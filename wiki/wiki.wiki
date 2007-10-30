@@ -7,7 +7,7 @@ Es bastante sencillo editar estas páginas
 
 = Detalles =
 
-Y se le puede dar formato:
+Se les puede dar formato:
   * Texto en *negrita* or _cursiva_
   * Encabezados, párrafos, y listas
   * Links automáticos a otras páginas wiki
