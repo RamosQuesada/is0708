@@ -12,4 +12,4 @@ Y se le puede dar formato:
   * Encabezados, párrafos, y listas
   * Links automáticos a otras páginas wiki
 
-Y los links salen solos cuando hablas de algo que ya está en el wiki, como por ejemplo, de los cuadrantes.
+Y los links salen solos cuando hablas de algo que ya está en el wiki, como por ejemplo, de los [cuadrantes].
