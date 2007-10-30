@@ -13,3 +13,7 @@ Y se le puede dar formato:
   * Links automáticos a otras páginas wiki
 
 Y los links salen solos cuando hablas de algo que ya está en el wiki, como por ejemplo, de los [cuadrantes].
+
+= Importante =
+
+Es importante poner los nombres de página en minúscula, o si no luego el wiki no las encuentra.
