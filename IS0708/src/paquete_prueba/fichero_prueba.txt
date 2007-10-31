@@ -1,5 +1,10 @@
 Soy un fichero de prueba.
 ¡Ahora soy un archivo de prueba modificado!
+<<<<<<< .mine
 Segunda modificación del archivo.
 
-Estoy editando el archivo desde dos ubicaciones diferentes.
+Estoy editando el archivo desde
+dos sitios diferentes.=======
+Segunda modificación del archivo.
+
+Estoy editando el archivo desde dos ubicaciones diferentes.>>>>>>> .r22
