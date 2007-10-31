@@ -1,3 +1,5 @@
 Soy un fichero de prueba.
 ¡Ahora soy un archivo de prueba modificado!
 Segunda modificación del archivo.
+
+Estoy editando el archivo desde dos ubicaciones diferentes.
