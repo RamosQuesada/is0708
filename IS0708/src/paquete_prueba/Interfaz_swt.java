@@ -22,6 +22,11 @@ public class Interfaz_swt {
 	public static void main(String[] IS0708) {
 		final Display display = new Display ();
 		final Shell shell = new Shell (display);
+
+		final Text texto = new Text(shell, SWT.BORDER);
+
+		final Button boton = new Button(shell, SWT.PUSH);
+
 		shell.setText("Título de la ventana");
 		shell.setVisible(true);
 
@@ -44,7 +49,7 @@ public class Interfaz_swt {
 		itemSeleccionar.addListener (SWT.Selection, new Listener () {
 			public void handleEvent (Event e) {
 				// Esto es lo que hace el elemento del menú
-				System.out.println ("Has pinchado en \"Seleccionar todo\"");
+				texto.selectAll();
 			}
 		});
 		itemSeleccionar.setText ("Seleccionar &todo \tCtrl+A");
@@ -58,21 +63,19 @@ public class Interfaz_swt {
 		});
 		itemSalir.setText("&Salir \tCtrl+S");
 		itemSalir.setAccelerator (SWT.MOD1 + 'S');
+
+		texto.setEditable(true);
+		texto.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 3, 1));
+
+		boton.setText("Mostrar en la esquina");
+		boton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		
 		shell.setSize (300, 200);
 		shell.open ();		
 
-		final Text texto = new Text(shell, SWT.BORDER);
-		texto.setEditable(true);
-		texto.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 3, 1));
-
-		final Button boton = new Button(shell, SWT.PUSH);
-		boton.setText("Mostrar en la esquina");
-		boton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
-
 		SelectionAdapter sel = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				final ToolTip hssTip = new ToolTip(shell, SWT.BALLOON | SWT.ICON_INFORMATION);
+				final ToolTip hssTip = new ToolTip(shell, SWT.BALLOON  | SWT.ICON_INFORMATION);
 				hssTip.setMessage(texto.getText());
 				
 				Tray hssTray = display.getSystemTray();
