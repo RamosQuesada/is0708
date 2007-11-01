@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * INTERFAZ DE PRUEBA
+ *   por Daniel Dionne
+ *   
+ * Interfaz de prueba para ver cómo funciona SWT.
+ * Más ejemplos en: 
+ *   http://www.eclipse.org/swt/widgets/
+ *******************************************************************************/
+
+
 package paquete_prueba;
 
 import org.eclipse.swt.SWT;
@@ -52,7 +62,9 @@ public class Interfaz_swt {
 				texto.selectAll();
 			}
 		});
+		// Texto del item de menú
 		itemSeleccionar.setText ("Seleccionar &todo \tCtrl+A");
+		// Acceso rápido (ctrl+a)
 		itemSeleccionar.setAccelerator (SWT.MOD1 + 'A');
 		MenuItem itemSalir = new MenuItem (submenu, SWT.PUSH);
 		itemSalir.addListener (SWT.Selection, new Listener () {
@@ -61,7 +73,9 @@ public class Interfaz_swt {
 				display.dispose();
 			}
 		});
+		// Texto del item de menú
 		itemSalir.setText("&Salir \tCtrl+S");
+		// Acceso rápido (ctrl+s)
 		itemSalir.setAccelerator (SWT.MOD1 + 'S');
 
 		texto.setEditable(true);
@@ -70,9 +84,7 @@ public class Interfaz_swt {
 		boton.setText("Mostrar en la esquina");
 		boton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		
-		shell.setSize (300, 200);
-		shell.open ();		
-
+		// Un SelectionAdapter con lo que hace el botón
 		SelectionAdapter sel = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				final ToolTip hssTip = new ToolTip(shell, SWT.BALLOON  | SWT.ICON_INFORMATION);
@@ -95,6 +107,7 @@ public class Interfaz_swt {
 		shell.setSize(400, 100);
 		shell.open();
 
+		// Este bucle mantiene la ventana abierta
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
