@@ -10,22 +10,13 @@
 
 package paquete_prueba;
 
-import org.eclipse.swt.SWT;
+import org.eclipse.swt.*;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.ToolTip;
-import org.eclipse.swt.widgets.Tray;
-import org.eclipse.swt.widgets.TrayItem;
+import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.graphics.*;
 
 public class Interfaz_swt {
 
@@ -37,7 +28,7 @@ public class Interfaz_swt {
 
 		final Button boton = new Button(shell, SWT.PUSH);
 
-		shell.setText("Título de la ventana");
+		shell.setText("Interfaz de ejemplo");
 		shell.setVisible(true);
 
 		GridLayout layout = new GridLayout();
@@ -84,19 +75,23 @@ public class Interfaz_swt {
 		boton.setText("Mostrar en la esquina");
 		boton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		
+		final Tray tray = display.getSystemTray();
+		final TrayItem trayItem = new TrayItem(tray, SWT.NONE);
+		
+		if (tray != null) {			
+			Image image = new Image(display, Interfaz_swt.class.getResourceAsStream("icono.gif"));
+			trayItem.setImage(image);
+		}
+
 		// Un SelectionAdapter con lo que hace el botón
 		SelectionAdapter sel = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				final ToolTip hssTip = new ToolTip(shell, SWT.BALLOON  | SWT.ICON_INFORMATION);
-				hssTip.setMessage(texto.getText());
-				
-				Tray hssTray = display.getSystemTray();
-
-				if (hssTray != null) {
-					TrayItem hssItem = new TrayItem(hssTray, SWT.NONE);
-					hssTip.setText("Aviso");
-					hssItem.setToolTip(hssTip);
-					hssTip.setVisible(true);
+				if (tray != null) {
+					ToolTip tip = new ToolTip(shell, SWT.BALLOON  | SWT.ICON_INFORMATION);
+					tip.setMessage(texto.getText());
+					tip.setText("Aviso");
+					trayItem.setToolTip(tip);
+					tip.setVisible(true);
 				}
 			}
 		};
@@ -105,6 +100,7 @@ public class Interfaz_swt {
 
 		shell.pack();
 		shell.setSize(400, 100);
+		shell.setLocation(500, 400);
 		shell.open();
 
 		// Este bucle mantiene la ventana abierta
@@ -113,7 +109,6 @@ public class Interfaz_swt {
 				display.sleep();
 			}
 		}
-
 		display.dispose();
 	}
 }
