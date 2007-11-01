@@ -13,9 +13,9 @@ import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.swt.widgets.Tray;
 import org.eclipse.swt.widgets.TrayItem;
 
-public class testings {
+public class Interfaz_swt {
 
-  public static void main(String[] lol) {
+  public static void main(String[] IS0708) {
     final Display display = new Display();
     final Shell shell = new Shell();
 
