@@ -3,10 +3,11 @@
  *   por Daniel Dionne
  *   
  * Interfaz de identificación del usuario.
+ * ver 0.1
  *******************************************************************************/
 
 
-package paquete_prueba;
+package interfaces;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -30,7 +31,7 @@ public class I01 {
 		final Button bAceptar = new Button(shell, SWT.PUSH);
 		final Button bCancelar = new Button(shell, SWT.PUSH);
 
-		shell.setText("Identificación del usuario");
+		shell.setText("Identificación");
 		shell.setVisible(true);
 
 		GridLayout layout = new GridLayout();
@@ -55,15 +56,23 @@ public class I01 {
 		bCancelar.setText("Cancelar");
 		bCancelar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 4, 1));
 
-		// Un SelectionAdapter con lo que hace el botón
+		// Un SelectionAdapter con lo que hace el botón bCancelar
 		SelectionAdapter sabCancelar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				shell.dispose();
 			}
 		};
 
-		bCancelar.addSelectionListener(sabCancelar);
+		// Un SelectionAdapter con lo que hace el botón bAceptar
+		SelectionAdapter sabAceptar = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				shell.dispose();
+			}
+		};
 
+		bCancelar.addSelectionListener(sabCancelar);
+		bAceptar.addSelectionListener(sabAceptar);
+		
 		shell.pack();
 		shell.setSize(200, 150);
 		shell.setLocation(500, 400);
