@@ -15,6 +15,9 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.graphics.*;
+
+import paquete_prueba.Interfaz_swt;
 
 public class I01 {
 
@@ -31,9 +34,13 @@ public class I01 {
 		final Button bAceptar = new Button(shell, SWT.PUSH);
 		final Button bCancelar = new Button(shell, SWT.PUSH);
 
+		// Dos iconos de tamaño diferente para SO's que los necesiten
+		Image icoGr = new Image(display, I01.class.getResourceAsStream("icoGr.gif"));
+		Image icoPq = new Image(display, I01.class.getResourceAsStream("icoPq.gif"));
+		shell.setImages(new Image[] {icoPq,icoGr});
 		shell.setText("Identificación");
 		shell.setVisible(true);
-
+		
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 8;
 		layout.makeColumnsEqualWidth = true;

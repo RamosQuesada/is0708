@@ -28,6 +28,7 @@ public class Interfaz_swt {
 
 		final Button boton = new Button(shell, SWT.PUSH);
 
+		Image icono = new Image(display, Interfaz_swt.class.getResourceAsStream("icono.gif"));
 		shell.setText("Interfaz de ejemplo");
 		shell.setVisible(true);
 
@@ -53,6 +54,10 @@ public class Interfaz_swt {
 				texto.selectAll();
 			}
 		});
+		MenuItem itemImprimir = new MenuItem (submenu, SWT.PUSH);
+		Image ico_imprimir = new Image(display, Interfaz_swt.class.getResourceAsStream("ico_imprimir.gif"));
+		itemImprimir.setImage(ico_imprimir);
+		itemImprimir.setText("&Imprimir");
 		// Texto del item de menú
 		itemSeleccionar.setText ("Seleccionar &todo \tCtrl+A");
 		// Acceso rápido (ctrl+a)
@@ -78,9 +83,10 @@ public class Interfaz_swt {
 		final Tray tray = display.getSystemTray();
 		final TrayItem trayItem = new TrayItem(tray, SWT.NONE);
 		
+		
+		shell.setImage(icono);
 		if (tray != null) {			
-			Image image = new Image(display, Interfaz_swt.class.getResourceAsStream("icono.gif"));
-			trayItem.setImage(image);
+			trayItem.setImage(icono);
 		}
 
 		// Un SelectionAdapter con lo que hace el botón
