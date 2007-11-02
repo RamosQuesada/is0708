@@ -17,18 +17,20 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
 
-import paquete_pruebas.Interfaz_swt;
-
 public class I02 {
 
 	public static void main(String[] IS0708) {
 		final Display display = new Display ();
 		final Shell shell = new Shell (display);
 
-		
-		// Dos iconos de tamaño diferente para SO's que los necesiten
 		Image icoGr = new Image(display, I02.class.getResourceAsStream("icoGr.gif"));
 		Image icoPq = new Image(display, I02.class.getResourceAsStream("icoPq.gif"));
+		Image ico_imprimir = new Image(display, I02.class.getResourceAsStream("ico_imprimir.gif"));
+		Image ico_mens_l = new Image(display, I02.class.getResourceAsStream("ico_mens1_v.gif"));
+		Image ico_mens = new Image(display, I02.class.getResourceAsStream("ico_mens2_v.gif"));
+		
+		
+		// Dos iconos de tamaño diferente para SO's que los necesiten
 		shell.setImages(new Image[] {icoPq,icoGr});
 		shell.setText("Turno-matic");
 		shell.setVisible(true);
@@ -55,7 +57,6 @@ public class I02 {
 		itemSeleccionar.setAccelerator (SWT.MOD1 + 'A');		
 		
 		MenuItem itemImprimir = new MenuItem (submenu, SWT.PUSH);
-		Image ico_imprimir = new Image(display, I02.class.getResourceAsStream("ico_imprimir.gif"));
 		itemImprimir.setImage(ico_imprimir);
 		itemImprimir.setText("&Imprimir");
 
@@ -65,7 +66,6 @@ public class I02 {
 				shell.close();
 			}
 		});
-		
 		// Texto del item de menú
 		itemSalir.setText("&Salir \tCtrl+S");
 		// Acceso rápido (ctrl+s)
@@ -73,7 +73,6 @@ public class I02 {
 		
 		final Tray tray = display.getSystemTray();
 		final TrayItem trayItem = new TrayItem(tray, SWT.NONE);
-		
 		shell.setImage(icoPq);
 		if (tray != null) {			
 			trayItem.setImage(icoPq);
@@ -82,23 +81,24 @@ public class I02 {
 		GridLayout lShell = new GridLayout();
 		lShell.numColumns = 2;
 		
-
 		shell.setLayout(lShell);
 		
 		final Composite cIzq = new Composite (shell, SWT.BORDER);
 		final Composite cDer = new Composite (shell, SWT.BORDER);
-		cIzq.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, true, 1, 1));
+		cIzq.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
 		cDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		GridLayout lCIzq = new GridLayout();
 		lCIzq.numColumns = 4;
 		lCIzq.makeColumnsEqualWidth = true;
 		cIzq.setLayout(lCIzq);
-		cDer.setLayout(new GridLayout());
+		GridLayout lCDer = new GridLayout();
+		lCDer.numColumns = 2;
+		cDer.setLayout(lCDer);
 		
 		
 		final Label lHorarios = new Label (cIzq, SWT.LEFT);
 		lHorarios.setText("Horarios");
-		lHorarios.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 4, 1));
+		lHorarios.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 4, 1));
 		
 		final DateTime calendario = new DateTime (cIzq, SWT.CALENDAR);
 		calendario.addSelectionListener (new SelectionAdapter () {
@@ -107,7 +107,34 @@ public class I02 {
 				System.out.println ("Fecha cambiada a "+ String.valueOf(calendario.getDay()) + " de " + meses[calendario.getMonth()]+ " de " + String.valueOf(calendario.getYear()));
 			}
 		});
-		calendario.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 4, 1));
+		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, true, 4, 1));
+		
+		
+		final Label lMensajes = new Label (cDer, SWT.LEFT);
+		lMensajes.setText("Mensajes");
+		lMensajes.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
+
+		Table table = new Table (cDer, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
+		table.setLinesVisible (true);
+		table.setHeaderVisible (true);
+		String[] titles = {" ", "De", "Asunto", "Mensaje"};
+		for (int i=0; i<titles.length; i++) {
+			TableColumn column = new TableColumn (table, SWT.NONE);
+			column.setText (titles [i]);
+		}	
+		int count = 12;
+		for (int i=0; i<count; i++) {
+			TableItem item = new TableItem (table, SWT.NONE);
+			item.setImage(ico_mens);
+			item.setText (1, "Remitente");
+			item.setText (2, "Asunto del mensaje");
+			item.setText (3, "Aquí va lo que quepa del principio del mensaje");
+		}
+		for (int i=0; i<titles.length; i++) {
+			table.getColumn (i).pack ();
+		}	
+		//table.setSize (table.computeSize (SWT.DEFAULT, 200));
+		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		// Ajustar el tamaño de la ventana al contenido
 		shell.pack();
@@ -120,7 +147,7 @@ public class I02 {
 			public void handleEvent (Event event) {
 				MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
 				messageBox.setText ("Mensaje");
-				messageBox.setMessage ("¿Cerrar la aplicación?");
+				messageBox.setMessage ("¿Desea cerrar la aplicación?");
 				event.doit = messageBox.open () == SWT.YES;
 			}
 		});
