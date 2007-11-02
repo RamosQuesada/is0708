@@ -74,7 +74,7 @@ public class I01 {
 		bAceptar.addSelectionListener(sabAceptar);
 		
 		shell.pack();
-		shell.setSize(200, 150);
+		shell.setSize(210, 150);
 		shell.setLocation(500, 400);
 		shell.open();
 
