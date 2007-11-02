@@ -17,7 +17,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
 
-import paquete_prueba.Interfaz_swt;
+import paquete_pruebas.Interfaz_swt;
 
 public class I02 {
 

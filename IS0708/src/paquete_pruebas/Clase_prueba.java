@@ -1,4 +1,4 @@
-package paquete_prueba;
+package paquete_pruebas;
 
 public class Clase_prueba {
   // Esta es una clase de prueba, dentro del paquete_prueba

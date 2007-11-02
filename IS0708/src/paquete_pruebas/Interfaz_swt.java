@@ -8,7 +8,7 @@
  *******************************************************************************/
 
 
-package paquete_prueba;
+package paquete_pruebas;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.events.SelectionAdapter;
