@@ -46,14 +46,14 @@ public class I02 {
 		MenuItem itemSeleccionar = new MenuItem (submenu, SWT.PUSH);
 		itemSeleccionar.addListener (SWT.Selection, new Listener () {
 			public void handleEvent (Event e) {
-				// Esto es lo que hace el elemento del menú
-				System.out.println("Pulsado Seleccionar todo");
+				System.out.println("Pulsado Abrir");
 			}
 		});
 		// Texto del item de menú
-		itemSeleccionar.setText ("Seleccionar &todo \tCtrl+A");
+		itemSeleccionar.setText ("Abrir \tCtrl+A");
 		// Acceso rápido (ctrl+a)
 		itemSeleccionar.setAccelerator (SWT.MOD1 + 'A');		
+		
 		MenuItem itemImprimir = new MenuItem (submenu, SWT.PUSH);
 		Image ico_imprimir = new Image(display, I02.class.getResourceAsStream("ico_imprimir.gif"));
 		itemImprimir.setImage(ico_imprimir);
@@ -62,10 +62,10 @@ public class I02 {
 		MenuItem itemSalir = new MenuItem (submenu, SWT.PUSH);
 		itemSalir.addListener (SWT.Selection, new Listener () {
 			public void handleEvent (Event e) {
-				// Esto es lo que hace el segundo elemento
-				display.dispose();
+				shell.close();
 			}
 		});
+		
 		// Texto del item de menú
 		itemSalir.setText("&Salir \tCtrl+S");
 		// Acceso rápido (ctrl+s)
@@ -114,6 +114,16 @@ public class I02 {
 		// Mostrar ventana centrada en la pantalla
 		shell.setLocation(display.getBounds().width/2 - shell.getSize().x/2, display.getBounds().height/2 - shell.getSize().y/2);
 		shell.open();
+		
+		// Preguntar antes de salir
+		shell.addListener (SWT.Close, new Listener () {
+			public void handleEvent (Event event) {
+				MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
+				messageBox.setText ("Mensaje");
+				messageBox.setMessage ("¿Cerrar la aplicación?");
+				event.doit = messageBox.open () == SWT.YES;
+			}
+		});
 
 		// Este bucle mantiene la ventana abierta
 		while (!shell.isDisposed()) {
