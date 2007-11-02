@@ -26,7 +26,7 @@ public class I01 {
 		final Label lUsuario  = new Label(shell, SWT.LEFT);
 		final Text  tUsuario  = new Text(shell, SWT.BORDER);
 		final Label lPassword = new Label(shell, SWT.LEFT);
-		final Text  tPassword = new Text(shell, SWT.BORDER);
+		final Text  tPassword = new Text(shell, SWT.BORDER | SWT.PASSWORD);
 
 	
 		final Button bAceptar  = new Button(shell, SWT.PUSH);
@@ -38,8 +38,6 @@ public class I01 {
 		shell.setImages(new Image[] {icoPq,icoGr});
 		shell.setText("Identificación");
 		shell.setVisible(true);
-		
-		
 		
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 8;
@@ -54,6 +52,7 @@ public class I01 {
 
 		lPassword.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 3, 1));
 		lPassword.setText("Contraseña");
+		
 		tPassword.setEditable(true);
 		tPassword.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 5, 1));
 
@@ -73,9 +72,12 @@ public class I01 {
 		// Un SelectionAdapter con lo que hace el botón bAceptar
 		SelectionAdapter sabAceptar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				if (tUsuario.getText().length()==0) {
+				if (tUsuario.getText().length()!=8) {
 					I11 ventana = new I11();
-					ventana.mostrarMensaje("Debes escribir algo.");
+					ventana.mostrarMensaje("El número de vendedor debe tener 8 cifras.");
+					// Enfocar tUsuario y seleccionar texto
+					tUsuario.setFocus();
+					tUsuario.selectAll();
 				}
 				else shell.dispose();
 			}
@@ -83,9 +85,13 @@ public class I01 {
 
 		bCancelar.addSelectionListener(sabCancelar);
 		bAceptar.addSelectionListener(sabAceptar);
+
+		// Botón por defecto bAceptar
+		shell.setDefaultButton(bAceptar);
+		// Ajustar el tamaño de la ventana al contenido
 		shell.pack();
-		shell.setSize(210, 150);
-		shell.setLocation(500, 400);
+		// Mostrar ventana centrada en la pantalla
+		shell.setLocation(display.getBounds().width/2 - shell.getSize().x/2, display.getBounds().height/2 - shell.getSize().y/2);
 		shell.open();
 
 		// Este bucle mantiene la ventana abierta

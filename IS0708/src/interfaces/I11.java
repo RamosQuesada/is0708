@@ -24,6 +24,7 @@ public class I11 {
 
 	public void mostrarMensaje(String mensaje) {
 		final Display display = Display.getCurrent();
+		
 		final Shell shell = new Shell (display, SWT.CLOSE);
 
 		final Label lMensaje  = new Label(shell, SWT.LEFT);
@@ -57,8 +58,11 @@ public class I11 {
 
 		bAceptar.addSelectionListener(sabAceptar);
 		
+		// Ajustar el tamaño de la ventana al contenido del mensaje
 		shell.pack();
-		shell.setSize(100, 100);
+		
+		// Mostrar ventana centrada
+		//display.getBounds().width;
 		shell.setLocation(550, 450);
 		shell.open();
 
