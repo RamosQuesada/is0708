@@ -17,21 +17,19 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
 
-import paquete_prueba.Interfaz_swt;
-
 public class I01 {
 
 	public static void main(String[] IS0708) {
 		final Display display = new Display ();
-		final Shell shell = new Shell (display);
+		final Shell shell = new Shell (display, SWT.CLOSE);
 
-		final Label lUsuario = new Label(shell, SWT.LEFT);
-		final Text tUsuario  = new Text(shell, SWT.BORDER);
+		final Label lUsuario  = new Label(shell, SWT.LEFT);
+		final Text  tUsuario  = new Text(shell, SWT.BORDER);
 		final Label lPassword = new Label(shell, SWT.LEFT);
-		final Text tPassword = new Text(shell, SWT.BORDER);
+		final Text  tPassword = new Text(shell, SWT.BORDER);
 
 	
-		final Button bAceptar = new Button(shell, SWT.PUSH);
+		final Button bAceptar  = new Button(shell, SWT.PUSH);
 		final Button bCancelar = new Button(shell, SWT.PUSH);
 
 		// Dos iconos de tamaño diferente para SO's que los necesiten
@@ -40,6 +38,8 @@ public class I01 {
 		shell.setImages(new Image[] {icoPq,icoGr});
 		shell.setText("Identificación");
 		shell.setVisible(true);
+		
+		
 		
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 8;
@@ -66,20 +66,23 @@ public class I01 {
 		// Un SelectionAdapter con lo que hace el botón bCancelar
 		SelectionAdapter sabCancelar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				shell.dispose();
+					shell.dispose();	
 			}
 		};
 
 		// Un SelectionAdapter con lo que hace el botón bAceptar
 		SelectionAdapter sabAceptar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				shell.dispose();
+				if (tUsuario.getText().length()==0) {
+					I11 ventana = new I11();
+					ventana.mostrarMensaje("Debes escribir algo.");
+				}
+				else shell.dispose();
 			}
 		};
 
 		bCancelar.addSelectionListener(sabCancelar);
 		bAceptar.addSelectionListener(sabAceptar);
-		
 		shell.pack();
 		shell.setSize(210, 150);
 		shell.setLocation(500, 400);
