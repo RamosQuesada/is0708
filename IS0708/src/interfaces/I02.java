@@ -28,6 +28,7 @@ public class I02 {
 		Image ico_imprimir = new Image(display, I02.class.getResourceAsStream("ico_imprimir.gif"));
 		Image ico_mens_l = new Image(display, I02.class.getResourceAsStream("ico_mens1_v.gif"));
 		Image ico_mens = new Image(display, I02.class.getResourceAsStream("ico_mens2_v.gif"));
+		Image ico_cuadrante = new Image(display, I02.class.getResourceAsStream("ico_cuadrante.gif"));
 		
 		
 		// Dos iconos de tamaño diferente para SO's que los necesiten
@@ -87,8 +88,10 @@ public class I02 {
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		TabItem tabItem1 = new TabItem (tabFolder, SWT.NONE);
 		tabItem1.setText ("Cuadrantes");
+		tabItem1.setImage(ico_cuadrante);
 		TabItem tabItem2 = new TabItem (tabFolder, SWT.NONE);
 		tabItem2.setText ("Mensajes");
+		tabItem2.setImage(ico_mens_l);
 		
 		final Composite cCuadrantes = new Composite (tabFolder, SWT.NONE);
 		cCuadrantes.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
