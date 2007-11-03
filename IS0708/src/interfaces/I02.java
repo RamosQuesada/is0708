@@ -92,7 +92,8 @@ public class I02 {
 		lCIzq.makeColumnsEqualWidth = true;
 		cIzq.setLayout(lCIzq);
 		GridLayout lCDer = new GridLayout();
-		lCDer.numColumns = 2;
+		lCDer.numColumns = 4;
+		lCDer.makeColumnsEqualWidth = true;
 		cDer.setLayout(lCDer);
 		
 		
@@ -112,7 +113,7 @@ public class I02 {
 		
 		final Label lMensajes = new Label (cDer, SWT.LEFT);
 		lMensajes.setText("Mensajes");
-		lMensajes.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
+		lMensajes.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 4, 1));
 
 		Table table = new Table (cDer, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
 		table.setLinesVisible (true);
@@ -134,8 +135,24 @@ public class I02 {
 			table.getColumn (i).pack ();
 		}	
 		//table.setSize (table.computeSize (SWT.DEFAULT, 200));
-		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
 		
+		final Button bLeer = new Button(cDer, SWT.PUSH);
+		bLeer.setText("Leer");
+		bLeer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		
+		final Button bResponder = new Button(cDer, SWT.PUSH);
+		bResponder.setText("Responder");
+		bResponder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+
+		final Button bEliminar = new Button(cDer, SWT.PUSH);
+		bEliminar.setText("Eliminar");
+		bEliminar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		
+		final Button bMarcar = new Button(cDer, SWT.PUSH);
+		bMarcar.setText("Marcar");
+		bMarcar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+
 		// Ajustar el tamaño de la ventana al contenido
 		shell.pack();
 		// Mostrar ventana centrada en la pantalla
