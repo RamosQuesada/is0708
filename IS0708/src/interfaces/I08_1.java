@@ -74,6 +74,7 @@ public class I08_1 {
 		final Combo cDepto			= new Combo(grupoDer, SWT.BORDER | SWT.READ_ONLY);
 		final Button bAceptar		= new Button(shell, SWT.PUSH);
 		final Button bCancelar		= new Button(shell, SWT.PUSH);
+		
 		lNVend.setText("Vendedor");
 		lPassword.setText("Contraseña");
 		lNombre.setText("Nombre");

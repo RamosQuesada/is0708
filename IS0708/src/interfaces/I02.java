@@ -22,7 +22,9 @@ import interfaces.I08_1;
 public class I02 {
 	private static Display display;
 	private Shell shell;
-
+	Image icoGr, icoPq, ico_imprimir, ico_mens_l, ico_mens, ico_cuadrante, ico_chico, ico_chica, ico_chicos;
+	
+	
 	public static void main(String[] args) {
 		// Este bucle mantiene la ventana abierta
 		display = new Display ();
@@ -37,22 +39,7 @@ public class I02 {
 		display.dispose();
 	}
 	
-	
-	private void crearVentana() {
-		shell = new Shell (display);
-		Image icoGr = new Image(display, I02.class.getResourceAsStream("icoGr.gif"));
-		Image icoPq = new Image(display, I02.class.getResourceAsStream("icoPq.gif"));
-		Image ico_imprimir = new Image(display, I02.class.getResourceAsStream("ico_imprimir.gif"));
-		Image ico_mens_l = new Image(display, I02.class.getResourceAsStream("ico_mens1_v.gif"));
-		Image ico_mens = new Image(display, I02.class.getResourceAsStream("ico_mens2_v.gif"));
-		Image ico_cuadrante = new Image(display, I02.class.getResourceAsStream("ico_cuadrante.gif"));
-		Image ico_chico = new Image(display, I02.class.getResourceAsStream("ico_chico.gif"));
-		Image ico_chica = new Image(display, I02.class.getResourceAsStream("ico_chica.gif"));
-		
-		// Dos iconos de tamaño diferente para SO's que los necesiten
-		shell.setImages(new Image[] {icoPq,icoGr});
-		shell.setText("Turno-matic");
-
+	private void crearBarraMenu() {
 		// Una barra de menús
 		Menu barra = new Menu (shell, SWT.BAR);
 		shell.setMenuBar (barra);
@@ -63,21 +50,24 @@ public class I02 {
 		Menu submenu = new Menu (shell, SWT.DROP_DOWN);
 		archivoItem.setMenu (submenu);
 		// Aquí los elementos del submenú
-		MenuItem itemSeleccionar = new MenuItem (submenu, SWT.PUSH);
-		itemSeleccionar.addListener (SWT.Selection, new Listener () {
+		// Item Abrir
+		MenuItem itemAbrir = new MenuItem (submenu, SWT.PUSH);
+		itemAbrir.addListener (SWT.Selection, new Listener () {
 			public void handleEvent (Event e) {
 				System.out.println("Pulsado Abrir");
 			}
 		});
 		// Texto del item de menú
-		itemSeleccionar.setText ("Abrir \tCtrl+A");
+		itemAbrir.setText ("Abrir \tCtrl+A");
 		// Acceso rápido (ctrl+a)
-		itemSeleccionar.setAccelerator (SWT.MOD1 + 'A');		
+		itemAbrir.setAccelerator (SWT.MOD1 + 'A');		
 		
+		// Item Imprimir
 		MenuItem itemImprimir = new MenuItem (submenu, SWT.PUSH);
 		itemImprimir.setImage(ico_imprimir);
 		itemImprimir.setText("&Imprimir");
 
+		// Item Salir
 		MenuItem itemSalir = new MenuItem (submenu, SWT.PUSH);
 		itemSalir.addListener (SWT.Selection, new Listener () {
 			public void handleEvent (Event e) {
@@ -89,42 +79,20 @@ public class I02 {
 		// Acceso rápido (ctrl+s)
 		itemSalir.setAccelerator (SWT.MOD1 + 'S');
 		
-		final Tray tray = display.getSystemTray();
-		final TrayItem trayItem = new TrayItem(tray, SWT.NONE);
-		shell.setImage(icoPq);
-		if (tray != null) {			
-			trayItem.setImage(icoPq);
-		}
-				
+	}
+	
+	private void crearCompositeCuadrantes (Composite c) {
+		c.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
+		GridLayout lCc = new GridLayout();
+		lCc.numColumns = 4;
+		//lCc.makeColumnsEqualWidth = true;
+		c.setLayout(lCc);
 		
-		GridLayout lShell = new GridLayout();
-		lShell.numColumns = 1;		
-		shell.setLayout(lShell);
-
-		final TabFolder tabFolder = new TabFolder (shell, SWT.NONE);
-		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		TabItem tabItemCuadrantes = new TabItem (tabFolder, SWT.NONE);
-		tabItemCuadrantes.setText ("Cuadrantes");
-		tabItemCuadrantes.setImage(ico_cuadrante);
-		TabItem tabItemMensajes = new TabItem (tabFolder, SWT.NONE);
-		tabItemMensajes.setText ("Mensajes");
-		tabItemMensajes.setImage(ico_mens_l);
-		TabItem tabItemEmpleados = new TabItem (tabFolder, SWT.NONE);
-		tabItemEmpleados.setText ("Empleados");
-		tabItemEmpleados.setImage(ico_chico);
-		
-		final Composite cCuadrantes = new Composite (tabFolder, SWT.NONE);
-		cCuadrantes.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
-		GridLayout lCuadrantes = new GridLayout();
-		lCuadrantes.numColumns = 4;
-		//lCuadrantes.makeColumnsEqualWidth = true;
-		cCuadrantes.setLayout(lCuadrantes);
-		
-		final Label lCalendario = new Label (cCuadrantes, SWT.LEFT);
+		final Label lCalendario = new Label (c, SWT.LEFT);
 		lCalendario.setText("Calendario");
 		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		
-		final Composite cCuadrantesDer = new Composite (cCuadrantes, SWT.BORDER);
+		final Composite cCuadrantesDer = new Composite (c, SWT.BORDER);
 		cCuadrantesDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 2));
 		GridLayout lCuadrantesDer = new GridLayout();
 		lCuadrantesDer.numColumns = 4;
@@ -135,7 +103,7 @@ public class I02 {
 		lCuadr.setText("Aquí se mostrarán los cuadrantes");
 		lCuadr.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 4, 1));
 
-		final DateTime calendario = new DateTime (cCuadrantes, SWT.CALENDAR);
+		final DateTime calendario = new DateTime (c, SWT.CALENDAR);
 		calendario.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
@@ -143,15 +111,17 @@ public class I02 {
 			}
 		});
 		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1));
-						
-		final Composite cMensajes = new Composite (tabFolder, SWT.NONE);
-		cMensajes.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
-		GridLayout lCMensajes = new GridLayout();
-		lCMensajes.numColumns = 4;
-		lCMensajes.makeColumnsEqualWidth = true;
-		cMensajes.setLayout(lCMensajes);
+
+	}
+
+	private void crearCompositeMensajes (Composite c) {
+		c.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
+		GridLayout lCc = new GridLayout();
+		lCc.numColumns = 4;
+		lCc.makeColumnsEqualWidth = true;
+		c.setLayout(lCc);
 		
-		Table tablaMensajes = new Table (cMensajes, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
+		Table tablaMensajes = new Table (c, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
 		tablaMensajes.setLinesVisible (true);
 		tablaMensajes.setHeaderVisible (true);
 		String[] titles = {" ", "De", "Asunto", "Mensaje", "Fecha"};
@@ -174,29 +144,31 @@ public class I02 {
 		//table.setSize (table.computeSize (SWT.DEFAULT, 200));
 		tablaMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
 		
-		final Button bMensNuevo = new Button(cMensajes, SWT.PUSH);
+		final Button bMensNuevo = new Button(c, SWT.PUSH);
 		bMensNuevo.setText("Nuevo");
 		bMensNuevo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		final Button bMensResponder = new Button(cMensajes, SWT.PUSH);
+		final Button bMensResponder = new Button(c, SWT.PUSH);
 		bMensResponder.setText("Responder");
 		bMensResponder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		final Button bMensEliminar = new Button(cMensajes, SWT.PUSH);
+		final Button bMensEliminar = new Button(c, SWT.PUSH);
 		bMensEliminar.setText("Eliminar");
 		bMensEliminar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		final Button bMensMarcar = new Button(cMensajes, SWT.PUSH);
+		final Button bMensMarcar = new Button(c, SWT.PUSH);
 		bMensMarcar.setText("Marcar");
 		bMensMarcar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		final Composite cEmpleados = new Composite (tabFolder, SWT.NONE);
-		cMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		GridLayout lCEmpleados = new GridLayout();
-		lCEmpleados.numColumns = 2;
-		cEmpleados.setLayout(lCEmpleados);
+	}
+	
+	private void crearCompositeEmpleados(Composite c) {
+		c.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		GridLayout lCc = new GridLayout();
+		lCc.numColumns = 2;
+		c.setLayout(lCc);
 		
-		final Composite cEmplIzq = new Composite (cEmpleados, SWT.NONE);
+		final Composite cEmplIzq = new Composite (c, SWT.NONE);
 		cEmplIzq.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
 		GridLayout lCEmplIzq = new GridLayout();
 		lCEmplIzq.numColumns = 2;
@@ -235,7 +207,7 @@ public class I02 {
 		Combo cEmplContr = new Combo (cEmplIzq, SWT.BORDER);
 		cEmplContr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		final Composite cEmplDer = new Composite (cEmpleados, SWT.NONE);
+		final Composite cEmplDer = new Composite (c, SWT.NONE);
 		cEmplDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		GridLayout lCEmplDer = new GridLayout();
 		lCEmplDer.numColumns = 4;
@@ -287,20 +259,93 @@ public class I02 {
 		final Button bEmplBaja = new Button(cEmplDer, SWT.PUSH);
 		bEmplBaja.setText("Dar de baja");
 		bEmplBaja.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-				
+	}
+	
+	private void crearCompositeDepartamentos(Composite c) {
+		c.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		GridLayout lCc = new GridLayout();
+		lCc.numColumns = 2;
+		c.setLayout(lCc);
+
+		Label lDepartamentos = new Label(c, SWT.LEFT);
+		lDepartamentos.setText("Departamento");
+		lDepartamentos.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, true, 1, 1));
+		
+		Combo cDepartamentos = new Combo(c, SWT.BORDER | SWT.READ_ONLY);
+		cDepartamentos.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, true, 1, 1));
+	}
+	
+	private void crearVistaJefe() {
+		final TabFolder tabFolder = new TabFolder (shell, SWT.NONE);
+		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		TabItem tabItemCuadrantes = new TabItem (tabFolder, SWT.NONE);
+		tabItemCuadrantes.setText ("Cuadrantes");
+		tabItemCuadrantes.setImage(ico_cuadrante);
+		TabItem tabItemMensajes = new TabItem (tabFolder, SWT.NONE);
+		tabItemMensajes.setText ("Mensajes");
+		tabItemMensajes.setImage(ico_mens_l);
+		TabItem tabItemEmpleados = new TabItem (tabFolder, SWT.NONE);
+		tabItemEmpleados.setText ("Empleados");
+		tabItemEmpleados.setImage(ico_chico);
+		TabItem tabItemDepartamentos = new TabItem (tabFolder, SWT.NONE);
+		tabItemDepartamentos.setText ("Departamentos");
+		tabItemDepartamentos.setImage(ico_chicos);
+		
+		
+		final Composite cCuadrantes = new Composite (tabFolder, SWT.NONE);
+		crearCompositeCuadrantes(cCuadrantes);				
+		
+		final Composite cMensajes = new Composite (tabFolder, SWT.NONE);
+		crearCompositeMensajes(cMensajes);
+		
+		final Composite cEmpleados = new Composite (tabFolder, SWT.NONE);
+		crearCompositeEmpleados(cEmpleados);
+		
+		final Composite cDepartamentos = new Composite (tabFolder, SWT.NONE);
+		crearCompositeDepartamentos(cDepartamentos);
+		
 		// Asignar cada panel a su tab 
-		tabItemCuadrantes.setControl(cCuadrantes);
-		tabItemMensajes.setControl(cMensajes);
-		tabItemEmpleados.setControl(cEmpleados);
+		tabItemCuadrantes   .setControl(cCuadrantes);
+		tabItemMensajes     .setControl(cMensajes);
+		tabItemEmpleados    .setControl(cEmpleados);
+		tabItemDepartamentos.setControl(cDepartamentos);
+	}
+	private void crearVentana() {
+		shell = new Shell (display);
+		icoGr = new Image(display, I02.class.getResourceAsStream("icoGr.gif"));
+		icoPq = new Image(display, I02.class.getResourceAsStream("icoPq.gif"));
+		ico_imprimir = new Image(display, I02.class.getResourceAsStream("ico_imprimir.gif"));
+		ico_mens_l = new Image(display, I02.class.getResourceAsStream("ico_mens1_v.gif"));
+		ico_mens = new Image(display, I02.class.getResourceAsStream("ico_mens2_v.gif"));
+		ico_cuadrante = new Image(display, I02.class.getResourceAsStream("ico_cuadrante.gif"));
+		ico_chico = new Image(display, I02.class.getResourceAsStream("ico_chico.gif"));
+		ico_chica = new Image(display, I02.class.getResourceAsStream("ico_chica.gif"));
+		ico_chicos = new Image(display, I02.class.getResourceAsStream("ico_chicos.gif"));
+				// Dos iconos de tamaño diferente para SO's que los necesiten
+		shell.setImages(new Image[] {icoPq,icoGr});
+		shell.setText("Turno-matic");
+
+		crearBarraMenu();
 		
+		final Tray tray = display.getSystemTray();
+		final TrayItem trayItem = new TrayItem(tray, SWT.NONE);
+		shell.setImage(icoPq);
+		if (tray != null) {			
+			trayItem.setImage(icoPq);
+		}
 		
+		GridLayout lShell = new GridLayout();
+		lShell.numColumns = 1;		
+		shell.setLayout(lShell);
+		
+		crearVistaJefe();
 		
 		// Ajustar el tamaño de la ventana al contenido
 		shell.pack();
 		// Mostrar ventana centrada en la pantalla
 		shell.setLocation(display.getBounds().width/2 - shell.getSize().x/2, display.getBounds().height/2 - shell.getSize().y/2);
 		shell.open();
-		
+		//I01 login = new I01(shell);
 		// Preguntar antes de salir
 		shell.addListener (SWT.Close, new Listener () {
 			public void handleEvent (Event e) {
