@@ -77,45 +77,53 @@ public class I02 {
 		if (tray != null) {			
 			trayItem.setImage(icoPq);
 		}
+				
 		
 		GridLayout lShell = new GridLayout();
-		lShell.numColumns = 2;
-		
+		lShell.numColumns = 1;		
 		shell.setLayout(lShell);
+
+		final TabFolder tabFolder = new TabFolder (shell, SWT.NONE);
+		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		TabItem tabItem1 = new TabItem (tabFolder, SWT.NONE);
+		tabItem1.setText ("Cuadrantes");
+		TabItem tabItem2 = new TabItem (tabFolder, SWT.NONE);
+		tabItem2.setText ("Mensajes");
 		
-		final Composite cIzq = new Composite (shell, SWT.BORDER);
-		final Composite cDer = new Composite (shell, SWT.BORDER);
-		cIzq.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
-		cDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		GridLayout lCIzq = new GridLayout();
-		lCIzq.numColumns = 4;
-		lCIzq.makeColumnsEqualWidth = true;
-		cIzq.setLayout(lCIzq);
+		final Composite cCuadrantes = new Composite (tabFolder, SWT.NONE);
+		cCuadrantes.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
+		GridLayout lCuadrantes = new GridLayout();
+		lCuadrantes.numColumns = 4;
+		//lCuadrantes.makeColumnsEqualWidth = true;
+		cCuadrantes.setLayout(lCuadrantes);
+		
+		final Label lCalendario = new Label (cCuadrantes, SWT.LEFT);
+		lCalendario.setText("Calendario");
+		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+		
+		final Composite cCuadrantesDer = new Composite (cCuadrantes, SWT.BORDER);
+		cCuadrantesDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 2));
 		GridLayout lCDer = new GridLayout();
 		lCDer.numColumns = 4;
-		lCDer.makeColumnsEqualWidth = true;
-		cDer.setLayout(lCDer);
-		
-		
-		final Label lHorarios = new Label (cIzq, SWT.LEFT);
-		lHorarios.setText("Horarios");
-		lHorarios.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 4, 1));
-		
-		final DateTime calendario = new DateTime (cIzq, SWT.CALENDAR);
+		cCuadrantesDer.setLayout(lCDer);
+
+		final DateTime calendario = new DateTime (cCuadrantes, SWT.CALENDAR);
 		calendario.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
 				System.out.println ("Fecha cambiada a "+ String.valueOf(calendario.getDay()) + " de " + meses[calendario.getMonth()]+ " de " + String.valueOf(calendario.getYear()));
 			}
 		});
-		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, true, 4, 1));
+		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1));
+						
+		final Composite cMensajes = new Composite (tabFolder, SWT.BORDER);
+		cMensajes.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
+		GridLayout lCMensajes = new GridLayout();
+		lCMensajes.numColumns = 4;
+		lCMensajes.makeColumnsEqualWidth = true;
+		cMensajes.setLayout(lCMensajes);
 		
-		
-		final Label lMensajes = new Label (cDer, SWT.LEFT);
-		lMensajes.setText("Mensajes");
-		lMensajes.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 4, 1));
-
-		Table table = new Table (cDer, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
+		Table table = new Table (cMensajes, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
 		table.setLinesVisible (true);
 		table.setHeaderVisible (true);
 		String[] titles = {" ", "De", "Asunto", "Mensaje"};
@@ -125,11 +133,11 @@ public class I02 {
 		}	
 		int count = 12;
 		for (int i=0; i<count; i++) {
-			TableItem item = new TableItem (table, SWT.NONE);
-			item.setImage(ico_mens);
-			item.setText (1, "Remitente");
-			item.setText (2, "Asunto del mensaje");
-			item.setText (3, "Aquí va lo que quepa del principio del mensaje");
+			TableItem tItem = new TableItem (table, SWT.NONE);
+			tItem.setImage(ico_mens);
+			tItem.setText (1, "Remitente");
+			tItem.setText (2, "Asunto del mensaje");
+			tItem.setText (3, "Aquí va lo que quepa del principio del mensaje");
 		}
 		for (int i=0; i<titles.length; i++) {
 			table.getColumn (i).pack ();
@@ -137,22 +145,25 @@ public class I02 {
 		//table.setSize (table.computeSize (SWT.DEFAULT, 200));
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
 		
-		final Button bLeer = new Button(cDer, SWT.PUSH);
+		final Button bLeer = new Button(cMensajes, SWT.PUSH);
 		bLeer.setText("Leer");
 		bLeer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		final Button bResponder = new Button(cDer, SWT.PUSH);
+		final Button bResponder = new Button(cMensajes, SWT.PUSH);
 		bResponder.setText("Responder");
 		bResponder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		final Button bEliminar = new Button(cDer, SWT.PUSH);
+		final Button bEliminar = new Button(cMensajes, SWT.PUSH);
 		bEliminar.setText("Eliminar");
 		bEliminar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		final Button bMarcar = new Button(cDer, SWT.PUSH);
+		final Button bMarcar = new Button(cMensajes, SWT.PUSH);
 		bMarcar.setText("Marcar");
 		bMarcar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
+		tabItem1.setControl(cCuadrantes);
+		tabItem2.setControl(cMensajes);
+		
 		// Ajustar el tamaño de la ventana al contenido
 		shell.pack();
 		// Mostrar ventana centrada en la pantalla
