@@ -115,6 +115,7 @@ public class I02 {
 		lCuadrantesDer.numColumns = 4;
 		cCuadrantesDer.setLayout(lCuadrantesDer);
 		
+		
 		Label lCuadr = new Label (cCuadrantesDer, SWT.CENTER);
 		lCuadr.setText("Aquí se mostrarán los cuadrantes");
 		lCuadr.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 4, 1));
@@ -265,9 +266,12 @@ public class I02 {
 		bEmplBaja.setText("Dar de baja");
 		bEmplBaja.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 				
+		// Asignar cada panel a su tab 
 		tabItemCuadrantes.setControl(cCuadrantes);
 		tabItemMensajes.setControl(cMensajes);
 		tabItemEmpleados.setControl(cEmpleados);
+		
+		
 		
 		// Ajustar el tamaño de la ventana al contenido
 		shell.pack();
