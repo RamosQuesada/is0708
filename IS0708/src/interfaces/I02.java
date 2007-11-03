@@ -138,18 +138,19 @@ public class I02 {
 		Table tablaMensajes = new Table (cMensajes, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
 		tablaMensajes.setLinesVisible (true);
 		tablaMensajes.setHeaderVisible (true);
-		String[] titles = {" ", "De", "Asunto", "Mensaje"};
+		String[] titles = {" ", "De", "Asunto", "Mensaje", "Fecha"};
 		for (int i=0; i<titles.length; i++) {
 			TableColumn column = new TableColumn (tablaMensajes, SWT.NONE);
 			column.setText (titles [i]);
 		}	
-		int count = 12;
-		for (int i=0; i<count; i++) {
+		for (int i=0; i<12; i++) {
 			TableItem tItem = new TableItem (tablaMensajes, SWT.NONE);
 			tItem.setImage(ico_mens);
 			tItem.setText (1, "Remitente");
 			tItem.setText (2, "Asunto del mensaje");
 			tItem.setText (3, "Aquí va lo que quepa del principio del mensaje");
+			tItem.setText (4, "25/10/2007");
+			
 		}
 		for (int i=0; i<titles.length; i++) {
 			tablaMensajes.getColumn (i).pack ();
@@ -157,44 +158,90 @@ public class I02 {
 		//table.setSize (table.computeSize (SWT.DEFAULT, 200));
 		tablaMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
 		
-		final Button bLeer = new Button(cMensajes, SWT.PUSH);
-		bLeer.setText("Leer");
-		bLeer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		final Button bMensNuevo = new Button(cMensajes, SWT.PUSH);
+		bMensNuevo.setText("Nuevo");
+		bMensNuevo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		final Button bResponder = new Button(cMensajes, SWT.PUSH);
-		bResponder.setText("Responder");
-		bResponder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		final Button bMensResponder = new Button(cMensajes, SWT.PUSH);
+		bMensResponder.setText("Responder");
+		bMensResponder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		final Button bEliminar = new Button(cMensajes, SWT.PUSH);
-		bEliminar.setText("Eliminar");
-		bEliminar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		final Button bMensEliminar = new Button(cMensajes, SWT.PUSH);
+		bMensEliminar.setText("Eliminar");
+		bMensEliminar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		final Button bMarcar = new Button(cMensajes, SWT.PUSH);
-		bMarcar.setText("Marcar");
-		bMarcar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		final Button bMensMarcar = new Button(cMensajes, SWT.PUSH);
+		bMensMarcar.setText("Marcar");
+		bMensMarcar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
 		final Composite cEmpleados = new Composite (tabFolder, SWT.NONE);
-		cMensajes.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
+		cMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		GridLayout lCEmpleados = new GridLayout();
-		lCEmpleados.numColumns = 4;
-		lCEmpleados.makeColumnsEqualWidth = true;
+		lCEmpleados.numColumns = 2;
 		cEmpleados.setLayout(lCEmpleados);
 		
-		Table tablaEmpleados = new Table (cEmpleados, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
+		final Composite cEmplIzq = new Composite (cEmpleados, SWT.NONE);
+		cEmplIzq.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
+		GridLayout lCEmplIzq = new GridLayout();
+		lCEmplIzq.numColumns = 2;
+		//lCEmplIzq.makeColumnsEqualWidth = true;
+		cEmplIzq.setLayout(lCEmplIzq);
+		
+		Label lEmplFiltro = new Label(cEmplIzq, SWT.NONE);
+		lEmplFiltro.setText("Filtro");
+		lEmplFiltro.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
+		
+		Label lEmplNombre = new Label(cEmplIzq, SWT.NONE);
+		lEmplNombre.setText("Nombre");
+		lEmplNombre.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		
+		Text tEmplNombre = new Text(cEmplIzq, SWT.BORDER);
+		tEmplNombre.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		
+		Label lEmplNVend = new Label(cEmplIzq, SWT.NONE);
+		lEmplNVend.setText("N. vend");
+		lEmplNVend.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		
+		Text tEmplNVend = new Text(cEmplIzq, SWT.BORDER);
+		tEmplNVend.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+
+		Label lEmplDpto = new Label(cEmplIzq, SWT.NONE);
+		lEmplDpto.setText("Dpto.");
+		lEmplDpto.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		
+		Text tEmplDpto = new Text(cEmplIzq, SWT.BORDER);
+		tEmplDpto.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+
+		Label lEmplContr = new Label(cEmplIzq, SWT.NONE);
+		lEmplContr.setText("Contrato");
+		lEmplContr.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		
+		Combo cEmplContr = new Combo (cEmplIzq, SWT.BORDER);
+		cEmplContr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+
+		final Composite cEmplDer = new Composite (cEmpleados, SWT.NONE);
+		cEmplDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		GridLayout lCEmplDer = new GridLayout();
+		lCEmplDer.numColumns = 4;
+		lCEmplDer.makeColumnsEqualWidth = true;
+		cEmplDer.setLayout(lCEmplDer);
+
+		Table tablaEmpleados = new Table (cEmplDer, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
 		tablaEmpleados.setLinesVisible (true);
 		tablaEmpleados.setHeaderVisible (true);
-		String[] titles2 = {" ", "Nº vend", "Nombre", "Departamento"};
+		String[] titles2 = {" ", "Nº vend", "Nombre", "Departamento", "Contrato",""};
 		for (int i=0; i<titles2.length; i++) {
 			TableColumn column = new TableColumn (tablaEmpleados, SWT.NONE);
 			column.setText (titles2 [i]);
 		}	
-		count = 12;
-		for (int i=0; i<count; i++) {
+		for (int i=0; i<10; i++) {
 			TableItem tItem = new TableItem (tablaEmpleados, SWT.NONE);
 			tItem.setImage(ico_chica);
 			tItem.setText (1, "56468546");
 			tItem.setText (2, "Mandarina González");
 			tItem.setText (3, "Discos");
+			tItem.setText (4, "6:40h");
+			tItem.setImage(5, ico_mens);
 		}
 		for (int i=0; i<titles2.length; i++) {
 			tablaEmpleados.getColumn (i).pack ();
@@ -202,19 +249,19 @@ public class I02 {
 		//table.setSize (table.computeSize (SWT.DEFAULT, 200));
 		tablaEmpleados.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
 		
-		final Button bEmplNuevo = new Button(cEmpleados, SWT.PUSH);
+		final Button bEmplNuevo = new Button(cEmplDer, SWT.PUSH);
 		bEmplNuevo.setText("Nuevo");
 		bEmplNuevo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		final Button bEmplVer = new Button(cEmpleados, SWT.PUSH);
+		final Button bEmplVer = new Button(cEmplDer, SWT.PUSH);
 		bEmplVer.setText("Ver");
 		bEmplVer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		final Button bEmplEditar = new Button(cEmpleados, SWT.PUSH);
+		final Button bEmplEditar = new Button(cEmplDer, SWT.PUSH);
 		bEmplEditar.setText("Editar");
 		bEmplEditar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		final Button bEmplBaja = new Button(cEmpleados, SWT.PUSH);
+		final Button bEmplBaja = new Button(cEmplDer, SWT.PUSH);
 		bEmplBaja.setText("Dar de baja");
 		bEmplBaja.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 				
