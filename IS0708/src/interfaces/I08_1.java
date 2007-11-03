@@ -27,6 +27,9 @@ public class I08_1 {
 		final Display display = new Display ();
 		final Shell shell = new Shell (display);
 
+		final Image ico_chico = new Image(display, I01.class.getResourceAsStream("ico_chico.gif"));
+		final Image ico_chica = new Image(display, I01.class.getResourceAsStream("ico_chica.gif"));
+		
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 2;
 		//layout.makeColumnsEqualWidth = true;
@@ -56,13 +59,13 @@ public class I08_1 {
 		final Label lAnoNac			= new Label(grupoIzq, SWT.LEFT);
 		final Text  tAnoNac			= new Text (grupoIzq, SWT.BORDER);
 		final Label lSexo			= new Label(grupoIzq, SWT.LEFT);
-		final Combo cSexo			= new Combo(grupoIzq, SWT.BORDER);
+		final Combo cSexo			= new Combo(grupoIzq, SWT.BORDER | SWT.READ_ONLY);
 		final Label lContrato		= new Label(grupoDer, SWT.LEFT);
-		final Combo cContrato		= new Combo(grupoDer, SWT.BORDER);
+		final Combo cContrato		= new Combo(grupoDer, SWT.BORDER | SWT.READ_ONLY);
 		final Label lExperiencia	= new Label(grupoDer, SWT.LEFT);
-		final Combo cExperiencia	= new Combo(grupoDer, SWT.BORDER);
+		final Combo cExperiencia	= new Combo(grupoDer, SWT.BORDER | SWT.READ_ONLY);
 		final Label lDepto			= new Label(grupoDer, SWT.LEFT);
-		final Combo cDepto			= new Combo(grupoDer, SWT.BORDER);
+		final Combo cDepto			= new Combo(grupoDer, SWT.BORDER | SWT.READ_ONLY);
 		final Button bAceptar		= new Button(shell, SWT.PUSH);
 		final Button bCancelar		= new Button(shell, SWT.PUSH);
 		lNVend.setText("Vendedor");
@@ -103,24 +106,37 @@ public class I08_1 {
 		grupoIzq.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
 		grupoDer.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
 		
+		cSexo.setItems (new String [] {"Femenino", "Masculino",});
+		cContrato.setItems (new String [] {"6:40", "Días sueltos",});
+		cExperiencia.setItems (new String [] {"Iniciación", "Profesional",});
+		cDepto.setItems (new String [] {"Cocina", "Baño",});
+		cSexo.select(0);
+		cContrato.select(0);
+		cExperiencia.select(0);
+		cDepto.select(0);
 		
-		// Dos iconos de tamaño diferente para SO's que los necesiten
-		Image icoGr = new Image(display, I01.class.getResourceAsStream("icoGr.gif"));
-		Image icoPq = new Image(display, I01.class.getResourceAsStream("icoPq.gif"));
-		shell.setImages(new Image[] {icoPq,icoGr});
+		shell.setImage(ico_chica);
 		shell.setText("Nuevo empleado");
 		shell.setVisible(true);
-		
-		
 		shell.setLayout(layout);
 		
-
 		bAceptar.setText("Aceptar");
 		bAceptar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		
 		bCancelar.setText("Cancelar");
 		bCancelar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 
+		SelectionAdapter sacSexo = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e){
+				if (cSexo.getSelectionIndex()==0)
+					shell.setImage(ico_chica);
+				else
+					shell.setImage(ico_chico);
+			}
+		};
+		
+		cSexo.addSelectionListener(sacSexo);
+		
 		// Un SelectionAdapter con lo que hace el botón bCancelar
 		SelectionAdapter sabCancelar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
