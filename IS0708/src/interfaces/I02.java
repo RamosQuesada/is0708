@@ -29,6 +29,8 @@ public class I02 {
 		Image ico_mens_l = new Image(display, I02.class.getResourceAsStream("ico_mens1_v.gif"));
 		Image ico_mens = new Image(display, I02.class.getResourceAsStream("ico_mens2_v.gif"));
 		Image ico_cuadrante = new Image(display, I02.class.getResourceAsStream("ico_cuadrante.gif"));
+		Image ico_chico = new Image(display, I02.class.getResourceAsStream("ico_chico.gif"));
+		Image ico_chica = new Image(display, I02.class.getResourceAsStream("ico_chica.gif"));
 		
 		
 		// Dos iconos de tamaño diferente para SO's que los necesiten
@@ -86,12 +88,15 @@ public class I02 {
 
 		final TabFolder tabFolder = new TabFolder (shell, SWT.NONE);
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		TabItem tabItem1 = new TabItem (tabFolder, SWT.NONE);
-		tabItem1.setText ("Cuadrantes");
-		tabItem1.setImage(ico_cuadrante);
-		TabItem tabItem2 = new TabItem (tabFolder, SWT.NONE);
-		tabItem2.setText ("Mensajes");
-		tabItem2.setImage(ico_mens_l);
+		TabItem tabItemCuadrantes = new TabItem (tabFolder, SWT.NONE);
+		tabItemCuadrantes.setText ("Cuadrantes");
+		tabItemCuadrantes.setImage(ico_cuadrante);
+		TabItem tabItemMensajes = new TabItem (tabFolder, SWT.NONE);
+		tabItemMensajes.setText ("Mensajes");
+		tabItemMensajes.setImage(ico_mens_l);
+		TabItem tabItemEmpleados = new TabItem (tabFolder, SWT.NONE);
+		tabItemEmpleados.setText ("Empleados");
+		tabItemEmpleados.setImage(ico_chico);
 		
 		final Composite cCuadrantes = new Composite (tabFolder, SWT.NONE);
 		cCuadrantes.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
@@ -106,9 +111,13 @@ public class I02 {
 		
 		final Composite cCuadrantesDer = new Composite (cCuadrantes, SWT.BORDER);
 		cCuadrantesDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 2));
-		GridLayout lCDer = new GridLayout();
-		lCDer.numColumns = 4;
-		cCuadrantesDer.setLayout(lCDer);
+		GridLayout lCuadrantesDer = new GridLayout();
+		lCuadrantesDer.numColumns = 4;
+		cCuadrantesDer.setLayout(lCuadrantesDer);
+		
+		Label lCuadr = new Label (cCuadrantesDer, SWT.CENTER);
+		lCuadr.setText("Aquí se mostrarán los cuadrantes");
+		lCuadr.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 4, 1));
 
 		final DateTime calendario = new DateTime (cCuadrantes, SWT.CALENDAR);
 		calendario.addSelectionListener (new SelectionAdapter () {
@@ -119,34 +128,34 @@ public class I02 {
 		});
 		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1));
 						
-		final Composite cMensajes = new Composite (tabFolder, SWT.BORDER);
+		final Composite cMensajes = new Composite (tabFolder, SWT.NONE);
 		cMensajes.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
 		GridLayout lCMensajes = new GridLayout();
 		lCMensajes.numColumns = 4;
 		lCMensajes.makeColumnsEqualWidth = true;
 		cMensajes.setLayout(lCMensajes);
 		
-		Table table = new Table (cMensajes, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
-		table.setLinesVisible (true);
-		table.setHeaderVisible (true);
+		Table tablaMensajes = new Table (cMensajes, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
+		tablaMensajes.setLinesVisible (true);
+		tablaMensajes.setHeaderVisible (true);
 		String[] titles = {" ", "De", "Asunto", "Mensaje"};
 		for (int i=0; i<titles.length; i++) {
-			TableColumn column = new TableColumn (table, SWT.NONE);
+			TableColumn column = new TableColumn (tablaMensajes, SWT.NONE);
 			column.setText (titles [i]);
 		}	
 		int count = 12;
 		for (int i=0; i<count; i++) {
-			TableItem tItem = new TableItem (table, SWT.NONE);
+			TableItem tItem = new TableItem (tablaMensajes, SWT.NONE);
 			tItem.setImage(ico_mens);
 			tItem.setText (1, "Remitente");
 			tItem.setText (2, "Asunto del mensaje");
 			tItem.setText (3, "Aquí va lo que quepa del principio del mensaje");
 		}
 		for (int i=0; i<titles.length; i++) {
-			table.getColumn (i).pack ();
+			tablaMensajes.getColumn (i).pack ();
 		}	
 		//table.setSize (table.computeSize (SWT.DEFAULT, 200));
-		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
+		tablaMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
 		
 		final Button bLeer = new Button(cMensajes, SWT.PUSH);
 		bLeer.setText("Leer");
@@ -164,8 +173,54 @@ public class I02 {
 		bMarcar.setText("Marcar");
 		bMarcar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		tabItem1.setControl(cCuadrantes);
-		tabItem2.setControl(cMensajes);
+		final Composite cEmpleados = new Composite (tabFolder, SWT.NONE);
+		cMensajes.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
+		GridLayout lCEmpleados = new GridLayout();
+		lCEmpleados.numColumns = 4;
+		lCEmpleados.makeColumnsEqualWidth = true;
+		cEmpleados.setLayout(lCEmpleados);
+		
+		Table tablaEmpleados = new Table (cEmpleados, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
+		tablaEmpleados.setLinesVisible (true);
+		tablaEmpleados.setHeaderVisible (true);
+		String[] titles2 = {" ", "Nº vend", "Nombre", "Departamento"};
+		for (int i=0; i<titles2.length; i++) {
+			TableColumn column = new TableColumn (tablaEmpleados, SWT.NONE);
+			column.setText (titles2 [i]);
+		}	
+		count = 12;
+		for (int i=0; i<count; i++) {
+			TableItem tItem = new TableItem (tablaEmpleados, SWT.NONE);
+			tItem.setImage(ico_chica);
+			tItem.setText (1, "56468546");
+			tItem.setText (2, "Mandarina González");
+			tItem.setText (3, "Discos");
+		}
+		for (int i=0; i<titles2.length; i++) {
+			tablaEmpleados.getColumn (i).pack ();
+		}	
+		//table.setSize (table.computeSize (SWT.DEFAULT, 200));
+		tablaEmpleados.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
+		
+		final Button bEmplNuevo = new Button(cEmpleados, SWT.PUSH);
+		bEmplNuevo.setText("Nuevo");
+		bEmplNuevo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+
+		final Button bEmplVer = new Button(cEmpleados, SWT.PUSH);
+		bEmplVer.setText("Ver");
+		bEmplVer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		
+		final Button bEmplEditar = new Button(cEmpleados, SWT.PUSH);
+		bEmplEditar.setText("Editar");
+		bEmplEditar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+
+		final Button bEmplBaja = new Button(cEmpleados, SWT.PUSH);
+		bEmplBaja.setText("Dar de baja");
+		bEmplBaja.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+				
+		tabItemCuadrantes.setControl(cCuadrantes);
+		tabItemMensajes.setControl(cMensajes);
+		tabItemEmpleados.setControl(cEmpleados);
 		
 		// Ajustar el tamaño de la ventana al contenido
 		shell.pack();
