@@ -18,10 +18,14 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
 
 public class I01 {
+	private Shell padre = null;
 
-	public static void main(String[] IS0708) {
-		final Display display = new Display ();
-		final Shell shell = new Shell (display, SWT.CLOSE);
+	public I01(Shell padre) {
+		this.padre = padre;
+		mostrarVentana();
+	}
+	public void mostrarVentana() {
+		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 
 		final Label lUsuario  = new Label(shell, SWT.LEFT);
 		final Text  tUsuario  = new Text(shell, SWT.BORDER);
@@ -33,8 +37,8 @@ public class I01 {
 		final Button bCancelar = new Button(shell, SWT.PUSH);
 
 		// Dos iconos de tamaño diferente para SO's que los necesiten
-		Image icoGr = new Image(display, I01.class.getResourceAsStream("icoGr.gif"));
-		Image icoPq = new Image(display, I01.class.getResourceAsStream("icoPq.gif"));
+		Image icoGr = new Image(padre.getDisplay(), I01.class.getResourceAsStream("icoGr.gif"));
+		Image icoPq = new Image(padre.getDisplay(), I01.class.getResourceAsStream("icoPq.gif"));
 		shell.setImages(new Image[] {icoPq,icoGr});
 		shell.setText("Identificación");
 		shell.setVisible(true);
@@ -90,16 +94,8 @@ public class I01 {
 		shell.setDefaultButton(bAceptar);
 		// Ajustar el tamaño de la ventana al contenido
 		shell.pack();
-		// Mostrar ventana centrada en la pantalla
-		shell.setLocation(display.getBounds().width/2 - shell.getSize().x/2, display.getBounds().height/2 - shell.getSize().y/2);
+		// Mostrar ventana centrada sobre el padre
+		shell.setLocation(padre.getBounds().width/2 + padre.getBounds().x - shell.getSize().x/2, padre.getBounds().height/2 + padre.getBounds().y - shell.getSize().y/2);
 		shell.open();
-
-		// Este bucle mantiene la ventana abierta
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-		display.dispose();
 	}
 }

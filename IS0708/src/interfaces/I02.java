@@ -16,13 +16,29 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
+import interfaces.I01;
 
 public class I02 {
+	private static Display display;
+	private Shell shell;
 
-	public static void main(String[] IS0708) {
-		final Display display = new Display ();
-		final Shell shell = new Shell (display);
-
+	public static void main(String[] args) {
+		// Este bucle mantiene la ventana abierta
+		display = new Display ();
+		I02 estaClase = new I02();
+		estaClase.crearVentana();
+		estaClase.shell.open();
+		while (!estaClase.shell.isDisposed()) {
+			if (!display.readAndDispatch()) {
+				display.sleep();
+			}
+		}
+		display.dispose();
+	}
+	
+	
+	private void crearVentana() {
+		shell = new Shell (display);
 		Image icoGr = new Image(display, I02.class.getResourceAsStream("icoGr.gif"));
 		Image icoPq = new Image(display, I02.class.getResourceAsStream("icoPq.gif"));
 		Image ico_imprimir = new Image(display, I02.class.getResourceAsStream("ico_imprimir.gif"));
@@ -31,7 +47,6 @@ public class I02 {
 		Image ico_cuadrante = new Image(display, I02.class.getResourceAsStream("ico_cuadrante.gif"));
 		Image ico_chico = new Image(display, I02.class.getResourceAsStream("ico_chico.gif"));
 		Image ico_chica = new Image(display, I02.class.getResourceAsStream("ico_chica.gif"));
-		
 		
 		// Dos iconos de tamaño diferente para SO's que los necesiten
 		shell.setImages(new Image[] {icoPq,icoGr});
@@ -125,6 +140,7 @@ public class I02 {
 			public void widgetSelected (SelectionEvent e) {
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
 				System.out.println ("Fecha cambiada a "+ String.valueOf(calendario.getDay()) + " de " + meses[calendario.getMonth()]+ " de " + String.valueOf(calendario.getYear()));
+				new I01(shell);
 			}
 		});
 		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1));
@@ -289,12 +305,6 @@ public class I02 {
 			}
 		});
 
-		// Este bucle mantiene la ventana abierta
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-		display.dispose();
 	}
 }
+	
