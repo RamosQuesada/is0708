@@ -17,6 +17,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
 import interfaces.I01;
+import interfaces.I08_1;
 
 public class I02 {
 	private static Display display;
@@ -51,7 +52,6 @@ public class I02 {
 		// Dos iconos de tamaño diferente para SO's que los necesiten
 		shell.setImages(new Image[] {icoPq,icoGr});
 		shell.setText("Turno-matic");
-		shell.setVisible(true);
 
 		// Una barra de menús
 		Menu barra = new Menu (shell, SWT.BAR);
@@ -140,7 +140,6 @@ public class I02 {
 			public void widgetSelected (SelectionEvent e) {
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
 				System.out.println ("Fecha cambiada a "+ String.valueOf(calendario.getDay()) + " de " + meses[calendario.getMonth()]+ " de " + String.valueOf(calendario.getYear()));
-				new I01(shell);
 			}
 		});
 		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1));
@@ -270,6 +269,13 @@ public class I02 {
 		bEmplNuevo.setText("Nuevo");
 		bEmplNuevo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
+		bEmplNuevo.addSelectionListener (new SelectionAdapter () {
+			public void widgetSelected (SelectionEvent e) {
+				I08_1 ventana = new I08_1(shell);
+			}
+		});
+		
+		
 		final Button bEmplVer = new Button(cEmplDer, SWT.PUSH);
 		bEmplVer.setText("Ver");
 		bEmplVer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -298,7 +304,7 @@ public class I02 {
 		// Preguntar antes de salir
 		shell.addListener (SWT.Close, new Listener () {
 			public void handleEvent (Event event) {
-				MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
+				MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO | SWT.ICON_WARNING);
 				messageBox.setText ("Mensaje");
 				messageBox.setMessage ("¿Desea cerrar la aplicación?");
 				event.doit = messageBox.open () == SWT.YES;

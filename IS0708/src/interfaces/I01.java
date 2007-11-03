@@ -41,7 +41,6 @@ public class I01 {
 		Image icoPq = new Image(padre.getDisplay(), I01.class.getResourceAsStream("icoPq.gif"));
 		shell.setImages(new Image[] {icoPq,icoGr});
 		shell.setText("Identificación");
-		shell.setVisible(true);
 		
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 8;

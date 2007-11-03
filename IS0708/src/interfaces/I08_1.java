@@ -22,13 +22,18 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 public class I08_1 {
+	private Shell padre = null;
 
-	public static void main(String[] IS0708) {
-		final Display display = new Display ();
-		final Shell shell = new Shell (display);
+	public I08_1(Shell padre) {
+		this.padre = padre;
+		mostrarVentana();
+	}
+	
+	public void mostrarVentana() {
+		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 
-		final Image ico_chico = new Image(display, I01.class.getResourceAsStream("ico_chico.gif"));
-		final Image ico_chica = new Image(display, I01.class.getResourceAsStream("ico_chica.gif"));
+		final Image ico_chico = new Image(padre.getDisplay(), I01.class.getResourceAsStream("ico_chico.gif"));
+		final Image ico_chica = new Image(padre.getDisplay(), I01.class.getResourceAsStream("ico_chica.gif"));
 		
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 2;
@@ -115,9 +120,10 @@ public class I08_1 {
 		cExperiencia.select(0);
 		cDepto.select(0);
 		
+		shell.setImage(ico_chico);
+
 		shell.setImage(ico_chica);
 		shell.setText("Nuevo empleado");
-		shell.setVisible(true);
 		shell.setLayout(layout);
 		
 		bAceptar.setText("Aceptar");
@@ -157,7 +163,7 @@ public class I08_1 {
 				else shell.dispose();
 			}
 		};
-
+		
 		bCancelar.addSelectionListener(sabCancelar);
 		bAceptar.addSelectionListener(sabAceptar);
 
@@ -165,16 +171,8 @@ public class I08_1 {
 		shell.setDefaultButton(bAceptar);
 		// Ajustar el tamaño de la ventana al contenido
 		shell.pack();
-		// Mostrar ventana centrada en la pantalla
-		shell.setLocation(display.getBounds().width/2 - shell.getSize().x/2, display.getBounds().height/2 - shell.getSize().y/2);
+		// Mostrar ventana centrada sobre el padre
+		shell.setLocation(padre.getBounds().width/2 + padre.getBounds().x - shell.getSize().x/2, padre.getBounds().height/2 + padre.getBounds().y - shell.getSize().y/2);
 		shell.open();
-
-		// Este bucle mantiene la ventana abierta
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-		display.dispose();
 	}
 }
