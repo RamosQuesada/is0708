@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
@@ -154,8 +155,10 @@ public class I08_1 {
 		SelectionAdapter sabAceptar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				if (tNVend.getText().length()!=8) {
-					I11 ventana = new I11();
-					ventana.mostrarMensaje("El número de vendedor debe tener 8 cifras.");
+					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO | SWT.ICON_INFORMATION);
+					messageBox.setText ("Mensaje");
+					messageBox.setMessage ("El número de vendedor debe tener 8 cifras.");
+					e.doit = messageBox.open () == SWT.YES;
 					// Enfocar tNVend y seleccionar texto
 					tNVend.setFocus();
 					tNVend.selectAll();

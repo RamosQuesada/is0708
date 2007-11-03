@@ -303,11 +303,11 @@ public class I02 {
 		
 		// Preguntar antes de salir
 		shell.addListener (SWT.Close, new Listener () {
-			public void handleEvent (Event event) {
+			public void handleEvent (Event e) {
 				MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO | SWT.ICON_WARNING);
 				messageBox.setText ("Mensaje");
 				messageBox.setMessage ("¿Desea cerrar la aplicación?");
-				event.doit = messageBox.open () == SWT.YES;
+				e.doit = messageBox.open () == SWT.YES;
 			}
 		});
 

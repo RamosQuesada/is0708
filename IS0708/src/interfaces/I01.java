@@ -76,8 +76,10 @@ public class I01 {
 		SelectionAdapter sabAceptar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				if (tUsuario.getText().length()!=8) {
-					I11 ventana = new I11();
-					ventana.mostrarMensaje("El número de vendedor debe tener 8 cifras.");
+					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO | SWT.ICON_INFORMATION);
+					messageBox.setText ("Mensaje");
+					messageBox.setMessage ("El número de vendedor debe tener 8 cifras.");
+					e.doit = messageBox.open () == SWT.YES;
 					// Enfocar tUsuario y seleccionar texto
 					tUsuario.setFocus();
 					tUsuario.selectAll();
