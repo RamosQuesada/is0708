@@ -80,7 +80,6 @@ public class I02 {
 		itemSalir.setAccelerator (SWT.MOD1 + 'S');
 		
 	}
-	
 	private void crearCompositeCuadrantes (Composite c) {
 		c.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
 		GridLayout lCc = new GridLayout();
@@ -113,7 +112,6 @@ public class I02 {
 		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1));
 
 	}
-
 	private void crearCompositeMensajes (Composite c) {
 		c.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
 		GridLayout lCc = new GridLayout();
@@ -161,7 +159,6 @@ public class I02 {
 		bMensMarcar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
 	}
-	
 	private void crearCompositeEmpleados(Composite c) {
 		c.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		GridLayout lCc = new GridLayout();
@@ -246,8 +243,7 @@ public class I02 {
 				I08_1 ventana = new I08_1(shell);
 			}
 		});
-		
-		
+				
 		final Button bEmplVer = new Button(cEmplDer, SWT.PUSH);
 		bEmplVer.setText("Ver");
 		bEmplVer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -260,7 +256,6 @@ public class I02 {
 		bEmplBaja.setText("Dar de baja");
 		bEmplBaja.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 	}
-	
 	private void crearCompositeDepartamentos(Composite c) {
 		c.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		GridLayout lCc = new GridLayout();
@@ -274,7 +269,6 @@ public class I02 {
 		Combo cDepartamentos = new Combo(c, SWT.BORDER | SWT.READ_ONLY);
 		cDepartamentos.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, true, 1, 1));
 	}
-	
 	private void crearVistaJefe() {
 		final TabFolder tabFolder = new TabFolder (shell, SWT.NONE);
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
