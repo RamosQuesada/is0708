@@ -1,8 +1,8 @@
 /*******************************************************************************
- * INTERFAZ I-02 :: Ventana principal
+ * INTERFAZ I-02 :: Ventana principal - Jefe
  *   por Daniel Dionne
  *   
- * Interfaz principal de la aplicación.
+ * Interfaz principal de la aplicación, vista de jefe.
  * ver 0.1
  *******************************************************************************/
 
@@ -10,14 +10,18 @@
 package interfaces;
 
 import org.eclipse.swt.*;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
+
 import interfaces.I01;
 import interfaces.I08_1;
+import interfaces.I02_cuadr;
 
 public class I02 {
 	private static Display display;
@@ -83,23 +87,30 @@ public class I02 {
 	private void crearCompositeCuadrantes (Composite c) {
 		c.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
 		GridLayout lCc = new GridLayout();
-		lCc.numColumns = 4;
+		lCc.numColumns = 5;
 		//lCc.makeColumnsEqualWidth = true;
 		c.setLayout(lCc);
+		Label lDepartamentos = new Label(c, SWT.NONE);
+		lDepartamentos.setText("Dpto.");
+		lDepartamentos.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		
-		final Label lCalendario = new Label (c, SWT.LEFT);
-		lCalendario.setText("Calendario");
-		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+		Combo cDepartamentos = new Combo(c, SWT.BORDER | SWT.READ_ONLY);
+		cDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		cDepartamentos.setItems(new String[] {"Baños", "Cocinas"});
+		cDepartamentos.select(0);
 		
-		final Composite cCuadrantesDer = new Composite (c, SWT.BORDER);
-		cCuadrantesDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 2));
+		Composite cCuadrantesDer = new Composite (c, SWT.BORDER);
+		cCuadrantesDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 3));
 		GridLayout lCuadrantesDer = new GridLayout();
 		lCuadrantesDer.numColumns = 4;
 		cCuadrantesDer.setLayout(lCuadrantesDer);
-		
-		
+
+		Label lCalendario = new Label (c, SWT.LEFT);
+		lCalendario.setText("Calendario");
+		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1));
+
 		Label lCuadr = new Label (cCuadrantesDer, SWT.CENTER);
-		lCuadr.setText("Aquí se mostrarán los cuadrantes");
+		lCuadr.setText("Aquí se muestran los cuadrantes");
 		lCuadr.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 4, 1));
 
 		final DateTime calendario = new DateTime (c, SWT.CALENDAR);
@@ -109,7 +120,7 @@ public class I02 {
 				System.out.println ("Fecha cambiada a "+ String.valueOf(calendario.getDay()) + " de " + meses[calendario.getMonth()]+ " de " + String.valueOf(calendario.getYear()));
 			}
 		});
-		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1));
+		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 2, 1));
 
 	}
 	private void crearCompositeMensajes (Composite c) {
@@ -214,7 +225,7 @@ public class I02 {
 		Table tablaEmpleados = new Table (cEmplDer, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
 		tablaEmpleados.setLinesVisible (true);
 		tablaEmpleados.setHeaderVisible (true);
-		String[] titles2 = {" ", "Nº vend", "Nombre", "Departamento", "Contrato",""};
+		String[] titles2 = {" ", "Nº vend", "Nombre", "Departamento", "Contrato","Teléfono",""};
 		for (int i=0; i<titles2.length; i++) {
 			TableColumn column = new TableColumn (tablaEmpleados, SWT.NONE);
 			column.setText (titles2 [i]);
@@ -226,7 +237,8 @@ public class I02 {
 			tItem.setText (2, "Mandarina González");
 			tItem.setText (3, "Discos");
 			tItem.setText (4, "6:40h");
-			tItem.setImage(5, ico_mens);
+			tItem.setText (5, "911234567");
+			tItem.setImage(6, ico_mens);
 		}
 		for (int i=0; i<titles2.length; i++) {
 			tablaEmpleados.getColumn (i).pack ();
@@ -264,10 +276,10 @@ public class I02 {
 
 		Label lDepartamentos = new Label(c, SWT.LEFT);
 		lDepartamentos.setText("Departamento");
-		lDepartamentos.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
+		lDepartamentos.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		
 		Combo cDepartamentos = new Combo(c, SWT.BORDER | SWT.READ_ONLY);
-		cDepartamentos.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+		cDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		cDepartamentos.setItems(new String[] {"Baños", "Cocinas"});
 		cDepartamentos.select(0);
 		
