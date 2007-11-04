@@ -4,6 +4,7 @@ import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.events.*;
+import java.util.ArrayList;
 
 public class I02_cuadr {
 
@@ -12,7 +13,7 @@ public class I02_cuadr {
 	int alto;
 	GC gc;
 	Color fg;
-	Franja f;
+	ArrayList<Franja> franjas;
 
 	public class Franja {
 		int inicio;
@@ -30,11 +31,13 @@ public class I02_cuadr {
 			cambiandoFin = false;
 		}
 		public void dibujarFranja () {
-			gc.setLineWidth(2);
-			cambiarRelleno(190,234,140);
-			cambiarPincel(150,150,65);
-			gc.fillRectangle(inicio,10,fin-inicio,15);
-			gc.drawRectangle(inicio,10,fin-inicio,15);
+			gc.setLineWidth(1);
+			cambiarPincel(0,145,3);
+			cambiarRelleno(100,100,100);
+			gc.fillRoundRectangle(inicio+2,10+2,fin-inicio,15,10,10);
+			cambiarRelleno(104,228,85);
+			gc.fillRoundRectangle(inicio,10,fin-inicio,15,8,8);
+			gc.drawRoundRectangle(inicio,10,fin-inicio,15,8,8);
 		}
 		public Boolean contienePunto(int x, int y) {
 			if (x>inicio+3 && x<fin-3) mueve = true;
@@ -64,16 +67,6 @@ public class I02_cuadr {
 	private void cambiarRelleno(int r, int g, int b) {
 		gc.setBackground(new Color(c.getDisplay(),r, g, b));
 	}
-	/*
-	 * Qué debería hacer esto:
-	 * - Guardar una lista de rectángulos que correspondan con las horas
-	 * - Al pasar el ratón por encima:
-	 * 		- comprobar si está dentro de algún rectángulo: cursor = mano
-	 * 		- comprobar si está en el borde de algún rectángulo: cursor = resize
-	 * - Al arrastrar el ratón, cambiar los parámetros del rectángulo sobre el que está
-	 *   según el movimiento del ratón.
-	 * - Redibujar la lista de rectángulos a cada cambio.
-	 */
 	
 	public void redibujar(Franja f) {
 		c.redraw(0, 9, ancho, 18, false);
@@ -97,11 +90,17 @@ public class I02_cuadr {
 	}
 	public I02_cuadr (Composite c) {
 		this.c = c;
-		f = new Franja(20, 60);
+		franjas = new ArrayList();
+		Franja f1 = new Franja(20, 80);
+		Franja f2 = new Franja(150, 200);
+		franjas.add(f1);
+		franjas.add(f2);
 		c.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent event) {
 				gc = event.gc;
-				f.dibujarFranja();
+				gc.setAntialias(SWT.ON);
+				for (int i=0; i<franjas.size(); i++)
+				  franjas.get(i).dibujarFranja();
 			}
 		});
 		c.addControlListener(new ControlListener() {
@@ -113,40 +112,53 @@ public class I02_cuadr {
 		c.addMouseMoveListener(new MouseMoveListener() {
 			public void mouseMove(MouseEvent e){
 				// Comprobar si el cursor está en alguna franja
-				// Esto habrá que hacerlo para la lista de franjas, no sólo para una.
-				if (f.moviendo) {
-					int ancho = f.fin - f.inicio;
-					f.inicio = e.x-ancho/2;
-					f.fin    = e.x+ancho/2;
-					redibujar(f);
-				}
-				else if (f.cambiandoInicio) {
-					f.inicio = e.x;
-					redibujar(f);
-				}
-				else if (f.cambiandoFin) {
-					f.fin = e.x;
-					redibujar(f);
-				}
-				else
-					if (f.contienePunto    (e.x, e.y)) {
-						cursor(1);
+				Franja f;
+				Boolean encontrado = false;
+				int i = 0;
+				while (!encontrado && i<franjas.size()) {
+					f = franjas.get(i);
+				
+					if (f.moviendo) {
+						int ancho = f.fin - f.inicio;
+						f.inicio = e.x-ancho/2;
+						f.fin    = e.x+ancho/2;
+						redibujar(f);
 					}
-					else if (f.tocaLadoIzquierdo(e.x, e.y)) cursor(2);
-					else if (f.tocaLadoDerecho  (e.x, e.y)) cursor(2);
-					else cursor(0);				
+					else if (f.cambiandoInicio) {
+						f.inicio = e.x;
+						redibujar(f);
+					}
+					else if (f.cambiandoFin) {
+						f.fin = e.x;
+						redibujar(f);
+					}
+					else
+						if (f.contienePunto (e.x, e.y)) { cursor(1); encontrado=true;}
+						else if (f.tocaLadoIzquierdo(e.x, e.y)) { cursor(2); encontrado=true;}
+						else if (f.tocaLadoDerecho  (e.x, e.y)) { cursor(2); encontrado=true;}
+						else cursor(0);
+					i++;
+				}
 			}
 		});
 		c.addMouseListener(new MouseListener() {
 			public void mouseDown(MouseEvent e){
-				if (f.contienePunto (e.x, e.y)) f.moviendo = true;
-				else if (f.tocaLadoIzquierdo(e.x, e.y)) f.cambiandoInicio = true;
-				else if (f.tocaLadoDerecho  (e.x, e.y)) f.cambiandoFin = true;
+				Franja f;
+				for (int i=0; i<franjas.size(); i++) {
+					f = franjas.get(i);
+					if (f.contienePunto (e.x, e.y)) f.moviendo = true;
+					else if (f.tocaLadoIzquierdo(e.x, e.y)) f.cambiandoInicio = true;
+					else if (f.tocaLadoDerecho  (e.x, e.y)) f.cambiandoFin = true;
+				}
 			}
 			public void mouseUp(MouseEvent e) {
-				f.moviendo = false;
-				f.cambiandoInicio = false;
-				f.cambiandoFin = false;
+				Franja f;
+				for (int i=0; i<franjas.size(); i++) {
+					f = franjas.get(i);
+					f.moviendo = false;
+					f.cambiandoInicio = false;
+					f.cambiandoFin = false;
+				}
 			}
 			public void mouseDoubleClick(MouseEvent e) {}
 		});
