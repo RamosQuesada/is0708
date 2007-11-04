@@ -259,15 +259,31 @@ public class I02 {
 	private void crearCompositeDepartamentos(Composite c) {
 		c.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		GridLayout lCc = new GridLayout();
-		lCc.numColumns = 2;
+		lCc.numColumns = 3;
 		c.setLayout(lCc);
 
 		Label lDepartamentos = new Label(c, SWT.LEFT);
 		lDepartamentos.setText("Departamento");
-		lDepartamentos.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, true, 1, 1));
+		lDepartamentos.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
 		
 		Combo cDepartamentos = new Combo(c, SWT.BORDER | SWT.READ_ONLY);
-		cDepartamentos.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, true, 1, 1));
+		cDepartamentos.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+		cDepartamentos.setItems(new String[] {"Baños", "Cocinas"});
+		cDepartamentos.select(0);
+		
+		Button bConfig = new Button(c,SWT.PUSH);
+		bConfig.setText("Configurar este departamento");
+		bConfig.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+
+		Composite cInfo = new Composite(c,SWT.BORDER);
+		GridLayout lCcInfo = new GridLayout();
+		lCcInfo.numColumns = 2;
+		cInfo.setLayout(lCc);
+		cInfo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
+		Label lContenido = new Label(cInfo,SWT.CENTER);
+		lContenido.setText("Aquí va información del departamento");
+		lContenido.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 2, 1));
+		
 	}
 	private void crearVistaJefe() {
 		final TabFolder tabFolder = new TabFolder (shell, SWT.NONE);
