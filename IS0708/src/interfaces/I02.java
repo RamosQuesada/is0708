@@ -102,18 +102,12 @@ public class I02 {
 		cDepartamentos.setItems(new String[] {"Baños", "Cocinas"});
 		cDepartamentos.select(0);
 
-		// Un composite para albergar el canvas de los cuadrantes
-		Composite cCuadrantesDer = new Composite (c, SWT.BORDER);
-		cCuadrantesDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 3));
-		GridLayout lCuadrantesDer = new GridLayout();
-		lCuadrantesDer.numColumns = 4;
-		cCuadrantesDer.setLayout(lCuadrantesDer);
+		// Un canvas para albergar el gráfico de los cuadrantes
+		// NO_BACKGROUND + doble buffer para evitar parpadeo
+		Canvas canvas = new Canvas(c, SWT.NO_BACKGROUND | SWT.BORDER);
+		canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 3));
 		
-		I02_cuadr cuadr = new I02_cuadr(cCuadrantesDer);
-
-		Label lCuadr = new Label (cCuadrantesDer, SWT.CENTER);
-		lCuadr.setText("Aquí se muestran los cuadrantes");
-		lCuadr.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 4, 1));
+		I02_cuadr cuadr = new I02_cuadr(canvas);
 
 		Label lCalendario = new Label (c, SWT.LEFT);
 		lCalendario.setText("Calendario");

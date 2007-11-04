@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class I02_cuadr {
 
 	Composite c;
+	Display display;
 	int ancho;
 	int alto;
 	GC gc;
@@ -88,8 +89,10 @@ public class I02_cuadr {
 		}
 		
 	}
-	public I02_cuadr (Composite c) {
+	public I02_cuadr (Canvas c) {
 		this.c = c;
+
+		display = c.getDisplay();
 		franjas = new ArrayList();
 		Franja f1 = new Franja(20, 80);
 		Franja f2 = new Franja(150, 200);
@@ -97,10 +100,15 @@ public class I02_cuadr {
 		franjas.add(f2);
 		c.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent event) {
-				gc = event.gc;
+			    // Doble buffering para evitar parpadeo
+				Image bufferImage = new Image(display,ancho,alto);
+			    gc = new GC(bufferImage);
 				gc.setAntialias(SWT.ON);
 				for (int i=0; i<franjas.size(); i++)
-				  franjas.get(i).dibujarFranja();
+					franjas.get(i).dibujarFranja();
+				
+				event.gc.drawImage(bufferImage,0,0);
+				bufferImage.dispose();
 			}
 		});
 		c.addControlListener(new ControlListener() {
@@ -162,5 +170,7 @@ public class I02_cuadr {
 			}
 			public void mouseDoubleClick(MouseEvent e) {}
 		});
+		
+		
 	}
 }
