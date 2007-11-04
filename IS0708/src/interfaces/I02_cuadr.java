@@ -19,11 +19,15 @@ public class I02_cuadr {
 	public class Franja {
 		int inicio;
 		int fin;
+		int r,g,b;
 		Boolean mueve, cambiaInicio, cambiaFin;
 		Boolean moviendo, cambiandoInicio, cambiandoFin;
-		public Franja (int i, int f) {
+		public Franja (int i, int f, int r, int g, int b) {
 			inicio = i;
 			fin = f;
+			this.r = r;
+			this.g = g;
+			this.b = b;
 			mueve = false;
 			cambiaInicio = false;
 			cambiaFin = false;
@@ -33,10 +37,10 @@ public class I02_cuadr {
 		}
 		public void dibujarFranja () {
 			gc.setLineWidth(1);
-			cambiarPincel(0,145,3);
-			cambiarRelleno(100,100,100);
+			cambiarRelleno(r-50,g-50,b-50);
 			gc.fillRoundRectangle(inicio+2,10+2,fin-inicio,15,10,10);
-			cambiarRelleno(104,228,85);
+			cambiarRelleno(r,g,b);
+			cambiarPincel(r-100,g-100,b-100);
 			gc.fillRoundRectangle(inicio,10,fin-inicio,15,8,8);
 			gc.drawRoundRectangle(inicio,10,fin-inicio,15,8,8);
 		}
@@ -46,26 +50,39 @@ public class I02_cuadr {
 			return mueve;
 		}
 		public Boolean tocaLadoIzquierdo(int x, int y) {
-			if (x>inicio-2 && x<inicio+4) cambiaInicio = true;
+			if (x>inicio-5 && x<inicio+5) cambiaInicio = true;
 			else cambiaInicio = false;
 			return cambiaInicio;
 		}
 		public Boolean tocaLadoDerecho(int x, int y) {
-			if (x>fin-4 && x<fin+2) cambiaFin = true;
+			if (x>fin-5 && x<fin+5) cambiaFin = true;
 			else cambiaFin = false;
 			return cambiaFin;
 		}
 
 	}
-
 	private void calcularTamaño(){
 		ancho = c.getClientArea().width;
 		alto = c.getClientArea().height;	
 	}
-	private void cambiarPincel(int r, int g, int b) {
+	private void cambiarPincel (int r, int g, int b) {
+		// Controlar límites de colores
+		if (r<0) r=0;
+		if (g<0) g=0;
+		if (b<0) b=0;
+		if (r>255) r=255;
+		if (g>255) g=255;
+		if (b>255) b=255;		
 		gc.setForeground(new Color(c.getDisplay(),r, g, b));
 	}
 	private void cambiarRelleno(int r, int g, int b) {
+		// Controlar límites de colores
+		if (r<0) r=0;
+		if (g<0) g=0;
+		if (b<0) b=0;
+		if (r>255) r=255;
+		if (g>255) g=255;
+		if (b>255) b=255;		
 		gc.setBackground(new Color(c.getDisplay(),r, g, b));
 	}
 	
@@ -94,10 +111,12 @@ public class I02_cuadr {
 
 		display = c.getDisplay();
 		franjas = new ArrayList();
-		Franja f1 = new Franja(20, 80);
-		Franja f2 = new Franja(150, 200);
+		Franja f1 = new Franja(20, 80, 104, 228, 85);
+		Franja f2 = new Franja(150, 200, 130, 130, 225);
+		Franja f3 = new Franja(220, 250, 240, 190, 150);
 		franjas.add(f1);
 		franjas.add(f2);
+		franjas.add(f3);
 		c.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent event) {
 			    // Doble buffering para evitar parpadeo
@@ -106,7 +125,7 @@ public class I02_cuadr {
 				gc.setAntialias(SWT.ON);
 				for (int i=0; i<franjas.size(); i++)
 					franjas.get(i).dibujarFranja();
-				
+				franjas.get(1).dibujarFranja();
 				event.gc.drawImage(bufferImage,0,0);
 				bufferImage.dispose();
 			}
@@ -170,7 +189,5 @@ public class I02_cuadr {
 			}
 			public void mouseDoubleClick(MouseEvent e) {}
 		});
-		
-		
 	}
 }
