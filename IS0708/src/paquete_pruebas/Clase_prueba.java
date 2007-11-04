@@ -5,4 +5,9 @@ public class Clase_prueba {
   int x,y;
   
   // Probando modificacion
+  
+  /*
+   * SWT + Java 2D:
+   * http://www-128.ibm.com/developerworks/java/library/j-2dswt/
+   */
 }
