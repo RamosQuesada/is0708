@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
 
 import interfaces.I01;
+import interfaces.I02_cuadr;
 import interfaces.I08_1;
 
 public class I02 {
@@ -28,7 +29,7 @@ public class I02 {
 	Image icoGr, icoPq, ico_imprimir, ico_mens_l, ico_mens, ico_cuadrante, ico_chico, ico_chica, ico_chicos;
 	
 	
-	public static void main(String[] args) {
+	public static void main (String[] args) {
 		// Este bucle mantiene la ventana abierta
 		display = new Display ();
 		I02 estaClase = new I02();
@@ -84,11 +85,14 @@ public class I02 {
 		
 	}
 	private void crearCompositeCuadrantes (Composite c) {
+		// Configuración del composite
 		c.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
 		GridLayout lCc = new GridLayout();
 		lCc.numColumns = 5;
 		//lCc.makeColumnsEqualWidth = true;
 		c.setLayout(lCc);
+		
+		// Componentes del composite
 		Label lDepartamentos = new Label(c, SWT.NONE);
 		lDepartamentos.setText("Dpto.");
 		lDepartamentos.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -97,21 +101,25 @@ public class I02 {
 		cDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		cDepartamentos.setItems(new String[] {"Baños", "Cocinas"});
 		cDepartamentos.select(0);
-		
+
+		// Un composite para albergar el canvas de los cuadrantes
 		Composite cCuadrantesDer = new Composite (c, SWT.BORDER);
 		cCuadrantesDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 3));
 		GridLayout lCuadrantesDer = new GridLayout();
 		lCuadrantesDer.numColumns = 4;
 		cCuadrantesDer.setLayout(lCuadrantesDer);
-
-		Label lCalendario = new Label (c, SWT.LEFT);
-		lCalendario.setText("Calendario");
-		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1));
+		
+		I02_cuadr cuadr = new I02_cuadr(cCuadrantesDer);
 
 		Label lCuadr = new Label (cCuadrantesDer, SWT.CENTER);
 		lCuadr.setText("Aquí se muestran los cuadrantes");
 		lCuadr.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 4, 1));
 
+		Label lCalendario = new Label (c, SWT.LEFT);
+		lCalendario.setText("Calendario");
+		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1));
+
+		
 		final DateTime calendario = new DateTime (c, SWT.CALENDAR);
 		calendario.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
@@ -297,6 +305,7 @@ public class I02 {
 		
 	}
 	private void crearVistaJefe() {
+		// Crear menu tabs
 		final TabFolder tabFolder = new TabFolder (shell, SWT.NONE);
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		TabItem tabItemCuadrantes = new TabItem (tabFolder, SWT.NONE);
@@ -332,7 +341,11 @@ public class I02 {
 		tabItemDepartamentos.setControl(cDepartamentos);
 	}
 	private void crearVentana() {
+		// Crear la ventana
 		shell = new Shell (display);
+		shell.setText("Turno-matic");
+
+		// Cargar iconos
 		icoGr = new Image(display, I02.class.getResourceAsStream("icoGr.gif"));
 		icoPq = new Image(display, I02.class.getResourceAsStream("icoPq.gif"));
 		ico_imprimir = new Image(display, I02.class.getResourceAsStream("ico_imprimir.gif"));
@@ -342,9 +355,9 @@ public class I02 {
 		ico_chico = new Image(display, I02.class.getResourceAsStream("ico_chico.gif"));
 		ico_chica = new Image(display, I02.class.getResourceAsStream("ico_chica.gif"));
 		ico_chicos = new Image(display, I02.class.getResourceAsStream("ico_chicos.gif"));
-				// Dos iconos de tamaño diferente para SO's que los necesiten
+		
+		// Dos iconos de tamaño diferente para SO's que los necesiten
 		shell.setImages(new Image[] {icoPq,icoGr});
-		shell.setText("Turno-matic");
 
 		crearBarraMenu();
 		
@@ -355,10 +368,12 @@ public class I02 {
 			trayItem.setImage(icoPq);
 		}
 		
+		// Crear layout principal
 		GridLayout lShell = new GridLayout();
 		lShell.numColumns = 1;		
 		shell.setLayout(lShell);
 		
+		// Poblar ventana
 		crearVistaJefe();
 		
 		// Ajustar el tamaño de la ventana al contenido
@@ -366,13 +381,16 @@ public class I02 {
 		// Mostrar ventana centrada en la pantalla
 		shell.setLocation(display.getBounds().width/2 - shell.getSize().x/2, display.getBounds().height/2 - shell.getSize().y/2);
 		shell.open();
+		
+		// Login
 		//I01 login = new I01(shell);
+		
 		// Preguntar antes de salir
 		shell.addListener (SWT.Close, new Listener () {
 			public void handleEvent (Event e) {
 				MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO | SWT.ICON_WARNING);
 				messageBox.setText ("Mensaje");
-//http://www.developer.com/java/other/article.php/10936_3330861_2
+// Diferentes iconos: http://www.developer.com/java/other/article.php/10936_3330861_2
 				messageBox.setMessage ("¿Desea cerrar la aplicación?");
 				e.doit = messageBox.open () == SWT.YES;
 			}
