@@ -21,7 +21,6 @@ import org.eclipse.swt.graphics.*;
 
 import interfaces.I01;
 import interfaces.I08_1;
-import interfaces.I02_cuadr;
 
 public class I02 {
 	private static Display display;
@@ -118,6 +117,8 @@ public class I02 {
 			public void widgetSelected (SelectionEvent e) {
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
 				System.out.println ("Fecha cambiada a "+ String.valueOf(calendario.getDay()) + " de " + meses[calendario.getMonth()]+ " de " + String.valueOf(calendario.getYear()));
+				Dialog oShell = new Dialog ();
+				oShell.open();
 			}
 		});
 		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 2, 1));
@@ -373,6 +374,7 @@ public class I02 {
 			public void handleEvent (Event e) {
 				MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO | SWT.ICON_WARNING);
 				messageBox.setText ("Mensaje");
+//http://www.developer.com/java/other/article.php/10936_3330861_2
 				messageBox.setMessage ("¿Desea cerrar la aplicación?");
 				e.doit = messageBox.open () == SWT.YES;
 			}
