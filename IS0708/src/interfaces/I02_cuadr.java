@@ -15,7 +15,6 @@ public class I02_cuadr {
 	int despl; // Este es para cuando movemos una barra, para saber de dónde la he cogido
 	GC gc;
 	Color fg;
-	ArrayList<Franja> franjas;
 	Boolean creando, terminadoDeCrear;
 	int margenIzq, margenDer, margenSup, margenInf; // Márgenes del cuadrante
 	int margenNombres; // Un margen para pintar los nombres a la izquierda
@@ -23,10 +22,11 @@ public class I02_cuadr {
 	int subdivisiones; // Cuántas subdivisiones hacer por hora (0 = sin subdivisiones)
 	// La variable terminadoDeCrear sirve para que una franja nueva no desaparezca al crearla
 	Franja franjaActiva;
+	Empleado empleadoActivo;
+	ArrayList<Empleado> empleados; 
 	int movimiento;
 	Boolean stickyGrid;
-	Boolean subStick;;
-
+	Boolean subStick;
 	public class Franja {
 		int inicio, fin;
 		int r,g,b;
@@ -37,14 +37,14 @@ public class I02_cuadr {
 			this.g = g;
 			this.b = b;
 		}
-		public void dibujarFranja () {
+		public void dibujarFranja (int despV) {
 			gc.setLineWidth(1);
 			cambiarRelleno(r-50,g-50,b-50);
-			gc.fillRoundRectangle(inicio+2,50+2,fin-inicio,15,10,10);
+			gc.fillRoundRectangle(inicio+2,despV+2,fin-inicio,15,10,10);
 			cambiarRelleno(r,g,b);
 			cambiarPincel(r-100,g-100,b-100);
-			gc.fillRoundRectangle(inicio,50,fin-inicio,15,8,8);
-			gc.drawRoundRectangle(inicio,50,fin-inicio,15,8,8);
+			gc.fillRoundRectangle(inicio,despV,fin-inicio,15,8,8);
+			gc.drawRoundRectangle(inicio,despV,fin-inicio,15,8,8);
 		}
 		public Boolean contienePunto(int x, int y) {
 			return x>inicio && x<fin;
@@ -76,6 +76,32 @@ public class I02_cuadr {
 				fin = ancho - margenDer;
 				inicio = fin-anchoFranja;
 			}
+		}
+	}
+	
+	public class Empleado {
+		String nombre;
+		int r,g,b;
+		int posV;
+		ArrayList<Franja> franjas;
+		public Empleado (String n, int r, int g, int b, int posV) {
+			nombre = n;
+			franjas = new ArrayList();
+			this.r = r;
+			this.g = g;
+			this.b = b;
+			this.posV = posV;
+		}
+		public void franjaNueva (int inicio, int fin) {
+			Franja f = new Franja(inicio, fin, r, g, b);
+			franjas.add(f);
+		}
+		public void quitarFranja (Franja franja) {
+			franjas.remove(franja);
+		}
+		public void dibujarFranjas() {
+			for (int i=0; i<franjas.size(); i++)
+				franjas.get(i).dibujarFranja(posV);
 		}
 	}
 	
@@ -114,9 +140,9 @@ public class I02_cuadr {
 	public Boolean enAreaDibujo(int x, int y) {
 		Boolean b = true;
 		if (x<margenNombres+margenIzq) b = false;
-		else if (x>ancho-margenDer) b = false;
-		else if (y<margenSup) b = false;
-		else if (y>alto-margenInf) b = false;
+		else if (x>ancho-margenDer)    b = false;
+		else if (y<margenSup)          b = false;
+		else if (y>alto-margenInf)     b = false;
 		return b;
 	}
 	
@@ -177,7 +203,7 @@ public class I02_cuadr {
 	}
 
 	public void activarFranja(int franja, int mov) {
-		franjaActiva = franjas.get(franja);
+		franjaActiva = empleadoActivo.franjas.get(franja);
 		movimiento = mov;
 		// Movimientos:
 		//		0: Ninguno
@@ -207,24 +233,32 @@ public class I02_cuadr {
 		margenInf = 20;
 		margenNombres = 100;
 		horaInicio = 9;
-		horaFin = 22;
-		subdivisiones = 3;
+		horaFin = 23;
+		subdivisiones = 4;
 		franjaActiva = null;
 		movimiento = 0;
 		stickyGrid = true;
-		subStick = false;
+		subStick = true;
 
 		display = c.getDisplay();
-		franjas = new ArrayList();
-		Franja f1 = new Franja(150, 200, 104, 228, 85);
-		Franja f2 = new Franja(220, 280, 104, 228, 85);
-		Franja f3 = new Franja(300, 360, 104, 228, 85);
-
-		//Franja f2 = new Franja(150, 200, 130, 130, 225);
-		//Franja f3 = new Franja(220, 250, 240, 190, 150);
-		franjas.add(f1);
-		franjas.add(f2);
-		franjas.add(f3);
+		Empleado e1 = new Empleado("Pepe", 104, 228,  85, 50);
+		Empleado e2 = new Empleado("Pepe", 130, 130, 225, 100);
+		Empleado e3 = new Empleado("Pepe", 240, 190, 150, 150);
+		
+		e1.franjaNueva(150,200);
+		e1.franjaNueva(220,280);
+		e1.franjaNueva(300,360);
+		e2.franjaNueva(150,200);
+		e2.franjaNueva(220,280);
+		e2.franjaNueva(300,360);
+		e3.franjaNueva(150,200);
+		e3.franjaNueva(220,280);
+		e3.franjaNueva(300,360);
+		empleadoActivo = e1;
+		empleados = new ArrayList();
+		empleados.add(e1);
+		empleados.add(e2);
+		empleados.add(e3);
 		c.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent event) {
 			    // Doble buffering para evitar parpadeo
@@ -232,8 +266,10 @@ public class I02_cuadr {
 			    gc = new GC(bufferImage);
 				gc.setAntialias(SWT.ON);
 				dibujarHoras();
-				for (int i=0; i<franjas.size(); i++)
-					franjas.get(i).dibujarFranja();
+				for (int i=0; i<empleados.size(); i++) {
+					empleadoActivo = empleados.get(i);
+					empleadoActivo.dibujarFranjas();
+				}
 				event.gc.drawImage(bufferImage,0,0);
 				bufferImage.dispose();
 			}
@@ -241,7 +277,7 @@ public class I02_cuadr {
 		c.addControlListener(new ControlListener() {
 			public void controlMoved(ControlEvent e) { }
 			public void controlResized(ControlEvent e) {
-				calcularTamaño();				
+				calcularTamaño();
 			}
 		});
 		c.addMouseMoveListener(new MouseMoveListener() {
@@ -250,8 +286,11 @@ public class I02_cuadr {
 				// Si acabo de apretar el botón para crear una franja, pero todavía no he movido el ratón
 				if (creando) {
 					Franja nuevaFranja = new Franja(e.x, e.x,104,228,85);
-					franjas.add(nuevaFranja);
-					activarFranja(franjas.size()-1,3);
+					if (stickyGrid){
+						nuevaFranja.inicio = sticky(nuevaFranja.inicio);
+					}
+					empleadoActivo.franjas.add(nuevaFranja);
+					activarFranja(empleadoActivo.franjas.size()-1,3);
 					creando = false;
 					terminadoDeCrear = false;
 				}
@@ -269,18 +308,18 @@ public class I02_cuadr {
 					int j = 0;
 					// Comprobar contacto con otras franjas
 					Franja f2; Boolean encontrado2 = false;
-					while (!encontrado2 && j<franjas.size()) {
-						f2 = franjas.get(j);
+					while (!encontrado2 && j<empleadoActivo.franjas.size()) {
+						f2 = empleadoActivo.franjas.get(j);
 						if ((f.inicio < f2.fin && f2.contienePunto(f.inicio, e.y)) | (f.inicio < f2.inicio && f.fin > f2.fin)) {
 							encontrado2=true;
 							f.inicio = f2.inicio;
 							despl += (f2.fin-f2.inicio);
-							franjas.remove(j);								
+							empleadoActivo.franjas.remove(j);								
 						}
 						else if ((f.fin > f2.inicio && f2.contienePunto(f.fin, e.y)) | (f.inicio < f2.inicio && f.fin > f2.fin)) {
 							encontrado2=true;
 							f.fin = f2.fin;
-							franjas.remove(j);
+							empleadoActivo.franjas.remove(j);
 						}
 						j++;
 					}						
@@ -294,7 +333,7 @@ public class I02_cuadr {
 					// Comprobar si la barra es de tamaño menor o igual que 0
 					if (f.inicio > f.fin) {
 						desactivarFranja();
-						franjas.remove(f);
+						empleadoActivo.franjas.remove(f);
 						cursor(0);
 					}
 					else if (stickyGrid) {
@@ -304,12 +343,12 @@ public class I02_cuadr {
 						// Comprobar contacto con otras franjas
 						int j = 0;
 						Franja f2; Boolean encontrado2 = false;
-						while (terminadoDeCrear && !encontrado2 && j<franjas.size()) {
-							f2 = franjas.get(j);
+						while (terminadoDeCrear && !encontrado2 && j<empleadoActivo.franjas.size()) {
+							f2 = empleadoActivo.franjas.get(j);
 							if ((f.inicio < f2.fin && f2.contienePunto(e.x, e.y)) | (f.inicio < f2.inicio && f.fin > f2.fin)) {
 								encontrado2=true;
 								f.inicio = f2.inicio;
-								franjas.remove(j);
+								empleadoActivo.franjas.remove(j);
 							}
 							j++;
 						}
@@ -324,7 +363,7 @@ public class I02_cuadr {
 					// Comprobar si la barra es de tamaño menor o igual que 0
 					if (f.inicio > f.fin) {
 						desactivarFranja();
-						franjas.remove(f);
+						empleadoActivo.franjas.remove(f);
 						cursor(0);
 					}
 					else if (stickyGrid) {
@@ -334,12 +373,12 @@ public class I02_cuadr {
 						// Comprobar contacto con otras franjas
 						int j = 0;
 						Franja f2; Boolean encontrado2 = false;
-						while (terminadoDeCrear && !encontrado2 && j<franjas.size()) {
-							f2 = franjas.get(j);
+						while (terminadoDeCrear && !encontrado2 && j<empleadoActivo.franjas.size()) {
+							f2 = empleadoActivo.franjas.get(j);
 							if ((f.fin > f2.inicio && f2.contienePunto(e.x, e.y)) | (f.inicio < f2.inicio && f.fin > f2.fin)) {
 								encontrado2=true;
 								f.fin = f2.fin;
-								franjas.remove(j);
+								empleadoActivo.franjas.remove(j);
 								desactivarFranja();
 							}
 							j++;
@@ -352,8 +391,8 @@ public class I02_cuadr {
 				else {
 					int i=0;
 					Boolean encontrado = false;
-					while (!encontrado && i<franjas.size()) {
-						f = franjas.get(i);
+					while (!encontrado && i<empleadoActivo.franjas.size()) {
+						f = empleadoActivo.franjas.get(i);
 						if (f.contienePuntoInt (e.x, e.y)) { cursor(1); encontrado=true;}
 						else if (f.tocaLadoIzquierdo(e.x, e.y)) { cursor(2); encontrado=true;}
 						else if (f.tocaLadoDerecho  (e.x, e.y)) { cursor(2); encontrado=true;}
@@ -368,13 +407,10 @@ public class I02_cuadr {
 // COMPROBAR que no queda una fracción tonta
 				if (e.button==3) {
 					int i=0; Franja f; Boolean encontrado = false;
-					while (!encontrado && i<franjas.size()) {
-						f = franjas.get(i);
+					while (!encontrado && i<empleadoActivo.franjas.size()) {
+						f = empleadoActivo.franjas.get(i);
 						if (f.contienePuntoInt (e.x, e.y)) {
-							f = franjas.get(i);
-							Franja f2 = new Franja (f.inicio, e.x-10, 104, 228, 85);
-							f.inicio=e.x+10;
-							franjas.add(f2);
+							empleadoActivo.franjas.remove(f);
 							redibujar(f);
 							encontrado = true;
 						}
@@ -385,8 +421,8 @@ public class I02_cuadr {
 					Franja f;
 					int i = 0;
 					Boolean encontrado = false;
-					while (!encontrado && i<franjas.size()) {
-						f = franjas.get(i);
+					while (!encontrado && i<empleadoActivo.franjas.size()) {
+						f = empleadoActivo.franjas.get(i);
 						if (f.contienePuntoInt (e.x, e.y))		{
 							encontrado = true;
 							activarFranja(i,2);
@@ -402,8 +438,8 @@ public class I02_cuadr {
 			public void mouseUp(MouseEvent e) {
 				Franja f;
 				desactivarFranja();
-				for (int i=0; i<franjas.size(); i++) {
-					f = franjas.get(i);
+				for (int i=0; i<empleadoActivo.franjas.size(); i++) {
+					f = empleadoActivo.franjas.get(i);
 					// Si acabo de crear una franja, comprobar que no está del revés, y si lo está, darle la vuelta
 					// Comprobar también si se cruza con otra.
 					if (!terminadoDeCrear) {
@@ -415,13 +451,13 @@ public class I02_cuadr {
 						Franja f2;
 						int j = 0;
 						Boolean encontrado = false;
-						while (!encontrado && j<franjas.size()) {
-							f2 = franjas.get(j);
+						while (!encontrado && j<empleadoActivo.franjas.size()) {
+							f2 = empleadoActivo.franjas.get(j);
 							if (f2.contienePuntoInt(f.inicio, e.y) || f2.contienePuntoInt(f.fin, e.y)) {
 								// Juntar dos franjas que se tocan o cruzan
 								if (f2.inicio < f.inicio) f.inicio = f2.inicio;
 								if (f2.fin > f2.fin) f.fin = f2.fin;
-								franjas.remove(j);
+								empleadoActivo.franjas.remove(j);
 								redibujar(f);
 							}
 							j++;
@@ -431,7 +467,21 @@ public class I02_cuadr {
 				
 				terminadoDeCrear = true;
 			}
-			public void mouseDoubleClick(MouseEvent e) {}
+			public void mouseDoubleClick(MouseEvent e) {
+				int i=0; Franja f; Boolean encontrado = false;
+				while (!encontrado && i<empleadoActivo.franjas.size()) {
+					f = empleadoActivo.franjas.get(i);
+					if (f.contienePuntoInt (e.x, e.y)) {
+						f = empleadoActivo.franjas.get(i);
+						Franja f2 = new Franja (f.inicio, e.x-10, 104, 228, 85);
+						f.inicio=e.x+10;
+						empleadoActivo.franjas.add(f2);
+						redibujar(f);
+						encontrado = true;
+					}
+					i++;
+				}
+			}
 		});
 	}
 }
