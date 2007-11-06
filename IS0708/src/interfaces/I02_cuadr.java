@@ -5,7 +5,6 @@ import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.events.*;
 import java.util.ArrayList;
-import java.math.*;
 
 public class I02_cuadr {
 
@@ -26,7 +25,7 @@ public class I02_cuadr {
 	Franja franjaActiva;
 	int movimiento;
 	Boolean stickyGrid;
-	Boolean subStick;
+	Boolean subStick;;
 
 	public class Franja {
 		int inicio, fin;
@@ -41,11 +40,11 @@ public class I02_cuadr {
 		public void dibujarFranja () {
 			gc.setLineWidth(1);
 			cambiarRelleno(r-50,g-50,b-50);
-			gc.fillRoundRectangle(inicio+2,10+2,fin-inicio,15,10,10);
+			gc.fillRoundRectangle(inicio+2,50+2,fin-inicio,15,10,10);
 			cambiarRelleno(r,g,b);
 			cambiarPincel(r-100,g-100,b-100);
-			gc.fillRoundRectangle(inicio,10,fin-inicio,15,8,8);
-			gc.drawRoundRectangle(inicio,10,fin-inicio,15,8,8);
+			gc.fillRoundRectangle(inicio,50,fin-inicio,15,8,8);
+			gc.drawRoundRectangle(inicio,50,fin-inicio,15,8,8);
 		}
 		public Boolean contienePunto(int x, int y) {
 			return x>inicio && x<fin;
@@ -84,21 +83,33 @@ public class I02_cuadr {
 		cambiarPincel(40,80,40);
 		int m = margenIzq + margenNombres;
 		int h = horaFin - horaInicio;
-		int sep = (ancho - margenIzq - margenNombres - margenDer)/h;
-		for (int i=0; i<h+1; i++) {
-			gc.drawText(String.valueOf(horaInicio+i)+'h', m+i*sep-5, margenSup, true);
-			if (i<h && subdivisiones>0) {
-				int subsep = sep/(subdivisiones+1);
-				cambiarPincel(120,170,120);
-				for (int j=0; j < subdivisiones; j++) {
-					gc.setLineStyle(SWT.LINE_DOT);
-					gc.drawLine(m+i*sep+subsep*(j+1), 20+margenSup, m+i*sep+subsep*(j+1), alto-margenInf);
-				}
-				gc.setLineStyle(SWT.LINE_SOLID);
-				cambiarPincel(40,80,40);
+		int sep = (ancho - m - margenDer)/h;
+		if (subdivisiones==0) {
+			for (int i=0; i<h+1; i++) {
+				gc.drawText(String.valueOf(horaInicio+i)+'h', m+i*sep-5, margenSup, true);
+				gc.drawLine(m+i*sep, 20+margenSup, m+i*sep, alto-margenInf);
 			}
-			gc.drawLine(m+i*sep, 20+margenSup, m+i*sep, alto-margenInf);
 		}
+		else {
+			int subsep = sep/(subdivisiones);
+			int hi = horaInicio;
+			for (int i=0; i<h*subdivisiones; i++) {
+				gc.setLineStyle(SWT.LINE_DOT);
+				if (i%subdivisiones==0) {
+					gc.setLineStyle(SWT.LINE_SOLID);
+					cambiarPincel(40,80,40);
+					gc.drawText(String.valueOf(hi)+'h', m+i*subsep-5, margenSup, true);
+					gc.drawLine(m+i*subsep, 20+margenSup, m+i*subsep, alto-margenInf);
+					cambiarPincel(120,170,120);
+					gc.setLineStyle(SWT.LINE_DOT);
+					hi++;
+				}
+				else {
+					gc.drawLine(m+i*subsep, 20+margenSup, m+i*subsep, alto-margenInf);
+				}
+			}
+		}
+		gc.setLineStyle(SWT.LINE_SOLID);
 	}
 	public Boolean enAreaDibujo(int x, int y) {
 		Boolean b = true;
@@ -110,18 +121,24 @@ public class I02_cuadr {
 	}
 	
 	public int sticky (int x) {
+		// Pegar las barras al grid si está activada la opción
 		int sep = (ancho - margenIzq - margenNombres - margenDer)/(horaFin - horaInicio);
-		int stick = sep;
-		int desp = margenNombres + margenDer;
-		if (subStick) stick = sep /(subdivisiones+1);
-		if ((x+desp)%stick<(stick/3)+1) x = stick * ((x+despl)/stick)-despl;
-		else if ((x+desp)%stick>(stick-(stick/3))-1) x = stick*(((x+despl)/stick)+1)-despl;
+		int stick = sep / subdivisiones;
+		int desp = margenNombres + margenIzq;
+		if (subStick) {
+			if      ((x-desp)%stick<(stick/3))         x = desp + stick * ((x-desp)/stick);
+			else if ((x-desp)%stick>(stick-(stick/3))) x = desp + stick *(((x-desp)/stick)+1);
+		}
+		else {
+			if      ((x-desp)%(stick*subdivisiones)<(stick*subdivisiones/3))         x = desp + stick * ((x-desp)/stick);
+			else if ((x-desp)%(stick*subdivisiones)>(stick*subdivisiones-(stick*subdivisiones/3))) x = desp + stick *(((x-desp)/stick)+1);
+		}
 		return x;
 	}
 	
 	private void calcularTamaño(){
 		ancho = c.getClientArea().width;
-		alto = c.getClientArea().height;	
+		alto  = c.getClientArea().height;	
 	}
 	private void cambiarPincel (int r, int g, int b) {
 		// Controlar límites de colores
@@ -145,7 +162,7 @@ public class I02_cuadr {
 	}
 	
 	public void redibujar(Franja f) {
-		c.redraw(0, 9, ancho, 18, false);
+		c.redraw(0, 49, ancho, 18, false);
 	}
 	public void cursor(int i) {
 		switch (i) {			
@@ -195,7 +212,7 @@ public class I02_cuadr {
 		franjaActiva = null;
 		movimiento = 0;
 		stickyGrid = true;
-		subStick = true;
+		subStick = false;
 
 		display = c.getDisplay();
 		franjas = new ArrayList();
@@ -348,21 +365,39 @@ public class I02_cuadr {
 		});
 		c.addMouseListener(new MouseListener() {
 			public void mouseDown(MouseEvent e){
-				Franja f;
-				int i = 0;
-				Boolean encontrado = false;
-				while (!encontrado && i<franjas.size()) {
-					f = franjas.get(i);
-					if (f.contienePuntoInt (e.x, e.y))		{
-						encontrado = true;
-						activarFranja(i,2);
-						despl = e.x - f.inicio;
+// COMPROBAR que no queda una fracción tonta
+				if (e.button==3) {
+					int i=0; Franja f; Boolean encontrado = false;
+					while (!encontrado && i<franjas.size()) {
+						f = franjas.get(i);
+						if (f.contienePuntoInt (e.x, e.y)) {
+							f = franjas.get(i);
+							Franja f2 = new Franja (f.inicio, e.x-10, 104, 228, 85);
+							f.inicio=e.x+10;
+							franjas.add(f2);
+							redibujar(f);
+							encontrado = true;
+						}
+						i++;
 					}
-					else if (f.tocaLadoIzquierdo(e.x, e.y)) { encontrado = true; activarFranja(i,1);}
-					else if (f.tocaLadoDerecho  (e.x, e.y)) { encontrado = true; activarFranja(i,3);}					
-					i++;
 				}
-				if (!encontrado && enAreaDibujo(e.x,e.y)) creando = true;
+				else {
+					Franja f;
+					int i = 0;
+					Boolean encontrado = false;
+					while (!encontrado && i<franjas.size()) {
+						f = franjas.get(i);
+						if (f.contienePuntoInt (e.x, e.y))		{
+							encontrado = true;
+							activarFranja(i,2);
+							despl = e.x - f.inicio;
+						}
+						else if (f.tocaLadoIzquierdo(e.x, e.y)) { encontrado = true; activarFranja(i,1);}
+						else if (f.tocaLadoDerecho  (e.x, e.y)) { encontrado = true; activarFranja(i,3);}					
+						i++;
+					}
+					if (!encontrado && enAreaDibujo(e.x,e.y)) creando = true;
+				}
 			}
 			public void mouseUp(MouseEvent e) {
 				Franja f;
