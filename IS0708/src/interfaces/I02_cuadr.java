@@ -17,11 +17,14 @@ public class I02_cuadr {
 	Color fg;
 	ArrayList<Franja> franjas;
 	Boolean creando, terminadoDeCrear;
+	int margenIzq, margenDer, margenSup, margenInf; // Márgenes del cuadrante
+	int margenNombres; // Un margen para pintar los nombres a la izquierda
+	int horaInicio,horaFin; // Definen de qué hora a qué hora es el cuadrante
+	int subdivisiones; // Cuántas subdivisiones hacer por hora (0 = sin subdivisiones)
 	// La variable terminadoDeCrear sirve para que una franja nueva no desaparezca al crearla
 
 	public class Franja {
-		int inicio;
-		int fin;
+		int inicio, fin;
 		int r,g,b;
 		Boolean mueve, cambiaInicio, cambiaFin;
 		Boolean moviendo, cambiandoInicio, cambiandoFin;
@@ -67,6 +70,28 @@ public class I02_cuadr {
 		}
 
 	}
+	
+	private void dibujarHoras() {
+		cambiarPincel(40,80,40);
+		int m = margenIzq + margenNombres;
+		int h = horaFin - horaInicio;
+		int sep = (ancho - margenIzq - margenNombres - margenDer)/h;
+		for (int i=0; i<h+1; i++) {
+			gc.drawText(String.valueOf(horaInicio+i)+'h', m+i*sep-5, margenSup, true);
+			if (i<h && subdivisiones>0) {
+				int subsep = sep/(subdivisiones+1);
+				cambiarPincel(120,170,120);
+				for (int j=0; j < subdivisiones; j++) {
+					gc.setLineStyle(SWT.LINE_DOT);
+					gc.drawLine(m+i*sep+subsep*(j+1), 20+margenSup, m+i*sep+subsep*(j+1), alto-margenInf);
+				}
+				gc.setLineStyle(SWT.LINE_SOLID);
+				cambiarPincel(40,80,40);
+			}
+			gc.drawLine(m+i*sep, 20+margenSup, m+i*sep, alto-margenInf);
+		}
+	}
+	
 	private void calcularTamaño(){
 		ancho = c.getClientArea().width;
 		alto = c.getClientArea().height;	
@@ -99,14 +124,11 @@ public class I02_cuadr {
 		switch (i) {
 			
 		case 1 :
-			c.setCursor(new Cursor (c.getDisplay(), SWT.CURSOR_HAND));
-			break;
+			c.setCursor(new Cursor (c.getDisplay(), SWT.CURSOR_HAND));	break;
 		case 2 :
-			c.setCursor(new Cursor (c.getDisplay(), SWT.CURSOR_SIZEE));
-			break;
+			c.setCursor(new Cursor (c.getDisplay(), SWT.CURSOR_SIZEE));	break;
 		default :
-			c.setCursor(new Cursor (c.getDisplay(), SWT.CURSOR_ARROW));
-			break;
+			c.setCursor(new Cursor (c.getDisplay(), SWT.CURSOR_ARROW));	break;
 		}
 		
 	}
@@ -115,6 +137,14 @@ public class I02_cuadr {
 		this.c = c;
 		creando = false;
 		terminadoDeCrear = true;
+		margenIzq = 20;
+		margenDer=  20;
+		margenSup = 20;
+		margenInf = 20;
+		margenNombres = 100;
+		horaInicio = 9;
+		horaFin = 22;
+		subdivisiones = 3;
 
 		display = c.getDisplay();
 		franjas = new ArrayList();
@@ -133,6 +163,7 @@ public class I02_cuadr {
 				Image bufferImage = new Image(display,ancho,alto);
 			    gc = new GC(bufferImage);
 				gc.setAntialias(SWT.ON);
+				dibujarHoras();
 				for (int i=0; i<franjas.size(); i++)
 					franjas.get(i).dibujarFranja();
 				event.gc.drawImage(bufferImage,0,0);
