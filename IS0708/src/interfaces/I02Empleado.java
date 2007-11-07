@@ -26,6 +26,9 @@ import org.eclipse.swt.graphics.*;
 
 public class I02Empleado {
 
+	
+	
+
 	public static void main(String[] IS0708) {
 		final Display display = new Display ();
 		final Shell shell = new Shell (display);
@@ -38,6 +41,7 @@ public class I02Empleado {
 		final Image ico_cuadrante = new Image(display, I02.class.getResourceAsStream("ico_cuadrante.gif"));
 		final Image ico_chico = new Image(display, I02.class.getResourceAsStream("ico_chico.gif"));
 		final Image ico_chica = new Image(display, I02.class.getResourceAsStream("ico_chica.gif"));
+		final Image ico_estadisticas = new Image(display, I02.class.getResourceAsStream("grafica_1.ico"));
 		
 		
 		// Dos iconos de tamaño diferente para SO's que los necesiten
@@ -101,12 +105,9 @@ public class I02Empleado {
 		TabItem tabItemMensajes = new TabItem (tabFolder, SWT.NONE);
 		tabItemMensajes.setText ("Mensajes");
 		tabItemMensajes.setImage(ico_mens_l);
-		TabItem tabItemEnviarMensajes = new TabItem (tabFolder, SWT.NONE);
-		tabItemEnviarMensajes.setText ("EnviarMensajes");
-		tabItemEnviarMensajes.setImage(ico_mens);
 		TabItem tabItemVerEstadisticas = new TabItem (tabFolder, SWT.NONE);
 		tabItemVerEstadisticas.setText ("Ver estadísticas");
-		tabItemVerEstadisticas.setImage(ico_mens);
+		tabItemVerEstadisticas.setImage(ico_estadisticas);
 		
 		
 		final Composite cCuadrantes = new Composite (tabFolder, SWT.NONE);
@@ -236,6 +237,11 @@ public class I02Empleado {
 		final Button bMensNuevo = new Button(cMensajes, SWT.PUSH);
 		bMensNuevo.setText("Nuevo");
 		bMensNuevo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		bMensNuevo.addSelectionListener (new SelectionAdapter () {
+			public void widgetSelected (SelectionEvent e) {
+				I02MensajeNuevo ventana = new I02MensajeNuevo(shell);
+			}
+		});
 		
 		final Button bMensResponder = new Button(cMensajes, SWT.PUSH);
 		bMensResponder.setText("Responder");
@@ -485,61 +491,9 @@ public class I02Empleado {
 		
 		
 		
-		
-//		
-//		
-//		Label lEmplNombre = new Label(cEmplIzq, SWT.NONE);
-//		lEmplNombre.setText("Nombre");
-//		lEmplNombre.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
-//		
-//		Text tEmplNombre = new Text(cEmplIzq, SWT.BORDER);
-//		tEmplNombre.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-//		
-//		Label lEmplNVend = new Label(cEmplIzq, SWT.NONE);
-//		lEmplNVend.setText("N. vend");
-//		lEmplNVend.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
-//		
-//		Text tEmplNVend = new Text(cEmplIzq, SWT.BORDER);
-//		tEmplNVend.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-//
-//		Label lEmplDpto = new Label(cEmplIzq, SWT.NONE);
-//		lEmplDpto.setText("Dpto.");
-//		lEmplDpto.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
-//		
-//		Text tEmplDpto = new Text(cEmplIzq, SWT.BORDER);
-//		tEmplDpto.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-//
-//		Label lEmplContr = new Label(cEmplIzq, SWT.NONE);
-//		lEmplContr.setText("Contrato");
-//		lEmplContr.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
-		
-//		Combo cElegirDestino = new Combo (cEmplIzq, SWT.BORDER);
-//		cElegirDestino.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		
-		
-		
-
-		
-//		final Button bEmplNuevo = new Button(cEmplDer, SWT.RADIO);
-//		bEmplNuevo.setText("Nuevo");
-//		bEmplNuevo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-//
-//		final Button bEmplVer = new Button(cEmplDer, SWT.RADIO);
-//		bEmplVer.setText("Ver");
-//		bEmplVer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-//		
-//		final Button bEmplEditar = new Button(cEmplDer, SWT.RADIO);
-//		bEmplEditar.setText("Editar");
-//		bEmplEditar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-//
-//		final Button bEmplBaja = new Button(cEmplDer, SWT.PUSH);
-//		bEmplBaja.setText("Dar de baja");
-//		bEmplBaja.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-				
 		tabItemCuadrantes.setControl(cCuadrantes);
 		tabItemMensajes.setControl(cMensajes);
-		tabItemEnviarMensajes.setControl(cEnviarMensaje);
 		
 		// Ajustar el tamaño de la ventana al contenido
 		shell.pack();
