@@ -141,8 +141,8 @@ public class I02MensajeNuevo {
 				}
 				if(opcion_actual==MENSAJERIA_INTERNA){
 					System.out.println("HOLA1");
-					I02MensajeriaInterna ventana = new I02MensajeriaInterna(shell);
-					//mostrar pantalla indicandolo
+					I02MensajeriaInterna ventana = new I02MensajeriaInterna(padre);
+					shell.dispose();
 
 				}
 				if(opcion_actual==PETICION_BAJA){
