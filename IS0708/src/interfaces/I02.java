@@ -18,6 +18,9 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
+import org.eclipse.swt.printing.*;
+
+import paquete_pruebas.Imprimir;
 
 import interfaces.I01;
 import interfaces.I02_cuadr;
@@ -27,7 +30,6 @@ public class I02 {
 	private static Display display;
 	private Shell shell;
 	Image icoGr, icoPq, ico_imprimir, ico_mens_l, ico_mens, ico_cuadrante, ico_chico, ico_chica, ico_chicos;
-	
 	
 	public static void main (String[] args) {
 		// Este bucle mantiene la ventana abierta
@@ -67,9 +69,16 @@ public class I02 {
 		itemAbrir.setAccelerator (SWT.MOD1 + 'A');		
 		
 		// Item Imprimir
-		MenuItem itemImprimir = new MenuItem (submenu, SWT.PUSH);
+		MenuItem itemImprimir = new MenuItem (submenu, SWT.PUSH);		  
+		itemImprimir.addListener(SWT.Selection, new Listener(){
+			public void handleEvent (Event e) {
+				Imprimir imprimir = new Imprimir(shell, display);
+				imprimir.abrirDialogBox();
+			}
+		});
 		itemImprimir.setImage(ico_imprimir);
-		itemImprimir.setText("&Imprimir");
+		itemImprimir.setText("&Imprimir\tCtrl+P");
+		itemImprimir.setAccelerator(SWT.MOD1+'P');
 
 		// Item Salir
 		MenuItem itemSalir = new MenuItem (submenu, SWT.PUSH);
@@ -107,8 +116,7 @@ public class I02 {
 		Canvas canvas = new Canvas(c, SWT.NO_BACKGROUND | SWT.BORDER);
 		canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 3));
 		
-		I02_cuadr cuadr = new I02_cuadr(canvas);
-
+		I02_cuadr cuadr = new I02_cuadr(canvas);		
 		Label lCalendario = new Label (c, SWT.LEFT);
 		lCalendario.setText("Calendario");
 		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1));
@@ -317,7 +325,7 @@ public class I02 {
 		
 		
 		final Composite cCuadrantes = new Composite (tabFolder, SWT.NONE);
-		crearCompositeCuadrantes(cCuadrantes);				
+		crearCompositeCuadrantes(cCuadrantes);		
 		
 		final Composite cMensajes = new Composite (tabFolder, SWT.NONE);
 		crearCompositeMensajes(cMensajes);
