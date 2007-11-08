@@ -19,7 +19,6 @@ public class I02_cuadr {
 	int alto_franjas;
 	int sep_vert_franjas;
 	int despl; // Este es para cuando movemos una barra, para saber de dónde la he cogido
-	GC gc;
 	Color fg;
 	Boolean creando, terminadoDeCrear;
 	int margenIzq, margenDer, margenSup, margenInf; // Márgenes del cuadrante
@@ -39,15 +38,15 @@ public class I02_cuadr {
 			inicio = i;
 			fin = f;
 		}
-		public void dibujarFranja (int despV, Color color) {
+		public void dibujarFranja (GC gc, int despV, Color color) {
 			int r = color.getRed();
 			int g = color.getGreen();
 			int b = color.getBlue();
 			gc.setLineWidth(1);
-			cambiarRelleno(r-50,g-50,b-50);
+			cambiarRelleno(gc, r-50,g-50,b-50);
 			gc.fillRoundRectangle(inicio+2,despV+2,fin-inicio,15,10,10);
-			cambiarRelleno(r,g,b);
-			cambiarPincel(r-100,g-100,b-100);
+			cambiarRelleno(gc, r,g,b);
+			cambiarPincel(gc, r-100,g-100,b-100);
 			gc.fillRoundRectangle(inicio,despV,fin-inicio,15,8,8);
 			gc.drawRoundRectangle(inicio,despV,fin-inicio,15,8,8);
 		}
@@ -100,9 +99,9 @@ public class I02_cuadr {
 		public void quitarFranja (Franja franja) {
 			franjas.remove(franja);
 		}
-		public void dibujarFranjas(int posV, Color color) {
+		public void dibujarFranjas(GC gc, int posV, Color color) {
 			for (int i=0; i<franjas.size(); i++)
-				franjas.get(i).dibujarFranja(margenSup+(sep_vert_franjas+alto_franjas)*(posV+1),color);
+				franjas.get(i).dibujarFranja(gc, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1),color);
 		}
 		public Boolean contienePunto (int y, int posV) {
 			Boolean b = false;
@@ -114,8 +113,8 @@ public class I02_cuadr {
 		}
 	}
 	
-	private void dibujarHoras() {
-		cambiarPincel(40,80,40);
+	private void dibujarHoras(GC gc) {
+		cambiarPincel(gc, 40,80,40);
 		int m = margenIzq + margenNombres;
 		int h = horaFin - horaInicio;
 		int sep = (ancho - m - margenDer)/h;
@@ -132,10 +131,10 @@ public class I02_cuadr {
 				gc.setLineStyle(SWT.LINE_DOT);
 				if (i%subdivisiones==0) {
 					gc.setLineStyle(SWT.LINE_SOLID);
-					cambiarPincel(40,80,40);
+					cambiarPincel(gc, 40,80,40);
 					gc.drawText(String.valueOf(hi)+'h', m+i*subsep-5, margenSup, true);
 					gc.drawLine(m+i*subsep, 20+margenSup, m+i*subsep, alto-margenInf);
-					cambiarPincel(120,170,120);
+					cambiarPincel(gc, 120,170,120);
 					gc.setLineStyle(SWT.LINE_DOT);
 					hi++;
 				}
@@ -146,7 +145,7 @@ public class I02_cuadr {
 		}
 		gc.setLineStyle(SWT.LINE_SOLID);
 	}
-	private void dibujarSeleccion (int emp) {
+	private void dibujarSeleccion (GC gc, int emp) {
 		gc.setBackground(empleados.get(emp).dameColor());
 		gc.fillRectangle(margenNombres+margenIzq,margenSup+(sep_vert_franjas+alto_franjas)*(emp+1),ancho-margenNombres-margenIzq-margenDer,alto_franjas);
 	}
@@ -177,7 +176,7 @@ public class I02_cuadr {
 		ancho = c.getClientArea().width;
 		alto  = c.getClientArea().height;	
 	}
-	private void cambiarPincel (int r, int g, int b) {
+	private void cambiarPincel (GC gc, int r, int g, int b) {
 		// Controlar límites de colores
 		if (r<0) r=0;
 		if (g<0) g=0;
@@ -187,7 +186,7 @@ public class I02_cuadr {
 		if (b>255) b=255;		
 		gc.setForeground(new Color(c.getDisplay(),r, g, b));
 	}
-	private void cambiarRelleno(int r, int g, int b) {
+	private void cambiarRelleno(GC gc, int r, int g, int b) {
 		// Controlar límites de colores
 		if (r<0) r=0;
 		if (g<0) g=0;
@@ -231,6 +230,20 @@ public class I02_cuadr {
 	public Franja dameFranjaActiva() {
 		return franjaActiva;
 	}
+	public void dibujarCuadrante(GC gc) {
+	    // Doble buffering para evitar parpadeo
+		Image bufferImage = new Image(display,ancho,alto);
+	    GC gc2 = new GC(bufferImage);
+		gc2.setAntialias(SWT.ON);
+		//dibujarSeleccion(empleadoActivo);
+		dibujarHoras(gc2);
+		for (int i=0; i<empleados.size(); i++) {
+			empleados.get(i).dibujarFranjas(gc2, i,empleados.get(i).dameColor());
+		}
+		gc.drawImage(bufferImage,0,0);
+		bufferImage.dispose();
+	}
+	
 	public I02_cuadr (Canvas c) {
 
 		this.c = c;
@@ -272,18 +285,7 @@ public class I02_cuadr {
 		empleados.add(e3);
 		c.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent event) {
-			    // Doble buffering para evitar parpadeo
-				Image bufferImage = new Image(display,ancho,alto);
-			    gc = new GC(bufferImage);
-// Esto no va en el lab
-			    gc.setAntialias(SWT.ON);
-				//dibujarSeleccion(empleadoActivo);
-				dibujarHoras();
-				for (int i=0; i<empleados.size(); i++) {
-					empleados.get(i).dibujarFranjas(i,empleados.get(i).dameColor());
-				}
-				event.gc.drawImage(bufferImage,0,0);
-				bufferImage.dispose();
+				dibujarCuadrante(event.gc);
 			}
 		});
 		c.addControlListener(new ControlListener() {

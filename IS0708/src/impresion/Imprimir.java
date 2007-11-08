@@ -1,7 +1,7 @@
 /**
  * 
  */
-package paquete_pruebas;
+package impresion;
 
 /**
  * @author Kuba Chudzinski
@@ -16,6 +16,7 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.printing.*;
+import interfaces.I02_cuadr;
 
 public class Imprimir {
 	private PrintDialog printDialog;

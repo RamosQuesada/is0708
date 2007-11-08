@@ -20,31 +20,23 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.printing.*;
 
-import paquete_pruebas.Imprimir;
 
+import impresion.Imprimir;
 import interfaces.I01;
 import interfaces.I02_cuadr;
 import interfaces.I08_1;
 
 public class I02 {
-	private static Display display;
-	private Shell shell;
+	
+	Shell shell;
+	Display display;
 	Image icoGr, icoPq, ico_imprimir, ico_mens_l, ico_mens, ico_cuadrante, ico_chico, ico_chica, ico_chicos;
 	
-	public static void main (String[] args) {
-		// Este bucle mantiene la ventana abierta
-		display = new Display ();
-		I02 estaClase = new I02();
-		estaClase.crearVentana();
-		estaClase.shell.open();
-		while (!estaClase.shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-		display.dispose();
-	}
 	
+	public I02 (Shell shell, Display display){
+		this.shell = shell;
+		this.display = display;
+	}
 	private void crearBarraMenu() {
 		// Una barra de menús
 		Menu barra = new Menu (shell, SWT.BAR);
@@ -342,9 +334,8 @@ public class I02 {
 		tabItemEmpleados    .setControl(cEmpleados);
 		tabItemDepartamentos.setControl(cDepartamentos);
 	}
-	private void crearVentana() {
+	public void crearVentana() {
 		// Crear la ventana
-		shell = new Shell (display);
 		shell.setText("Turno-matic");
 
 		// Cargar iconos
