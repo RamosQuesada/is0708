@@ -7,9 +7,11 @@ import org.eclipse.swt.events.*;
 import java.util.ArrayList;
 
 public class I02_cuadr {
-// quitar colores de las barras (pertenecen a los empleados)
-// mostrar nombres de los empleados
-// resaltar el empleado seleccionado en el modo edición
+/* Tareas:
+ * - mostrar nombres de los empleados
+ * - resaltar el empleado seleccionado en el modo edición
+ * - bug: al hacer muchas franjas pequeñitas, no se pegan bien (y no tiene que ver con el sticky)
+ */
 	Composite c;
 	Display display;
 	int ancho;
