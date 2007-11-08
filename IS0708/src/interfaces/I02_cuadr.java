@@ -275,7 +275,8 @@ public class I02_cuadr {
 			    // Doble buffering para evitar parpadeo
 				Image bufferImage = new Image(display,ancho,alto);
 			    gc = new GC(bufferImage);
-				gc.setAntialias(SWT.ON);
+// Esto no va en el lab
+			    gc.setAntialias(SWT.ON);
 				//dibujarSeleccion(empleadoActivo);
 				dibujarHoras();
 				for (int i=0; i<empleados.size(); i++) {
