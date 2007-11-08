@@ -107,7 +107,6 @@ public class I02 {
 		// NO_BACKGROUND + doble buffer para evitar parpadeo
 		Canvas canvas = new Canvas(c, SWT.NO_BACKGROUND | SWT.BORDER);
 		canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 3));
-		
 		I02_cuadr cuadr = new I02_cuadr(canvas);		
 		Label lCalendario = new Label (c, SWT.LEFT);
 		lCalendario.setText("Calendario");
