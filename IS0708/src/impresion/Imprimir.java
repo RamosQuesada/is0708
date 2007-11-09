@@ -72,7 +72,7 @@ public class Imprimir {
 			p.startPage();
 
 			GC gc2 = new GC(p);
-			Cuadrante c = new Cuadrante(imDisplay);
+			Cuadrante c = new Cuadrante(imDisplay,4);
 			c.setTamaño(p.getClientArea().width, p.getClientArea().height);
 			c.dibujarCuadrante(gc2);
 

@@ -2,7 +2,10 @@
  * INTERFAZ I-02_cuadr :: Canvas de cuadrante
  *   por Daniel Dionne
  *   
- * Crea un canvas con un cuadrante editable
+ * Crea un canvas con un cuadrante editable.
+ * Importa la clase cuadrante que es la que lo dibuja. Esta clase sólo se encarga
+ * de los movimientos y pulsaciones del ratón.
+ * 
  * ver 0.1
  *******************************************************************************/
 
@@ -12,7 +15,6 @@ import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.events.*;
-import java.util.ArrayList;
 import interfaces.Cuadrante.*;
 
 public class I02_cuadr {
@@ -33,10 +35,9 @@ public class I02_cuadr {
 	int margenIzq, margenDer, margenSup, margenInf; // Márgenes del cuadrante
 	int margenNombres; // Un margen para pintar los nombres a la izquierda
 	Franja franjaActiva;
-
+	int subdivisiones; 
 	int movimiento;
-	Boolean stickyGrid;
-	Boolean subStick;
+
 	
 	
 	private void calcularTamaño(){
@@ -100,17 +101,15 @@ public class I02_cuadr {
 		
 		franjaActiva = null;
 		movimiento = 0;
-		stickyGrid = true;
-		subStick = true;
 		
 		margenIzq = 20;
 		margenDer=  20;
 		margenSup = 20;
 		margenInf = 20;
 		margenNombres = 100;
-
+		subdivisiones = 4;
 		empleadoActivo = 2;
-		cuadrante = new Cuadrante(display);
+		cuadrante = new Cuadrante(display, subdivisiones);
 		calcularTamaño();
 		display = c.getDisplay();
 		c.addPaintListener(new PaintListener() {
@@ -129,24 +128,25 @@ public class I02_cuadr {
 				Franja f = dameFranjaActiva();
 				// Si acabo de apretar el botón para crear una franja, pero todavía no he movido el ratón
 				if (creando) {
-					Franja nuevaFranja = cuadrante.new Franja(e.x, e.x);
+					//TODO
+					//Franja nuevaFranja = cuadrante.new Franja(e.x, e.x);
+					/*
 					if (stickyGrid){
 						nuevaFranja.inicio = cuadrante.sticky(nuevaFranja.inicio, subStick);
 					}
 					cuadrante.empleados.get(empleadoActivo).franjas.add(nuevaFranja);
 					activarFranja(cuadrante.empleados.get(empleadoActivo).franjas.size()-1,3);
+					*/
 					creando = false;
 					terminadoDeCrear = false;
 				}
 				// Si estoy moviendo una franja
 				else if (dameMovimiento()==2) {
-					int anchoFranja = f.fin - f.inicio;
-					f.inicio = e.x-despl;
-					f.fin    = f.inicio+anchoFranja;
-					if (stickyGrid) {
-						f.inicio = cuadrante.sticky(f.inicio, subStick);
-						f.fin = f.inicio+anchoFranja;
-					}
+					//TODO Calcula mal el ancho
+					Posicion ancho = f.pfin.diferencia(f.pinicio, subdivisiones);
+					f.pinicio = cuadrante.sticky2(e.x-despl);
+					f.actualizarPixeles();
+					f.pfin.suma(ancho, subdivisiones);
 					// Comprobar si me estoy pegando a los bordes
 					f.pegarALosBordes();
 					int j = 0;
@@ -174,10 +174,9 @@ public class I02_cuadr {
 					f.inicio = e.x;
 					// Comprobar si toco el borde izquierdo
 					if (f.inicio < margenNombres+margenIzq) f.inicio=margenNombres+margenIzq;
-					// Activar sticky-grid
-					if (stickyGrid) {
-						f.inicio = cuadrante.sticky(f.inicio, subStick);
-					}
+					f.pinicio = cuadrante.sticky2(f.inicio);
+					f.actualizarPixeles();
+										
 					// Comprobar si la barra es de tamaño menor o igual que 0
 					if (f.inicio > f.fin) {
 						desactivarFranja();
@@ -207,9 +206,8 @@ public class I02_cuadr {
 					// Comprobar si toco el borde derecho
 					if (f.fin > ancho-margenDer) f.fin=ancho-margenDer;
 					// Activar sticky-grid
-					if (stickyGrid) {
-						f.fin = cuadrante.sticky(f.fin, subStick);
-					}
+					f.pfin = cuadrante.sticky2(f.fin);
+					f.actualizarPixeles();
 					// Comprobar si la barra es de tamaño menor o igual que 0
 					if (f.inicio > f.fin) {
 						desactivarFranja();
@@ -327,9 +325,10 @@ public class I02_cuadr {
 					f = cuadrante.empleados.get(empleadoActivo).franjas.get(i);
 					if (f.contienePuntoInt (e.x, e.y)) {
 						f = cuadrante.empleados.get(empleadoActivo).franjas.get(i);
-						Franja f2 = cuadrante.new Franja (f.inicio, e.x-10);
-						f.inicio=e.x+10;
-						cuadrante.empleados.get(empleadoActivo).franjas.add(f2);
+						//TODO que calcule el sticky en el que está
+						//Franja f2 = cuadrante.new Franja (f.inicio, e.x-10);
+						//f.inicio=e.x+10;
+						//cuadrante.empleados.get(empleadoActivo).franjas.add(f2);
 						redibujar(f,empleadoActivo);
 						encontrado = true;
 					}

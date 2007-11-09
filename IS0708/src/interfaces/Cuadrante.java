@@ -16,14 +16,38 @@ public class Cuadrante {
 	int sep_vert_franjas;
 	int horaInicio,horaFin; // Definen de qué hora a qué hora es el cuadrante
 	int subdivisiones; // Cuántas subdivisiones hacer por hora (0 = sin subdivisiones)
-	
+	int tamHora, tamSubdiv;
 	public ArrayList<Empleado> empleados; 
 
+	public class Posicion {
+		int hora, subdivision;
+		public Posicion (int hora, int subdivision) {
+			this.hora = hora;
+			this.subdivision = subdivision;
+		}
+		public void suma (Posicion p, int numSubDiv) {
+			int x = this.hora*numSubDiv + p.hora*numSubDiv + this.subdivision + p.subdivision;
+			this.hora = x/numSubDiv;
+			this.subdivision = x%numSubDiv;
+		}
+		public void resta (Posicion p, int numSubDiv) {
+			int x = this.hora*numSubDiv - p.hora*numSubDiv + this.subdivision - p.subdivision;
+			this.hora = x/numSubDiv;
+			this.subdivision = x%numSubDiv;
+		}
+		public Posicion diferencia (Posicion p, int numSubDiv) {
+			int x = this.hora*numSubDiv - p.hora*numSubDiv + this.subdivision - p.subdivision;
+			return new Posicion(x/numSubDiv, x%numSubDiv);
+		} 
+		
+	}
 	public class Franja {
 		int inicio, fin;
-		public Franja (int i, int f) {
-			inicio = i;
-			fin = f;
+		Posicion pinicio, pfin;
+		public Franja (Posicion pinicio, Posicion pfin) {
+			this.pinicio = pinicio;
+			this.pfin = pfin;
+			actualizarPixeles();
 		}
 		public void dibujarFranja (GC gc, int despV, Color color) {
 			int r = color.getRed();
@@ -58,8 +82,8 @@ public class Cuadrante {
 		public void pegarALosBordes () {
 			int anchoFranja = fin - inicio;
 			// Comprobar si me he salido por la izquierda
-			if (inicio<margenNombres+margenIzq) {
-				inicio=margenNombres+margenIzq;
+			if (inicio < margenNombres+margenIzq) {
+				inicio = margenNombres+margenIzq;
 				fin = inicio+anchoFranja;
 			}
 			// Comprobar si me he salido por la derecha
@@ -67,6 +91,10 @@ public class Cuadrante {
 				fin = ancho - margenDer;
 				inicio = fin-anchoFranja;
 			}
+		}
+		public void actualizarPixeles () {
+			inicio = margenIzq + margenNombres + tamHora*(pinicio.hora-horaInicio) + tamSubdiv*pinicio.subdivision;
+			fin    = margenIzq + margenNombres + tamHora*(pfin.hora   -horaInicio) + tamSubdiv*pfin.subdivision;
 		}
 	}
 	
@@ -79,8 +107,8 @@ public class Cuadrante {
 			franjas = new ArrayList();
 			color = c;
 		}
-		public void franjaNueva (int inicio, int fin) {
-			Franja f = new Franja(inicio, fin);
+		public void franjaNueva (Posicion pinicio, Posicion pfin) {
+			Franja f = new Franja(pinicio, pfin);
 			franjas.add(f);
 		}
 		public void quitarFranja (Franja franja) {
@@ -100,7 +128,7 @@ public class Cuadrante {
 		}
 	}
 
-	public Cuadrante(Display d) {
+	public Cuadrante(Display d, int subdivisiones) {
 		display = d;
 		margenIzq = 20;
 		margenDer=  20;
@@ -111,21 +139,22 @@ public class Cuadrante {
 		horaFin = 23;
 		alto_franjas = 15;
 		sep_vert_franjas = 10;
-		subdivisiones = 4;
+		this.subdivisiones = subdivisiones;
+		
 		
 		Empleado e1 = new Empleado("Pepe", new Color (display, 104, 228,  85));
 		Empleado e2 = new Empleado("Pepe", new Color (display, 130, 130, 225));
 		Empleado e3 = new Empleado("Pepe", new Color (display, 240, 190, 150));
 		
-		e1.franjaNueva(150,200);
-		e1.franjaNueva(220,280);
-		e1.franjaNueva(300,360);
-		e2.franjaNueva(150,200);
-		e2.franjaNueva(220,280);
-		e2.franjaNueva(300,360);
-		e3.franjaNueva(150,200);
-		e3.franjaNueva(220,280);
-		e3.franjaNueva(300,360);
+		e1.franjaNueva(new Posicion( 9, 0), new Posicion(14, 1));
+		e1.franjaNueva(new Posicion(15, 0), new Posicion(16, 0));
+		e1.franjaNueva(new Posicion(17, 0), new Posicion(22, 1));
+		e2.franjaNueva(new Posicion( 9, 0), new Posicion(14, 1));
+		e2.franjaNueva(new Posicion(15, 0), new Posicion(16, 0));
+		e2.franjaNueva(new Posicion(17, 0), new Posicion(22, 1));
+		e3.franjaNueva(new Posicion( 9, 0), new Posicion(14, 1));
+		e3.franjaNueva(new Posicion(15, 0), new Posicion(16, 0));
+		e3.franjaNueva(new Posicion(17, 0), new Posicion(22, 1));
 		
 		empleados = new ArrayList();
 		empleados.add(e1);
@@ -146,29 +175,16 @@ public class Cuadrante {
 		int m = margenIzq + margenNombres;
 		int h = horaFin - horaInicio;
 		int sep = (ancho - m - margenDer)/h;
-		if (subdivisiones==0) {
-			for (int i=0; i<h+1; i++) {
-				gc.drawText(String.valueOf(horaInicio+i)+'h', m+i*sep-5, margenSup, true);
-				gc.drawLine(m+i*sep, 20+margenSup, m+i*sep, alto-margenInf);
-			}
-		}
-		else {
-			int subsep = sep/(subdivisiones);
-			int hi = horaInicio;
-			for (int i=0; i<h*subdivisiones; i++) {
-				gc.setLineStyle(SWT.LINE_DOT);
-				if (i%subdivisiones==0) {
-					gc.setLineStyle(SWT.LINE_SOLID);
-					cambiarPincel(gc, 40,80,40);
-					gc.drawText(String.valueOf(hi)+'h', m+i*subsep-5, margenSup, true);
-					gc.drawLine(m+i*subsep, 20+margenSup, m+i*subsep, alto-margenInf);
-					cambiarPincel(gc, 120,170,120);
-					gc.setLineStyle(SWT.LINE_DOT);
-					hi++;
-				}
-				else {
-					gc.drawLine(m+i*subsep, 20+margenSup, m+i*subsep, alto-margenInf);
-				}
+		int subsep = sep/(subdivisiones);
+		for (int i=0; i<h+1; i++) {
+			gc.setLineStyle(SWT.LINE_SOLID);
+			cambiarPincel(gc, 40,80,40);
+			gc.drawText(String.valueOf(horaInicio+i)+'h', m+i*sep-5, margenSup, true);
+			gc.drawLine(m+i*sep, 20+margenSup, m+i*sep, alto-margenInf);
+			cambiarPincel(gc, 120,170,120);
+			gc.setLineStyle(SWT.LINE_DOT);
+			for (int j=0; j<subdivisiones; j++) {
+				gc.drawLine(m+i*sep+j*subsep, 20+margenSup, m+i*sep+j*subsep, alto-margenInf);
 			}
 		}
 		gc.setLineStyle(SWT.LINE_SOLID);
@@ -197,25 +213,51 @@ public class Cuadrante {
 		gc.setBackground(empleados.get(emp).dameColor());
 		gc.fillRectangle(margenNombres+margenIzq,margenSup+(sep_vert_franjas+alto_franjas)*(emp+1),ancho-margenNombres-margenIzq-margenDer,alto_franjas);
 	}
-
-	public int sticky (int x, Boolean subStick) {
+/*
+	public int sticky (int x) {
 		// Pegar las barras al grid si está activada la opción
 		int sep = (ancho - margenIzq - margenNombres - margenDer)/(horaFin - horaInicio);
 		int stick = sep / subdivisiones;
 		int desp = margenNombres + margenIzq;
-		if (subStick) {
-			if      ((x-desp)%stick<(stick/3))         x = desp + stick * ((x-desp)/stick);
-			else if ((x-desp)%stick>(stick-(stick/3))) x = desp + stick *(((x-desp)/stick)+1);
-		}
-		else {
-			if      ((x-desp)%(stick*subdivisiones)<(stick*subdivisiones/3))         x = desp + stick * ((x-desp)/stick);
-			else if ((x-desp)%(stick*subdivisiones)>(stick*subdivisiones-(stick*subdivisiones/3))) x = desp + stick *(((x-desp)/stick)+1);
-		}
+		if      ((x-desp)%(stick*subdivisiones)<=(stick*subdivisiones/2))         x = desp + stick * ((x-desp)/stick);
+		else if ((x-desp)%(stick*subdivisiones)> (stick*subdivisiones-(stick*subdivisiones/2))) x = desp + stick *(((x-desp)/stick)+1);
 		return x;
 	}
+*/
+	public Posicion sticky2 (int x) {
+		// TODO Tener en cuenta las mitades, que ahora se cambia al principio
+		int y = x - margenNombres - margenIzq;
+		return new Posicion(y/tamHora+horaInicio,(y%tamHora)/tamSubdiv);
+	}
+	
 	public void setTamaño(int ancho, int alto) {
 		this.alto = alto;
 		this.ancho = ancho;
+		tamHora = (ancho - margenIzq-margenDer-margenNombres)/(horaFin-horaInicio);
+		tamSubdiv = tamHora/subdivisiones;
+		for (int i=0; i < empleados.size(); i++) {
+			Empleado e = empleados.get(i);
+			for (int j=0; j < e.franjas.size(); j++) {
+				Franja f = e.franjas.get(j);
+				f.actualizarPixeles();
+			}
+		}
+		System.out.println();
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
