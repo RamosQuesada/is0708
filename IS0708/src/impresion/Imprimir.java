@@ -16,7 +16,7 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.printing.*;
-import interfaces.I02_cuadr;
+import interfaces.Cuadrante;
 
 public class Imprimir {
 	private PrintDialog printDialog;
@@ -48,10 +48,12 @@ public class Imprimir {
 	          p.startPage();
 	          Point size = imShell.getSize();    
 	          GC gc = new GC(p);
+
 	          Image printImage = new Image(p, image);
 	          if (!printImage.isDisposed()){
 	        	  gc.drawImage(printImage, size.x, size.y);
 	          }
+
 	          p.endPage();
 	          gc.dispose();
 	          p.endJob();
@@ -65,26 +67,20 @@ public class Imprimir {
 		//printDialog.setPrintToFile(true);
 		printerData = printDialog.open();
 		if (!(printerData == null)) {
-	          Printer p = new Printer(printerData);
-	          p.startJob("PrintJob");
-	          p.startPage();
-	          Point size = imShell.getSize();
-	          Image image = new Image(imDisplay, size.x, size.y);
-	          GC gc = new GC(imDisplay);
-	          imShell.update();
-	          gc.copyArea(image, imShell.getLocation().x, imShell.getLocation().y);
-	          gc.dispose(); 
-	          // Get the ImageData and create a new printer Image from it
-	          GC gc2 = new GC(p);
-	          ImageData imageData = image.getImageData();
-	          Image printImage = new Image(p, imageData);
-	          gc2.drawImage(printImage, size.x, size.y);
-	          
-	          p.endPage();
-	          gc2.dispose();
-	          p.endJob();
-	          p.dispose();
-	        }
+			Printer p = new Printer(printerData);
+			p.startJob("PrintJob");
+			p.startPage();
+
+			GC gc2 = new GC(p);
+			Cuadrante c = new Cuadrante(imDisplay);
+			c.setTamaño(p.getClientArea().width, p.getClientArea().height);
+			c.dibujarCuadrante(gc2);
+
+			p.endPage();
+			gc2.dispose();
+			p.endJob();
+			p.dispose();
+		}
 	};
 	public void imprimirEstado(PrinterData printerData){
 		if (printerData != null){
