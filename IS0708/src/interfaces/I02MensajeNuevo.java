@@ -148,6 +148,8 @@ public class I02MensajeNuevo {
 				if(opcion_actual==PETICION_BAJA){
 					System.out.println("HOLA2");
 					//mostrar pantalla indicandolo
+					I02PeticionBaja ventana = new I02PeticionBaja(padre);
+					shell.dispose();
 
 				}
 				if(opcion_actual==CAMBIO_HORARIO){
