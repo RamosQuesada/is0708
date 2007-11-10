@@ -43,8 +43,6 @@ public class I02Empleado {
 		final Image ico_mens_l = new Image(display, I02.class.getResourceAsStream("ico_mens1_v.gif"));
 		final Image ico_mens = new Image(display, I02.class.getResourceAsStream("ico_mens2_v.gif"));
 		final Image ico_cuadrante = new Image(display, I02.class.getResourceAsStream("ico_cuadrante.gif"));
-		final Image ico_chico = new Image(display, I02.class.getResourceAsStream("ico_chico.gif"));
-		final Image ico_chica = new Image(display, I02.class.getResourceAsStream("ico_chica.gif"));
 		final Image ico_estadisticas = new Image(display, I02.class.getResourceAsStream("grafica_1.ico"));
 		
 		
@@ -252,6 +250,7 @@ public class I02Empleado {
 		//Creamos un oyente
 		bMensNuevo.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
+				@SuppressWarnings("unused")
 				I02MensajeNuevo ventana = new I02MensajeNuevo(shell);
 			}
 		});
@@ -308,6 +307,7 @@ public class I02Empleado {
 	}
 	
 	public static void main(String[] IS0708) {
+		@SuppressWarnings("unused")
 		I02Empleado empleado = new I02Empleado();
 	}
 }

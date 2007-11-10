@@ -13,22 +13,43 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
+/**
+ * Clase que crea la ventana de eleccion de tipo de mensaje
+ * @author David Rodilla
+ */
 public class I02MensajeNuevo {
+	/**
+	 * Ventana que llama a la de esta clase
+	 */
 	private Shell padre = null;
 
+	/**Constante para indicar que la opcion actual no esta inicializada aun */
 	private final static int NO_INICIALIZADO=0;
+	
+	/**Constante para indicar que la opcion actual es enviar
+	 *  mensaje por mensajeria interna */
 	private final static int MENSAJERIA_INTERNA=1;
+	/**Constante para indicar que la opcion actual es enviar
+	 *  mensaje de peticion de baja */
 	private final static int PETICION_BAJA=2;
+	/**Constante para indicar que la opcion actual es enviar
+	 *  mensaje de peticion cambio de horario */
 	private final static int CAMBIO_HORARIO=3;
 
-	
+	/** Entero que indica la opcion seleccionada en un momento */
 	private int opcion_actual= NO_INICIALIZADO;
 	
+	/** Constructor
+	 * @param padre ventana que llama a la actual
+	 */
 	public I02MensajeNuevo(Shell padre) {
 		this.padre = padre;
 		mostrarVentana();
 	}
 	
+	/**
+	 * Metodo que muestra por pantalla la nueva ventana
+	 */
 	public void mostrarVentana() {
 		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 
