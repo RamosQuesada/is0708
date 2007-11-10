@@ -140,21 +140,18 @@ public class I02MensajeNuevo {
 					e.doit = messageBox.open () == SWT.CLOSE;
 				}
 				if(opcion_actual==MENSAJERIA_INTERNA){
-					System.out.println("HOLA1");
 					I02MensajeriaInterna ventana = new I02MensajeriaInterna(padre);
 					shell.dispose();
 
 				}
 				if(opcion_actual==PETICION_BAJA){
-					System.out.println("HOLA2");
-					//mostrar pantalla indicandolo
 					I02PeticionBaja ventana = new I02PeticionBaja(padre);
 					shell.dispose();
 
 				}
 				if(opcion_actual==CAMBIO_HORARIO){
-					System.out.println("HOLA3");
-					//mostrar pantalla indicandolo
+					I02CambioHorario ventana = new I02CambioHorario(padre);
+					shell.dispose();
 
 				}
 			}
