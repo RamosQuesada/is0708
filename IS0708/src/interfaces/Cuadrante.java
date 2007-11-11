@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.*;
+
+//De dónde coger javadoc: http://javashoplm.sun.com/ECom/docs/Welcome.jsp?StoreId=22&PartDetailId=jdk-6u3-oth-JPR&SiteId=JSC&TransactionId=noreg
+/*TODO	Si hago la ventana muy muy pequeña, el cuadrante se da la vuelta
+ *		
+ */		
+
 /**
  * Dibuja un cuadrante sobre un GC.
  * 
@@ -11,12 +17,6 @@ import org.eclipse.swt.widgets.*;
  * @version	0.1
  * 
  */
-
-//De dónde coger javadoc: http://javashoplm.sun.com/ECom/docs/Welcome.jsp?StoreId=22&PartDetailId=jdk-6u3-oth-JPR&SiteId=JSC&TransactionId=noreg
-/*TODO	Si hago la ventana muy muy pequeña, el cuadrante se da la vuelta
- *		
- */		
-
 public class Cuadrante {
 	private final int anchoLados = 5; // El ancho de los lados de una franja, de donde se coge para estirarla y encogerla 
 	private Display display;
