@@ -45,8 +45,8 @@ public class Cuadrante {
 		int hora, cmin;
 		/**
 		 * El constructor de la clase. Si cmin es mayor que 11, se deja en 11.
-		 * @param hora
-		 * @param cmin
+		 * @param hora	La hora de la posición
+		 * @param cmin	Los cminutos (intervalos de 5 minutos)
 		 */
 		public Posicion (int hora, int cmin) {
 			this.hora = hora;
@@ -349,17 +349,16 @@ public class Cuadrante {
 	}
 
 	/**
-	 * Constructor del cuadrante
+	 * Constructor del cuadrante. Los valores habituales del parámetro subdivisiones son:
+	 * <ul>
+	 * <li>12	(cada 5 min),
+	 * <li>6	(cada 10 min),
+	 * <li>4	(cada 15 min),
+	 * <li>2	(cada 30 min),
+	 * <li>1	(sin subdivisiones)
+	 * </ul>
 	 * @param d				Display sobre el que se dibujará el cuadrante
-	 * @param subdivisiones	Número de subdivisiones que se muestran en el cuadrante.
-	 * 						Los valores habituales de este parámetro son:
-	 * 						<ul>
-	 * 						<il> 12	(cada 5 min),
-	 *  					<il> 6	(cada 10 min),
-	 *   					<il> 4	(cada 15 min),
-	 *    					<il> 2	(cada 30 min),
-	 *    					<il> 1	(sin subdivisiones)
-	 *     					</ul>  
+	 * @param subdivisiones	Número de subdivisiones que se muestran en el cuadrante.  
 	 * @param horaInicio	Hora de inicio del cuadrante
 	 * @param horaFin		Hora de fin del cuadrante. Las horas pasadas de las 24 se muestran
 	 * 						como la madrugada del día siguiente.
