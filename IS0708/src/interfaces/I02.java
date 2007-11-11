@@ -102,12 +102,11 @@ public class I02 {
 		// Un canvas para albergar el gráfico de los cuadrantes
 		// NO_BACKGROUND + doble buffer para evitar parpadeo
 		Canvas canvas = new Canvas(c, SWT.NO_BACKGROUND | SWT.BORDER);
-		canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 3));
-		new I02_cuadr(canvas);		
+		canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 4));
+		final I02_cuadr cuadrante = new I02_cuadr(canvas);		
 		Label lCalendario = new Label (c, SWT.LEFT);
 		lCalendario.setText("Calendario");
 		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1));
-
 		
 		final DateTime calendario = new DateTime (c, SWT.CALENDAR);
 		calendario.addSelectionListener (new SelectionAdapter () {
@@ -117,6 +116,27 @@ public class I02 {
 			}
 		});
 		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 2, 1));
+
+		Label lGridCuadrante= new Label (c, SWT.LEFT);
+		lGridCuadrante.setText("Mostrar intervalos de");
+		lGridCuadrante.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+		
+		final Combo cGridCuadrante = new Combo(c, SWT.BORDER | SWT.READ_ONLY);
+		cGridCuadrante.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		cGridCuadrante.setItems(new String[] {"5 min", "10 min", "15 min", "30 min", "1 hora"});
+		cGridCuadrante.select(2);
+		
+		cGridCuadrante.addListener(SWT.Selection, new Listener () {
+			public void handleEvent (Event e){
+				switch (cGridCuadrante.getSelectionIndex()) {
+				case 0 : cuadrante.setSubdivisiones(12); break;
+				case 1 : cuadrante.setSubdivisiones(6); break;
+				case 2 : cuadrante.setSubdivisiones(4); break;
+				case 3 : cuadrante.setSubdivisiones(2); break;
+				case 4 : cuadrante.setSubdivisiones(1);
+				}
+			}
+		});
 
 	}
 	private void crearCompositeMensajes (Composite c) {
