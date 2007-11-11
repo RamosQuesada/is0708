@@ -283,7 +283,7 @@ public class I02Empleado {
 		cEstadisticas.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
 		//Le añadimos un layout
 		GridLayout lEstadisticas = new GridLayout();
-		lEstadisticas.numColumns = 5;
+		lEstadisticas.numColumns = 2;
 		cEstadisticas.setLayout(lEstadisticas);
 		
 		//CAMBIANTE
@@ -300,7 +300,7 @@ public class I02Empleado {
 		final Composite cEstDer = new Composite (cEstadisticas, SWT.BORDER);
 		cEstDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		GridLayout lEstDer = new GridLayout();
-		lEstDer.numColumns = 4;
+		lEstDer.numColumns = 1;
 		lEstDer.makeColumnsEqualWidth = true;
 		cEstDer.setLayout(lEstDer);
 		
@@ -313,28 +313,29 @@ public class I02Empleado {
 			        org.eclipse.swt.SWT.BOLD));
 		lTitulo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
 		
-		final Composite cOpciones = new Composite (cEstIzq, SWT.BACKGROUND);
-		cOpciones.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
-		GridLayout lOpciones = new GridLayout();
-		lOpciones.numColumns = 2;
-		lOpciones.makeColumnsEqualWidth = true;
-		cOpciones.setLayout(lOpciones);
+//		final Composite cOpciones = new Composite (cEstIzq, SWT.BACKGROUND);
+//		cOpciones.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
+//		GridLayout lOpciones = new GridLayout();
+//		lOpciones.numColumns = 2;
+//		lOpciones.makeColumnsEqualWidth = true;
+//		cOpciones.setLayout(lOpciones);
 		
-		final Label lTiempo	= new Label(cOpciones, SWT.LEFT);
+		final Label lTiempo	= new Label(cEstIzq, SWT.LEFT);
 		lTiempo.setText("Tiempo datos:");
-		lTiempo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, true, 1, 1));
-		Combo cTiempo = new Combo(cOpciones, SWT.BORDER | SWT.READ_ONLY);
-		cTiempo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		lTiempo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
+		Combo cTiempo = new Combo(cEstIzq, SWT.BORDER | SWT.READ_ONLY);
+		cTiempo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		cTiempo.setItems(new String[] {"Semana", "Quincena", "Mes","Año"});
 		cTiempo.select(0);
 		
-		final Label lComparar	= new Label(cOpciones, SWT.LEFT);
+		final Label lComparar	= new Label(cEstIzq, SWT.LEFT);
 		lComparar.setText("Comparar con:");
-		lComparar.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, true, 1, 1));
-		Combo cComparar = new Combo(cOpciones, SWT.BORDER | SWT.READ_ONLY);
-		cComparar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		lComparar.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
+		Combo cComparar = new Combo(cEstIzq, SWT.BORDER | SWT.READ_ONLY);
+		cComparar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		cComparar.setItems(new String[] {"Nadie","Empleado medio", "Mejor de semana", "Mejor de mes","Mejor de año","Elegir otro"});
 		cComparar.select(0);
+		cComparar.setVisibleItemCount(6);
 		
 		final Label lTipoGrafico	= new Label(cEstIzq, SWT.CENTER);
 		lTipoGrafico.setText("Datos a visualizar:");
@@ -426,8 +427,8 @@ public class I02Empleado {
 		);
 
 		
-		final Label lPrueba2 = new Label (cEstDer, SWT.FILL);
-		lPrueba2.setText("Calendario 2");
+		final Label lPrueba2 = new Label (cEstDer, SWT.SIMPLE);
+		lPrueba2.setText("Aqui se visualizarian las graficas");
 		lPrueba2.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 
 
