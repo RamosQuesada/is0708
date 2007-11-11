@@ -9,12 +9,10 @@ package impresion;
  */
 import org.eclipse.swt.*;
 import org.eclipse.swt.widgets.*;
-import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.printing.*;
 import interfaces.Cuadrante;
 
@@ -72,9 +70,9 @@ public class Imprimir {
 			p.startPage();
 
 			GC gc2 = new GC(p);
-			Cuadrante c = new Cuadrante(imDisplay,4);
+			Cuadrante c = new Cuadrante(imDisplay,4,9,23);
 			c.setTamaño(p.getClientArea().width, p.getClientArea().height);
-			c.dibujarCuadrante(gc2);
+			c.dibujarCuadrante(gc2,-1);
 
 			p.endPage();
 			gc2.dispose();

@@ -10,15 +10,11 @@
 package interfaces;
 
 import org.eclipse.swt.*;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.*;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.printing.*;
 
 
 import impresion.Imprimir;
@@ -107,7 +103,7 @@ public class I02 {
 		// NO_BACKGROUND + doble buffer para evitar parpadeo
 		Canvas canvas = new Canvas(c, SWT.NO_BACKGROUND | SWT.BORDER);
 		canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 3));
-		I02_cuadr cuadr = new I02_cuadr(canvas);		
+		new I02_cuadr(canvas);		
 		Label lCalendario = new Label (c, SWT.LEFT);
 		lCalendario.setText("Calendario");
 		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1));
@@ -252,7 +248,7 @@ public class I02 {
 
 		bEmplNuevo.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				I08_1 ventana = new I08_1(shell);
+				new I08_1(shell);
 			}
 		});
 				
