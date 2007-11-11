@@ -113,7 +113,7 @@ public class I02_cuadr {
 			catch (SWTException ex){
 				System.out.println(ex.code);
 			}
-			cuadrante.dibujarCuadrante(gc2, empleadoActivo);
+			cuadrante.dibujarCuadranteDia(gc2, empleadoActivo);
 			gc.drawImage(bufferImage, 0, 0);
 			bufferImage.dispose();
 		}

@@ -349,16 +349,16 @@ public class Cuadrante {
 	}
 
 	/**
-	 * Constructor del cuadrante. Los valores habituales del parámetro subdivisiones son:
-	 * <ul>
-	 * <li>12	(cada 5 min),
-	 * <li>6	(cada 10 min),
-	 * <li>4	(cada 15 min),
-	 * <li>2	(cada 30 min),
-	 * <li>1	(sin subdivisiones)
-	 * </ul>
+	 * Constructor del cuadrante.
 	 * @param d				Display sobre el que se dibujará el cuadrante
 	 * @param subdivisiones	Número de subdivisiones que se muestran en el cuadrante.  
+	 * 						<ul>
+	 * 						<li>12	(cada 5 min),
+	 * 						<li>6	(cada 10 min),
+	 * 						<li>4	(cada 15 min),
+	 * 						<li>2	(cada 30 min),
+	 * 						<li>1	(sin subdivisiones)
+	 * 						</ul>
 	 * @param horaInicio	Hora de inicio del cuadrante
 	 * @param horaFin		Hora de fin del cuadrante. Las horas pasadas de las 24 se muestran
 	 * 						como la madrugada del día siguiente.
@@ -406,7 +406,7 @@ public class Cuadrante {
 	 * @param empleadoActivo	La posición del empleado a resaltar en la lista de empleados.
 	 */
 	// TODO Debería lanzar una excepción si empleadoActivo > empleados.size
-	public void dibujarCuadrante(GC gc, int empleadoActivo) {
+	public void dibujarCuadranteDia(GC gc, int empleadoActivo) {
 		dibujarSeleccion(gc, empleadoActivo);
 		dibujarHoras(gc);
 		for (int i=0; i<empleados.size(); i++) {
