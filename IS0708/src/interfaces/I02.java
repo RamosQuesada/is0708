@@ -332,7 +332,7 @@ public class I02 {
 	}
 	public void crearVentana() {
 		// Crear la ventana
-		shell.setText("Turno-matic");
+		shell.setText("Turno-matic");// idiomas igual siempre
 
 		// Cargar iconos
 		icoGr = new Image(display, I02.class.getResourceAsStream("icoGr.gif"));
