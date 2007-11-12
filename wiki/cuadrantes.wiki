@@ -17,4 +17,5 @@ Os lo explico un poco:
  * Como veis, Pilar viene todos los días por la tarde, y Ángeles por la mañana. Supongo que porque lo han hablado y lo prefieren así. El programa debería admitir este tipo de excepciones, ya que de lo contrario, lo mejor es intentar una rotación. 
 
 Ejemplo de un cuadrante diario:
+
 http://is0708.googlecode.com/files/Captura.JPG
