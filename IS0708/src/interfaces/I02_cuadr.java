@@ -14,67 +14,75 @@ package interfaces;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.events.*;
 import interfaces.Cuadrante.*;
 
+/**
+ * Dada una instancia de Canvas, que se le pasa como parámetro al constructor,
+ * crea un cuadrante sobre la misma.
+ * @author Daniel
+ *
+ */
 public class I02_cuadr {
-	/*
-	 * Tareas: - mostrar nombres de los empleados - resaltar el empleado
-	 * seleccionado en el modo edición - bug: al hacer muchas franjas
-	 * pequeñitas, no se pegan bien (y no tiene que ver con el sticky)
+	/* TODO
+	 * Las barras de tamaño cero se quedan
+	 * bug: al hacer muchas franjas pequeñitas, no se pegan bien (ver si sigue pasando)
 	 */
-	Composite c;
-	Cuadrante cuadrante;
-	int alto, ancho;
-	Display display;
-	int despl; // Este es para cuando movemos una barra, para saber de dónde la
+	private Canvas canvas;
+	private Cuadrante cuadrante;
+	private int alto, ancho;
+	private Display display;
+	private int despl; // Este es para cuando movemos una barra, para saber de dónde la
 				// he cogido
-	Color fg;
-	Boolean creando, terminadoDeCrear; // La variable terminadoDeCrear sirve
-										// para que una franja nueva no
-										// desaparezca al crearla
-	int empleadoActivo;
-	int horaInicio, horaFin; // Definen de qué hora a qué hora es el
+	private Boolean creando, terminadoDeCrear;
+	// La variable terminadoDeCrear sirve para que una franja nueva no desaparezca al crearla
+	private Boolean diario; // 1: muestra cuadrante diario, 0: muestra cuadrante mensual
+	private int empleadoActivo;
+	private int horaInicio, horaFin; // Definen de qué hora a qué hora es el
 								// cuadrante
 
-	int margenIzq, margenDer, margenSup, margenInf; // Márgenes del cuadrante
-	int margenNombres; // Un margen para pintar los nombres a la izquierda
-	Franja franjaActiva;
-	int movimiento;
-
+	private int margenIzq, margenDer, margenSup, margenInf; // Márgenes del cuadrante
+	private int margenNombres; // Un margen para pintar los nombres a la izquierda
+	private Franja franjaActiva;
+	private int movimiento;
+	private final Label lGridCuadrante;
+	private final Combo cGridCuadrante;
+	
 	private void calcularTamaño() {
-		ancho = c.getClientArea().width;
-		alto = c.getClientArea().height;
+		ancho = canvas.getClientArea().width;
+		alto = canvas.getClientArea().height;
 		cuadrante.setTamaño(ancho, alto);
 	}
 
-	public void redibujar() {
+	private void redibujar() {
 		// Redibuja sólo las franjas que corresponden, para evitar calculos
 		// innecesarios
 		// TODO ¿Merece la pena? Hay que ver si hay alguna diferencia en el rendimiento.
 		// c.redraw(0, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1),
 		// ancho, 18, false);
 		//c.redraw(0, 0, ancho, alto, false);
-		c.redraw();
+		canvas.redraw();
 	}
 
-	public void cursor(int i) {
+	private void cursor(int i) {
 		switch (i) {
 		case 1:
-			c.setCursor(new Cursor(c.getDisplay(), SWT.CURSOR_HAND));
+			canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_HAND));
 			break;
 		case 2:
-			c.setCursor(new Cursor(c.getDisplay(), SWT.CURSOR_SIZEE));
+			canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_SIZEE));
 			break;
 		default:
-			c.setCursor(new Cursor(c.getDisplay(), SWT.CURSOR_ARROW));
+			canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_ARROW));
 			break;
 		}
 
 	}
 
-	public void activarFranja(int franja, int mov) {
+	private void activarFranja(int franja, int mov) {
 		franjaActiva = cuadrante.empleados.get(empleadoActivo).franjas
 				.get(franja);
 		franjaActiva.activarFranja();
@@ -86,22 +94,22 @@ public class I02_cuadr {
 		// 3: Mover final
 	}
 
-	public void desactivarFranja() {
+	private void desactivarFranja() {
 		if (franjaActiva!=null)
 			franjaActiva.desactivarFranja();
 		franjaActiva = null;
 		movimiento = 0;
 	}
 
-	public int dameMovimiento() {
+	private int dameMovimiento() {
 		return movimiento;
 	}
 
-	public Franja dameFranjaActiva() {
+	private Franja dameFranjaActiva() {
 		return franjaActiva;
 	}
 
-	public void dibujarCuadrante(GC gc) {
+	private void dibujarCuadrante(GC gc) {
 		// Doble buffering para evitar parpadeo
 		if (ancho != 0 && alto != 0) {
 			Image bufferImage = new Image(display, ancho, alto);
@@ -113,43 +121,90 @@ public class I02_cuadr {
 			catch (SWTException ex){
 				System.out.println(ex.code);
 			}
-			cuadrante.dibujarCuadranteDia(gc2, empleadoActivo);
+			if (diario) cuadrante.dibujarCuadranteDia(gc2, empleadoActivo);
+			else cuadrante.dibujarCuadranteMes(gc2);
 			gc.drawImage(bufferImage, 0, 0);
 			bufferImage.dispose();
 		}
 	}
-	public void setSubdivisiones(int i) {
+	private void setSubdivisiones(int i) {
 		cuadrante.subdivisiones = i;
 		redibujar();
 	}
+	public void setDiario()  {
+		diario = true;
+		lGridCuadrante.setVisible(true);
+		cGridCuadrante.setVisible(true);
+		redibujar();}
+	public void setMensual() {
+		diario = false;
+		lGridCuadrante.setVisible(false);
+		cGridCuadrante.setVisible(false);
+		redibujar();
+	}
+	/**
+	 * Constructora que recibe como parámetro el Composite donde colocar los botones
+	 * y el cuadrante.
+	 * @param c	Composite sobre el que dibujar el cuadrante
+	 */
+	public I02_cuadr(Composite c, Boolean diario) {
+		this.diario = diario;
+		final GridLayout l = new GridLayout(3,false);
+		c.setLayout(l);
+		
+		final Label lCuadranteTitulo= new Label (c, SWT.LEFT);
+		String fname = lCuadranteTitulo.getFont().getFontData()[0].getName();
+		lCuadranteTitulo.setFont(new Font(c.getDisplay(),fname,15,0));
+		// TODO Esto tendrá que cambiarse por la fecha elegida en el calendario
+		lCuadranteTitulo.setText("12 de noviembre de 2007");
+		lCuadranteTitulo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		
+		lGridCuadrante= new Label (c, SWT.LEFT);
+		lGridCuadrante.setText("Mostrar intervalos de");
+		lGridCuadrante.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
+		
+		cGridCuadrante = new Combo(c, SWT.BORDER | SWT.READ_ONLY);
+		cGridCuadrante.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		cGridCuadrante.setItems(new String[] {"5 min", "10 min", "15 min", "30 min", "1 hora"});
+		cGridCuadrante.select(2);
+		
+		cGridCuadrante.addListener(SWT.Selection, new Listener () {
+			public void handleEvent (Event e){
+				switch (cGridCuadrante.getSelectionIndex()) {
+				case 0 : setSubdivisiones(12); break;
+				case 1 : setSubdivisiones(6); break;
+				case 2 : setSubdivisiones(4); break;
+				case 3 : setSubdivisiones(2); break;
+				case 4 : setSubdivisiones(1);
+				}
+			}
+		});
 
-	public I02_cuadr(Canvas c) {
-
-		this.c = c;
+		this.canvas = new Canvas(c, SWT.FILL | SWT.NO_BACKGROUND);
+		canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
+		if (diario) setDiario(); else setMensual();
 		creando = false;
 		terminadoDeCrear = true;
 
 		franjaActiva = null;
 		movimiento = 0;
-
 		margenIzq = 15;
 		margenDer = 20;
-		margenSup = 10;
+		margenSup = 1;
 		margenInf = 10;
 		margenNombres = 90;
-
 		empleadoActivo = -1;
 		horaInicio = 9;
 		horaFin = 23;
 		cuadrante = new Cuadrante(display, 4, horaInicio, horaFin, margenIzq, margenDer, margenSup, margenInf, margenNombres);
 		calcularTamaño();
-		display = c.getDisplay();
-		c.addPaintListener(new PaintListener() {
+		display = canvas.getDisplay();
+		canvas.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent event) {
 				dibujarCuadrante(event.gc);
 			}
 		});
-		c.addControlListener(new ControlListener() {
+		canvas.addControlListener(new ControlListener() {
 			public void controlMoved(ControlEvent e) {
 			}
 
@@ -157,7 +212,7 @@ public class I02_cuadr {
 				calcularTamaño();
 			}
 		});
-		c.addMouseMoveListener(new MouseMoveListener() {
+		canvas.addMouseMoveListener(new MouseMoveListener() {
 			public void mouseMove(MouseEvent e) {
 				Franja f = dameFranjaActiva();
 				// Si acabo de apretar el botón para crear una franja, pero
@@ -327,7 +382,7 @@ public class I02_cuadr {
 				}
 			}
 		});
-		c.addMouseListener(new MouseListener() {
+		canvas.addMouseListener(new MouseListener() {
 			public void mouseDown(MouseEvent e) {
 				// Botón derecho: Borra una franja (podría mostrar un menú si hace falta)
 				if (empleadoActivo!=-1 && e.button == 3) {

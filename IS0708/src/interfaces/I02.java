@@ -84,10 +84,7 @@ public class I02 {
 	private void crearCompositeCuadrantes (Composite c) {
 		// Configuración del composite
 		c.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
-		GridLayout lCc = new GridLayout();
-		lCc.numColumns = 5;
-		//lCc.makeColumnsEqualWidth = true;
-		c.setLayout(lCc);
+		c.setLayout(new GridLayout(5,false));
 		
 		// Componentes del composite
 		Label lDepartamentos = new Label(c, SWT.NONE);
@@ -101,9 +98,10 @@ public class I02 {
 
 		// Un canvas para albergar el gráfico de los cuadrantes
 		// NO_BACKGROUND + doble buffer para evitar parpadeo
-		Canvas canvas = new Canvas(c, SWT.NO_BACKGROUND | SWT.BORDER);
-		canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 4));
-		final I02_cuadr cuadrante = new I02_cuadr(canvas);		
+		Composite cCuadrante= new Composite(c, SWT.BORDER);
+		cCuadrante.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 5));
+
+		final I02_cuadr cuadrante = new I02_cuadr(cCuadrante, false);		
 		Label lCalendario = new Label (c, SWT.LEFT);
 		lCalendario.setText("Calendario");
 		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1));
@@ -115,36 +113,31 @@ public class I02 {
 				System.out.println ("Fecha cambiada a "+ String.valueOf(calendario.getDay()) + " de " + meses[calendario.getMonth()]+ " de " + String.valueOf(calendario.getYear()));
 			}
 		});
-		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 2, 1));
-
-		Label lGridCuadrante= new Label (c, SWT.LEFT);
-		lGridCuadrante.setText("Mostrar intervalos de");
-		lGridCuadrante.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-		
-		final Combo cGridCuadrante = new Combo(c, SWT.BORDER | SWT.READ_ONLY);
-		cGridCuadrante.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		cGridCuadrante.setItems(new String[] {"5 min", "10 min", "15 min", "30 min", "1 hora"});
-		cGridCuadrante.select(2);
-		
-		cGridCuadrante.addListener(SWT.Selection, new Listener () {
-			public void handleEvent (Event e){
-				switch (cGridCuadrante.getSelectionIndex()) {
-				case 0 : cuadrante.setSubdivisiones(12); break;
-				case 1 : cuadrante.setSubdivisiones(6); break;
-				case 2 : cuadrante.setSubdivisiones(4); break;
-				case 3 : cuadrante.setSubdivisiones(2); break;
-				case 4 : cuadrante.setSubdivisiones(1);
+		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));
+		final Button bPorMes = new Button(c, SWT.RADIO);
+		bPorMes.setText("Ver por mes");
+		bPorMes.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));
+		//Oyente para saber cuando se ha modificado la seleccion del boton
+		bPorMes.addListener(SWT.Selection, new Listener() {
+			//Seleccionado por mes
+			public void handleEvent(Event e) {
+				if (bPorMes.getSelection()) {
+					cuadrante.setMensual();
 				}
+				else cuadrante.setDiario();
+				
 			}
-		});
+		});		
 
+		final Button bPorSemanas = new Button(c, SWT.RADIO);
+		bPorSemanas.setText("Ver por semana");
+		bPorSemanas.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));		
+
+		bPorMes.setSelection(true);
 	}
 	private void crearCompositeMensajes (Composite c) {
 		c.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
-		GridLayout lCc = new GridLayout();
-		lCc.numColumns = 4;
-		lCc.makeColumnsEqualWidth = true;
-		c.setLayout(lCc);
+		c.setLayout(new GridLayout(4, true));
 		
 		Table tablaMensajes = new Table (c, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
 		tablaMensajes.setLinesVisible (true);
@@ -188,16 +181,11 @@ public class I02 {
 	}
 	private void crearCompositeEmpleados(Composite c) {
 		c.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		GridLayout lCc = new GridLayout();
-		lCc.numColumns = 2;
-		c.setLayout(lCc);
+		c.setLayout(new GridLayout(2, false));
 		
 		final Composite cEmplIzq = new Composite (c, SWT.NONE);
 		cEmplIzq.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
-		GridLayout lCEmplIzq = new GridLayout();
-		lCEmplIzq.numColumns = 2;
-		//lCEmplIzq.makeColumnsEqualWidth = true;
-		cEmplIzq.setLayout(lCEmplIzq);
+		cEmplIzq.setLayout(new GridLayout(2, false));
 		
 		Label lEmplFiltro = new Label(cEmplIzq, SWT.NONE);
 		lEmplFiltro.setText("Filtro");
@@ -233,10 +221,7 @@ public class I02 {
 
 		final Composite cEmplDer = new Composite (c, SWT.NONE);
 		cEmplDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		GridLayout lCEmplDer = new GridLayout();
-		lCEmplDer.numColumns = 4;
-		lCEmplDer.makeColumnsEqualWidth = true;
-		cEmplDer.setLayout(lCEmplDer);
+		cEmplDer.setLayout(new GridLayout(4, true));
 
 		Table tablaEmpleados = new Table (cEmplDer, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
 		tablaEmpleados.setLinesVisible (true);
@@ -286,9 +271,7 @@ public class I02 {
 	}
 	private void crearCompositeDepartamentos(Composite c) {
 		c.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		GridLayout lCc = new GridLayout();
-		lCc.numColumns = 3;
-		c.setLayout(lCc);
+		c.setLayout(new GridLayout(3,false));
 
 		Label lDepartamentos = new Label(c, SWT.LEFT);
 		lDepartamentos.setText("Departamento");
@@ -304,9 +287,7 @@ public class I02 {
 		bConfig.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
 		Composite cInfo = new Composite(c,SWT.BORDER);
-		GridLayout lCcInfo = new GridLayout();
-		lCcInfo.numColumns = 2;
-		cInfo.setLayout(lCc);
+		cInfo.setLayout(new GridLayout(2,false));
 		cInfo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		Label lContenido = new Label(cInfo,SWT.CENTER);
 		lContenido.setText("Aquí va información del departamento");
@@ -377,8 +358,7 @@ public class I02 {
 		}
 		
 		// Crear layout principal
-		GridLayout lShell = new GridLayout();
-		lShell.numColumns = 1;		
+		GridLayout lShell = new GridLayout(1,false);
 		shell.setLayout(lShell);
 		
 		// Poblar ventana

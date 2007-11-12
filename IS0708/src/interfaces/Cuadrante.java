@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.*;
-
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 //De dónde coger javadoc: http://javashoplm.sun.com/ECom/docs/Welcome.jsp?StoreId=22&PartDetailId=jdk-6u3-oth-JPR&SiteId=JSC&TransactionId=noreg
 /*TODO	Si hago la ventana muy muy pequeña, el cuadrante se da la vuelta
  *		
@@ -29,7 +31,7 @@ public class Cuadrante {
 	private int horaInicio, horaFin; // Definen de qué hora a qué hora es el cuadrante
 	private int tamHora, tamSubdiv;
 	public  int subdivisiones; // Cuántas subdivisiones hacer por hora (0 = sin subdivisiones)
-	public ArrayList<Empleado> empleados; 
+	public ArrayList<Empleado> empleados;
 
 	/**
 	 * Representa una hora del cuadrante mediante dos valores:
@@ -349,6 +351,16 @@ public class Cuadrante {
 	}
 
 	/**
+	 * Clase provisional para representar un turno. A descartar.
+	 * @author Daniel
+	 *
+	 */
+	public class Turno {
+		int id;
+		String nombre;
+		String abrev;
+	}
+	/**
 	 * Constructor del cuadrante.
 	 * @param d				Display sobre el que se dibujará el cuadrante
 	 * @param subdivisiones	Número de subdivisiones que se muestran en el cuadrante.  
@@ -384,20 +396,29 @@ public class Cuadrante {
 		this.subdivisiones = subdivisiones;
 		
 		// TODO Borrar esto cuando se importen los empleados
-		Empleado e1 = new Empleado("Juan López", new Color (display, 104, 228,  85));
-		Empleado e2 = new Empleado("Marisol Pitis", new Color (display, 130, 130, 225));
-		Empleado e3 = new Empleado("Bill Gates", new Color (display, 240, 190, 150));
-		
-		e1.franjaNueva(new Posicion( 9, 6), new Posicion(14, 0));
-		e1.franjaNueva(new Posicion(16, 0), new Posicion(18, 0));
-		e2.franjaNueva(new Posicion(15, 0), new Posicion(22, 0));
-		e3.franjaNueva(new Posicion(12, 3), new Posicion(16, 0));
-		e3.franjaNueva(new Posicion(18, 0), new Posicion(22, 1));
+		Empleado e1 = new Empleado("M. Jackson", new Color (display, 104, 228,  85));
+		Empleado e2 = new Empleado("J. Mayer",   new Color (display, 130, 130, 225));
+		Empleado e3 = new Empleado("B. Jovi",    new Color (display, 240, 190, 150));
+		Empleado e4 = new Empleado("H. Day",     new Color (display, 150, 150, 150));
+		Empleado e5 = new Empleado("N. Furtado", new Color (display, 200, 80, 180));
+		Empleado e6 = new Empleado("L. Kravitz", new Color (display, 200, 80, 100));
+		e1.franjaNueva(new Posicion( 9,  6), new Posicion(14,  0));
+		e1.franjaNueva(new Posicion(16,  0), new Posicion(18,  0));
+		e2.franjaNueva(new Posicion(15,  0), new Posicion(22,  0));
+		e3.franjaNueva(new Posicion(12,  3), new Posicion(16,  0));
+		e3.franjaNueva(new Posicion(18,  0), new Posicion(22,  3));
+		e4.franjaNueva(new Posicion(15,  0), new Posicion(19,  9));
+		e5.franjaNueva(new Posicion(12,  0), new Posicion(16,  0));
+		e6.franjaNueva(new Posicion(10,  5), new Posicion(14,  0));
+		e6.franjaNueva(new Posicion(16, 10), new Posicion(19,  0));
 		
 		empleados = new ArrayList<Empleado>();
 		empleados.add(e1);
 		empleados.add(e2);
 		empleados.add(e3);
+		empleados.add(e4);
+		empleados.add(e5);
+		empleados.add(e6);
 
 	}
 	/**
@@ -412,6 +433,41 @@ public class Cuadrante {
 		for (int i=0; i<empleados.size(); i++) {
 			empleados.get(i).dibujarFranjas(gc, i, empleados.get(i).dameColor());
 		}
+	}
+	
+	public void dibujarCuadranteMes(GC gc){
+		Calendar c = Calendar.getInstance();
+		// Esto coge el día 1 de este mes
+		c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),1);
+		// Y esto en qué día de la semana cae
+		int primerDia = c.get(Calendar.DAY_OF_WEEK);
+		c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),1);
+		c.roll(Calendar.DAY_OF_MONTH,false); // Pasa al último día del este mes
+		int ultimoDia = c.get(Calendar.DAY_OF_MONTH);
+		int anchoMes = ancho - margenIzq - margenDer - margenNombres;
+		int anchoDia = anchoMes/ultimoDia;
+		int altoFila = 20;
+		// Dibujar números de los días
+		if (anchoDia>14)
+			for (int j=0; j < ultimoDia; j++) {
+				gc.drawText(String.valueOf(j+1), margenIzq + margenNombres + j*anchoDia + anchoDia/2, margenSup);
+			}
+
+		for (int i=0; i < empleados.size(); i++) {
+			gc.drawText(empleados.get(i).nombre, margenIzq, margenSup + 20 + i*altoFila);
+			for (int j=0; j < ultimoDia; j++) {
+				gc.drawRectangle(margenIzq + margenNombres + j*anchoDia, margenSup + 20 + i*altoFila, anchoDia, altoFila);
+			}
+		}
+		
+		
+		
+		
+		// Esto es para un calendario normal
+		int altoMes = alto - margenSup - margenInf;
+		int numSemanas = 5;
+		int altoDia = alto/numSemanas;
+		
 	}
 	/**
 	 * Dibuja lineas verticales representando las horas y las subdivisiones del cuadrante.
