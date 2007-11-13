@@ -10,11 +10,11 @@ public class LanguageChanger {
 		new Locale("en","US")
 	};
 	Locale currentLocale = supportedLocales[0];
-	ResourceBundle labels = ResourceBundle.getBundle("paquete.Fichero",currentLocale);
+	ResourceBundle labels = ResourceBundle.getBundle("idiomas.Idioma",currentLocale);
 				 
 	public void cambiarLocale(int locale){
 		currentLocale=supportedLocales[locale];
-		labels=ResourceBundle.getBundle("paquete.Fichero",currentLocale);
+		labels=ResourceBundle.getBundle("idiomas.Idioma",currentLocale);
 	}
 	
 	public ResourceBundle getBundle(){

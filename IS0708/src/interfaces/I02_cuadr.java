@@ -51,6 +51,11 @@ public class I02_cuadr {
 	private final Label lGridCuadrante;
 	private final Combo cGridCuadrante;
 	
+	private MouseListener mouseListenerCuadrSemanal;
+	private MouseListener mouseListenerCuadrMensual;
+	private MouseMoveListener mouseMoveListenerCuadrSemanal;
+	private MouseMoveListener mouseMoveListenerCuadrMensual;
+
 	private void calcularTamaño() {
 		ancho = canvas.getClientArea().width;
 		alto = canvas.getClientArea().height;
@@ -135,11 +140,19 @@ public class I02_cuadr {
 		diario = true;
 		lGridCuadrante.setVisible(true);
 		cGridCuadrante.setVisible(true);
+		canvas.addMouseListener(mouseListenerCuadrSemanal);
+		canvas.addMouseMoveListener(mouseMoveListenerCuadrSemanal);
+		canvas.removeMouseListener(mouseListenerCuadrMensual);
+		canvas.removeMouseMoveListener(mouseMoveListenerCuadrMensual);
 		redibujar();}
 	public void setMensual() {
 		diario = false;
 		lGridCuadrante.setVisible(false);
 		cGridCuadrante.setVisible(false);
+		canvas.addMouseListener(mouseListenerCuadrMensual);
+		canvas.addMouseMoveListener(mouseMoveListenerCuadrMensual);
+		canvas.removeMouseListener(mouseListenerCuadrSemanal);
+		canvas.removeMouseMoveListener(mouseMoveListenerCuadrSemanal);
 		redibujar();
 	}
 	/**
@@ -182,7 +195,6 @@ public class I02_cuadr {
 
 		this.canvas = new Canvas(c, SWT.FILL | SWT.NO_BACKGROUND);
 		canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
-		if (diario) setDiario(); else setMensual();
 		creando = false;
 		terminadoDeCrear = true;
 
@@ -205,14 +217,13 @@ public class I02_cuadr {
 			}
 		});
 		canvas.addControlListener(new ControlListener() {
-			public void controlMoved(ControlEvent e) {
-			}
-
+			public void controlMoved(ControlEvent e) {}
 			public void controlResized(ControlEvent e) {
 				calcularTamaño();
 			}
-		});
-		canvas.addMouseMoveListener(new MouseMoveListener() {
+		});			
+				
+		mouseMoveListenerCuadrSemanal = new MouseMoveListener() {
 			public void mouseMove(MouseEvent e) {
 				Franja f = dameFranjaActiva();
 				// Si acabo de apretar el botón para crear una franja, pero
@@ -264,8 +275,7 @@ public class I02_cuadr {
 					f.inicio = e.x;
 					f.pinicio = cuadrante.sticky(f.inicio);
 					// Comprobar si toco el borde izquierdo
-					if (f.pinicio.hora < horaInicio
-							|| f.pinicio.cmin < 0) {
+					if (f.pinicio.hora < horaInicio	|| f.pinicio.cmin < 0) {
 						f.pinicio.hora = horaInicio;
 						f.pinicio.cmin = 0;
 					}
@@ -274,26 +284,19 @@ public class I02_cuadr {
 					// Comprobar si la barra es de tamaño menor o igual que 0
 					if (f.inicio > f.fin) {
 						desactivarFranja();
-						cuadrante.empleados.get(empleadoActivo).franjas
-								.remove(f);
+						cuadrante.empleados.get(empleadoActivo).franjas.remove(f);
 						cursor(0);
 					} else {
 						// Comprobar contacto con otras franjas
 						int j = 0;
 						Franja f2;
 						Boolean encontrado2 = false;
-						while (!encontrado2
-								&& j < cuadrante.empleados.get(empleadoActivo).franjas
-										.size()) {
-							f2 = cuadrante.empleados.get(empleadoActivo).franjas
-									.get(j);
-							if (f != f2
-									&& ((f.pinicio.menorOIgualQue(f2.pfin) && f2
-											.contienePixel(e.x - 10)) | (f.inicio <= f2.inicio && f.fin >= f2.fin))) {
+						while (!encontrado2 && j < cuadrante.empleados.get(empleadoActivo).franjas.size()) {
+							f2 = cuadrante.empleados.get(empleadoActivo).franjas.get(j);
+							if (f != f2 && ((f.pinicio.menorOIgualQue(f2.pfin) && f2.contienePixel(e.x - 10)) | (f.inicio <= f2.inicio && f.fin >= f2.fin))) {
 								encontrado2 = true;
 								f.pinicio = f2.pinicio;
-								cuadrante.empleados.get(empleadoActivo).franjas
-										.remove(j);
+								cuadrante.empleados.get(empleadoActivo).franjas.remove(j);
 								desactivarFranja();
 								f.actualizarPixeles();
 							}
@@ -381,8 +384,9 @@ public class I02_cuadr {
 					if (redibujar) redibujar();
 				}
 			}
-		});
-		canvas.addMouseListener(new MouseListener() {
+		};
+		
+		mouseListenerCuadrSemanal = new MouseListener() {
 			public void mouseDown(MouseEvent e) {
 				// Botón derecho: Borra una franja (podría mostrar un menú si hace falta)
 				if (empleadoActivo!=-1 && e.button == 3) {
@@ -421,7 +425,6 @@ public class I02_cuadr {
 						creando = true;
 				}
 			}
-
 			public void mouseUp(MouseEvent e) {
 				Franja f;
 				redibujar();
@@ -466,7 +469,6 @@ public class I02_cuadr {
 				}
 				terminadoDeCrear = true;
 			}
-
 			public void mouseDoubleClick(MouseEvent e) {
 				int i = 0;
 				Franja f;
@@ -488,7 +490,18 @@ public class I02_cuadr {
 					i++;
 				}
 			}
-		});
+		};
+		mouseListenerCuadrMensual = new MouseListener() {
+			public void mouseDown(MouseEvent e){};
+			public void mouseUp(MouseEvent e){};
+			public void mouseDoubleClick(MouseEvent e){};
+		};
+		mouseMoveListenerCuadrMensual = new MouseMoveListener() {
+			public void mouseMove(MouseEvent e) {
+				
+			}
+		};
+		if (diario) setDiario(); else setMensual();
 	}
 
 	public Boolean enAreaDibujo(int x, int y) {
