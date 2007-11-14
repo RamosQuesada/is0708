@@ -102,7 +102,7 @@ public class I02PeticionBaja {
 		
 		
 		final Composite cAceptarCancelar = new Composite (shell, SWT.BORDER);
-		cAceptarCancelar.setLayoutData(new GridData(SWT.LEFT, SWT.DOWN, true, false, 1, 1));
+		cAceptarCancelar.setLayoutData(new GridData(SWT.RIGHT, SWT.DOWN, true, false, 1, 1));
 		GridLayout lAceptarCancelar = new GridLayout();
 		lAceptarCancelar.numColumns = 2;
 		cAceptarCancelar.setLayout(lAceptarCancelar);
@@ -112,8 +112,8 @@ public class I02PeticionBaja {
 		final Button bCancelar		= new Button(cAceptarCancelar, SWT.PUSH);
 		
 		//Introducimos los textos a los botones
-		bAceptar.setText(" Enviar ");
-		bCancelar.setText(" Cancelar ");
+		bAceptar.setText( "       Enviar       ");
+		bCancelar.setText("      Cancelar      ");
 				//Introducimos los valores y eventos de Aceptar
 		bAceptar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1));
 		bAceptar.addSelectionListener (new SelectionAdapter () {

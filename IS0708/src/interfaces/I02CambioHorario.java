@@ -52,8 +52,99 @@ public class I02CambioHorario {
 		/*    */
 
 		
+		final Composite cDuracion = new Composite (shell, SWT.BORDER);
+		cDuracion.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 0, 0));
+		GridLayout lDuracion = new GridLayout();
+		lDuracion.numColumns = 1;
+		cDuracion.setLayout(lDuracion);
+		
+		final Button bIndefinida		= new Button(cDuracion, SWT.RADIO);
+		bIndefinida.setText("Peticion cambio horario  indefinido: ");
+		final Button bTemporal		= new Button(cDuracion, SWT.RADIO);
+		bTemporal.setText("Peticion cambio horario  temporal: ");
+		
+		final Composite cFecha = new Composite (cDuracion, SWT.BORDER);
+		cFecha.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 0, 0));
+		GridLayout lFecha = new GridLayout();
+		lFecha.numColumns = 3;
+		cFecha.setLayout(lFecha);
+
+		final Label lFechaInicio	= new Label(cFecha, SWT.LEFT);
+		lFechaInicio.setText("Fecha inicio: ");
+		cFechaInicio =new Text (cFecha, SWT.BORDER);
+		cFechaInicio.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 0, 0));
+		final Button bFechaInicio	= new Button(cFecha, SWT.PUSH);
+		bFechaInicio.setText("Seleccionar");
+		//Introducimos los valores y eventos de Fecha Inicio
+		bFechaInicio.addSelectionListener (new SelectionAdapter () {
+			public void widgetSelected (SelectionEvent e) {
+				I02PeticionFecha ventana = new I02PeticionFecha(shell,cFechaInicio);
+			}				
+		});
+		
+		
+		final Label lFechaFin	= new Label(cFecha, SWT.LEFT);
+		lFechaFin.setText("Fecha fin: ");
+		cFechaFin =new Text (cFecha, SWT.BORDER);
+		cFechaFin.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 0, 0));
+		final Button bFechaFin	= new Button(cFecha, SWT.PUSH);
+		bFechaFin.setText("Seleccionar");
+		//Introducimos los valores y eventos de Fecha Inicio
+		bFechaFin.addSelectionListener (new SelectionAdapter () {
+			public void widgetSelected (SelectionEvent e) {
+				I02PeticionFecha ventana = new I02PeticionFecha(shell,cFechaFin);
+			}				
+		});		
+		
 
 		
+		
+		bIndefinida.addFocusListener(new FocusListener(){
+
+			public void focusGained(FocusEvent e) {
+				lFechaFin.setEnabled(false);
+				lFechaInicio.setEnabled(false);
+				bFechaFin.setEnabled(false);
+				bFechaInicio.setEnabled(false);
+				cFechaFin.setEnabled(false);
+				cFechaInicio.setEnabled(false);
+			}
+
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		}
+		);
+		bTemporal.addFocusListener(new FocusListener(){
+
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				//System.out.println("peticion mensajeria interna in");
+				//_opcion_actual=I02CambioHorario.TODOSDIAS;
+				//coTodosDias.setEnabled(true);
+				//for(int cont=0;cont<nombreDias.size();cont++){
+				//	nombreDias.get(cont).setEnabled(false);
+				//}
+				//for(int cont=0;cont<comboDias.size();cont++){
+				//	comboDias.get(cont).setEnabled(false);
+				//}
+				//DESACTIVAR COMPOSITE DIA A DIA
+				lFechaFin.setEnabled(true);
+				lFechaInicio.setEnabled(true);
+				bFechaFin.setEnabled(true);
+				bFechaInicio.setEnabled(true);
+				cFechaFin.setEnabled(true);
+				cFechaInicio.setEnabled(true);
+			}
+
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		}
+		);
+
 		final Composite cTodosDias = new Composite (shell, SWT.BORDER);
 		cTodosDias.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 0, 0));
 		GridLayout lTodosDias = new GridLayout();
@@ -69,14 +160,14 @@ public class I02CambioHorario {
 		coTodosDias.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 0, 0));
 		coTodosDias.setItems(new String[] {"Turno Mañana", "Turno Tarde","Turno Noche"});
 		coTodosDias.select(0);
-		
+		coTodosDias.setEnabled(false);
 		
 		final Composite cDiaDia = new Composite (shell, SWT.BORDER);
 		cDiaDia.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		GridLayout lDiaDia = new GridLayout();
 		lDiaDia.numColumns = 2;
 		cDiaDia.setLayout(lDiaDia);
-		ArrayList<Label> laDiaDia= new ArrayList<Label>();
+		//ArrayList<Label> laDiaDia= new ArrayList<Label>();
 		final String[] dias={"Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"};
 		final ArrayList<Label> nombreDias = new ArrayList<Label>();
 		final ArrayList<Combo> comboDias = new ArrayList<Combo>();
@@ -86,12 +177,14 @@ public class I02CambioHorario {
 			aux.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 0, 0));
 			nombreDias.add(aux);
 			aux.setText(dia);
+			aux.setEnabled(false);
 			comboDias.add(cont, new Combo(cDiaDia,SWT.BORDER | SWT.READ_ONLY));
 			//final Combo coaux= new Combo(cDiaDia,SWT.LEFT);
 			final String[] texto= new String[] {"Turno Mañana", "Turno Tarde","Turno Noche"};
 			comboDias.get(cont).setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 0, 0));
 			comboDias.get(cont).setItems(texto);
 			comboDias.get(cont).select(0);
+			comboDias.get(cont).setEnabled(false);
 			
 			
 			
