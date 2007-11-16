@@ -1,6 +1,8 @@
 package interfaces;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
@@ -21,6 +23,10 @@ public class I02PeticionBaja {
 	
 	private Text cFechaInicio;
 	private Text cFechaFin;
+	
+	private I02PeticionFecha ventana;
+	private Integer iFechaInicio=0;
+	private Integer iFechaFin=0;
 	
 	public I02PeticionBaja(Shell padre) {
 		this.padre = padre;
@@ -51,13 +57,25 @@ public class I02PeticionBaja {
 		lFechaInicio.setText("Fecha inicio: ");
 		cFechaInicio =new Text (cGrupo, SWT.BORDER);
 		cFechaInicio.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 0, 0));
+	
 		final Button bFechaInicio	= new Button(cGrupo, SWT.PUSH);
 		bFechaInicio.setText("Seleccionar");
 		//Introducimos los valores y eventos de Fecha Inicio
 		bFechaInicio.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				I02PeticionFecha ventana = new I02PeticionFecha(shell,cFechaInicio);
+				System.out.println("hola");
+				ventana = new I02PeticionFecha(shell,cFechaInicio);
+				//iFechaInicio=ventana.dameCatDia();
 			}				
+		});
+		
+		cFechaInicio.addModifyListener(new ModifyListener(){
+
+			public void modifyText(ModifyEvent e) {
+				// TODO Auto-generated method stub
+				iFechaInicio=ventana.dameCatDia();
+			}
+			
 		});
 		
 		
@@ -68,14 +86,25 @@ public class I02PeticionBaja {
 		final Button bFechaFin	= new Button(cGrupo, SWT.PUSH);
 		bFechaFin.setText("Seleccionar");
 		//Introducimos los valores y eventos de Fecha Inicio
+
 		bFechaFin.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				I02PeticionFecha ventana = new I02PeticionFecha(shell,cFechaFin);
+				System.out.println("hola");
+				ventana = new I02PeticionFecha(shell,cFechaFin);
+				//iFechaFin=ventana.dameCatDia();
+
 			}				
 		});		
 		
 		
-		
+		cFechaFin.addModifyListener(new ModifyListener(){
+
+			public void modifyText(ModifyEvent e) {
+				// TODO Auto-generated method stub
+				iFechaFin=ventana.dameCatDia();
+			}
+			
+		});
 		
 		
 		
@@ -118,7 +147,18 @@ public class I02PeticionBaja {
 		bAceptar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1));
 		bAceptar.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				if((tMotivo.getCharCount()==0)&&(tExposicion.getCharCount()==0)){
+				System.out.println("Fecha inicio"+iFechaInicio);
+				System.out.println("Fecha fin"+iFechaFin);
+				if(iFechaFin<iFechaInicio){
+					MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO | SWT.ICON_INFORMATION);
+					messageBox.setText ("Mensaje");
+					messageBox.setMessage ("Error en el periodo de baja,\n enviar de todas formas?   ");
+					if( messageBox.open () == SWT.YES){
+						shell.dispose();
+					}
+									
+				}
+				else if((tMotivo.getCharCount()==0)&&(tExposicion.getCharCount()==0)){
 					MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO | SWT.ICON_INFORMATION);
 					messageBox.setText ("Mensaje");
 					messageBox.setMessage ("   El mensaje no tiene texto ni asunto \n ¿Desea enviar este mensaje sin asunto y sin texto?");

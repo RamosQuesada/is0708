@@ -18,13 +18,15 @@ import org.eclipse.swt.widgets.Text;
 public class I02PeticionFecha {
 	private Shell padre = null;
 	private Text texto_asociado;
+	//private Double fechaNumerica;
+	private DateTime calendario;
 	private boolean seleccionado=false;
 	
 	public I02PeticionFecha(Shell padre,Text texto) {
 		this.padre = padre;
 		texto_asociado=texto;
 		mostrarVentana();
-	}
+		}
 	
 	public void mostrarVentana() {
 		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
@@ -43,7 +45,7 @@ public class I02PeticionFecha {
 		
 
 		//Introducimos los textos a los botones
-		final DateTime calendario = new DateTime (shell, SWT.CALENDAR);
+		calendario = new DateTime (shell, SWT.CALENDAR);
 		final String fecha3;
 		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 2, 1));
 		
@@ -66,7 +68,7 @@ public class I02PeticionFecha {
 			//	I02PeticionFecha ventana = new I02PeticionFecha(shell,cFechaInicio);
 				final String fecha2;
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
-				fecha2=(String.valueOf(calendario.getDay()) + " de " + meses[calendario.getMonth()]+ " de " + String.valueOf(calendario.getYear()));					
+				fecha2=(String.valueOf(calendario.getDay()) + " de " + meses[calendario.getMonth()]+ " de " + String.valueOf(calendario.getYear()));
 				texto_asociado.setText(fecha2);
 				shell.dispose();
 			}				
@@ -89,4 +91,11 @@ public class I02PeticionFecha {
 		shell.setLocation(padre.getBounds().width/2 + padre.getBounds().x - shell.getSize().x/2, padre.getBounds().height/2 + padre.getBounds().y - shell.getSize().y/2);
 		shell.open();
 	}
+
+	public Integer dameCatDia() {
+		// TODO Auto-generated method stub
+		return (calendario.getYear()*10000+calendario.getMonth()*100+calendario.getDay());
+	}
+
+	
 }

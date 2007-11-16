@@ -166,6 +166,7 @@ public class I02Empleado {
 
 		//Creamos los botones para ver el horario por dias o semanas		
 		final Button bPorDias = new Button(cBotones, SWT.RADIO);
+		bPorDias.setSelection(true);
 		bPorDias.setText("Horario dia");
 		bPorDias.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		//Oyente para saber cuando se ha modificado la seleccion del boton

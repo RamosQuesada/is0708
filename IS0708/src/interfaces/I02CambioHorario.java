@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
@@ -16,15 +18,18 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 public class I02CambioHorario {
 	private Shell padre = null;
 	
-	
+	private I02PeticionFecha ventana;
 	private Text cFechaInicio;
 	private Text cFechaFin;
+	private Integer iFechaInicio=0;
+	private Integer iFechaFin=0;
 	
 	private int _opcion_actual= I02CambioHorario.NOINICIALIZADO;
 	
@@ -78,8 +83,18 @@ public class I02CambioHorario {
 		//Introducimos los valores y eventos de Fecha Inicio
 		bFechaInicio.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				I02PeticionFecha ventana = new I02PeticionFecha(shell,cFechaInicio);
+				ventana = new I02PeticionFecha(shell,cFechaInicio);
+				//
 			}				
+		});
+		
+		cFechaInicio.addModifyListener(new ModifyListener(){
+
+			public void modifyText(ModifyEvent e) {
+				// TODO Auto-generated method stub
+				iFechaInicio=ventana.dameCatDia();
+			}
+			
 		});
 		
 		
@@ -92,13 +107,21 @@ public class I02CambioHorario {
 		//Introducimos los valores y eventos de Fecha Inicio
 		bFechaFin.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				I02PeticionFecha ventana = new I02PeticionFecha(shell,cFechaFin);
+				ventana = new I02PeticionFecha(shell,cFechaFin);
+				//iFechaFin=ventana.dameCatDia();
 			}				
 		});		
 		
+		cFechaFin.addModifyListener(new ModifyListener(){
 
+			public void modifyText(ModifyEvent e) {
+				// TODO Auto-generated method stub
+				iFechaFin=ventana.dameCatDia();
+			}
+			
+		});
 		
-		
+		bIndefinida.setSelection(true);
 		bIndefinida.addFocusListener(new FocusListener(){
 
 			public void focusGained(FocusEvent e) {
@@ -160,7 +183,6 @@ public class I02CambioHorario {
 		coTodosDias.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 0, 0));
 		coTodosDias.setItems(new String[] {"Turno Mañana", "Turno Tarde","Turno Noche"});
 		coTodosDias.select(0);
-		coTodosDias.setEnabled(false);
 		
 		final Composite cDiaDia = new Composite (shell, SWT.BORDER);
 		cDiaDia.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -198,7 +220,7 @@ public class I02CambioHorario {
 		}
 		
 		
-		
+		bTodosDias.setSelection(true);
 		bTodosDias.addFocusListener(new FocusListener(){
 
 			public void focusGained(FocusEvent e) {
@@ -266,7 +288,18 @@ public class I02CambioHorario {
 		bAceptar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		bAceptar.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
+				if(iFechaFin<iFechaInicio){
+					MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO | SWT.ICON_INFORMATION);
+					messageBox.setText ("Mensaje");
+					messageBox.setMessage ("Error en el periodo,\n enviar de todas formas?   ");
+					if( messageBox.open () == SWT.YES){
+						shell.dispose();
+					}
+									
+				}
+				else {
 				shell.dispose();
+				}
 			}	
 		});
 		
