@@ -146,9 +146,10 @@ public class I02Empleado {
 		GridLayout lCuadrantesDer = new GridLayout();
 		lCuadrantesDer.numColumns = 1;
 		cCuadrantesDer.setLayout(lCuadrantesDer);
-		final Label lCuadr1=new Label (cCuadrantesDer, SWT.CENTER);
-		lCuadr1.setText("Aquí se mostrarán los cuadrantes");
-		
+		//final Label lCuadr1=new Label (cCuadrantesDer, SWT.CENTER);
+		//lCuadr1.setText("Aquí se mostrarán los cuadrantes");
+		final I02_cuadrEmpl cuadrante = new I02_cuadrEmpl(cCuadrantesDer, false);	
+		cuadrante.setSemanal();
 		//Creamos el calendario		
 		final DateTime calendario = new DateTime (cBotones, SWT.CALENDAR);
 		calendario.addSelectionListener (new SelectionAdapter () {
@@ -165,48 +166,38 @@ public class I02Empleado {
 
 
 		//Creamos los botones para ver el horario por dias o semanas		
-		final Button bPorDias = new Button(cBotones, SWT.RADIO);
-		bPorDias.setSelection(true);
-		bPorDias.setText("Horario dia");
-		bPorDias.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
-		//Oyente para saber cuando se ha modificado la seleccion del boton
-		bPorDias.addFocusListener(new FocusListener(){
-
-			//Seleccionado por dias
-			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
-				lCuadr1.setText("SE MOSTRARIAN POR DIAS");
-
+		final Button bPorSemanas = new Button(cBotones, SWT.RADIO);
+		bPorSemanas.setText("Ver por semanas");
+		bPorSemanas.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));		
+		bPorSemanas.setSelection(true);
+		bPorSemanas.addListener(SWT.Selection, new Listener() {
+			//Seleccionado por mes
+			public void handleEvent(Event e) {
+				if (bPorSemanas.getSelection()) {
+					cuadrante.setSemanal();				
+				}
+				else cuadrante.setMensual(); 
 				
 			}
-			
-			//No seleccionado por dias
-			public void focusLost(FocusEvent e) {
-				// TODO Auto-generated method stub
-			}
-		}
-		);
+		});
+
 		
 		//Creamos un boton para la seleccion del horario por semanas
-		final Button bPorSemanas = new Button(cBotones, SWT.RADIO);
-		bPorSemanas.setText("Horario semana");
-		bPorSemanas.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		final Button bPorMes = new Button(cBotones, SWT.RADIO);
+		bPorMes.setText("Horario mes");
+		bPorMes.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		//Creamos un oyente
-		bPorSemanas.addFocusListener(new FocusListener(){
-			//Seleccionado por semanas
-			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println("por semanas in");
-				lCuadr1.setText("SE MOSTRARIAN POR SEMANAS");
+		bPorMes.addListener(SWT.Selection, new Listener() {
+			//Seleccionado por mes
+			public void handleEvent(Event e) {
+				if (bPorMes.getSelection()) {
+					cuadrante.setMensual();
+				}
+				else cuadrante.setSemanal();
+				
 			}
-			
-			//No seleccionado por semanas
-			public void focusLost(FocusEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println("por semanas out");			
-			}
-		}
-		);
+		});
+		
 		
 
 

@@ -152,7 +152,8 @@ public class I02PeticionBaja {
 				if(iFechaFin<iFechaInicio){
 					MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
 					messageBox.setText ("Mensaje");
-					messageBox.setMessage ("Error en el periodo de baja?   ");
+					messageBox.setMessage ("Error en el periodo de baja");
+					messageBox.open();
 									
 				}
 				else if((tMotivo.getCharCount()==0)&&(tExposicion.getCharCount()==0)){

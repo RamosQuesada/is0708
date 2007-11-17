@@ -291,7 +291,11 @@ public class I02CambioHorario {
 				if(iFechaFin<iFechaInicio){
 					MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
 					messageBox.setText ("Mensaje");
-					messageBox.setMessage ("Error en el periodo,\n enviar de todas formas?   ");
+					messageBox.setMessage ("Error en el periodo");
+					messageBox.open();
+					//if( messageBox.open () == SWT.YES){
+					//	shell.dispose();
+					//}
 									
 				}
 				else {
