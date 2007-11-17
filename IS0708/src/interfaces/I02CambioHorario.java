@@ -289,12 +289,9 @@ public class I02CambioHorario {
 		bAceptar.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
 				if(iFechaFin<iFechaInicio){
-					MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO | SWT.ICON_INFORMATION);
+					MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
 					messageBox.setText ("Mensaje");
 					messageBox.setMessage ("Error en el periodo,\n enviar de todas formas?   ");
-					if( messageBox.open () == SWT.YES){
-						shell.dispose();
-					}
 									
 				}
 				else {
