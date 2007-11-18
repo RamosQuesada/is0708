@@ -18,7 +18,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.events.*;
-import interfaces.Cuadrante.*;
+import aplicacion.Posicion;
+import aplicacion.FranjaDib;
 
 /**
  * Dada una instancia de Canvas, que se le pasa como parámetro al constructor,
@@ -46,7 +47,7 @@ public class I02_cuadr {
 
 	private int margenIzq, margenDer, margenSup, margenInf; // Márgenes del cuadrante
 	private int margenNombres; // Un margen para pintar los nombres a la izquierda
-	private Franja franjaActiva;
+	private FranjaDib franjaActiva;
 	private int movimiento;
 	private final Label lGridCuadrante;
 	private final Combo cGridCuadrante;
@@ -88,8 +89,7 @@ public class I02_cuadr {
 	}
 
 	private void activarFranja(int franja, int mov) {
-		franjaActiva = cuadrante.empleados.get(empleadoActivo).franjas
-				.get(franja);
+		franjaActiva = cuadrante.empleados.get(empleadoActivo).franjas.get(franja);
 		franjaActiva.activarFranja();
 		movimiento = mov;
 		// Movimientos:
@@ -110,7 +110,7 @@ public class I02_cuadr {
 		return movimiento;
 	}
 
-	private Franja dameFranjaActiva() {
+	private FranjaDib dameFranjaActiva() {
 		return franjaActiva;
 	}
 
@@ -225,14 +225,13 @@ public class I02_cuadr {
 				
 		mouseMoveListenerCuadrSemanal = new MouseMoveListener() {
 			public void mouseMove(MouseEvent e) {
-				Franja f = dameFranjaActiva();
+				FranjaDib f = dameFranjaActiva();
 				// Si acabo de apretar el botón para crear una franja, pero
 				// todavía no he movido el ratón
 				if (creando && empleadoActivo != -1) {
 					Posicion p = cuadrante.sticky(e.x);
-					Franja nuevaFranja = cuadrante.new Franja(p, p);
-					cuadrante.empleados.get(empleadoActivo).franjas
-							.add(nuevaFranja);
+					FranjaDib nuevaFranja = new FranjaDib(p, p);
+					cuadrante.empleados.get(empleadoActivo).franjas.add(nuevaFranja);
 					activarFranja(cuadrante.empleados.get(empleadoActivo).franjas.size() - 1, 3);
 					creando = false;
 					terminadoDeCrear = false;
@@ -243,10 +242,10 @@ public class I02_cuadr {
 					f.pinicio = cuadrante.sticky(e.x - despl);
 					// System.out.println(String.valueOf(f.pinicio.hora)+"-"+String.valueOf(f.pinicio.cmin));
 					f.pfin.suma(f.pinicio, ancho);
-					f.pegarALosBordes();
-					f.actualizarPixeles();
+					f.pegarALosBordes(horaInicio, horaFin);
+					f.actualizarPixeles(margenIzq, margenNombres, cuadrante.tamHora, cuadrante.tamSubdiv, cuadrante.subdivisiones, horaInicio);
 					int j = 0;
-					Franja f2;
+					FranjaDib f2;
 					Boolean encontrado2 = false;
 					while (!encontrado2	&& j < cuadrante.empleados.get(empleadoActivo).franjas.size()) {
 						f2 = cuadrante.empleados.get(empleadoActivo).franjas.get(j);
@@ -259,12 +258,12 @@ public class I02_cuadr {
 							f.inicio = f2.inicio;
 							despl += (f2.fin - f2.inicio);
 							cuadrante.empleados.get(empleadoActivo).franjas.remove(j);
-							f.actualizarPixeles();
+							f.actualizarPixeles(margenIzq, margenNombres, cuadrante.tamHora, cuadrante.tamSubdiv, cuadrante.subdivisiones, horaInicio);
 						} else if ((f.pfin.mayorOIgualQue(f2.pinicio) && f2.contienePixel(f.fin + 10))	| (f.inicio < f2.inicio && f.fin > f2.fin)) {
 							encontrado2 = true;
 							f.pfin = f2.pfin;
 							cuadrante.empleados.get(empleadoActivo).franjas.remove(j);
-							f.actualizarPixeles();
+							f.actualizarPixeles(margenIzq, margenNombres, cuadrante.tamHora, cuadrante.tamSubdiv, cuadrante.subdivisiones, horaInicio);
 						}
 						j++;
 					}
@@ -275,11 +274,11 @@ public class I02_cuadr {
 					f.inicio = e.x;
 					f.pinicio = cuadrante.sticky(f.inicio);
 					// Comprobar si toco el borde izquierdo
-					if (f.pinicio.hora < horaInicio	|| f.pinicio.cmin < 0) {
-						f.pinicio.hora = horaInicio;
-						f.pinicio.cmin = 0;
+					if (f.pinicio.dameHora() < horaInicio	|| f.pinicio.dameCMin() < 0) {
+						f.pinicio.ponHora(horaInicio);
+						f.pinicio.ponCMin(0);
 					}
-					f.actualizarPixeles();
+					f.actualizarPixeles(margenIzq, margenNombres, cuadrante.tamHora, cuadrante.tamSubdiv, cuadrante.subdivisiones, horaInicio);
 
 					// Comprobar si la barra es de tamaño menor o igual que 0
 					if (f.inicio > f.fin) {
@@ -289,7 +288,7 @@ public class I02_cuadr {
 					} else {
 						// Comprobar contacto con otras franjas
 						int j = 0;
-						Franja f2;
+						FranjaDib f2;
 						Boolean encontrado2 = false;
 						while (!encontrado2 && j < cuadrante.empleados.get(empleadoActivo).franjas.size()) {
 							f2 = cuadrante.empleados.get(empleadoActivo).franjas.get(j);
@@ -298,7 +297,7 @@ public class I02_cuadr {
 								f.pinicio = f2.pinicio;
 								cuadrante.empleados.get(empleadoActivo).franjas.remove(j);
 								desactivarFranja();
-								f.actualizarPixeles();
+								f.actualizarPixeles(margenIzq, margenNombres, cuadrante.tamHora, cuadrante.tamSubdiv, cuadrante.subdivisiones, horaInicio);
 							}
 							j++;
 						}
@@ -310,12 +309,11 @@ public class I02_cuadr {
 					f.fin = e.x;
 					f.pfin = cuadrante.sticky(f.fin);
 					// Comprobar si toco el borde derecho
-					if (f.pfin.hora > horaFin
-							|| (f.pfin.hora == horaFin && f.pfin.cmin > 0)) {
-						f.pfin.hora = horaFin;
-						f.pfin.cmin = 0;
+					if (f.pfin.dameHora() > horaFin || (f.pfin.dameHora() == horaFin && f.pfin.dameCMin() > 0)) {
+						f.pfin.ponHora(horaFin);
+						f.pfin.ponCMin(0);
 					}
-					f.actualizarPixeles();
+					f.actualizarPixeles(margenIzq, margenNombres, cuadrante.tamHora, cuadrante.tamSubdiv, cuadrante.subdivisiones, horaInicio);
 					// Comprobar si la barra es de tamaño menor o igual que 0
 					if (f.inicio > f.fin) {
 						desactivarFranja();
@@ -325,24 +323,16 @@ public class I02_cuadr {
 					} else {
 						// Comprobar contacto con otras franjas
 						int j = 0;
-						Franja f2;
+						FranjaDib f2;
 						Boolean encontrado2 = false;
-						while (terminadoDeCrear
-								&& !encontrado2
-								&& j < cuadrante.empleados.get(empleadoActivo).franjas
-										.size()) {
-							f2 = cuadrante.empleados.get(empleadoActivo).franjas
-									.get(j);
-							if (f != f2
-									&& (f.pfin.mayorOIgualQue(f2.pinicio) && f2
-											.contienePixel(e.x + 10))
-									| (f.inicio <= f2.inicio && f.fin >= f2.fin)) {
+						while (terminadoDeCrear	&& !encontrado2	&& j < cuadrante.empleados.get(empleadoActivo).franjas.size()) {
+							f2 = cuadrante.empleados.get(empleadoActivo).franjas.get(j);
+							if (f != f2	&& (f.pfin.mayorOIgualQue(f2.pinicio) && f2.contienePixel(e.x + 10)) | (f.inicio <= f2.inicio && f.fin >= f2.fin)) {
 								encontrado2 = true;
 								f.pfin = f2.pfin;
-								cuadrante.empleados.get(empleadoActivo).franjas
-										.remove(j);
+								cuadrante.empleados.get(empleadoActivo).franjas.remove(j);
 								desactivarFranja();
-								f.actualizarPixeles();
+								f.actualizarPixeles(margenIzq, margenNombres, cuadrante.tamHora, cuadrante.tamSubdiv, cuadrante.subdivisiones, horaInicio);
 							}
 							j++;
 						}
@@ -391,7 +381,7 @@ public class I02_cuadr {
 				// Botón derecho: Borra una franja (podría mostrar un menú si hace falta)
 				if (empleadoActivo!=-1 && e.button == 3) {
 					int i = 0;
-					Franja f;
+					FranjaDib f;
 					Boolean encontrado = false;
 					while (!encontrado && i < cuadrante.empleados.get(empleadoActivo).franjas.size()) {
 						f = cuadrante.empleados.get(empleadoActivo).franjas.get(i);
@@ -403,7 +393,7 @@ public class I02_cuadr {
 						i++;
 					}
 				} else {
-					Franja f;
+					FranjaDib f;
 					int i = 0;
 					Boolean encontrado = false;
 					while (empleadoActivo != -1 && !encontrado && i < cuadrante.empleados.get(empleadoActivo).franjas.size()) {
@@ -426,7 +416,7 @@ public class I02_cuadr {
 				}
 			}
 			public void mouseUp(MouseEvent e) {
-				Franja f;
+				FranjaDib f;
 				redibujar();
 				desactivarFranja();
 				if (empleadoActivo != -1) {
@@ -443,7 +433,7 @@ public class I02_cuadr {
 								f.inicio = f.fin;
 								f.fin = aux;
 							}
-							Franja f2;
+							FranjaDib f2;
 							int j = 0;
 							Boolean encontrado = false;
 							while (!encontrado
@@ -471,7 +461,7 @@ public class I02_cuadr {
 			}
 			public void mouseDoubleClick(MouseEvent e) {
 				int i = 0;
-				Franja f;
+				FranjaDib f;
 				Boolean encontrado = false;
 				while (!encontrado
 						&& i < cuadrante.empleados.get(empleadoActivo).franjas
