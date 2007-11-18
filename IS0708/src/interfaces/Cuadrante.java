@@ -25,39 +25,13 @@ public class Cuadrante {
 	private int alto;
 	private int margenIzq, margenDer, margenSup, margenInf; // Márgenes del cuadrante
 	private int margenNombres; // Un margen para pintar los nombres a la izquierda
-	private int alto_franjas;
-	private int sep_vert_franjas;
+	public int alto_franjas;
+	public int sep_vert_franjas;
 	private int horaInicio, horaFin; // Definen de qué hora a qué hora es el cuadrante
 	public int tamHora, tamSubdiv;
 	public int subdivisiones; // Cuántas subdivisiones hacer por hora (0 = sin subdivisiones)
-	public ArrayList<EmpleadoDib> empleados;
+	public ArrayList<Empleado> empleados;
 
-
-
-	public class EmpleadoDib extends Empleado {
-		public EmpleadoDib(String n, Color c) {
-			super(n,c);
-		}
-	public void dibujarFranjas(GC gc, int posV, Color color) {
-		int subDivs = 0;
-		gc.setBackground(new Color(display, 0,0,0));
-		gc.drawText(nombre, margenIzq, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1), true);
-		for (int i=0; i<franjas.size(); i++) {
-			franjas.get(i).dibujarFranja(display, gc, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1),color);
-			subDivs += (franjas.get(i).pfin.dameHora() - franjas.get(i).pinicio.dameHora())*12;
-			subDivs += (franjas.get(i).pfin.dameCMin() - franjas.get(i).pinicio.dameCMin());
-		}
-		gc.drawText(String.valueOf(subDivs/12)+":"+String.valueOf(aString(subDivs%12*60/12)), margenNombres-10, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1), true);
-	}
-	public Boolean contienePunto (int y, int posV) {
-		Boolean b = false;
-		if (y > margenSup+(sep_vert_franjas+alto_franjas)*(posV+1) && y<=margenSup+(sep_vert_franjas+alto_franjas)*(posV+2)) b = true;
-		return b;
-	}
-	public Color dameColor() {
-		return color;
-	}
-	}
 
 
 	/**
@@ -91,7 +65,8 @@ public class Cuadrante {
 	 * 						el cuadrante a partir del margen izquierdo, dejando un espacio para
 	 * 						los nombres.
 	 */
-	public Cuadrante(Display d, int subdivisiones, int horaInicio, int horaFin, int margenIzq, int margenDer, int margenSup, int margenInf, int margenNombres) {
+	public Cuadrante(Display d, int subdivisiones, int horaInicio, int horaFin, int margenIzq, int margenDer, int margenSup, int margenInf, int margenNombres, ArrayList<Empleado> empleados) {
+		this.empleados = empleados;
 		display = d;
 		this.margenIzq  = margenIzq;
 		this.margenDer  = margenDer;
@@ -105,29 +80,6 @@ public class Cuadrante {
 		this.subdivisiones = subdivisiones;
 		
 		// TODO Borrar esto cuando se importen los empleados
-		EmpleadoDib e1 = new EmpleadoDib("M. Jackson", new Color (display, 104, 228,  85));
-		EmpleadoDib e2 = new EmpleadoDib("J. Mayer",   new Color (display, 130, 130, 225));
-		EmpleadoDib e3 = new EmpleadoDib("B. Jovi",    new Color (display, 240, 190, 150));
-		EmpleadoDib e4 = new EmpleadoDib("H. Day",     new Color (display, 150, 150, 150));
-		EmpleadoDib e5 = new EmpleadoDib("N. Furtado", new Color (display, 200, 80, 180));
-		EmpleadoDib e6 = new EmpleadoDib("L. Kravitz", new Color (display, 200, 80, 100));
-		e1.franjaNueva(new Posicion( 9,  6), new Posicion(14,  0));
-		e1.franjaNueva(new Posicion(16,  0), new Posicion(18,  0));
-		e2.franjaNueva(new Posicion(15,  0), new Posicion(22,  0));
-		e3.franjaNueva(new Posicion(12,  3), new Posicion(16,  0));
-		e3.franjaNueva(new Posicion(18,  0), new Posicion(22,  3));
-		e4.franjaNueva(new Posicion(15,  0), new Posicion(19,  9));
-		e5.franjaNueva(new Posicion(12,  0), new Posicion(16,  0));
-		e6.franjaNueva(new Posicion(10,  5), new Posicion(14,  0));
-		e6.franjaNueva(new Posicion(16, 10), new Posicion(19,  0));
-		
-		empleados = new ArrayList<EmpleadoDib>();
-		empleados.add(e1);
-		empleados.add(e2);
-		empleados.add(e3);
-		empleados.add(e4);
-		empleados.add(e5);
-		empleados.add(e6);
 
 	}
 	/**
@@ -140,7 +92,7 @@ public class Cuadrante {
 		dibujarSeleccion(gc, empleadoActivo);
 		dibujarHoras(gc);
 		for (int i=0; i<empleados.size(); i++) {
-			empleados.get(i).dibujarFranjas(gc, i, empleados.get(i).dameColor());
+			empleados.get(i).dibujarFranjas(display, gc, i, empleados.get(i).dameColor(),margenIzq, margenNombres,margenSup,sep_vert_franjas,alto_franjas);
 		}
 	}
 	
@@ -247,7 +199,7 @@ public class Cuadrante {
 		tamHora = (ancho - margenIzq-margenDer-margenNombres)/(horaFin-horaInicio);
 		tamSubdiv = tamHora/12;
 		for (int i=0; i < empleados.size(); i++) {
-			EmpleadoDib e = empleados.get(i);
+			Empleado e = empleados.get(i);
 			for (int j=0; j < e.franjas.size(); j++) {
 				FranjaDib f = e.franjas.get(j);
 				f.actualizarPixeles(margenIzq, margenNombres, tamHora, tamSubdiv, subdivisiones, horaInicio);

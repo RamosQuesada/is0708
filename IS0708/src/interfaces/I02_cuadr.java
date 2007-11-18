@@ -12,12 +12,16 @@
 // TODO Hacer que reduzca la resolución del grid en función del tamaño de la pantalla
 package interfaces;
 
+import java.util.ArrayList;
+
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.events.*;
+
+import aplicacion.Empleado;
 import aplicacion.Posicion;
 import aplicacion.FranjaDib;
 
@@ -36,6 +40,7 @@ public class I02_cuadr {
 	private Cuadrante cuadrante;
 	private int alto, ancho;
 	private Display display;
+	private ArrayList<Empleado> empleados;
 	private int despl; // Este es para cuando movemos una barra, para saber de dónde la
 				// he cogido
 	private Boolean creando, terminadoDeCrear;
@@ -160,8 +165,9 @@ public class I02_cuadr {
 	 * y el cuadrante.
 	 * @param c	Composite sobre el que dibujar el cuadrante
 	 */
-	public I02_cuadr(Composite c, Boolean diario) {
+	public I02_cuadr(Composite c, Boolean diario, ArrayList<Empleado> empleados) {
 		this.diario = diario;
+		this.empleados = empleados;
 		final GridLayout l = new GridLayout(3,false);
 		c.setLayout(l);
 		
@@ -208,7 +214,7 @@ public class I02_cuadr {
 		empleadoActivo = -1;
 		horaInicio = 9;
 		horaFin = 23;
-		cuadrante = new Cuadrante(display, 4, horaInicio, horaFin, margenIzq, margenDer, margenSup, margenInf, margenNombres);
+		cuadrante = new Cuadrante(display, 4, horaInicio, horaFin, margenIzq, margenDer, margenSup, margenInf, margenNombres, empleados);
 		calcularTamaño();
 		display = canvas.getDisplay();
 		canvas.addPaintListener(new PaintListener() {
@@ -347,8 +353,8 @@ public class I02_cuadr {
 					Boolean encontrado = false;
 					int empleadoActivoNuevo = -1;
 					// Seleccionar empleado activo
-					while (!encontrado && i < cuadrante.empleados.size()) {
-						if (cuadrante.empleados.get(i).contienePunto(e.y, i))
+					while (!encontrado && i < cuadrante.empleados.size()) { 
+						if (cuadrante.empleados.get(i).contienePunto(e.y, i,margenSup,cuadrante.sep_vert_franjas,cuadrante.alto_franjas))
 							empleadoActivoNuevo = i;
 						i++;
 					}
