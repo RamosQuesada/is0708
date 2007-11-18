@@ -464,6 +464,11 @@ public class I02CuadranteEmpleado {
 		//cambiarPincel(gc,100,0,0);
 		this.cambiarRelleno(gc, 0,143,65);
 		//cambiarPincel(gc, 100,100,100);
+// Estos rectángulos deberías calcularlos en función del tamaño de la fuente. Si haces una ventana muy
+// ancha y muy bajita, se cruzan con los días de la semana.
+// La altura la consigues, una vez asignada la fuente, con esto:
+// gc.getFontMetrics().getAscent();			
+
 		gc.fillRoundRectangle(m,this.margenSup,7*sep,tamañoFila,8,8);
 		gc.drawRoundRectangle(m,this.margenSup,7*sep,tamañoFila,8,8);
 		gc.drawRectangle(m, this.margenSup, 7*sep, tamañoFila);
@@ -478,6 +483,7 @@ public class I02CuadranteEmpleado {
 				String[] diasSemana = {"     Lunes   ","   Martes"," Miercoles ","   Jueves","   Viernes ","   Sabado ","  Domingo  "};
 				//int sobrante= sep - diasSemana[i].length()*2;
 				int tamaño= sep/8;
+// Después de jugar un rato con la ventana, esto revienta (haces un new por cada vez que dibujas).
 				Font fuente=new Font(display,"Verdana",tamaño,SWT.BOLD|SWT.ITALIC);
 				gc.setFont(fuente);
 				gc.drawText(diasSemana[((i)%7)],m+i*sep , margenSup+(alto/50), true);
