@@ -130,7 +130,7 @@ public class I02 {
 		});		
 
 		final Button bPorSemanas = new Button(c, SWT.RADIO);
-		bPorSemanas.setText("Ver por semana");
+		bPorSemanas.setText("Ver por día");
 		bPorSemanas.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));		
 
 		bPorMes.setSelection(true);
@@ -371,7 +371,7 @@ public class I02 {
 		shell.open();
 		
 		// Login
-		//I01 login = new I01(shell);
+		I01 login = new I01(shell);
 		
 		// Preguntar antes de salir
 		shell.addListener (SWT.Close, new Listener () {

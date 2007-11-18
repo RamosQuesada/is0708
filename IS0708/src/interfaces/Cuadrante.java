@@ -8,9 +8,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 //De dónde coger javadoc: http://javashoplm.sun.com/ECom/docs/Welcome.jsp?StoreId=22&PartDetailId=jdk-6u3-oth-JPR&SiteId=JSC&TransactionId=noreg
-/*TODO	Si hago la ventana muy muy pequeña, el cuadrante se da la vuelta
- *		
- */		
 
 /**
  * Dibuja un cuadrante sobre un GC.
@@ -351,7 +348,6 @@ public class Cuadrante {
 	}
 
 	/**
-	 * Clase provisional para representar un turno. A descartar.
 	 * @author Daniel
 	 *
 	 */
