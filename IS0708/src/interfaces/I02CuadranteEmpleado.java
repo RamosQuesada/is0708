@@ -171,6 +171,7 @@ public class I02CuadranteEmpleado {
 			cambiarPincel(gc, r-100,g-100,b-100);
 			gc.fillRoundRectangle(inicio,despV,fin-inicio,15,8,8);
 			gc.drawRoundRectangle(inicio,despV,fin-inicio,15,8,8);
+			
 			// Si la franja está activa, mostrar una pestaña con información adicional
 			// TODO Si la franja está muy a la derecha y es pequeña, la pestaña se sale
 			if (activa) {
@@ -322,14 +323,16 @@ public class I02CuadranteEmpleado {
 		public void dibujarFranjas(GC gc, int posV, Color color) {
 			int subDivs = 0;
 			cambiarPincel(gc, 0, 0, 0);
-			gc.drawText(nombre, margenIzq, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1), true);
+			//gc.drawText(nombre, margenIzq, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1), true);
 			for (int i=0; i<franjas.size(); i++) {
-				franjas.get(i).dibujarFranja(gc, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1),color);
+				//franjas.get(i).dibujarFranja(gc, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1),color);
 				subDivs += (franjas.get(i).pfin.hora - franjas.get(i).pinicio.hora)*12;
 				subDivs += (franjas.get(i).pfin.cmin - franjas.get(i).pinicio.cmin);
 			}
-			gc.drawText(String.valueOf(subDivs/12)+":"+String.valueOf(aString(subDivs%12*60/12)), margenNombres-10, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1), true);
+			//gc.drawText(String.valueOf(subDivs/12)+":"+String.valueOf(aString(subDivs%12*60/12)), margenNombres-10, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1), true);
 		}
+		
+		
 		public Boolean contienePunto (int y, int posV) {
 			Boolean b = false;
 			if (y > margenSup+(sep_vert_franjas+alto_franjas)*(posV+1) && y<=margenSup+(sep_vert_franjas+alto_franjas)*(posV+2)) b = true;
@@ -401,7 +404,7 @@ public class I02CuadranteEmpleado {
 	public void dibujarCuadranteDia(GC gc, int empleadoActivo) {
 		dibujarSeleccion(gc, empleadoActivo);
 		dibujarDias(gc);
-		//empleado.dibujarFranjas(gc, 0, empleado.dameColor());
+	//	empleado.dibujarFranjas(gc, 0, empleado.dameColor());
 	}
 	
 	public void dibujarCuadranteMes(GC gc){
@@ -442,7 +445,7 @@ public class I02CuadranteEmpleado {
 	 * @param gc	El GC del display sobre el que se dibujará el cuadrante.
 	 */
 	private void dibujarDias(GC gc) {
-		cambiarPincel(gc, 40,80,40);
+		//cambiarPincel(gc, 40,80,40);
 		int m = margenIzq + margenNombres;
 		m = margenIzq;
 		int h = horaFin - horaInicio;
@@ -450,20 +453,32 @@ public class I02CuadranteEmpleado {
 		int sep = (ancho - m - margenDer)/h;
 		//int subsep = sep/subdivisiones;
 		int tamañoFila=(alto)/15;
+		cambiarPincel(gc, 100,200,100);
 		gc.drawLine(m, this.margenSup, m+7*sep, this.margenSup);
 		gc.drawLine(m, tamañoFila+this.margenSup, m+7*sep, tamañoFila+this.margenSup);
+		gc.drawLine(m, alto-margenInf, m+7*sep, alto-margenInf);
+		cambiarPincel(gc, 150,200,150);
+		this.cambiarRelleno(gc, 180,230,180);
+		gc.fillRoundRectangle(m,tamañoFila+this.margenSup,7*sep,alto-margenInf-(tamañoFila+this.margenSup),8,8);
+		//gc.drawRoundRectangle(m,tamañoFila+this.margenSup,margenInf-margenSup,15,8,8);
+		//cambiarPincel(gc,100,0,0);
+		this.cambiarRelleno(gc, 0,143,65);
+		//cambiarPincel(gc, 100,100,100);
+		gc.fillRoundRectangle(m,this.margenSup,7*sep,tamañoFila,8,8);
+		gc.drawRoundRectangle(m,this.margenSup,7*sep,tamañoFila,8,8);
+		gc.drawRectangle(m, this.margenSup, 7*sep, tamañoFila);
 		for (int i=0; i<=h; i++) {
 			gc.setLineStyle(SWT.LINE_SOLID);
-			cambiarPincel(gc, 40,80,40);
+			cambiarPincel(gc, 100,200,100);
 			gc.drawLine(m+i*sep, this.margenSup, m+i*sep, alto-margenInf);
-			cambiarPincel(gc, 120,170,120);
+			//cambiarPincel(gc, 120,170,120);
 			gc.setLineStyle(SWT.LINE_DOT);
 			if (i!=h)
-			{	cambiarPincel(gc, 40,80,40);
-				String[] diasSemana = {"     Lunes   ","    Martes"," Miercoles ","    Jueves","    Viernes  ","   Sabado  ","  Domingo  "};
+			{	cambiarPincel(gc, 150,250,150);
+				String[] diasSemana = {"     Lunes   ","   Martes"," Miercoles ","   Jueves","   Viernes ","   Sabado ","  Domingo  "};
 				//int sobrante= sep - diasSemana[i].length()*2;
-				int tamaño= sep/7;
-				Font fuente=new Font(display,"Arial",tamaño,SWT.BOLD);
+				int tamaño= sep/8;
+				Font fuente=new Font(display,"Verdana",tamaño,SWT.BOLD|SWT.ITALIC);
 				gc.setFont(fuente);
 				gc.drawText(diasSemana[((i)%7)],m+i*sep , margenSup+(alto/50), true);
 			}
