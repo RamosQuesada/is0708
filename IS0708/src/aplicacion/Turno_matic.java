@@ -1,9 +1,7 @@
 package aplicacion;
 
 import java.util.ArrayList;
-
 import interfaces.I02;
-
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;

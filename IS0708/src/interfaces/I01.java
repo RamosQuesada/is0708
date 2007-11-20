@@ -16,12 +16,14 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
+import java.util.ResourceBundle;
 
 public class I01 {
 	private Shell padre = null;
-
-	public I01(Shell padre) {
+	private ResourceBundle bundle;
+	public I01(Shell padre, ResourceBundle bundle) {
 		this.padre = padre;
+		this.bundle = bundle;
 		mostrarVentana();
 	}
 	public void mostrarVentana() {
@@ -40,7 +42,7 @@ public class I01 {
 		Image icoGr = new Image(padre.getDisplay(), I01.class.getResourceAsStream("icoGr.gif"));
 		Image icoPq = new Image(padre.getDisplay(), I01.class.getResourceAsStream("icoPq.gif"));
 		shell.setImages(new Image[] {icoPq,icoGr});
-		shell.setText("Identificación");
+		shell.setText(bundle.getString("I01_tit_Ident"));
 		
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 8;
@@ -49,20 +51,20 @@ public class I01 {
 		shell.setLayout(layout);
 
 		lUsuario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 3, 1));
-		lUsuario.setText("Vendedor");
+		lUsuario.setText(bundle.getString("Vendedor"));
 		tUsuario.setEditable(true);
 		tUsuario.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 5, 1));
 
 		lPassword.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 3, 1));
-		lPassword.setText("Contraseña");
+		lPassword.setText(bundle.getString("Contraseña"));
 		
 		tPassword.setEditable(true);
 		tPassword.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 5, 1));
 
-		bAceptar.setText("Aceptar");
+		bAceptar.setText(bundle.getString("Aceptar"));
 		bAceptar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 4, 1));
 		
-		bCancelar.setText("Cancelar");
+		bCancelar.setText(bundle.getString("Cancelar"));
 		bCancelar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 4, 1));
 
 		// Un SelectionAdapter con lo que hace el botón bCancelar
@@ -77,8 +79,8 @@ public class I01 {
 			public void widgetSelected(SelectionEvent e) {
 				if (tUsuario.getText().length()!=8) {
 					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
-					messageBox.setText ("Mensaje");
-					messageBox.setMessage ("El número de vendedor debe tener 8 cifras.");
+					messageBox.setText (bundle.getString("Mensaje"));
+					messageBox.setMessage (bundle.getString("I01_err_num_vendedor"));
 					e.doit = messageBox.open () == SWT.YES;
 					// Enfocar tUsuario y seleccionar texto
 					tUsuario.setFocus();

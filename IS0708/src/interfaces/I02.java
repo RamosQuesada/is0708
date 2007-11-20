@@ -379,7 +379,7 @@ public class I02 {
 		shell.open();
 		
 		// Login
-		I01 login = new I01(shell);
+		I01 login = new I01(shell, bundle);
 		
 		// Preguntar antes de salir
 		shell.addListener (SWT.Close, new Listener () {
