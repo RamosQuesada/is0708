@@ -22,6 +22,7 @@ public class I02CuadranteEmpleado {
 	private int tamHora, tamSubdiv;
 	public  int subdivisiones; // Cuántas subdivisiones hacer por hora (0 = sin subdivisiones)
 	public Empleado empleado;
+	private int tamaño =8;
 
 	/**
 	 * Representa una hora del cuadrante mediante dos valores:
@@ -464,11 +465,7 @@ public class I02CuadranteEmpleado {
 		//cambiarPincel(gc,100,0,0);
 		this.cambiarRelleno(gc, 0,143,65);
 		//cambiarPincel(gc, 100,100,100);
-// Estos rectángulos deberías calcularlos en función del tamaño de la fuente. Si haces una ventana muy
-// ancha y muy bajita, se cruzan con los días de la semana.
-// La altura la consigues, una vez asignada la fuente, con esto:
-// gc.getFontMetrics().getAscent();			
-
+	
 		gc.fillRoundRectangle(m,this.margenSup,7*sep,tamañoFila,8,8);
 		gc.drawRoundRectangle(m,this.margenSup,7*sep,tamañoFila,8,8);
 		gc.drawRectangle(m, this.margenSup, 7*sep, tamañoFila);
@@ -481,12 +478,22 @@ public class I02CuadranteEmpleado {
 			if (i!=h)
 			{	cambiarPincel(gc, 150,250,150);
 				String[] diasSemana = {"     Lunes   ","   Martes"," Miercoles ","   Jueves","   Viernes ","   Sabado ","  Domingo  "};
-				//int sobrante= sep - diasSemana[i].length()*2;
-				int tamaño= sep/8;
-// Después de jugar un rato con la ventana, esto revienta (haces un new por cada vez que dibujas).
-				Font fuente=new Font(display,"Verdana",tamaño,SWT.BOLD|SWT.ITALIC);
+				int tamaño1= sep/8;
+				int tamaño2= tamañoFila/2;
+				int desplazamiento=0;
+				if (tamaño1<tamaño2){
+					tamaño = tamaño1;
+					}
+				else{
+					tamaño=tamaño2;
+					desplazamiento = (tamaño1-tamaño2)*4;
+				}
+				
+				Font fuente=gc.getFont();
+				gc.setFont(new Font(display,"Verdana",tamaño,SWT.BOLD|SWT.ITALIC));
+				gc.drawText(diasSemana[((i)%7)],m+i*sep+desplazamiento , margenSup+(alto/50), true);
+				gc.getFont().dispose();
 				gc.setFont(fuente);
-				gc.drawText(diasSemana[((i)%7)],m+i*sep , margenSup+(alto/50), true);
 			}
 		}
 		gc.setLineStyle(SWT.LINE_SOLID);
