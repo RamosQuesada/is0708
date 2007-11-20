@@ -21,11 +21,21 @@ public class Imprimir {
 	private PrinterData printerData;
 	private Shell imShell;
 	private Display imDisplay;
+	  
+		/** 
+	    * Class constructor.
+	    * @param shell 
+	    */
 	public Imprimir(Shell shell){
 		imShell = shell;
 		printDialog = new PrintDialog(imShell, SWT.NONE);
 		printerData = new PrinterData();
 	}
+	   /** 
+	    * Class constructor.
+	    * @param shell 
+	    * @param display 
+	    */
 	public Imprimir(Shell shell, Display display){
 		imShell = shell;
 		imDisplay = display;
@@ -34,9 +44,8 @@ public class Imprimir {
 		 
 	}
 	
-	public void imprimirImage(ImageData image){
-		System.out.println("Pulsado Imprimir");	
-		printDialog.setText("PrintDialogDemo");
+	public void imprimirImage(ImageData image){	
+		printDialog.setText("PrintDialog");
 		printDialog.setScope(PrinterData.ALL_PAGES);
 		//printDialog.setPrintToFile(true);
 		printerData = printDialog.open();
@@ -58,9 +67,8 @@ public class Imprimir {
 	          p.dispose();
 	        }
 	}
-	public void abrirDialogBox(){
-		System.out.println("Pulsado Imprimir");	
-		printDialog.setText("PrintDialogDemo");
+	public void abrirDialogBox(){	
+		printDialog.setText("PrintDialog");
 		printDialog.setScope(PrinterData.ALL_PAGES);
 		//printDialog.setPrintToFile(true);
 		printerData = printDialog.open();
