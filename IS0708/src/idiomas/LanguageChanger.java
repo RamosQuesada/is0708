@@ -3,13 +3,13 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LanguageChanger {
-	private Locale[] supportedLocales = {
+	 private Locale currentLocale;
+	 private ResourceBundle labels;
+	 private Locale[] supportedLocales = {
 			new Locale("es","ES"),
 			new Locale("pl","POL"),
 			new Locale("en","US")
 		};
-	 private Locale currentLocale;
-	 private ResourceBundle labels;
 	public LanguageChanger(){		
 		currentLocale = supportedLocales[0];
 		labels = ResourceBundle.getBundle("idiomas.Idioma",currentLocale);
