@@ -34,9 +34,9 @@ public class I12_Ayuda  {
 	 *  Class Constructor
 	 *  This constructor will open default language User Help File ( ES )
 	 */
-public I12_Ayuda(){
+public I12_Ayuda(Display d){
 	
-	display = new Display();
+	display = d;
 	shell = new Shell(display,SWT.DIALOG_TRIM);
 	icoPq = new Image(display, I02.class.getResourceAsStream("icoPq.gif"));		
 	
@@ -50,7 +50,7 @@ public I12_Ayuda(){
 	helppath = "/Ayuda/index_es.html";
 	localpath = localpath.replaceAll("\\\\", "/");
 	localpath = localpath.replaceAll(" ", "%20");
-	//System.out.print("file://localhost/"+localpath+helppath);
+	System.out.print("file://localhost/"+localpath+helppath);
 	
 	
 	// Source Code of a Web Page that redirects user to a locally kept Help Web Page
