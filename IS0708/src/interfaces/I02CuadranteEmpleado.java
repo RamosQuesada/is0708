@@ -17,6 +17,7 @@ public class I02CuadranteEmpleado {
 	private int margenIzq, margenDer, margenSup, margenInf; // Márgenes del cuadrante
 	private int margenNombres; // Un margen para pintar los nombres a la izquierda
 	private int alto_franjas;
+	private int tamañoFila;
 	private int sep_vert_franjas;
 	private int horaInicio, horaFin; // Definen de qué hora a qué hora es el cuadrante
 	private int tamHora, tamSubdiv;
@@ -453,14 +454,14 @@ public class I02CuadranteEmpleado {
 		h=7;
 		int sep = (ancho - m - margenDer)/h;
 		//int subsep = sep/subdivisiones;
-		int tamañoFila=(alto)/15;
+		tamañoFila=(alto)/15;
 		cambiarPincel(gc, 100,200,100);
 		gc.drawLine(m, this.margenSup, m+7*sep, this.margenSup);
 		gc.drawLine(m, tamañoFila+this.margenSup, m+7*sep, tamañoFila+this.margenSup);
 		gc.drawLine(m, alto-margenInf, m+7*sep, alto-margenInf);
 		cambiarPincel(gc, 150,200,150);
 		this.cambiarRelleno(gc, 180,230,180);
-		gc.fillRoundRectangle(m,tamañoFila+this.margenSup,7*sep,alto-margenInf-(tamañoFila+this.margenSup),8,8);
+		gc.fillRoundRectangle(m,tamañoFila+this.margenSup,7*sep,alto-margenInf-(tamañoFila+this.margenSup),1,1);
 		//gc.drawRoundRectangle(m,tamañoFila+this.margenSup,margenInf-margenSup,15,8,8);
 		//cambiarPincel(gc,100,0,0);
 		this.cambiarRelleno(gc, 0,143,65);
@@ -497,6 +498,25 @@ public class I02CuadranteEmpleado {
 			}
 		}
 		gc.setLineStyle(SWT.LINE_SOLID);
+		dibujarTurno(gc,0,10,12,"COSMETICA");
+		dibujarTurno(gc,1,12,13,"INFORMATICA");
+		dibujarTurno(gc,2,15,16,"PELUQUERIA");
+		dibujarTurno(gc,3,15,23,"FRUTERIA");
+		dibujarTurno(gc,4,10,12,"CAFETERIA");
+		dibujarTurno(gc,4,15,16,"CAFETERIA");
+		dibujarTurno(gc,5,17,18,"VIAJES");
+		dibujarTurno(gc,6,9,17,"VIAJES");
+		dibujarTurno(gc,6,18,23,"VIAJES");
+		this.dibujarLineaHorizontal(gc, 15.0f);
+		int num_subdivisiones=(int)((this.subdivisiones)*(this.horaFin-this.horaInicio)+1);
+		System.out.println("num subdivisiones"+num_subdivisiones);
+		for(int cont=0;cont<num_subdivisiones;cont++){
+			float fraccion = 1.0f/this.subdivisiones;
+			float hora=fraccion*cont;
+			hora +=this.horaInicio;
+			System.out.println("hora"+ hora);
+			this.dibujarLineaHorizontal(gc, hora);
+		}
 	}
 	/**
 	 * Cambia el color del pincel (foreground) sin exceder los límites de Color.
@@ -585,4 +605,75 @@ public class I02CuadranteEmpleado {
 				f.actualizarPixeles();
 			}
 	}
+	
+	
+	public void dibujarTurno(GC gc,int dia,int horaComienzo,int horaFinal,String Departamento){
+		int x_comienzo=convertirDia(dia);
+		int y_comienzo=convertirHora(horaComienzo);
+		int x_fin=convertirDia(dia+1);
+		int y_fin=convertirHora(horaFinal);
+		int m = margenIzq + margenNombres;
+		m = margenIzq;
+		int h = horaFin - horaInicio;
+		h=7;
+		gc.fillRoundRectangle(x_comienzo,y_comienzo,x_fin-x_comienzo,y_fin-y_comienzo,8,8);
+		this.cambiarPincel(gc, 0, 0, 0);
+		gc.drawRoundRectangle(x_comienzo,y_comienzo,x_fin-x_comienzo,y_fin-y_comienzo,8,8);
+		int sep=(ancho - m - margenDer)/h;
+		int tamaño1= sep/12;
+		int tamaño2= tamañoFila/3;
+		int desplazamiento=0;
+		if (tamaño1<tamaño2){
+			tamaño = tamaño1;
+			}
+		else{
+			tamaño=tamaño2;
+			desplazamiento = (tamaño1-tamaño2)*4;
+		}
+		
+		Font fuente=gc.getFont();
+		gc.setFont(new Font(display,"Verdana",tamaño,SWT.BOLD|SWT.ITALIC));
+		gc.drawText(Departamento,m+dia*sep+desplazamiento , (y_comienzo+y_fin)/2, true);
+		gc.getFont().dispose();
+		gc.setFont(fuente);
+
+
+	}
+	
+	public int convertirDia(int dia) {
+		int x=0;
+		int m = margenIzq + margenNombres;
+		m = margenIzq;
+		int h = horaFin - horaInicio;
+		h=7;
+		int sep=(ancho - m - margenDer)/h;
+		x=m+dia*sep;
+		return x;
+
+	}
+	
+	public int convertirHora(float hora) {
+		
+		Float hora_relativa = hora- horaInicio;
+		int duracion = horaFin-horaInicio;
+		int tamaño=alto-margenInf-(tamañoFila+this.margenSup);
+		int posicion_relativa = (int)((tamaño / duracion)*hora_relativa);
+		int posicion_absoluta =tamañoFila+this.margenSup+posicion_relativa;
+		return posicion_absoluta;
+	}
+	
+	public void dibujarLineaHorizontal(GC gc,float hora){
+		int m = margenIzq + margenNombres;
+		m = margenIzq;
+		int h = horaFin - horaInicio;
+		h=7;
+		int sep=(ancho - m - margenDer)/h;
+		gc.setLineStyle(SWT.LINE_DOT);
+		cambiarPincel(gc, 0,0,0);
+		
+		gc.drawLine(this.margenIzq, convertirHora(hora), this.margenIzq+7*sep,convertirHora(hora));
+		gc.setLineStyle(SWT.LINE_SOLID);
+	}
+
+//	horaInicio, horaFin;
 }
