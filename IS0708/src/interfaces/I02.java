@@ -88,6 +88,15 @@ public class I02 {
 		// Acceso rápido (ctrl+s)
 		itemSalir.setAccelerator (SWT.MOD1 + bundle.getString("I02_men_itm_saliracc").charAt(0));
 		
+		// Ayuda
+		MenuItem helpMenuHeader = new MenuItem(barra, SWT.CASCADE);
+	    helpMenuHeader.setText("&Help");
+		Menu helpMenu = new Menu(shell, SWT.DROP_DOWN);
+		helpMenuHeader.setMenu(helpMenu);
+
+	    MenuItem helpGetHelpItem = new MenuItem(helpMenu, SWT.PUSH);
+	    helpGetHelpItem.setText("&Get Help");
+		
 	}
 	private void crearCompositeCuadrantes (Composite c) {
 		// Configuración del composite
