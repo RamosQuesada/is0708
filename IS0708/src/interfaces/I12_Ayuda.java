@@ -15,8 +15,22 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class I12_Ayuda  {
+	
+	private final String HtmlDefoult = "<html> \n <head> \n "+
+	"</head>"+
+		"<body><br><br><b>"+
+			"We apologize but Help File can not by find <br></b><br>" +
+			"You can try to open it from folder “Ayuda” <br>"+
+			"To do so open Folder were You install <br> " +
+			"Your \"Turno_Matic\" application. "+
+		"</body>" +
+	"</html>";;
+	
 	private Image icoPq;
 	private Shell shell;
+	/**
+	 *  display as help is normally displayed after a user call this atribut will by passed to class constructor 
+	 */
 	private Display display;
 	/**
 	 *  String variable with the source code  of a web page that  redirects user to local help file ( writen as HTML ).  
@@ -33,7 +47,9 @@ public class I12_Ayuda  {
 	/**
 	 *  Class Constructor
 	 *  This constructor will open default language User Help File ( ES )
+	 *  @param display class uses main window display atribut to show help window 
 	 */
+	private String filePath;
 public I12_Ayuda(Display d){
 	
 	display = d;
@@ -116,11 +132,12 @@ public I12_Ayuda(ResourceBundle bundle){
  *  Class Constructor
  *  @param locale keeps information about User Country  
  *  This constructor will open User Help File in the lounge depending on locale variable
+ *  @param display class uses main window display atribut to show help window  
  */
-public I12_Ayuda(Locale locale){
+public I12_Ayuda(Display d, Locale locale){
 
 	
-	display = new Display();
+	display = d;
 	shell = new Shell(display,SWT.DIALOG_TRIM);
 	icoPq = new Image(display, I02.class.getResourceAsStream("icoPq.gif"));		
 	
@@ -134,6 +151,7 @@ public I12_Ayuda(Locale locale){
 	
 	helppath = "/Ayuda/index_" + locale.getCountry() + ".html";
 	localpath = localpath.replaceAll("\\\\", "/");
+	filePath = localpath+helppath;
 	localpath = localpath.replaceAll(" ", "%20");
 	System.out.print("file://localhost/"+localpath+helppath);
 	
@@ -167,7 +185,13 @@ public void abrirHelp(){
 			System.out.println("Could not instantiate Browser: " + e.getMessage());
 			return;
 		}
-		browser.setText(html);
+		if ( (new File(this.filePath).exists())){
+			browser.setText(html);
+		}else 
+		{
+			browser.setText(this.HtmlDefoult);
+		}
+		
 		shell.open();
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch())
@@ -178,8 +202,9 @@ public void abrirHelp(){
 
 public static void main(String [] args) {
 	LanguageChanger lch = new LanguageChanger();
+	Display display = new Display();
 	//System.out.println(lch.getCurrentLocale().getCountry());
-	I12_Ayuda help = new I12_Ayuda(lch.getCurrentLocale());
+	I12_Ayuda help = new I12_Ayuda(display, lch.getCurrentLocale());
 	help.abrirHelp();
 }
 

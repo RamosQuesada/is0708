@@ -96,6 +96,7 @@ public class I02 {
 
 	    MenuItem helpGetHelpItem = new MenuItem(helpMenu, SWT.PUSH);
 	    helpGetHelpItem.setText("&Get Help");
+	    // display 
 	    helpGetHelpItem.addListener(SWT.Selection, new Listener(){
 	    	public void handleEvent (Event e) {
 	    		I12_Ayuda ayuda = new I12_Ayuda(display);
