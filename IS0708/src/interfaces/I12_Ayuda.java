@@ -75,6 +75,7 @@ public class I12_Ayuda {
 		helppath = "/Ayuda/index_es.html";
 		localpath = localpath.replaceAll("\\\\", "/");
 		localpath = localpath.replaceAll(" ", "%20");
+		filePath = localpath + helppath;
 		System.out.print("file://localhost/" + localpath + helppath);
 
 		// Source Code of a Web Page that redirects user to a locally kept Help
@@ -115,6 +116,7 @@ public class I12_Ayuda {
 		helppath = "/Ayuda/index_" + bundle.getLocale().getCountry() + ".html";
 		localpath = localpath.replaceAll("\\\\", "/");
 		localpath = localpath.replaceAll(" ", "%20");
+		filePath = localpath + helppath;
 		System.out.print("file://localhost/" + localpath + helppath);
 
 		// Source Code of a Web Page that redirects user to a locally kept Help
