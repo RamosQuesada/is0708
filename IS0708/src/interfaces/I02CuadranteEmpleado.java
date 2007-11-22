@@ -24,6 +24,7 @@ public class I02CuadranteEmpleado {
 	public  int subdivisiones; // Cuántas subdivisiones hacer por hora (0 = sin subdivisiones)
 	public Empleado empleado;
 	private int tamaño =8;
+	
 
 	/**
 	 * Representa una hora del cuadrante mediante dos valores:
@@ -168,10 +169,12 @@ public class I02CuadranteEmpleado {
 			int b = color.getBlue();
 			// Todos los cambios de colores
 			cambiarRelleno(gc, r-50,g-50,b-50);
-			gc.fillRoundRectangle(inicio+2,despV+2,fin-inicio,15,10,10);
+			//gc.fillGradientRectangle(inicio+2,despV+2,fin-inicio,15,false);
+			//gc.fillRoundRectangle(inicio+2,despV+2,fin-inicio,15,10,10);
 			cambiarRelleno(gc, r,g,b);
 			cambiarPincel(gc, r-100,g-100,b-100);
-			gc.fillRoundRectangle(inicio,despV,fin-inicio,15,8,8);
+			gc.fillGradientRectangle(inicio,despV,fin-inicio,15,false);
+			//gc.fillRoundRectangle(inicio,despV,fin-inicio,15,8,8);
 			gc.drawRoundRectangle(inicio,despV,fin-inicio,15,8,8);
 			
 			// Si la franja está activa, mostrar una pestaña con información adicional
@@ -453,24 +456,32 @@ public class I02CuadranteEmpleado {
 		int sep = (ancho - m - margenDer)/h;
 		//int subsep = sep/subdivisiones;
 		tamañoFila=(alto)/15;
-		cambiarPincel(gc, 100,200,100);
+		cambiarPincel(gc, 0,143,65);
+		this.cambiarRelleno(gc, 180,230,180);
+		gc.fillGradientRectangle(m,tamañoFila+this.margenSup,7*sep,alto-margenInf-(tamañoFila+this.margenSup),false);
+
+		this.cambiarPincel(gc, 10, 160, 90);
+		this.cambiarRelleno(gc, 0, 143, 65);
+		gc.fillGradientRectangle(m,this.margenSup,7*sep,tamañoFila,true);
+		
+		cambiarPincel(gc, 0,0,0);
 		gc.drawLine(m, this.margenSup, m+7*sep, this.margenSup);
 		gc.drawLine(m, tamañoFila+this.margenSup, m+7*sep, tamañoFila+this.margenSup);
 		gc.drawLine(m, alto-margenInf, m+7*sep, alto-margenInf);
-		cambiarPincel(gc, 150,200,150);
-		this.cambiarRelleno(gc, 180,230,180);
-		gc.fillRoundRectangle(m,tamañoFila+this.margenSup,7*sep,alto-margenInf-(tamañoFila+this.margenSup),1,1);
+
+		//gc.fillRoundRectangle(m,tamañoFila+this.margenSup,7*sep,alto-margenInf-(tamañoFila+this.margenSup),1,1);
 		//gc.drawRoundRectangle(m,tamañoFila+this.margenSup,margenInf-margenSup,15,8,8);
 		//cambiarPincel(gc,100,0,0);
-		this.cambiarRelleno(gc, 0,143,65);
+		//this.cambiarRelleno(gc, 0,143,65);
 		//cambiarPincel(gc, 100,100,100);
 	
-		gc.fillRoundRectangle(m,this.margenSup,7*sep,tamañoFila,8,8);
+
+		//gc.fillRoundRectangle(m,this.margenSup,7*sep,tamañoFila,8,8);
 		gc.drawRoundRectangle(m,this.margenSup,7*sep,tamañoFila,8,8);
 		gc.drawRectangle(m, this.margenSup, 7*sep, tamañoFila);
 		for (int i=0; i<=h; i++) {
 			gc.setLineStyle(SWT.LINE_SOLID);
-			cambiarPincel(gc, 100,200,100);
+			cambiarPincel(gc, 0,0,0);
 			gc.drawLine(m+i*sep, this.margenSup, m+i*sep, alto-margenInf);
 			//cambiarPincel(gc, 120,170,120);
 			gc.setLineStyle(SWT.LINE_DOT);
@@ -496,7 +507,7 @@ public class I02CuadranteEmpleado {
 			}
 		}
 		gc.setLineStyle(SWT.LINE_SOLID);
-		dibujarTurno(gc,0,10,12,"INFOR.");
+		dibujarTurno(gc,0,10.5f,12.5f,"INFOR.");
 		dibujarTurno(gc,1,12,13,"FRUTE.");
 		dibujarTurno(gc,2,15,16,"PELUQ.");
 		dibujarTurno(gc,3,15,23,"FRUTE.");
@@ -506,14 +517,12 @@ public class I02CuadranteEmpleado {
 		dibujarTurno(gc,6,9,17, "VIAJE.");
 		dibujarTurno(gc,0,16,17,"VIAJE.");
 		dibujarTurno(gc,6,18,23,"VIAJE.");
-		this.dibujarLineaHorizontal(gc, 15.0f);
+		//this.dibujarLineaHorizontal(gc, 15.0f);
 		int num_subdivisiones=(int)((this.subdivisiones)*(this.horaFin-this.horaInicio)+1);
-		System.out.println("num subdivisiones"+num_subdivisiones);
 		for(int cont=0;cont<num_subdivisiones;cont++){
 			float fraccion = 1.0f/this.subdivisiones;
 			float hora=fraccion*cont;
 			hora +=this.horaInicio;
-			System.out.println("hora"+ hora);
 			this.dibujarLineaHorizontal(gc, hora);
 		}
 	}
@@ -582,7 +591,7 @@ public class I02CuadranteEmpleado {
 	}
 	
 	
-	public void dibujarTurno(GC gc,int dia,int horaComienzo,int horaFinal,String Departamento){
+	public void dibujarTurno(GC gc,int dia,float horaComienzo,float horaFinal,String Departamento){
 		int x_comienzo=convertirDia(dia);
 		int y_comienzo=convertirHora(horaComienzo);
 		int x_fin=convertirDia(dia+1);
@@ -591,29 +600,40 @@ public class I02CuadranteEmpleado {
 		m = margenIzq;
 		int h = horaFin - horaInicio;
 		h=7;
-		gc.fillRoundRectangle(x_comienzo,y_comienzo,x_fin-x_comienzo,y_fin-y_comienzo,8,8);
+		this.cambiarPincel(gc, 150, 255, 150);
+		this.cambiarRelleno(gc, 100, 200, 100);
+		int x_comienzo_c = (x_comienzo*8+x_fin*2)/10;
+		int longitud = (int)((x_fin-x_comienzo_c));
+		gc.fillGradientRectangle(x_comienzo_c,y_comienzo,longitud,y_fin-y_comienzo,true);
 		this.cambiarPincel(gc, 0, 0, 0);
-		gc.drawRoundRectangle(x_comienzo,y_comienzo,x_fin-x_comienzo,y_fin-y_comienzo,8,8);
+		gc.drawRoundRectangle(x_comienzo_c,y_comienzo,longitud,y_fin-y_comienzo,8,8);
 		int sep=(ancho - m - margenDer)/h;
-		int tamaño1= sep/8;
-		int tamaño2= tamañoFila/2;
+		float tamañox= sep/12;
+		float tamañoy= tamañoFila/3;
+		
+
 		int desplazamiento=0;
-		if (tamaño1<tamaño2){
-			tamaño = tamaño1;
-			desplazamiento = (tamaño1-tamaño2)*8;
+		if (tamañox<tamañoy){
+			System.out.println("1");
+			System.out.println(tamañoy-tamañox);
+			tamaño = (int)(tamañox);
+			desplazamiento = (int)((tamañoy-tamañox)*15);
 			}
 		else{
-			tamaño=tamaño2;
-			desplazamiento = (tamaño1-tamaño2)*8;
+			System.out.println("2");
+			System.out.println(tamañox-tamañoy);
+			tamaño= (int)tamañoy;
+			desplazamiento = (int)(tamañox-tamañoy)*15;
 		}
-		if(desplazamiento<3){desplazamiento=10;		}
+		//if(desplazamiento<3){desplazamiento=20;		}
 		
 		Font fuente=gc.getFont();
 		gc.setFont(new Font(display,"Verdana",tamaño,SWT.BOLD));
+		gc.drawText(String.valueOf((int)horaComienzo),x_comienzo, (y_comienzo), true);
 		gc.drawText(Departamento,m+dia*sep+desplazamiento , (y_comienzo*2+y_fin)/3, true);
+		gc.drawText(String.valueOf((int)horaFinal),x_comienzo , y_fin-10, true);
 		gc.getFont().dispose();
 		gc.setFont(fuente);
-
 
 	}
 	
