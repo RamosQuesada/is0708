@@ -1,4 +1,8 @@
 
+body{
+background-color:#EEEEEE;
+}
+
 h1,h2,h3,h4,h5,h6{ 
   font-variant:small-caps;
   background-color:#FFFFFF;
@@ -9,6 +13,13 @@ h1,h2,h3,h4,h5,h6{
   clear:both;
  }
 
-ul, li{
+ul, li, p{
 font-family:arial;
 }
+
+p { 
+  text-indent:2em;
+ }
+p:first-letter{ 
+  font-size:150%;
+ }
