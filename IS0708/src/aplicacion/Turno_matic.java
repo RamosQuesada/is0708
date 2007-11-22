@@ -16,7 +16,9 @@ public class Turno_matic {
 		empleados = new ArrayList<Empleado>();
 			
 		LanguageChanger l = new LanguageChanger();
-		l.cambiarLocale(2);
+		// 2 inglés
+		l.cambiarLocale(0);
+		System.out.println(l.getCurrentLocale().getCountry());
 		// Prueba del archivo de idioma
 		display = new Display ();
 		Shell shell = new Shell(display);
@@ -44,7 +46,7 @@ public class Turno_matic {
 		empleados.add(e5);
 		empleados.add(e6);
 
-		I02 i = new I02(shell, display, l.getBundle(), empleados);
+		I02 i = new I02(shell, display, l.getBundle(), l.getCurrentLocale(), empleados);
 		i.crearVentana();
 		// Este bucle mantiene la ventana abierta
 		while (!shell.isDisposed()) {
