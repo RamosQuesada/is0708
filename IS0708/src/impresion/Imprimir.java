@@ -15,6 +15,8 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.printing.*;
 import interfaces.Cuadrante;
+import aplicacion.Empleado;
+import java.util.ArrayList;
 
 public class Imprimir {
 	private PrintDialog printDialog;
@@ -67,7 +69,7 @@ public class Imprimir {
 	          p.dispose();
 	        }
 	}
-	public void abrirDialogBox(){	
+	public void abrirDialogBox(ArrayList<Empleado> empleados){
 		printDialog.setText("PrintDialog");
 		printDialog.setScope(PrinterData.ALL_PAGES);
 		//printDialog.setPrintToFile(true);
@@ -79,7 +81,7 @@ public class Imprimir {
 
 			GC gc2 = new GC(p);
 			//TODO
-			Cuadrante c = new Cuadrante(imDisplay,4,9,23,0,0,0,0,0,e);
+			Cuadrante c = new Cuadrante(imDisplay,4,9,23,0,0,0,0,0,empleados);
 			c.setTamaño(p.getClientArea().width, p.getClientArea().height);
 			c.dibujarCuadranteDia(gc2,-1);
 

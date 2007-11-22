@@ -73,7 +73,7 @@ public class I02 {
 		itemImprimir.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				Imprimir imprimir = new Imprimir(shell, display);
-				imprimir.abrirDialogBox();
+				imprimir.abrirDialogBox(empleados);
 			}
 		});
 		itemImprimir.setImage(ico_imprimir);
@@ -107,7 +107,7 @@ public class I02 {
 		// display
 		helpHelpItem.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				I12 ayuda = new I12(display, locale, bundle);
+				new I12(display, locale, bundle);
 			}
 		});
 		helpHelpItem.setAccelerator(SWT.F1);

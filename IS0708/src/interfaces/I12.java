@@ -151,7 +151,7 @@ public class I12 {
 		bPrint.addListener(SWT.Selection, new Listener(){
 			public void handleEvent(Event event) {
 				Imprimir imprimir = new Imprimir(shell);
-				imprimir.abrirDialogBox();
+				//imprimir.abrirDialogBox();
 				
 			}
 		});
