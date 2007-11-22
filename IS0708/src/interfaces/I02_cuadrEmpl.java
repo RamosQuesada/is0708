@@ -12,15 +12,14 @@
 // TODO Hacer que reduzca la resolución del grid en función del tamaño de la pantalla
 package interfaces;
 
-import interfaces.I02CuadranteEmpleado.Franja;
-import interfaces.I02CuadranteEmpleado.Posicion;
-
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.events.*;
+
+import aplicacion.Franja;
 
 
 /**
