@@ -126,7 +126,7 @@ public class I12 {
 		bHome.setImage(icoHome);
 		bForward.setImage(icoFw);
 		bPrint.setImage(icoPrnt);
-		bPrint.setToolTipText(I12_tip_imprimir);
+		bPrint.setToolTipText("I12_tip_imprimir");
 		
 		final Browser browser = new Browser(c, SWT.NONE);;
 		
