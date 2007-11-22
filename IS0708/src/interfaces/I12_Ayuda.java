@@ -9,10 +9,13 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Button;
 
 import idiomas.LanguageChanger;
+import impresion.Imprimir;
 
 import java.io.File;
 import java.util.Locale;
@@ -38,7 +41,7 @@ public class I12_Ayuda {
 	 * String variable with the source code of a web page that redirects user to
 	 * local help file ( writen as HTML ).
 	 */
-	private String html;
+	final private String html;
 	/**
 	 * Keeps the Absolute Path to the folder with a project
 	 */
@@ -180,7 +183,7 @@ public class I12_Ayuda {
 		icoHome = new Image(display, I12_Ayuda.class.getResourceAsStream("ico_Home.gif"));
 		icoPrnt = new Image(display, I12_Ayuda.class.getResourceAsStream("ico_Imprimir.gif"));
 		
-		Browser browser;
+		
 		Composite c = new Composite(shell,SWT.NONE);
 		c.setLayout(new GridLayout(1,true));
 		
@@ -204,14 +207,42 @@ public class I12_Ayuda {
 		bPrint.setImage(icoPrnt);
 		bPrint.setToolTipText("Imprimir esta página de ayuda");
 		
+		final Browser browser = new Browser(c, SWT.NONE);;
+		
+		bBack.addListener(SWT.Selection, new Listener(){
+			public void handleEvent(Event event) {
+				browser.back();
+				
+			}
+			
+		});
+		bForward.addListener(SWT.Selection, new Listener(){
+			public void handleEvent(Event event) {
+				browser.forward();				
+			}		
+		});
+		bHome.addListener(SWT.Selection, new Listener(){
+			public void handleEvent(Event event) {
+				browser.setText(I12_Ayuda.this.html);				
+			}
+			
+		});
+		bPrint.addListener(SWT.Selection, new Listener(){
+			public void handleEvent(Event event) {
+				Imprimir imprimir = new Imprimir(shell);
+				imprimir.abrirDialogBox();
+				
+			}
+		});
 		try {
-			browser = new Browser(c, SWT.NONE);
+			//browser = new Browser(c, SWT.NONE);
 			browser.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
 		} catch (SWTError e) {
 			System.out.println("Could not instantiate Browser: "
 					+ e.getMessage());
 			return;
 		}
+		
 		if ((new File(this.filePath).exists())) {
 			browser.setText(html);
 		} else {
