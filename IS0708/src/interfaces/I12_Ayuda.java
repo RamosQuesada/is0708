@@ -27,7 +27,7 @@ public class I12_Ayuda {
 			+ "To do so open Folder were You install <br> "
 			+ "Your \"Turno_Matic\" application. " + "</body>" + "</html>";;
 
-	private Image icoPq;
+	private Image icoPq, icoPrnt, icoBk,icoFw,icoHome;
 	private Shell shell;
 	/**
 	 * display as help is normally displayed after a user call this atribut will
@@ -174,28 +174,35 @@ public class I12_Ayuda {
 		shell.setImage(icoPq);
 		shell.setText("Turno Matic");
 		shell.setSize(700, 500);
+
+		icoBk	= new Image(display, I12_Ayuda.class.getResourceAsStream("ico_Bk.gif"));
+		icoFw	= new Image(display, I12_Ayuda.class.getResourceAsStream("ico_Fw.gif"));
+		icoHome = new Image(display, I12_Ayuda.class.getResourceAsStream("ico_Home.gif"));
+		icoPrnt = new Image(display, I12_Ayuda.class.getResourceAsStream("ico_Imprimir.gif"));
+		
 		Browser browser;
 		Composite c = new Composite(shell,SWT.NONE);
 		c.setLayout(new GridLayout(1,true));
 		
 		Composite cButtons = new Composite(c,SWT.NONE);
-		cButtons.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
-		cButtons.setLayout(new GridLayout(5,true));
+		cButtons.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
+		cButtons.setLayout(new GridLayout(4,false));
 
-		Button bBack = new Button(cButtons, SWT.PUSH);
-		Button bHome = new Button(cButtons, SWT.PUSH);
-		Button bForward = new Button(cButtons, SWT.PUSH);
-		Button bPrint = new Button(cButtons, SWT.PUSH);
+		Button bBack	= new Button(cButtons, SWT.PUSH);
+		Button bForward	= new Button(cButtons, SWT.PUSH);
+		Button bHome	= new Button(cButtons, SWT.PUSH);
+		Button bPrint	= new Button(cButtons, SWT.PUSH);
 		
-		bBack.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		bHome.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 2, 1));
-		bForward.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 1, 1));
-		bPrint.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true , 1, 1));
+		bBack.setLayoutData		(new GridData(SWT.LEFT,  SWT.TOP, false, true, 1, 1));
+		bHome.setLayoutData		(new GridData(SWT.FILL,  SWT.TOP, false, true, 1, 1));
+		bForward.setLayoutData	(new GridData(SWT.LEFT,  SWT.TOP, false, true, 1, 1));
+		bPrint.setLayoutData	(new GridData(SWT.RIGHT, SWT.TOP, true,  true, 1, 1));
 		
-		bBack.setImage(icoPq);
-		bHome.setImage(icoPq);
-		bForward.setImage(icoPq);
-		bPrint.setImage(icoPq);
+		bBack.setImage(icoBk);
+		bHome.setImage(icoHome);
+		bForward.setImage(icoFw);
+		bPrint.setImage(icoPrnt);
+		bPrint.setToolTipText("Imprimir esta página de ayuda");
 		
 		try {
 			browser = new Browser(c, SWT.NONE);
