@@ -23,9 +23,7 @@ import java.util.ResourceBundle;
 
 public class I12 {
 
-	private final String htmlDefault = "<html> \n <head> \n " + "</head>"
-			+ "<body>"
-			 + "</body>" + "</html>";;
+	private String htmlDefault;
 
 	private Image icoPq, icoPrnt, icoBk,icoFw,icoHome;
 	private Shell shell;
@@ -60,12 +58,15 @@ public class I12 {
 	 * @param display
 	 *            class uses main window display atribut to show help window
 	 */
-	public I12(Display d, Locale locale) {
+	public I12(Display d, Locale locale, ResourceBundle bundle) {
 
 		display = d;
 		shell = new Shell(display, SWT.DIALOG_TRIM);
 		icoPq = new Image(display, I02.class.getResourceAsStream("icoPq.gif"));
 
+		htmlDefault = "<html> \n <head> \n " + "</head>"
+			+ "<body>" + bundle.getString("I12_err_fileNotFound")
+			 + "</body>" + "</html>";
 		/*
 		 * A place where variables localpath, helppath are initialized and
 		 * prepared to by used as a part of URL address Important it is designed
@@ -74,7 +75,7 @@ public class I12 {
 
 		localpath = (new File("").getAbsolutePath());
 
-		helppath = "/Ayuda/index_" + locale.getCountry() + ".html";
+		helppath = "/Ayuda/" + locale.getCountry() + "/index.html";
 		localpath = localpath.replaceAll("\\\\", "/");
 		filePath = localpath + helppath;
 		localpath = localpath.replaceAll(" ", "%20");
@@ -90,7 +91,7 @@ public class I12 {
 				+ "<body onLoad=\"redir()\">" +
 
 				"</body>" + "</html>";
-
+		abrirHelp();
 	}
 
 	public void abrirHelp() {
@@ -103,7 +104,6 @@ public class I12 {
 		icoFw	= new Image(display, I12.class.getResourceAsStream("ico_Fw.gif"));
 		icoHome = new Image(display, I12.class.getResourceAsStream("ico_Home.gif"));
 		icoPrnt = new Image(display, I12.class.getResourceAsStream("ico_Imprimir.gif"));
-		
 		
 		Composite c = new Composite(shell,SWT.NONE);
 		c.setLayout(new GridLayout(1,true));
@@ -159,8 +159,7 @@ public class I12 {
 			//browser = new Browser(c, SWT.NONE);
 			browser.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
 		} catch (SWTError e) {
-			System.out.println("Could not instantiate Browser: "
-					+ e.getMessage());
+			System.out.println("Could not instantiate Browser: " + e.getMessage());
 			return;
 		}
 		

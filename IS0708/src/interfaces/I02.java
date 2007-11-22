@@ -103,12 +103,11 @@ public class I02 {
 		helpMenuHeader.setMenu(helpMenu);
 
 		MenuItem helpHelpItem = new MenuItem(helpMenu, SWT.PUSH);
-		helpHelpItem.setText(bundle.getString("I02_men_Ayuda") + "\tF1");
+		helpHelpItem.setText(bundle.getString("I02_men_itm_Ayuda") + "\tF1");
 		// display
 		helpHelpItem.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				I12 ayuda = new I12(display, locale);
-				ayuda.abrirHelp();
+				I12 ayuda = new I12(display, locale, bundle);
 			}
 		});
 		helpHelpItem.setAccelerator(SWT.F1);
