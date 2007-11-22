@@ -404,9 +404,7 @@ public class I02CuadranteEmpleado {
 	 */
 	// TODO Debería lanzar una excepción si empleadoActivo > empleados.size
 	public void dibujarCuadranteDia(GC gc, int empleadoActivo) {
-		dibujarSeleccion(gc, empleadoActivo);
 		dibujarDias(gc);
-	//	empleado.dibujarFranjas(gc, 0, empleado.dameColor());
 	}
 	
 	public void dibujarCuadranteMes(GC gc){
@@ -498,15 +496,16 @@ public class I02CuadranteEmpleado {
 			}
 		}
 		gc.setLineStyle(SWT.LINE_SOLID);
-		dibujarTurno(gc,0,10,12,"COSMETICA");
-		dibujarTurno(gc,1,12,13,"INFORMATICA");
-		dibujarTurno(gc,2,15,16,"PELUQUERIA");
-		dibujarTurno(gc,3,15,23,"FRUTERIA");
-		dibujarTurno(gc,4,10,12,"CAFETERIA");
-		dibujarTurno(gc,4,15,16,"CAFETERIA");
-		dibujarTurno(gc,5,17,18,"VIAJES");
-		dibujarTurno(gc,6,9,17,"VIAJES");
-		dibujarTurno(gc,6,18,23,"VIAJES");
+		dibujarTurno(gc,0,10,12,"INFOR.");
+		dibujarTurno(gc,1,12,13,"FRUTE.");
+		dibujarTurno(gc,2,15,16,"PELUQ.");
+		dibujarTurno(gc,3,15,23,"FRUTE.");
+		dibujarTurno(gc,4,10,12,"CAFET.");
+		dibujarTurno(gc,4,15,16,"CAFET.");
+		dibujarTurno(gc,5,17,18,"VIAJE.");
+		dibujarTurno(gc,6,9,17, "VIAJE.");
+		dibujarTurno(gc,0,16,17,"VIAJE.");
+		dibujarTurno(gc,6,18,23,"VIAJE.");
 		this.dibujarLineaHorizontal(gc, 15.0f);
 		int num_subdivisiones=(int)((this.subdivisiones)*(this.horaFin-this.horaInicio)+1);
 		System.out.println("num subdivisiones"+num_subdivisiones);
@@ -556,38 +555,14 @@ public class I02CuadranteEmpleado {
 		if (b>255) b=255;		
 		gc.setBackground(new Color(display,r, g, b));
 	}
-	/**
-	 * Dibuja un fondo distinguido para el empleado seleccionado, basado en el color del empleado
-	 * pero más pálido.
-	 * @param gc	El GC sobre el que resaltar el empleado
-	 * @param emp	La posición del empleado a resaltar en la lista de empleados. Se considera
-	 * 				que -1 significa que no hay ningún empleado seleccionado.
-	 */
-	// TODO Lanzar excepción si emp > empleados.size
-	private void dibujarSeleccion (GC gc, int emp) {
-		if (emp!=-1) {
-			cambiarRelleno(gc, 255-(255-empleado.dameColor().getRed())/5, 255-(255-empleado.dameColor().getGreen())/5, 255-(255-empleado.dameColor().getBlue())/5);
-			gc.fillRectangle(margenNombres+margenIzq,margenSup+(sep_vert_franjas+alto_franjas)*(emp+1)-5,ancho-margenNombres-margenIzq-margenDer,alto_franjas+11);
-		}
-	}
+
 	/**
 	 * Pega el valor x al más cercano dentro de la rejilla. El tamaño de la rejilla está determinado
 	 * por el número de subdivisiones.
 	 * @param x		El valor a ajustar
 	 * @return		El valor ajustado a la rejilla
 	 */
-	public Posicion sticky (int x) {
-		int y = x - margenNombres - margenIzq + (tamHora/subdivisiones)/2;
-		Posicion p;
-		if (((y%tamHora)/(tamHora/subdivisiones))>=subdivisiones)
-			// Para evitar resultados del tipo 14:60
-			p = new Posicion(1+y/tamHora+horaInicio,0);
-		else
-			// En otro caso, hay que tener en cuenta cómo se dibuja el cuadrante para evitar
-			// desfases entre las lineas horarias y las franjas.
-			p = new Posicion(y/tamHora+horaInicio,((y%tamHora)/(tamHora/subdivisiones))*12/subdivisiones);
-		return p;
-	}
+
 	/**
 	 * Actualiza el tamaño del cuadrante, el tamaño de las horas y las subdivisiones, y para cada
 	 * franja, actualiza sus píxeles inicial y final en función de sus valores pinicio y pfin.
@@ -620,20 +595,22 @@ public class I02CuadranteEmpleado {
 		this.cambiarPincel(gc, 0, 0, 0);
 		gc.drawRoundRectangle(x_comienzo,y_comienzo,x_fin-x_comienzo,y_fin-y_comienzo,8,8);
 		int sep=(ancho - m - margenDer)/h;
-		int tamaño1= sep/12;
-		int tamaño2= tamañoFila/3;
+		int tamaño1= sep/8;
+		int tamaño2= tamañoFila/2;
 		int desplazamiento=0;
 		if (tamaño1<tamaño2){
 			tamaño = tamaño1;
+			desplazamiento = (tamaño1-tamaño2)*8;
 			}
 		else{
 			tamaño=tamaño2;
-			desplazamiento = (tamaño1-tamaño2)*4;
+			desplazamiento = (tamaño1-tamaño2)*8;
 		}
+		if(desplazamiento<3){desplazamiento=10;		}
 		
 		Font fuente=gc.getFont();
-		gc.setFont(new Font(display,"Verdana",tamaño,SWT.BOLD|SWT.ITALIC));
-		gc.drawText(Departamento,m+dia*sep+desplazamiento , (y_comienzo+y_fin)/2, true);
+		gc.setFont(new Font(display,"Verdana",tamaño,SWT.BOLD));
+		gc.drawText(Departamento,m+dia*sep+desplazamiento , (y_comienzo*2+y_fin)/3, true);
 		gc.getFont().dispose();
 		gc.setFont(fuente);
 
@@ -675,5 +652,4 @@ public class I02CuadranteEmpleado {
 		gc.setLineStyle(SWT.LINE_SOLID);
 	}
 
-//	horaInicio, horaFin;
 }
