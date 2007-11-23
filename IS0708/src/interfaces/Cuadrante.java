@@ -115,7 +115,7 @@ public class Cuadrante {
 			}
 
 		for (int i=0; i < empleados.size(); i++) {
-			gc.drawText(empleados.get(i).dameNombre(), margenIzq, margenSup + 20 + i*altoFila);
+			gc.drawText(empleados.get(i).getNombre(), margenIzq, margenSup + 20 + i*altoFila);
 			for (int j=0; j < ultimoDia; j++) {
 				gc.drawRectangle(margenIzq + margenNombres + j*anchoDia, margenSup + 20 + i*altoFila, anchoDia, altoFila);
 			}

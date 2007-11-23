@@ -11,22 +11,29 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.ColorDialog;
+import aplicacion.General;
+import java.util.ResourceBundle;
 
+// TODO Mostrar elección de rangos inferiores al usuario
+// TODO Elegir color (si lo vamos a usar)
 public class I08_1 {
 	private Shell padre = null;
-
-	public I08_1(Shell padre) {
+	private ResourceBundle bundle;
+	public I08_1(Shell padre, ResourceBundle bundle) {
 		this.padre = padre;
+		this.bundle = bundle;
 		mostrarVentana();
 	}
 	
@@ -42,8 +49,8 @@ public class I08_1 {
 
 		final Group grupoIzq = new Group(shell, SWT.NONE);
 		final Group grupoDer = new Group(shell, SWT.NONE);
-		grupoIzq.setText("Datos personales");
-		grupoDer.setText("Datos laborales");
+		grupoIzq.setText(bundle.getString("I08_lab_DatosPersonales"));
+		grupoDer.setText(bundle.getString("I08_lab_DatosLaborales"));
 
 		GridLayout lGrupoIzq = new GridLayout();
 		lGrupoIzq.numColumns = 2;
@@ -52,70 +59,91 @@ public class I08_1 {
 		lGrupoDer.numColumns = 2;
 		grupoDer.setLayout(lGrupoDer);
 		
-		final Label lNVend			= new Label(grupoIzq, SWT.LEFT);
-		final Text  tNVend			= new Text (grupoIzq, SWT.BORDER);
-		final Label lPassword		= new Label(grupoIzq, SWT.LEFT);
-		final Text  tPassword		= new Text (grupoIzq, SWT.BORDER);
-		final Label lNombre			= new Label(grupoIzq, SWT.LEFT);
-		final Text  tNombre			= new Text (grupoIzq, SWT.BORDER);
-		final Label lApell1			= new Label(grupoIzq, SWT.LEFT);
-		final Text  tApell1			= new Text (grupoIzq, SWT.BORDER);
-		final Label lApell2			= new Label(grupoIzq, SWT.LEFT);
-		final Text  tApell2			= new Text (grupoIzq, SWT.BORDER);
-		final Label lAnoNac			= new Label(grupoIzq, SWT.LEFT);
-		final Text  tAnoNac			= new Text (grupoIzq, SWT.BORDER);
-		final Label lSexo			= new Label(grupoIzq, SWT.LEFT);
-		final Combo cSexo			= new Combo(grupoIzq, SWT.BORDER | SWT.READ_ONLY);
-		final Label lContrato		= new Label(grupoDer, SWT.LEFT);
-		final Combo cContrato		= new Combo(grupoDer, SWT.BORDER | SWT.READ_ONLY);
-		final Label lExperiencia	= new Label(grupoDer, SWT.LEFT);
-		final Combo cExperiencia	= new Combo(grupoDer, SWT.BORDER | SWT.READ_ONLY);
-		final Label lDepto			= new Label(grupoDer, SWT.LEFT);
-		final Combo cDepto			= new Combo(grupoDer, SWT.BORDER | SWT.READ_ONLY);
+		final Label  lNVend			= new Label (grupoIzq, SWT.LEFT);
+		final Text   tNVend			= new Text  (grupoIzq, SWT.BORDER);
+		final Label  lPassword		= new Label (grupoIzq, SWT.LEFT);
+		final Text   tPassword		= new Text  (grupoIzq, SWT.BORDER);
+		final Label  lNombre		= new Label (grupoIzq, SWT.LEFT);
+		final Text   tNombre		= new Text  (grupoIzq, SWT.BORDER);
+		final Label  lApell1		= new Label (grupoIzq, SWT.LEFT);
+		final Text   tApell1		= new Text  (grupoIzq, SWT.BORDER);
+		final Label  lApell2		= new Label (grupoIzq, SWT.LEFT);
+		final Text   tApell2		= new Text  (grupoIzq, SWT.BORDER);
+		final Label  lEMail			= new Label (grupoIzq, SWT.LEFT);
+		final Text   tEMail			= new Text  (grupoIzq, SWT.BORDER);
+		final Label  lAnoNac		= new Label (grupoIzq, SWT.LEFT);
+		final Text   tAnoNac		= new Text  (grupoIzq, SWT.BORDER);
+		final Label  lSexo			= new Label (grupoIzq, SWT.LEFT);
+		final Combo  cSexo			= new Combo (grupoIzq, SWT.BORDER | SWT.READ_ONLY);
+		final Label  lContrato		= new Label (grupoDer, SWT.LEFT);
+		final Combo  cContrato		= new Combo (grupoDer, SWT.BORDER | SWT.READ_ONLY);
+		final Label  lExperiencia	= new Label (grupoDer, SWT.LEFT);
+		final Combo  cExperiencia	= new Combo (grupoDer, SWT.BORDER | SWT.READ_ONLY);
+		final Label  lDepto			= new Label (grupoDer, SWT.LEFT);
+		final Combo  cDepto			= new Combo (grupoDer, SWT.BORDER | SWT.READ_ONLY);
+		final Button bFContrato		= new Button(grupoDer, SWT.PUSH);
+		final Text   tFContrato		= new Text  (grupoDer, SWT.BORDER | SWT.READ_ONLY);
+		final Button bFAlta			= new Button(grupoDer, SWT.PUSH);
+		final Text   tFAlta			= new Text  (grupoDer, SWT.BORDER | SWT.READ_ONLY);
+		final Button bColor			= new Button(grupoDer, SWT.PUSH);
+		final Label  lColor			= new Label	(grupoDer,  SWT.NONE);
+		
 		final Button bAceptar		= new Button(shell, SWT.PUSH);
 		final Button bCancelar		= new Button(shell, SWT.PUSH);
 		
-		lNVend.setText("Vendedor");
-		lPassword.setText("Contraseña");
-		lNombre.setText("Nombre");
-		lApell1.setText("1er apellido");
-		lApell2.setText("2º  apellido");
-		lAnoNac.setText("Año de nacimiento");
-		lSexo.setText("Sexo");
-		lContrato.setText("Tipo de contrato");
-		lExperiencia.setText("Experiencia");
-		lDepto.setText("Departamento");
-		
+		lNVend			.setText(bundle.getString("Vendedor"));
+		lPassword		.setText(bundle.getString("Contraseña"));
+		lEMail			.setText(bundle.getString("EMail"));
+		lNombre			.setText(bundle.getString("Nombre"));
+		lApell1			.setText(bundle.getString("I08_lab_Apellido1"));
+		lApell2			.setText(bundle.getString("I08_lab_Apellido2"));
+		lAnoNac			.setText(bundle.getString("I08_lab_AnoNacimiento"));
+		lSexo			.setText(bundle.getString("Sexo"));
+		lContrato		.setText(bundle.getString("I08_lab_TipoContrato"));
+		lExperiencia	.setText(bundle.getString("Experiencia"));
+		lDepto			.setText(bundle.getString("Departamento"));
+		bFAlta			.setText(bundle.getString("I08_lab_FAlta"));
+		bFContrato		.setText(bundle.getString("I08_lab_FContr"));
+		bColor			.setText(bundle.getString("I08_lab_SelColor"));
 
-		lNVend.setLayoutData		(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
-		tNVend.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,false,1,1));
-		lPassword.setLayoutData		(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
-		tPassword.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		lNombre.setLayoutData		(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
-		tNombre.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		lApell1.setLayoutData		(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
-		tApell1.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		lApell2.setLayoutData		(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
-		tApell2.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		lAnoNac.setLayoutData		(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
-		tAnoNac.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		lSexo.setLayoutData			(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
-		cSexo.setLayoutData			(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		lContrato.setLayoutData		(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
-		cContrato.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		lNVend		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
+		tNVend		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,false,1,1));
+		lPassword	.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
+		tPassword	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		lEMail		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
+		tEMail		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		lNombre		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
+		tNombre		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		lApell1		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
+		tApell1		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		lApell2		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
+		tApell2		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		lAnoNac		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
+		tAnoNac		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		lSexo		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
+		cSexo		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		lContrato	.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
+		cContrato	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		lExperiencia.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
 		cExperiencia.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		lDepto.setLayoutData		(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
-		cDepto.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		bAceptar.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		bCancelar.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		lDepto		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
+		cDepto		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		bFContrato	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
+		tFContrato	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
+		bFAlta		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
+		tFAlta		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
+		bColor		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
+		lColor		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		
+		bAceptar	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		bCancelar	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+
 		grupoIzq.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
 		grupoDer.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
 		
-		cSexo.setItems (new String [] {"Femenino", "Masculino",});
+		cSexo.setItems (new String [] {bundle.getString("Femenino"), bundle.getString("Masculino"),});
 		cContrato.setItems (new String [] {"6:40", "Días sueltos",});
-		cExperiencia.setItems (new String [] {"Iniciación", "Profesional",});
+		cExperiencia.setItems (new String [] {bundle.getString("Principiante"), bundle.getString("Experto"),});
 		cDepto.setItems (new String [] {"Cocina", "Baño",});
 		cSexo.select(0);
 		cContrato.select(0);
@@ -125,15 +153,16 @@ public class I08_1 {
 		shell.setImage(ico_chico);
 
 		shell.setImage(ico_chica);
-		shell.setText("Nuevo empleado");
+		shell.setText(bundle.getString("I08_but_NuevoEmpleado"));
 		shell.setLayout(layout);
 		
-		bAceptar.setText("Aceptar");
+		bAceptar.setText(bundle.getString("Aceptar"));
 		bAceptar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		
-		bCancelar.setText("Cancelar");
+		bCancelar.setText(bundle.getString("Cancelar"));
 		bCancelar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 
+		// Un listener para el selector de sexo
 		SelectionAdapter sacSexo = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
 				if (cSexo.getSelectionIndex()==0)
@@ -142,27 +171,68 @@ public class I08_1 {
 					shell.setImage(ico_chico);
 			}
 		};
-		
 		cSexo.addSelectionListener(sacSexo);
 		
-		// Un SelectionAdapter con lo que hace el botón bCancelar
+		// Listener para el selector de fecha de contrato
+		SelectionAdapter sabFContrato = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e){
+				new I02PeticionFecha(shell, tFContrato);
+			}
+		};
+		bFContrato.addSelectionListener(sabFContrato);
+		
+		// Listener para el selector de fecha de alta
+		SelectionAdapter sabFAlta = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e){
+				new I02PeticionFecha(shell, tFAlta);
+			}
+		};
+		bFAlta.addSelectionListener(sabFAlta);
+		
+		// Listener para el selector de color
+		SelectionAdapter sabColor = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e){
+				ColorDialog cd = new ColorDialog(shell);
+				cd.setText(bundle.getString("I08_lab_SelColor"));
+				cd.setRGB(new RGB(255, 255, 255));
+				RGB newColor = cd.open();
+				if (newColor != null) {
+					lColor.setBackground(new Color(shell.getDisplay(), newColor));
+				}
+			}
+		};
+		bColor.addSelectionListener(sabColor);
+
+		
+		// Un listener con lo que hace el botón bCancelar
 		SelectionAdapter sabCancelar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 					shell.dispose();	
 			}
 		};
 
-		// Un SelectionAdapter con lo que hace el botón bAceptar
+		// Un listener con lo que hace el botón bAceptar
 		SelectionAdapter sabAceptar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
+				// Comprueba el número de vendedor (campo obligatorio)
 				if (tNVend.getText().length()!=8) {
-					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO | SWT.ICON_INFORMATION);
-					messageBox.setText ("Mensaje");
-					messageBox.setMessage ("El número de vendedor debe tener 8 cifras.");
+					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
+					messageBox.setText (bundle.getString("Mensaje"));
+					messageBox.setMessage (bundle.getString("I01_err_num_vendedor"));
 					e.doit = messageBox.open () == SWT.YES;
 					// Enfocar tNVend y seleccionar texto
 					tNVend.setFocus();
 					tNVend.selectAll();
+				}
+				// Comprueba la dirección de email (campo no obligatorio)
+				else if (tEMail.getText().length()!=0 && !General.comprobarEmail(tEMail.getText())) {
+					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
+					messageBox.setText (bundle.getString("Mensaje"));
+					messageBox.setMessage (bundle.getString("I08_err_EmailNoValido"));
+					e.doit = messageBox.open () == SWT.YES;
+					// Enfocar tEMail y seleccionar texto
+					tEMail.setFocus();
+					tEMail.selectAll();
 				}
 				else shell.dispose();
 			}

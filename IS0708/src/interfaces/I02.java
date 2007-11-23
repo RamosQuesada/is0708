@@ -146,23 +146,21 @@ public class I02 {
 		final DateTime calendario = new DateTime(c, SWT.CALENDAR | SWT.SHORT);
 		calendario.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				String[] meses = { bundle.getString("enero"),
-						bundle.getString("febrero"), bundle.getString("marzo"),
-						bundle.getString("abril"), bundle.getString("mayo"),
-						bundle.getString("junio"), bundle.getString("julio"),
-						bundle.getString("agosto"),
-						bundle.getString("septiembre"),
-						bundle.getString("octubre"),
-						bundle.getString("noviembre"),
-						bundle.getString("diciembre") };
-				System.out.println("Fecha cambiada a "
-						+ String.valueOf(calendario.getDay()) + " de "
-						+ meses[calendario.getMonth()] + " de "
-						+ String.valueOf(calendario.getYear()));
+				String[] meses = { 
+						bundle.getString("enero"),		bundle.getString("febrero"),
+						bundle.getString("marzo"),		bundle.getString("abril"),
+						bundle.getString("mayo"),		bundle.getString("junio"),
+						bundle.getString("julio"),		bundle.getString("agosto"),
+						bundle.getString("septiembre"),	bundle.getString("octubre"),
+						bundle.getString("noviembre"),	bundle.getString("diciembre")
+				};
+				System.out.println("Fecha cambiada a " +
+						String.valueOf(calendario.getDay())	+ " de " +
+						meses[calendario.getMonth()]		+ " de " +
+						String.valueOf(calendario.getYear()));
 			}
 		});
-		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false,
-				2, 1));
+		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));
 		final Button bPorMes = new Button(c, SWT.RADIO);
 		bPorMes.setText(bundle.getString("I02_but_Verpormes"));
 		bPorMes.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2,
@@ -330,7 +328,7 @@ public class I02 {
 
 		bEmplNuevo.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				new I08_1(shell);
+				new I08_1(shell, bundle);
 			}
 		});
 
@@ -474,9 +472,8 @@ public class I02 {
 		shell.addListener(SWT.Close, new Listener() {
 			public void handleEvent(Event e) {
 				MessageBox messageBox = new MessageBox(shell,
-						SWT.APPLICATION_MODAL | SWT.YES | SWT.NO
-								| SWT.ICON_WARNING);
-				messageBox.setText(bundle.getString("Mensaje"));
+						SWT.APPLICATION_MODAL | SWT.YES | SWT.NO | SWT.ICON_WARNING);
+				messageBox.setText(bundle.getString(bundle.getString("Mensaje")));
 				// Diferentes iconos:
 				// http://www.developer.com/java/other/article.php/10936_3330861_2
 				messageBox.setMessage(bundle.getString("I02_dlg_CerrarAp"));
