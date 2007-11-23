@@ -67,7 +67,7 @@ public class I02CuadranteEmpleado {
 		this.subdivisiones = subdivisiones;
 		
 		// TODO Borrar esto cuando se importen los empleados
-		Empleado e1 = new Empleado("M. Jackson", new Color (display, 104, 228,  85));
+		Empleado e1 = new Empleado(2, "M. Jackson", new Color (display, 104, 228,  85));
 		e1.franjaNueva(new Posicion( 9,  6), new Posicion(14,  0));
 		e1.franjaNueva(new Posicion(16,  0), new Posicion(18,  0));
 		empleado = e1;
@@ -101,7 +101,7 @@ public class I02CuadranteEmpleado {
 				gc.drawText(String.valueOf(j+1), margenIzq + margenNombres + j*anchoDia + anchoDia/2, margenSup);
 			}
 
-		gc.drawText(empleado.dameNombre(), margenIzq, margenSup + 20 + 0*altoFila);
+		gc.drawText(empleado.getNombre(), margenIzq, margenSup + 20 + 0*altoFila);
 		for (int j=0; j < ultimoDia; j++) {
 			gc.drawRectangle(margenIzq + margenNombres + j*anchoDia, margenSup + 20 + 0*altoFila, anchoDia, altoFila);
 		}

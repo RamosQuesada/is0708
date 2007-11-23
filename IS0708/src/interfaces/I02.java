@@ -466,14 +466,13 @@ public class I02 {
 		shell.open();
 
 		// Login
-		I01 login = new I01(shell, bundle);
+		new I01(shell, bundle);
 
 		// Preguntar antes de salir
 		shell.addListener(SWT.Close, new Listener() {
 			public void handleEvent(Event e) {
-				MessageBox messageBox = new MessageBox(shell,
-						SWT.APPLICATION_MODAL | SWT.YES | SWT.NO | SWT.ICON_WARNING);
-				messageBox.setText(bundle.getString(bundle.getString("Mensaje")));
+				MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO | SWT.ICON_WARNING);
+				messageBox.setText(bundle.getString("Mensaje"));
 				// Diferentes iconos:
 				// http://www.developer.com/java/other/article.php/10936_3330861_2
 				messageBox.setMessage(bundle.getString("I02_dlg_CerrarAp"));

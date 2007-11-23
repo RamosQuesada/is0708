@@ -48,7 +48,6 @@ public class Empleado {
 	public Empleado (int nvend, String nombre, String apellido1, String apellido2, 
 			Date fechaNac, int sexo, String email, String contraseña, int grupo,
 			String departamento, int rango, int contrato, Date fContrato, Date fAlta, Color color) {
-		// TODO Debería comprobar que el nvend es correcto
 		this.nvend		= nvend;
 		this.nombre		= nombre;
 		this.apellido1	= apellido1;
@@ -137,28 +136,16 @@ public class Empleado {
 	}
 	
 	/**
-	 * Asigna un número de vendedor a un empleado, que debe ser un número de 8 cifras.
+	 * Intenta asignar un número de vendedor a un empleado, que debe ser un número de 8 cifras.
+	 * Si no es correcto, no produce ningún cambio.
 	 * @param	nvend el número de vendedor a asignar al empleado.
 	 * @return	<i>true</i> si se ha asignado correctamente el número, <i>false</i> si 
 	 * 			el string no tiene longitud 8 o no es un número.
 	 */
 	public boolean setNVend(String nvend){
-		boolean b = true;
-		int n;
-		if (nvend.length()!=8) {
-			b = false;
-		}
-		else {
-			
-			try {
-				n = Integer.valueOf(nvend);
-				this.nvend = n;
-			}
-			catch (NumberFormatException e) {
-				b = false;
-			}
-		}
-		return b;
+		int n = General.convertirNVend(nvend);
+		if (n>0) this.nvend = n;
+		return n>0;
 	}
 
 	/**

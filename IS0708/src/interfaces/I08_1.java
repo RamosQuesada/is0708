@@ -215,10 +215,11 @@ public class I08_1 {
 		SelectionAdapter sabAceptar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				// Comprueba el número de vendedor (campo obligatorio)
-				if (tNVend.getText().length()!=8) {
+				int n = General.convertirNVend(tNVend.getText());
+				if (n<0) {
 					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
 					messageBox.setText (bundle.getString("Mensaje"));
-					messageBox.setMessage (bundle.getString("I01_err_num_vendedor"));
+					messageBox.setMessage (bundle.getString("I01_err_NumVendedor"));
 					e.doit = messageBox.open () == SWT.YES;
 					// Enfocar tNVend y seleccionar texto
 					tNVend.setFocus();

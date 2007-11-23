@@ -35,4 +35,22 @@ public class General {
 	    else if (email.lastIndexOf(".") == email.length()-1) valido = false;
 		return valido;
 	}
+
+	/**
+	 * Convierte un string a número de vendedor, comprobando que es válido. Devuelve -1 si no lo es.
+	 * @param nvend el string a convertir
+	 * @return el número de vendedor, o -1 si el string es incorrecto
+	 */
+	public static int convertirNVend(String nvend) {
+		int n = -1;
+		if (nvend.length()==8) {
+			try {
+				n = Integer.valueOf(nvend);
+			}
+			catch (NumberFormatException e) {
+				System.out.println("I08.1_Empleado nuevo: Número de vendedor incorrecto.");
+			}
+		}
+		return n;
+	}
 }
