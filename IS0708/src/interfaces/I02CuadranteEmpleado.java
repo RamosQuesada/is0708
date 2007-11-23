@@ -7,7 +7,9 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Text;
 
 import aplicacion.Empleado;
 import aplicacion.Franja;
@@ -160,21 +162,23 @@ public class I02CuadranteEmpleado {
 			gc.setLineStyle(SWT.LINE_DOT);
 			if (i!=h)
 			{	cambiarPincel(gc, 150,250,150);
-				String[] diasSemana = {"     Lunes   ","   Martes"," Miercoles ","   Jueves","   Viernes ","   Sabado ","  Domingo  "};
+				String[] diasSemana = {"Lunes","Martes","Miercoles","Jueves","Viernes ","Sabado ","Domingo"};
 				int tamaño1= sep/8;
 				int tamaño2= tamañoFila/2;
-				int desplazamiento=0;
+		
+				
 				if (tamaño1<tamaño2){
 					tamaño = tamaño1;
 					}
 				else{
 					tamaño=tamaño2;
-					desplazamiento = (tamaño1-tamaño2)*4;
 				}
-				
+
 				Font fuente=gc.getFont();
 				gc.setFont(new Font(display,"Verdana",tamaño,SWT.BOLD|SWT.ITALIC));
-				gc.drawText(diasSemana[((i)%7)],m+i*sep+desplazamiento , margenSup+(alto/50), true);
+				String text = diasSemana[((i)%7)];
+		        Point textSize = gc.textExtent(text);
+		        gc.drawText(diasSemana[((i)%7)],((m+i*sep)+((m+(i+1)*sep)))/2-textSize.x/2, margenSup+(alto/50), true);
 				gc.getFont().dispose();
 				gc.setFont(fuente);
 			}
@@ -276,6 +280,7 @@ public class I02CuadranteEmpleado {
 		this.cambiarPincel(gc, 150, 255, 150);
 		this.cambiarRelleno(gc, 100, 200, 100);
 		int x_comienzo_c = (x_comienzo*8+x_fin*2)/10;
+		int x_comienzo_t = ((x_comienzo_c+x_fin)/2);
 		int longitud = (int)((x_fin-x_comienzo_c));
 		gc.fillGradientRectangle(x_comienzo_c,y_comienzo,longitud,y_fin-y_comienzo,true);
 		this.cambiarPincel(gc, 0, 0, 0);
@@ -303,8 +308,13 @@ public class I02CuadranteEmpleado {
 		Font fuente=gc.getFont();
 		gc.setFont(new Font(display,"Verdana",tamaño,SWT.BOLD));
 		gc.drawText(String.valueOf((int)horaComienzo),x_comienzo, (y_comienzo), true);
-		gc.drawText(Departamento,m+dia*sep+desplazamiento , (y_comienzo*2+y_fin)/3, true);
-		gc.drawText(String.valueOf((int)horaFinal),x_comienzo , y_fin-10, true);
+		String text = Departamento;
+        Point textSize = gc.textExtent(text);
+        gc.drawText(Departamento,x_comienzo_t-textSize.x/2, (y_comienzo*2+y_fin)/3, true);
+        //gc.drawText(text, x_comienzo_t-textSize.x/2, y_fin);
+		String text2 = (String.valueOf((int)horaFinal));
+        Point textSize2 = gc.textExtent(text2);
+		gc.drawText((String.valueOf((int)horaFinal)),x_comienzo , y_fin-textSize2.y, true);
 		gc.getFont().dispose();
 		gc.setFont(fuente);
 
