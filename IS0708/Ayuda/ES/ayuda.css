@@ -1,0 +1,25 @@
+
+body{
+background-color:#EEEEEE;
+}
+
+h1,h2,h3,h4,h5,h6{ 
+  font-variant:small-caps;
+  background-color:#FFFFFF;
+  color:purple;
+  padding-left:1em;
+  padding-right:1em;
+  text-align:left;
+  clear:both;
+ }
+
+ul, li, p{
+font-family:arial;
+}
+
+p { 
+  text-indent:2em;
+ }
+p:first-letter{ 
+  font-size:150%;
+ }
