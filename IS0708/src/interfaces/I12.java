@@ -58,7 +58,7 @@ public class I12 {
 	public I12(Display d, Locale locale, ResourceBundle bundle) {
 
 		display = d;
-		shell = new Shell(display, SWT.DIALOG_TRIM);
+		shell = new Shell(display);
 		icoPq = new Image(display, I02.class.getResourceAsStream("icoPq.gif"));
 
 		htmlDefault = "<html> \n <head> \n " + "</head>"
