@@ -14,9 +14,6 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Button;
 
-import idiomas.LanguageChanger;
-import impresion.Imprimir;
-
 import java.io.File;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -24,7 +21,7 @@ import java.util.ResourceBundle;
 public class I12 {
 
 	private String htmlDefault;
-
+	private Browser browser;
 	private Image icoPq, icoPrnt, icoBk,icoFw,icoHome;
 	private Shell shell;
 	/**
@@ -79,7 +76,7 @@ public class I12 {
 		localpath = localpath.replaceAll("\\\\", "/");
 		filePath = localpath + helppath;
 		localpath = localpath.replaceAll(" ", "%20");
-		//System.out.print("file://localhost/" + localpath + helppath);
+		System.out.print("file://localhost/" + localpath + helppath);
 
 		// Source Code of a Web Page that redirects user to a locally kept Help
 		// Web Page
@@ -128,7 +125,7 @@ public class I12 {
 		bPrint.setImage(icoPrnt);
 		bPrint.setToolTipText("I12_tip_imprimir");
 		
-		final Browser browser = new Browser(c, SWT.NONE);;
+		browser = new Browser(c, SWT.NONE);
 		
 		bBack.addListener(SWT.Selection, new Listener(){
 			public void handleEvent(Event event) {
@@ -150,8 +147,7 @@ public class I12 {
 		});
 		bPrint.addListener(SWT.Selection, new Listener(){
 			public void handleEvent(Event event) {
-				Imprimir imprimir = new Imprimir(shell);
-				//imprimir.abrirDialogBox();
+				browser.execute("window.print();");
 				
 			}
 		});

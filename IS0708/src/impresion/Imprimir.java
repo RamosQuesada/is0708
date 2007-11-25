@@ -23,27 +23,41 @@ public class Imprimir {
 	private PrinterData printerData;
 	private Shell imShell;
 	private Display imDisplay;
-	  
-		/** 
-	    * Class constructor.
-	    * @param shell 
-	    */
-	public Imprimir(Shell shell){
-		imShell = shell;
-		printDialog = new PrintDialog(imShell, SWT.NONE);
-		printerData = new PrinterData();
-	}
 	   /** 
-	    * Class constructor.
-	    * @param shell 
+	    * Class constructor. 
 	    * @param display 
 	    */
-	public Imprimir(Shell shell, Display display){
-		imShell = shell;
+	public Imprimir(Display display){		
 		imDisplay = display;
+		imShell = new Shell(imDisplay);
 		printDialog = new PrintDialog(imShell, SWT.NONE);
 		printerData = new PrinterData();
 		 
+	}
+	public PrinterData abrirDialogBox(){
+		printDialog.setText("PrintDialog");
+		printDialog.setScope(PrinterData.ALL_PAGES);
+		//printDialog.setPrintToFile(true);
+		return printerData = printDialog.open();
+	}
+
+	public void imprimirIO2(PrinterData pData, ArrayList<Empleado> empleados){
+		
+		if (!(pData == null)) {
+			Printer p = new Printer(pData);
+			p.startJob("PrintJob");
+			p.startPage();
+
+			GC gc2 = new GC(p);
+			Cuadrante c = new Cuadrante(imDisplay,4,9,23,0,0,0,0,0,empleados);
+			c.setTamaño(p.getClientArea().width, p.getClientArea().height);
+			c.dibujarCuadranteDia(gc2,-1);
+
+			p.endPage();
+			gc2.dispose();
+			p.endJob();
+			p.dispose();
+		}
 	}
 	
 	public void imprimirImage(ImageData image){	
@@ -69,61 +83,5 @@ public class Imprimir {
 	          p.dispose();
 	        }
 	}
-	public void abrirDialogBox(ArrayList<Empleado> empleados){
-		printDialog.setText("PrintDialog");
-		printDialog.setScope(PrinterData.ALL_PAGES);
-		//printDialog.setPrintToFile(true);
-		printerData = printDialog.open();
-		if (!(printerData == null)) {
-			Printer p = new Printer(printerData);
-			p.startJob("PrintJob");
-			p.startPage();
-
-			GC gc2 = new GC(p);
-			//TODO
-			Cuadrante c = new Cuadrante(imDisplay,4,9,23,0,0,0,0,0,empleados);
-			c.setTamaño(p.getClientArea().width, p.getClientArea().height);
-			c.dibujarCuadranteDia(gc2,-1);
-
-			p.endPage();
-			gc2.dispose();
-			p.endJob();
-			p.dispose();
-		}
-	};
-	public void imprimirEstado(PrinterData printerData){
-		if (printerData != null){
-			switch(printerData.scope){
-			case PrinterData.ALL_PAGES:
-			System.out.println("Printing all pages.");
-			break;
-			case PrinterData.SELECTION:
-			System.out.println("Printing selected page.");
-			break;
-			case PrinterData.PAGE_RANGE:
-			System.out.print("Printing page range. ");
-			System.out.print("From:"+printerData.startPage);
-			System.out.println(" to:"+printerData.endPage);
-			break;
-			}
-			if (printerData.printToFile){
-			System.out.println("Printing to file.");
-			//SafeSaveDialog ssDialog = new SafeSaveDialog(imShell);
-			//ssDialog.open();
-			
-			
-			}
-			else
-			System.out.println("Not printing to file.");
-			if (printerData.collate)
-			System.out.println("Collating.");
-			else
-			System.out.println("Not collating.");
-			System.out.println("Number of copies:"+printerData.copyCount);
-			System.out.println("Printer Name:"+printerData.name);
-			}
-		
-	}
-
 }
 

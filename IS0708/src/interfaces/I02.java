@@ -45,6 +45,10 @@ public class I02 {
 		this.locale = locale;
 	}
 
+	public void imprimir(){
+		Imprimir imprimir = new Imprimir(display);		
+		imprimir.imprimirIO2(imprimir.abrirDialogBox(), empleados);
+	}
 	private void crearBarraMenu() {
 		// Una barra de menús
 		Menu barra = new Menu(shell, SWT.BAR);
@@ -72,8 +76,7 @@ public class I02 {
 		MenuItem itemImprimir = new MenuItem(submenu, SWT.PUSH);
 		itemImprimir.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				Imprimir imprimir = new Imprimir(shell, display);
-				imprimir.abrirDialogBox(empleados);
+				imprimir();
 			}
 		});
 		itemImprimir.setImage(ico_imprimir);
