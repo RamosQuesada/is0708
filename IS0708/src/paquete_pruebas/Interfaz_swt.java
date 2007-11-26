@@ -18,9 +18,13 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
 
+import aplicacion.Database;
+
 public class Interfaz_swt {
 
 	public static void main(String[] IS0708) {
+		//Database prueba = new Database();
+		//prueba.abrirConexion();
 		final Display display = new Display ();
 		final Shell shell = new Shell (display);
 
