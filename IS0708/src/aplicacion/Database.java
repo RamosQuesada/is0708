@@ -1,4 +1,5 @@
 package aplicacion;
+
 import java.sql.*;
 /**
  * Aquí se encuentran los métodos de acceso a la base de datos.
@@ -33,5 +34,11 @@ public class Database {
 		// Pongo return null para que no diga que hay un error
 		return null;
 		
-	}	
+	}
+	
+	public static void main(String[] IS0708) {
+		@SuppressWarnings("unused")
+		Database prueba = new Database();
+		prueba.abrirConexion();
+	}
 }
