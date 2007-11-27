@@ -1,32 +1,28 @@
 package interfaces;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Text;
-
 import aplicacion.Empleado;
-import aplicacion.Franja;
 import aplicacion.Posicion;
 
 public class I02CuadranteEmpleado {
-	private final int anchoLados = 5; // El ancho de los lados de una franja, de donde se coge para estirarla y encogerla 
+	//private final int anchoLados = 5; // El ancho de los lados de una franja, de donde se coge para estirarla y encogerla 
 	private Display display;
 	private int ancho;
 	private int alto;
 	private int margenIzq, margenDer, margenSup, margenInf; // Márgenes del cuadrante
 	private int margenNombres; // Un margen para pintar los nombres a la izquierda
-	private int alto_franjas;
+	//private int alto_franjas;
 	private int tamañoFila;
-	private int sep_vert_franjas;
+	//private int sep_vert_franjas;
 	private int horaInicio, horaFin; // Definen de qué hora a qué hora es el cuadrante
-	private int tamHora, tamSubdiv;
+	private int tamHora;
+	//, tamSubdiv;
 	public  int subdivisiones; // Cuántas subdivisiones hacer por hora (0 = sin subdivisiones)
 	public Empleado empleado;
 	private int tamaño =8;
@@ -64,8 +60,8 @@ public class I02CuadranteEmpleado {
 		this.margenNombres  = margenNombres;
 		this.horaInicio = horaInicio;
 		this.horaFin = horaFin;
-		alto_franjas = 15;
-		sep_vert_franjas = 10;
+		//alto_franjas = 15;
+		//sep_vert_franjas = 10;
 		this.subdivisiones = subdivisiones;
 		
 		// TODO Borrar esto cuando se importen los empleados
@@ -133,8 +129,10 @@ public class I02CuadranteEmpleado {
 		tamañoFila=(alto)/15;
 		cambiarPincel(gc, 0,143,65);
 		this.cambiarRelleno(gc, 180,230,180);
-		gc.fillGradientRectangle(m,tamañoFila+this.margenSup,7*sep,alto-margenInf-(tamañoFila+this.margenSup),false);
-
+		int inferior=((int)((alto-margenInf-(tamañoFila+this.margenSup))
+				/(horaFin-horaInicio)))*(horaFin-horaInicio);
+		gc.fillGradientRectangle(m,tamañoFila+this.margenSup,7*sep,inferior,false);
+		int inferior_total=tamañoFila+margenSup+inferior;
 		this.cambiarPincel(gc, 10, 160, 90);
 		this.cambiarRelleno(gc, 0, 143, 65);
 		gc.fillGradientRectangle(m,this.margenSup,7*sep,tamañoFila,true);
@@ -142,31 +140,19 @@ public class I02CuadranteEmpleado {
 		cambiarPincel(gc, 0,0,0);
 		gc.drawLine(m, this.margenSup, m+7*sep, this.margenSup);
 		gc.drawLine(m, tamañoFila+this.margenSup, m+7*sep, tamañoFila+this.margenSup);
-		gc.drawLine(m, alto-margenInf, m+7*sep, alto-margenInf);
-
-		//gc.fillRoundRectangle(m,tamañoFila+this.margenSup,7*sep,alto-margenInf-(tamañoFila+this.margenSup),1,1);
-		//gc.drawRoundRectangle(m,tamañoFila+this.margenSup,margenInf-margenSup,15,8,8);
-		//cambiarPincel(gc,100,0,0);
-		//this.cambiarRelleno(gc, 0,143,65);
-		//cambiarPincel(gc, 100,100,100);
-	
-
-		//gc.fillRoundRectangle(m,this.margenSup,7*sep,tamañoFila,8,8);
+		gc.drawLine(m, inferior_total, m+7*sep, inferior_total);
 		gc.drawRoundRectangle(m,this.margenSup,7*sep,tamañoFila,8,8);
 		gc.drawRectangle(m, this.margenSup, 7*sep, tamañoFila);
 		for (int i=0; i<=h; i++) {
 			gc.setLineStyle(SWT.LINE_SOLID);
 			cambiarPincel(gc, 0,0,0);
-			gc.drawLine(m+i*sep, this.margenSup, m+i*sep, alto-margenInf);
-			//cambiarPincel(gc, 120,170,120);
+			gc.drawLine(m+i*sep, this.margenSup, m+i*sep, inferior_total);
 			gc.setLineStyle(SWT.LINE_DOT);
 			if (i!=h)
 			{	cambiarPincel(gc, 150,250,150);
 				String[] diasSemana = {"Lunes","Martes","Miercoles","Jueves","Viernes ","Sabado ","Domingo"};
 				int tamaño1= sep/8;
 				int tamaño2= tamañoFila/2;
-		
-				
 				if (tamaño1<tamaño2){
 					tamaño = tamaño1;
 					}
@@ -203,6 +189,7 @@ public class I02CuadranteEmpleado {
 			this.dibujarLineaHorizontal(gc, hora);
 		}
 	}
+	
 	/**
 	 * Cambia el color del pincel (foreground) sin exceder los límites de Color.
 	 * Si se excede un límite, se pone a 0 o 255, respectivamente.
@@ -259,15 +246,19 @@ public class I02CuadranteEmpleado {
 		this.alto = alto;
 		this.ancho = ancho;
 		tamHora = (ancho - margenIzq-margenDer-margenNombres)/(horaFin-horaInicio);
-		tamSubdiv = tamHora/12;
-			Empleado e = empleado;
-//			for (int j=0; j < e.franjas.size(); j++) {
-//				Franja f = e.franjas.get(j);
-//				f.actualizarPixeles();
-//			}
+		Empleado e = empleado;
 	}
 	
 	
+	/**
+	 * Metodo que dibuja un turno de trabajo de un empleado, esto es desde que entra hasta que sale
+	 * sin interrupciones
+	 * @param gc
+	 * @param dia dia de la semana del que vamos a dibujar el turno
+	 * @param horaComienzo hora del comienzo del turno
+	 * @param horaFinal	hora del fin del turno
+	 * @param Departamento	Nombre del departamento en el que va a trabajar
+	 */
 	public void dibujarTurno(GC gc,int dia,float horaComienzo,float horaFinal,String Departamento){
 		int x_comienzo=convertirDia(dia);
 		int y_comienzo=convertirHora(horaComienzo);
@@ -290,20 +281,16 @@ public class I02CuadranteEmpleado {
 		float tamañoy= tamañoFila/3;
 		
 
-		int desplazamiento=0;
 		if (tamañox<tamañoy){
 			System.out.println("1");
 			System.out.println(tamañoy-tamañox);
 			tamaño = (int)(tamañox);
-			desplazamiento = (int)((tamañoy-tamañox)*15);
 			}
 		else{
 			System.out.println("2");
 			System.out.println(tamañox-tamañoy);
 			tamaño= (int)tamañoy;
-			desplazamiento = (int)(tamañox-tamañoy)*15;
 		}
-		//if(desplazamiento<3){desplazamiento=20;		}
 		
 		Font fuente=gc.getFont();
 		gc.setFont(new Font(display,"Verdana",tamaño,SWT.BOLD));
@@ -311,7 +298,6 @@ public class I02CuadranteEmpleado {
 		String text = Departamento;
         Point textSize = gc.textExtent(text);
         gc.drawText(Departamento,x_comienzo_t-textSize.x/2, (y_comienzo*2+y_fin)/3, true);
-        //gc.drawText(text, x_comienzo_t-textSize.x/2, y_fin);
 		String text2 = (String.valueOf((int)horaFinal));
         Point textSize2 = gc.textExtent(text2);
 		gc.drawText((String.valueOf((int)horaFinal)),x_comienzo , y_fin-textSize2.y, true);
@@ -331,7 +317,10 @@ public class I02CuadranteEmpleado {
 		return x;
 
 	}
-	
+
+	/**
+	 * Metodo que convierte una hora determinada a una coordenada  y
+	 */
 	public int convertirHora(float hora) {
 		
 		Float hora_relativa = hora- horaInicio;
@@ -342,6 +331,11 @@ public class I02CuadranteEmpleado {
 		return posicion_absoluta;
 	}
 	
+	/**
+	 * Metodo que dibuja una linea horizontal a una hora dada
+	 * @param gc
+	 * @param hora hora a la que queremos dibujar la hora
+	 */
 	public void dibujarLineaHorizontal(GC gc,float hora){
 		int m = margenIzq + margenNombres;
 		m = margenIzq;
