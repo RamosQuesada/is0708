@@ -65,7 +65,6 @@ public class Empleado {
 		this.color = color;
 		// TODO Esto debería quitarse cuando no haga falta
 		franjas = new ArrayList<FranjaDib>();
-
 	}
 
 	/**

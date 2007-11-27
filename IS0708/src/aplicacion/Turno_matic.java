@@ -23,7 +23,7 @@ public class Turno_matic {
 		// 0 español
 		// 1 polaco
 		// 2 inglés
-		l.cambiarLocale(0);
+		l.cambiarLocale(2);
 		System.out.println(l.getCurrentLocale().getCountry());
 		// Prueba del archivo de idioma
 		display = new Display ();
