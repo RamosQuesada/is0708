@@ -29,6 +29,15 @@ public class Database {
 		} 
 	}
 	
+	public void cerrarConexion() {
+		try {
+			con.close();
+			System.out.println("Conexion Cerrada Correctamente");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error cerrando la conexion");
+		}
+	}
 	public Empleado dameEmpleado(int nvend) {
 		
 		// Pongo return null para que no diga que hay un error
@@ -40,5 +49,6 @@ public class Database {
 		@SuppressWarnings("unused")
 		Database prueba = new Database();
 		prueba.abrirConexion();
+		prueba.cerrarConexion();
 	}
 }
