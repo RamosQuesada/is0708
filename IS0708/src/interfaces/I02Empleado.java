@@ -10,11 +10,8 @@
 package interfaces;
 
 import idiomas.LanguageChanger;
-
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
 import org.eclipse.swt.*;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
@@ -24,8 +21,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
-
-import aplicacion.Empleado;
 
 /**
  * Clase que implementa la interfaz en caso 
@@ -68,7 +63,51 @@ public class I02Empleado {
 		_shell.setImages(new Image[] {_icoPq,_icoGr});
 		_shell.setText("Turno-matic");
 		_shell.setVisible(true);
+		
+		@SuppressWarnings("unused")
+		Menu barra = barraMenus();
+		
+		final Tray tray = _display.getSystemTray();
+		final TrayItem trayItem = new TrayItem(tray, SWT.NONE);
+		_shell.setImage(_icoPq);
+		if (tray != null) {			
+			trayItem.setImage(_icoPq);
+		}
+				
+		//Establecemos el layout externo
+		GridLayout lShell = new GridLayout();
+		lShell.numColumns = 1;		
+		_shell.setLayout(lShell);
 
+		@SuppressWarnings("unused")
+		final TabFolder tabFolder = crearPestañas();
+
+		// Ajustar el tamaño de la ventana al contenido
+		_shell.pack();
+		// Mostrar ventana centrada en la pantalla
+		_shell.setLocation(_display.getBounds().width/2 - _shell.getSize().x/2, _display.getBounds().height/2 - _shell.getSize().y/2);
+		_shell.open();
+		
+		// Preguntar antes de salir
+		_shell.addListener (SWT.Close, new Listener () {
+			public void handleEvent (Event event) {
+				MessageBox messageBox = new MessageBox (_shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
+				messageBox.setText ("Mensaje");
+				messageBox.setMessage (_bundle.getString("cierre"));
+				event.doit = messageBox.open () == SWT.YES;
+			}
+		});
+
+		// Este bucle mantiene la ventana abierta
+		while (!_shell.isDisposed()) {
+			if (!_display.readAndDispatch()) {
+				_display.sleep();
+			}
+		}
+		_display.dispose();
+	}
+	
+	private Menu barraMenus(){
 		// Una barra de menús
 		Menu barra = new Menu (_shell, SWT.BAR);
 		_shell.setMenuBar (barra);
@@ -118,31 +157,18 @@ public class I02Empleado {
 			}
 		});
 		helpHelpItem.setAccelerator(SWT.F1);
+		return barra;
+	}
+	
+	public TabFolder crearPestañas(){
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		final Tray tray = _display.getSystemTray();
-		final TrayItem trayItem = new TrayItem(tray, SWT.NONE);
-		_shell.setImage(_icoPq);
-		if (tray != null) {			
-			trayItem.setImage(_icoPq);
-		}
-				
-		//Establecemos el layout externo
-		GridLayout lShell = new GridLayout();
-		lShell.numColumns = 1;		
-		_shell.setLayout(lShell);
-
 		//Creamos distintas pestañas para las distintas funcionalidades
-		final TabFolder tabFolder = new TabFolder (_shell, SWT.NONE);
+		TabFolder tabFolder = new TabFolder (_shell, SWT.NONE);
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
+		final Composite cCuadrantes=creaPestañaCuadrantes(tabFolder);
+		final Composite cMensajes = this.creaPestañaMensajes(tabFolder);
+		final Composite cEstadisticas = creaPestañaEstadisticas(tabFolder); 
 		
 		//Pestaña para ver los horarios (Cuadrantes)
 		TabItem tabItemCuadrantes = new TabItem (tabFolder, SWT.NONE);
@@ -157,11 +183,18 @@ public class I02Empleado {
 		//Pestaña para ver las estadisticas de ventas
 		TabItem tabItemVerEstadisticas = new TabItem (tabFolder, SWT.NONE);
 		tabItemVerEstadisticas.setText (this._bundle.getString("verestadisticas"));
-		tabItemVerEstadisticas.setImage(_ico_estadisticas);
-		
+		tabItemVerEstadisticas.setImage(_ico_estadisticas);	
 
+		//Enlazamos composites y pestañas
+		tabItemCuadrantes.setControl(cCuadrantes);
+		tabItemMensajes.setControl(cMensajes);
+		tabItemVerEstadisticas.setControl(cEstadisticas);
+		return tabFolder;
+	}
+	
+	public Composite creaPestañaCuadrantes(TabFolder tabFolder){
 		//Creamos el contenido de la pestaña cuadrantes
-		final Composite cCuadrantes = new Composite (tabFolder, SWT.NONE);
+		Composite cCuadrantes = new Composite (tabFolder, SWT.NONE);
 		cCuadrantes.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
 		//Le añadimos un layout
 		GridLayout lCuadrantes = new GridLayout();
@@ -239,12 +272,12 @@ public class I02Empleado {
 				
 			}
 		});
-		
-		
-
-
+		return cCuadrantes;
+	}
+	
+	public Composite creaPestañaMensajes(TabFolder tabFolder){
 		//Creamos un composite para la pestaña de mensajes
-		final Composite cMensajes = new Composite (tabFolder, SWT.NONE);
+		Composite cMensajes = new Composite (tabFolder, SWT.NONE);
 		cMensajes.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
 		GridLayout lCMensajes = new GridLayout();
 		lCMensajes.numColumns = 4;
@@ -310,8 +343,10 @@ public class I02Empleado {
 		GridLayout lCEnviarMensaje = new GridLayout();
 		lCEnviarMensaje.numColumns = 2;
 		cEnviarMensaje.setLayout(lCEnviarMensaje);
-		
-		
+		return cMensajes;
+	}
+	
+	public Composite creaPestañaEstadisticas(TabFolder tabFolder){
 		//Creamos el contenido de la pestaña estadisticas
 		final Composite cEstadisticas = new Composite (tabFolder, SWT.NONE);
 		cEstadisticas.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
@@ -320,7 +355,6 @@ public class I02Empleado {
 		lEstadisticas.numColumns = 2;
 		cEstadisticas.setLayout(lEstadisticas);
 		
-		//CAMBIANTE
 		//Creamos el contenido interno de la pestaña cuadrantes
 		//Creamos un composite para los botones
 		final Composite cEstIzq = new Composite (cEstadisticas, SWT.BORDER);
@@ -337,8 +371,6 @@ public class I02Empleado {
 		lEstDer.numColumns = 1;
 		lEstDer.makeColumnsEqualWidth = true;
 		cEstDer.setLayout(lEstDer);
-		
-		//Creamos un composite para el calendario
 
 		final Label lTitulo	= new Label(cEstIzq, SWT.CENTER);
 		lTitulo.setText(this._bundle.getString("opcionvis"));
@@ -347,12 +379,6 @@ public class I02Empleado {
 			        org.eclipse.swt.SWT.BOLD));
 		lTitulo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
 		
-//		final Composite cOpciones = new Composite (cEstIzq, SWT.BACKGROUND);
-//		cOpciones.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
-//		GridLayout lOpciones = new GridLayout();
-//		lOpciones.numColumns = 2;
-//		lOpciones.makeColumnsEqualWidth = true;
-//		cOpciones.setLayout(lOpciones);
 		
 		final Label lTiempo	= new Label(cEstIzq, SWT.LEFT);
 		lTiempo.setText(this._bundle.getString("tiempodatos"));
@@ -472,43 +498,11 @@ public class I02Empleado {
 		lPrueba2.setText("Aqui se visualizarian las graficas");
 		lPrueba2.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 
-
+		return cEstadisticas;
 		
-		
-		//FIN CAMBIANTE
-		
-		//Enlazamos composites y pestañas
-		tabItemCuadrantes.setControl(cCuadrantes);
-		tabItemMensajes.setControl(cMensajes);
-		tabItemVerEstadisticas.setControl(cEstadisticas);
-		
-
-		
-		
-		// Ajustar el tamaño de la ventana al contenido
-		_shell.pack();
-		// Mostrar ventana centrada en la pantalla
-		_shell.setLocation(_display.getBounds().width/2 - _shell.getSize().x/2, _display.getBounds().height/2 - _shell.getSize().y/2);
-		_shell.open();
-		
-		// Preguntar antes de salir
-		_shell.addListener (SWT.Close, new Listener () {
-			public void handleEvent (Event event) {
-				MessageBox messageBox = new MessageBox (_shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
-				messageBox.setText ("Mensaje");
-				messageBox.setMessage (_bundle.getString("cierre"));
-				event.doit = messageBox.open () == SWT.YES;
-			}
-		});
-
-		// Este bucle mantiene la ventana abierta
-		while (!_shell.isDisposed()) {
-			if (!_display.readAndDispatch()) {
-				_display.sleep();
-			}
-		}
-		_display.dispose();
 	}
+	
+	
 	
 	public static void main(String[] IS0708) {
 		@SuppressWarnings("unused")
