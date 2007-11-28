@@ -16,6 +16,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
+
 import java.util.ResourceBundle;
 import java.util.Locale;
 
@@ -26,7 +27,7 @@ import interfaces.I01;
 import interfaces.I02_cuadr;
 import interfaces.I08_1;
 
-public class I02 {
+public class I02 implements impresion.Imprimible{
 
 	Shell shell;
 	Display display;
@@ -34,6 +35,10 @@ public class I02 {
 	Locale locale;
 	Image icoGr, icoPq, ico_imprimir, ico_mens_l, ico_mens, ico_cuadrante,
 			ico_chico, ico_chica, ico_chicos;
+	
+	private Image cuadranteImg;
+	private Point imgSize = new Point(800, 600);
+	
 	private ArrayList<Empleado> empleados;
 
 	public I02(Shell shell, Display display, ResourceBundle bundle, Locale locale, 
@@ -43,12 +48,10 @@ public class I02 {
 		this.empleados = empleados;
 		this.bundle = bundle;
 		this.locale = locale;
+		this.cuadranteImg = new Image(this.display, imgSize.x, imgSize.y);
+		ponImageDia();
 	}
 
-	public void imprimir(){
-		Imprimir imprimir = new Imprimir(display);		
-		imprimir.imprimirIO2(imprimir.abrirDialogBox(), empleados);
-	}
 	private void crearBarraMenu() {
 		// Una barra de menús
 		Menu barra = new Menu(shell, SWT.BAR);
@@ -76,7 +79,8 @@ public class I02 {
 		MenuItem itemImprimir = new MenuItem(submenu, SWT.PUSH);
 		itemImprimir.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				imprimir();
+				Imprimir imprimir = new Imprimir(display);
+				imprimir.imprimirImage(dameImageImprimible());
 			}
 		});
 		itemImprimir.setImage(ico_imprimir);
@@ -173,10 +177,11 @@ public class I02 {
 			// Seleccionado por mes
 			public void handleEvent(Event e) {
 				if (bPorMes.getSelection()) {
+					ponImageMes();
 					cuadrante.setMensual();
 				} else
-					cuadrante.setDiario();
-
+					ponImageDia();
+					cuadrante.setDiario();			
 			}
 		});
 
@@ -463,9 +468,8 @@ public class I02 {
 		shell.pack();
 		// Mostrar ventana centrada en la pantalla
 		shell.setLocation(
-				display.getBounds().width / 2 - shell.getSize().x / 2, display
-						.getBounds().height
-						/ 2 - shell.getSize().y / 2);
+				display.getBounds().width  / 2 - shell.getSize().x / 2, 
+				display.getBounds().height / 2 - shell.getSize().y / 2  );
 		shell.open();
 
 		// Login
@@ -483,5 +487,29 @@ public class I02 {
 			}
 		});
 
+	}
+
+	public void ponImageDia(){
+		cuadranteImg.dispose();
+		cuadranteImg = new Image(this.display, imgSize.x, imgSize.y);
+		GC gc1 = new GC(cuadranteImg);
+		Cuadrante c = new Cuadrante(display,4,9,23,0,0,0,0,0,empleados);
+		c.dibujarCuadranteDia(gc1,-1);	
+		gc1.dispose();
+
+	}
+	
+	public void ponImageMes(){
+		cuadranteImg.dispose();
+		cuadranteImg = new Image(this.display, imgSize.x, imgSize.y);
+		GC gc2 = new GC(cuadranteImg);
+		Cuadrante c = new Cuadrante(display,4,9,23,0,0,0,0,0,empleados);
+		c.dibujarCuadranteMes(gc2);	
+		gc2.dispose();
+		
+	}
+	
+	public ImageData dameImageImprimible(){
+		return cuadranteImg.getImageData();
 	}
 }
