@@ -9,6 +9,12 @@
 
 package interfaces;
 
+import idiomas.LanguageChanger;
+
+import java.util.ArrayList;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import org.eclipse.swt.*;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
@@ -19,104 +25,139 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
 
+import aplicacion.Empleado;
+
 /**
  * Clase que implementa la interfaz en caso 
  * de que entre al sistema un empleado
  * @author David Rodilla
  */
 public class I02Empleado {
-
+	Shell _shell;
+	Display _display;
+	ResourceBundle _bundle;
+	Locale _locale;
+	Image _icoGr, _icoPq, _ico_imprimir, _ico_mens_l, _ico_mens, _ico_cuadrante,
+			_ico_chico, _ico_chica, _ico_chicos,_ico_estadisticas;
+	
 
 	/**
 	 * Constructor de clase
 	 * (crea la ventana)
 	 */
-	public I02Empleado() {
+	public I02Empleado(Shell shell, Display display, ResourceBundle bundle, Locale locale) {
 		//creamos un display y un shell donde emplazar los widgets (elementos swt)
-		final Display display = new Display ();
-		final Shell shell = new Shell (display);
-
+		//display = new Display ();
+		//shell = new Shell (display);
+		this._shell = shell;
+		this._display = display;
+		this._bundle = bundle;
+		this._locale = locale;
+		
 		//creamos los iconos que vamos a utilizar en el programa
-		final Image icoGr = new Image(display, I02.class.getResourceAsStream("icoGr.gif"));
-		final Image icoPq = new Image(display, I02.class.getResourceAsStream("icoPq.gif"));
-		final Image ico_imprimir = new Image(display, I02.class.getResourceAsStream("ico_imprimir.gif"));
-		final Image ico_mens_l = new Image(display, I02.class.getResourceAsStream("ico_mens1_v.gif"));
-		final Image ico_mens = new Image(display, I02.class.getResourceAsStream("ico_mens2_v.gif"));
-		final Image ico_cuadrante = new Image(display, I02.class.getResourceAsStream("ico_cuadrante.gif"));
-		final Image ico_estadisticas = new Image(display, I02.class.getResourceAsStream("grafica_1.ico"));
+		_icoGr = new Image(_display, I02.class.getResourceAsStream("icoGr.gif"));
+		_icoPq = new Image(_display, I02.class.getResourceAsStream("icoPq.gif"));
+		_ico_imprimir = new Image(_display, I02.class.getResourceAsStream("ico_imprimir.gif"));
+		_ico_mens_l = new Image(_display, I02.class.getResourceAsStream("ico_mens1_v.gif"));
+		_ico_mens = new Image(_display, I02.class.getResourceAsStream("ico_mens2_v.gif"));
+		_ico_cuadrante = new Image(_display, I02.class.getResourceAsStream("ico_cuadrante.gif"));
+		_ico_estadisticas = new Image(_display, I02.class.getResourceAsStream("grafica_1.ico"));
 		
 		
 		// Dos iconos de tamaño diferente para SO's que los necesiten
-		shell.setImages(new Image[] {icoPq,icoGr});
-		shell.setText("Turno-matic");
-		shell.setVisible(true);
+		_shell.setImages(new Image[] {_icoPq,_icoGr});
+		_shell.setText("Turno-matic");
+		_shell.setVisible(true);
 
 		// Una barra de menús
-		Menu barra = new Menu (shell, SWT.BAR);
-		shell.setMenuBar (barra);
+		Menu barra = new Menu (_shell, SWT.BAR);
+		_shell.setMenuBar (barra);
 		// Con un elemento "archivo"
 		MenuItem archivoItem = new MenuItem (barra, SWT.CASCADE);
-		archivoItem.setText ("&Archivo");
+		archivoItem.setText(_bundle.getString("I02_men_Archivo"));
+		
 		// Y un submenú de persiana asociado al elemento
-		Menu submenu = new Menu (shell, SWT.DROP_DOWN);
+		Menu submenu = new Menu (_shell, SWT.DROP_DOWN);
 		archivoItem.setMenu (submenu);
 		// Aquí los elementos del submenú
 		MenuItem itemSeleccionar = new MenuItem (submenu, SWT.PUSH);
 		itemSeleccionar.addListener (SWT.Selection, new Listener () {
 			public void handleEvent (Event e) {
-				System.out.println("Pulsado Abrir");
+			
 			}
 		});
 		// Texto del item de menú
-		itemSeleccionar.setText ("Abrir \tCtrl+A");
-		// Acceso rápido (ctrl+a)
-		itemSeleccionar.setAccelerator (SWT.MOD1 + 'A');		
-		
+		itemSeleccionar.setText(_bundle.getString("I02_men_itm_Abrir"));
+		archivoItem.setAccelerator(_bundle.getString("I02_men_itm_abriracc").charAt(0));
 		MenuItem itemImprimir = new MenuItem (submenu, SWT.PUSH);
-		itemImprimir.setImage(ico_imprimir);
-		itemImprimir.setText("&Imprimir");
+		itemImprimir.setImage(_ico_imprimir);
+		itemImprimir.setText(_bundle.getString("I02_men_itm_Imprimir"));
+		itemImprimir.setAccelerator(_bundle.getString("I02_men_itm_imprimiracc").charAt(0));
 
 		MenuItem itemSalir = new MenuItem (submenu, SWT.PUSH);
 		itemSalir.addListener (SWT.Selection, new Listener () {
 			public void handleEvent (Event e) {
-				shell.close();
+				_shell.close();
 			}
 		});
 		// Texto del item de menú
-		itemSalir.setText("&Salir \tCtrl+S");
-		// Acceso rápido (ctrl+s)
-		itemSalir.setAccelerator (SWT.MOD1 + 'S');
+		itemSalir.setText(_bundle.getString("I02_men_itm_Salir"));
+		itemSalir.setAccelerator(_bundle.getString("I02_men_itm_saliracc").charAt(0));
+		// Ayuda
+		MenuItem helpMenuHeader = new MenuItem(barra, SWT.CASCADE);
+		helpMenuHeader.setText(_bundle.getString("I02_men_Ayuda"));
+		Menu helpMenu = new Menu(_shell, SWT.DROP_DOWN);
+		helpMenuHeader.setMenu(helpMenu);
+
+		MenuItem helpHelpItem = new MenuItem(helpMenu, SWT.PUSH);
+		helpHelpItem.setText(_bundle.getString("I02_men_itm_Ayuda") + "\tF1");
+		// display
+		helpHelpItem.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				new I12(_display, _locale, _bundle);
+			}
+		});
+		helpHelpItem.setAccelerator(SWT.F1);
 		
-		final Tray tray = display.getSystemTray();
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		final Tray tray = _display.getSystemTray();
 		final TrayItem trayItem = new TrayItem(tray, SWT.NONE);
-		shell.setImage(icoPq);
+		_shell.setImage(_icoPq);
 		if (tray != null) {			
-			trayItem.setImage(icoPq);
+			trayItem.setImage(_icoPq);
 		}
 				
 		//Establecemos el layout externo
 		GridLayout lShell = new GridLayout();
 		lShell.numColumns = 1;		
-		shell.setLayout(lShell);
+		_shell.setLayout(lShell);
 
 		//Creamos distintas pestañas para las distintas funcionalidades
-		final TabFolder tabFolder = new TabFolder (shell, SWT.NONE);
+		final TabFolder tabFolder = new TabFolder (_shell, SWT.NONE);
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		//Pestaña para ver los horarios (Cuadrantes)
 		TabItem tabItemCuadrantes = new TabItem (tabFolder, SWT.NONE);
-		tabItemCuadrantes.setText ("Cuadrantes");
-		tabItemCuadrantes.setImage(ico_cuadrante);
+		tabItemCuadrantes.setText (this._bundle.getString("Cuadrantes"));
+		tabItemCuadrantes.setImage(_ico_cuadrante);
 		
 		//Pestaña para ver o enviar mensajes
 		TabItem tabItemMensajes = new TabItem (tabFolder, SWT.NONE);
-		tabItemMensajes.setText ("Mensajes");
-		tabItemMensajes.setImage(ico_mens_l);
+		tabItemMensajes.setText (this._bundle.getString("Mensajes"));
+		tabItemMensajes.setImage(_ico_mens_l);
 		
 		//Pestaña para ver las estadisticas de ventas
 		TabItem tabItemVerEstadisticas = new TabItem (tabFolder, SWT.NONE);
-		tabItemVerEstadisticas.setText ("Ver estadísticas");
-		tabItemVerEstadisticas.setImage(ico_estadisticas);
+		tabItemVerEstadisticas.setText (this._bundle.getString("verestadisticas"));
+		tabItemVerEstadisticas.setImage(_ico_estadisticas);
 		
 
 		//Creamos el contenido de la pestaña cuadrantes
@@ -137,7 +178,7 @@ public class I02Empleado {
 		
 		//Creamos un composite para el calendario
 		final Label lCalendario = new Label (cBotones, SWT.LEFT);
-		lCalendario.setText("Calendario");
+		lCalendario.setText(this._bundle.getString("Calendario"));
 		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		
 		//Creamos un composite para la zona donde se mostrara el calendario		
@@ -154,7 +195,8 @@ public class I02Empleado {
 		final DateTime calendario = new DateTime (cBotones, SWT.CALENDAR);
 		calendario.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
+				String [] meses = {	"enero","febrero",
+						"marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
 				int day=calendario.getDay();
 				int month=calendario.getMonth();
 				int year=calendario.getYear();
@@ -167,7 +209,7 @@ public class I02Empleado {
 
 		//Creamos los botones para ver el horario por dias o semanas		
 		final Button bPorSemanas = new Button(cBotones, SWT.RADIO);
-		bPorSemanas.setText("Ver por semanas");
+		bPorSemanas.setText(this._bundle.getString("Verporsemana"));
 		bPorSemanas.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));		
 		bPorSemanas.setSelection(true);
 		bPorSemanas.addListener(SWT.Selection, new Listener() {
@@ -184,7 +226,7 @@ public class I02Empleado {
 		
 		//Creamos un boton para la seleccion del horario por semanas
 		final Button bPorMes = new Button(cBotones, SWT.RADIO);
-		bPorMes.setText("Horario mes");
+		bPorMes.setText(this._bundle.getString("I02_but_Verpormes"));
 		bPorMes.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		//Creamos un oyente
 		bPorMes.addListener(SWT.Selection, new Listener() {
@@ -213,7 +255,7 @@ public class I02Empleado {
 		Table tablaMensajes = new Table (cMensajes, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
 		tablaMensajes.setLinesVisible (true);
 		tablaMensajes.setHeaderVisible (true);
-		String[] titles = {" ", "De", "Asunto", "Mensaje", "Fecha"};
+		String[] titles = {" ", _bundle.getString("I02_mens_De"), _bundle.getString("asunto"), _bundle.getString("mensaje2"), _bundle.getString("Fecha")};
 		for (int i=0; i<titles.length; i++) {
 			TableColumn column = new TableColumn (tablaMensajes, SWT.NONE);
 			column.setText (titles [i]);
@@ -222,7 +264,7 @@ public class I02Empleado {
 		//Introducimos manualmente unos mensajes por defecto
 		for (int i=0; i<12; i++) {
 			TableItem tItem = new TableItem (tablaMensajes, SWT.NONE);
-			tItem.setImage(ico_mens);
+			tItem.setImage(_ico_mens);
 			tItem.setText (1, "Remitente");
 			tItem.setText (2, "Asunto del mensaje");
 			tItem.setText (3, "Aquí va lo que quepa del principio del mensaje");
@@ -237,29 +279,29 @@ public class I02Empleado {
 		//Creamos los distintos botones
 		//Mensaje nuevo
 		final Button bMensNuevo = new Button(cMensajes, SWT.PUSH);
-		bMensNuevo.setText("Nuevo");
+		bMensNuevo.setText(_bundle.getString("Nuevo"));
 		bMensNuevo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		//Creamos un oyente
 		bMensNuevo.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
 				@SuppressWarnings("unused")
-				I02MensajeNuevo ventana = new I02MensajeNuevo(shell);
+				I02MensajeNuevo ventana = new I02MensajeNuevo(_shell);
 			}
 		});
 		
 		//Responder
 		final Button bMensResponder = new Button(cMensajes, SWT.PUSH);
-		bMensResponder.setText("Responder");
+		bMensResponder.setText(_bundle.getString("I02_but_Responder"));
 		bMensResponder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
 		//Eliminar mensaje
 		final Button bMensEliminar = new Button(cMensajes, SWT.PUSH);
-		bMensEliminar.setText("Eliminar");
+		bMensEliminar.setText(_bundle.getString("I02_but_Eliminar"));
 		bMensEliminar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
 		//Marcar mensaje
 		final Button bMensMarcar = new Button(cMensajes, SWT.PUSH);
-		bMensMarcar.setText("Marcar");
+		bMensMarcar.setText(_bundle.getString("I02_but_Marcar"));
 		bMensMarcar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
 		//Enviar mensaje
@@ -299,7 +341,7 @@ public class I02Empleado {
 		//Creamos un composite para el calendario
 
 		final Label lTitulo	= new Label(cEstIzq, SWT.CENTER);
-		lTitulo.setText("Opciones a visualizar: ");
+		lTitulo.setText(this._bundle.getString("opcionvis"));
 		lTitulo.setFont(new org.eclipse.swt.graphics.Font(
 			        org.eclipse.swt.widgets.Display.getDefault(), "Arial", 10,
 			        org.eclipse.swt.SWT.BOLD));
@@ -313,31 +355,38 @@ public class I02Empleado {
 //		cOpciones.setLayout(lOpciones);
 		
 		final Label lTiempo	= new Label(cEstIzq, SWT.LEFT);
-		lTiempo.setText("Tiempo datos:");
+		lTiempo.setText(this._bundle.getString("tiempodatos"));
 		lTiempo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
 		Combo cTiempo = new Combo(cEstIzq, SWT.BORDER | SWT.READ_ONLY);
 		cTiempo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		cTiempo.setItems(new String[] {"Semana", "Quincena", "Mes","Año"});
+		cTiempo.setItems(new String[] {_bundle.getString("semana"), _bundle.getString("quincena"), _bundle.getString("mes"),_bundle.getString("año")});
 		cTiempo.select(0);
 		
 		final Label lComparar	= new Label(cEstIzq, SWT.LEFT);
-		lComparar.setText("Comparar con:");
+		lComparar.setText(_bundle.getString("compararcon"));
 		lComparar.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
 		Combo cComparar = new Combo(cEstIzq, SWT.BORDER | SWT.READ_ONLY);
 		cComparar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		cComparar.setItems(new String[] {"Nadie","Empleado medio", "Mejor de semana", "Mejor de mes","Mejor de año","Elegir otro"});
+		cComparar.setItems(new String[] {
+				_bundle.getString("nadie"),
+				_bundle.getString("empleadomedio"),
+				_bundle.getString("mejorsemana"),
+				_bundle.getString("mejormes"),
+				_bundle.getString("mejoraño")
+				});
+		
 		cComparar.select(0);
 		cComparar.setVisibleItemCount(6);
 		
 		final Label lTipoGrafico	= new Label(cEstIzq, SWT.CENTER);
-		lTipoGrafico.setText("Datos a visualizar:");
+		lTipoGrafico.setText(_bundle.getString("datosvis"));
 		lTipoGrafico.setFont(new org.eclipse.swt.graphics.Font(
 			        org.eclipse.swt.widgets.Display.getDefault(), "Arial", 9,
 			        org.eclipse.swt.SWT.BOLD));
 		lTipoGrafico.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
 		
 		final Button bVentasTotales = new Button(cEstIzq, SWT.RADIO);
-		bVentasTotales.setText("Ver ventas totales");
+		bVentasTotales.setText(_bundle.getString("verventastot"));
 		bVentasTotales.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		//Creamos un oyente
 		bVentasTotales.addFocusListener(new FocusListener(){
@@ -358,7 +407,7 @@ public class I02Empleado {
 		
 		
 		final Button bVentasPTiempo = new Button(cEstIzq, SWT.RADIO);
-		bVentasPTiempo.setText("Ventas por tiempo trabajo");
+		bVentasPTiempo.setText(this._bundle.getString("ventaspertime"));
 		bVentasPTiempo.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		//Creamos un oyente
 		bVentasPTiempo.addFocusListener(new FocusListener(){
@@ -378,7 +427,7 @@ public class I02Empleado {
 		);
 		
 		final Button bVentasPPrecio = new Button(cEstIzq, SWT.RADIO);
-		bVentasPPrecio.setText("Ventas por precio producto");
+		bVentasPPrecio.setText(this._bundle.getString("ventasporprecio"));
 		bVentasPPrecio.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		//Creamos un oyente
 		bVentasPPrecio.addFocusListener(new FocusListener(){
@@ -399,7 +448,7 @@ public class I02Empleado {
 
 		
 		final Button bVentasPDepartamento = new Button(cEstIzq, SWT.RADIO);
-		bVentasPDepartamento.setText("Ventas por departamentos");
+		bVentasPDepartamento.setText(this._bundle.getString("ventaspordpto"));
 		bVentasPDepartamento.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		//Creamos un oyente
 		bVentasPDepartamento.addFocusListener(new FocusListener(){
@@ -437,32 +486,41 @@ public class I02Empleado {
 		
 		
 		// Ajustar el tamaño de la ventana al contenido
-		shell.pack();
+		_shell.pack();
 		// Mostrar ventana centrada en la pantalla
-		shell.setLocation(display.getBounds().width/2 - shell.getSize().x/2, display.getBounds().height/2 - shell.getSize().y/2);
-		shell.open();
+		_shell.setLocation(_display.getBounds().width/2 - _shell.getSize().x/2, _display.getBounds().height/2 - _shell.getSize().y/2);
+		_shell.open();
 		
 		// Preguntar antes de salir
-		shell.addListener (SWT.Close, new Listener () {
+		_shell.addListener (SWT.Close, new Listener () {
 			public void handleEvent (Event event) {
-				MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
+				MessageBox messageBox = new MessageBox (_shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
 				messageBox.setText ("Mensaje");
-				messageBox.setMessage ("¿Desea cerrar la aplicación?");
+				messageBox.setMessage (_bundle.getString("cierre"));
 				event.doit = messageBox.open () == SWT.YES;
 			}
 		});
 
 		// Este bucle mantiene la ventana abierta
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
+		while (!_shell.isDisposed()) {
+			if (!_display.readAndDispatch()) {
+				_display.sleep();
 			}
 		}
-		display.dispose();
+		_display.dispose();
 	}
 	
 	public static void main(String[] IS0708) {
 		@SuppressWarnings("unused")
-		I02Empleado empleado = new I02Empleado();
+				LanguageChanger l = new LanguageChanger();
+		// 0 español
+		// 1 polaco
+		// 2 inglés
+		l.cambiarLocale(2);
+		// Prueba del archivo de idioma
+		Display display = new Display ();
+		Shell shell = new Shell(display);
+		I02Empleado i = new I02Empleado(shell, display, l.getBundle(), l.getCurrentLocale());
+		
 	}
 }

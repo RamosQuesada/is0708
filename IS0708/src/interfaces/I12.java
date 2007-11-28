@@ -52,7 +52,7 @@ public class I12 {
 	 * @param locale
 	 *            keeps information about User Country This constructor will
 	 *            open User Help File in the lounge depending on locale variable
-	 * @param display
+	 * @param _display
 	 *            class uses main window display atribut to show help window
 	 */
 	public I12(Display d, Locale locale, ResourceBundle bundle) {
