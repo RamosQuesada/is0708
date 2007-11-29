@@ -21,7 +21,6 @@ import java.util.ResourceBundle;
 public class I02MensajeriaInterna {
 	private Shell _padre = null;
 	private ResourceBundle _bundle;
-	private Locale _locale;
 
 	private final static int NO_INICIALIZADO=0;
 	private final static int MENSAJERIA_INSTANTANEA=1;
@@ -31,10 +30,9 @@ public class I02MensajeriaInterna {
 	
 	private int opcion_actual= NO_INICIALIZADO;
 	
-	public I02MensajeriaInterna(Shell padre	,ResourceBundle bundle, Locale locale) {
+	public I02MensajeriaInterna(Shell padre	,ResourceBundle bundle) {
 		this._padre = padre;
 		this._bundle=bundle;
-		this._locale=locale;
 		mostrarVentana();
 	}
 	

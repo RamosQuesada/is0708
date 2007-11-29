@@ -168,12 +168,12 @@ public class I02MensajeNuevo {
 					e.doit = messageBox.open () == SWT.CLOSE;
 				}
 				if(opcion_actual==MENSAJERIA_INTERNA){
-					I02MensajeriaInterna ventana = new I02MensajeriaInterna(_padre,_bundle,_locale);
+					I02MensajeriaInterna ventana = new I02MensajeriaInterna(_padre,_bundle);
 					shell.dispose();
 
 				}
 				if(opcion_actual==PETICION_BAJA){
-					I02PeticionBaja ventana = new I02PeticionBaja(_padre);
+					I02PeticionBaja ventana = new I02PeticionBaja(_padre,_bundle);
 					shell.dispose();
 
 				}
