@@ -37,11 +37,6 @@ public class I02PeticionFecha {
 		GridLayout lShell = new GridLayout();
 		lShell.numColumns = 1;		
 		shell.setLayout(lShell);
-		shell.setText("Tipo de mensaje :");
-		shell.setImage(ico_mens_l);
-		
-		/*  a continuacion 3 radio butons para la eleccion del tipo de mensaje  */
-		
 		
 
 		//Introducimos los textos a los botones
