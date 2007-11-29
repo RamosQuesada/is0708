@@ -318,7 +318,7 @@ public class I02Empleado {
 		bMensNuevo.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
 				@SuppressWarnings("unused")
-				I02MensajeNuevo ventana = new I02MensajeNuevo(_shell);
+				I02MensajeNuevo ventana = new I02MensajeNuevo(_shell,_bundle,_locale);
 			}
 		});
 		

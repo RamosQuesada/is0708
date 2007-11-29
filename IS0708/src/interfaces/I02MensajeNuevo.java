@@ -1,5 +1,8 @@
 package interfaces;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
@@ -21,7 +24,10 @@ public class I02MensajeNuevo {
 	/**
 	 * Ventana que llama a la de esta clase
 	 */
-	private Shell padre = null;
+	private Shell _padre = null;
+	
+	private ResourceBundle _bundle;
+	private Locale _locale;
 
 	/**Constante para indicar que la opcion actual no esta inicializada aun */
 	private final static int NO_INICIALIZADO=0;
@@ -42,8 +48,10 @@ public class I02MensajeNuevo {
 	/** Constructor
 	 * @param padre ventana que llama a la actual
 	 */
-	public I02MensajeNuevo(Shell padre) {
-		this.padre = padre;
+	public I02MensajeNuevo(Shell padre,ResourceBundle bundle, Locale locale) {
+		this._padre = padre;
+		this._bundle = bundle;
+		this._locale = locale;
 		mostrarVentana();
 	}
 	
@@ -51,9 +59,9 @@ public class I02MensajeNuevo {
 	 * Metodo que muestra por pantalla la nueva ventana
 	 */
 	public void mostrarVentana() {
-		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
+		final Shell shell = new Shell (_padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 
-		final Image ico_mens_l = new Image(padre.getDisplay(), I02.class.getResourceAsStream("ico_mens1_v.gif"));
+		final Image ico_mens_l = new Image(_padre.getDisplay(), I02.class.getResourceAsStream("ico_mens1_v.gif"));
 		
 		//Establecemos el layout del shell
 		GridLayout lShell = new GridLayout();
@@ -83,11 +91,11 @@ public class I02MensajeNuevo {
 		final Button bCancelar		= new Button(cAceptarCancelar, SWT.PUSH);
 		
 		//Introducimos los textos a los botones
-		bMInterna.setText("Mensajeria Interna");
-		bPetBaja.setText("Peticion de Baja");
-		bPCHorario.setText("Peticion de cambio de horario");
-		bAceptar.setText("Aceptar");
-		bCancelar.setText("Cancelar");
+		bMInterna.setText(this._bundle.getString("mensajeriaint"));
+		bPetBaja.setText(this._bundle.getString("peticionbaja"));
+		bPCHorario.setText(this._bundle.getString("peticioncambhorario"));
+		bAceptar.setText(this._bundle.getString("aceptar1"));
+		bCancelar.setText(this._bundle.getString("cancelar1"));
 		
 		//Introducimos los valores y eventos de peticion de Mensajeria interna
 		bMInterna.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -153,25 +161,24 @@ public class I02MensajeNuevo {
 			public void widgetSelected (SelectionEvent e) {
 				System.out.println(opcion_actual);
 				if(opcion_actual==NO_INICIALIZADO){
-					System.out.println("hola");
 					//mostrar pantalla indicandolo
-					MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
-					messageBox.setText ("Mensaje");
-					messageBox.setMessage ("Seleccione un tipo de mensaje");
+					MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
+					messageBox.setText (_bundle.getString("Mensaje"));
+					messageBox.setMessage (_bundle.getString("selectipomens"));
 					e.doit = messageBox.open () == SWT.CLOSE;
 				}
 				if(opcion_actual==MENSAJERIA_INTERNA){
-					I02MensajeriaInterna ventana = new I02MensajeriaInterna(padre);
+					I02MensajeriaInterna ventana = new I02MensajeriaInterna(_padre,_bundle,_locale);
 					shell.dispose();
 
 				}
 				if(opcion_actual==PETICION_BAJA){
-					I02PeticionBaja ventana = new I02PeticionBaja(padre);
+					I02PeticionBaja ventana = new I02PeticionBaja(_padre);
 					shell.dispose();
 
 				}
 				if(opcion_actual==CAMBIO_HORARIO){
-					I02CambioHorario ventana = new I02CambioHorario(padre);
+					I02CambioHorario ventana = new I02CambioHorario(_padre);
 					shell.dispose();
 
 				}
@@ -191,7 +198,7 @@ public class I02MensajeNuevo {
 		// Ajustar el tamaño de la ventana al contenido
 		shell.pack();
 		// Mostrar ventana centrada sobre el padre
-		shell.setLocation(padre.getBounds().width/2 + padre.getBounds().x - shell.getSize().x/2, padre.getBounds().height/2 + padre.getBounds().y - shell.getSize().y/2);
+		shell.setLocation(_padre.getBounds().width/2 + _padre.getBounds().x - shell.getSize().x/2, _padre.getBounds().height/2 + _padre.getBounds().y - shell.getSize().y/2);
 		shell.open();
 	}
 }
