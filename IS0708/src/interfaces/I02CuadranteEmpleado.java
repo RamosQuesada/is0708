@@ -1,6 +1,8 @@
 package interfaces;
 
 import java.util.Calendar;
+import java.util.ResourceBundle;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -26,6 +28,7 @@ public class I02CuadranteEmpleado {
 	public  int subdivisiones; // Cuántas subdivisiones hacer por hora (0 = sin subdivisiones)
 	public Empleado empleado;
 	private int tamaño =8;
+	private ResourceBundle _bundle;
 	
 
 
@@ -51,8 +54,10 @@ public class I02CuadranteEmpleado {
 	 * 						el cuadrante a partir del margen izquierdo, dejando un espacio para
 	 * 						los nombres.
 	 */
-	public I02CuadranteEmpleado(Display d, int subdivisiones, int horaInicio, int horaFin, int margenIzq, int margenDer, int margenSup, int margenInf, int margenNombres) {
+	public I02CuadranteEmpleado(Display d, int subdivisiones, int horaInicio, int horaFin, int margenIzq, 
+			int margenDer, int margenSup, int margenInf, int margenNombres,ResourceBundle bundle) {
 		display = d;
+		_bundle=bundle;
 		this.margenIzq  = margenIzq;
 		this.margenDer  = margenDer;
 		this.margenSup  = margenSup;
@@ -150,8 +155,16 @@ public class I02CuadranteEmpleado {
 			gc.setLineStyle(SWT.LINE_DOT);
 			if (i!=h)
 			{	cambiarPincel(gc, 150,250,150);
-				String[] diasSemana = {"Lunes","Martes","Miercoles","Jueves","Viernes ","Sabado ","Domingo"};
-				int tamaño1= sep/8;
+				final String[] diasSemana={
+					_bundle.getString("lunes"),
+					_bundle.getString("martes"),
+					_bundle.getString("miercoles"),
+					_bundle.getString("jueves"),
+					_bundle.getString("viernes"),
+					_bundle.getString("sabado"),
+					_bundle.getString("domingo")
+					};
+				int tamaño1= sep/10;
 				int tamaño2= tamañoFila/2;
 				if (tamaño1<tamaño2){
 					tamaño = tamaño1;

@@ -12,6 +12,8 @@
 // TODO Hacer que reduzca la resolución del grid en función del tamaño de la pantalla
 package interfaces;
 
+import java.util.ResourceBundle;
+
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.layout.GridData;
@@ -37,6 +39,7 @@ public class I02_cuadrEmpl {
 	private I02CuadranteEmpleado cuadrante;
 	private int alto, ancho;
 	private Display display;
+	private ResourceBundle _bundle;
 	private int despl; // Este es para cuando movemos una barra, para saber de dónde la
 				// he cogido
 	private Boolean creando, terminadoDeCrear;
@@ -158,8 +161,9 @@ public class I02_cuadrEmpl {
 	 * y el cuadrante.
 	 * @param c	Composite sobre el que dibujar el cuadrante
 	 */
-	public I02_cuadrEmpl(Composite c, Boolean diario) {
+	public I02_cuadrEmpl(Composite c, Boolean diario,ResourceBundle bundle) {
 		this.semanal = diario;
+		this._bundle = bundle;
 		final GridLayout l = new GridLayout(3,false);
 		c.setLayout(l);
 		
@@ -206,7 +210,7 @@ public class I02_cuadrEmpl {
 		empleadoActivo = -1;
 		horaInicio = 9;
 		horaFin = 23;
-		cuadrante = new I02CuadranteEmpleado(display, 4, horaInicio, horaFin, margenIzq, margenDer, margenSup, margenInf, margenNombres);
+		cuadrante = new I02CuadranteEmpleado(display, 4, horaInicio, horaFin, margenIzq, margenDer, margenSup, margenInf, margenNombres,_bundle);
 		calcularTamaño();
 		display = canvas.getDisplay();
 		canvas.addPaintListener(new PaintListener() {

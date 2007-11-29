@@ -222,7 +222,7 @@ public class I02Empleado {
 		cCuadrantesDer.setLayout(lCuadrantesDer);
 		//final Label lCuadr1=new Label (cCuadrantesDer, SWT.CENTER);
 		//lCuadr1.setText("Aquí se mostrarán los cuadrantes");
-		final I02_cuadrEmpl cuadrante = new I02_cuadrEmpl(cCuadrantesDer, false);	
+		final I02_cuadrEmpl cuadrante = new I02_cuadrEmpl(cCuadrantesDer, false,_bundle);	
 		cuadrante.setSemanal();
 		//Creamos el calendario		
 		final DateTime calendario = new DateTime (cBotones, SWT.CALENDAR);
