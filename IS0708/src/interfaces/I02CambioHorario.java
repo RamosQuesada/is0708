@@ -1,6 +1,7 @@
 package interfaces;
 
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
@@ -24,6 +25,7 @@ import org.eclipse.swt.widgets.Text;
 
 public class I02CambioHorario {
 	private Shell padre = null;
+	private ResourceBundle _bundle;
 	
 	private I02PeticionFecha ventana;
 	private Text cFechaInicio;
@@ -37,8 +39,9 @@ public class I02CambioHorario {
 	private final static int TODOSDIAS = 1;
 	private final static int DIAADIA = 2;
 	
-	public I02CambioHorario(Shell padre) {
+	public I02CambioHorario(Shell padre,ResourceBundle bundle) {
 		this.padre = padre;
+		_bundle = bundle;
 		mostrarVentana();
 	}
 	
@@ -51,7 +54,7 @@ public class I02CambioHorario {
 		GridLayout lShell = new GridLayout();
 		lShell.numColumns = 1;		
 		shell.setLayout(lShell);
-		shell.setText("Peticion de Cambio de horario:");
+		shell.setText(_bundle.getString("peticion"));
 		shell.setImage(ico_mens_l);
 		
 		/*    */
@@ -64,9 +67,9 @@ public class I02CambioHorario {
 		cDuracion.setLayout(lDuracion);
 		
 		final Button bIndefinida		= new Button(cDuracion, SWT.RADIO);
-		bIndefinida.setText("Peticion cambio horario  indefinido: ");
+		bIndefinida.setText(_bundle.getString("petind"));
 		final Button bTemporal		= new Button(cDuracion, SWT.RADIO);
-		bTemporal.setText("Peticion cambio horario  temporal: ");
+		bTemporal.setText(_bundle.getString("pettem"));
 		
 		final Composite cFecha = new Composite (cDuracion, SWT.BORDER);
 		cFecha.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 0, 0));
@@ -75,11 +78,11 @@ public class I02CambioHorario {
 		cFecha.setLayout(lFecha);
 
 		final Label lFechaInicio	= new Label(cFecha, SWT.LEFT);
-		lFechaInicio.setText("Fecha inicio: ");
+		lFechaInicio.setText(_bundle.getString("fechaini"));
 		cFechaInicio =new Text (cFecha, SWT.BORDER);
 		cFechaInicio.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 0, 0));
 		final Button bFechaInicio	= new Button(cFecha, SWT.PUSH);
-		bFechaInicio.setText("Seleccionar");
+		bFechaInicio.setText(_bundle.getString("seleccionar"));
 		//Introducimos los valores y eventos de Fecha Inicio
 		bFechaInicio.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
@@ -99,11 +102,11 @@ public class I02CambioHorario {
 		
 		
 		final Label lFechaFin	= new Label(cFecha, SWT.LEFT);
-		lFechaFin.setText("Fecha fin: ");
+		lFechaFin.setText(_bundle.getString("fechafin"));
 		cFechaFin =new Text (cFecha, SWT.BORDER);
 		cFechaFin.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 0, 0));
 		final Button bFechaFin	= new Button(cFecha, SWT.PUSH);
-		bFechaFin.setText("Seleccionar");
+		bFechaFin.setText(_bundle.getString("seleccionar"));
 		//Introducimos los valores y eventos de Fecha Inicio
 		bFechaFin.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
@@ -143,15 +146,7 @@ public class I02CambioHorario {
 
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
-				//System.out.println("peticion mensajeria interna in");
-				//_opcion_actual=I02CambioHorario.TODOSDIAS;
-				//coTodosDias.setEnabled(true);
-				//for(int cont=0;cont<nombreDias.size();cont++){
-				//	nombreDias.get(cont).setEnabled(false);
-				//}
-				//for(int cont=0;cont<comboDias.size();cont++){
-				//	comboDias.get(cont).setEnabled(false);
-				//}
+
 				//DESACTIVAR COMPOSITE DIA A DIA
 				lFechaFin.setEnabled(true);
 				lFechaInicio.setEnabled(true);
@@ -181,7 +176,10 @@ public class I02CambioHorario {
 		bTodosDias.setText("Pedir cambio todos los dias: ");
 		final Combo coTodosDias = new Combo(cTodosDias, SWT.BORDER | SWT.READ_ONLY);
 		coTodosDias.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 0, 0));
-		coTodosDias.setItems(new String[] {"Turno Mañana", "Turno Tarde","Turno Noche"});
+		coTodosDias.setItems(new String[] {
+				_bundle.getString("turnomañ"), 
+				_bundle.getString("turnotarde"),
+				_bundle.getString("turnonoche")});
 		coTodosDias.select(0);
 		
 		final Composite cDiaDia = new Composite (shell, SWT.BORDER);
@@ -190,7 +188,16 @@ public class I02CambioHorario {
 		lDiaDia.numColumns = 2;
 		cDiaDia.setLayout(lDiaDia);
 		//ArrayList<Label> laDiaDia= new ArrayList<Label>();
-		final String[] dias={"Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"};
+		final String[] dias={
+				_bundle.getString("lunes"),
+				_bundle.getString("martes"),
+				_bundle.getString("miercoles"),
+				_bundle.getString("jueves"),
+				_bundle.getString("viernes"),
+				_bundle.getString("sabado"),
+				_bundle.getString("domingo")
+				};
+		
 		final ArrayList<Label> nombreDias = new ArrayList<Label>();
 		final ArrayList<Combo> comboDias = new ArrayList<Combo>();
 		for(int cont=0;cont<7;cont++){
@@ -201,21 +208,17 @@ public class I02CambioHorario {
 			aux.setText(dia);
 			aux.setEnabled(false);
 			comboDias.add(cont, new Combo(cDiaDia,SWT.BORDER | SWT.READ_ONLY));
-			//final Combo coaux= new Combo(cDiaDia,SWT.LEFT);
-			final String[] texto= new String[] {"Turno Mañana", "Turno Tarde","Turno Noche"};
+			final String[] texto= new String[] {
+					_bundle.getString("turnomañ"), 
+					_bundle.getString("turnotarde"),
+					_bundle.getString("turnonoche")
+					};
 			comboDias.get(cont).setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 0, 0));
 			comboDias.get(cont).setItems(texto);
 			comboDias.get(cont).select(0);
 			comboDias.get(cont).setEnabled(false);
 			
-			
-			
-
-//			coaux.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 0, 0));
-//			coaux.setItems(new String[] {"Turno Mañana", "Turno Tarde","Turno Noche"});
-//			coaux.select(0);
-			
-		//	comboDias.add(coaux);
+		
 			
 		}
 		
@@ -246,7 +249,7 @@ public class I02CambioHorario {
 
 		
 		final Button bDia		= new Button(cTodosDias, SWT.RADIO);
-		bDia.setText("Pedir horario dia a dia de la semana: ");
+		bDia.setText(_bundle.getString("pedirhora"));
 
 		bDia.addFocusListener(new FocusListener(){
 
@@ -282,16 +285,16 @@ public class I02CambioHorario {
 		final Button bCancelar		= new Button(cAceptarCancelar, SWT.PUSH);
 		
 		//Introducimos los textos a los botones
-		bAceptar.setText(" Enviar ");
-		bCancelar.setText(" Cancelar ");
+		bAceptar.setText(_bundle.getString("enviar"));
+		bCancelar.setText(_bundle.getString("cancelar1"));
 				//Introducimos los valores y eventos de Aceptar
 		bAceptar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		bAceptar.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
 				if(iFechaFin<iFechaInicio){
 					MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
-					messageBox.setText ("Mensaje");
-					messageBox.setMessage ("Error en el periodo");
+					messageBox.setText (_bundle.getString("Mensaje"));
+					messageBox.setMessage (_bundle.getString("errper"));
 					messageBox.open();
 					//if( messageBox.open () == SWT.YES){
 					//	shell.dispose();

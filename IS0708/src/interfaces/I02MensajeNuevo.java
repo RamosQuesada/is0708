@@ -178,7 +178,7 @@ public class I02MensajeNuevo {
 
 				}
 				if(opcion_actual==CAMBIO_HORARIO){
-					I02CambioHorario ventana = new I02CambioHorario(_padre);
+					I02CambioHorario ventana = new I02CambioHorario(_padre,_bundle);
 					shell.dispose();
 
 				}
