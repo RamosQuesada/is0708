@@ -26,6 +26,7 @@ import impresion.Imprimir;
 import interfaces.I01;
 import interfaces.I02_cuadr;
 import interfaces.I08_1;
+import interfaces.I09_1;
 
 public class I02 implements impresion.Imprimible{
 
@@ -373,9 +374,16 @@ public class I02 implements impresion.Imprimible{
 
 		Button bConfig = new Button(c, SWT.PUSH);
 		bConfig.setText(bundle.getString("I02_but_Config_dep"));
-		bConfig.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1,
-				1));
+		bConfig.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
+		bConfig.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				System.out.println("Pulsado Configuración departamentos");
+				new I09_1(shell, bundle);
+			}
+		});
+
+		
 		Composite cInfo = new Composite(c, SWT.BORDER);
 		cInfo.setLayout(new GridLayout(2, false));
 		cInfo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));

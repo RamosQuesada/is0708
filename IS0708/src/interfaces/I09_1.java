@@ -13,8 +13,8 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
-import org.eclipse.swt.custom.*;
 import java.util.ResourceBundle;
+import org.eclipse.swt.graphics.*;
 
 public class I09_1 {
 	private Shell padre = null;
@@ -69,8 +69,6 @@ public class I09_1 {
 		final List list = new List (grupo2, SWT.BORDER |  SWT.V_SCROLL);
 		list.add("Turno 1");
 		list.add("Turno 2");
-		list.add("Turno 3");
-		list.add("Turno 4");
 		list.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 3));
 		
 		final Button bNuevoTurno		= new Button(grupo2, SWT.PUSH);
@@ -94,12 +92,14 @@ public class I09_1 {
 		tLongCiclo		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,true,1,1));
 		tLongCiclo		.setTextLimit(2);
 		tLongCiclo		.setToolTipText(bundle.getString("I09_tip_LongCiclo"));
+		tLongCiclo		.setText("14");
+		// TODO Añadir botón "borrar todo"
 		bAyuda			.setText("Ayuda");
 		bAyuda			.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,true,1,1));
 		
 		final Composite cCiclo = new Composite(grupo3, SWT.NONE);
-		int longCiclo = 26;
-		int numTurnos = 3;
+		int longCiclo = 14;
+		int numTurnos = 2;
 		cCiclo.setLayout(new GridLayout(longCiclo+1, false));
 		Button b;
 		Label l;
@@ -108,12 +108,14 @@ public class I09_1 {
 				l = new Label(cCiclo,SWT.NONE);
 			else {
 				l = new Label(cCiclo,SWT.NONE);
-				l.setText("Turno " + String.valueOf(i));
+				l.setText("Turno " + String.valueOf(i+1));
 			}
 			for (int j = 1; j <= longCiclo; j++) {
 				if (i==-1) {
 					l = new Label(cCiclo,SWT.NONE);
 					l.setText(String.valueOf(j));
+					if (j%7 ==0)
+						l.setForeground(new Color(shell.getDisplay(),255,0,0));
 					l.setLayoutData(new GridData(SWT.CENTER,SWT.FILL,true,true,1,1));
 				}
 				else {
