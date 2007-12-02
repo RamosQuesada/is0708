@@ -9,16 +9,13 @@ import java.util.ResourceBundle;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
@@ -47,7 +44,7 @@ public class I02Admin {
 	
 	Image _fondo_turnomatic;
 	
-	Text _contra;
+	Text _contra,tNombreUsuario,tApellidos,tNombre;
 	
 	Point tamaño;
 	
@@ -151,11 +148,9 @@ public class I02Admin {
 		});
 		// Texto del item de menú
 		itemSeleccionar.setText(_bundle.getString("I02_men_itm_Abrir"));
-		archivoItem.setAccelerator(_bundle.getString("I02_men_itm_abriracc").charAt(0));
 		MenuItem itemImprimir = new MenuItem (submenu, SWT.PUSH);
 		itemImprimir.setImage(_ico_imprimir);
 		itemImprimir.setText(_bundle.getString("I02_men_itm_Imprimir"));
-		itemImprimir.setAccelerator(_bundle.getString("I02_men_itm_imprimiracc").charAt(0));
 
 		MenuItem itemSalir = new MenuItem (submenu, SWT.PUSH);
 		itemSalir.addListener (SWT.Selection, new Listener () {
@@ -165,7 +160,6 @@ public class I02Admin {
 		});
 		// Texto del item de menú
 		itemSalir.setText(_bundle.getString("I02_men_itm_Salir"));
-		itemSalir.setAccelerator(_bundle.getString("I02_men_itm_saliracc").charAt(0));
 		// Ayuda
 		MenuItem helpMenuHeader = new MenuItem(barra, SWT.CASCADE);
 		helpMenuHeader.setText(_bundle.getString("I02_men_Ayuda"));
@@ -241,14 +235,9 @@ public class I02Admin {
 		bienvenido.setLayoutData(new GridData(SWT.CENTER,SWT.TOP,true,true,1,1));
 		bienvenido.setText("BIENVENIDO A TURNOMATIC");
 		
-		//_fondo_turnomatic = Image.open(Turnomatic.jpg);
-		Point tamaño=cInicio.getSize();
-		System.out.println("tamañox "+tamaño.x);
-		System.out.println("tamañoy "+tamaño.y);
-		ImageData imagedata = _fondo_turnomatic.getImageData().scaledTo(50, 30);
+		
+		ImageData imagedata = _fondo_turnomatic.getImageData().scaledTo(300, 240);
 		_fondo_turnomatic = new Image(_display, imagedata);
-		//_fondo_turnomatic.resize(tamaño.x, tamaño.y, Image.ANTIALIAS);
-		//im_resize.save(archJPG, "JPEG")
 
 		cInicio.setBackgroundImage(this._fondo_turnomatic);
 		return cInicio;
@@ -258,35 +247,45 @@ public class I02Admin {
 	public Composite creaPestañaNuevoGerente(TabFolder tabFolder){
 		//Creamos el contenido de la pestaña cuadrantes
 		final Composite cNuevoGerente = new Composite (tabFolder, SWT.BORDER);
-		cNuevoGerente.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 0, 0));
+		cNuevoGerente.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 0, 0));
 		GridLayout lGrupo = new GridLayout();
-		lGrupo.numColumns = 2;
+		lGrupo.numColumns = 1;
 		cNuevoGerente.setLayout(lGrupo);
 		
 
-		final Label lNombre	= new Label(cNuevoGerente, SWT.LEFT);
+		
+		final Label lTitulo	= new Label(cNuevoGerente, SWT.LEFT);
+		lTitulo.setText("Introduzca los datos del gerente");
+		final Composite cNuevoGerente2 = new Composite (cNuevoGerente, SWT.BORDER);
+		cNuevoGerente2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 0, 0));
+		GridLayout lGrupo2 = new GridLayout();
+		lGrupo2.numColumns = 2;
+		cNuevoGerente2.setLayout(lGrupo2);
+		final Label lNombre	= new Label(cNuevoGerente2, SWT.LEFT);
 		lNombre.setText(_bundle.getString("I02AdminNombre"));
-		final Text  tNombre	= new Text (cNuevoGerente, SWT.BORDER);
+		tNombre	= new Text (cNuevoGerente2, SWT.BORDER);
 		tNombre.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 0, 0));
 
-		final Label lApellidos	= new Label(cNuevoGerente, SWT.LEFT);
+		final Label lApellidos	= new Label(cNuevoGerente2, SWT.LEFT);
 		lApellidos.setText(_bundle.getString("I02AdminApellidos"));
-		final Text  tApellidos	= new Text (cNuevoGerente, SWT.BORDER);
+		tApellidos	= new Text (cNuevoGerente2, SWT.BORDER);
 		tApellidos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 0, 0));
 		
-		final Label lNombreUsuario	= new Label(cNuevoGerente, SWT.LEFT);
+		final Label lNombreUsuario	= new Label(cNuevoGerente2, SWT.LEFT);
 		lNombreUsuario.setText(_bundle.getString("I02AdminNombreUsuario"));
-		final Text  tNombreUsuario	= new Text (cNuevoGerente, SWT.BORDER);
+		tNombreUsuario	= new Text (cNuevoGerente2, SWT.BORDER);
 		tNombreUsuario.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 0, 0));
 
-		final Label lContra	= new Label(cNuevoGerente, SWT.LEFT);
+		final Label lContra	= new Label(cNuevoGerente2, SWT.LEFT);
 		lContra.setText(_bundle.getString("I02AdminClave"));
-		_contra	= new Text (cNuevoGerente, SWT.BORDER);
+		_contra	= new Text (cNuevoGerente2, SWT.BORDER);
 		_contra.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 0, 0));
+		_contra.setText(this.obtenerClave());
+		_contra.setEditable(false);
 		
 		
-		final Composite cAceptarCancelar = new Composite (_shell, SWT.BORDER);
-		cAceptarCancelar.setLayoutData(new GridData(SWT.LEFT, SWT.DOWN, true, false, 1, 1));
+		final Composite cAceptarCancelar = new Composite (cNuevoGerente, SWT.BORDER);
+		cAceptarCancelar.setLayoutData(new GridData(SWT.CENTER, SWT.DOWN, false, false, 1, 1));
 		GridLayout lAceptarCancelar = new GridLayout();
 		lAceptarCancelar.numColumns = 2;
 		cAceptarCancelar.setLayout(lAceptarCancelar);
@@ -296,42 +295,28 @@ public class I02Admin {
 		final Button bCancelar		= new Button(cAceptarCancelar, SWT.PUSH);
 		
 		//Introducimos los textos a los botones
-		bAceptar.setText("Obtener clave");
+//		bOClave.setText("Obtener clave");
+		bAceptar.setText("Aceptar");
 		bCancelar.setText(_bundle.getString("cancelar1"));
 				//Introducimos los valores y eventos de Aceptar
 		
-		bAceptar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1));
-		bAceptar.addSelectionListener (new SelectionAdapter () {
-			
-			public void widgetSelected (SelectionEvent e) {
-				String clave = obtenerClave();
-				_contra.setText(clave);
-			}
 
-			private String obtenerClave() {
-				// TODO Auto-generated method stub
-				Random randomizador=new Random();
-				String clave = "";
-				char[] chars = new char[]{
-						'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o',
-						'p','q','r','s','t','u','v','w','x','y','z',
-						'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O',
-						'P','Q','R','S','T','U','V','W','X','Y','Z',
-						'1','2','3','4','5','6','7','8','9','0'
-					};
-				
-				char[] clavechar= new char[8];
-				for (int cont=0;cont<8;cont++){
-
-					int r = randomizador.nextInt(chars.length);
-					clavechar[cont]=chars[r];
-				}
-				System.out.println(clavechar);
-				clave=String.copyValueOf(clavechar);
-				return clave;
-			}		
-		});
 		
+		bAceptar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
+		bAceptar.addSelectionListener (new SelectionAdapter () {
+			public void widgetSelected (SelectionEvent e) {
+				MessageBox messageBox = new MessageBox (_shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
+				messageBox.setText ("CONFIRMACION");
+				messageBox.setMessage ("¿Desea guardar el nuevo gerente?");
+				if( messageBox.open () == SWT.YES)
+				{
+					tNombreUsuario.setText("");
+					tNombre.setText("");
+					tApellidos.setText("");
+					_contra.setText(obtenerClave());
+				}
+			}				
+		});
 		//Introducimos los valores y eventos de Cancelar
 		bCancelar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
 		bCancelar.addSelectionListener (new SelectionAdapter () {
@@ -490,6 +475,29 @@ public class I02Admin {
 		cEnviarMensaje.setLayout(lCEnviarMensaje);
 		return cMensajes;
 	}
+	
+	private String obtenerClave() {
+		// TODO Auto-generated method stub
+		Random randomizador=new Random();
+		String clave = "";
+		char[] chars = new char[]{
+				'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o',
+				'p','q','r','s','t','u','v','w','x','y','z',
+				'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O',
+				'P','Q','R','S','T','U','V','W','X','Y','Z',
+				'1','2','3','4','5','6','7','8','9','0'
+			};
+		
+		char[] clavechar= new char[8];
+		for (int cont=0;cont<8;cont++){
+
+			int r = randomizador.nextInt(chars.length);
+			clavechar[cont]=chars[r];
+		}
+		System.out.println(clavechar);
+		clave=String.copyValueOf(clavechar);
+		return clave;
+	}		
 	
 		
 		
