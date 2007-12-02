@@ -3,7 +3,7 @@ package aplicacion;
 import java.sql.*;
 /**
  * Aquí se encuentran los métodos de acceso a la base de datos.
- * @author Daniel
+ * @author Camilo
  *
  */
 
@@ -25,7 +25,7 @@ public class Database {
 	        System.out.println("Conexión a la BD"); 
 		} catch (Exception e) { 
 			e.printStackTrace();
-			System.out.println("Error en conexión "); 
+			System.out.println("Error en conexión"); 
 		} 
 	}
 	
