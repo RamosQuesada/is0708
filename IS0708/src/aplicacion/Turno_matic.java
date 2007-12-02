@@ -18,7 +18,7 @@ public class Turno_matic {
 		// La lista de empleados
 		final ArrayList<Empleado> empleados;
 		empleados = new ArrayList<Empleado>();
-			
+		
 		LanguageChanger l = new LanguageChanger();
 		// 0 español
 		// 1 polaco
@@ -36,15 +36,15 @@ public class Turno_matic {
 		Empleado e4 = new Empleado(4, "H. Day",     new Color (display, 150, 150, 150));
 		Empleado e5 = new Empleado(5, "N. Furtado", new Color (display, 200, 80, 180));
 		Empleado e6 = new Empleado(6, "L. Kravitz", new Color (display, 200, 80, 100));
-		e1.franjaNueva(new Posicion( 9,  6), new Posicion(14,  0));
-		e1.franjaNueva(new Posicion(16,  0), new Posicion(18,  0));
-		e2.franjaNueva(new Posicion(15,  0), new Posicion(22,  0));
-		e3.franjaNueva(new Posicion(12,  3), new Posicion(16,  0));
-		e3.franjaNueva(new Posicion(18,  0), new Posicion(22,  3));
-		e4.franjaNueva(new Posicion(15,  0), new Posicion(19,  9));
-		e5.franjaNueva(new Posicion(12,  0), new Posicion(16,  0));
-		e6.franjaNueva(new Posicion(10,  5), new Posicion(14,  0));
-		e6.franjaNueva(new Posicion(16, 10), new Posicion(19,  0));		
+		e1.turno.franjaNueva(new Posicion( 9,  6), new Posicion(14,  0));
+		e1.turno.franjaNueva(new Posicion(16,  0), new Posicion(18,  0));
+		e2.turno.franjaNueva(new Posicion(15,  0), new Posicion(22,  0));
+		e3.turno.franjaNueva(new Posicion(12,  3), new Posicion(16,  0));
+		e3.turno.franjaNueva(new Posicion(18,  0), new Posicion(22,  3));
+		e4.turno.franjaNueva(new Posicion(15,  0), new Posicion(19,  9));
+		e5.turno.franjaNueva(new Posicion(12,  0), new Posicion(16,  0));
+		e6.turno.franjaNueva(new Posicion(10,  5), new Posicion(14,  0));
+		e6.turno.franjaNueva(new Posicion(16, 10), new Posicion(19,  0));		
 		empleados.add(e1);
 		empleados.add(e2);
 		empleados.add(e3);
