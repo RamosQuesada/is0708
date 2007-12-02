@@ -1,6 +1,7 @@
 package aplicacion;
 
 import java.util.ArrayList;
+import aplicacion.General.*;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.widgets.Display;
@@ -25,7 +26,10 @@ public class Empleado {
 	private int contrato;
 	private Date fContrato;
 	private Date fAlta;
-	public ArrayList<FranjaDib> franjas;
+	// Eliminar esto, que irá en el cuadrante
+	// ahora sólo sirve para hacer prubas de interfaz
+	public Turno turno;
+	
  
 	/**
 	 * Constructor de un empleado. No se hace ninguna comprobación de ninguno de los datos.
@@ -64,7 +68,6 @@ public class Empleado {
 		this.fAlta		= fAlta;
 		this.color = color;
 		// TODO Esto debería quitarse cuando no haga falta
-		franjas = new ArrayList<FranjaDib>();
 	}
 
 	/**
@@ -74,8 +77,8 @@ public class Empleado {
 	public Empleado(int nvend, String nombre, Color color){
 		this.nvend = nvend;
 		this.nombre = nombre;
-		franjas = new ArrayList<FranjaDib>();
 		this.color = color;
+		turno = new Turno();
 	}
 	
 	/**
@@ -227,39 +230,19 @@ public class Empleado {
 	Date fAlta;
 */
 	
-	
-	
-	
-	
-	public void franjaNueva (Posicion pinicio, Posicion pfin) {
-		FranjaDib f = new FranjaDib(pinicio, pfin);
-		franjas.add(f);
+	public void dibujarTurno(Display display, GC gc, int posV, Color color, int margenIzq, int margenNombres, int margenSup, int sep_vert_franjas, int alto_franjas) {
+		// Un entero para sumar el tiempo que trabaja un empleado y mostrarlo a la izquierda
+		int subDivs = 0;
+		gc.setBackground(new Color(display, 0,0,0));
+		if (margenNombres > 0) {
+			gc.drawText(nombre, margenIzq, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1), true);
+			gc.drawText(String.valueOf(subDivs/12)+":"+String.valueOf(General.aString(subDivs%12*60/12)), margenNombres-10, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1), true);
+		}
+		turno.dibujarFranjas(display, gc, posV, color, margenIzq, margenNombres, margenSup, sep_vert_franjas, alto_franjas);
 	}
-	public void quitarFranja (FranjaDib franja) {
-		franjas.remove(franja);
-	}
-	protected String aString (int i) {
-		String s = String.valueOf(i);
-		if (i<10) s = '0' + s;
-		return s;
-	}
+	
 	public Color dameColor() {
 		return color;
 	}
-	public void dibujarFranjas(Display display, GC gc, int posV, Color color, int margenIzq, int margenNombres, int margenSup, int sep_vert_franjas, int alto_franjas) {
-		int subDivs = 0;
-		gc.setBackground(new Color(display, 0,0,0));
-		gc.drawText(nombre, margenIzq, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1), true);
-		for (int i=0; i<franjas.size(); i++) {
-			franjas.get(i).dibujarFranja(display, gc, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1),color);
-			subDivs += (franjas.get(i).pfin.dameHora() - franjas.get(i).pinicio.dameHora())*12;
-			subDivs += (franjas.get(i).pfin.dameCMin() - franjas.get(i).pinicio.dameCMin());
-		}
-		gc.drawText(String.valueOf(subDivs/12)+":"+String.valueOf(aString(subDivs%12*60/12)), margenNombres-10, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1), true);
-	}
-	public Boolean contienePunto (int y, int posV, int margenSup, int sep_vert_franjas, int alto_franjas) {
-		Boolean b = false;
-		if (y > margenSup+(sep_vert_franjas+alto_franjas)*(posV+1) && y<=margenSup+(sep_vert_franjas+alto_franjas)*(posV+2)) b = true;
-		return b;
-	}
+
 }
