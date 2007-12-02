@@ -53,4 +53,16 @@ public class General {
 		}
 		return n;
 	}
+	
+	/**
+	 * Convierte un entero a un String de dos cifras, con un cero delante si es necesario.
+	 * @param i el número a convertir
+	 * @return un String con el entero en formato xx.
+	 */
+	static public String aString (int i) {
+		String s = String.valueOf(i);
+		if (i<10) s = '0' + s;
+		return s;
+	}
+
 }
