@@ -93,7 +93,7 @@ public class I02_cuadrEmpl {
 	}
 
 	private void activarFranja(int franja, int mov) {
-		franjaActiva = cuadrante.empleado.franjas
+		franjaActiva = cuadrante.empleado.turno.franjas
 				.get(franja);
 		franjaActiva.activarFranja();
 		movimiento = mov;

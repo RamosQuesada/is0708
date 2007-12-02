@@ -94,7 +94,7 @@ public class I02_cuadr {
 	}
 
 	private void activarFranja(int franja, int mov) {
-		franjaActiva = cuadrante.empleados.get(empleadoActivo).franjas.get(franja);
+		franjaActiva = cuadrante.empleados.get(empleadoActivo).turno.franjas.get(franja);
 		franjaActiva.activarFranja();
 		movimiento = mov;
 		// Movimientos:
@@ -237,8 +237,8 @@ public class I02_cuadr {
 				if (creando && empleadoActivo != -1) {
 					Posicion p = cuadrante.sticky(e.x);
 					FranjaDib nuevaFranja = new FranjaDib(p, p);
-					cuadrante.empleados.get(empleadoActivo).franjas.add(nuevaFranja);
-					activarFranja(cuadrante.empleados.get(empleadoActivo).franjas.size() - 1, 3);
+					cuadrante.empleados.get(empleadoActivo).turno.franjas.add(nuevaFranja);
+					activarFranja(cuadrante.empleados.get(empleadoActivo).turno.franjas.size() - 1, 3);
 					creando = false;
 					terminadoDeCrear = false;
 				}
@@ -253,8 +253,8 @@ public class I02_cuadr {
 					int j = 0;
 					FranjaDib f2;
 					Boolean encontrado2 = false;
-					while (!encontrado2	&& j < cuadrante.empleados.get(empleadoActivo).franjas.size()) {
-						f2 = cuadrante.empleados.get(empleadoActivo).franjas.get(j);
+					while (!encontrado2	&& j < cuadrante.empleados.get(empleadoActivo).turno.franjas.size()) {
+						f2 = cuadrante.empleados.get(empleadoActivo).turno.franjas.get(j);
 						if ((f.pinicio.menorOIgualQue(f2.pfin) && f2.contienePixel(f.inicio - 10)) | (f.inicio < f2.inicio && f.fin > f2.fin)) {
 							encontrado2 = true;
 							Posicion ancho2 = f2.pfin.diferencia(f2.pinicio);
@@ -263,12 +263,12 @@ public class I02_cuadr {
 							f.pfin.suma(f.pinicio, ancho2);
 							f.inicio = f2.inicio;
 							despl += (f2.fin - f2.inicio);
-							cuadrante.empleados.get(empleadoActivo).franjas.remove(j);
+							cuadrante.empleados.get(empleadoActivo).turno.franjas.remove(j);
 							f.actualizarPixeles(margenIzq, margenNombres, cuadrante.tamHora, cuadrante.tamSubdiv, cuadrante.subdivisiones, horaInicio);
 						} else if ((f.pfin.mayorOIgualQue(f2.pinicio) && f2.contienePixel(f.fin + 10))	| (f.inicio < f2.inicio && f.fin > f2.fin)) {
 							encontrado2 = true;
 							f.pfin = f2.pfin;
-							cuadrante.empleados.get(empleadoActivo).franjas.remove(j);
+							cuadrante.empleados.get(empleadoActivo).turno.franjas.remove(j);
 							f.actualizarPixeles(margenIzq, margenNombres, cuadrante.tamHora, cuadrante.tamSubdiv, cuadrante.subdivisiones, horaInicio);
 						}
 						j++;
@@ -289,19 +289,19 @@ public class I02_cuadr {
 					// Comprobar si la barra es de tamaño menor o igual que 0
 					if (f.inicio > f.fin) {
 						desactivarFranja();
-						cuadrante.empleados.get(empleadoActivo).franjas.remove(f);
+						cuadrante.empleados.get(empleadoActivo).turno.franjas.remove(f);
 						cursor(0);
 					} else {
 						// Comprobar contacto con otras franjas
 						int j = 0;
 						FranjaDib f2;
 						Boolean encontrado2 = false;
-						while (!encontrado2 && j < cuadrante.empleados.get(empleadoActivo).franjas.size()) {
-							f2 = cuadrante.empleados.get(empleadoActivo).franjas.get(j);
+						while (!encontrado2 && j < cuadrante.empleados.get(empleadoActivo).turno.franjas.size()) {
+							f2 = cuadrante.empleados.get(empleadoActivo).turno.franjas.get(j);
 							if (f != f2 && ((f.pinicio.menorOIgualQue(f2.pfin) && f2.contienePixel(e.x - 10)) | (f.inicio <= f2.inicio && f.fin >= f2.fin))) {
 								encontrado2 = true;
 								f.pinicio = f2.pinicio;
-								cuadrante.empleados.get(empleadoActivo).franjas.remove(j);
+								cuadrante.empleados.get(empleadoActivo).turno.franjas.remove(j);
 								desactivarFranja();
 								f.actualizarPixeles(margenIzq, margenNombres, cuadrante.tamHora, cuadrante.tamSubdiv, cuadrante.subdivisiones, horaInicio);
 							}
@@ -323,7 +323,7 @@ public class I02_cuadr {
 					// Comprobar si la barra es de tamaño menor o igual que 0
 					if (f.inicio > f.fin) {
 						desactivarFranja();
-						cuadrante.empleados.get(empleadoActivo).franjas
+						cuadrante.empleados.get(empleadoActivo).turno.franjas
 								.remove(f);
 						cursor(0);
 					} else {
@@ -331,12 +331,12 @@ public class I02_cuadr {
 						int j = 0;
 						FranjaDib f2;
 						Boolean encontrado2 = false;
-						while (terminadoDeCrear	&& !encontrado2	&& j < cuadrante.empleados.get(empleadoActivo).franjas.size()) {
-							f2 = cuadrante.empleados.get(empleadoActivo).franjas.get(j);
+						while (terminadoDeCrear	&& !encontrado2	&& j < cuadrante.empleados.get(empleadoActivo).turno.franjas.size()) {
+							f2 = cuadrante.empleados.get(empleadoActivo).turno.franjas.get(j);
 							if (f != f2	&& (f.pfin.mayorOIgualQue(f2.pinicio) && f2.contienePixel(e.x + 10)) | (f.inicio <= f2.inicio && f.fin >= f2.fin)) {
 								encontrado2 = true;
 								f.pfin = f2.pfin;
-								cuadrante.empleados.get(empleadoActivo).franjas.remove(j);
+								cuadrante.empleados.get(empleadoActivo).turno.franjas.remove(j);
 								desactivarFranja();
 								f.actualizarPixeles(margenIzq, margenNombres, cuadrante.tamHora, cuadrante.tamSubdiv, cuadrante.subdivisiones, horaInicio);
 							}
@@ -354,7 +354,7 @@ public class I02_cuadr {
 					int empleadoActivoNuevo = -1;
 					// Seleccionar empleado activo
 					while (!encontrado && i < cuadrante.empleados.size()) { 
-						if (cuadrante.empleados.get(i).contienePunto(e.y, i,margenSup,cuadrante.sep_vert_franjas,cuadrante.alto_franjas))
+						if (cuadrante.empleados.get(i).turno.contienePunto(e.y, i,margenSup,cuadrante.sep_vert_franjas,cuadrante.alto_franjas))
 							empleadoActivoNuevo = i;
 						i++;
 					}
@@ -369,8 +369,8 @@ public class I02_cuadr {
 					encontrado = false;
 					if (franjaActiva!=null)	franjaActiva.desactivarFranja();
 					franjaActiva = null;
-					while (empleadoActivo != -1 && !encontrado && i < cuadrante.empleados.get(empleadoActivo).franjas.size()) {
-						f = cuadrante.empleados.get(empleadoActivo).franjas.get(i);
+					while (empleadoActivo != -1 && !encontrado && i < cuadrante.empleados.get(empleadoActivo).turno.franjas.size()) {
+						f = cuadrante.empleados.get(empleadoActivo).turno.franjas.get(i);
 						if 		(f.contienePixelInt(e.x)) 	{ cursor(1); encontrado = true; franjaActiva = f; f.activarFranja(); redibujar=true;}
 						else if (f.tocaLadoIzquierdo(e.x)) { cursor(2); encontrado = true; franjaActiva = f; f.activarFranja(); redibujar=true;}
 						else if (f.tocaLadoDerecho(e.x)) 	{ cursor(2); encontrado = true; franjaActiva = f; f.activarFranja(); redibujar=true;}
@@ -389,10 +389,10 @@ public class I02_cuadr {
 					int i = 0;
 					FranjaDib f;
 					Boolean encontrado = false;
-					while (!encontrado && i < cuadrante.empleados.get(empleadoActivo).franjas.size()) {
-						f = cuadrante.empleados.get(empleadoActivo).franjas.get(i);
+					while (!encontrado && i < cuadrante.empleados.get(empleadoActivo).turno.franjas.size()) {
+						f = cuadrante.empleados.get(empleadoActivo).turno.franjas.get(i);
 						if (f.contienePixelInt(e.x)) {
-							cuadrante.empleados.get(empleadoActivo).franjas.remove(f);
+							cuadrante.empleados.get(empleadoActivo).turno.franjas.remove(f);
 							redibujar();
 							encontrado = true;
 						}
@@ -402,8 +402,8 @@ public class I02_cuadr {
 					FranjaDib f;
 					int i = 0;
 					Boolean encontrado = false;
-					while (empleadoActivo != -1 && !encontrado && i < cuadrante.empleados.get(empleadoActivo).franjas.size()) {
-						f = cuadrante.empleados.get(empleadoActivo).franjas.get(i);
+					while (empleadoActivo != -1 && !encontrado && i < cuadrante.empleados.get(empleadoActivo).turno.franjas.size()) {
+						f = cuadrante.empleados.get(empleadoActivo).turno.franjas.get(i);
 						if (f.contienePixelInt(e.x)) {
 							encontrado = true;
 							activarFranja(i, 2);
@@ -426,9 +426,9 @@ public class I02_cuadr {
 				redibujar();
 				desactivarFranja();
 				if (empleadoActivo != -1) {
-					for (int i = 0; i < cuadrante.empleados.get(empleadoActivo).franjas
+					for (int i = 0; i < cuadrante.empleados.get(empleadoActivo).turno.franjas
 							.size(); i++) {
-						f = cuadrante.empleados.get(empleadoActivo).franjas
+						f = cuadrante.empleados.get(empleadoActivo).turno.franjas
 								.get(i);
 						// Si acabo de crear una franja, comprobar que no está
 						// del revés, y si lo está, darle la vuelta
@@ -444,8 +444,8 @@ public class I02_cuadr {
 							Boolean encontrado = false;
 							while (!encontrado
 									&& j < cuadrante.empleados
-											.get(empleadoActivo).franjas.size()) {
-								f2 = cuadrante.empleados.get(empleadoActivo).franjas
+											.get(empleadoActivo).turno.franjas.size()) {
+								f2 = cuadrante.empleados.get(empleadoActivo).turno.franjas
 										.get(j);
 								if (f2.contienePixelInt(f.inicio)
 										|| f2.contienePixelInt(f.fin)) {
@@ -454,7 +454,7 @@ public class I02_cuadr {
 										f.inicio = f2.inicio;
 									if (f2.fin > f2.fin)
 										f.fin = f2.fin;
-									cuadrante.empleados.get(empleadoActivo).franjas
+									cuadrante.empleados.get(empleadoActivo).turno.franjas
 											.remove(j);
 									redibujar();
 								}
@@ -470,11 +470,11 @@ public class I02_cuadr {
 				FranjaDib f;
 				Boolean encontrado = false;
 				while (!encontrado
-						&& i < cuadrante.empleados.get(empleadoActivo).franjas
+						&& i < cuadrante.empleados.get(empleadoActivo).turno.franjas
 								.size()) {
-					f = cuadrante.empleados.get(empleadoActivo).franjas.get(i);
+					f = cuadrante.empleados.get(empleadoActivo).turno.franjas.get(i);
 					if (f.contienePixelInt(e.x)) {
-						f = cuadrante.empleados.get(empleadoActivo).franjas
+						f = cuadrante.empleados.get(empleadoActivo).turno.franjas
 								.get(i);
 						// TODO que calcule el sticky en el que está
 						// Franja f2 = cuadrante.new Franja (f.inicio, e.x-10);

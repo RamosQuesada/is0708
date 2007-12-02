@@ -71,8 +71,8 @@ public class I02CuadranteEmpleado {
 		
 		// TODO Borrar esto cuando se importen los empleados
 		Empleado e1 = new Empleado(2, "M. Jackson", new Color (display, 104, 228,  85));
-		e1.franjaNueva(new Posicion( 9,  6), new Posicion(14,  0));
-		e1.franjaNueva(new Posicion(16,  0), new Posicion(18,  0));
+		e1.turno.franjaNueva(new Posicion( 9,  6), new Posicion(14,  0));
+		e1.turno.franjaNueva(new Posicion(16,  0), new Posicion(18,  0));
 		empleado = e1;
 
 	}

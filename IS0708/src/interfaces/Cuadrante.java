@@ -91,8 +91,12 @@ public class Cuadrante {
 	public void dibujarCuadranteDia(GC gc, int empleadoActivo) {
 		dibujarSeleccion(gc, empleadoActivo);
 		dibujarHoras(gc);
+		dibujarTurnos(gc);
+	}
+	
+	public void dibujarTurnos(GC gc) {
 		for (int i=0; i<empleados.size(); i++) {
-			empleados.get(i).dibujarFranjas(display, gc, i, empleados.get(i).dameColor(),margenIzq, margenNombres,margenSup,sep_vert_franjas,alto_franjas);
+			empleados.get(i).dibujarTurno(display, gc, i, empleados.get(i).dameColor(),margenIzq, margenNombres,margenSup,sep_vert_franjas,alto_franjas);
 		}
 	}
 	
@@ -200,8 +204,8 @@ public class Cuadrante {
 		tamSubdiv = tamHora/12;
 		for (int i=0; i < empleados.size(); i++) {
 			Empleado e = empleados.get(i);
-			for (int j=0; j < e.franjas.size(); j++) {
-				FranjaDib f = e.franjas.get(j);
+			for (int j=0; j < e.turno.franjas.size(); j++) {
+				FranjaDib f = e.turno.franjas.get(j);
 				f.actualizarPixeles(margenIzq, margenNombres, tamHora, tamSubdiv, subdivisiones, horaInicio);
 			}
 		}
