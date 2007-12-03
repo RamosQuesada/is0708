@@ -172,7 +172,7 @@ public class I02_cuadr {
 		this.empleados = empleados;
 		final GridLayout l = new GridLayout(3,false);
 		c.setLayout(l);
-		
+		cuadranteImg = new Image(display, imgSize.x, imgSize.y);
 		final Label lCuadranteTitulo= new Label (c, SWT.LEFT);
 		String fname = lCuadranteTitulo.getFont().getFontData()[0].getName();
 		lCuadranteTitulo.setFont(new Font(c.getDisplay(),fname,15,0));
