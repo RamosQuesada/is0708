@@ -28,7 +28,7 @@ import interfaces.I02_cuadr;
 import interfaces.I08_1;
 import interfaces.I09_1;
 
-public class I02 implements impresion.Imprimible{
+public class I02 {
 
 	Shell shell;
 	Display display;
@@ -37,10 +37,12 @@ public class I02 implements impresion.Imprimible{
 	Image icoGr, icoPq, ico_imprimir, ico_mens_l, ico_mens, ico_cuadrante,
 			ico_chico, ico_chica, ico_chicos;
 	
-	private Image cuadranteImg;
-	private Point imgSize = new Point(800, 600);
+	//private  I02_cuadr cuadrante;
 	
 	private ArrayList<Empleado> empleados;
+	
+	private ImageData Img;
+	//private Point imgSize = new Point(1000, 400);
 
 	public I02(Shell shell, Display display, ResourceBundle bundle, Locale locale, 
 			ArrayList<Empleado> empleados) {
@@ -49,8 +51,8 @@ public class I02 implements impresion.Imprimible{
 		this.empleados = empleados;
 		this.bundle = bundle;
 		this.locale = locale;
-		this.cuadranteImg = new Image(this.display, imgSize.x, imgSize.y);
-		ponImageDia();
+
+		//ponImageDia();
 	}
 
 	private void crearBarraMenu() {
@@ -81,7 +83,7 @@ public class I02 implements impresion.Imprimible{
 		itemImprimir.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				Imprimir imprimir = new Imprimir(display);
-				imprimir.imprimirImage(dameImageImprimible());
+				imprimir.imprimirImage(Img);
 			}
 		});
 		itemImprimir.setImage(ico_imprimir);
@@ -146,6 +148,8 @@ public class I02 implements impresion.Imprimible{
 				3, 5));
 
 		final I02_cuadr cuadrante = new I02_cuadr(cCuadrante, false, empleados);
+		Img = cuadrante.dameImageImprimible();
+		
 		Label lCalendario = new Label(c, SWT.LEFT);
 		lCalendario.setText(bundle.getString("Calendario"));
 		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
@@ -178,10 +182,12 @@ public class I02 implements impresion.Imprimible{
 			// Seleccionado por mes
 			public void handleEvent(Event e) {
 				if (bPorMes.getSelection()) {
-					ponImageMes();
+					cuadrante.ponImageMes();
+					Img = cuadrante.dameImageImprimible();
 					cuadrante.setMensual();
 				} else
-					ponImageDia();
+					cuadrante.ponImageDia();
+					Img = cuadrante.dameImageImprimible();
 					cuadrante.setDiario();			
 			}
 		});
@@ -328,8 +334,13 @@ public class I02 implements impresion.Imprimible{
 		}
 		// table.setSize (table.computeSize (SWT.DEFAULT, 200));
 		tablaEmpleados.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-				true, 4, 1));
-
+				true, 4, 1));			
+		/* printing prueba
+		 */
+		Image image = new Image(display, 800, 800);
+		
+		
+		
 		final Button bEmplNuevo = new Button(cEmplDer, SWT.PUSH);
 		bEmplNuevo.setText(bundle.getString("Nuevo"));
 		bEmplNuevo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
@@ -402,12 +413,15 @@ public class I02 implements impresion.Imprimible{
 		TabItem tabItemCuadrantes = new TabItem(tabFolder, SWT.NONE);
 		tabItemCuadrantes.setText(bundle.getString("Cuadrantes"));
 		tabItemCuadrantes.setImage(ico_cuadrante);
+		
 		TabItem tabItemMensajes = new TabItem(tabFolder, SWT.NONE);
 		tabItemMensajes.setText(bundle.getString("Mensajes"));
 		tabItemMensajes.setImage(ico_mens_l);
+		
 		TabItem tabItemEmpleados = new TabItem(tabFolder, SWT.NONE);
 		tabItemEmpleados.setText(bundle.getString("Empleados"));
 		tabItemEmpleados.setImage(ico_chico);
+		
 		TabItem tabItemDepartamentos = new TabItem(tabFolder, SWT.NONE);
 		tabItemDepartamentos.setText(bundle.getString("Departamentos"));
 		tabItemDepartamentos.setImage(ico_chicos);
@@ -497,27 +511,4 @@ public class I02 implements impresion.Imprimible{
 
 	}
 
-	public void ponImageDia(){
-		cuadranteImg.dispose();
-		cuadranteImg = new Image(this.display, imgSize.x, imgSize.y);
-		GC gc1 = new GC(cuadranteImg);
-		Cuadrante c = new Cuadrante(display,4,9,23,0,0,0,0,0,empleados);
-		c.dibujarCuadranteDia(gc1,-1);	
-		gc1.dispose();
-
-	}
-	
-	public void ponImageMes(){
-		cuadranteImg.dispose();
-		cuadranteImg = new Image(this.display, imgSize.x, imgSize.y);
-		GC gc2 = new GC(cuadranteImg);
-		Cuadrante c = new Cuadrante(display,4,9,23,0,0,0,0,0,empleados);
-		c.dibujarCuadranteMes(gc2);	
-		gc2.dispose();
-		
-	}
-	
-	public ImageData dameImageImprimible(){
-		return cuadranteImg.getImageData();
-	}
 }

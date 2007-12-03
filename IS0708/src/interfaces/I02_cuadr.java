@@ -50,6 +50,8 @@ public class I02_cuadr {
 	private int horaInicio, horaFin; // Definen de qué hora a qué hora es el
 								// cuadrante
 
+	private Image cuadranteImg;
+	private final Point imgSize = new Point(800,800);
 	private int margenIzq, margenDer, margenSup, margenInf; // Márgenes del cuadrante
 	private int margenNombres; // Un margen para pintar los nombres a la izquierda
 	private FranjaDib franjaActiva;
@@ -512,5 +514,50 @@ public class I02_cuadr {
 			b = false;
 		return b;
 	}
-
+	/**
+	 *  method sets printable image ( day view )
+	 *  size of drowen cuadrante is set 
+	 *  by imgSize variable
+	 */
+	
+	public void ponImageDia(){
+		cuadranteImg.dispose();
+		cuadranteImg = new Image(this.display, imgSize.x, imgSize.y);
+		GC gc1 = new GC(cuadranteImg);
+		Cuadrante c = new Cuadrante(display,4,9,23,0,0,0,0,0,empleados);
+		c.setTamaño(imgSize.x-10, imgSize.y-10);
+		c.dibujarCuadranteDia(gc1,-1);	
+		calcularTamaño();
+		gc1.dispose();
+	}
+	
+	/**
+	 *  method sets printable image ( month view )
+	 *  size of drowen cuadrante is set 
+	 *  by imgSize variable
+	 */
+	
+	public void ponImageMes(){
+		cuadranteImg.dispose();
+		cuadranteImg = new Image(this.display, imgSize.x, imgSize.y);
+		GC gc2 = new GC(cuadranteImg);
+		Cuadrante c = new Cuadrante(display,4,9,23,0,0,0,0,0,empleados);
+		c.setTamaño(imgSize.x-10, imgSize.y-10);
+		c.dibujarCuadranteMes(gc2);
+		calcularTamaño();
+		gc2.dispose();
+		
+	}
+	
+	/**
+	 *  implementation of interface "impresion.Imprimible"
+	 *  returns class private variable cuadranteImg - that
+	 *  MUST be set by ponImageDia or ponImageMes
+	 */
+	
+	public ImageData dameImageImprimible(){
+		return this.cuadranteImg.getImageData();
+	}
+		
+	
 }
