@@ -13,6 +13,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.custom.ScrolledComposite;
 
 import java.util.ResourceBundle;
 import org.eclipse.swt.graphics.*;
@@ -25,22 +26,16 @@ public class I09_1 {
 	public I09_1(Shell padre, ResourceBundle bundle) {
 		this.padre = padre;
 		this.bundle = bundle;
-		mostrarVentana();
+		crearVentana();
 	}
-	
-	private class CB {
-		private int fila,columna;
-		public Button b;
-		public CB(Composite padre, int fila, int columna) {
-			this.fila = fila;
-			this.columna = columna;
-			b = new Button(padre,SWT.CHECK);
-			b.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
-		}
-	}
-	
+	/**
+	 * Esta clase muestra una ventana con casillas para marcar los turnos.
+	 * Dibuja tantas filas como turnos, y tantas columnas como días haya en el ciclo. 
+	 * @author Daniel
+	 *
+	 */
 	private class CheckBoxes {
-		private CB[][] cbs;
+		private Button[][] cbs;
 		private Shell shell;
 		private Shell padre;
 		public CheckBoxes (Shell padre, int longCiclo, int numTurnos) {
@@ -60,19 +55,28 @@ public class I09_1 {
 					}
 				}
 			});
+			// Este tipo de composite permite que la ventana pueda ser más estrecha
+			// que el contenido pero que se siga pudiendo ver todo
+			final ScrolledComposite sc = new ScrolledComposite(shell, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+			sc.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true));
 			
-			Composite c1 = new Composite(shell, SWT.NONE);
+			// c1 contiene las casillas, y está dentro del scroll
+			final Composite c1 = new Composite(sc, SWT.NONE);
+			// Label de ayuda
 			final Label lInfo			= new Label(shell, SWT.WRAP);
-			Composite c2 = new Composite(shell, SWT.NONE);
+			// c2 tiene los botones Aceptar y Cancelar
+			final Composite c2 = new Composite(shell, SWT.NONE);
 			c1.setLayout(new GridLayout(longCiclo+1, false));
-			c2.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
+			c2.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true));
 			lInfo	.setText(bundle.getString("I09_info_AyudaCiclos"));
 			lInfo	.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,true,1,2));
 			lInfo	.setSize(200, 200);
 			c2.setLayout(new GridLayout(2, true));
-			c2.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
+			c2.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true));
 			
-			cbs = new CB[numTurnos][longCiclo];
+			// Creación de las casillas. Se guardan en una matriz para poder recuperar
+			// sus valores
+			cbs = new Button[numTurnos][longCiclo];
 			Label l;
 			for (int i = -1; i < numTurnos; i++) {
 				if (i==-1)
@@ -90,17 +94,20 @@ public class I09_1 {
 						l.setLayoutData(new GridData(SWT.CENTER,SWT.FILL,true,true,1,1));
 					}
 					else {
-						cbs[i][j-1] = new CB(c1,i,j-1);
+						cbs[i][j-1] = new Button(c1,SWT.CHECK);
+						cbs[i][j-1].setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
 					}
 				}			
 			}
+			
+			c1.pack();
+			sc.setContent(c1);
 			final Button bAceptar		= new Button(c2, SWT.PUSH);
 			final Button bCancelar		= new Button(c2, SWT.PUSH);
 			bAceptar	.setText(bundle.getString("Aceptar"));
 			bCancelar	.setText(bundle.getString("Cancelar"));
 			bAceptar	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
 			bCancelar	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
-			
 			// Un listener con lo que hace el botón bCancelar
 			SelectionAdapter sabCancelar = new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
@@ -109,15 +116,24 @@ public class I09_1 {
 			};
 			bCancelar.addSelectionListener(sabCancelar);
 			
+			// TODO La acción del botón Aceptar
 			shell.setDefaultButton(bAceptar);
 			shell.pack();
-			// Mostrar ventana a un lado del padre
+			
+			// Evitar que la ventana se salga de la pantalla
+			if (shell.getSize().x > shell.getDisplay().getClientArea().width-100)
+				shell.setSize(shell.getDisplay().getClientArea().width-100, shell.getSize().y);
+			
+			// Mostrar centrada sobre el padre
 			shell.setLocation(this.padre.getBounds().width/2 + this.padre.getBounds().x - shell.getSize().x/2, this.padre.getBounds().height/2 + this.padre.getBounds().y - shell.getSize().y/2);
 			shell.open();
 		}
 	}
-	
-	public void mostrarVentana() {
+
+	/**
+	 * Crea el contenido de la ventana
+	 */
+	public void crearVentana() {
 		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);		
 		shell.setText(bundle.getString("I09_lab_NuevoContrato"));
 		shell.setLayout(new GridLayout(2,true));
@@ -188,6 +204,7 @@ public class I09_1 {
 		bAyuda			.setText(bundle.getString("Ayuda"));
 		bAyuda			.setLayoutData	(new GridData(SWT.RIGHT,SWT.FILL,true,true,1,1));
 
+// Parte inferior de la ventana
 		final Button bAceptar		= new Button(shell, SWT.PUSH);
 		final Button bCancelar		= new Button(shell, SWT.PUSH);		
 		
@@ -197,7 +214,6 @@ public class I09_1 {
 		grupo1.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,true,2,1));
 		grupo2.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,true,2,1));
 		grupo3.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,true,2,1));
-		
 		
 		bAceptar	.setText(bundle.getString("Aceptar"));
 		bCancelar	.setText(bundle.getString("Cancelar"));
@@ -216,8 +232,7 @@ public class I09_1 {
 					messageBox.open();
 					tLongCiclo.setFocus();
 					tLongCiclo.setSelection(0,2);
-				}
-				
+				}				
 			}
 		};
 		bLCCambiar.addSelectionListener(sabLCCambiar);
@@ -230,26 +245,22 @@ public class I09_1 {
 		};
 		bNuevoTurno.addSelectionListener(sabNuevoTurno);
 		
+		// TODO Listener para el botón bAceptar
+		SelectionAdapter sabAceptar = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+			}
+		};		
+		bAceptar.addSelectionListener(sabAceptar);
 		
-		// Un listener con lo que hace el botón bCancelar
+		// Listener para el botón bCancelar
 		SelectionAdapter sabCancelar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 					shell.dispose();	
 			}
 		};
-
-		// Un listener con lo que hace el botón bAceptar
-		SelectionAdapter sabAceptar = new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-			}
-		};
-		
 		bCancelar.addSelectionListener(sabCancelar);
-		bAceptar.addSelectionListener(sabAceptar);
 
-		// Botón por defecto bAceptar
 		shell.setDefaultButton(bAceptar);
-		// Ajustar el tamaño de la ventana al contenido
 		shell.pack();
 		// Mostrar ventana centrada sobre el padre
 		shell.setLocation(padre.getBounds().width/2 + padre.getBounds().x - shell.getSize().x/2, padre.getBounds().height/2 + padre.getBounds().y - shell.getSize().y/2);
