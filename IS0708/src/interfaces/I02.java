@@ -294,6 +294,8 @@ public class I02 {
 		tEmplDpto.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
 				1, 1));
 
+		
+		
 		Label lEmplContr = new Label(cEmplIzq, SWT.NONE);
 		lEmplContr.setText(bundle.getString("Contrato"));
 		lEmplContr.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false,
@@ -335,11 +337,6 @@ public class I02 {
 		// table.setSize (table.computeSize (SWT.DEFAULT, 200));
 		tablaEmpleados.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 				true, 4, 1));			
-		/* printing prueba
-		 */
-		Image image = new Image(display, 800, 800);
-		
-		
 		
 		final Button bEmplNuevo = new Button(cEmplDer, SWT.PUSH);
 		bEmplNuevo.setText(bundle.getString("Nuevo"));
@@ -438,11 +435,30 @@ public class I02 {
 		final Composite cDepartamentos = new Composite(tabFolder, SWT.NONE);
 		crearCompositeDepartamentos(cDepartamentos);
 
+		cEmpleados.addListener(SWT.MouseMove, new Listener(){
+			public void handleEvent(Event e) {
+			
+				Composite cHelp = (Composite)cEmpleados.getChildren()[1];
+				cHelp.getClientArea();
+				Rectangle rect = cHelp.getClientArea();
+		          // Create buffer for double buffering
+		          Image image = new Image(display, rect.width, rect.height);
+		          GC gc1 = new GC(cEmpleados.getChildren()[1]);
+		          gc1.copyArea(image, rect.y,rect.x);
+		          Img=image.getImageData();
+		          System.out.print(Img.width);
+			}
+		});
+		
+
 		// Asignar cada panel a su tab
 		tabItemCuadrantes.setControl(cCuadrantes);
 		tabItemMensajes.setControl(cMensajes);
 		tabItemEmpleados.setControl(cEmpleados);
 		tabItemDepartamentos.setControl(cDepartamentos);
+		
+
+		
 	}
 
 	public void crearVentana() {
