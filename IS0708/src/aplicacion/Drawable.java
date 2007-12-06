@@ -8,15 +8,17 @@ import org.eclipse.swt.graphics.*;
  */
 public interface Drawable {
 	/**
-	 * Este método devuelve un ImageData que se pueda imprimir
+	 * Este método devuelve un ImageData que se pueda imprimir.
 	 * @param bn true si queremos una imagen en escala de grises
 	 * @return el ImageData a imprimir
+	 * @see #getDrawableImage()
 	 */
 	public ImageData getPrintableImage(boolean bn);
 	
 	/**
-	 * Este método devuelve un ImageData que se puede dibujar en la pantalla 
+	 * Este método devuelve un ImageData que se puede dibujar en la pantalla. 
 	 * @return el ImageData a dibujar en la pantalla
+	 * @see #getPrintableImage(boolean)
 	 */
 	public ImageData getDrawableImage();
 }

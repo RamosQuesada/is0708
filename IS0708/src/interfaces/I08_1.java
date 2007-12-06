@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ColorDialog;
-import aplicacion.General;
+import aplicacion.Util;
 import java.util.ResourceBundle;
 
 // TODO Mostrar elección de rangos inferiores al usuario
@@ -215,7 +215,7 @@ public class I08_1 {
 		SelectionAdapter sabAceptar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				// Comprueba el número de vendedor (campo obligatorio)
-				int n = General.convertirNVend(tNVend.getText());
+				int n = Util.convertirNVend(tNVend.getText());
 				if (n<0) {
 					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
 					messageBox.setText (bundle.getString("Mensaje"));
@@ -226,7 +226,7 @@ public class I08_1 {
 					tNVend.selectAll();
 				}
 				// Comprueba la dirección de email (campo no obligatorio)
-				else if (tEMail.getText().length()!=0 && !General.comprobarEmail(tEMail.getText())) {
+				else if (tEMail.getText().length()!=0 && !Util.comprobarEmail(tEMail.getText())) {
 					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
 					messageBox.setText (bundle.getString("Mensaje"));
 					messageBox.setMessage (bundle.getString("I08_err_EmailNoValido"));

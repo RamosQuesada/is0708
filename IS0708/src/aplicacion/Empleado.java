@@ -7,19 +7,22 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.widgets.Display;
 import java.util.Date;
 
+import javax.print.attribute.SetOfIntegerSyntax;
+import org.eclipse.swt.graphics.*;
+
 /**
  * Representa a un empleado.
  * @author Daniel
  *
  */
-public class Empleado {
+public class Empleado implements Drawable {
 	private String nombre, apellido1, apellido2;
 	private Color color;
 	private int nvend;
 	private Date fechaNac;
 	private int sexo; // 0 femenino, 1 masculino
 	private String email;
-	private String contraseña;
+	private String password;
 	private int grupo; // 0 principiante, 1 experto
 	private String departamento;
 	private int rango;
@@ -40,7 +43,7 @@ public class Empleado {
 	 * @param fechaNac		la fecha de nacimiento del empleado
 	 * @param sexo			el sexo del vendedor: 0 femenino, 1 masculino
 	 * @param email			la dirección de email del empleado
-	 * @param contraseña	la contraseña de acceso del empleado
+	 * @param password		la contraseña de acceso del empleado
 	 * @param grupo			la experiencia del empleado: 0 principiante, 1 experto
 	 * @param departamento	el nombre del departamento al que pertenece	
 	 * @param rango			POR DETERMINAR SI SE QUEDARÁ COMO STRING O INT
@@ -50,7 +53,7 @@ public class Empleado {
 	 * @param color			un color con el que se representará al empleado en los cuadrantes
 	 */
 	public Empleado (int nvend, String nombre, String apellido1, String apellido2, 
-			Date fechaNac, int sexo, String email, String contraseña, int grupo,
+			Date fechaNac, int sexo, String email, String password, int grupo,
 			String departamento, int rango, int contrato, Date fContrato, Date fAlta, Color color) {
 		this.nvend		= nvend;
 		this.nombre		= nombre;
@@ -59,7 +62,7 @@ public class Empleado {
 		this.fechaNac	= fechaNac;
 		this.sexo		= sexo;
 		this.email		= email;
-		this.contraseña	= contraseña;
+		this.password	= password;
 		this.grupo		= grupo;
 		this.departamento	= departamento;
 		this.rango		= rango;
@@ -67,7 +70,6 @@ public class Empleado {
 		this.fContrato	= fContrato;
 		this.fAlta		= fAlta;
 		this.color = color;
-		// TODO Esto debería quitarse cuando no haga falta
 	}
 
 	/**
@@ -219,16 +221,87 @@ public class Empleado {
 		this.email = email;
 	}
 	
+	/**
+	 * Devuelve la contraseña de un empleado.
+	 * @return la contraseña del empleado
+	 */
+	public String getPassword(){
+		return password;
+	}
+	
+	/**
+	 * Asigna una contraseña a un empleado.
+	 * @param password la contraseña
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	/**
+	 * Devuelve el grupo de experiencia al que pertenece el empleado.
+	 * @return 0 - principiante, 1 - experto
+	 */
+	public int getGrupo() {
+		return grupo;
+	}
+
+	/**
+	 * Asigna un grupo de experiencia al empleado.
+	 * @param grupo 0 si es principiante, 1 si es experto
+	 */
+	public void setGrupo(int grupo) {
+		if (grupo == 0 | grupo == 1)
+			this.grupo = grupo;
+	}
+	
+	/**
+	 * Devuelve el nombre del departamento al que pertenece el empleado.
+	 * @return el nombre del departamento
+	 */
+	public String getDepartamento() {
+		return departamento;
+	}
+	
+	/**
+	 * Asigna un departamento a un empleado.
+	 * @param departamento el nombre del departamento
+	 */
+	public void setDepartamento(String departamento) {
+		this.departamento = departamento;
+	}
+	
+	/**
+	 * Devuelve el rango de un empleado.
+	 * @return el rango del empleado
+	 */
+	public int getRango() {
+		return rango;
+	}
+	
+	/**
+	 * Asigna un rango a un empleado.
+	 * @param rango el rango del empleado
+	 */	
+	public void setRango(int rango) {
+		this.rango = rango;
+	}
 /*
- faltan estos getters y setters
-	String contraseña;
-	int grupo; // 0 principiante, 1 experto
-	String departamento;
-	int rango;
+ * TODO faltan estos getters y setters
+ * 
 	int contrato;
 	Date fContrato;
 	Date fAlta;
 */
+	
+	public ImageData getDrawableImage() {
+		// TODO
+		return null;
+	}
+	
+	public ImageData getPrintableImage(boolean bn) {
+		// TODO
+		return null;
+	}
 	
 	public void dibujarTurno(Display display, GC gc, int posV, Color color, int margenIzq, int margenNombres, int margenSup, int sep_vert_franjas, int alto_franjas) {
 		// Un entero para sumar el tiempo que trabaja un empleado y mostrarlo a la izquierda
