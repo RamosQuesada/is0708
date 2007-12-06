@@ -7,6 +7,8 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
@@ -276,6 +278,49 @@ public class I02Admin {
 		tNombreUsuario	= new Text (cNuevoGerente2, SWT.BORDER);
 		tNombreUsuario.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 0, 0));
 
+		final Button bClaveAuto		= new Button(cNuevoGerente2, SWT.RADIO);
+		bClaveAuto.setText("Generacion automatica de la clave");
+		final Button bClaveManual			= new Button(cNuevoGerente2, SWT.RADIO);
+		bClaveAuto.setSelection(true);
+		bClaveAuto.addFocusListener(new FocusListener(){
+
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				tNombreUsuario.setText("");
+				tNombre.setText("");
+				tApellidos.setText("");
+				_contra.setEditable(false);
+				_contra.setText(obtenerClave());				
+			}
+
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		}
+		);
+		
+		bClaveManual.addFocusListener(new FocusListener(){
+
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				_contra.setEditable(true);
+				tNombreUsuario.setText("");
+				tNombre.setText("");
+				tApellidos.setText("");
+				_contra.setText("");
+								
+			}
+
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		}
+		);
+
+		
+		bClaveManual.setText("Seleccion manual de la clave");
 		final Label lContra	= new Label(cNuevoGerente2, SWT.LEFT);
 		lContra.setText(_bundle.getString("I02AdminClave"));
 		_contra	= new Text (cNuevoGerente2, SWT.BORDER);
