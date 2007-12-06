@@ -31,7 +31,6 @@ public class I10_ManageDepartament {
 		// TODO Auto-generated method stub
 		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.RESIZE | SWT.APPLICATION_MODAL);		
 		//shell.setText(bundle.getString("GestionDeDepartamentos"));
-		
 
 		shell.pack();
 		shell.setSize(new Point(350, shell.getSize().y));
