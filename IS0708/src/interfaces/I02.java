@@ -9,6 +9,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
 
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.Locale;
 
@@ -350,6 +351,16 @@ public class I02 {
 		bEmplVer.setText(bundle.getString("I02_but_Ver"));
 		bEmplVer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1,
 				1));
+		bEmplVer.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				// employ created for tests
+				Color col = new Color(display, 10, 0, 50);
+				Empleado eS = new Empleado(1, "M. Jackson", new Color (display, 104, 228,  85));
+				
+				Empleado emp = new Empleado(eS, 12345678, "phil", "colins", "-", new Date("12/12/09"), 1, "phil.colins@gmail.com", "", 1, null, null, new Date("12/12/09"),new Date("12/12/09"), col );
+				new I08_2(shell, emp, bundle);
+			}
+		});
 
 		final Button bEmplEditar = new Button(cEmplDer, SWT.PUSH);
 		bEmplEditar.setText(bundle.getString("Editar"));
@@ -461,7 +472,7 @@ public class I02 {
 		          GC gc1 = new GC(cEmpleados.getChildren()[1]);
 		          gc1.copyArea(image, rect.y,rect.x);
 		          Img=image.getImageData();
-		          System.out.print(Img.width);
+		          //System.out.print(Img.width);
 			}
 		});
 		
