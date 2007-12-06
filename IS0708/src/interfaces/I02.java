@@ -389,7 +389,7 @@ public class I02 {
 		bConfig.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				System.out.println("Pulsado Configuración departamentos: "+cDepartamentos.getText().toString());
-				new I10_ManageDepartament(shell, bundle);
+				new I10_ManageDepartament(shell, bundle, bundle.getString("I02_but_Config_dep"));
 			}
 		});
 		
@@ -401,7 +401,7 @@ public class I02 {
 		bNew.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				System.out.println("Pulsado Nuevo Departamento");
-				new I10_ManageDepartament(shell, bundle);
+				new I10_ManageDepartament(shell, bundle, bundle.getString("I02_but_Nuevo_dep"));
 			}
 		});
 	
