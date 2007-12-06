@@ -11,6 +11,11 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import idiomas.LanguageChanger;
 
+/**
+ * Este es el Controlador o clase principal de la aplicación.
+ * @author Daniel Dionne
+ *
+ */
 public class Aplicacion {
 	private static Display display;
 	
@@ -52,18 +57,7 @@ public class Aplicacion {
 		empleados.add(e5);
 		empleados.add(e6);
 
-		/*
-		MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO | SWT.ICON_WARNING);
-		messageBox.setText("Mensaje");
-		messageBox.setMessage("¿Eres jefe?");
-		if (messageBox.open() == SWT.YES) {
-			I02 i = new I02(shell, display, l.getBundle(), l.getCurrentLocale(), empleados);
-			i.crearVentana();
-		}
-		else {
-			// new I02Empleado(shell, display);
-		}
-		*/
+		// TODO Cambiar por acceso a la vista
 		I02 i = new I02(shell, display, l.getBundle(), l.getCurrentLocale(), empleados);
 		i.crearVentana();
 		// Este bucle mantiene la ventana abierta

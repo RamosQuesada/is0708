@@ -30,7 +30,6 @@ public class Franja {
 		this.pinicio = pinicio;
 		this.pfin = pfin;
 		activa = false;
-		//actualizarPixeles();
 	}
 	/**
 	 * Devuelve el string que representa al entero, con un cero delante si es menor que 10.
