@@ -12,6 +12,8 @@ import org.eclipse.swt.widgets.Display;
  *
  */
 public class Turno {
+	
+	
 	public ArrayList<FranjaDib> franjas;
 	public Turno() {
 		franjas = new ArrayList<FranjaDib>();	

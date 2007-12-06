@@ -1,11 +1,3 @@
-/*******************************************************************************
- * INTERFAZ I-02 :: Ventana principal - Jefe
- *   por Daniel Dionne
- *   
- * Interfaz principal de la aplicación, vista de jefe.
- * ver 0.1
- *******************************************************************************/
-
 package interfaces;
 
 import java.util.ArrayList;
@@ -28,6 +20,11 @@ import interfaces.I02_cuadr;
 import interfaces.I08_1;
 import interfaces.I09_1;
 
+/**
+ * Interfaz I-02 :: Ventana principal - Jefe
+ * @author Daniel Dionne
+ * 
+ */
 public class I02 {
 
 	Shell shell;
@@ -54,7 +51,7 @@ public class I02 {
 
 		//ponImageDia();
 	}
-
+	
 	private void crearBarraMenu() {
 		// Una barra de menús
 		Menu barra = new Menu(shell, SWT.BAR);
