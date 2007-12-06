@@ -20,17 +20,17 @@ public class I10_ManageDepartament {
 	private int alto, ancho;
 	private Cuadrante cuadrante;
 
-	public I10_ManageDepartament(Shell padre, ResourceBundle bundle) {
+	public I10_ManageDepartament(Shell padre, ResourceBundle bundle, String windowName) {
 		// TODO Auto-generated constructor stub
 		this.padre = padre;
 		this.bundle = bundle;
-		createWindow();
+		createWindow(windowName);
 	}
 
-	private void createWindow() {
+	private void createWindow(String windowName) {
 		// TODO Auto-generated method stub
 		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.RESIZE | SWT.APPLICATION_MODAL);		
-		shell.setText(bundle.getString("I02_but_Nuevo_dep"));
+		shell.setText(windowName);
 
 		shell.pack();
 		shell.setSize(new Point(350, shell.getSize().y));
