@@ -10,6 +10,8 @@ import java.util.ArrayList;
 /**
  * Esta clase corresponde con la salida del algoritmo,un arraylist de objetos de la Trabaja
  */
+
+// FIXME David, si pones los comentarios por trozos, no te lo coge todo en el javadoc
 public class Cuadrante {
 	
 	private int mes;
