@@ -387,6 +387,19 @@ public class I02 {
 				new I10_ManageDepartament(shell, bundle);
 			}
 		});
+		//***************
+		Button bNew = new Button(c, SWT.PUSH);
+		bNew.setText(bundle.getString("I02_but_Nuevo_dep"));
+		bNew.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+
+		bNew.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				System.out.println("Pulsado Nuevo Departamento");
+				new I10_ManageDepartament(shell, bundle);
+			}
+		});
+		//***************
+	
 
 		
 		Composite cInfo = new Composite(c, SWT.BORDER);
