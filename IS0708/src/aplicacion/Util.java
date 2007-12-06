@@ -1,10 +1,10 @@
 package aplicacion;
 
 /**
- * El cajón desastre de las funciones que no tienen cabida en ninguna clase, pero que interesa
- * que estén fuera para usarse en distintos ámbitos.
- * @author Daniel
- *
+ * El cajón desastre de las funciones que no tienen cabida en ninguna clase,
+ * pero que interesa que estén juntas para usarse en distintos ámbitos.
+ * @author Daniel Dionne
+ * 
  */
 public class Util {
 	
@@ -12,6 +12,7 @@ public class Util {
 	 * Comprueba si una dirección de email dada en un String es correcta
 	 * @param email	la cadena a comprobar
 	 * @return		<i>true</i> si la cadena es un email, <i>false</i> en caso contrario
+	 * @author Daniel Dionne
 	 */
 	public static boolean comprobarEmail(String email) {
 		boolean valido = true;
