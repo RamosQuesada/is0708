@@ -30,7 +30,7 @@ public class I10_ManageDepartament {
 	private void createWindow() {
 		// TODO Auto-generated method stub
 		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.RESIZE | SWT.APPLICATION_MODAL);		
-		//shell.setText(bundle.getString("GestionDeDepartamentos"));
+		shell.setText(bundle.getString("I02_but_Nuevo_dep"));
 
 		shell.pack();
 		shell.setSize(new Point(350, shell.getSize().y));

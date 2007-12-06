@@ -371,24 +371,30 @@ public class I02 {
 		lDepartamentos.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
 				false, 1, 1));
 
-		Combo cDepartamentos = new Combo(c, SWT.BORDER | SWT.READ_ONLY);
+		final Combo cDepartamentos = new Combo(c,SWT.BORDER |SWT.READ_ONLY);
 		cDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 1, 1));
 		cDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
 		cDepartamentos.select(0);
 
-		Button bConfig = new Button(c, SWT.PUSH);
+		//Composite for Buttons: "New Department" and "Configure Department"
+		Composite cBut = new Composite(c,SWT.LEFT);
+		cBut.setLayout(new GridLayout(2, false));
+		
+		//Button "Configure Department"
+		Button bConfig = new Button(cBut, SWT.PUSH);
 		bConfig.setText(bundle.getString("I02_but_Config_dep"));
 		bConfig.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
 		bConfig.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				System.out.println("Pulsado Configuración departamentos");
+				System.out.println("Pulsado Configuración departamentos: "+cDepartamentos.getText().toString());
 				new I10_ManageDepartament(shell, bundle);
 			}
 		});
-		//***************
-		Button bNew = new Button(c, SWT.PUSH);
+		
+		//Button "New Department"
+		Button bNew = new Button(cBut, SWT.PUSH);
 		bNew.setText(bundle.getString("I02_but_Nuevo_dep"));
 		bNew.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
@@ -398,7 +404,6 @@ public class I02 {
 				new I10_ManageDepartament(shell, bundle);
 			}
 		});
-		//***************
 	
 
 		
