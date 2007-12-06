@@ -11,7 +11,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import idiomas.LanguageChanger;
 
-public class Turno_matic {
+public class Aplicacion {
 	private static Display display;
 	
 	public static void main (String[] args) {

@@ -6,7 +6,6 @@ import java.sql.*;
  * @author Camilo
  *
  */
-
 public class Database {	
 	Connection con;	
 	Statement st;

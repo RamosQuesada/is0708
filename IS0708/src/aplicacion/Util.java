@@ -6,7 +6,7 @@ package aplicacion;
  * @author Daniel
  *
  */
-public class General {
+public class Util {
 	
 	/**
 	 * Comprueba si una dirección de email dada en un String es correcta

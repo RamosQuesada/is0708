@@ -1,7 +1,7 @@
 package aplicacion;
 
 import java.util.ArrayList;
-import aplicacion.General.*;
+import aplicacion.Util.*;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.widgets.Display;
@@ -145,7 +145,7 @@ public class Empleado {
 	 * 			el string no tiene longitud 8 o no es un número.
 	 */
 	public boolean setNVend(String nvend){
-		int n = General.convertirNVend(nvend);
+		int n = Util.convertirNVend(nvend);
 		if (n>0) this.nvend = n;
 		return n>0;
 	}
@@ -236,7 +236,7 @@ public class Empleado {
 		gc.setBackground(new Color(display, 0,0,0));
 		if (margenNombres > 0) {
 			gc.drawText(nombre, margenIzq, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1), true);
-			gc.drawText(String.valueOf(subDivs/12)+":"+String.valueOf(General.aString(subDivs%12*60/12)), margenNombres-10, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1), true);
+			gc.drawText(String.valueOf(subDivs/12)+":"+String.valueOf(Util.aString(subDivs%12*60/12)), margenNombres-10, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1), true);
 		}
 		turno.dibujarFranjas(display, gc, posV, color, margenIzq, margenNombres, margenSup, sep_vert_franjas, alto_franjas);
 	}
