@@ -384,7 +384,7 @@ public class I02 {
 		bConfig.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				System.out.println("Pulsado Configuración departamentos");
-				new I09_1(shell, bundle);
+				new I10_ManageDepartament(shell, bundle);
 			}
 		});
 
