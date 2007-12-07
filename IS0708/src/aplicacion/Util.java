@@ -1,5 +1,7 @@
 package aplicacion;
 
+import java.util.Random;
+
 /**
  * El cajón desastre de las funciones que no tienen cabida en ninguna clase,
  * pero que interesa que estén juntas para usarse en distintos ámbitos.
@@ -65,5 +67,28 @@ public class Util {
 		if (i<10) s = '0' + s;
 		return s;
 	}
+
+	public static String obtenerClave() {
+		// TODO Auto-generated method stub
+		Random randomizador=new Random();
+		String clave = "";
+		char[] chars = new char[]{
+				'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o',
+				'p','q','r','s','t','u','v','w','x','y','z',
+				'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O',
+				'P','Q','R','S','T','U','V','W','X','Y','Z',
+				'1','2','3','4','5','6','7','8','9','0'
+			};
+		
+		char[] clavechar= new char[8];
+		for (int cont=0;cont<8;cont++){
+
+			int r = randomizador.nextInt(chars.length);
+			clavechar[cont]=chars[r];
+		}
+		System.out.println(clavechar);
+		clave=String.copyValueOf(clavechar);
+		return clave;
+	}		
 
 }
