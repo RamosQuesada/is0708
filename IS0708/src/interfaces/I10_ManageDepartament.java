@@ -80,6 +80,7 @@ public class I10_ManageDepartament {
 
 		//Group - Keeps Variables of Department 
 		group.setLayout(new GridLayout(2,false));
+		group.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,false,2,1));
 		
 		final Label[] arrayL = new Label[this.getArrayDB().length];
 		final Text[] arrayT = new Text[this.getArrayDB().length];
@@ -96,14 +97,18 @@ public class I10_ManageDepartament {
 			arrayT[i].setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,false,true,1,1));
 		}
 		
+		//Buttons "Accept" and "Cancel"
 		
-		//**********************************************************
-/*		final Label  lNombre	= new Label (group, SWT.LEFT);
-		lNombre.setText(bundle.getString("I09_lab_NombreTurno"));
-		lNombre.setLayoutData(new GridData(SWT.LEFT,SWT.CENTER,false,true,1,1));*/
-		//***********************************************************
+		final Button bAccept		= new Button(shellWindow, SWT.PUSH);
+		bAccept	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		bAccept	.setText(bundle.getString("Aceptar"));
+		bAccept	.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		group.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,false,2,1));
+		final Button bCancel		= new Button(shellWindow, SWT.PUSH);		
+		bCancel	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		bCancel	.setText(bundle.getString("Cancelar"));
+		bCancel	.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
 
 		shellWindow.pack();
 		shellWindow.setSize(new Point(350, shellWindow.getSize().y));
