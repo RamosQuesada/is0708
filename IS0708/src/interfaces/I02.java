@@ -532,7 +532,7 @@ public class I02 {
 		tabItemAdminInicio.setControl(cInicio);
 		
 		Image _fondo_turnomatic;
-		_fondo_turnomatic = new Image(display, I02.class.getResourceAsStream("Turnomatic.jpg"));
+		_fondo_turnomatic = new Image(display, I02.class.getResourceAsStream("admin_fondo.jpg"));
 		
 		cInicio.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		//Le añadimos un layout
@@ -544,8 +544,8 @@ public class I02 {
 		bienvenido.setLayoutData(new GridData(SWT.CENTER,SWT.TOP,true,true,1,1));
 		bienvenido.setText("BIENVENIDO A TURNOMATIC");
 		
-		ImageData imagedata = _fondo_turnomatic.getImageData().scaledTo(320, 240);
-		_fondo_turnomatic = new Image(display, imagedata);
+		//ImageData imagedata = _fondo_turnomatic.getImageData().scaledTo(320, 240);
+		//_fondo_turnomatic = new Image(display, imagedata);
 
 		cInicio.setBackgroundImage(_fondo_turnomatic);
 	}
@@ -1162,7 +1162,7 @@ public class I02 {
 		shell.setLayout(lShell);
 
 		// Poblar ventana: 0 administrador, 1 empleado, 2 jefe, 3 gerente
-		crearTabFolder(1);
+		crearTabFolder(0);
 
 		// Crear una barra de estado
 		Composite estado = new Composite(shell,SWT.BORDER);
