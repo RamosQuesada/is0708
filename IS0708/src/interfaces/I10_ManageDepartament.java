@@ -74,13 +74,13 @@ public class I10_ManageDepartament {
 	
 		final Group group = new Group(shellWindow, SWT.NONE);
 		group.setText(bundle.getString("Departamento"));
-		group.setLayout(new GridLayout(1,false));
-		group.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,false,2,1));
+		group.setLayout(new GridLayout(1,true));
+		group.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,2,1));
 		
 
 		//Group - Keeps Variables of Department 
-		group.setLayout(new GridLayout(2,false));
-		group.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,false,2,1));
+		group.setLayout(new GridLayout(2,true));
+		group.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,2,1));
 		
 		final Label[] arrayL = new Label[this.getArrayDB().length];
 		final Text[] arrayT = new Text[this.getArrayDB().length];
@@ -88,13 +88,14 @@ public class I10_ManageDepartament {
 		for (int i=0 ;i< this.getArrayDB().length; i++){
 			System.out.println(" "+i);
 			
-			arrayL[i] = new Label (group, SWT.LEFT);
+			arrayL[i] = new Label (group, SWT.NONE);
 			arrayL[i].setText("Variable_"+i);
-			arrayL[i].setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,false,true,1,1));
+			arrayL[i].setLayoutData	(new GridData(SWT.CENTER,SWT.CENTER,true,true,1,1));
 			
 			arrayT[i] = new Text  (group, SWT.BORDER);	
-			arrayT[i].setText(this.getArrayDB()[i]);
-			arrayT[i].setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,false,true,1,1));
+			arrayT[i].setText(this.getArrayDB()[i]);	
+			arrayT[i].setSize(100,20);
+			arrayT[i].setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,true,true,1,1));
 		}
 		
 		//Buttons "Accept" and "Cancel"
@@ -109,15 +110,33 @@ public class I10_ManageDepartament {
 		bCancel	.setText(bundle.getString("Cancelar"));
 		bCancel	.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
+		//Adding listeners to Buttons	
+		// on action "Cancel"
+		SelectionAdapter onCancel = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+					shellWindow.dispose();	
+			}
+		};
 
+		// on action "Accept"
+		SelectionAdapter onAccept = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				System.out.println("Send datas to BD");
+			}
+		};
+		
+		bCancel.addSelectionListener(onCancel);
+		bAccept.addSelectionListener(onAccept);
+
+		//default button is "Accept"
+		shellWindow.setDefaultButton(bAccept);
+		
 		shellWindow.pack();
 		shellWindow.setSize(new Point(350, shellWindow.getSize().y));
 		shellWindow.setLocation(padre.getBounds().width / 2 + padre.getBounds().x
 				- shellWindow.getSize().x / 2, padre.getBounds().height / 2
 				+ padre.getBounds().y - shellWindow.getSize().y / 2);
 		shellWindow.open();
-		
-
 
 	}
 
