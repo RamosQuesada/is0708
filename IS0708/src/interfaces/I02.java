@@ -21,6 +21,7 @@ import interfaces.I01;
 import interfaces.I02_cuadr;
 import interfaces.I08_1;
 import interfaces.I09_1;
+import aplicacion.Util.*;
 
 /**
  * Interfaz I-02 :: Ventana principal - Jefe
@@ -41,14 +42,13 @@ public class I02 {
 	
 	private ImageData Img;
 
-	public I02(Shell shell, Display display, ResourceBundle bundle, Locale locale, 
-			ArrayList<Empleado> empleados) {
+	public I02(Shell shell, Display display, ResourceBundle bundle, Locale locale, ArrayList<Empleado> empleados) {
 		this.shell = shell;
 		this.display = display;
 		this.empleados = empleados;
 		this.bundle = bundle;
 		this.locale = locale;
-
+		crearVentana();
 		//ponImageDia();
 	}
 	
@@ -121,7 +121,7 @@ public class I02 {
 
 	}
 
-	private void crearTabCuadrantes(TabFolder tabFolder) {
+	private void crearTabJefeCuadrantes(TabFolder tabFolder) {
 		TabItem tabItemCuadrantes = new TabItem(tabFolder, SWT.NONE);
 		tabItemCuadrantes.setText(bundle.getString("Cuadrantes"));
 		tabItemCuadrantes.setImage(ico_cuadrante);
@@ -197,7 +197,11 @@ public class I02 {
 
 		bPorMes.setSelection(true);
 	}
-
+	/**
+	 * Crea un tab de mensajería
+	 * @param tabFolder el tabFolder donde colocarlo
+	 * @author Daniel Dionne
+	 */
 	private void crearTabMensajes(TabFolder tabFolder) {
 		TabItem tabItemMensajes = new TabItem(tabFolder, SWT.NONE);
 		tabItemMensajes.setText(bundle.getString("Mensajes"));
@@ -236,6 +240,11 @@ public class I02 {
 		final Button bMensNuevo = new Button(cMensajes, SWT.PUSH);
 		bMensNuevo.setText(bundle.getString("Nuevo"));
 		bMensNuevo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		bMensNuevo.addSelectionListener (new SelectionAdapter () {
+			public void widgetSelected (SelectionEvent e) {
+				new I02MensajeNuevo(shell,bundle,locale);
+			}
+		});
 
 		final Button bMensResponder = new Button(cMensajes, SWT.PUSH);
 		bMensResponder.setText(bundle.getString("I02_but_Responder"));
@@ -251,7 +260,12 @@ public class I02 {
 
 	}
 
-	private void crearTabEmpleados(TabFolder tabFolder) {
+	/**
+	 * Crea un tab con un listado de empleados 
+	 * @param tabFolder el tabFolder donde colocarlo
+	 * @author Daniel Dionne
+	 */
+	private void crearTabJefeEmpleados(TabFolder tabFolder) {
 		TabItem tabItemEmpleados = new TabItem(tabFolder, SWT.NONE);
 		tabItemEmpleados.setText(bundle.getString("Empleados"));
 		tabItemEmpleados.setImage(ico_chico);
@@ -379,7 +393,12 @@ public class I02 {
 
 	}
 
-	private void crearTabDepartamentos(TabFolder tabFolder) {
+	/**
+	 * Crea un tab con un listado de departamentos 
+	 * @param tabFolder el tabFolder donde colocarlo
+	 * @author Daniel Dionne
+	 */
+	private void crearTabJefeDepartamentos(TabFolder tabFolder) {
 		TabItem tabItemDepartamentos = new TabItem(tabFolder, SWT.NONE);
 		tabItemDepartamentos.setText(bundle.getString("Departamentos"));
 		tabItemDepartamentos.setImage(ico_chicos);
@@ -440,7 +459,12 @@ public class I02 {
 
 	}
 
-	private void crearTabContratos(TabFolder tabFolder) { 		
+	/**
+	 * Crea un tab con un listado de contratos 
+	 * @param tabFolder el tabFolder donde colocarlo
+	 * @author Daniel Dionne
+	 */
+	private void crearTabJefeContratos(TabFolder tabFolder) { 		
 		TabItem tabItemContratos = new TabItem(tabFolder, SWT.NONE);
 		tabItemContratos.setText(bundle.getString("Contratos"));
 		tabItemContratos.setImage(ico_cuadrante);
@@ -491,19 +515,622 @@ public class I02 {
 		});
 
 	}
+
+	/**
+	 * Crea un tab de inicio para el administrador
+	 * @param tabFolder el tabFolder donde colocarlo
+	 * @author David Rodilla
+	 */
+	private void crearTabAdminInicio(TabFolder tabFolder){
+		TabItem tabItemAdminInicio = new TabItem(tabFolder, SWT.NONE);
+		tabItemAdminInicio.setText("Admin:Inicio");
+		tabItemAdminInicio.setImage(ico_cuadrante);
+		
+		//Creamos el contenido de la pestaña cuadrantes
+		
+		Composite cInicio = new Composite (tabFolder, SWT.NONE);
+		tabItemAdminInicio.setControl(cInicio);
+		
+		Image _fondo_turnomatic;
+		_fondo_turnomatic = new Image(display, I02.class.getResourceAsStream("Turnomatic.jpg"));
+		
+		cInicio.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		//Le añadimos un layout
+		GridLayout lInicio = new GridLayout();
+		lInicio.numColumns = 2;
+		cInicio.setLayout(lInicio);
+
+		final Label bienvenido = new Label(cInicio,SWT.None);
+		bienvenido.setLayoutData(new GridData(SWT.CENTER,SWT.TOP,true,true,1,1));
+		bienvenido.setText("BIENVENIDO A TURNOMATIC");
+		
+		ImageData imagedata = _fondo_turnomatic.getImageData().scaledTo(320, 240);
+		_fondo_turnomatic = new Image(display, imagedata);
+
+		cInicio.setBackgroundImage(_fondo_turnomatic);
+	}
+
+	/**
+	 * Crea un tab de administrador para crear nuevos gerentes  
+	 * @param tabFolder el tabFolder donde colocarlo
+	 * @author David Rodilla
+	 */
+	private void crearTabAdminNuevoGerente(TabFolder tabFolder){
+		TabItem tabItemEmpleados = new TabItem(tabFolder, SWT.NONE);
+		tabItemEmpleados.setText("Admin:Nuevo Gerente");
+		tabItemEmpleados.setImage(ico_chico);
+
+		//Creamos el contenido de la pestaña cuadrantes
+		final Composite cNuevoGerente = new Composite (tabFolder, SWT.BORDER);
+		tabItemEmpleados.setControl(cNuevoGerente);
+
+		cNuevoGerente.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 0, 0));
+		GridLayout lGrupo = new GridLayout();
+		lGrupo.numColumns = 1;
+		cNuevoGerente.setLayout(lGrupo);
+		
+		
+		
+		final Label lTitulo	= new Label(cNuevoGerente, SWT.LEFT);
+		lTitulo.setText("Introduzca los datos del gerente");
+		final Composite cNuevoGerente2 = new Composite (cNuevoGerente, SWT.BORDER);
+		cNuevoGerente2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 0, 0));
+		GridLayout lGrupo2 = new GridLayout();
+		lGrupo2.numColumns = 2;
+		cNuevoGerente2.setLayout(lGrupo2);
+		final Label lNombre	= new Label(cNuevoGerente2, SWT.LEFT);
+		lNombre.setText(bundle.getString("I02AdminNombre"));
+		final Text tNombre	= new Text (cNuevoGerente2, SWT.BORDER);
+		tNombre.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 0, 0));
+
+		final Label lApellidos	= new Label(cNuevoGerente2, SWT.LEFT);
+		lApellidos.setText(bundle.getString("I02AdminApellidos"));
+		final Text tApellidos	= new Text (cNuevoGerente2, SWT.BORDER);
+		tApellidos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 0, 0));
+		
+		final Label lNombreUsuario	= new Label(cNuevoGerente2, SWT.LEFT);
+		lNombreUsuario.setText(bundle.getString("I02AdminNombreUsuario"));
+		final Text tNombreUsuario	= new Text (cNuevoGerente2, SWT.BORDER);
+		tNombreUsuario.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 0, 0));
+
+		final Button bClaveAuto		= new Button(cNuevoGerente2, SWT.RADIO);
+		bClaveAuto.setText("Generacion automatica de la clave");
+		final Button bClaveManual			= new Button(cNuevoGerente2, SWT.RADIO);
+		bClaveAuto.setSelection(true);
+
+		bClaveManual.setText("Seleccion manual de la clave");
+		final Label lContra	= new Label(cNuevoGerente2, SWT.LEFT);
+		lContra.setText(bundle.getString("I02AdminClave"));
+		final Text tPassword	= new Text (cNuevoGerente2, SWT.BORDER);
+		tPassword.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 0, 0));
+		tPassword.setText(aplicacion.Util.obtenerClave());
+		tPassword.setEditable(false);
+
+		bClaveAuto.addFocusListener(new FocusListener(){
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				tNombreUsuario.setText("");
+				tNombre.setText("");
+				tApellidos.setText("");
+				tPassword.setEditable(false);
+				tPassword.setText(aplicacion.Util.obtenerClave());
+			}
+
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		}
+		);
+		
+		bClaveManual.addFocusListener(new FocusListener(){
+
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				tPassword.setEditable(true);
+				tNombreUsuario.setText("");
+				tNombre.setText("");
+				tApellidos.setText("");
+				tPassword.setText("");
+								
+			}
+
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		}
+		);
+
+		final Composite cAceptarCancelar = new Composite (cNuevoGerente, SWT.BORDER);
+		cAceptarCancelar.setLayoutData(new GridData(SWT.CENTER, SWT.DOWN, false, false, 1, 1));
+		GridLayout lAceptarCancelar = new GridLayout();
+		lAceptarCancelar.numColumns = 2;
+		cAceptarCancelar.setLayout(lAceptarCancelar);
+		
+		//Botones aceptar y cancelar
+		final Button bAceptar		= new Button(cAceptarCancelar, SWT.PUSH);
+		final Button bCancelar		= new Button(cAceptarCancelar, SWT.PUSH);
+		
+		//Introducimos los textos a los botones
+//		bOClave.setText("Obtener clave");
+		bAceptar.setText("Aceptar");
+		bCancelar.setText(bundle.getString("cancelar1"));
+				//Introducimos los valores y eventos de Aceptar
+		
+
+		
+		bAceptar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
+		bAceptar.addSelectionListener (new SelectionAdapter () {
+			public void widgetSelected (SelectionEvent e) {
+				MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
+				messageBox.setText ("CONFIRMACION");
+				messageBox.setMessage ("¿Desea guardar el nuevo gerente?");
+				if( messageBox.open () == SWT.YES)
+				{
+					tNombreUsuario.setText("");
+					tNombre.setText("");
+					tApellidos.setText("");
+					tPassword.setText(aplicacion.Util.obtenerClave());
+				}
+			}				
+		});
+		//Introducimos los valores y eventos de Cancelar
+		bCancelar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
+		bCancelar.addSelectionListener (new SelectionAdapter () {
+			public void widgetSelected (SelectionEvent e) {
+				shell.dispose();
+			}				
+		});
+		
+	}
+
+	/**
+	 * Crea un tab de administrador para eliminar gerentes 
+	 * @param tabFolder el tabFolder donde colocarlo
+	 * @author David Rodilla
+	 */
+	private void crearTabAdminEliminaGerente(TabFolder tabFolder){
+		TabItem tabItemEmpleados = new TabItem(tabFolder, SWT.NONE);
+		tabItemEmpleados.setText("Admin:Elimina Gerente");
+		tabItemEmpleados.setImage(ico_chico);
+
+		//Creamos un composite para la pestaña de mensajes
+		final Composite cEliminaGerente = new Composite (tabFolder, SWT.NONE);
+		tabItemEmpleados.setControl(cEliminaGerente);
+
+		cEliminaGerente.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		GridLayout lTJ = new GridLayout();
+		lTJ.numColumns = 1;
+		lTJ.makeColumnsEqualWidth = true;
+		cEliminaGerente.setLayout(lTJ);
+		//1º elegimos el gerente que queremos eliminar
+		final Label nombreGerente=new Label(cEliminaGerente,SWT.None);
+		nombreGerente.setText("Escoja el gerente a eliminar:");
+		final Combo comboGerenteElim = new Combo(cEliminaGerente,SWT.BORDER | SWT.READ_ONLY);
+		final String[] textoListaGerentes= new String[] {
+				"GERENTE1", 
+				"GERENTE2",
+				"GERENTE3"
+				};
+		comboGerenteElim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 0, 0));
+		comboGerenteElim.setItems(textoListaGerentes);
+		comboGerenteElim.select(0);		
+
+		
+		final Label opcionJefes=new Label(cEliminaGerente,SWT.None);
+		opcionJefes.setText("¿Que desea hacer con los empleados del gerente seleccionado?:");
+
+		
+
+		final Button bDejarSinAsignar			= new Button(cEliminaGerente, SWT.RADIO);
+		bDejarSinAsignar.setText("Dejar sin asignar:");
+		bDejarSinAsignar.setSelection(true);
+		final Button bAsignarAUnGerente			= new Button(cEliminaGerente, SWT.RADIO);
+		bAsignarAUnGerente.setText("Asignar a otro gerente:");
+		
+		final Combo comboGerenteSust = new Combo(cEliminaGerente,SWT.BORDER | SWT.READ_ONLY);
+		comboGerenteSust.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 0, 0));
+		comboGerenteSust.setItems(textoListaGerentes);
+		comboGerenteSust.select(0);
+		
+
+		final Button bAsignarAGerentes			= new Button(cEliminaGerente, SWT.RADIO);
+		bAsignarAGerentes.setText("Seleccionar asignacion uno a uno:");
+		//Introducimos manualmente unos mensajes por defecto
+		final Composite cEliminaGerente2 = new Composite (cEliminaGerente, SWT.BORDER);
+		
+		cEliminaGerente2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
+		GridLayout lTJ2 = new GridLayout();
+		lTJ2.numColumns = 4;
+		lTJ2.makeColumnsEqualWidth = true;
+		cEliminaGerente2.setLayout(lTJ2);
+		cEliminaGerente2.setEnabled(false);
+		cEliminaGerente2.setVisible(false);		
+		comboGerenteSust.setEnabled(false);
+
+		bDejarSinAsignar.addFocusListener(new FocusListener(){
+
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				cEliminaGerente2.setEnabled(false);
+				cEliminaGerente2.setVisible(false);		
+				comboGerenteSust.setEnabled(false);
+			}
+
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		}
+		);
+
+		bAsignarAUnGerente.addFocusListener(new FocusListener(){
+
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				cEliminaGerente2.setEnabled(false);
+				cEliminaGerente2.setVisible(false);
+				comboGerenteSust.setEnabled(true);
+			}
+
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		}
+		);
+		
+		
+		bAsignarAGerentes.addFocusListener(new FocusListener(){
+
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				cEliminaGerente2.setEnabled(true);
+				cEliminaGerente2.setVisible(true);
+				comboGerenteSust.setEnabled(false);
+			}
+
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		}
+		);
+		
+		
+		for (int i=0; i<3; i++) {
+			/*
+			TableItem tItem = new TableItem (tablaJefes, SWT.NONE);
+			tItem.setText (0, "Nombre");
+			tItem.setText (1, "Apellidos");
+			tItem.setText (2, "Departamento");
+			*/
+			final Label nombreJefe=new Label(cEliminaGerente2,SWT.None);
+			nombreJefe.setText("nombre Jefe");
+			final Label apellidosJefe=new Label(cEliminaGerente2,SWT.None);
+			apellidosJefe.setText("apellidos Jefe");
+			final Label departamentoJefe=new Label(cEliminaGerente2,SWT.None);
+			departamentoJefe.setText("departamento Jefe");
+			final Combo combo = new Combo(cEliminaGerente2,SWT.BORDER | SWT.READ_ONLY);
+			final String[] texto= new String[] {
+					"GERENTE1", 
+					"GERENTE2",
+					"GERENTE3"
+					};
+			combo.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 0, 0));
+			combo.setItems(texto);
+			combo.select(0);	
+		}
+		
+		//Creamos los distintos botones
+		final Button bEliminar = new Button(cEliminaGerente, SWT.PUSH);
+		bEliminar.setText("Eliminar");
+		bEliminar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		//Creamos un oyente
+		bEliminar.addSelectionListener (new SelectionAdapter () {
+			public void widgetSelected (SelectionEvent e) {
+			
+			}
+		});
+	}
+
+	/**
+	 * Crea un tab de empleado para mostrar el cuadrante
+	 * @param tabFolder
+	 */
+	private void crearTabEmpleadoCuadrantes(TabFolder tabFolder){
+		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
+		tabItem.setText("Empleado:Cuadrantes");
+		tabItem.setImage(ico_chico);
+		
+		//Creamos el contenido de la pestaña cuadrantes
+		Composite cCuadrantes = new Composite (tabFolder, SWT.NONE);
+		tabItem.setControl(cCuadrantes);
+
+		
+		cCuadrantes.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
+		//Le añadimos un layout
+		GridLayout lCuadrantes = new GridLayout();
+		lCuadrantes.numColumns = 2;
+		cCuadrantes.setLayout(lCuadrantes);
+		
+		//Creamos el contenido interno de la pestaña cuadrantes
+		//Creamos un composite para los botones
+		final Composite cBotones = new Composite (cCuadrantes, SWT.BORDER);
+		cBotones.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		GridLayout lCBotones = new GridLayout();
+		lCBotones.numColumns = 1;
+		cBotones.setLayout(lCBotones);
+		
+		//Creamos un composite para el calendario
+		final Label lCalendario = new Label (cBotones, SWT.LEFT);
+		lCalendario.setText(this.bundle.getString("Calendario"));
+		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+		
+		//Creamos un composite para la zona donde se mostrara el calendario		
+		final Composite cCuadrantesDer = new Composite (cCuadrantes, SWT.BORDER);
+		cCuadrantesDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		GridLayout lCuadrantesDer = new GridLayout();
+		lCuadrantesDer.numColumns = 1;
+		cCuadrantesDer.setLayout(lCuadrantesDer);
+		//final Label lCuadr1=new Label (cCuadrantesDer, SWT.CENTER);
+		//lCuadr1.setText("Aquí se mostrarán los cuadrantes");
+		final I02_cuadrEmpl cuadrante = new I02_cuadrEmpl(cCuadrantesDer, false,bundle);	
+		cuadrante.setSemanal();
+		//Creamos el calendario		
+		final DateTime calendario = new DateTime (cBotones, SWT.CALENDAR);
+		calendario.addSelectionListener (new SelectionAdapter () {
+			public void widgetSelected (SelectionEvent e) {
+				String [] meses = {	"enero","febrero",
+						"marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
+				int day=calendario.getDay();
+				int month=calendario.getMonth();
+				int year=calendario.getYear();
+				System.out.println ("Fecha cambiada a "+ String.valueOf(day) + " de " + meses[month]+ " de " + String.valueOf(year));
+			}
+		});
+		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		
+
+
+		//Creamos los botones para ver el horario por dias o semanas		
+		final Button bPorSemanas = new Button(cBotones, SWT.RADIO);
+		bPorSemanas.setText(this.bundle.getString("Verporsemana"));
+		bPorSemanas.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));		
+		bPorSemanas.setSelection(true);
+		bPorSemanas.addListener(SWT.Selection, new Listener() {
+			//Seleccionado por mes
+			public void handleEvent(Event e) {
+				if (bPorSemanas.getSelection()) {
+					cuadrante.setSemanal();				
+				}
+				else cuadrante.setMensual(); 
+				
+			}
+		});
+
+		
+		//Creamos un boton para la seleccion del horario por semanas
+		final Button bPorMes = new Button(cBotones, SWT.RADIO);
+		bPorMes.setText(this.bundle.getString("I02_but_Verpormes"));
+		bPorMes.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		//Creamos un oyente
+		bPorMes.addListener(SWT.Selection, new Listener() {
+			//Seleccionado por mes
+			public void handleEvent(Event e) {
+				if (bPorMes.getSelection()) {
+					cuadrante.setMensual();
+				}
+				else cuadrante.setSemanal();
+				
+			}
+		});
+	}
 	
-	private void crearVistaJefe() {
+	private void crearTabEmpleadoEstadisticas(TabFolder tabFolder){
+		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
+		tabItem.setText("Empleado:Estadisticas");
+		tabItem.setImage(ico_chico);
+		
+		//Creamos el contenido de la pestaña estadisticas
+		final Composite cEstadisticas = new Composite (tabFolder, SWT.NONE);
+		tabItem.setControl(cEstadisticas);
+
+		cEstadisticas.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
+		//Le añadimos un layout
+		GridLayout lEstadisticas = new GridLayout();
+		lEstadisticas.numColumns = 2;
+		cEstadisticas.setLayout(lEstadisticas);
+		
+		//Creamos el contenido interno de la pestaña cuadrantes
+		//Creamos un composite para los botones
+		final Composite cEstIzq = new Composite (cEstadisticas, SWT.BORDER);
+		cEstIzq.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
+		GridLayout lEstIzq = new GridLayout();
+		lEstIzq.numColumns = 1;
+		lEstIzq.makeColumnsEqualWidth = true;
+		cEstIzq.setLayout(lEstIzq);
+		
+		
+		final Composite cEstDer = new Composite (cEstadisticas, SWT.BORDER);
+		cEstDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		GridLayout lEstDer = new GridLayout();
+		lEstDer.numColumns = 1;
+		lEstDer.makeColumnsEqualWidth = true;
+		cEstDer.setLayout(lEstDer);
+
+		final Label lTitulo	= new Label(cEstIzq, SWT.CENTER);
+		lTitulo.setText(this.bundle.getString("opcionvis"));
+		lTitulo.setFont(new org.eclipse.swt.graphics.Font(
+			        org.eclipse.swt.widgets.Display.getDefault(), "Arial", 10,
+			        org.eclipse.swt.SWT.BOLD));
+		lTitulo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
+		
+		
+		final Label lTiempo	= new Label(cEstIzq, SWT.LEFT);
+		lTiempo.setText(this.bundle.getString("tiempodatos"));
+		lTiempo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
+		Combo cTiempo = new Combo(cEstIzq, SWT.BORDER | SWT.READ_ONLY);
+		cTiempo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		cTiempo.setItems(new String[] {bundle.getString("semana"), bundle.getString("quincena"), bundle.getString("mes"),bundle.getString("año")});
+		cTiempo.select(0);
+		
+		final Label lComparar	= new Label(cEstIzq, SWT.LEFT);
+		lComparar.setText(bundle.getString("compararcon"));
+		lComparar.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
+		Combo cComparar = new Combo(cEstIzq, SWT.BORDER | SWT.READ_ONLY);
+		cComparar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		cComparar.setItems(new String[] {
+				bundle.getString("nadie"),
+				bundle.getString("empleadomedio"),
+				bundle.getString("mejorsemana"),
+				bundle.getString("mejormes"),
+				bundle.getString("mejoraño")
+				});
+		
+		cComparar.select(0);
+		cComparar.setVisibleItemCount(6);
+		
+		final Label lTipoGrafico	= new Label(cEstIzq, SWT.CENTER);
+		lTipoGrafico.setText(bundle.getString("datosvis"));
+		lTipoGrafico.setFont(new org.eclipse.swt.graphics.Font(
+			        org.eclipse.swt.widgets.Display.getDefault(), "Arial", 9,
+			        org.eclipse.swt.SWT.BOLD));
+		lTipoGrafico.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
+		
+		final Button bVentasTotales = new Button(cEstIzq, SWT.RADIO);
+		bVentasTotales.setText(bundle.getString("verventastot"));
+		bVentasTotales.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		//Creamos un oyente
+		bVentasTotales.addFocusListener(new FocusListener(){
+			//Seleccionado por semanas
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("Ventas totales in");
+				
+			}
+			
+			//No seleccionado por semanas
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("Ventas totales out");			
+			}
+		}
+		);
+		
+		
+		final Button bVentasPTiempo = new Button(cEstIzq, SWT.RADIO);
+		bVentasPTiempo.setText(this.bundle.getString("ventaspertime"));
+		bVentasPTiempo.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		//Creamos un oyente
+		bVentasPTiempo.addFocusListener(new FocusListener(){
+			//Seleccionado por semanas
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("Ventas por tiempo de trabajo in");
+				
+			}
+			
+			//No seleccionado por semanas
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("Ventas por tiempo de trabajo out");			
+			}
+		}
+		);
+		
+		final Button bVentasPPrecio = new Button(cEstIzq, SWT.RADIO);
+		bVentasPPrecio.setText(this.bundle.getString("ventasporprecio"));
+		bVentasPPrecio.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		//Creamos un oyente
+		bVentasPPrecio.addFocusListener(new FocusListener(){
+			//Seleccionado por semanas
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("Ventas por precio producto in");
+				
+			}
+			
+			//No seleccionado por semanas
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("Ventas por precio producto out");			
+			}
+		}
+		);
+
+		
+		final Button bVentasPDepartamento = new Button(cEstIzq, SWT.RADIO);
+		bVentasPDepartamento.setText(this.bundle.getString("ventaspordpto"));
+		bVentasPDepartamento.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		//Creamos un oyente
+		bVentasPDepartamento.addFocusListener(new FocusListener(){
+			//Seleccionado por semanas
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("Ventas por departamento in");
+				
+			}
+			
+			//No seleccionado por semanas
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("Ventas por departamento out");			
+			}
+		}
+		);
+
+		
+		final Label lPrueba2 = new Label (cEstDer, SWT.SIMPLE);
+		lPrueba2.setText("Aqui se visualizarian las graficas");
+		lPrueba2.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));		
+	}
+
+	/**
+	 * Crea un tabFolder.
+	 * TODO que haga los tabs dependiendo del usuario autentificado
+	 */
+	private void crearTabFolder(int rango) {
 		// Crear menu tabs
 		final TabFolder tabFolder = new TabFolder(shell, SWT.NONE);
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,1));
-		crearTabCuadrantes(tabFolder);
-		crearTabMensajes(tabFolder);
-		crearTabEmpleados(tabFolder);		
-		crearTabDepartamentos(tabFolder);
-		crearTabContratos(tabFolder);
+		
+		switch (rango) {
+		case 0:
+			// Tabs de administrador
+			crearTabAdminInicio(tabFolder);
+			crearTabAdminNuevoGerente(tabFolder);
+			crearTabAdminEliminaGerente(tabFolder);
+			break;
+		case 1:
+			// Tabs de empleado
+			crearTabEmpleadoCuadrantes(tabFolder);
+			crearTabMensajes(tabFolder);
+			crearTabEmpleadoEstadisticas(tabFolder);
+			break;
+		case 2:
+			// Tabs de jefe
+			crearTabJefeCuadrantes(tabFolder);
+			crearTabMensajes(tabFolder);
+			crearTabJefeEmpleados(tabFolder);		
+			crearTabJefeDepartamentos(tabFolder);
+			crearTabJefeContratos(tabFolder);
+			break;
+		case 3:
+			//Tabs de gerente
+			crearTabMensajes(tabFolder);
+			break;
+		}
+		
+		
 	}
 
+	/**
+	 * Crea la ventana.
+	 */
 	public void crearVentana() {
+
 		// Crear la ventana
 		shell.setText(bundle.getString("Turno-matic"));// idiomas igual siempre
 
@@ -534,8 +1161,8 @@ public class I02 {
 		GridLayout lShell = new GridLayout(1, false);
 		shell.setLayout(lShell);
 
-		// Poblar ventana seg
-		crearVistaJefe();
+		// Poblar ventana: 0 administrador, 1 empleado, 2 jefe, 3 gerente
+		crearTabFolder(1);
 
 		// Crear una barra de estado
 		Composite estado = new Composite(shell,SWT.BORDER);
@@ -548,16 +1175,14 @@ public class I02 {
 		pbEstado.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,1));
 		pbEstado.setSelection(85);
 
-		// Ajustar el tamaño de la ventana al contenido
-		shell.pack();
+		// Ajustar el tamaño de la ventana
+		shell.setSize(700,500);
 		// Mostrar ventana centrada en la pantalla
 		shell.setLocation(
 				display.getBounds().width  / 2 - shell.getSize().x / 2, 
 				display.getBounds().height / 2 - shell.getSize().y / 2  );
 		shell.open();
 
-		// Login
-		new I01(shell, bundle);
 
 		// Preguntar antes de salir
 		shell.addListener(SWT.Close, new Listener() {

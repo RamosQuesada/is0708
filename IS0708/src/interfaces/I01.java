@@ -27,16 +27,25 @@ public class I01 {
 		mostrarVentana();
 	}
 	public void mostrarVentana() {
-		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
+		Image fondo = new Image(padre.getDisplay(), I01.class.getResourceAsStream("intro.png"));
+		final Shell shell = new Shell (padre, SWT.NONE | SWT.APPLICATION_MODAL);
 
-		final Label lUsuario  = new Label(shell, SWT.LEFT);
-		final Text  tUsuario  = new Text(shell, SWT.BORDER);
-		final Label lPassword = new Label(shell, SWT.LEFT);
-		final Text  tPassword = new Text(shell, SWT.BORDER | SWT.PASSWORD);
+		
+		//Esto hace que los labels no tengan fondo
+		shell.setBackgroundMode(SWT.INHERIT_DEFAULT);
+		shell.setLayout(new GridLayout());
+		
+		Composite contenido = new Composite(shell, SWT.NONE);
+		contenido.setLayout(new GridLayout(8,true));
+		contenido.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true, 1, 1));
+		
+		final Label lUsuario  = new Label(contenido, SWT.LEFT);
+		final Text  tUsuario  = new Text(contenido, SWT.BORDER);
+		final Label lPassword = new Label(contenido, SWT.LEFT);
+		final Text  tPassword = new Text(contenido, SWT.BORDER | SWT.PASSWORD);
 
-	
-		final Button bAceptar  = new Button(shell, SWT.PUSH);
-		final Button bCancelar = new Button(shell, SWT.PUSH);
+		final Button bAceptar  = new Button(contenido, SWT.PUSH);
+		final Button bCancelar = new Button(contenido, SWT.PUSH);
 
 		// Dos iconos de tamaño diferente para SO's que los necesiten
 		Image icoGr = new Image(padre.getDisplay(), I01.class.getResourceAsStream("icoGr.gif"));
@@ -44,28 +53,24 @@ public class I01 {
 		shell.setImages(new Image[] {icoPq,icoGr});
 		shell.setText(bundle.getString("I01_tit_Ident"));
 		
-		GridLayout layout = new GridLayout();
-		layout.numColumns = 8;
-		layout.makeColumnsEqualWidth = true;
-
-		shell.setLayout(layout);
-
+		
+		
 		lUsuario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 3, 1));
 		lUsuario.setText(bundle.getString("Vendedor"));
 		tUsuario.setEditable(true);
-		tUsuario.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 5, 1));
+		tUsuario.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 5, 1));
 
 		lPassword.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 3, 1));
 		lPassword.setText(bundle.getString("Contraseña"));
 		
 		tPassword.setEditable(true);
-		tPassword.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 5, 1));
+		tPassword.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 5, 1));
 
 		bAceptar.setText(bundle.getString("Aceptar"));
-		bAceptar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 4, 1));
+		bAceptar.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 4, 1));
 		
 		bCancelar.setText(bundle.getString("Cancelar"));
-		bCancelar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 4, 1));
+		bCancelar.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 4, 1));
 
 		// Un SelectionAdapter con lo que hace el botón bCancelar
 		SelectionAdapter sabCancelar = new SelectionAdapter() {
@@ -80,7 +85,7 @@ public class I01 {
 				if (tUsuario.getText().length()!=8) {
 					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
 					messageBox.setText (bundle.getString("Mensaje"));
-					messageBox.setMessage (bundle.getString("I01_err_num_vendedor"));
+					messageBox.setMessage (bundle.getString("I01_err_NumVendedor"));
 					e.doit = messageBox.open () == SWT.YES;
 					// Enfocar tUsuario y seleccionar texto
 					tUsuario.setFocus();
@@ -96,9 +101,11 @@ public class I01 {
 		// Botón por defecto bAceptar
 		shell.setDefaultButton(bAceptar);
 		// Ajustar el tamaño de la ventana al contenido
-		shell.pack();
-		// Mostrar ventana centrada sobre el padre
-		shell.setLocation(padre.getBounds().width/2 + padre.getBounds().x - shell.getSize().x/2, padre.getBounds().height/2 + padre.getBounds().y - shell.getSize().y/2);
+		shell.setBackgroundImage(fondo);
+		shell.setSize(500,374);
+
+		// Mostrar ventana centrada sobre la pantalla
+		shell.setLocation(padre.getDisplay().getClientArea().width/2 - shell.getSize().x/2, padre.getDisplay().getClientArea().height/2 - shell.getSize().y/2);
 		shell.open();
 	}
 }

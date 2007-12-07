@@ -2,6 +2,7 @@ package aplicacion;
 
 import java.util.ArrayList;
 import interfaces.I02;
+import interfaces.I01;
 import interfaces.I02Empleado;
 
 import org.eclipse.swt.SWT;
@@ -57,9 +58,9 @@ public class Aplicacion {
 		empleados.add(e5);
 		empleados.add(e6);
 
+		I01 login = new I01(shell, l.getBundle());
 		// TODO Cambiar por acceso a la vista
-		I02 i = new I02(shell, display, l.getBundle(), l.getCurrentLocale(), empleados);
-		i.crearVentana();
+		I02 interfaz = new I02(shell, display, l.getBundle(), l.getCurrentLocale(), empleados);
 		// Este bucle mantiene la ventana abierta
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch()) {
