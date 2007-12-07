@@ -44,15 +44,11 @@ public class I10_ManageDepartament {
 	private String[] arrayDB =null;
 	
 	//List of Atributes of Departament in DB 
-	private final String[] arrayLabel = {"Atr1", "Atr2", "Atr3", "Atr4"};
+	private final String[] arrayLabel = {"Name", "Number", "Boss"};
 
 	private ResourceBundle bundle;
 
 	private aplicacion.Turno turno;
-
-	private int alto, ancho;
-
-	private Cuadrante cuadrante;
 	
 	private Image iconDep;
 	
@@ -77,7 +73,12 @@ public class I10_ManageDepartament {
 		this.padre = padre;
 		this.bundle = bundle;
 				
-		String[]newArrayDB = {"","","",""};
+		//String[]newArrayDB = {"","",""};
+		String[] newArrayDB = new String[this.getArrayLabel().length];
+		for (int i=0;i< this.getArrayLabel().length;i++){
+			newArrayDB[i] = "";
+		}
+		
 		arrayDB = newArrayDB;
 		createWindow(windowName);
 	}
@@ -86,7 +87,7 @@ public class I10_ManageDepartament {
 	private void createWindow(String windowName) {
 		// TODO Auto-generated method stub
 		//final Shell shellWindow = new Shell(padre, SWT.CLOSE | SWT.RESIZE
-		shellWindow = new Shell(padre, SWT.CLOSE | SWT.RESIZE
+		shellWindow = new Shell(padre, SWT.CLOSE | SWT.CLOSE
 				| SWT.APPLICATION_MODAL);
 		shellWindow.setText(windowName);
 		shellWindow.setLayout(new GridLayout(2,true));
@@ -180,9 +181,28 @@ public class I10_ManageDepartament {
 			}
 		});
 	}
-	
+
+	public ResourceBundle getBundle(){
+		return bundle;
+	}
+	public Shell getPadre(){
+		return padre;
+	}
+	public Image getIconDep(){
+		return iconDep;
+	}
+	public String[] getArrayLabel(){
+		return arrayLabel;
+	}
 	public String[] getArrayDB(){
 		return arrayDB;
+	}
+	
+	public void setIconDep(Image newImage){
+		iconDep = newImage;
+	}
+	public void setBundle(ResourceBundle newBundle){
+		bundle = newBundle;
 	}
 	public void setArrayDB(String[]newArrayDB){
 		arrayDB = newArrayDB;
