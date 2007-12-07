@@ -19,6 +19,7 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -52,14 +53,20 @@ public class I10_ManageDepartament {
 	private int alto, ancho;
 
 	private Cuadrante cuadrante;
-
+	
+	private Image iconDep;
+	
 	public I10_ManageDepartament(Shell padre, ResourceBundle bundle,
 			String windowName, String[] newArrayDB) {
 		// TODO Auto-generated constructor stub
 		this.padre = padre;
 		this.bundle = bundle;
-				
-		//String[]newArrayDB = {"nazwaDepartamentu","1 parametr","2 parametr","3 parametr"};
+		
+		//*****************
+		//creamos los iconos que vamos a utilizar en el programa
+		//_icoGr = new Image(_display, I02.class.getResourceAsStream("icoGr.gif"));
+		//*************************************************************
+		
 		arrayDB = newArrayDB;
 		createWindow(windowName);
 	}
@@ -75,6 +82,7 @@ public class I10_ManageDepartament {
 		createWindow(windowName);
 	}
 
+
 	private void createWindow(String windowName) {
 		// TODO Auto-generated method stub
 		//final Shell shellWindow = new Shell(padre, SWT.CLOSE | SWT.RESIZE
@@ -84,6 +92,10 @@ public class I10_ManageDepartament {
 		shellWindow.setLayout(new GridLayout(2,true));
 		
 		closeOnECS(shellWindow);
+		
+		//adding icon to window
+		iconDep = new Image(padre.getDisplay(), I02.class.getResourceAsStream("ico_chicos.gif"));
+		shellWindow.setImage(iconDep);
 	
 		final Group group = new Group(shellWindow, SWT.NONE);
 		group.setText(bundle.getString("Departamento"));
