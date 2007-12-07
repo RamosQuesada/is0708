@@ -44,7 +44,7 @@ public class I10_ManageDepartament {
 	private String[] arrayDB =null;
 	
 	//List of Atributes of Departament in DB 
-	private final String[] arrayLabel = {"Name", "Number", "Boss"};
+	private String[] arrayLabel = null;
 
 	private ResourceBundle bundle;
 
@@ -57,11 +57,9 @@ public class I10_ManageDepartament {
 		// TODO Auto-generated constructor stub
 		this.padre = padre;
 		this.bundle = bundle;
-		
-		//*****************
-		//creamos los iconos que vamos a utilizar en el programa
-		//_icoGr = new Image(_display, I02.class.getResourceAsStream("icoGr.gif"));
-		//*************************************************************
+		String[] newArrayLabel = {bundle.getString("Nombre"), bundle.getString("I10_dep_num"), bundle.getString("I10_dep_jefe")};
+		arrayLabel = newArrayLabel;
+
 		
 		arrayDB = newArrayDB;
 		createWindow(windowName);
@@ -72,8 +70,10 @@ public class I10_ManageDepartament {
 		// TODO Auto-generated constructor stub
 		this.padre = padre;
 		this.bundle = bundle;
-				
-		//String[]newArrayDB = {"","",""};
+
+		String[] newArrayLabel = {bundle.getString("Nombre"), bundle.getString("I10_dep_num"), bundle.getString("I10_dep_jefe")};
+		arrayLabel = newArrayLabel;
+		
 		String[] newArrayDB = new String[this.getArrayLabel().length];
 		for (int i=0;i< this.getArrayLabel().length;i++){
 			newArrayDB[i] = "";
@@ -148,6 +148,7 @@ public class I10_ManageDepartament {
 		SelectionAdapter onAccept = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Send datas to BD");
+				shellWindow.dispose();
 			}
 		};
 		
