@@ -60,7 +60,8 @@ public class Aplicacion {
 
 		I01 login = new I01(shell, l.getBundle());
 		// TODO Cambiar por acceso a la vista
-		I02 interfaz = new I02(shell, display, l.getBundle(), l.getCurrentLocale(), empleados);
+		// Poblar ventana: 0 administrador, 1 empleado, 2 jefe, 3 gerente
+		I02 interfaz = new I02(shell, display, l.getBundle(), l.getCurrentLocale(), empleados,2);
 		// Este bucle mantiene la ventana abierta
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch()) {
