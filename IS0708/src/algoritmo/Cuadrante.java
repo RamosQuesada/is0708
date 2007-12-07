@@ -3,33 +3,16 @@ package algoritmo;
 import java.util.ArrayList;
 
 /**
- * 
- * @author DavidMartin
- *
- */
-/**
  * Esta clase corresponde con la salida del algoritmo,un arraylist de objetos de la clase Trabaja
+ * @author DavidMartin
  */
 
-// FIXME David, si pones los comentarios por trozos, no te lo coge todo en el javadoc
 public class Cuadrante {
 	
-	/**
-	 * Mes
-	 */
 	private int mes;
-	/**
-	 *Año
-	 */
 	private int anio;
-	/**
-	 *Numero de dias del mes
-	 */
-	private int numDias;
-	/**
-	 *Formato del cuadrante
-	 */
-	ArrayList<Trabaja> cuad[];
+	private int numDias;//numero de dias del mes
+	ArrayList<Trabaja> cuad[];//esta matriz seria la salida del algoritmo,un vector donde en cada posicion hay una lista de los empleados que trabajan
 	
 	public Cuadrante(int mes,int dias){//creacion de un cuadrante vacio
 		this.mes=mes;
@@ -37,9 +20,8 @@ public class Cuadrante {
 		for(int i=0;i<numDias;i++){
 			cuad[i]=new ArrayList<Trabaja>();
 		}
-	
 	}
-
+	
 	public int getMes() {
 		return mes;
 	}

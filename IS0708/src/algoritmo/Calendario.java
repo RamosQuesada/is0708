@@ -2,37 +2,24 @@ package algoritmo;
 import java.util.ArrayList;
 
 /**
- * 
- * @author DavidMartin
- *
- */
-/**
  * Esta clase representa a un calendario donde vamos a almacenar los dias festivos,el
  * max/min numero de empleados y el numero de expertos e inexpertos
+ * @author DavidMartin
  */
 public class Calendario {
 	
-	/**
-	 *Mes
-	 */
 	private int mes;
-	/**
-	 *Año
-	 */
 	private int anio;
-	/**
-	 *Numero de dias del mes
-	 */
-	private int numDias;
-	/**La primera dimensión representa el mes en cuestión (una posición por cada dia del mes)
-	 * la segunda dimensión representa las horas de cada dia
-	 */
-	private HoraCalendario cal[][];
+	private int numDias;//numero de dias del mes
+	private HoraCalendario cal[][];//esta matriz contiene para cada dia y para cada hora un objeto de la clase Horacalendario
 	
-	public Calendario(int mes,int anio){
+	public Calendario(){//constructora por defecto
+		
+	}
+	public Calendario(int numDias,int mes,int anio){
 		this.mes=mes;
 		this.anio=anio;
-		numDias=dameDias(mes); 
+		this.numDias=numDias;
 		cal=new HoraCalendario[numDias][24];//el calenadario tendra un numero de dias dependiendo del mes y de 0 a 23 horas
 		//ahora rellenamos el calenadrio
 		for(int i=0;i<numDias;i++){
@@ -40,16 +27,6 @@ public class Calendario {
 				//Aqui debemos rellenar los datos accediendo a las base de datos
 			}
 		}
-		
-	}
-	public int dameDias(int mes){//esta funcion devuelve el numero de dias del mes
-		if(mes == (1|3|5|7|8|10|12)){
-			return 31;
-		}
-		if(mes == (4|6|9|11)){
-			return 30;
-		}else return 28;
-		
 		
 	}
 	public int getMes() {
