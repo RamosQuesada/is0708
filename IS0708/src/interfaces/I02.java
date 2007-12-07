@@ -3,6 +3,7 @@ package interfaces;
 import java.util.ArrayList;
 
 import org.eclipse.swt.*;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -34,13 +35,11 @@ public class I02 {
 	Locale locale;
 	Image icoGr, icoPq, ico_imprimir, ico_mens_l, ico_mens, ico_cuadrante,
 			ico_chico, ico_chica, ico_chicos;
-	
-	//private  I02_cuadr cuadrante;
+
 	
 	private ArrayList<Empleado> empleados;
 	
 	private ImageData Img;
-	//private Point imgSize = new Point(1000, 400);
 
 	public I02(Shell shell, Display display, ResourceBundle bundle, Locale locale, 
 			ArrayList<Empleado> empleados) {
@@ -122,38 +121,40 @@ public class I02 {
 
 	}
 
-	private void crearCompositeCuadrantes(Composite c) {
+	private void crearTabCuadrantes(TabFolder tabFolder) {
+		TabItem tabItemCuadrantes = new TabItem(tabFolder, SWT.NONE);
+		tabItemCuadrantes.setText(bundle.getString("Cuadrantes"));
+		tabItemCuadrantes.setImage(ico_cuadrante);
+
+		final Composite cCuadrantes = new Composite(tabFolder, SWT.NONE);
+		tabItemCuadrantes.setControl(cCuadrantes);
 		// Configuración del composite
-		c.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
-		c.setLayout(new GridLayout(5, false));
+		cCuadrantes.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
+		cCuadrantes.setLayout(new GridLayout(5, false));
 
 		// Componentes del composite
-		Label lDepartamentos = new Label(c, SWT.NONE);
+		Label lDepartamentos = new Label(cCuadrantes, SWT.NONE);
 		lDepartamentos.setText(bundle.getString("I02_lab_Dpto"));
-		lDepartamentos.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
-				false, 1, 1));
+		lDepartamentos.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 
-		Combo cDepartamentos = new Combo(c, SWT.BORDER | SWT.READ_ONLY);
-		cDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
-				false, 1, 1));
+		Combo cDepartamentos = new Combo(cCuadrantes, SWT.BORDER | SWT.READ_ONLY);
+		cDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		cDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
 		cDepartamentos.select(0);
 
 		// Un canvas para albergar el gráfico de los cuadrantes
 		// NO_BACKGROUND + doble buffer para evitar parpadeo
-		Composite cCuadrante = new Composite(c, SWT.BORDER);
-		cCuadrante.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
-				3, 5));
+		Composite cCuadrante = new Composite(cCuadrantes, SWT.BORDER);
+		cCuadrante.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 5));
 
 		final I02_cuadr cuadrante = new I02_cuadr(cCuadrante, false, empleados);
 		Img = cuadrante.dameImageImprimible();
 		
-		Label lCalendario = new Label(c, SWT.LEFT);
+		Label lCalendario = new Label(cCuadrantes, SWT.LEFT);
 		lCalendario.setText(bundle.getString("Calendario"));
-		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
-				false, 2, 1));
+		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1));
 
-		final DateTime calendario = new DateTime(c, SWT.CALENDAR | SWT.SHORT);
+		final DateTime calendario = new DateTime(cCuadrantes, SWT.CALENDAR | SWT.SHORT);
 		calendario.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				String[] meses = { 
@@ -171,10 +172,9 @@ public class I02 {
 			}
 		});
 		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));
-		final Button bPorMes = new Button(c, SWT.RADIO);
+		final Button bPorMes = new Button(cCuadrantes, SWT.RADIO);
 		bPorMes.setText(bundle.getString("I02_but_Verpormes"));
-		bPorMes.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2,
-				1));
+		bPorMes.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));
 		// Oyente para saber cuando se ha modificado la seleccion del boton
 		bPorMes.addListener(SWT.Selection, new Listener() {
 			// Seleccionado por mes
@@ -190,7 +190,7 @@ public class I02 {
 			}
 		});
 
-		final Button bPorSemanas = new Button(c, SWT.RADIO);
+		final Button bPorSemanas = new Button(cCuadrantes, SWT.RADIO);
 		bPorSemanas.setText(bundle.getString("I02_but_Verpordia"));
 		bPorSemanas.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false,
 				2, 1));
@@ -198,12 +198,18 @@ public class I02 {
 		bPorMes.setSelection(true);
 	}
 
-	private void crearCompositeMensajes(Composite c) {
-		c.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
-		c.setLayout(new GridLayout(4, true));
+	private void crearTabMensajes(TabFolder tabFolder) {
+		TabItem tabItemMensajes = new TabItem(tabFolder, SWT.NONE);
+		tabItemMensajes.setText(bundle.getString("Mensajes"));
+		tabItemMensajes.setImage(ico_mens_l);
+		
+		final Composite cMensajes = new Composite(tabFolder, SWT.NONE);		
+		tabItemMensajes.setControl(cMensajes);
+		
+		cMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		cMensajes.setLayout(new GridLayout(4, true));
 
-		Table tablaMensajes = new Table(c, SWT.MULTI | SWT.BORDER
-				| SWT.FULL_SELECTION);
+		Table tablaMensajes = new Table(cMensajes, SWT.MULTI | SWT.BORDER  | SWT.FULL_SELECTION);
 		tablaMensajes.setLinesVisible(true);
 		tablaMensajes.setHeaderVisible(true);
 		String[] titles = { " ", bundle.getString("I02_mens_De"),
@@ -220,96 +226,83 @@ public class I02 {
 			tItem.setText(2, "Asunto del mensaje");
 			tItem.setText(3, "Aquí va lo que quepa del principio del mensaje");
 			tItem.setText(4, "25/10/2007");
-
 		}
 		for (int i = 0; i < titles.length; i++) {
 			tablaMensajes.getColumn(i).pack();
 		}
 		// table.setSize (table.computeSize (SWT.DEFAULT, 200));
-		tablaMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-				true, 4, 1));
+		tablaMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
 
-		final Button bMensNuevo = new Button(c, SWT.PUSH);
+		final Button bMensNuevo = new Button(cMensajes, SWT.PUSH);
 		bMensNuevo.setText(bundle.getString("Nuevo"));
-		bMensNuevo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
-				1, 1));
+		bMensNuevo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		final Button bMensResponder = new Button(c, SWT.PUSH);
+		final Button bMensResponder = new Button(cMensajes, SWT.PUSH);
 		bMensResponder.setText(bundle.getString("I02_but_Responder"));
-		bMensResponder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-				false, 1, 1));
+		bMensResponder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,	false, 1, 1));
 
-		final Button bMensEliminar = new Button(c, SWT.PUSH);
+		final Button bMensEliminar = new Button(cMensajes, SWT.PUSH);
 		bMensEliminar.setText(bundle.getString("I02_but_Eliminar"));
-		bMensEliminar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-				false, 1, 1));
+		bMensEliminar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		final Button bMensMarcar = new Button(c, SWT.PUSH);
+		final Button bMensMarcar = new Button(cMensajes, SWT.PUSH);
 		bMensMarcar.setText(bundle.getString("I02_but_Marcar"));
-		bMensMarcar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
-				1, 1));
+		bMensMarcar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
 	}
 
-	private void crearCompositeEmpleados(Composite c) {
-		c.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		c.setLayout(new GridLayout(2, false));
+	private void crearTabEmpleados(TabFolder tabFolder) {
+		TabItem tabItemEmpleados = new TabItem(tabFolder, SWT.NONE);
+		tabItemEmpleados.setText(bundle.getString("Empleados"));
+		tabItemEmpleados.setImage(ico_chico);
 
-		final Composite cEmplIzq = new Composite(c, SWT.NONE);
-		cEmplIzq.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1,
-				1));
+		final Composite cEmpleados = new Composite(tabFolder, SWT.NONE);		
+		tabItemEmpleados.setControl(cEmpleados);
+		
+		cEmpleados.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		cEmpleados.setLayout(new GridLayout(2, false));
+
+		final Composite cEmplIzq = new Composite(cEmpleados, SWT.NONE);
+		cEmplIzq.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
 		cEmplIzq.setLayout(new GridLayout(2, false));
 
 		Label lEmplFiltro = new Label(cEmplIzq, SWT.NONE);
 		lEmplFiltro.setText(bundle.getString("I02_lab_Filtro"));
-		lEmplFiltro.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true,
-				false, 2, 1));
+		lEmplFiltro.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
 
 		Label lEmplNombre = new Label(cEmplIzq, SWT.NONE);
 		lEmplNombre.setText(bundle.getString("Nombre"));
-		lEmplNombre.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false,
-				false, 1, 1));
+		lEmplNombre.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 
 		Text tEmplNombre = new Text(cEmplIzq, SWT.BORDER);
-		tEmplNombre.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
-				1, 1));
+		tEmplNombre.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,	1, 1));
 
 		Label lEmplNVend = new Label(cEmplIzq, SWT.NONE);
 		lEmplNVend.setText(bundle.getString("I02_lab_NVend"));
-		lEmplNVend.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false,
-				1, 1));
+		lEmplNVend.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false,	1, 1));
 
 		Text tEmplNVend = new Text(cEmplIzq, SWT.BORDER);
-		tEmplNVend.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
-				1, 1));
+		tEmplNVend.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
 		Label lEmplDpto = new Label(cEmplIzq, SWT.NONE);
 		lEmplDpto.setText(bundle.getString("I02_lab_Dpto"));
-		lEmplDpto.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false,
-				1, 1));
+		lEmplDpto.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 
 		Text tEmplDpto = new Text(cEmplIzq, SWT.BORDER);
-		tEmplDpto.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
-				1, 1));
+		tEmplDpto.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		
-		
 		Label lEmplContr = new Label(cEmplIzq, SWT.NONE);
 		lEmplContr.setText(bundle.getString("Contrato"));
-		lEmplContr.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false,
-				1, 1));
+		lEmplContr.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 
 		Combo cEmplContr = new Combo(cEmplIzq, SWT.BORDER);
-		cEmplContr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
-				1, 1));
+		cEmplContr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		final Composite cEmplDer = new Composite(c, SWT.NONE);
-		cEmplDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,
-				1));
+		final Composite cEmplDer = new Composite(cEmpleados, SWT.NONE);
+		cEmplDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		cEmplDer.setLayout(new GridLayout(4, true));
 
-		Table tablaEmpleados = new Table(cEmplDer, SWT.MULTI | SWT.BORDER
-				| SWT.FULL_SELECTION);
+		Table tablaEmpleados = new Table(cEmplDer, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
 		tablaEmpleados.setLinesVisible(true);
 		tablaEmpleados.setHeaderVisible(true);
 		String[] titles2 = { " ", bundle.getString("I02_lab_NVend"),
@@ -338,8 +331,7 @@ public class I02 {
 		
 		final Button bEmplNuevo = new Button(cEmplDer, SWT.PUSH);
 		bEmplNuevo.setText(bundle.getString("Nuevo"));
-		bEmplNuevo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
-				1, 1));
+		bEmplNuevo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
 		bEmplNuevo.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
@@ -349,8 +341,7 @@ public class I02 {
 
 		final Button bEmplVer = new Button(cEmplDer, SWT.PUSH);
 		bEmplVer.setText(bundle.getString("I02_but_Ver"));
-		bEmplVer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1,
-				1));
+		bEmplVer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1,	1));
 		bEmplVer.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				// employ created for tests
@@ -364,32 +355,54 @@ public class I02 {
 
 		final Button bEmplEditar = new Button(cEmplDer, SWT.PUSH);
 		bEmplEditar.setText(bundle.getString("Editar"));
-		bEmplEditar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
-				1, 1));
+		bEmplEditar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
 		final Button bEmplBaja = new Button(cEmplDer, SWT.PUSH);
+
 		bEmplBaja.setText(bundle.getString("I02_but_Eliminar"));
-		bEmplBaja.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
-				1, 1));
+		bEmplBaja.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+
+		// FIXME Jakub, you shouldn't print the list from the screen, you should
+		// print your own by hand. This image is not scalable.
+		cEmpleados.addListener(SWT.MouseMove, new Listener(){
+			public void handleEvent(Event e) {
+				Composite cHelp = (Composite)cEmpleados.getChildren()[1];
+				cHelp.getClientArea();
+				Rectangle rect = cHelp.getClientArea();
+		          // Create buffer for double buffering
+		          Image image = new Image(display, rect.width, rect.height);
+		          GC gc1 = new GC(cEmpleados.getChildren()[1]);
+		          gc1.copyArea(image, rect.y,rect.x);
+		          Img=image.getImageData();
+			}
+		});
+
 	}
 
-	private void crearCompositeDepartamentos(Composite c) {
-		c.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		c.setLayout(new GridLayout(3, false));
+	private void crearTabDepartamentos(TabFolder tabFolder) {
+		TabItem tabItemDepartamentos = new TabItem(tabFolder, SWT.NONE);
+		tabItemDepartamentos.setText(bundle.getString("Departamentos"));
+		tabItemDepartamentos.setImage(ico_chicos);
 
-		Label lDepartamentos = new Label(c, SWT.LEFT);
+		final Composite cDepartamentos = new Composite(tabFolder, SWT.NONE);
+		tabItemDepartamentos.setControl(cDepartamentos);
+		
+		cDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		cDepartamentos.setLayout(new GridLayout(3, false));
+
+		Label lDepartamentos = new Label(cDepartamentos, SWT.LEFT);
 		lDepartamentos.setText(bundle.getString("Departamento"));
 		lDepartamentos.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
 				false, 1, 1));
 
-		final Combo cDepartamentos = new Combo(c,SWT.BORDER |SWT.READ_ONLY);
-		cDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+		final Combo cmbDepartamentos = new Combo(cDepartamentos,SWT.BORDER |SWT.READ_ONLY);
+		cmbDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 1, 1));
-		cDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
-		cDepartamentos.select(0);
+		cmbDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
+		cmbDepartamentos.select(0);
 
 		//Composite for Buttons: "New Department" and "Configure Department"
-		Composite cBut = new Composite(c,SWT.LEFT);
+		Composite cBut = new Composite(cDepartamentos,SWT.LEFT);
 		cBut.setLayout(new GridLayout(2, false));
 		
 		//Button "Configure Department"
@@ -399,7 +412,7 @@ public class I02 {
 
 		bConfig.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				System.out.println("Pulsado Configuración departamentos: "+cDepartamentos.getText().toString());
+				System.out.println("Pulsado Configuración departamentos: "+cmbDepartamentos.getText().toString());
 				new I10_ManageDepartament(shell, bundle, bundle.getString("I02_but_Config_dep"));
 			}
 		});
@@ -418,73 +431,76 @@ public class I02 {
 	
 
 		
-		Composite cInfo = new Composite(c, SWT.BORDER);
+		Composite cInfo = new Composite(cDepartamentos, SWT.BORDER);
 		cInfo.setLayout(new GridLayout(2, false));
 		cInfo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		Label lContenido = new Label(cInfo, SWT.CENTER);
 		lContenido.setText("Aquí va información del departamento");
-		lContenido.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true,
-				true, 2, 1));
+		lContenido.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 2, 1));
 
 	}
 
+	private void crearTabContratos(TabFolder tabFolder) { 		
+		TabItem tabItemContratos = new TabItem(tabFolder, SWT.NONE);
+		tabItemContratos.setText(bundle.getString("Contratos"));
+		tabItemContratos.setImage(ico_cuadrante);
+
+		final Composite cContratos = new Composite(tabFolder, SWT.NONE);
+		tabItemContratos.setControl(cContratos);
+		
+		cContratos.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		cContratos.setLayout(new GridLayout(3,false));
+		
+		Table tablaContratos = new Table(cContratos, SWT.MULTI | SWT.BORDER  | SWT.FULL_SELECTION);
+		tablaContratos.setLinesVisible(true);
+		tablaContratos.setHeaderVisible(true);
+		String[] titles = { "Nombre contrato", "Empleados", "Total"};
+		for (int i = 0; i < titles.length; i++) {
+			TableColumn column = new TableColumn(tablaContratos, SWT.NONE);
+			column.setText(titles[i]);
+		}
+		// TODO Quitar este ejemplo
+		TableItem tItem = new TableItem(tablaContratos, SWT.NONE);
+		tItem.setText(0, "6:40h");
+		tItem.setText(1, "Mike Olfield, Lou Vega, Paul McCartney, Ricky Martin");
+		tItem.setText(2, "4");
+		tItem = new TableItem(tablaContratos, SWT.NONE);
+		tItem.setText(0, "Días sueltos");
+		tItem.setText(1, "Alicia Keys, Ana Torroja, Marylin Manson");
+		tItem.setText(2, "3");
+		for (int i = 0; i < titles.length; i++) {
+			tablaContratos.getColumn(i).pack();
+		}
+		tablaContratos.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3,1));
+		
+		final Button bNuevoContrato		= new Button(cContratos, SWT.PUSH);
+		final Button bModificarContrato	= new Button(cContratos, SWT.PUSH);
+		final Button bEliminarContrato	= new Button(cContratos	, SWT.PUSH);
+		
+		bNuevoContrato		.setText("Nuevo contrato");
+		bModificarContrato	.setText("Modificar contrato");
+		bEliminarContrato	.setText("Eliminar contrato");
+		bNuevoContrato		.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1,1));
+		bModificarContrato	.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1,1));
+		bEliminarContrato	.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1,1));		
+
+		bNuevoContrato.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				new I09_1(shell, bundle);
+			}
+		});
+
+	}
+	
 	private void crearVistaJefe() {
 		// Crear menu tabs
 		final TabFolder tabFolder = new TabFolder(shell, SWT.NONE);
-		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,
-				1));
-		TabItem tabItemCuadrantes = new TabItem(tabFolder, SWT.NONE);
-		tabItemCuadrantes.setText(bundle.getString("Cuadrantes"));
-		tabItemCuadrantes.setImage(ico_cuadrante);
-		
-		TabItem tabItemMensajes = new TabItem(tabFolder, SWT.NONE);
-		tabItemMensajes.setText(bundle.getString("Mensajes"));
-		tabItemMensajes.setImage(ico_mens_l);
-		
-		TabItem tabItemEmpleados = new TabItem(tabFolder, SWT.NONE);
-		tabItemEmpleados.setText(bundle.getString("Empleados"));
-		tabItemEmpleados.setImage(ico_chico);
-		
-		TabItem tabItemDepartamentos = new TabItem(tabFolder, SWT.NONE);
-		tabItemDepartamentos.setText(bundle.getString("Departamentos"));
-		tabItemDepartamentos.setImage(ico_chicos);
-
-		final Composite cCuadrantes = new Composite(tabFolder, SWT.NONE);
-		crearCompositeCuadrantes(cCuadrantes);
-
-		final Composite cMensajes = new Composite(tabFolder, SWT.NONE);
-		crearCompositeMensajes(cMensajes);
-
-		final Composite cEmpleados = new Composite(tabFolder, SWT.NONE);
-		crearCompositeEmpleados(cEmpleados);
-
-		final Composite cDepartamentos = new Composite(tabFolder, SWT.NONE);
-		crearCompositeDepartamentos(cDepartamentos);
-
-		cEmpleados.addListener(SWT.MouseMove, new Listener(){
-			public void handleEvent(Event e) {
-			
-				Composite cHelp = (Composite)cEmpleados.getChildren()[1];
-				cHelp.getClientArea();
-				Rectangle rect = cHelp.getClientArea();
-		          // Create buffer for double buffering
-		          Image image = new Image(display, rect.width, rect.height);
-		          GC gc1 = new GC(cEmpleados.getChildren()[1]);
-		          gc1.copyArea(image, rect.y,rect.x);
-		          Img=image.getImageData();
-		          //System.out.print(Img.width);
-			}
-		});
-		
-
-		// Asignar cada panel a su tab
-		tabItemCuadrantes.setControl(cCuadrantes);
-		tabItemMensajes.setControl(cMensajes);
-		tabItemEmpleados.setControl(cEmpleados);
-		tabItemDepartamentos.setControl(cDepartamentos);
-		
-
-		
+		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,1));
+		crearTabCuadrantes(tabFolder);
+		crearTabMensajes(tabFolder);
+		crearTabEmpleados(tabFolder);		
+		crearTabDepartamentos(tabFolder);
+		crearTabContratos(tabFolder);
 	}
 
 	public void crearVentana() {
@@ -492,22 +508,15 @@ public class I02 {
 		shell.setText(bundle.getString("Turno-matic"));// idiomas igual siempre
 
 		// Cargar iconos
-		icoGr = new Image(display, I02.class.getResourceAsStream("icoGr.gif"));
-		icoPq = new Image(display, I02.class.getResourceAsStream("icoPq.gif"));
-		ico_imprimir = new Image(display, I02.class
-				.getResourceAsStream("ico_imprimir.gif"));
-		ico_mens_l = new Image(display, I02.class
-				.getResourceAsStream("ico_mens1_v.gif"));
-		ico_mens = new Image(display, I02.class
-				.getResourceAsStream("ico_mens2_v.gif"));
-		ico_cuadrante = new Image(display, I02.class
-				.getResourceAsStream("ico_cuadrante.gif"));
-		ico_chico = new Image(display, I02.class
-				.getResourceAsStream("ico_chico.gif"));
-		ico_chica = new Image(display, I02.class
-				.getResourceAsStream("ico_chica.gif"));
-		ico_chicos = new Image(display, I02.class
-				.getResourceAsStream("ico_chicos.gif"));
+		icoGr			= new Image(display, I02.class.getResourceAsStream("icoGr.gif"));
+		icoPq			= new Image(display, I02.class.getResourceAsStream("icoPq.gif"));
+		ico_imprimir	= new Image(display, I02.class.getResourceAsStream("ico_imprimir.gif"));
+		ico_mens_l		= new Image(display, I02.class.getResourceAsStream("ico_mens1_v.gif"));
+		ico_mens		= new Image(display, I02.class.getResourceAsStream("ico_mens2_v.gif"));
+		ico_cuadrante	= new Image(display, I02.class.getResourceAsStream("ico_cuadrante.gif"));
+		ico_chico		= new Image(display, I02.class.getResourceAsStream("ico_chico.gif"));
+		ico_chica		= new Image(display, I02.class.getResourceAsStream("ico_chica.gif"));
+		ico_chicos		= new Image(display, I02.class.getResourceAsStream("ico_chicos.gif"));
 
 		// Dos iconos de tamaño diferente para SO's que los necesiten
 		shell.setImages(new Image[] { icoPq, icoGr });
@@ -525,8 +534,19 @@ public class I02 {
 		GridLayout lShell = new GridLayout(1, false);
 		shell.setLayout(lShell);
 
-		// Poblar ventana
+		// Poblar ventana seg
 		crearVistaJefe();
+
+		// Crear una barra de estado
+		Composite estado = new Composite(shell,SWT.BORDER);
+		estado.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1,1));
+		estado.setLayout(new GridLayout(2,false));
+		Label lEstado = new Label(estado,SWT.LEFT);
+		ProgressBar pbEstado = new ProgressBar(estado,SWT.RIGHT);
+		lEstado.setText("Conectando con la base de datos.");
+		lEstado.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1,1));
+		pbEstado.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,1));
+		pbEstado.setSelection(85);
 
 		// Ajustar el tamaño de la ventana al contenido
 		shell.pack();
@@ -550,7 +570,5 @@ public class I02 {
 				e.doit = messageBox.open() == SWT.YES;
 			}
 		});
-
 	}
-
 }
