@@ -27,7 +27,6 @@ import aplicacion.Util;
 import java.util.ResourceBundle;
 
 // TODO Mostrar elección de rangos inferiores al usuario
-// TODO Elegir color (si lo vamos a usar)
 public class I08_1 {
 	private Shell padre = null;
 	private ResourceBundle bundle;
