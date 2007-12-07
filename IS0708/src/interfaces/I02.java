@@ -432,7 +432,9 @@ public class I02 {
 		bConfig.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				System.out.println("Pulsado Configuración departamentos: "+cmbDepartamentos.getText().toString());
-				new I10_ManageDepartament(shell, bundle, bundle.getString("I02_but_Config_dep"));
+				//take arrayDB from DB this is only for to show interface
+				String[]arrayDB = {"nazwaDepartamentu","1 parametr","2 parametr","3 parametr"};
+				new I10_ManageDepartament(shell, bundle, bundle.getString("I02_but_Config_dep"),arrayDB);
 			}
 		});
 		
@@ -1162,7 +1164,7 @@ public class I02 {
 		shell.setLayout(lShell);
 
 		// Poblar ventana: 0 administrador, 1 empleado, 2 jefe, 3 gerente
-		crearTabFolder(0);
+		crearTabFolder(2);
 
 		// Crear una barra de estado
 		Composite estado = new Composite(shell,SWT.BORDER);
