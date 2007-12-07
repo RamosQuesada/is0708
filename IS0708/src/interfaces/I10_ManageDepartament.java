@@ -41,6 +41,9 @@ public class I10_ManageDepartament {
 	private Shell shellWindow =null;
 	
 	private String[] arrayDB =null;
+	
+	//List of Atributes of Departament in DB 
+	private final String[] arrayLabel = {"Atr1", "Atr2", "Atr3", "Atr4"};
 
 	private ResourceBundle bundle;
 
@@ -51,13 +54,23 @@ public class I10_ManageDepartament {
 	private Cuadrante cuadrante;
 
 	public I10_ManageDepartament(Shell padre, ResourceBundle bundle,
+			String windowName, String[] newArrayDB) {
+		// TODO Auto-generated constructor stub
+		this.padre = padre;
+		this.bundle = bundle;
+				
+		//String[]newArrayDB = {"nazwaDepartamentu","1 parametr","2 parametr","3 parametr"};
+		arrayDB = newArrayDB;
+		createWindow(windowName);
+	}
+	
+	public I10_ManageDepartament(Shell padre, ResourceBundle bundle,
 			String windowName) {
 		// TODO Auto-generated constructor stub
 		this.padre = padre;
 		this.bundle = bundle;
-		
-		
-		String[]newArrayDB = {"nazwaDepartamentu","1 parametr","2 parametr","3 parametr"};
+				
+		String[]newArrayDB = {"","","",""};
 		arrayDB = newArrayDB;
 		createWindow(windowName);
 	}
@@ -89,7 +102,7 @@ public class I10_ManageDepartament {
 			System.out.println(" "+i);
 			
 			arrayL[i] = new Label (group, SWT.NONE);
-			arrayL[i].setText("Variable_"+i);
+			arrayL[i].setText(arrayLabel[i]);
 			arrayL[i].setLayoutData	(new GridData(SWT.CENTER,SWT.CENTER,true,true,1,1));
 			
 			arrayT[i] = new Text  (group, SWT.BORDER);	
