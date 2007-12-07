@@ -2,27 +2,17 @@ package algoritmo;
 
 import java.util.ArrayList;
 import aplicacion.*;
-
+/**
+ * En esta clase estan las listas que utilizamos en la clase estructura
+ * @author madctol
+ */
 public class ListasEmpleados {
-	
-	/**
-	 * Empleados que trabajan
-	 */
-	private ArrayList<Empleado> empleados;
-	
-	/**
-	 * Empleados disponibles
-	 */
-    private ArrayList<Empleado> disponibles;
+
+	private ArrayList<Empleado> empleados;//empleados que trabajan
+    private ArrayList<Empleado> disponibles;//empleados disponibles
+    private ArrayList<Empleado> reserva;//empleados de reserva
     
-    /**
-     * Empleados en reserva (se calculará al finalizar)
-     */
-    private ArrayList<Empleado> reserva;
-    
-    /**
-     * Constructora de ListasEmpleados
-     */
+
     public ListasEmpleados(){
     	empleados = new ArrayList<Empleado>();
     	disponibles = new ArrayList<Empleado>();

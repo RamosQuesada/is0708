@@ -3,28 +3,16 @@ package algoritmo;
 import java.util.ArrayList;
 
 /**
- * 
+ * Esta clase representa el tipo de datos que llevara el cuadrante en cada posicion,es decir,
+ * para cada dia y para cada hora/turno habra una idEmpleado,horaIni y HoraFin.
  * @author DavidMartin
  *
  */
-/**
- * Esta clase representa el tipo de datos que llevara el cuadrante en cada posicion,es decir,
- * para cada dia y para cada hora/turno habra una idEmpleado,horaIni y HoraFin.
- */
 public class Trabaja {
 
-	/**
-	 *Id del empleado
-	 */
-	private int IdEmpl;
-	/**
-	 *Fichaje inicial
-	 */
-	private int FichIni;//hay que mirar bien los tipos que van a llevar las fechas
-	/**
-	 *Fichaje final
-	 */
-	private int FichFin;
+	private int IdEmpl;//id del empleado
+	private int FichIni;//Fichaje inicial,hay que mirar bien los tipos que van a llevar las fechas
+	private int FichFin;//Fichaje final
 	
 	public Trabaja(){//constructora por defecto
 		IdEmpl=0;

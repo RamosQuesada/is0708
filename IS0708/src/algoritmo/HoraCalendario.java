@@ -3,30 +3,14 @@ package algoritmo;
 import java.util.ArrayList;
 
 /**
- * 
+ * Esta clase contiene el max/min numero de personas y numero de expertos/inexpertos,que se van a utilizar en la clase calendario
  * @author DavidMartin
- *
- */
-/**
- * Esta clase representa el tipo de datos que va a utilizar la clase calendario
  */
 public class HoraCalendario {
 
-	/**
-	 *maximo numero de empleados por hora
-	 */
 	private int max;
-	/**
-	 *minimo numero de empleados por hora
-	 */
 	private int min;//
-	/**
-	 *numero de personal experta por hora
-	 */
 	private int expertos;//
-	/**
-	 *numero de personal inexperta por hora
-	 */
 	private int inexpertos;//
 	
 	public HoraCalendario(){//Constructora por defecto
