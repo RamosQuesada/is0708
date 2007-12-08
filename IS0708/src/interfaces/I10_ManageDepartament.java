@@ -25,6 +25,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -40,11 +41,21 @@ public class I10_ManageDepartament {
 	private Shell padre = null;
 	
 	private Shell shellWindow =null;
-	
-	private String[] arrayDB =null;
+	private String[] arrayDB = {"","",""};
 	
 	//List of Atributes of Departament in DB 
-	private String[] arrayLabel = null;
+	private Label labName = null;
+	private Label labNumber = null;
+	private Label labBoss = null;
+	
+	private Button butNewBoss = null;
+	
+	private Button bAccept = null;
+	private Button bCancel = null;
+	
+	private Text tName = null;
+	private Text tNumber = null;
+	private Combo comboBoss = null;
 
 	private ResourceBundle bundle;
 
@@ -57,9 +68,7 @@ public class I10_ManageDepartament {
 		// TODO Auto-generated constructor stub
 		this.padre = padre;
 		this.bundle = bundle;
-		String[] newArrayLabel = {bundle.getString("Nombre"), bundle.getString("I10_dep_num"), bundle.getString("I10_dep_jefe")};
-		arrayLabel = newArrayLabel;
-
+		//String[] newArrayLabel = {bundle.getString("Nombre"), bundle.getString("I10_dep_num"), bundle.getString("I10_dep_jefe")};
 		
 		arrayDB = newArrayDB;
 		createWindow(windowName);
@@ -71,15 +80,8 @@ public class I10_ManageDepartament {
 		this.padre = padre;
 		this.bundle = bundle;
 
-		String[] newArrayLabel = {bundle.getString("Nombre"), bundle.getString("I10_dep_num"), bundle.getString("I10_dep_jefe")};
-		arrayLabel = newArrayLabel;
-		
-		String[] newArrayDB = new String[this.getArrayLabel().length];
-		for (int i=0;i< this.getArrayLabel().length;i++){
-			newArrayDB[i] = "";
-		}
-		
-		arrayDB = newArrayDB;
+		//String[] newArrayLabel = {bundle.getString("Nombre"), bundle.getString("I10_dep_num"), bundle.getString("I10_dep_jefe")};
+
 		createWindow(windowName);
 	}
 
@@ -97,7 +99,8 @@ public class I10_ManageDepartament {
 		//adding icon to window
 		iconDep = new Image(padre.getDisplay(), I02.class.getResourceAsStream("ico_chicos.gif"));
 		shellWindow.setImage(iconDep);
-	
+
+//******Adding Components into Window*********************************************************************
 		final Group group = new Group(shellWindow, SWT.NONE);
 		group.setText(bundle.getString("Departamento"));
 		group.setLayout(new GridLayout(1,true));
@@ -108,30 +111,48 @@ public class I10_ManageDepartament {
 		group.setLayout(new GridLayout(2,true));
 		group.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,2,1));
 		
-		final Label[] arrayL = new Label[this.getArrayDB().length];
-		final Text[] arrayT = new Text[this.getArrayDB().length];
+		//components inside Group
+
+		labName = new Label (group, SWT.NONE);
+		labName.setText(bundle.getString("Nombre"));
+		labName.setLayoutData	(new GridData(SWT.CENTER,SWT.CENTER,true,true,1,1));	
 		
-		for (int i=0 ;i< this.getArrayDB().length; i++){
-			System.out.println(" "+i);
-			
-			arrayL[i] = new Label (group, SWT.NONE);
-			arrayL[i].setText(arrayLabel[i]);
-			arrayL[i].setLayoutData	(new GridData(SWT.CENTER,SWT.CENTER,true,true,1,1));
-			
-			arrayT[i] = new Text  (group, SWT.BORDER);	
-			arrayT[i].setText(this.getArrayDB()[i]);	
-			arrayT[i].setSize(100,20);
-			arrayT[i].setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,true,true,1,1));
-		}
+		tName = new Text  (group, SWT.BORDER);	
+		tName.setText(this.getArrayDB()[0]);	
+		tName.setSize(100,20);
+		tName.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,true,true,1,1));
+		
+		labNumber = new Label (group, SWT.NONE);
+		labNumber.setText(bundle.getString("I10_dep_num"));
+		labNumber.setLayoutData	(new GridData(SWT.CENTER,SWT.CENTER,true,true,1,1));	
+	
+		tNumber = new Text  (group, SWT.BORDER);	
+		tNumber.setText(this.getArrayDB()[1]);	
+		tNumber.setSize(100,20);
+		tNumber.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,true,true,1,1));
+		
+		labBoss = new Label (group, SWT.NONE);
+		labBoss.setText(bundle.getString("I10_dep_jefe"));
+		labBoss.setLayoutData	(new GridData(SWT.CENTER,SWT.CENTER,true,true,1,1));	
+		
+		comboBoss = new Combo  (group, SWT.DROP_DOWN );	
+		comboBoss.setText(this.getArrayDB()[2]);	
+		comboBoss.setSize(100,20);
+		comboBoss.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,true,true,1,1));
+		
+		butNewBoss		= new Button(group, SWT.PUSH);
+		butNewBoss	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		butNewBoss	.setText(bundle.getString("I10_dep_nuevo_jefe"));
+		butNewBoss	.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		//Buttons "Accept" and "Cancel"
 		
-		final Button bAccept		= new Button(shellWindow, SWT.PUSH);
+		bAccept		= new Button(shellWindow, SWT.PUSH);
 		bAccept	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		bAccept	.setText(bundle.getString("Aceptar"));
 		bAccept	.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		final Button bCancel		= new Button(shellWindow, SWT.PUSH);		
+		bCancel		= new Button(shellWindow, SWT.PUSH);		
 		bCancel	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		bCancel	.setText(bundle.getString("Cancelar"));
 		bCancel	.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -157,7 +178,7 @@ public class I10_ManageDepartament {
 
 		//default button is "Accept"
 		shellWindow.setDefaultButton(bAccept);
-		
+//*************************************************************************************************************		
 		shellWindow.pack();
 		shellWindow.setSize(new Point(350, shellWindow.getSize().y));
 		shellWindow.setLocation(padre.getBounds().width / 2 + padre.getBounds().x
@@ -183,6 +204,7 @@ public class I10_ManageDepartament {
 		});
 	}
 
+//**GET methods***********************************************************************************************
 	public ResourceBundle getBundle(){
 		return bundle;
 	}
@@ -192,13 +214,37 @@ public class I10_ManageDepartament {
 	public Image getIconDep(){
 		return iconDep;
 	}
-	public String[] getArrayLabel(){
-		return arrayLabel;
-	}
 	public String[] getArrayDB(){
 		return arrayDB;
 	}
-	
+	public Label getLabName(){
+		return labName;
+	}
+	public Label getLabNumber(){
+		return labNumber;
+	}
+	public Label getLabBoss(){
+		return labBoss;
+	}
+	public Button getButNewBoss(){
+		return butNewBoss;
+	}
+	public Button getBAccept(){
+		return bAccept;
+	}
+	public Button getBCancel(){
+		return bCancel;
+	}
+	public Text getTName(){
+		return tName;
+	}
+	public Text getTNumber(){
+		return tNumber;
+	}
+	public Combo getComboBoss(){
+		return comboBoss;
+	}
+//**SET methods************************************************************************************************
 	public void setIconDep(Image newImage){
 		iconDep = newImage;
 	}
@@ -208,5 +254,32 @@ public class I10_ManageDepartament {
 	public void setArrayDB(String[]newArrayDB){
 		arrayDB = newArrayDB;
 	}
-
+	public void setLabName(Label newLabel){
+		labName = newLabel;
+	}
+	public void setLabNumber(Label newLabel){
+		labNumber = newLabel;
+	}
+	public void setLabBoss(Label newLabel){
+		labBoss = newLabel;
+	}
+	public void setButNewBoss(Button newButNewBoss){
+		butNewBoss = newButNewBoss;
+	}
+	public void setBAccept(Button newBAccept){
+		bAccept = newBAccept;
+	}
+	public void setBCancel(Button newBCancel){
+		bCancel = newBCancel;
+	}
+	public void setTName(Text newTName){
+		tName = newTName;
+	}
+	public void setTNumber(Text newTNumber){
+		tNumber = newTNumber;
+	}
+	public void setComboBoss(Combo newComboBoss){
+		comboBoss = newComboBoss;
+	}
+	
 }
