@@ -8,6 +8,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
 import java.util.ResourceBundle;
+import aplicacion.Database;
 
 /**
  * Interfaz de usuario I-01 :: Identificación
@@ -20,18 +21,22 @@ public class I01 {
 	String password;
 	public Shell dialog;
 	private int botonPulsado;
+	Database db;
+	Text tEstado;
+	
 	public I01(Shell padre, ResourceBundle bundle) {
 		this.padre = padre;
 		this.bundle = bundle;
+		this.db = db;
 		numeroVendedor = 0;
 		password = "";
 		botonPulsado = -1;
 	}
-	
-	/**
+		
+	/**	
 	 * Crea la ventana
 	 */
-	public void mostrarVentana() {
+	public synchronized void mostrarVentana() {
 		Image fondo = new Image(padre.getDisplay(), I01.class.getResourceAsStream("intro.png"));
 		dialog = new Shell (padre, SWT.NONE | SWT.APPLICATION_MODAL);
 		
@@ -42,6 +47,11 @@ public class I01 {
 		Composite contenido = new Composite(dialog, SWT.NONE);
 		contenido.setLayout(new GridLayout(8,true));
 		contenido.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true, 1, 1));
+		
+		/* TODO
+		tEstado = new Text(dialog, SWT.LEFT);
+		tEstado.setText("Conectando con la base de datos");
+		*/
 		
 		final Label lUsuario  = new Label(contenido, SWT.LEFT);
 		final Text  tUsuario  = new Text(contenido, SWT.BORDER);
@@ -65,8 +75,12 @@ public class I01 {
 		tUsuario.setTextLimit(8);
 		lPassword.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 3, 1));
 		lPassword.setText(bundle.getString("Contraseña"));
+		//TODO quitar esto
+		tUsuario.setText("00000002");
+		tPassword.setText("blabla");
 		
-		tPassword.setEditable(true);
+		//TODO ¿Y esto de aquí debajo para qué lo puse?
+		//tPassword.setEditable(true);
 		tPassword.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 5, 1));
 
 		bAceptar.setText(bundle.getString("Aceptar"));
