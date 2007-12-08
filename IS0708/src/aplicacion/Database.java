@@ -6,17 +6,17 @@ import java.sql.*;
  * @author Camilo
  *
  */
-public class Database extends Thread {	
+public class Database extends Thread{	
 	Connection con;	
 	Statement st;
 	ResultSet rs;
-	
+
 	public void run() {
 		abrirConexion();
 	}
 	// Tras una hora de pelea con Eclipse y MySQL, por fin tenemos
 	// conexion con la BD ;)
-	public void abrirConexion() {
+	public synchronized void abrirConexion() {
 		try { 
 			String userName="turnomat_user";
 	        String password="is0708";
@@ -24,7 +24,7 @@ public class Database extends Thread {
 	        String url="jdbc:mysql://72.34.56.241:3306/"+bd; 
 	        Class.forName("com.mysql.jdbc.Driver").newInstance(); 
 	        con = DriverManager.getConnection(url, userName, password); 
-	        System.out.println("Conexión a la BD"); 
+	        System.out.println("Conexión a la BD");
 		} catch (Exception e) { 
 			e.printStackTrace();
 			System.out.println("Error en conexión"); 

@@ -20,7 +20,7 @@ import idiomas.LanguageChanger;
 public class Aplicacion {
 	private static Display display;
 	private Empleado empleadoActual;
-	
+			
 	public static void main (String[] args) {
 		// La lista de empleados
 		final ArrayList<Empleado> empleados;
@@ -31,8 +31,7 @@ public class Aplicacion {
 		// 1 polaco
 		// 2 inglés
 		l.cambiarLocale(0);
-		//System.out.println(l.getCurrentLocale().getCountry());
-		// Prueba del archivo de idioma
+
 		display = new Display ();
 		Shell shell = new Shell(display);
 		
@@ -59,8 +58,9 @@ public class Aplicacion {
 		empleados.add(e5);
 		empleados.add(e6);
 
-		// Conectar con la base de datos
 		Database db = new Database();
+		
+		// Conectar con la base de datos
 		db.start();
 		
 		// Login
