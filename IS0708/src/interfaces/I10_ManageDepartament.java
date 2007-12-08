@@ -7,6 +7,7 @@ package interfaces;
  * Management (adding and configurate) department.
  * ver 1.0
  *******************************************************************************/
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -26,12 +27,17 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Dialog;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.ErrorMsg;
 
 import aplicacion.Empleado;
 import aplicacion.Posicion;
@@ -169,12 +175,30 @@ public class I10_ManageDepartament {
 		SelectionAdapter onAccept = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Send datas to BD");
-				shellWindow.dispose();
+				if(integerCheck(tNumber.getText())==true){
+					shellWindow.dispose();
+				}else{
+					//show message for user
+					MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
+					messageBox.setText (bundle.getString("Mensaje"));
+					messageBox.setMessage (bundle.getString("I10_int_check_mess"));
+					e.doit = messageBox.open () == SWT.CLOSE;
+					
+					System.out.println("Non-integer value in Number field: "+tNumber.getText());
+				}		
+			}
+		};
+		
+		// on action "New Boss"
+		SelectionAdapter onNewBoss = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				I08_1 I08_1_instance = new I08_1(padre, bundle);
 			}
 		};
 		
 		bCancel.addSelectionListener(onCancel);
 		bAccept.addSelectionListener(onAccept);
+		butNewBoss.addSelectionListener(onNewBoss);
 
 		//default button is "Accept"
 		shellWindow.setDefaultButton(bAccept);
@@ -203,7 +227,17 @@ public class I10_ManageDepartament {
 			}
 		});
 	}
-
+	//check if the String text is interger
+	public boolean integerCheck(String string){
+	    try {
+	    	int n = Integer.parseInt( string );
+	    	return true;
+	    } catch (Exception e) {
+	    	System.out.println("Non-integer value");
+	        return false;
+	    }
+	}
+	
 //**GET methods***********************************************************************************************
 	public ResourceBundle getBundle(){
 		return bundle;
