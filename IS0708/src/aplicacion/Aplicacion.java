@@ -1,9 +1,10 @@
 package aplicacion;
 
 import java.util.ArrayList;
-import interfaces.I02;
 import interfaces.I01;
-import interfaces.I02Empleado;
+import interfaces.I02;
+import aplicacion.Database.*;
+
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -15,10 +16,10 @@ import idiomas.LanguageChanger;
 /**
  * Este es el Controlador o clase principal de la aplicación.
  * @author Daniel Dionne
- *
  */
 public class Aplicacion {
 	private static Display display;
+	private Empleado empleadoActual;
 	
 	public static void main (String[] args) {
 		// La lista de empleados
@@ -33,9 +34,9 @@ public class Aplicacion {
 		//System.out.println(l.getCurrentLocale().getCountry());
 		// Prueba del archivo de idioma
 		display = new Display ();
+		Shell shell = new Shell(display);
 		
-		
-		// Lista provisional de empleados para hacer pruebas:
+		// TODO Lista provisional de empleados para hacer pruebas:
 		Empleado e1 = new Empleado(1, "M. Jackson", new Color (display, 104, 228,  85));
 		Empleado e2 = new Empleado(2, "J. Mayer",   new Color (display, 130, 130, 225));
 		Empleado e3 = new Empleado(3, "B. Jovi",    new Color (display, 240, 190, 150));
@@ -57,26 +58,47 @@ public class Aplicacion {
 		empleados.add(e4);
 		empleados.add(e5);
 		empleados.add(e6);
-		boolean salir=false;
-		while (!salir){
-			Shell shell = new Shell(display);
-			I01 login = new I01(shell, l.getBundle());
+
+		// Conectar con la base de datos
+		Database db = new Database();
+		db.start();
+		
+		// Login
+		I01 login = new I01(shell, l.getBundle());
+		boolean identificado = false;
+		while (!identificado) {
+			login.mostrarVentana();
+			while (!login.dialog.isDisposed()) {
+				if (!display.readAndDispatch()) {
+					display.sleep();
+				}
+			}
+			if (login.getBotonPulsado()==1) {
+				// TODO Si el usuario existe en la base de datos, cargarlo en
+				//la variable empleadoActual
+				System.out.println("Empleado identificado: " + login.getNumeroVendedor());
+				identificado = true;
+			}
+			else {
+				display.dispose();
+				identificado = true; // Para que salga del bucle
+				db.cerrarConexion();
+			}
+		}
+		
+		// Si todavía no he cerrado el display
+		if (!display.isDisposed()) {
 			// TODO Cambiar por acceso a la vista
+			// Poblar ventana: 0 administrador, 1 empleado, 2 jefe, 3 gerente
+			new I02(shell, display, l.getBundle(), l.getCurrentLocale(), empleados, login.getNumeroVendedor());
 			// Este bucle mantiene la ventana abierta
 			while (!shell.isDisposed()) {
 				if (!display.readAndDispatch()) {
 					display.sleep();
 				}
 			}
-		
-			shell=new Shell(display);
-			I02 interfaz = new I02(shell, display, l.getBundle(), l.getCurrentLocale(), empleados);
-				while (!shell.isDisposed()) {
-					if (!display.readAndDispatch()) {
-						display.sleep();
-					}
-				}
-			}
-		display.dispose();
+			display.dispose();
+			db.cerrarConexion();
+		}
 	}
 }

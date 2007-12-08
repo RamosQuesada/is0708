@@ -24,7 +24,7 @@ import interfaces.I09_1;
 import aplicacion.Util.*;
 
 /**
- * Interfaz I-02 :: Ventana principal - Jefe
+ * Interfaz de usuario I-02 :: Ventana principal - Jefe
  * @author Daniel Dionne
  * 
  */
@@ -34,21 +34,19 @@ public class I02 {
 	Display display;
 	ResourceBundle bundle;
 	Locale locale;
-	Image icoGr, icoPq, ico_imprimir, ico_mens_l, ico_mens, ico_cuadrante,
-			ico_chico, ico_chica, ico_chicos;
-
+	Image icoGr, icoPq, ico_imprimir, ico_mens_l, ico_mens, ico_cuadrante, ico_chico, ico_chica, ico_chicos;
 	
 	private ArrayList<Empleado> empleados;
 	
 	private ImageData Img;
 
-	public I02(Shell shell, Display display, ResourceBundle bundle, Locale locale, ArrayList<Empleado> empleados) {
+	public I02(Shell shell, Display display, ResourceBundle bundle, Locale locale, ArrayList<Empleado> empleados, int rango) {
 		this.shell = shell;
 		this.display = display;
 		this.empleados = empleados;
 		this.bundle = bundle;
 		this.locale = locale;
-		crearVentana();
+		crearVentana(rango);
 		//ponImageDia();
 	}
 	
@@ -197,6 +195,7 @@ public class I02 {
 
 		bPorMes.setSelection(true);
 	}
+
 	/**
 	 * Crea un tab de mensajería
 	 * @param tabFolder el tabFolder donde colocarlo
@@ -1105,12 +1104,6 @@ public class I02 {
 			crearTabAdminNuevoGerente(tabFolder);
 			crearTabAdminEliminaGerente(tabFolder);
 			break;
-		case 1:
-			// Tabs de empleado
-			crearTabEmpleadoCuadrantes(tabFolder);
-			crearTabMensajes(tabFolder);
-			crearTabEmpleadoEstadisticas(tabFolder);
-			break;
 		case 2:
 			// Tabs de jefe
 			crearTabJefeCuadrantes(tabFolder);
@@ -1123,15 +1116,18 @@ public class I02 {
 			//Tabs de gerente
 			crearTabMensajes(tabFolder);
 			break;
+		default:
+			// Tabs de empleado
+			crearTabEmpleadoCuadrantes(tabFolder);
+			crearTabMensajes(tabFolder);
+			crearTabEmpleadoEstadisticas(tabFolder);
 		}
-		
-		
 	}
 
 	/**
-	 * Crea la ventana.
+	 * Crea la ventana con el rango del empleado.
 	 */
-	public void crearVentana() {
+	public void crearVentana(int rango) {
 
 		// Crear la ventana
 		shell.setText(bundle.getString("Turno-matic"));// idiomas igual siempre
@@ -1164,7 +1160,7 @@ public class I02 {
 		shell.setLayout(lShell);
 
 		// Poblar ventana: 0 administrador, 1 empleado, 2 jefe, 3 gerente
-		crearTabFolder(2);
+		crearTabFolder(rango);
 
 		// Crear una barra de estado
 		Composite estado = new Composite(shell,SWT.BORDER);
