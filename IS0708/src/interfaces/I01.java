@@ -1,12 +1,3 @@
-/*******************************************************************************
- * INTERFAZ I-01 :: Identificación
- *   por Daniel Dionne
- *   
- * Interfaz de identificación del usuario.
- * ver 0.1
- *******************************************************************************/
-
-
 package interfaces;
 
 import org.eclipse.swt.*;
@@ -18,24 +9,37 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
 import java.util.ResourceBundle;
 
+/**
+ * Interfaz de usuario I-01 :: Identificación
+ * @author Daniel Dionne
+ */
 public class I01 {
-	private Shell shell = null;
+	private Shell padre = null;
 	private ResourceBundle bundle;
-	public I01(Shell shell, ResourceBundle bundle) {
-		this.shell = shell;
+	private int numeroVendedor;
+	String password;
+	public Shell dialog;
+	private int botonPulsado;
+	public I01(Shell padre, ResourceBundle bundle) {
+		this.padre = padre;
 		this.bundle = bundle;
-		mostrarVentana();
+		numeroVendedor = 0;
+		password = "";
+		botonPulsado = -1;
 	}
+	
+	/**
+	 * Crea la ventana
+	 */
 	public void mostrarVentana() {
-		Image fondo = new Image(shell.getDisplay(), I01.class.getResourceAsStream("intro.png"));
-	//	final Shell shell = new Shell (shell, SWT.NONE | SWT.APPLICATION_MODAL);
-
+		Image fondo = new Image(padre.getDisplay(), I01.class.getResourceAsStream("intro.png"));
+		dialog = new Shell (padre, SWT.NONE | SWT.APPLICATION_MODAL);
 		
 		//Esto hace que los labels no tengan fondo
-		shell.setBackgroundMode(SWT.INHERIT_DEFAULT);
-		shell.setLayout(new GridLayout());
+		dialog.setBackgroundMode(SWT.INHERIT_DEFAULT);
+		dialog.setLayout(new GridLayout());
 		
-		Composite contenido = new Composite(shell, SWT.NONE);
+		Composite contenido = new Composite(dialog, SWT.NONE);
 		contenido.setLayout(new GridLayout(8,true));
 		contenido.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true, 1, 1));
 		
@@ -48,18 +52,17 @@ public class I01 {
 		final Button bCancelar = new Button(contenido, SWT.PUSH);
 
 		// Dos iconos de tamaño diferente para SO's que los necesiten
-		Image icoGr = new Image(shell.getDisplay(), I01.class.getResourceAsStream("icoGr.gif"));
-		Image icoPq = new Image(shell.getDisplay(), I01.class.getResourceAsStream("icoPq.gif"));
-		shell.setImages(new Image[] {icoPq,icoGr});
-		shell.setText(bundle.getString("I01_tit_Ident"));
+		Image icoGr = new Image(padre.getDisplay(), I01.class.getResourceAsStream("icoGr.gif"));
+		Image icoPq = new Image(padre.getDisplay(), I01.class.getResourceAsStream("icoPq.gif"));
+		dialog.setImages(new Image[] {icoPq,icoGr});
+		dialog.setText(bundle.getString("I01_tit_Ident"));
 		
-		
-		
+		// Contenido de la ventana		
 		lUsuario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 3, 1));
 		lUsuario.setText(bundle.getString("Vendedor"));
 		tUsuario.setEditable(true);
 		tUsuario.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 5, 1));
-
+		tUsuario.setTextLimit(8);
 		lPassword.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 3, 1));
 		lPassword.setText(bundle.getString("Contraseña"));
 		
@@ -75,7 +78,8 @@ public class I01 {
 		// Un SelectionAdapter con lo que hace el botón bCancelar
 		SelectionAdapter sabCancelar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-					shell.dispose();	
+				botonPulsado=0;
+				dialog.dispose();	
 			}
 		};
 
@@ -83,15 +87,31 @@ public class I01 {
 		SelectionAdapter sabAceptar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				if (tUsuario.getText().length()!=8) {
-					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
-					messageBox.setText (bundle.getString("Mensaje"));
-					messageBox.setMessage (bundle.getString("I01_err_NumVendedor"));
+					MessageBox messageBox = new MessageBox (dialog, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
+					messageBox.setText (bundle.getString("Error"));
+					messageBox.setMessage (bundle.getString("I01_err_NumVendedor1"));
 					e.doit = messageBox.open () == SWT.YES;
 					// Enfocar tUsuario y seleccionar texto
 					tUsuario.setFocus();
 					tUsuario.selectAll();
 				}
-				else shell.dispose();
+				else { 
+					try {
+						numeroVendedor = Integer.valueOf(tUsuario.getText());
+						password = tPassword.getText();
+						botonPulsado=1;
+						dialog.dispose();
+					} catch (NumberFormatException exception) {
+						MessageBox messageBox = new MessageBox (dialog, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
+						messageBox.setText (bundle.getString("Error"));
+						messageBox.setMessage (bundle.getString("I01_err_NumVendedor2"));
+						e.doit = messageBox.open () == SWT.YES;
+						// Enfocar tUsuario y seleccionar texto
+						tUsuario.setFocus();
+						tUsuario.selectAll();
+					}
+
+				}
 			}
 		};
 
@@ -99,14 +119,40 @@ public class I01 {
 		bAceptar.addSelectionListener(sabAceptar);
 
 		// Botón por defecto bAceptar
-		shell.setDefaultButton(bAceptar);
+		dialog.setDefaultButton(bAceptar);
+
 		// Ajustar el tamaño de la ventana al contenido
-		shell.setBackgroundImage(fondo);
-		shell.setSize(500,400);
-		
+		dialog.setBackgroundImage(fondo);
+		dialog.setSize(500,374);
 
 		// Mostrar ventana centrada sobre la pantalla
-		shell.setLocation(shell.getDisplay().getClientArea().width/2 - shell.getSize().x/2, shell.getDisplay().getClientArea().height/2 - shell.getSize().y/2);
-		shell.open();
+		dialog.setLocation(padre.getDisplay().getClientArea().width/2 - dialog.getSize().x/2, padre.getDisplay().getClientArea().height/2 - dialog.getSize().y/2);
+		dialog.open();
+	}
+
+	/**
+	 * Devuelve el número de vendedor introducido por el usuario.
+	 * @return un entero con el número de vendedor
+	 */
+	public int getNumeroVendedor() {
+		return numeroVendedor;
+	}
+	
+	/**
+	 * Devuelve la clave introducida por el usuario.
+	 * @return un String con la clave
+	 */
+	public String getPassword() {
+		return password;
+	}
+	
+	/**
+	 * Devuelve el botón que se ha pulsado
+	 * @return	<li>-1 - Ningún botón
+	 * 			<li> 0 - Cancelar
+	 * 			<li> 1 - Aceptar
+	 */
+	public int getBotonPulsado() {
+		return botonPulsado;
 	}
 }
