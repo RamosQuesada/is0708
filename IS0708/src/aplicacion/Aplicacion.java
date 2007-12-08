@@ -33,7 +33,7 @@ public class Aplicacion {
 		//System.out.println(l.getCurrentLocale().getCountry());
 		// Prueba del archivo de idioma
 		display = new Display ();
-		Shell shell = new Shell(display);
+		
 		
 		// Lista provisional de empleados para hacer pruebas:
 		Empleado e1 = new Empleado(1, "M. Jackson", new Color (display, 104, 228,  85));
@@ -57,17 +57,26 @@ public class Aplicacion {
 		empleados.add(e4);
 		empleados.add(e5);
 		empleados.add(e6);
-
-		I01 login = new I01(shell, l.getBundle());
-		// TODO Cambiar por acceso a la vista
-		// Poblar ventana: 0 administrador, 1 empleado, 2 jefe, 3 gerente
-		I02 interfaz = new I02(shell, display, l.getBundle(), l.getCurrentLocale(), empleados);
-		// Este bucle mantiene la ventana abierta
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
+		boolean salir=false;
+		while (!salir){
+			Shell shell = new Shell(display);
+			I01 login = new I01(shell, l.getBundle());
+			// TODO Cambiar por acceso a la vista
+			// Este bucle mantiene la ventana abierta
+			while (!shell.isDisposed()) {
+				if (!display.readAndDispatch()) {
+					display.sleep();
+				}
 			}
-		}
+		
+			shell=new Shell(display);
+			I02 interfaz = new I02(shell, display, l.getBundle(), l.getCurrentLocale(), empleados);
+				while (!shell.isDisposed()) {
+					if (!display.readAndDispatch()) {
+						display.sleep();
+					}
+				}
+			}
 		display.dispose();
 	}
 }
