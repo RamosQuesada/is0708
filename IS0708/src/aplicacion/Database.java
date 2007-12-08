@@ -6,11 +6,14 @@ import java.sql.*;
  * @author Camilo
  *
  */
-public class Database {	
+public class Database extends Thread {	
 	Connection con;	
 	Statement st;
 	ResultSet rs;
 	
+	public void run() {
+		abrirConexion();
+	}
 	// Tras una hora de pelea con Eclipse y MySQL, por fin tenemos
 	// conexion con la BD ;)
 	public void abrirConexion() {
