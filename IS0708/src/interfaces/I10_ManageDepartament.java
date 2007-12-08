@@ -7,6 +7,7 @@ package interfaces;
  * Management (adding and configurate) department.
  * ver 1.0
  *******************************************************************************/
+ /**draws window for to add/edid department*/
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -69,6 +70,7 @@ public class I10_ManageDepartament {
 	
 	private Image iconDep;
 	
+	/**constructor for editing department*/
 	public I10_ManageDepartament(Shell padre, ResourceBundle bundle,
 			String windowName, String[] newArrayDB) {
 		// TODO Auto-generated constructor stub
@@ -80,6 +82,7 @@ public class I10_ManageDepartament {
 		createWindow(windowName);
 	}
 	
+	/**constructor for new department*/
 	public I10_ManageDepartament(Shell padre, ResourceBundle bundle,
 			String windowName) {
 		// TODO Auto-generated constructor stub
@@ -91,7 +94,7 @@ public class I10_ManageDepartament {
 		createWindow(windowName);
 	}
 
-
+	/**create window for department*/
 	private void createWindow(String windowName) {
 		// TODO Auto-generated method stub
 		//final Shell shellWindow = new Shell(padre, SWT.CLOSE | SWT.RESIZE
@@ -106,62 +109,8 @@ public class I10_ManageDepartament {
 		iconDep = new Image(padre.getDisplay(), I02.class.getResourceAsStream("ico_chicos.gif"));
 		shellWindow.setImage(iconDep);
 
-//******Adding Components into Window*********************************************************************
-		final Group group = new Group(shellWindow, SWT.NONE);
-		group.setText(bundle.getString("Departamento"));
-		group.setLayout(new GridLayout(1,true));
-		group.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,2,1));
-		
-
-		//Group - Keeps Variables of Department 
-		group.setLayout(new GridLayout(2,true));
-		group.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,2,1));
-		
-		//components inside Group
-
-		labName = new Label (group, SWT.NONE);
-		labName.setText(bundle.getString("Nombre"));
-		labName.setLayoutData	(new GridData(SWT.CENTER,SWT.CENTER,true,true,1,1));	
-		
-		tName = new Text  (group, SWT.BORDER);	
-		tName.setText(this.getArrayDB()[0]);	
-		tName.setSize(100,20);
-		tName.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,true,true,1,1));
-		
-		labNumber = new Label (group, SWT.NONE);
-		labNumber.setText(bundle.getString("I10_dep_num"));
-		labNumber.setLayoutData	(new GridData(SWT.CENTER,SWT.CENTER,true,true,1,1));	
-	
-		tNumber = new Text  (group, SWT.BORDER);	
-		tNumber.setText(this.getArrayDB()[1]);	
-		tNumber.setSize(100,20);
-		tNumber.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,true,true,1,1));
-		
-		labBoss = new Label (group, SWT.NONE);
-		labBoss.setText(bundle.getString("I10_dep_jefe"));
-		labBoss.setLayoutData	(new GridData(SWT.CENTER,SWT.CENTER,true,true,1,1));	
-		
-		comboBoss = new Combo  (group, SWT.DROP_DOWN );	
-		comboBoss.setText(this.getArrayDB()[2]);	
-		comboBoss.setSize(100,20);
-		comboBoss.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,true,true,1,1));
-		
-		butNewBoss		= new Button(group, SWT.PUSH);
-		butNewBoss	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		butNewBoss	.setText(bundle.getString("I10_dep_nuevo_jefe"));
-		butNewBoss	.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		//Buttons "Accept" and "Cancel"
-		
-		bAccept		= new Button(shellWindow, SWT.PUSH);
-		bAccept	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		bAccept	.setText(bundle.getString("Aceptar"));
-		bAccept	.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		bCancel		= new Button(shellWindow, SWT.PUSH);		
-		bCancel	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		bCancel	.setText(bundle.getString("Cancelar"));
-		bCancel	.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		//add Components into Window
+		this.addComponents();
 		
 		//Adding listeners to Buttons	
 		// on action "Cancel"
@@ -211,8 +160,78 @@ public class I10_ManageDepartament {
 		shellWindow.open();
 
 	}
+	/**add components into window*/
+	public void addComponents(){
+//		******Adding Components into Window*********************************************************************
+		final Group group = new Group(shellWindow, SWT.NONE);
+		group.setText(bundle.getString("Departamento"));
+		group.setLayout(new GridLayout(1,true));
+		group.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,2,1));
+		
 
-	//allow to close window on ECS key
+		//Group - Keeps Variables of Department 
+		group.setLayout(new GridLayout(2,true));
+		group.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,2,1));
+		
+		//components inside Group
+		this.addComponentInGroup(group);
+		
+		//Buttons "Accept" and "Cancel"
+		this.addComponentOutGroup();
+
+	}
+	/**add components which are in group*/
+	public void addComponentInGroup(Group group){
+
+		labName = new Label (group, SWT.NONE);
+		labName.setText(bundle.getString("Nombre"));
+		labName.setLayoutData	(new GridData(SWT.CENTER,SWT.CENTER,true,true,1,1));	
+		
+		tName = new Text  (group, SWT.BORDER);	
+		tName.setText(this.getArrayDB()[0]);	
+		tName.setSize(100,20);
+		tName.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,true,true,1,1));
+		
+		labNumber = new Label (group, SWT.NONE);
+		labNumber.setText(bundle.getString("I10_dep_num"));
+		labNumber.setLayoutData	(new GridData(SWT.CENTER,SWT.CENTER,true,true,1,1));	
+	
+		tNumber = new Text  (group, SWT.BORDER);	
+		tNumber.setText(this.getArrayDB()[1]);	
+		tNumber.setSize(100,20);
+		tNumber.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,true,true,1,1));
+		
+		labBoss = new Label (group, SWT.NONE);
+		labBoss.setText(bundle.getString("I10_dep_jefe"));
+		labBoss.setLayoutData	(new GridData(SWT.CENTER,SWT.CENTER,true,true,1,1));	
+		
+		comboBoss = new Combo  (group, SWT.DROP_DOWN );	
+		comboBoss.setText(this.getArrayDB()[2]);	
+		comboBoss.setSize(100,20);
+		comboBoss.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,true,true,1,1));
+		
+		butNewBoss		= new Button(group, SWT.PUSH);
+		butNewBoss	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		butNewBoss	.setText(bundle.getString("I10_dep_nuevo_jefe"));
+		butNewBoss	.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+	}
+	
+	/**add components out of group (button Accept and Cancel)*/
+	public void addComponentOutGroup(){
+		//Buttons "Accept" and "Cancel"
+		
+		bAccept		= new Button(shellWindow, SWT.PUSH);
+		bAccept	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		bAccept	.setText(bundle.getString("Aceptar"));
+		bAccept	.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		bCancel		= new Button(shellWindow, SWT.PUSH);		
+		bCancel	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		bCancel	.setText(bundle.getString("Cancelar"));
+		bCancel	.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+	}
+
+	/**allow to close window on ECS key*/
 	public void closeOnECS(final Shell newShell) {
 		
 		newShell.addListener(SWT.Traverse, new Listener() {
@@ -227,7 +246,7 @@ public class I10_ManageDepartament {
 			}
 		});
 	}
-	//check if the String text is interger
+	/**check if the String text is interger*/
 	public boolean integerCheck(String string){
 	    try {
 	    	int n = Integer.parseInt( string );
@@ -238,7 +257,7 @@ public class I10_ManageDepartament {
 	    }
 	}
 	
-//**GET methods***********************************************************************************************
+/**GET methods*/
 	public ResourceBundle getBundle(){
 		return bundle;
 	}
@@ -278,7 +297,7 @@ public class I10_ManageDepartament {
 	public Combo getComboBoss(){
 		return comboBoss;
 	}
-//**SET methods************************************************************************************************
+/**SET methods*/
 	public void setIconDep(Image newImage){
 		iconDep = newImage;
 	}
