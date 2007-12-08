@@ -8,6 +8,9 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -28,6 +31,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
@@ -193,7 +197,6 @@ public class I02Admin {
 		final Composite cInicio = this.creaPestañaInicio(tabFolder);
 		final Composite cNuevoG = this.creaPestañaNuevoGerente(tabFolder);
 		final Composite cEliminaG = creaPestañaEliminaGerente(tabFolder); 
-		final Composite cOpciones = creaPestañaOpciones(tabFolder); 
 
 		//Pestaña para ver o enviar mensajes
 		TabItem tabItemInicio = new TabItem (tabFolder, SWT.NONE);
@@ -219,7 +222,6 @@ public class I02Admin {
 		tabItemInicio.setControl(cInicio);
 		tabItemNuevoG.setControl(cNuevoG);
 		tabItemEliminaG.setControl(cEliminaG);
-		tabItemOpciones.setControl(cOpciones);
 		return tabFolder;
 	}
 
@@ -241,7 +243,11 @@ public class I02Admin {
 		bienvenido.setText("BIENVENIDO A TURNOMATIC");
 		
 		
-		ImageData imagedata = _fondo_turnomatic.getImageData().scaledTo(300, 240);
+		ImageData imagedata; 
+		imagedata= _fondo_turnomatic.getImageData().scaledTo(300, 240);
+		int alto=(int)(_fondo_turnomatic.getImageData().height*0.3);
+		int ancho=(int)(_fondo_turnomatic.getImageData().width*0.3);
+		imagedata=_fondo_turnomatic.getImageData().scaledTo(ancho, alto);
 		_fondo_turnomatic = new Image(_display, imagedata);
 
 		cInicio.setBackgroundImage(this._fondo_turnomatic);
@@ -374,7 +380,7 @@ public class I02Admin {
 		});
 		
 		// Botón por defecto bAceptar
-		_shell.pack();
+		//_shell.pack();
 		_shell.setDefaultButton(bAceptar);
 		
 		
@@ -393,7 +399,7 @@ public class I02Admin {
 		//1º elegimos el gerente que queremos eliminar
 		final Label nombreGerente=new Label(cEliminaGerente,SWT.None);
 		nombreGerente.setText("Escoja el gerente a eliminar:");
-		final Combo comboGerenteElim = new Combo(cEliminaGerente,SWT.BORDER | SWT.READ_ONLY);
+		final Combo comboGerenteElim = new Combo(cEliminaGerente,SWT.HORIZONTAL | SWT.READ_ONLY);
 		final String[] textoListaGerentes= new String[] {
 				"GERENTE1", 
 				"GERENTE2",
@@ -424,14 +430,31 @@ public class I02Admin {
 		final Button bAsignarAGerentes			= new Button(cEliminaGerente, SWT.RADIO);
 		bAsignarAGerentes.setText("Seleccionar asignacion uno a uno:");
 		//Introducimos manualmente unos mensajes por defecto
-		final Composite cEliminaGerente2 = new Composite (cEliminaGerente, SWT.BORDER);
+		//final ScrolledComposite cEliminaGerenteS = new ScrolledComposite (cEliminaGerente, SWT.BORDER|SWT.V_SCROLL);
+		//cEliminaGerenteS.setExpandHorizontal(true);
+		//cEliminaGerenteS.setExpandVertical(false);
 		
-		cEliminaGerente2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
+
+
+		final Composite cEliminaGerente2 = new Composite (cEliminaGerente, SWT.NONE|SWT.V_SCROLL);
+		//cEliminaGerenteS.setContent(cEliminaGerente2);
+		cEliminaGerente2.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 1, 1));
+		
+		
+		  final ScrollBar vBar = cEliminaGerente2.getVerticalBar();
+		    vBar.addListener(SWT.Selection, new Listener() {
+		      public void handleEvent(Event e) {
+		        Point location = cEliminaGerente2.getLocation();
+		      //  location.y = -vBar.getSelection();
+		        cEliminaGerente2.setLocation(location);
+		      }
+		    });
+	    
+	    //cEliminaGerenteS.setMinSize(cEliminaGerente2.computeSize(SWT.DEFAULT,SWT.DEFAULT));
 		GridLayout lTJ2 = new GridLayout();
 		lTJ2.numColumns = 4;
 		lTJ2.makeColumnsEqualWidth = true;
 		cEliminaGerente2.setLayout(lTJ2);
-		cEliminaGerente2.setEnabled(false);
 		cEliminaGerente2.setVisible(false);		
 		comboGerenteSust.setEnabled(false);
 
@@ -439,7 +462,6 @@ public class I02Admin {
 
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
-				cEliminaGerente2.setEnabled(false);
 				cEliminaGerente2.setVisible(false);		
 				comboGerenteSust.setEnabled(false);
 			}
@@ -455,7 +477,6 @@ public class I02Admin {
 
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
-				cEliminaGerente2.setEnabled(false);
 				cEliminaGerente2.setVisible(false);
 				comboGerenteSust.setEnabled(true);
 			}
@@ -472,7 +493,6 @@ public class I02Admin {
 
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
-				cEliminaGerente2.setEnabled(true);
 				cEliminaGerente2.setVisible(true);
 				comboGerenteSust.setEnabled(false);
 			}
@@ -485,7 +505,7 @@ public class I02Admin {
 		);
 		
 		
-		for (int i=0; i<3; i++) {
+		for (int i=0; i<12; i++) {
 			/*
 			TableItem tItem = new TableItem (tablaJefes, SWT.NONE);
 			tItem.setText (0, "Nombre");
@@ -493,7 +513,7 @@ public class I02Admin {
 			tItem.setText (2, "Departamento");
 			*/
 			final Label nombreJefe=new Label(cEliminaGerente2,SWT.None);
-			nombreJefe.setText("nombre Jefe");
+			nombreJefe.setText("nombre Jefe"+String.valueOf(i));
 			final Label apellidosJefe=new Label(cEliminaGerente2,SWT.None);
 			apellidosJefe.setText("apellidos Jefe");
 			final Label departamentoJefe=new Label(cEliminaGerente2,SWT.None);
@@ -507,7 +527,7 @@ public class I02Admin {
 			combo.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 0, 0));
 			combo.setItems(texto);
 			combo.select(0);
-		
+			//cEliminaGerente2.setSize(new Point(SWT.DEFAULT,100));
 			
 		}
 
@@ -527,78 +547,7 @@ public class I02Admin {
 				return cEliminaGerente;
 	}
 	
-	
-	public Composite creaPestañaOpciones(TabFolder tabFolder){
-		//Creamos un composite para la pestaña de mensajes
-		Composite cMensajes = new Composite (tabFolder, SWT.NONE);
-		cMensajes.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
-		GridLayout lCMensajes = new GridLayout();
-		lCMensajes.numColumns = 4;
-		lCMensajes.makeColumnsEqualWidth = true;
-		cMensajes.setLayout(lCMensajes);
 		
-		//Creamos una tabla para los mensajes
-		Table tablaMensajes = new Table (cMensajes, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
-		tablaMensajes.setLinesVisible (true);
-		tablaMensajes.setHeaderVisible (true);
-		String[] titles = {" ", _bundle.getString("I02_mens_De"), _bundle.getString("asunto"), _bundle.getString("mensaje2"), _bundle.getString("Fecha")};
-		for (int i=0; i<titles.length; i++) {
-			TableColumn column = new TableColumn (tablaMensajes, SWT.NONE);
-			column.setText (titles [i]);
-		}	
-		
-		//Introducimos manualmente unos mensajes por defecto
-		for (int i=0; i<12; i++) {
-			TableItem tItem = new TableItem (tablaMensajes, SWT.NONE);
-			tItem.setImage(_ico_mens);
-			tItem.setText (1, "Remitente");
-			tItem.setText (2, "Asunto del mensaje");
-			tItem.setText (3, "Aquí va lo que quepa del principio del mensaje");
-			tItem.setText (4, "25/10/2007");
-			
-		}
-		for (int i=0; i<titles.length; i++) {
-			tablaMensajes.getColumn (i).pack ();
-		}	
-		tablaMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
-		
-		//Creamos los distintos botones
-		//Mensaje nuevo
-		final Button bMensNuevo = new Button(cMensajes, SWT.PUSH);
-		bMensNuevo.setText(_bundle.getString("Nuevo"));
-		bMensNuevo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		//Creamos un oyente
-		bMensNuevo.addSelectionListener (new SelectionAdapter () {
-			public void widgetSelected (SelectionEvent e) {
-				@SuppressWarnings("unused")
-				I02MensajeNuevo ventana = new I02MensajeNuevo(_shell,_bundle,_locale);
-			}
-		});
-		
-		//Responder
-		final Button bMensResponder = new Button(cMensajes, SWT.PUSH);
-		bMensResponder.setText(_bundle.getString("I02_but_Responder"));
-		bMensResponder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-
-		//Eliminar mensaje
-		final Button bMensEliminar = new Button(cMensajes, SWT.PUSH);
-		bMensEliminar.setText(_bundle.getString("I02_but_Eliminar"));
-		bMensEliminar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		
-		//Marcar mensaje
-		final Button bMensMarcar = new Button(cMensajes, SWT.PUSH);
-		bMensMarcar.setText(_bundle.getString("I02_but_Marcar"));
-		bMensMarcar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-
-		//Enviar mensaje
-		final Composite cEnviarMensaje = new Composite (tabFolder, SWT.NONE);
-		cMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		GridLayout lCEnviarMensaje = new GridLayout();
-		lCEnviarMensaje.numColumns = 2;
-		cEnviarMensaje.setLayout(lCEnviarMensaje);
-		return cMensajes;
-	}
-	
 	private String obtenerClave() {
 		// TODO Auto-generated method stub
 		Random randomizador=new Random();
@@ -622,11 +571,6 @@ public class I02Admin {
 		return clave;
 	}		
 	
-		
-		
-	
-		
-
 	
 	
 	

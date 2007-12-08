@@ -19,16 +19,16 @@ import org.eclipse.swt.graphics.*;
 import java.util.ResourceBundle;
 
 public class I01 {
-	private Shell padre = null;
+	private Shell shell = null;
 	private ResourceBundle bundle;
-	public I01(Shell padre, ResourceBundle bundle) {
-		this.padre = padre;
+	public I01(Shell shell, ResourceBundle bundle) {
+		this.shell = shell;
 		this.bundle = bundle;
 		mostrarVentana();
 	}
 	public void mostrarVentana() {
-		Image fondo = new Image(padre.getDisplay(), I01.class.getResourceAsStream("intro.png"));
-		final Shell shell = new Shell (padre, SWT.NONE | SWT.APPLICATION_MODAL);
+		Image fondo = new Image(shell.getDisplay(), I01.class.getResourceAsStream("intro.png"));
+	//	final Shell shell = new Shell (shell, SWT.NONE | SWT.APPLICATION_MODAL);
 
 		
 		//Esto hace que los labels no tengan fondo
@@ -48,8 +48,8 @@ public class I01 {
 		final Button bCancelar = new Button(contenido, SWT.PUSH);
 
 		// Dos iconos de tamaño diferente para SO's que los necesiten
-		Image icoGr = new Image(padre.getDisplay(), I01.class.getResourceAsStream("icoGr.gif"));
-		Image icoPq = new Image(padre.getDisplay(), I01.class.getResourceAsStream("icoPq.gif"));
+		Image icoGr = new Image(shell.getDisplay(), I01.class.getResourceAsStream("icoGr.gif"));
+		Image icoPq = new Image(shell.getDisplay(), I01.class.getResourceAsStream("icoPq.gif"));
 		shell.setImages(new Image[] {icoPq,icoGr});
 		shell.setText(bundle.getString("I01_tit_Ident"));
 		
@@ -102,10 +102,11 @@ public class I01 {
 		shell.setDefaultButton(bAceptar);
 		// Ajustar el tamaño de la ventana al contenido
 		shell.setBackgroundImage(fondo);
-		shell.setSize(500,374);
+		shell.setSize(500,400);
+		
 
 		// Mostrar ventana centrada sobre la pantalla
-		shell.setLocation(padre.getDisplay().getClientArea().width/2 - shell.getSize().x/2, padre.getDisplay().getClientArea().height/2 - shell.getSize().y/2);
+		shell.setLocation(shell.getDisplay().getClientArea().width/2 - shell.getSize().x/2, shell.getDisplay().getClientArea().height/2 - shell.getSize().y/2);
 		shell.open();
 	}
 }
