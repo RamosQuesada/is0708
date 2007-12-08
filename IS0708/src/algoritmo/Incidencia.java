@@ -13,11 +13,21 @@ public class Incidencia {
 	private Date fechainicio= new Date();
 	private Date fechafin=new Date();
 	
-	
+	/**
+	 * 
+	 * @param nvend  		 Numero de vendedor
+	 * @param idIncidencia   Identificador de la incidencia
+	 * @param descripcion	 Descripcion de la incidencia
+	 * @param fechainicio	 Fecha de inicio de la incidencia
+	 * @param fechafin	     Fecha de finalizacion de la incidencia
+	 
+
+	 */
 	public Incidencia(){ //constructora por defecto
 		
 	}
 	
+	//constructora 
 	public Incidencia(int user, int id, String descr,Date finicio, Date ffin){
 		this.nvend=user;
 		this.idIncidencia=id;
