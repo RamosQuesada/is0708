@@ -132,6 +132,16 @@ public class Empleado implements Drawable {
 	}
 	
 	/**
+	 * Constructor para hacer pruebas, Algoritmo
+	 * @deprecated eliminar cuando ya no sea necesario
+	 */
+	public Empleado(int nvend, String nombre, Turno tur){
+		this.nvend = nvend;
+		this.nombre = nombre;
+		turno = tur;
+	}
+	
+	/**
 	 * Devuelve el nombre de un empleado, sin apellidos.
 	 * @return	el nombre del empleado.
 	 */

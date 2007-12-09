@@ -44,5 +44,10 @@ public class Estructura {
 			return 30;
 		}else return 28;
 	}
+	
+	public ListasEmpleados[][] getDias(){
+		return dias;
+	}
+
 
 }
