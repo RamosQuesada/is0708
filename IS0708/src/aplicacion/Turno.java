@@ -15,9 +15,24 @@ public class Turno {
 	
 	
 	public ArrayList<FranjaDib> franjas;
+	public int id; //identificador del turno
+	public String horaEntrada; // hora de entrada
+	public String horaSalida; //hora de salida
 	public Turno() {
 		franjas = new ArrayList<FranjaDib>();	
 	}
+	
+	/**
+	 * Constructor para hacer pruebas, Algoritmo
+	 * @deprecated eliminar cuando ya no sea necesario
+	 */
+	public Turno(int i, String he, String hs){
+		id=i;
+		horaEntrada=he;
+		horaSalida=hs;
+		
+	}
+	
 	public void franjaNueva (Posicion pinicio, Posicion pfin) {
 		FranjaDib f = new FranjaDib(pinicio, pfin);
 		franjas.add(f);
