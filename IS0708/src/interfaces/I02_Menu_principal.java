@@ -446,6 +446,8 @@ public class I02_Menu_principal {
 			public void handleEvent(Event e) {
 				System.out.println("Pulsado Configuración departamentos: "+cmbDepartamentos.getText().toString());
 				//take arrayDB from DB this is only for to show interface
+/*TODO the arrayDB should be String[]array witch datas from DB (taken from select query with data of Department)
+ * (in this place should be methods of class servicing DB)*/
 				String[]arrayDB = {"nazwaDepartamentu","1 parametr","2 parametr"};
 				new I10_Config_departamento(shell, bundle, bundle.getString("I02_but_Config_dep"),arrayDB);
 			}
