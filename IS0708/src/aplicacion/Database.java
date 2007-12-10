@@ -106,7 +106,7 @@ public class Database extends Thread {
 			String password, String indicadorGrupo, Date fechaContrato,
 			Date fechaEntrada, int horasExtras, int idDept, String rango,
 			int idContrato, int idTurno) {
-		boolean error = false;
+		boolean correcto = false;
 		try {
 			st = con.createStatement();
 			st.executeUpdate("INSERT INTO usuario values ('" + id + "', '"
@@ -117,11 +117,11 @@ public class Database extends Thread {
 					+ "','" + rango + "','" + idContrato + "','" + idTurno
 					+ "')");
 			System.out.println("Usuario insertado");
-			error = true;
+			correcto = true;
 		} catch (SQLException e) {
-			error = false;
+			correcto = false;
 		}
-		return error;
+		return correcto;
 	}
 
 	/**
@@ -131,16 +131,16 @@ public class Database extends Thread {
 	 * @return			Informa sobre si se ha podido realizar la inserción o no
 	 */
 	public boolean insertarDepartamento(String nombre,int jefe) {
-		boolean error = false;
+		boolean correcto = false;
 		try {
 			st = con.createStatement();
 			st.executeUpdate("INSERT INTO departamento values ('" + nombre + "', '" + jefe + "')");
 			System.out.println("Departamento insertado");
-			error = true;
+			correcto = true;
 		} catch (SQLException e) {
-			error = false;
+			correcto = false;
 		}
-		return error;
+		return correcto;
 	}
 	
 	/**
@@ -150,16 +150,16 @@ public class Database extends Thread {
 	 * @return			Informa sobre si se ha podido realizar la inserción o no
 	 */
 	public boolean insertarNumerosDepartamento(String numero,String nombre) {
-		boolean error = false;
+		boolean correcto = false;
 		try {
 			st = con.createStatement();
 			st.executeUpdate("INSERT INTO numerosDpto values ('" + numero + "', '" + nombre + "')");
 			System.out.println("Departamento insertado");
-			error = true;
+			correcto = true;
 		} catch (SQLException e) {
-			error = false;
+			correcto = false;
 		}
-		return error;
+		return correcto;
 	}
 	/**
 	 * Método que inserta en la tabla Distribucion los valores correspondientes a una nueva distribución
@@ -178,16 +178,16 @@ public class Database extends Thread {
 	 * @return Informa sobre si se ha podido realizar la inserción o no
 	 */
 public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int NumMax, int NumMin,int IdDepartamento) {
-		boolean error = false;
+		boolean correcto = false;
 		try {
 			st = con.createStatement();
 			st.executeUpdate("INSERT INTO distribucion values ('" + Hora + "', '" + DiaSemana + "', '" + Patron + "', '" +NumMax+ "', '" +NumMin+ "', '" +IdDepartamento+ "')");
 			System.out.println("Distribucion insertada");
-			error = true;
+			correcto = true;
 		} catch (SQLException e) {
-			error = false;
+			correcto = false;
 		}
-		return error;
+		return correcto;
 	}
 /**
  * Método que inserta en la tabla Distribucion los valores correspondientes a una nueva distribución
@@ -207,16 +207,16 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
  * @return Informa sobre si se ha podido realizar la inserción o no
  */
 public boolean insertarFestivo(int Hora,Date FechaInicio,Date FechaFin,String Patron,int NumMax, int NumMin,int IdDepartamento) {
-	boolean error = false;
+	boolean correcto = false;
 	try {
 		st = con.createStatement();
 		st.executeUpdate("INSERT INTO festivos values ('" + Hora + "', '" + FechaInicio + "', '" + FechaFin+ "', '" + Patron + "', '" +NumMax+ "', '" +NumMin+ "', '" +IdDepartamento+ "')");
 		System.out.println("Festivo insertado");
-		error = true;
+		correcto = true;
 	} catch (SQLException e) {
-		error = false;
+		correcto = false;
 	}
-	return error;
+	return correcto;
 }
 	public static void main(String[] IS0708) {
 		// @SuppressWarnings("unused")
