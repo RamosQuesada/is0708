@@ -95,7 +95,7 @@ public class TurnoMatic {
 				 * empleado y si este es fijo habría que insertarlo 
 				 * en la estructura y en el cuadrante.
 				 */
-				emp = disponibles.get(j);
+			/*	emp = disponibles.get(j);
 				turno = emp.turno;
 				
 				//comprobamos si tiene turno fijo
@@ -107,7 +107,7 @@ public class TurnoMatic {
 					
 					
 				}
-				
+				*/
 							
 			}
 			System.out.println();
