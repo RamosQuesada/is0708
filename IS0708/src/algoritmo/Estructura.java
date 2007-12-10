@@ -27,7 +27,7 @@ public class Estructura {
 		// Calcular el numero de trozos en que se divide el horario
 		// Recuperar de la base de datos la lista de todos los turnos del departamento
 		// y ver en cuantos trozos vas a partir cada dia
-		numTrozos = 0;  
+		numTrozos = inicializaTrozos(); 
 		
 		int numDias = Util.dameDias(mes,anio);//calculamos el numero de dias
 		dias = new ListasEmpleados[numDias][numTrozos];
@@ -46,22 +46,30 @@ public class Estructura {
 		return dias;
 	}
 	
-	private int inicializaDivisiones(){
+	private int inicializaTrozos(){
 		// Database.getTurnos(idDepartamento) // Método en proceso
 		ArrayList<Turno> turnos = new ArrayList<Turno>();		
 		ArrayList<Time> horas = new ArrayList<Time>();
 		for (int i=0; i<turnos.size(); i++){
 			if (!horas.contains(turnos.get(i).getHoraEntrada()))
 				horas.add(turnos.get(i).getHoraEntrada());
-			if (!horas.contains(turnos.get(i).getHoraSalida()()))
+			if (!horas.contains(turnos.get(i).getHoraSalida()))
 				horas.add(turnos.get(i).getHoraSalida());
 			if (!horas.contains(turnos.get(i).getHoraDescanso()))
 				horas.add(turnos.get(i).getHoraDescanso());
-			Time finDescanso = new Time();
-			if (!horas.contains(turnos.get(i).getHoraDescanso()+))
-				horas.add(turnos.get(i).getHoraDescanso());
-			
+			Time finDescanso = Util.calculaFinDescanso(turnos.get(i).getHoraDescanso(), turnos.get(i).getTDescanso());
+			if (!horas.contains(finDescanso))
+				horas.add(finDescanso);
 		}
+		// Ordenar la lista
+		ArrayList<Time> orden = new ArrayList<Time>();
+		for (int i=0; i<horas.size(); i++){
+			int j=0;
+			while (j<orden.size() && orden.get(j).getTime()<horas.get(i).getTime())
+				j++;
+			orden.add(j,horas.get(i));
+		}
+		return horas.size();
 	}
 	
 }
