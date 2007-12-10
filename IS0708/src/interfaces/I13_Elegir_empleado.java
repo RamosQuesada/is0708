@@ -38,7 +38,7 @@ import aplicacion.Database;
 import aplicacion.Empleado;
 import aplicacion.Posicion;
 
-public class I13ElejirEmpleado {
+public class I13_Elegir_empleado {
 	private Shell shell;
 	private ResourceBundle bundle;
 	private Image icoPq;
@@ -49,7 +49,7 @@ public class I13ElejirEmpleado {
 	private ArrayList<Empleado> empleadoIN;
 	private ArrayList<Empleado> empleadoOUT;
 	
-	public I13ElejirEmpleado(Shell padre, ResourceBundle bundle, ArrayList<Empleado> empleados ) {
+	public I13_Elegir_empleado(Shell padre, ResourceBundle bundle, ArrayList<Empleado> empleados ) {
 		this.bundle   = bundle;
 		this.empleadoIN = empleados;
 		this.shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
@@ -58,7 +58,7 @@ public class I13ElejirEmpleado {
 
 	public void mostrarVentana() {
 		
-		icoPq = new Image(shell.getDisplay(), I02.class.getResourceAsStream("icoPq.gif"));
+		icoPq = new Image(shell.getDisplay(), I02_Menu_principal.class.getResourceAsStream("icoPq.gif"));
 		shell.setImage(icoPq);
 		shell.setText("Search");
 	//Establecemos el layout del shell

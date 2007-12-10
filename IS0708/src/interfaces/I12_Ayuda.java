@@ -18,7 +18,7 @@ import java.io.File;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class I12 {
+public class I12_Ayuda {
 
 	private String htmlDefault;
 	private Browser browser;
@@ -55,11 +55,11 @@ public class I12 {
 	 * @param _display
 	 *            class uses main window display atribut to show help window
 	 */
-	public I12(Display d, Locale locale, ResourceBundle bundle) {
+	public I12_Ayuda(Display d, Locale locale, ResourceBundle bundle) {
 
 		display = d;
 		shell = new Shell(display);
-		icoPq = new Image(display, I02.class.getResourceAsStream("icoPq.gif"));
+		icoPq = new Image(display, I02_Menu_principal.class.getResourceAsStream("icoPq.gif"));
 
 		htmlDefault = "<html> \n <head> \n " + "</head>"
 			+ "<body>" + bundle.getString("I12_err_fileNotFound")
@@ -97,10 +97,10 @@ public class I12 {
 		shell.setText("Turno Matic");
 		shell.setSize(700, 500);
 
-		icoBk	= new Image(display, I12.class.getResourceAsStream("ico_Bk.gif"));
-		icoFw	= new Image(display, I12.class.getResourceAsStream("ico_Fw.gif"));
-		icoHome = new Image(display, I12.class.getResourceAsStream("ico_Home.gif"));
-		icoPrnt = new Image(display, I12.class.getResourceAsStream("ico_Imprimir.gif"));
+		icoBk	= new Image(display, I12_Ayuda.class.getResourceAsStream("ico_Bk.gif"));
+		icoFw	= new Image(display, I12_Ayuda.class.getResourceAsStream("ico_Fw.gif"));
+		icoHome = new Image(display, I12_Ayuda.class.getResourceAsStream("ico_Home.gif"));
+		icoPrnt = new Image(display, I12_Ayuda.class.getResourceAsStream("ico_Imprimir.gif"));
 		
 		Composite c = new Composite(shell,SWT.NONE);
 		c.setLayout(new GridLayout(1,true));
@@ -141,7 +141,7 @@ public class I12 {
 		});
 		bHome.addListener(SWT.Selection, new Listener(){
 			public void handleEvent(Event event) {
-				browser.setText(I12.this.html);				
+				browser.setText(I12_Ayuda.this.html);				
 			}
 			
 		});

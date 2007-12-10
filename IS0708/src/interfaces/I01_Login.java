@@ -14,7 +14,7 @@ import aplicacion.Database;
  * Interfaz de usuario I-01 :: Identificación
  * @author Daniel Dionne
  */
-public class I01 {
+public class I01_Login {
 	private Shell padre = null;
 	private ResourceBundle bundle;
 	private int numeroVendedor;
@@ -24,7 +24,7 @@ public class I01 {
 	Database db;
 	Text tEstado;
 	
-	public I01(Shell padre, ResourceBundle bundle) {
+	public I01_Login(Shell padre, ResourceBundle bundle) {
 		this.padre = padre;
 		this.bundle = bundle;
 		this.db = db;
@@ -37,7 +37,7 @@ public class I01 {
 	 * Crea la ventana
 	 */
 	public synchronized void mostrarVentana() {
-		Image fondo = new Image(padre.getDisplay(), I01.class.getResourceAsStream("intro.png"));
+		Image fondo = new Image(padre.getDisplay(), I01_Login.class.getResourceAsStream("intro.png"));
 		dialog = new Shell (padre, SWT.NONE | SWT.APPLICATION_MODAL);
 		
 		//Esto hace que los labels no tengan fondo
@@ -62,8 +62,8 @@ public class I01 {
 		final Button bCancelar = new Button(contenido, SWT.PUSH);
 
 		// Dos iconos de tamaño diferente para SO's que los necesiten
-		Image icoGr = new Image(padre.getDisplay(), I01.class.getResourceAsStream("icoGr.gif"));
-		Image icoPq = new Image(padre.getDisplay(), I01.class.getResourceAsStream("icoPq.gif"));
+		Image icoGr = new Image(padre.getDisplay(), I01_Login.class.getResourceAsStream("icoGr.gif"));
+		Image icoPq = new Image(padre.getDisplay(), I01_Login.class.getResourceAsStream("icoPq.gif"));
 		dialog.setImages(new Image[] {icoPq,icoGr});
 		dialog.setText(bundle.getString("I01_tit_Ident"));
 		

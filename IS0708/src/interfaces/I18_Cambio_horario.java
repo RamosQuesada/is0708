@@ -23,23 +23,23 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-public class I02CambioHorario {
+public class I18_Cambio_horario {
 	private Shell padre = null;
 	private ResourceBundle _bundle;
 	
-	private I02PeticionFecha ventana;
+	private I17_Peticion_fecha ventana;
 	private Text cFechaInicio;
 	private Text cFechaFin;
 	private Integer iFechaInicio=0;
 	private Integer iFechaFin=0;
 	
-	private int _opcion_actual= I02CambioHorario.NOINICIALIZADO;
+	private int _opcion_actual= I18_Cambio_horario.NOINICIALIZADO;
 	
 	private final static int NOINICIALIZADO = 0;
 	private final static int TODOSDIAS = 1;
 	private final static int DIAADIA = 2;
 	
-	public I02CambioHorario(Shell padre,ResourceBundle bundle) {
+	public I18_Cambio_horario(Shell padre,ResourceBundle bundle) {
 		this.padre = padre;
 		_bundle = bundle;
 		mostrarVentana();
@@ -48,7 +48,7 @@ public class I02CambioHorario {
 	public void mostrarVentana() {
 		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 
-		final Image ico_mens_l = new Image(padre.getDisplay(), I02.class.getResourceAsStream("ico_mens1_v.gif"));
+		final Image ico_mens_l = new Image(padre.getDisplay(), I02_Menu_principal.class.getResourceAsStream("ico_mens1_v.gif"));
 		
 		//Establecemos el layout del shell
 		GridLayout lShell = new GridLayout();
@@ -86,7 +86,7 @@ public class I02CambioHorario {
 		//Introducimos los valores y eventos de Fecha Inicio
 		bFechaInicio.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				ventana = new I02PeticionFecha(shell,cFechaInicio);
+				ventana = new I17_Peticion_fecha(shell,cFechaInicio);
 				//
 			}				
 		});
@@ -110,7 +110,7 @@ public class I02CambioHorario {
 		//Introducimos los valores y eventos de Fecha Inicio
 		bFechaFin.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				ventana = new I02PeticionFecha(shell,cFechaFin);
+				ventana = new I17_Peticion_fecha(shell,cFechaFin);
 				//iFechaFin=ventana.dameCatDia();
 			}				
 		});		
@@ -229,7 +229,7 @@ public class I02CambioHorario {
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
 				System.out.println("peticion mensajeria interna in");
-				_opcion_actual=I02CambioHorario.TODOSDIAS;
+				_opcion_actual=I18_Cambio_horario.TODOSDIAS;
 				coTodosDias.setEnabled(true);
 				for(int cont=0;cont<nombreDias.size();cont++){
 					nombreDias.get(cont).setEnabled(false);
@@ -256,7 +256,7 @@ public class I02CambioHorario {
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
 				System.out.println("peticion nuevo");
-				_opcion_actual=I02CambioHorario.TODOSDIAS;
+				_opcion_actual=I18_Cambio_horario.TODOSDIAS;
 				coTodosDias.setEnabled(false);
 				for(int cont=0;cont<nombreDias.size();cont++){
 					nombreDias.get(cont).setEnabled(true);
