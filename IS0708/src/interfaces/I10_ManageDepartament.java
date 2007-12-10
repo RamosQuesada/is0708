@@ -123,8 +123,10 @@ public class I10_ManageDepartament {
 		// on action "Accept"
 		SelectionAdapter onAccept = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				System.out.println("Send datas to BD");
 				if(integerCheck(tNumber.getText())==true){
+/*TODO BD reference to a class which connects DB and takes the values of 
+  labels texts and combo (labName, labNumber ,labBoss, tName, tNumber, comboBoss ) and sends it to DB
+  DB check if this department exists if not add new, if yes edid with new datas*/
 					shellWindow.dispose();
 				}else{
 					//show message for user
