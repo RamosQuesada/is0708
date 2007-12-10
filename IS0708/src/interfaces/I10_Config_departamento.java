@@ -73,7 +73,6 @@ public class I10_Config_departamento {
 	/**constructor for editing department*/
 	public I10_Config_departamento(Shell padre, ResourceBundle bundle,
 			String windowName, String[] newArrayDB) {
-		// TODO Auto-generated constructor stub
 		this.padre = padre;
 		this.bundle = bundle;
 		//String[] newArrayLabel = {bundle.getString("Nombre"), bundle.getString("I10_dep_num"), bundle.getString("I10_dep_jefe")};
@@ -85,7 +84,6 @@ public class I10_Config_departamento {
 	/**constructor for new department*/
 	public I10_Config_departamento(Shell padre, ResourceBundle bundle,
 			String windowName) {
-		// TODO Auto-generated constructor stub
 		this.padre = padre;
 		this.bundle = bundle;
 
@@ -96,7 +94,6 @@ public class I10_Config_departamento {
 
 	/**create window for department*/
 	private void createWindow(String windowName) {
-		// TODO Auto-generated method stub
 		//final Shell shellWindow = new Shell(padre, SWT.CLOSE | SWT.RESIZE
 		shellWindow = new Shell(padre, SWT.CLOSE | SWT.CLOSE
 				| SWT.APPLICATION_MODAL);
@@ -208,6 +205,7 @@ public class I10_Config_departamento {
 		labBoss.setLayoutData	(new GridData(SWT.CENTER,SWT.CENTER,true,true,1,1));	
 		
 		comboBoss = new Combo  (group, SWT.DROP_DOWN );	
+//TODO combo gets items from DB (about possible boss)
 		comboBoss.setText(this.getArrayDB()[2]);	
 		comboBoss.setSize(100,20);
 		comboBoss.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,true,true,1,1));
