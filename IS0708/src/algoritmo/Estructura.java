@@ -36,13 +36,14 @@ public class Estructura {
 		//rellenar lista empleados
 		cal=new Calendario(numDias,mes,anio);//creamos calendario
 	}
-	public int dameDias(int mes){//esta funcion devuelve el numero de dias del mes
-		if(mes == (1|3|5|7|8|10|12)){
+	public int dameDias(int mes){ //esta funcion devuelve el numero de dias del mes
+		if (mes == (1|3|5|7|8|10|12)){
 			return 31;
 		}
-		if(mes == (4|6|9|11)){
+		else if (mes == (4|6|9|11)){
 			return 30;
-		}else return 28;
+		}
+		else return 28;
 	}
 	
 	public ListasEmpleados[][] getDias(){
