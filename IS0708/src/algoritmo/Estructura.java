@@ -1,6 +1,7 @@
 package algoritmo;
 
 import java.util.ArrayList;
+import java.sql.Time;
 import aplicacion.Empleado;
 import aplicacion.Util;
 
@@ -16,16 +17,19 @@ public class Estructura {
 	private ListasEmpleados[][] dias;
 	private ArrayList<Empleado> personal;//aqui estarán todos los empleados
 	private Calendario cal;//calendario donde se almacena min/max perso,exp/inexp... 
-	
+	private Time[] trozosHorario; // Lista con el inicio de cada turno y el fin del ultimo
+	                           // tamanio: nTrozos+1;
+	private int numTrozos;
 
 	public Estructura(int mes,int anio,ArrayList<Empleado> personal){//constructora de la estructura
 		this.personal = personal;
-		int numTrozos = 0;  
+		
 		// Calcular el numero de trozos en que se divide el horario
 		// Recuperar de la base de datos la lista de todos los turnos del departamento
 		// y ver en cuantos trozos vas a partir cada dia
-		int numDias=0;
-		numDias=Util.dameDias(mes,anio);//calculamos el numero de dias
+		numTrozos = 0;  
+		
+		int numDias = Util.dameDias(mes,anio);//calculamos el numero de dias
 		dias = new ListasEmpleados[numDias][numTrozos];
 		// Se podría no asignar listas a los dias que no se trabaja
 		for (int i=0; i<numDias; i++){
@@ -41,6 +45,23 @@ public class Estructura {
 	public ListasEmpleados[][] getDias(){
 		return dias;
 	}
-
-
+	
+	private int inicializaDivisiones(){
+		// Database.getTurnos(idDepartamento) // Método en proceso
+		ArrayList<Turno> turnos = new ArrayList<Turno>();		
+		ArrayList<Time> horas = new ArrayList<Time>();
+		for (int i=0; i<turnos.size(); i++){
+			if (!horas.contains(turnos.get(i).getHoraEntrada()))
+				horas.add(turnos.get(i).getHoraEntrada());
+			if (!horas.contains(turnos.get(i).getHoraSalida()()))
+				horas.add(turnos.get(i).getHoraSalida());
+			if (!horas.contains(turnos.get(i).getHoraDescanso()))
+				horas.add(turnos.get(i).getHoraDescanso());
+			Time finDescanso = new Time();
+			if (!horas.contains(turnos.get(i).getHoraDescanso()+))
+				horas.add(turnos.get(i).getHoraDescanso());
+			
+		}
+	}
+	
 }
