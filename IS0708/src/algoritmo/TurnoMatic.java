@@ -53,6 +53,7 @@ public class TurnoMatic {
 			//Aquí, actualizar la lista de empleados disponibles para cada
 			//turno a partir de la lista de todos los empleados.
 			
+			
 			//coloca sólo a los empleados fijos.
 			colocaFijos(i,disp);
 			
@@ -69,25 +70,48 @@ public class TurnoMatic {
 	private void colocaFijos(int dia, ArrayList<Empleado> disp){
 		
 		ArrayList<Empleado> disponibles;
+		ArrayList<Empleado> empleados;
 		ListasEmpleados[][] listas;
 		int numTrozos;
+		Empleado emp;
+		Turno turno;
 		
 		listas = estruc.getDias();
-		numTrozos = listas[0].length;
+		//numTrozos = listas[0].length;
+		//prueba
+		numTrozos = 4;
 		
 		//Para cada franja horaria
 		for(int i=0;i<numTrozos;i++){
 			
-			disponibles = listas[dia][i].getDisponibles();
+			//disponibles = listas[dia][i].getDisponibles();
+			//prueba
+			disponibles = disp;
+			empleados = new ArrayList<Empleado>();
 
-			for(int j=0;i<disponibles.size();j++){
+			for(int j=0;j<disponibles.size();j++){
 				
 				/* Aquí se debe mirar el tipo de contrato de cada
 				 * empleado y si este es fijo habría que insertarlo 
 				 * en la estructura y en el cuadrante.
 				 */
+				emp = disponibles.get(j);
+				turno = emp.turno;
+				
+				//comprobamos si tiene turno fijo
+				if(turno.id == 1){
+					
+					empleados.add(emp);
+					
+					
+					
+					
+				}
+				
 							
-			}		
+			}
+			System.out.println();
+
 		}		
 	}
 		

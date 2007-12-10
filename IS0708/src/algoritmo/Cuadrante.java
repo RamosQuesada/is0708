@@ -17,6 +17,7 @@ public class Cuadrante {
 	public Cuadrante(int mes,int dias){//creacion de un cuadrante vacio
 		this.mes=mes;
 		this.numDias=dias;
+		this.cuad = new ArrayList[numDias];
 		for(int i=0;i<numDias;i++){
 			cuad[i]=new ArrayList<Trabaja>();
 		}
