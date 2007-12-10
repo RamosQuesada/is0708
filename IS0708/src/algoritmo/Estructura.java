@@ -18,7 +18,7 @@ public class Estructura {
 	private ArrayList<Empleado> personal;//aqui estarán todos los empleados
 	private Calendario cal;//calendario donde se almacena min/max perso,exp/inexp... 
 	private Time[] trozosHorario; // Lista con el inicio de cada turno y el fin del ultimo
-	                           // tamanio: nTrozos+1;
+	                              // tamanio: nTrozos+1;
 	private int numTrozos;
 
 	public Estructura(int mes,int anio,ArrayList<Empleado> personal){//constructora de la estructura
@@ -27,7 +27,7 @@ public class Estructura {
 		// Calcular el numero de trozos en que se divide el horario
 		// Recuperar de la base de datos la lista de todos los turnos del departamento
 		// y ver en cuantos trozos vas a partir cada dia
-		numTrozos = inicializaTrozos(); 
+		inicializaTrozos(); 
 		
 		int numDias = Util.dameDias(mes,anio);//calculamos el numero de dias
 		dias = new ListasEmpleados[numDias][numTrozos];
@@ -46,8 +46,8 @@ public class Estructura {
 		return dias;
 	}
 	
-	private int inicializaTrozos(){
-		// Database.getTurnos(idDepartamento) // Método en proceso
+	private void inicializaTrozos(){
+		// ArrayList<Turno> turnos = Database.getTurnos(idDepartamento) // Método en proceso
 		ArrayList<Turno> turnos = new ArrayList<Turno>();		
 		ArrayList<Time> horas = new ArrayList<Time>();
 		for (int i=0; i<turnos.size(); i++){
@@ -62,14 +62,18 @@ public class Estructura {
 				horas.add(finDescanso);
 		}
 		// Ordenar la lista
+		numTrozos = horas.size();
 		ArrayList<Time> orden = new ArrayList<Time>();
-		for (int i=0; i<horas.size(); i++){
+		for (int i=0; i<numTrozos; i++){
 			int j=0;
 			while (j<orden.size() && orden.get(j).getTime()<horas.get(i).getTime())
 				j++;
 			orden.add(j,horas.get(i));
 		}
-		return horas.size();
+		// Guarda lo calculado
+		trozosHorario = new Time[numTrozos];
+		for (int i=0; i<numTrozos; i++)
+			trozosHorario[i] = orden.get(i);
 	}
 	
 }

@@ -45,7 +45,7 @@ public class PruebaAlgoritmo {
 		
 
 		// Prueba de inicializaTrozos
-		/*ArrayList<Turno> turnos = new ArrayList<Turno>();
+		ArrayList<Turno> turnos = new ArrayList<Turno>();
 		turnos.add(t1);
 		turnos.add(t2);
 		ArrayList<Time> horas = new ArrayList<Time>();
@@ -61,6 +61,8 @@ public class PruebaAlgoritmo {
 				horas.add(finDescanso);
 		}
 		System.out.println(horas.toString()); // Sin ordenar
+		// Ordenar la lista
+		int numTrozos = horas.size();
 		ArrayList<Time> orden = new ArrayList<Time>();
 		for (int i=0; i<horas.size(); i++){
 			int j=0;
@@ -69,7 +71,11 @@ public class PruebaAlgoritmo {
 			orden.add(j,horas.get(i));
 		}
 		System.out.println(orden.toString()); // Ordenada
-		*/
+		Time[] trozosHorario = new Time[numTrozos];
+		for (int i=0; i<numTrozos; i++)
+			trozosHorario[i] = orden.get(i);
+		for (int i=0; i<numTrozos; i++)
+			System.out.print(trozosHorario[i]+", ");    // Ordenada en Array
 		
 		System.out.println();
 		
