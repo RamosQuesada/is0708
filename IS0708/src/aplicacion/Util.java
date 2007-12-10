@@ -1,6 +1,7 @@
 package aplicacion;
 
 import java.util.Random;
+import java.sql.Time;
 
 /**
  * El cajón desastre de las funciones que no tienen cabida en ninguna clase,
@@ -114,6 +115,17 @@ public class Util {
 		else if (bisiesto) return 29;
 		else return 28;
 		    
+	}
+	
+	/**
+	 * Calcula la hora del fin del descanso
+	 * @param horaInicio 
+	 * @param minutos duracion del descanso 
+	 * @return Time que representa la hora del fin del descanso
+	 */
+	public static Time calculaFinDescanso(Time horaInicio, int minutos){
+		Time fin = new Time(horaInicio.getTime() + minutos*60000);
+		return fin;
 	}
 	
 }
