@@ -302,7 +302,8 @@ public class I02CambioHorario {
 									
 				}
 				else {
-				shell.dispose();
+					// TODO BD Guardar mensaje en la BD
+					shell.dispose();
 				}
 			}	
 		});

@@ -35,17 +35,20 @@ public class I02 {
 	ResourceBundle bundle;
 	Locale locale;
 	Image icoGr, icoPq, ico_imprimir, ico_mens_l, ico_mens, ico_cuadrante, ico_chico, ico_chica, ico_chicos;
+	Cuadrante cuadranteActual;
+	Empleado empleadoActual;
 	
 	private ArrayList<Empleado> empleados;
 	
 	private ImageData Img;
 
-	public I02(Shell shell, Display display, ResourceBundle bundle, Locale locale, ArrayList<Empleado> empleados, int rango) {
+	public I02(Shell shell, Display display, ResourceBundle bundle, Locale locale, ArrayList<Empleado> empleados, int rango, Empleado empleadoActual) {
 		this.shell = shell;
 		this.display = display;
 		this.empleados = empleados;
 		this.bundle = bundle;
 		this.locale = locale;
+		this.empleadoActual = empleadoActual;
 		crearVentana(rango);
 		//ponImageDia();
 	}
@@ -120,6 +123,11 @@ public class I02 {
 	}
 
 	private void crearTabJefeCuadrantes(TabFolder tabFolder) {
+		// TODO BD Cargar el cuadrante del departamento de empleadoActual
+		// con la fecha del calendario (definido más abajo) 
+		// en la variable cuadranteActual
+
+		// Crear el tabItem
 		TabItem tabItemCuadrantes = new TabItem(tabFolder, SWT.NONE);
 		tabItemCuadrantes.setText(bundle.getString("Cuadrantes"));
 		tabItemCuadrantes.setImage(ico_cuadrante);
@@ -163,6 +171,7 @@ public class I02 {
 						bundle.getString("septiembre"),	bundle.getString("octubre"),
 						bundle.getString("noviembre"),	bundle.getString("diciembre")
 				};
+				// TODO BD Cargar el cuadrante con la fecha correspondiente en la variable cuadranteActual
 				System.out.println("Fecha cambiada a " +
 						String.valueOf(calendario.getDay())	+ " de " +
 						meses[calendario.getMonth()]		+ " de " +
@@ -190,8 +199,7 @@ public class I02 {
 
 		final Button bPorSemanas = new Button(cCuadrantes, SWT.RADIO);
 		bPorSemanas.setText(bundle.getString("I02_but_Verpordia"));
-		bPorSemanas.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false,
-				2, 1));
+		bPorSemanas.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));
 
 		bPorMes.setSelection(true);
 	}
@@ -222,7 +230,10 @@ public class I02 {
 			TableColumn column = new TableColumn(tablaMensajes, SWT.NONE);
 			column.setText(titles[i]);
 		}
-		for (int i = 0; i < 12; i++) {
+		// TODO BD Cargar, por ejemplo, los 10 primeros mensajes
+		// de empleadoActual y ponerlos en la tabla usando el siguiente
+		// bucle
+		for (int i = 0; i < 10; i++) {
 			TableItem tItem = new TableItem(tablaMensajes, SWT.NONE);
 			tItem.setImage(ico_mens);
 			tItem.setText(1, "Remitente");
@@ -325,6 +336,7 @@ public class I02 {
 			TableColumn column = new TableColumn(tablaEmpleados, SWT.NONE);
 			column.setText(titles2[i]);
 		}
+		// TODO BD Coger listado de empleados
 		for (int i = 0; i < 10; i++) {
 			TableItem tItem = new TableItem(tablaEmpleados, SWT.NONE);
 			tItem.setImage(ico_chica);
@@ -357,7 +369,9 @@ public class I02 {
 		bEmplVer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1,	1));
 		bEmplVer.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				// employ created for tests
+				// TODO BD Coger empleado seleccionado de la BD y mostrarlo en la ventana
+				
+				// employee created for tests
 				Color col = new Color(display, 10, 0, 50);
 				Empleado eS = new Empleado(1, "M. Jackson", new Color (display, 104, 228,  85));
 				

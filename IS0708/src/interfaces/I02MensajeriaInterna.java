@@ -124,6 +124,7 @@ public class I02MensajeriaInterna {
 					}
 				}
 				else{
+					// TODO BD Guardar mensaje en la BD
 					shell.dispose();
 				}
 			}	

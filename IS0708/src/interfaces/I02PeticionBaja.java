@@ -183,6 +183,7 @@ public class I02PeticionBaja {
 					}
 				}
 				else{
+					// TODO BD Guardar mensaje en la BD
 					shell.dispose();
 				}
 			}	
