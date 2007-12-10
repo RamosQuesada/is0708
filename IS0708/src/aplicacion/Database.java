@@ -5,7 +5,7 @@ import java.sql.*;
 /**
  * Aquí se encuentran los métodos de acceso a la base de datos.
  * 
- * @author Camilo & chema
+ * @author Camilo & chema & Agustín
  * 
  */
 public class Database extends Thread {
@@ -161,7 +161,63 @@ public class Database extends Thread {
 		}
 		return error;
 	}
+	/**
+	 * Método que inserta en la tabla Distribucion los valores correspondientes a una nueva distribución
+	 * @param Hora    Franja horaria  dividida en unidades de una hora (por ej. De 9:00 – 10:00) representado por la hora de inicio (ej. 9)
+	 *            
+	 * @param DiaSemana  Dia (Lunes, Martes,...,Domingo) en el que se aplica la distribución
+	 *            
+	 * @param Patrón   Nos dice cómo se distribuyen los grupos (expertos y novatos)
+	 *           
+	 * @param NumMax   Nos acota el número máximo de trabajadores requeridos dicho día en una cierta franja horaria 
 
+	 * @param NumMin  Nos acota el número mínimo de trabajadores requeridos dicho día en una cierta franja horaria 
+	 * 
+	 * @param IdDepartamento  identificador del dpto.
+	
+	 * @return Informa sobre si se ha podido realizar la inserción o no
+	 */
+public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int NumMax, int NumMin,int IdDepartamento) {
+		boolean error = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("INSERT INTO distribucion values ('" + Hora + "', '" + DiaSemana + "', '" + Patron + "', '" +NumMax+ "', '" +NumMin+ "', '" +IdDepartamento+ "')");
+			System.out.println("Distribucion insertada");
+			error = true;
+		} catch (SQLException e) {
+			error = false;
+		}
+		return error;
+	}
+/**
+ * Método que inserta en la tabla Distribucion los valores correspondientes a una nueva distribución
+ * @param Hora    Franja horaria  dividida en unidades de una hora (por ej. De 9:00 – 10:00) representado por la hora de inicio (ej. 9)
+ *            
+ * @param FechaInicio   Fecha de Inicio de la distribución especial para festivos o promociones
+ * 
+ * @param FechaFin   Fecha de Finalizacion de la distribución especial para festivos o promociones
+ * @param Patrón   Nos dice cómo se distribuyen los grupos (expertos y novatos)
+ *           
+ * @param NumMax   Nos acota el número máximo de trabajadores requeridos dicho día en una cierta franja horaria 
+
+ * @param NumMin  Nos acota el número mínimo de trabajadores requeridos dicho día en una cierta franja horaria 
+ * 
+ * @param IdDepartamento  identificador del dpto.
+
+ * @return Informa sobre si se ha podido realizar la inserción o no
+ */
+public boolean insertarFestivo(int Hora,Date FechaInicio,Date FechaFin,String Patron,int NumMax, int NumMin,int IdDepartamento) {
+	boolean error = false;
+	try {
+		st = con.createStatement();
+		st.executeUpdate("INSERT INTO festivos values ('" + Hora + "', '" + FechaInicio + "', '" + FechaFin+ "', '" + Patron + "', '" +NumMax+ "', '" +NumMin+ "', '" +IdDepartamento+ "')");
+		System.out.println("Festivo insertado");
+		error = true;
+	} catch (SQLException e) {
+		error = false;
+	}
+	return error;
+}
 	public static void main(String[] IS0708) {
 		// @SuppressWarnings("unused")
 		Database prueba = new Database();
