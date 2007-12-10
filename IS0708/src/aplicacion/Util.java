@@ -90,5 +90,30 @@ public class Util {
 		clave=String.copyValueOf(clavechar);
 		return clave;
 	}		
-
+	
+	/**
+	 * Devuelve el numero de dias
+	 * @param mes
+	 * @param anio
+	 * @return entero que representa el numero de dias del mes
+	 */
+	public static int dameDias(int mes, int anio){ //esta funcion devuelve el numero de dias del mes
+		
+		// Sacado de Wikipedia: http://es.wikipedia.org/wiki/Algoritmo_bisiesto
+		boolean bisiesto = false;
+		if ((anio % 400 == 0) || (anio % 4 == 0 && anio % 100 != 0)){
+			bisiesto = true;
+		}
+		
+		if (mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12){
+			return 31;
+		}
+		else if (mes == 4 || mes == 6 || mes == 9 || mes == 10){
+			return 30;
+		}
+		else if (bisiesto) return 29;
+		else return 28;
+		    
+	}
+	
 }

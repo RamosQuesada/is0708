@@ -27,11 +27,11 @@ public class PruebaAlgoritmo {
 		disponibles.add(emp1);
 		disponibles.add(emp2);
 		disponibles.add(emp3);
-		
-		
+		cuad = new Cuadrante(12,2007);
+		System.out.println(cuad.getNumDias());
 		
 		alg = new TurnoMatic(6,2007);
-		alg.ejecutaAlgoritmo(disponibles);
+		//alg.ejecutaAlgoritmo(disponibles);
 		
 		System.out.println();
 		
