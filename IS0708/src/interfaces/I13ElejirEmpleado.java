@@ -12,6 +12,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
@@ -44,10 +45,11 @@ public class I13ElejirEmpleado {
 	private String numero;
 	private String apeido;
 	private String departamiento;
+	int itemNumbers [];
 	private ArrayList<Empleado> empleadoIN;
 	private ArrayList<Empleado> empleadoOUT;
 	
-	public I13ElejirEmpleado(Shell padre	,ResourceBundle bundle, ArrayList<Empleado> empleados ) {
+	public I13ElejirEmpleado(Shell padre, ResourceBundle bundle, ArrayList<Empleado> empleados ) {
 		this.bundle   = bundle;
 		this.empleadoIN = empleados;
 		this.shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
@@ -135,8 +137,21 @@ public class I13ElejirEmpleado {
 
 		
 	////Establecemos el grupoDER
-		List  dLEmail = new List(grupoDer, SWT.MULTI|SWT.SCROLL_LINE);
-		dLEmail.setLayoutData(new GridData(SWT.FILL,  SWT.FILL, true, true, 1, 1));		
+		final List  dLEmail = new List(grupoDer, SWT.MULTI | SWT.V_SCROLL);
+		dLEmail.setLayoutData(new GridData(SWT.FILL,  SWT.FILL, true, true, 1, 1));	
+		dLEmail.addSelectionListener(new SelectionListener(){
+			public void widgetDefaultSelected(SelectionEvent e) {
+				System.out.println(dLEmail.getSelectionIndex());
+			}
+			public void widgetSelected(SelectionEvent e) {
+				
+				String str [] = dLEmail.getSelection();
+				itemNumbers = dLEmail.getSelectionIndices();
+				
+			}
+			
+		});
+		
 		//abajo		
 		Composite cButtons = new Composite(grupoDer,SWT.NONE);
 		cButtons.setLayoutData(new GridData(SWT.LEFT, SWT.DOWN, true, true, 1, 1));
@@ -163,32 +178,46 @@ public class I13ElejirEmpleado {
 		SelectionAdapter sabAdd = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 					dameEmpleadoOut();	
+					shell.dispose();
 			}
 		};
 		SelectionAdapter sabRemove = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				System.out.println("remove");	
+					dLEmail.remove(itemNumbers);	
 			}
 		};
 		SelectionAdapter sabAddNum = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
+				dLEmail.add(numero);
 				System.out.println(numero);
 			}
 		};
 		SelectionAdapter sabAddApe = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
+				dLEmail.add(apeido);
 				System.out.println(apeido);
 			}
 		};
 		SelectionAdapter sabAddDep = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
+				/*
+				for (int i=0; i<empleadoIN.size();i++){
+					for (int j=0; j<empleadoIN.get(i).getDepartamento().size();j++){
+						if ( empleadoIN.get(i).getDepartamento().get(j).getName()== departamiento ){
+							dLEmail.add(empleadoIN.get(i).getApellido1()+"_"+empleadoIN.get(i).getApellido2());
+						}
+					}
+				}*/
+				
+				dLEmail.add(departamiento);
 				System.out.println(departamiento);
 			}
 		};
 	//
 		lBApellido.addSelectionListener(sabAddApe);
 		lBNumero.addSelectionListener(sabAddNum);
-		lBDept.addSelectionListener(sabAddNum);
+		lBDept.addSelectionListener(sabAddDep);
+		
 		bCancel.addSelectionListener(sabCancelar);
 		bAdd.addSelectionListener(sabAdd);
 		bRemove.addSelectionListener(sabRemove);
