@@ -43,7 +43,7 @@ import com.sun.org.apache.xalan.internal.xsltc.compiler.util.ErrorMsg;
 import aplicacion.Empleado;
 import aplicacion.Posicion;
 
-public class I10_ManageDepartament {
+public class I10_Config_departamento {
 
 	private Shell padre = null;
 	
@@ -71,7 +71,7 @@ public class I10_ManageDepartament {
 	private Image iconDep;
 	
 	/**constructor for editing department*/
-	public I10_ManageDepartament(Shell padre, ResourceBundle bundle,
+	public I10_Config_departamento(Shell padre, ResourceBundle bundle,
 			String windowName, String[] newArrayDB) {
 		// TODO Auto-generated constructor stub
 		this.padre = padre;
@@ -83,7 +83,7 @@ public class I10_ManageDepartament {
 	}
 	
 	/**constructor for new department*/
-	public I10_ManageDepartament(Shell padre, ResourceBundle bundle,
+	public I10_Config_departamento(Shell padre, ResourceBundle bundle,
 			String windowName) {
 		// TODO Auto-generated constructor stub
 		this.padre = padre;
@@ -106,7 +106,7 @@ public class I10_ManageDepartament {
 		closeOnECS(shellWindow);
 		
 		//adding icon to window
-		iconDep = new Image(padre.getDisplay(), I02.class.getResourceAsStream("ico_chicos.gif"));
+		iconDep = new Image(padre.getDisplay(), I02_Menu_principal.class.getResourceAsStream("ico_chicos.gif"));
 		shellWindow.setImage(iconDep);
 
 		//add Components into Window
@@ -143,7 +143,7 @@ public class I10_ManageDepartament {
 		// on action "New Boss"
 		SelectionAdapter onNewBoss = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				I08_1 I08_1_instance = new I08_1(padre, bundle);
+				I08_1_Anadir_empleado I08_1_instance = new I08_1_Anadir_empleado(padre, bundle);
 			}
 		};
 		

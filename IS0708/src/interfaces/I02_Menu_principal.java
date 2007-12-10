@@ -17,10 +17,10 @@ import java.util.Locale;
 import aplicacion.Empleado;
 
 import impresion.Imprimir;
-import interfaces.I01;
+import interfaces.I01_Login;
 import interfaces.I02_cuadr;
-import interfaces.I08_1;
-import interfaces.I09_1;
+import interfaces.I08_1_Anadir_empleado;
+import interfaces.I09_1_Creacion_contratos;
 import aplicacion.Util.*;
 
 /**
@@ -28,7 +28,7 @@ import aplicacion.Util.*;
  * @author Daniel Dionne
  * 
  */
-public class I02 {
+public class I02_Menu_principal {
 
 	Shell shell;
 	Display display;
@@ -42,7 +42,7 @@ public class I02 {
 	
 	private ImageData Img;
 
-	public I02(Shell shell, Display display, ResourceBundle bundle, Locale locale, ArrayList<Empleado> empleados, int rango, Empleado empleadoActual) {
+	public I02_Menu_principal(Shell shell, Display display, ResourceBundle bundle, Locale locale, ArrayList<Empleado> empleados, int rango, Empleado empleadoActual) {
 		this.shell = shell;
 		this.display = display;
 		this.empleados = empleados;
@@ -115,7 +115,7 @@ public class I02 {
 		// display
 		helpHelpItem.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				new I12(display, locale, bundle);
+				new I12_Ayuda(display, locale, bundle);
 			}
 		});
 		helpHelpItem.setAccelerator(SWT.F1);
@@ -252,7 +252,7 @@ public class I02 {
 		bMensNuevo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		bMensNuevo.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				new I02MensajeNuevo(shell,bundle,locale);
+				new I15_Mensaje_nuevo(shell,bundle,locale);
 			}
 		});
 
@@ -360,7 +360,7 @@ public class I02 {
 
 		bEmplNuevo.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				new I08_1(shell, bundle);
+				new I08_1_Anadir_empleado(shell, bundle);
 			}
 		});
 
@@ -376,7 +376,7 @@ public class I02 {
 				Empleado eS = new Empleado(1, "M. Jackson", new Color (display, 104, 228,  85));
 				
 				Empleado emp = new Empleado(eS, 12345678, "phil", "colins", "-", new Date("12/12/09"), 1, "phil.colins@gmail.com", "", 1, null, null, new Date("12/12/09"),new Date("12/12/09"), col );
-				new I08_2(shell, emp, bundle);
+				new I08_2_Consultar_empleado(shell, emp, bundle);
 			}
 		});
 
@@ -447,7 +447,7 @@ public class I02 {
 				System.out.println("Pulsado Configuración departamentos: "+cmbDepartamentos.getText().toString());
 				//take arrayDB from DB this is only for to show interface
 				String[]arrayDB = {"nazwaDepartamentu","1 parametr","2 parametr"};
-				new I10_ManageDepartament(shell, bundle, bundle.getString("I02_but_Config_dep"),arrayDB);
+				new I10_Config_departamento(shell, bundle, bundle.getString("I02_but_Config_dep"),arrayDB);
 			}
 		});
 		
@@ -459,7 +459,7 @@ public class I02 {
 		bNew.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				System.out.println("Pulsado Nuevo Departamento");
-				new I10_ManageDepartament(shell, bundle, bundle.getString("I02_but_Nuevo_dep"));
+				new I10_Config_departamento(shell, bundle, bundle.getString("I02_but_Nuevo_dep"));
 			}
 		});
 	
@@ -525,7 +525,7 @@ public class I02 {
 
 		bNuevoContrato.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				new I09_1(shell, bundle);
+				new I09_1_Creacion_contratos(shell, bundle);
 			}
 		});
 
@@ -547,7 +547,7 @@ public class I02 {
 		tabItemAdminInicio.setControl(cInicio);
 		
 		Image _fondo_turnomatic;
-		_fondo_turnomatic = new Image(display, I02.class.getResourceAsStream("admin_fondo.jpg"));
+		_fondo_turnomatic = new Image(display, I02_Menu_principal.class.getResourceAsStream("admin_fondo.jpg"));
 		
 		cInicio.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		//Le añadimos un layout
@@ -1147,15 +1147,15 @@ public class I02 {
 		shell.setText(bundle.getString("Turno-matic"));// idiomas igual siempre
 
 		// Cargar iconos
-		icoGr			= new Image(display, I02.class.getResourceAsStream("icoGr.gif"));
-		icoPq			= new Image(display, I02.class.getResourceAsStream("icoPq.gif"));
-		ico_imprimir	= new Image(display, I02.class.getResourceAsStream("ico_imprimir.gif"));
-		ico_mens_l		= new Image(display, I02.class.getResourceAsStream("ico_mens1_v.gif"));
-		ico_mens		= new Image(display, I02.class.getResourceAsStream("ico_mens2_v.gif"));
-		ico_cuadrante	= new Image(display, I02.class.getResourceAsStream("ico_cuadrante.gif"));
-		ico_chico		= new Image(display, I02.class.getResourceAsStream("ico_chico.gif"));
-		ico_chica		= new Image(display, I02.class.getResourceAsStream("ico_chica.gif"));
-		ico_chicos		= new Image(display, I02.class.getResourceAsStream("ico_chicos.gif"));
+		icoGr			= new Image(display, I02_Menu_principal.class.getResourceAsStream("icoGr.gif"));
+		icoPq			= new Image(display, I02_Menu_principal.class.getResourceAsStream("icoPq.gif"));
+		ico_imprimir	= new Image(display, I02_Menu_principal.class.getResourceAsStream("ico_imprimir.gif"));
+		ico_mens_l		= new Image(display, I02_Menu_principal.class.getResourceAsStream("ico_mens1_v.gif"));
+		ico_mens		= new Image(display, I02_Menu_principal.class.getResourceAsStream("ico_mens2_v.gif"));
+		ico_cuadrante	= new Image(display, I02_Menu_principal.class.getResourceAsStream("ico_cuadrante.gif"));
+		ico_chico		= new Image(display, I02_Menu_principal.class.getResourceAsStream("ico_chico.gif"));
+		ico_chica		= new Image(display, I02_Menu_principal.class.getResourceAsStream("ico_chica.gif"));
+		ico_chicos		= new Image(display, I02_Menu_principal.class.getResourceAsStream("ico_chicos.gif"));
 
 		// Dos iconos de tamaño diferente para SO's que los necesiten
 		shell.setImages(new Image[] { icoPq, icoGr });

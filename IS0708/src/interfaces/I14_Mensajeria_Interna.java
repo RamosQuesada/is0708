@@ -18,7 +18,7 @@ import org.eclipse.swt.widgets.Text;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class I02MensajeriaInterna {
+public class I14_Mensajeria_Interna {
 	private Shell _padre = null;
 	private ResourceBundle _bundle;
 
@@ -30,7 +30,7 @@ public class I02MensajeriaInterna {
 	
 	private int opcion_actual= NO_INICIALIZADO;
 	
-	public I02MensajeriaInterna(Shell padre	,ResourceBundle bundle) {
+	public I14_Mensajeria_Interna(Shell padre	,ResourceBundle bundle) {
 		this._padre = padre;
 		this._bundle=bundle;
 		mostrarVentana();
@@ -39,7 +39,7 @@ public class I02MensajeriaInterna {
 	public void mostrarVentana() {
 		final Shell shell = new Shell (_padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 
-		final Image ico_mens_l = new Image(_padre.getDisplay(), I02.class.getResourceAsStream("ico_mens1_v.gif"));
+		final Image ico_mens_l = new Image(_padre.getDisplay(), I02_Menu_principal.class.getResourceAsStream("ico_mens1_v.gif"));
 		
 		//Establecemos el layout del shell
 		GridLayout lShell = new GridLayout();

@@ -1,8 +1,8 @@
 package aplicacion;
 
 import java.util.ArrayList;
-import interfaces.I01;
-import interfaces.I02;
+import interfaces.I01_Login;
+import interfaces.I02_Menu_principal;
 import aplicacion.Database.*;
 
 
@@ -64,7 +64,7 @@ public class Aplicacion {
 		db.start();
 		
 		// Login
-		I01 login = new I01(shell, l.getBundle());
+		I01_Login login = new I01_Login(shell, l.getBundle());
 		boolean identificado = false;
 		while (!identificado) {
 			login.mostrarVentana();
@@ -90,7 +90,7 @@ public class Aplicacion {
 		if (!display.isDisposed()) {
 			// TODO Cambiar por acceso a la vista
 			// Poblar ventana: 0 administrador, 1 empleado, 2 jefe, 3 gerente
-			new I02(shell, display, l.getBundle(), l.getCurrentLocale(), empleados, login.getNumeroVendedor(), empleadoActual);
+			new I02_Menu_principal(shell, display, l.getBundle(), l.getCurrentLocale(), empleados, login.getNumeroVendedor(), empleadoActual);
 			// Este bucle mantiene la ventana abierta
 			while (!shell.isDisposed()) {
 				if (!display.readAndDispatch()) {

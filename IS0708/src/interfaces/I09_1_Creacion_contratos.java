@@ -18,12 +18,12 @@ import org.eclipse.swt.custom.ScrolledComposite;
 import java.util.ResourceBundle;
 import org.eclipse.swt.graphics.*;
 
-public class I09_1 {
+public class I09_1_Creacion_contratos {
 	private Shell padre = null;
 	private ResourceBundle bundle;
 	
 	private final int longCicloDefault = 14;
-	public I09_1(Shell padre, ResourceBundle bundle) {
+	public I09_1_Creacion_contratos(Shell padre, ResourceBundle bundle) {
 		this.padre = padre;
 		this.bundle = bundle;
 		crearVentana();
@@ -240,7 +240,7 @@ public class I09_1 {
 		// Listener para el botón de nuevo turno
 		SelectionAdapter sabNuevoTurno = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
-				new I09_1_1(shell, bundle);
+				new I09_1_1_Creacion_turnos(shell, bundle);
 			}
 		};
 		bNuevoTurno.addSelectionListener(sabNuevoTurno);

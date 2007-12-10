@@ -15,14 +15,14 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-public class I02PeticionFecha {
+public class I17_Peticion_fecha {
 	private Shell padre = null;
 	private Text texto_asociado;
 	//private Double fechaNumerica;
 	private DateTime calendario;
 	private boolean seleccionado=false;
 	
-	public I02PeticionFecha(Shell padre,Text texto) {
+	public I17_Peticion_fecha(Shell padre,Text texto) {
 		this.padre = padre;
 		texto_asociado=texto;
 		mostrarVentana();
@@ -31,7 +31,7 @@ public class I02PeticionFecha {
 	public void mostrarVentana() {
 		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 
-		final Image ico_mens_l = new Image(padre.getDisplay(), I02.class.getResourceAsStream("ico_mens1_v.gif"));
+		final Image ico_mens_l = new Image(padre.getDisplay(), I02_Menu_principal.class.getResourceAsStream("ico_mens1_v.gif"));
 		
 		//Establecemos el layout del shell
 		GridLayout lShell = new GridLayout();

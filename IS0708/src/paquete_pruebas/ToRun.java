@@ -1,7 +1,7 @@
 package paquete_pruebas;
 
 import idiomas.LanguageChanger;
-import interfaces.I13ElejirEmpleado;
+import interfaces.I13_Elegir_empleado;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,7 +15,7 @@ import aplicacion.Empleado;
 
 public class ToRun {
 
-	private I13ElejirEmpleado elejirEmpleado;
+	private I13_Elegir_empleado elejirEmpleado;
 	public static void main (String[] args) {
 		// La lista de empleados
 		final ArrayList<Empleado> empleados;
@@ -45,7 +45,7 @@ public class ToRun {
 		empleados.add(e6);
 
 		mainshell.open();
-		I13ElejirEmpleado elejirEmpleado = new I13ElejirEmpleado(mainshell, l.getBundle(), empleados);
+		I13_Elegir_empleado elejirEmpleado = new I13_Elegir_empleado(mainshell, l.getBundle(), empleados);
 		elejirEmpleado.mostrarVentana();
 		
 			// Este bucle mantiene la ventana abierta

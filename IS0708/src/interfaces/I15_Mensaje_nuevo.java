@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.Shell;
  * Clase que crea la ventana de eleccion de tipo de mensaje
  * @author David Rodilla
  */
-public class I02MensajeNuevo {
+public class I15_Mensaje_nuevo {
 	/**
 	 * Ventana que llama a la de esta clase
 	 */
@@ -48,7 +48,7 @@ public class I02MensajeNuevo {
 	/** Constructor
 	 * @param padre ventana que llama a la actual
 	 */
-	public I02MensajeNuevo(Shell padre,ResourceBundle bundle, Locale locale) {
+	public I15_Mensaje_nuevo(Shell padre,ResourceBundle bundle, Locale locale) {
 		this._padre = padre;
 		this._bundle = bundle;
 		this._locale = locale;
@@ -61,7 +61,7 @@ public class I02MensajeNuevo {
 	public void mostrarVentana() {
 		final Shell shell = new Shell (_padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 
-		final Image ico_mens_l = new Image(_padre.getDisplay(), I02.class.getResourceAsStream("ico_mens1_v.gif"));
+		final Image ico_mens_l = new Image(_padre.getDisplay(), I02_Menu_principal.class.getResourceAsStream("ico_mens1_v.gif"));
 		
 		//Establecemos el layout del shell
 		GridLayout lShell = new GridLayout();
@@ -104,7 +104,7 @@ public class I02MensajeNuevo {
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
 				System.out.println("peticion mensajeria interna in");
-				opcion_actual=I02MensajeNuevo.MENSAJERIA_INTERNA;
+				opcion_actual=I15_Mensaje_nuevo.MENSAJERIA_INTERNA;
 				
 			}
 
@@ -125,7 +125,7 @@ public class I02MensajeNuevo {
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
 				System.out.println("peticion baja in");
-				opcion_actual=I02MensajeNuevo.PETICION_BAJA;
+				opcion_actual=I15_Mensaje_nuevo.PETICION_BAJA;
 				
 			}
 
@@ -143,7 +143,7 @@ public class I02MensajeNuevo {
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
 				System.out.println("peticion cambio horario in");
-				opcion_actual=I02MensajeNuevo.CAMBIO_HORARIO;
+				opcion_actual=I15_Mensaje_nuevo.CAMBIO_HORARIO;
 				
 			}
 
@@ -168,17 +168,17 @@ public class I02MensajeNuevo {
 					e.doit = messageBox.open () == SWT.CLOSE;
 				}
 				if(opcion_actual==MENSAJERIA_INTERNA){
-					I02MensajeriaInterna ventana = new I02MensajeriaInterna(_padre,_bundle);
+					I14_Mensajeria_Interna ventana = new I14_Mensajeria_Interna(_padre,_bundle);
 					shell.dispose();
 
 				}
 				if(opcion_actual==PETICION_BAJA){
-					I02PeticionBaja ventana = new I02PeticionBaja(_padre,_bundle);
+					I16_Peticion_baja ventana = new I16_Peticion_baja(_padre,_bundle);
 					shell.dispose();
 
 				}
 				if(opcion_actual==CAMBIO_HORARIO){
-					I02CambioHorario ventana = new I02CambioHorario(_padre,_bundle);
+					I18_Cambio_horario ventana = new I18_Cambio_horario(_padre,_bundle);
 					shell.dispose();
 
 				}

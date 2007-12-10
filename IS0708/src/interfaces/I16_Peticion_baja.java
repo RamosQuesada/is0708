@@ -19,18 +19,18 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-public class I02PeticionBaja {
+public class I16_Peticion_baja {
 	private Shell _padre = null;
 	private ResourceBundle _bundle;
 	
 	private Text cFechaInicio;
 	private Text cFechaFin;
 	
-	private I02PeticionFecha ventana;
+	private I17_Peticion_fecha ventana;
 	private Integer iFechaInicio=0;
 	private Integer iFechaFin=0;
 	
-	public I02PeticionBaja(Shell padre,ResourceBundle bundle) {
+	public I16_Peticion_baja(Shell padre,ResourceBundle bundle) {
 		this._padre = padre;
 		this._bundle= bundle;
 		
@@ -40,7 +40,7 @@ public class I02PeticionBaja {
 	public void mostrarVentana() {
 		final Shell shell = new Shell (_padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 
-		final Image ico_mens_l = new Image(_padre.getDisplay(), I02.class.getResourceAsStream("ico_mens1_v.gif"));
+		final Image ico_mens_l = new Image(_padre.getDisplay(), I02_Menu_principal.class.getResourceAsStream("ico_mens1_v.gif"));
 		
 		//Establecemos el layout del shell
 		GridLayout lShell = new GridLayout();
@@ -67,7 +67,7 @@ public class I02PeticionBaja {
 		//Introducimos los valores y eventos de Fecha Inicio
 		bFechaInicio.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				ventana = new I02PeticionFecha(shell,cFechaInicio);
+				ventana = new I17_Peticion_fecha(shell,cFechaInicio);
 				//iFechaInicio=ventana.dameCatDia();
 			}				
 		});
@@ -92,7 +92,7 @@ public class I02PeticionBaja {
 
 		bFechaFin.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				ventana = new I02PeticionFecha(shell,cFechaFin);
+				ventana = new I17_Peticion_fecha(shell,cFechaFin);
 				//iFechaFin=ventana.dameCatDia();
 
 			}				

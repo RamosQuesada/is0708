@@ -25,13 +25,13 @@ import org.eclipse.swt.graphics.*;
 import aplicacion.Empleado;
 import aplicacion.Posicion;
 
-public class I09_1_1 {
+public class I09_1_1_Creacion_turnos {
 	private Shell padre = null;
 	private ResourceBundle bundle;
 	private aplicacion.Turno turno;
 	private int alto, ancho;
 	private Cuadrante cuadrante;
-	public I09_1_1(Shell padre, ResourceBundle bundle) {
+	public I09_1_1_Creacion_turnos(Shell padre, ResourceBundle bundle) {
 		this.padre = padre;
 		this.bundle = bundle;
 		mostrarVentana();
