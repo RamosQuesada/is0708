@@ -1,8 +1,8 @@
 package algoritmo;
 
 import java.util.ArrayList;
-import aplicacion.Empleado;
-import aplicacion.Turno;
+import aplicacion.*;
+
 
 /**
  * Esta contiene los algoritmos que vamos a utilizar para el calculo automatico de un cuadrante
@@ -31,7 +31,7 @@ public class TurnoMatic {
 		this.anio = year;
 		this.mes = m;
 		this.estruc = new Estructura(mes,anio,personal);
-		int dias = estruc.dameDias(mes);
+		int dias = Util.dameDias(mes,anio);
 		this.cuadrante = new Cuadrante(mes,dias);
 		
 	}
@@ -48,7 +48,7 @@ public class TurnoMatic {
 	public  Cuadrante ejecutaAlgoritmo(ArrayList<Empleado> disp){
 		
 		//colocamos a los empleados correspondientes a cada día
-		for(int i=0;i<estruc.dameDias(mes);i++){
+		for(int i=0;i<Util.dameDias(mes,anio);i++){
 			
 			//Aquí, actualizar la lista de empleados disponibles para cada
 			//turno a partir de la lista de todos los empleados.

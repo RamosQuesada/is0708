@@ -2,6 +2,7 @@ package algoritmo;
 
 import java.util.ArrayList;
 import aplicacion.Empleado;
+import aplicacion.Util;
 
 /**
  * La primera dimensión representa el mes en cuestión (una posición por cada dia del mes)
@@ -24,7 +25,7 @@ public class Estructura {
 		// Recuperar de la base de datos la lista de todos los turnos del departamento
 		// y ver en cuantos trozos vas a partir cada dia
 		int numDias=0;
-		numDias=dameDias(mes);//calculamos el numero de dias
+		numDias=Util.dameDias(mes,anio);//calculamos el numero de dias
 		dias = new ListasEmpleados[numDias][numTrozos];
 		// Se podría no asignar listas a los dias que no se trabaja
 		for (int i=0; i<numDias; i++){
@@ -35,15 +36,6 @@ public class Estructura {
 		personal=new ArrayList<Empleado>();
 		//rellenar lista empleados
 		cal=new Calendario(numDias,mes,anio);//creamos calendario
-	}
-	public int dameDias(int mes){ //esta funcion devuelve el numero de dias del mes
-		if (mes == (1|3|5|7|8|10|12)){
-			return 31;
-		}
-		else if (mes == (4|6|9|11)){
-			return 30;
-		}
-		else return 28;
 	}
 	
 	public ListasEmpleados[][] getDias(){
