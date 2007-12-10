@@ -10,13 +10,16 @@ package interfaces;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -30,10 +33,9 @@ import aplicacion.Empleado;
 import aplicacion.Util;
 import impresion.Imprimir;
 
+import java.util.Calendar;
 import java.util.ResourceBundle;
 
-// TODO Mostrar elección de rangos inferiores al usuario
-// TODO Elegir color (si lo vamos a usar)
 public class I08_2 {
 	private Shell padre = null;
 	private Empleado empleado;
@@ -47,7 +49,6 @@ public class I08_2 {
 	
 	public void mostrarVentana() {
 		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
-
 		final Image ico_chico = new Image(padre.getDisplay(), I01.class.getResourceAsStream("ico_chico.gif"));
 		final Image ico_chica = new Image(padre.getDisplay(), I01.class.getResourceAsStream("ico_chica.gif"));
 		
@@ -55,8 +56,10 @@ public class I08_2 {
 		layout.numColumns = 2;
 		//layout.makeColumnsEqualWidth = true;
 
+		shell.setLayoutData(layout);
 		final Group grupoIzq = new Group(shell, SWT.NONE);
 		final Group grupoDer = new Group(shell, SWT.NONE);
+		
 		grupoIzq.setText(bundle.getString("I08_lab_DatosPersonales"));
 		grupoDer.setText(bundle.getString("I08_lab_DatosLaborales"));
 
@@ -67,6 +70,7 @@ public class I08_2 {
 		lGrupoDer.numColumns = 2;
 		grupoDer.setLayout(lGrupoDer);
 		
+		//grupoIzq
 		final Label  lNVend			= new Label (grupoIzq, SWT.LEFT);
 		final Text   tNVend			= new Text  (grupoIzq, SWT.BORDER | SWT.READ_ONLY);
 		final Label  lPassword		= new Label (grupoIzq, SWT.LEFT);
@@ -83,6 +87,7 @@ public class I08_2 {
 		final Text   tAnoNac		= new Text  (grupoIzq, SWT.BORDER | SWT.READ_ONLY);
 		final Label  lSexo			= new Label (grupoIzq, SWT.LEFT);
 		final Text   tSexo			= new Text  (grupoIzq, SWT.BORDER | SWT.READ_ONLY);
+		//grupoDer
 		final Label  lContrato		= new Label (grupoDer, SWT.LEFT);
 		final Text   tContrato		= new Text  (grupoDer, SWT.BORDER | SWT.READ_ONLY);
 		final Label  lExperiencia	= new Label (grupoDer, SWT.LEFT);
@@ -93,12 +98,13 @@ public class I08_2 {
 		final Text   tFContrato		= new Text  (grupoDer, SWT.BORDER | SWT.READ_ONLY);
 		final Label  lFAlta			= new Label (grupoDer, SWT.LEFT);
 		final Text   tFAlta			= new Text  (grupoDer, SWT.BORDER | SWT.READ_ONLY);
-		final Text   tColor			= new Text  (grupoDer, SWT.PUSH);
-		final Label  lColor			= new Label	(grupoDer, SWT.NONE);
+		final Label  lColor			= new Label	(grupoDer, SWT.LEFT);
+		final Text   tColor			= new Text  (grupoDer, SWT.BORDER | SWT.READ_ONLY);
+
 		
 		final Button bImprimir		= new Button(shell, SWT.PUSH);
 		final Button bCancelar		= new Button(shell, SWT.PUSH);
-		
+		// Labels
 		lNVend			.setText(bundle.getString("Vendedor"));
 		lPassword		.setText(bundle.getString("Contraseña"));
 		lEMail			.setText(bundle.getString("EMail"));
@@ -113,21 +119,26 @@ public class I08_2 {
 		lFAlta			.setText(bundle.getString("I08_lab_FAlta"));
 		lFContrato		.setText(bundle.getString("I08_lab_FContr"));
 		lColor			.setText(bundle.getString("I08_lab_SelColor"));
+		// pone datos de empleado
+		try{
+			tNVend			.setText(""+empleado.getNVend());
+			//tPassword		.setText(empleado.getPassword());
+			tPassword		.setText("********");
+			tEMail			.setText(empleado.getEmail());
+			tNombre			.setText(empleado.getNombre());
+			tApell1			.setText(empleado.getApellido1());
+			tApell2			.setText(empleado.getApellido2());
+			tAnoNac			.setText(""+empleado.getFechaNac().getDay()+"/"+empleado.getFechaNac().getMonth()+"/"+empleado.getFechaNac().getYear());
+			tSexo			.setText(""+empleado.getSexo());
+			tContrato		.setText("");
+			tExperiencia	.setText("");
+			tDepto			.setText("");
+		 	tFAlta			.setText(""+empleado.getFechaNac().getDate());
+		 	tFContrato		.setText(""+empleado.getFechaNac().getDate());
+		 	tColor			.setBackground(empleado.getColor());
+		}catch(Exception e){
+		}
 		
-		tNVend			.setText(""+empleado.getNVend());
-		tPassword		.setText(empleado.getPassword());
-		tEMail			.setText(empleado.getEmail());
-		tNombre			.setText(empleado.getNombre());
-		tApell1			.setText(empleado.getApellido1());
-		tApell2			.setText(empleado.getApellido2());
-		tAnoNac			.setText(""+empleado.getFechaNac());
-		tSexo			.setText(""+empleado.getSexo());
-		tContrato		.setText("");
-		tExperiencia	.setText("");
-		tDepto			.setText("");
-	 	tFAlta			.setText("");
-	 	tFContrato		.setText("");
-	 	tColor			.setText("");
 	 	
 	 	
 		
@@ -159,7 +170,7 @@ public class I08_2 {
 		lFAlta		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		tFAlta		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		lColor		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
-		lColor		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
+		tColor		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		
 		bImprimir	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		bCancelar	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
@@ -205,6 +216,9 @@ public class I08_2 {
 		bImprimir.addListener(SWT.PUSH, new Listener(){
 			public void handleEvent(Event event) {
 				Imprimir im = new Imprimir(padre.getDisplay());
+				GC gc = new GC(shell);
+				Image image = new Image(shell.getDisplay(), shell.getClientArea().height, shell.getClientArea().width);		
+				gc.drawImage(image, shell.getClientArea().x, shell.getClientArea().y);
 				
 			}	
 		});
@@ -216,5 +230,10 @@ public class I08_2 {
 		// Mostrar ventana centrada sobre el padre
 		shell.setLocation(padre.getBounds().width/2 + padre.getBounds().x - shell.getSize().x/2, padre.getBounds().height/2 + padre.getBounds().y - shell.getSize().y/2);
 		shell.open();
+		
+
+
+		
 	}
+	
 }
