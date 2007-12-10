@@ -19,8 +19,8 @@ import idiomas.LanguageChanger;
  */
 public class Aplicacion {
 	private static Display display;
-	private Empleado empleadoActual;
-			
+	private static Empleado empleadoActual;
+	
 	public static void main (String[] args) {
 		// La lista de empleados
 		final ArrayList<Empleado> empleados;
@@ -35,7 +35,7 @@ public class Aplicacion {
 		display = new Display ();
 		Shell shell = new Shell(display);
 		
-		// TODO Lista provisional de empleados para hacer pruebas:
+		// TODO Quitar esta lista provisional de empleados para hacer pruebas:
 		Empleado e1 = new Empleado(1, "M. Jackson", new Color (display, 104, 228,  85));
 		Empleado e2 = new Empleado(2, "J. Mayer",   new Color (display, 130, 130, 225));
 		Empleado e3 = new Empleado(3, "B. Jovi",    new Color (display, 240, 190, 150));
@@ -74,7 +74,7 @@ public class Aplicacion {
 				}
 			}
 			if (login.getBotonPulsado()==1) {
-				// TODO Si el usuario existe en la base de datos, cargarlo en
+				// TODO BD Si el usuario existe en la base de datos, cargarlo en
 				//la variable empleadoActual
 				System.out.println("Empleado identificado: " + login.getNumeroVendedor());
 				identificado = true;
@@ -90,7 +90,7 @@ public class Aplicacion {
 		if (!display.isDisposed()) {
 			// TODO Cambiar por acceso a la vista
 			// Poblar ventana: 0 administrador, 1 empleado, 2 jefe, 3 gerente
-			new I02(shell, display, l.getBundle(), l.getCurrentLocale(), empleados, login.getNumeroVendedor());
+			new I02(shell, display, l.getBundle(), l.getCurrentLocale(), empleados, login.getNumeroVendedor(), empleadoActual);
 			// Este bucle mantiene la ventana abierta
 			while (!shell.isDisposed()) {
 				if (!display.readAndDispatch()) {
@@ -98,6 +98,7 @@ public class Aplicacion {
 				}
 			}
 			display.dispose();
+			// TODO Controlar si se había conectado antes
 			db.cerrarConexion();
 		}
 	}

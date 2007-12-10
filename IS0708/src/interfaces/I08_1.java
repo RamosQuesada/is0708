@@ -234,7 +234,10 @@ public class I08_1 {
 					tEMail.setFocus();
 					tEMail.selectAll();
 				}
-				else shell.dispose();
+				else {
+					// TODO BD Guardar empleado nuevo con todos sus datos en la BD
+					shell.dispose();
+				}
 			}
 		};
 		

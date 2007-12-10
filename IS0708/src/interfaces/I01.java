@@ -79,8 +79,6 @@ public class I01 {
 		tUsuario.setText("00000002");
 		tPassword.setText("blabla");
 		
-		//TODO ¿Y esto de aquí debajo para qué lo puse?
-		//tPassword.setEditable(true);
 		tPassword.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 5, 1));
 
 		bAceptar.setText(bundle.getString("Aceptar"));
