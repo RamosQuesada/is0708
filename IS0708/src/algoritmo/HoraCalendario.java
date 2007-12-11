@@ -3,7 +3,7 @@ package algoritmo;
 import java.util.ArrayList;
 
 /**
- * Esta clase contiene el max/min numero de personas y patrón de expertos/inexpertos, que se van a utilizar en la clase calendario
+ * Esta clase contiene el max/min numero de personas y patrón de expertos/principiantes, que se van a utilizar en la clase calendario
  * @author DavidMartin
  */
 public class HoraCalendario {
@@ -11,7 +11,7 @@ public class HoraCalendario {
 	private int max;
 	private int min;
 	private int expertos;
-	private int inexpertos;
+	private int principiantes;
 	
 	/**
 	 * Constructora por defecto. Inicializa atributos min y max a 0 y patrón a 1
@@ -20,7 +20,7 @@ public class HoraCalendario {
 		max=0;
 		min=0;
 		expertos=1;
-		inexpertos=1;	
+		principiantes=1;	
 	}
 	
 	/**
@@ -28,13 +28,13 @@ public class HoraCalendario {
 	 * @param max Número máximo de empleados simultaneos en el departamento
 	 * @param min Número mínimo de empleados simultaneos en el departamento
 	 * @param exp Número de empleados expertos por cada inexpert 
-	 * @param inexpert Número de empleados inexpertos simultaneos en el departamento
+	 * @param inexpert Número de empleados principiantes simultaneos en el departamento
 	 */
 	public HoraCalendario(int max,int min,int exp,int inexpert){//Otra constructora
 		this.max=max;
 		this.min=min;
 		this.expertos=exp;
-		this.inexpertos=inexpert;	
+		this.principiantes=inexpert;	
 	}
 	
 	/**
@@ -76,16 +76,28 @@ public class HoraCalendario {
 		return expertos;
 	}
 	
+	/**
+	 * Modifica el número de expertos del patrón
+	 * @param expertos
+	 */
 	public void setExpertos(int expertos) {
 		this.expertos = expertos;
 	}
 	
-	public int getInexpertos() {
-		return inexpertos;
+	/**
+	 * Consulta el número de principiantes del patrón
+	 * @return principiantes
+	 */
+	public int getPrincipiantes() {
+		return principiantes;
 	}
 	
-	public void setInexpertos(int inexpertos) {
-		this.inexpertos = inexpertos;
+	/**
+	 * Modifica el número de principiantes del patrón
+	 * @param principiantes
+	 */
+	public void setPrincipiantes(int principiantes) {
+		this.principiantes = principiantes;
 	}
 	
 }
