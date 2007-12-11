@@ -1,7 +1,7 @@
 package aplicacion;
 
 import java.sql.*;
-import java.util.Date;
+
 
 /**
  * Aquí se encuentran los métodos de acceso a la base de datos.
@@ -231,7 +231,7 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 	
 	 * @return Informa sobre si se ha podido realizar la inserción o no
 	 */
-	public boolean insertarFestivo(int Hora,Date FechaInicio,Date FechaFin,String Patron,int NumMax, int NumMin,int IdDepartamento) {
+	public boolean insertarFestivo(int Hora,String FechaInicio,String FechaFin,String Patron,int NumMax, int NumMin,int IdDepartamento) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
@@ -277,8 +277,8 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		
 		prueba.insertarTurno(1, "prueba", h, h, h, 10);
 		prueba.insertarDistribucion(9, "Martes", "1e5p", 10, 7, 1);
-	    Date d = new Date(2007,12,11);
-	    prueba.insertarFestivo(9, d, d,"2e7p", 15, 10, 1);
+	  //  Date d = new Date(10000000);
+	    prueba.insertarFestivo(9, "2007-12-11", "2007-12-11","2e7p", 15, 10, 1);
 		prueba.cerrarConexion();
 	}
 }
