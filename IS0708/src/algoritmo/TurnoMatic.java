@@ -1,5 +1,6 @@
 package algoritmo;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import aplicacion.*;
 
@@ -46,17 +47,36 @@ public class TurnoMatic {
 	 * El arrayList disp es solo para pruebas
 	 */
 	public  Cuadrante ejecutaAlgoritmo(ArrayList<Empleado> disp){
+	
+		//Colocamos a los empleados correspondientes a cada día
 		
-		//colocamos a los empleados correspondientes a cada día
-		for(int i=0;i<Util.dameDias(mes,anio);i++){
-			
-			//Aquí, actualizar la lista de empleados disponibles para cada
-			//turno a partir de la lista de todos los empleados.
-			
-			
+		ListasEmpleados[][] horario = estruc.getDias();
+		ArrayList<Empleado> reser;
+		ArrayList<Empleado> dispo;
+		Empleado e;
+		
+		//Recorremos los dias del mes
+		for(int i=0; i<Util.dameDias(mes,anio); i++){
+			//dividimos en el numero de franjas de cada dia
+			for(int j=0; j<estruc.getNumTrozos(); j++){
+				Time inif = estruc.getTrozosHorario()[j];
+				Time finf = estruc.getTrozosHorario()[j+1];
+				dispo = horario[i][j].getEmpleados();
+				reser = horario[i][j].getReserva();
+				
+				for(int k=0; k<disp.size(); k++){
+					e = disp.get(k);
+					if(e.estaDisponible(inif,finf)){
+						dispo.add(e);						
+					}else{
+						reser.add(e);
+					}
+				}
+				horario[i][j].setDisponibles(dispo);
+				horario[i][j].setReserva(reser);
+			}	
 			//coloca sólo a los empleados fijos.
 			colocaFijos(i,disp);
-			
 		}
 		
 		return this.cuadrante;
