@@ -244,10 +244,28 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		return correcto;
 	}
 
+	public boolean insertarTurno(int idTurno,String Descripcion,Time HoraEntrada,Time HoraSalida,Time HoraInicioDescanso, int Duracion) {
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("INSERT INTO TURNOS values ('" + idTurno + "', '" + Descripcion + "', '" + HoraEntrada + "', '" + HoraSalida + "', '" + HoraInicioDescanso + "', '" + Duracion + "')");
+			System.out.println("Turno insertado");
+			correcto = true;
+		} catch (SQLException e) {
+			correcto = false;
+		}
+		return correcto;
+	}
+	
 	public static void main(String[] IS0708) {
 		@SuppressWarnings("unused")
 		Database prueba = new Database();
 		prueba.abrirConexion();
+		
+		Time h = new Time(10000000);
+					
+		
+		prueba.insertarTurno(1, "prueba", h, h, h, 10);
 		prueba.cerrarConexion();
 	}
 }
