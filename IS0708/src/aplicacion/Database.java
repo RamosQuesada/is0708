@@ -268,7 +268,6 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 	}
 	
 	public static void main(String[] IS0708) {
-		@SuppressWarnings("unused")
 		Database prueba = new Database();
 		prueba.abrirConexion();
 		
