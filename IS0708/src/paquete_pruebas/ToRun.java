@@ -28,15 +28,14 @@ public class ToRun {
 		mainshell.setLocation(100,100);
 		
 		// TODO Lista provisional de empleados para hacer pruebas:
-		Empleado eS = new Empleado(1, "M. Jackson", new Color (display, 104, 228,  85));
 		
 		Color col = new Color(display, 108, 0, 50);
-		Empleado e1 = new Empleado(eS, 12345671, "phil", "colins", "-", new Date(1985,6,23), 1, "phil.colins@gmail.com", "", 1, null, null, new Date(2000,3,3),new Date(2005,9,9), col );
-		Empleado e2 = new Empleado(eS, 12345672, "bill", "andrew", "-", new Date(1985,6,23), 1, "phil.colins@gmail.com", "", 1, null, null, new Date(2000,3,3),new Date(2005,9,9), col );
-		Empleado e3 = new Empleado(eS, 12345673, "dark", "soprano", "-", new Date(1985,6,23), 1, "phil.colins@gmail.com", "", 1, null, null, new Date(2000,3,3),new Date(2005,9,9), col );
-		Empleado e4 = new Empleado(eS, 12345674, "angelo", "chilp", "-", new Date(1985,6,23), 1, "phil.colins@gmail.com", "", 1, null, null, new Date(2000,3,3),new Date(2005,9,9), col );
-		Empleado e5 = new Empleado(eS, 12345675, "phil",  "colins", "-", new Date(1985,6,23), 1, "phil.colins@gmail.com", "", 1, null, null, new Date(2000,3,3),new Date(2005,9,9), col );
-		Empleado e6 = new Empleado(eS, 12345676, "phil", "donk", "-", new Date(1985,6,23), 1, "phil.colins@gmail.com", "", 1, null, null, new Date(2000,3,3),new Date(2005,9,9), col );		
+		Empleado e1 = new Empleado(1, 12345671, "phil", "colins", "-", new Date(1985,6,23), 1, "phil.colins@gmail.com", "", 1, 1, 1, new Date(2000,3,3),new Date(2005,9,9), col,null,null );
+		Empleado e2 = new Empleado(1, 12345672, "bill", "andrew", "-", new Date(1985,6,23), 1, "phil.colins@gmail.com", "", 1, 1, 1, new Date(2000,3,3),new Date(2005,9,9), col,null,null );
+		Empleado e3 = new Empleado(1, 12345673, "dark", "soprano", "-", new Date(1985,6,23), 1, "phil.colins@gmail.com", "", 1, 1, 1, new Date(2000,3,3),new Date(2005,9,9), col,null,null );
+		Empleado e4 = new Empleado(1, 12345674, "angelo", "chilp", "-", new Date(1985,6,23), 1, "phil.colins@gmail.com", "", 1, 1, 1, new Date(2000,3,3),new Date(2005,9,9), col,null,null );
+		Empleado e5 = new Empleado(1, 12345675, "phil",  "colins", "-", new Date(1985,6,23), 1, "phil.colins@gmail.com", "", 1, 1, 1, new Date(2000,3,3),new Date(2005,9,9), col,null,null );
+		Empleado e6 = new Empleado(1, 12345676, "phil", "donk", "-", new Date(1985,6,23), 1, "phil.colins@gmail.com", "", 1, 1, 1, new Date(2000,3,3),new Date(2005,9,9), col,null,null );
 		empleados.add(e1);
 		empleados.add(e2);
 		empleados.add(e3);
