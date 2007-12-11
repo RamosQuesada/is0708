@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jfreechart"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.swt"/>
 	<classpathentry exported="true" kind="lib" path="/org.eclipse.swt/swt.jar" sourcepath="/org.eclipse.swt/src.zip">
 		<attributes>
@@ -11,5 +10,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="mysql-connector-java-5.1.5-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Documents and Settings/HaYeK/Escritorio/Java Utils/jfreechart-1.0.6/lib/jfreechart-1.0.6.jar"/>
+	<classpathentry kind="lib" path="C:/Documents and Settings/HaYeK/Escritorio/Java Utils/jfreechart-1.0.6/lib/jcommon-1.0.10.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
