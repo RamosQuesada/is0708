@@ -37,9 +37,9 @@ public class PruebaAlgoritmo {
 		System.out.println(cuad.getNumDias());
 		
 		alg = new TurnoMatic(6,2007);
-		alg.ejecutaAlgoritmo(disponibles);
+		//alg.ejecutaAlgoritmo(disponibles);
 		//alg.imprimeCuadrante();
-		alg.imprimeEstructura();
+		//alg.imprimeEstructura();
 		/*Time pr1 = new Time(19,49,00);
 		System.out.println(pr1.toString());
 		Time pr2 = Util.calculaFinDescanso(pr1, 20);
@@ -48,7 +48,7 @@ public class PruebaAlgoritmo {
 		
 
 		// Prueba de inicializaTrozos
-		ArrayList<Turno> turnos = new ArrayList<Turno>();
+		/*ArrayList<Turno> turnos = new ArrayList<Turno>();
 		//turnos.add(t1);
 		//turnos.add(t2);
 		ArrayList<Time> horas = new ArrayList<Time>();
@@ -74,8 +74,14 @@ public class PruebaAlgoritmo {
 			trozosHorario.add(j,horas.get(i));
 		}
 		System.out.println(trozosHorario.toString()); // Ordenada
+		*/
 		
-				
+		/*
+		// Prueba de la funcion Util.numExpertos(patron)
+		System.out.println("Expertos: "+Util.numExpertos("3e5p"));
+		System.out.println("Expertos: "+Util.numExpertos("re5p"));
+		*/
+		
 		System.out.println();
 		
 		
