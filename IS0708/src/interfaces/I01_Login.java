@@ -14,7 +14,7 @@ import aplicacion.Database;
  * Interfaz de usuario I-01 :: Identificación
  * @author Daniel Dionne
  */
-public class I01_Login {
+public class I01_Login extends Thread{
 	private Shell padre = null;
 	private ResourceBundle bundle;
 	private int numeroVendedor;
@@ -23,36 +23,63 @@ public class I01_Login {
 	private int botonPulsado;
 	Database db;
 	Text tEstado;
+	ProgressBar pbProgreso;
 	
-	public I01_Login(Shell padre, ResourceBundle bundle) {
+	public void run() {
+		// Conectar con la base de datos
+		db.abrirConexion();
+		if (!dialog.isDisposed())
+			if (!db.conexionAbierta()) {
+				dialog.getDisplay().asyncExec(new Runnable () {
+					public void run() {
+						MessageBox messageBox = new MessageBox(dialog, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
+						messageBox.setText (bundle.getString("Error"));
+						messageBox.setMessage (bundle.getString("I01_err_Conexion"));
+					}
+				});
+			}
+			else {
+				dialog.getDisplay().asyncExec(new Runnable () {
+					public void run() {
+						// Rellenar la barra de progreso
+						pbProgreso.setSelection(100);
+					}
+				});
+			}
+		else {
+			// En este caso se ha cerrado la aplicación antes de que termine de conectar.			
+			if (db.conexionAbierta())
+				db.cerrarConexion();
+		}
+	}
+	
+	public I01_Login(Shell padre, ResourceBundle bundle, Database db) {
 		this.padre = padre;
 		this.bundle = bundle;
 		this.db = db;
 		numeroVendedor = 0;
 		password = "";
 		botonPulsado = -1;
+		this.start();
 	}
 		
 	/**	
 	 * Crea la ventana
+	 * @author Daniel Dionne
 	 */
 	public synchronized void mostrarVentana() {
 		Image fondo = new Image(padre.getDisplay(), I01_Login.class.getResourceAsStream("intro.png"));
 		dialog = new Shell (padre, SWT.NONE | SWT.APPLICATION_MODAL);
 		
-		//Esto hace que los labels no tengan fondo
+		// Esto hace que los labels no tengan fondo
 		dialog.setBackgroundMode(SWT.INHERIT_DEFAULT);
 		dialog.setLayout(new GridLayout());
 		
+		// Contenido de la ventana
 		Composite contenido = new Composite(dialog, SWT.NONE);
 		contenido.setLayout(new GridLayout(8,true));
 		contenido.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true, 1, 1));
-		
-		/* TODO
-		tEstado = new Text(dialog, SWT.LEFT);
-		tEstado.setText("Conectando con la base de datos");
-		*/
-		
+				
 		final Label lUsuario  = new Label(contenido, SWT.LEFT);
 		final Text  tUsuario  = new Text(contenido, SWT.BORDER);
 		final Label lPassword = new Label(contenido, SWT.LEFT);
@@ -87,6 +114,14 @@ public class I01_Login {
 		bCancelar.setText(bundle.getString("Cancelar"));
 		bCancelar.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 4, 1));
 
+		//tEstado = new Text(contenido, SWT.LEFT);
+		//tEstado.setText("Conectando con la base de datos");
+		//tEstado.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true, 4, 1));
+
+		pbProgreso = new ProgressBar(contenido,SWT.FILL);
+		pbProgreso.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true, 8, 1));
+		pbProgreso.setSelection(50);
+		
 		// Un SelectionAdapter con lo que hace el botón bCancelar
 		SelectionAdapter sabCancelar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
@@ -112,6 +147,18 @@ public class I01_Login {
 						numeroVendedor = Integer.valueOf(tUsuario.getText());
 						password = tPassword.getText();
 						botonPulsado=1;
+						// bloquear interfaz, cursor esperar, bucle de espera
+						dialog.setCursor(new Cursor(dialog.getDisplay(), SWT.CURSOR_WAIT));
+						bAceptar.setEnabled(false);
+						tUsuario.setEnabled(false);
+						tPassword.setEnabled(false);
+						// TODO esperar por si todavía no ha terminado
+						while (!db.conexionAbierta()) {
+							if (!dialog.isDisposed() && !dialog.getDisplay().readAndDispatch()) {
+								dialog.getDisplay().sleep();
+							}
+						}
+						dialog.setCursor(new Cursor(dialog.getDisplay(), SWT.CURSOR_ARROW));
 						dialog.dispose();
 					} catch (NumberFormatException exception) {
 						MessageBox messageBox = new MessageBox (dialog, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
@@ -122,7 +169,6 @@ public class I01_Login {
 						tUsuario.setFocus();
 						tUsuario.selectAll();
 					}
-
 				}
 			}
 		};
@@ -135,7 +181,7 @@ public class I01_Login {
 
 		// Ajustar el tamaño de la ventana al contenido
 		dialog.setBackgroundImage(fondo);
-		dialog.setSize(500,374);
+		dialog.setSize(500,400);
 
 		// Mostrar ventana centrada sobre la pantalla
 		dialog.setLocation(padre.getDisplay().getClientArea().width/2 - dialog.getSize().x/2, padre.getDisplay().getClientArea().height/2 - dialog.getSize().y/2);
@@ -145,6 +191,7 @@ public class I01_Login {
 	/**
 	 * Devuelve el número de vendedor introducido por el usuario.
 	 * @return un entero con el número de vendedor
+	 * @author Daniel Dionne
 	 */
 	public int getNumeroVendedor() {
 		return numeroVendedor;
@@ -153,6 +200,7 @@ public class I01_Login {
 	/**
 	 * Devuelve la clave introducida por el usuario.
 	 * @return un String con la clave
+	 * @author Daniel Dionne
 	 */
 	public String getPassword() {
 		return password;
@@ -163,6 +211,7 @@ public class I01_Login {
 	 * @return	<li>-1 - Ningún botón
 	 * 			<li> 0 - Cancelar
 	 * 			<li> 1 - Aceptar
+	 * @author Daniel Dionne
 	 */
 	public int getBotonPulsado() {
 		return botonPulsado;

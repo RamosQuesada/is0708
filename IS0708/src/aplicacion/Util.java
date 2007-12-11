@@ -5,9 +5,7 @@ import java.sql.Time;
 
 /**
  * El cajón desastre de las funciones que no tienen cabida en ninguna clase,
- * pero que interesa que estén juntas para usarse en distintos ámbitos.
- * @author Daniel Dionne
- * 
+ * pero que interesa que estén juntas para usarse en distintos ámbitos. 
  */
 public class Util {
 	
@@ -44,6 +42,7 @@ public class Util {
 	 * Convierte un string a número de vendedor, comprobando que es válido. Devuelve -1 si no lo es.
 	 * @param nvend el string a convertir
 	 * @return el número de vendedor, o -1 si el string es incorrecto
+	 * @author Daniel Dionne
 	 */
 	public static int convertirNVend(String nvend) {
 		int n = -1;
@@ -62,6 +61,7 @@ public class Util {
 	 * Convierte un entero a un String de dos cifras, con un cero delante si es necesario.
 	 * @param i el número a convertir
 	 * @return un String con el entero en formato xx.
+	 * @author David Rodilla
 	 */
 	static public String aString (int i) {
 		String s = String.valueOf(i);
@@ -97,6 +97,7 @@ public class Util {
 	 * @param mes
 	 * @param anio
 	 * @return entero que representa el numero de dias del mes
+	 * @author Miguel Ángel
 	 */
 	public static int dameDias(int mes, int anio){ //esta funcion devuelve el numero de dias del mes
 		

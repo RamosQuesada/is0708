@@ -59,12 +59,9 @@ public class Aplicacion {
 		empleados.add(e6);
 
 		Database db = new Database();
-		
-		// Conectar con la base de datos
-		db.start();
-		
-		// Login
-		I01_Login login = new I01_Login(shell, l.getBundle());
+			
+		// Login y conexión a la base de datos
+		I01_Login login = new I01_Login(shell, l.getBundle(), db);
 		boolean identificado = false;
 		while (!identificado) {
 			login.mostrarVentana();
@@ -74,15 +71,25 @@ public class Aplicacion {
 				}
 			}
 			if (login.getBotonPulsado()==1) {
-				// TODO BD Si el usuario existe en la base de datos, cargarlo en
-				//la variable empleadoActual
-				System.out.println("Empleado identificado: " + login.getNumeroVendedor());
+				// Si llega aquí, ya ha conexión con la base de datos
+				if (login.getNumeroVendedor()==0) {
+					if (login.getPassword()=="admin")
+						System.out.println("Administrador identificado");
+				}
+				else {
+					// TODO BD Si el usuario existe en la base de datos, cargarlo en
+					//la variable empleadoActual
+					System.out.println("Empleado identificado: " + login.getNumeroVendedor());
+				}
 				identificado = true;
+				// si no, mostrar mensaje de error
 			}
 			else {
+				//Salir de la aplicación
 				display.dispose();
 				identificado = true; // Para que salga del bucle
-				db.cerrarConexion();
+				if (db.conexionAbierta())
+					db.cerrarConexion();
 			}
 		}
 		
@@ -90,7 +97,7 @@ public class Aplicacion {
 		if (!display.isDisposed()) {
 			// TODO Cambiar por acceso a la vista
 			// Poblar ventana: 0 administrador, 1 empleado, 2 jefe, 3 gerente
-			new I02_Menu_principal(shell, display, l.getBundle(), l.getCurrentLocale(), empleados, login.getNumeroVendedor(), empleadoActual);
+			new I02_Menu_principal(shell, display, l.getBundle(), l.getCurrentLocale(), empleados, login.getNumeroVendedor(), empleadoActual, db);
 			// Este bucle mantiene la ventana abierta
 			while (!shell.isDisposed()) {
 				if (!display.readAndDispatch()) {

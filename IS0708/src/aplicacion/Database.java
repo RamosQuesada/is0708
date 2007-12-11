@@ -53,6 +53,20 @@ public class Database extends Thread {
 		}
 	}
 
+	/**
+	 * Comprueba si hay una conexión abierta con la base de datos
+	 * @return	<i>true</i> si la conexión está abierta, <i>false</i> en caso
+	 * 			contrario o si hay alguna excepción
+	 * @author Daniel Dionne
+	 */
+	public boolean conexionAbierta() {
+		boolean b = false;
+		try {
+			b = !con.isClosed();
+		} catch (Exception e) {}
+		return b;
+	}
+	
 	public Empleado dameEmpleado(int nvend) {
 
 		// Pongo return null para que no diga que hay un error
@@ -189,39 +203,34 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		}
 		return correcto;
 	}
-/**
- * Método que inserta en la tabla Distribucion los valores correspondientes a una nueva distribución
- * @param Hora    Franja horaria  dividida en unidades de una hora (por ej. De 9:00 – 10:00) representado por la hora de inicio (ej. 9)
- *            
- * @param FechaInicio   Fecha de Inicio de la distribución especial para festivos o promociones
- * 
- * @param FechaFin   Fecha de Finalizacion de la distribución especial para festivos o promociones
- * @param Patrón   Nos dice cómo se distribuyen los grupos (expertos y novatos)
- *           
- * @param NumMax   Nos acota el número máximo de trabajadores requeridos dicho día en una cierta franja horaria 
 
- * @param NumMin  Nos acota el número mínimo de trabajadores requeridos dicho día en una cierta franja horaria 
- * 
- * @param IdDepartamento  identificador del dpto.
-
- * @return Informa sobre si se ha podido realizar la inserción o no
- */
-public boolean insertarFestivo(int Hora,Date FechaInicio,Date FechaFin,String Patron,int NumMax, int NumMin,int IdDepartamento) {
-	boolean correcto = false;
-	try {
-		st = con.createStatement();
-		st.executeUpdate("INSERT INTO festivos values ('" + Hora + "', '" + FechaInicio + "', '" + FechaFin+ "', '" + Patron + "', '" +NumMax+ "', '" +NumMin+ "', '" +IdDepartamento+ "')");
-		System.out.println("Festivo insertado");
-		correcto = true;
-	} catch (SQLException e) {
-		correcto = false;
-	}
-	return correcto;
-}
-	public static void main(String[] IS0708) {
-		// @SuppressWarnings("unused")
-		Database prueba = new Database();
-		prueba.abrirConexion();
-		prueba.cerrarConexion();
+	/**
+	 * Método que inserta en la tabla Distribucion los valores correspondientes a una nueva distribución
+	 * @param Hora    Franja horaria  dividida en unidades de una hora (por ej. De 9:00 – 10:00) representado por la hora de inicio (ej. 9)
+	 *            
+	 * @param FechaInicio   Fecha de Inicio de la distribución especial para festivos o promociones
+	 * 
+	 * @param FechaFin   Fecha de Finalizacion de la distribución especial para festivos o promociones
+	 * @param Patrón   Nos dice cómo se distribuyen los grupos (expertos y novatos)
+	 *           
+	 * @param NumMax   Nos acota el número máximo de trabajadores requeridos dicho día en una cierta franja horaria 
+	
+	 * @param NumMin  Nos acota el número mínimo de trabajadores requeridos dicho día en una cierta franja horaria 
+	 * 
+	 * @param IdDepartamento  identificador del dpto.
+	
+	 * @return Informa sobre si se ha podido realizar la inserción o no
+	 */
+	public boolean insertarFestivo(int Hora,Date FechaInicio,Date FechaFin,String Patron,int NumMax, int NumMin,int IdDepartamento) {
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("INSERT INTO festivos values ('" + Hora + "', '" + FechaInicio + "', '" + FechaFin+ "', '" + Patron + "', '" +NumMax+ "', '" +NumMin+ "', '" +IdDepartamento+ "')");
+			System.out.println("Festivo insertado");
+			correcto = true;
+		} catch (SQLException e) {
+			correcto = false;
+		}
+		return correcto;
 	}
 }

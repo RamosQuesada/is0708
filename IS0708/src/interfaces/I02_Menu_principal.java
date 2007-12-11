@@ -3,7 +3,6 @@ package interfaces;
 import java.util.ArrayList;
 
 import org.eclipse.swt.*;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -15,13 +14,12 @@ import java.util.ResourceBundle;
 import java.util.Locale;
 
 import aplicacion.Empleado;
-
+import aplicacion.Database;
 import impresion.Imprimir;
-import interfaces.I01_Login;
 import interfaces.I02_cuadr;
 import interfaces.I08_1_Anadir_empleado;
 import interfaces.I09_1_Creacion_contratos;
-import aplicacion.Util.*;
+
 
 /**
  * Interfaz de usuario I-02 :: Ventana principal - Jefe
@@ -37,18 +35,20 @@ public class I02_Menu_principal {
 	Image icoGr, icoPq, ico_imprimir, ico_mens_l, ico_mens, ico_cuadrante, ico_chico, ico_chica, ico_chicos;
 	Cuadrante cuadranteActual;
 	Empleado empleadoActual;
+	Database db;
 	
 	private ArrayList<Empleado> empleados;
 	
 	private ImageData Img;
 
-	public I02_Menu_principal(Shell shell, Display display, ResourceBundle bundle, Locale locale, ArrayList<Empleado> empleados, int rango, Empleado empleadoActual) {
+	public I02_Menu_principal(Shell shell, Display display, ResourceBundle bundle, Locale locale, ArrayList<Empleado> empleados, int rango, Empleado empleadoActual, Database db) {
 		this.shell = shell;
 		this.display = display;
 		this.empleados = empleados;
 		this.bundle = bundle;
 		this.locale = locale;
 		this.empleadoActual = empleadoActual;
+		this.db = db;
 		crearVentana(rango);
 		//ponImageDia();
 	}
