@@ -17,8 +17,8 @@ public class Estructura {
 	private ListasEmpleados[][] dias;
 	private ArrayList<Empleado> personal;//aqui estarán todos los empleados
 	private Calendario cal;//calendario donde se almacena min/max perso,exp/inexp... 
-	private Time[] trozosHorario; // Lista con el inicio de cada turno y el fin del ultimo
-	                              // tamanio: nTrozos+1;
+	private ArrayList<Time> trozosHorario; // Lista con el inicio de cada turno y el fin del ultimo
+	                                       // tamanio: nTrozos+1;
 	private int numTrozos;
 
 	
@@ -63,17 +63,13 @@ public class Estructura {
 		}
 		// Ordenar la lista
 		numTrozos = horas.size();
-		ArrayList<Time> orden = new ArrayList<Time>();
+		trozosHorario = new ArrayList<Time>();
 		for (int i=0; i<numTrozos; i++){
 			int j=0;
-			while (j<orden.size() && orden.get(j).getTime()<horas.get(i).getTime())
+			while (j<trozosHorario.size() && trozosHorario.get(j).getTime()<horas.get(i).getTime())
 				j++;
-			orden.add(j,horas.get(i));
+			trozosHorario.add(j,horas.get(i));
 		}
-		// Guarda lo calculado
-		trozosHorario = new Time[numTrozos];
-		for (int i=0; i<numTrozos; i++)
-			trozosHorario[i] = orden.get(i);
 	}
 	
 	/**
@@ -88,7 +84,7 @@ public class Estructura {
 	 * Devuelve las franjas horarias en las que se divide el dia del mes.
 	 * @return	franjas horarias.
 	 */
-	public Time[] getTrozosHorario() {
+	public ArrayList<Time> getTrozosHorario() {
 		return trozosHorario;
 	}	
 	
