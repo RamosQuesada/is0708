@@ -21,9 +21,9 @@ public class Estructura {
 	                              // tamanio: nTrozos+1;
 	private int numTrozos;
 
+	
 	public Estructura(int mes,int anio,ArrayList<Empleado> personal){//constructora de la estructura
 		this.personal = personal;
-		
 		// Calcular el numero de trozos en que se divide el horario
 		// Recuperar de la base de datos la lista de todos los turnos del departamento
 		// y ver en cuantos trozos vas a partir cada dia
@@ -37,7 +37,7 @@ public class Estructura {
 				dias[i][j] = new ListasEmpleados();
 			}
 		}
-		personal=new ArrayList<Empleado>();
+		personal = new ArrayList<Empleado>();
 		//rellenar lista empleados
 		cal=new Calendario(numDias,mes,anio);//creamos calendario
 	}
@@ -75,5 +75,23 @@ public class Estructura {
 		for (int i=0; i<numTrozos; i++)
 			trozosHorario[i] = orden.get(i);
 	}
+	
+	/**
+	 * Devuelve el numero de trozos en los que se divide el dia del mes.
+	 * @return	numero de trozos/dia.
+	 */
+	public int getNumTrozos() {
+		return numTrozos;
+	}
+	
+	/**
+	 * Devuelve las franjas horarias en las que se divide el dia del mes.
+	 * @return	franjas horarias.
+	 */
+	public Time[] getTrozosHorario() {
+		return trozosHorario;
+	}	
+	
+
 	
 }
