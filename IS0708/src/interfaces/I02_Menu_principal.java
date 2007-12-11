@@ -1114,7 +1114,7 @@ public class I02_Menu_principal {
 		tabItem.setText("Gerente:Estadisticas");
 		tabItem.setImage(ico_chico);
 		
-//		Creamos el contenido de la pestaña estadisticas
+		//Creamos el contenido de la pestaña estadisticas
 		final Composite cEstadisticas = new Composite (tabFolder, SWT.NONE);
 		tabItem.setControl(cEstadisticas);
 
@@ -1124,7 +1124,7 @@ public class I02_Menu_principal {
 		lEstadisticas.numColumns = 2;
 		cEstadisticas.setLayout(lEstadisticas);
 		
-//		Creamos el contenido interno de la pestaña cuadrantes
+		//Creamos el contenido interno de la pestaña cuadrantes
 		//Creamos un composite para los botones
 		final Composite cEstIzq = new Composite (cEstadisticas, SWT.BORDER);
 		cEstIzq.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
@@ -1132,6 +1132,140 @@ public class I02_Menu_principal {
 		lEstIzq.numColumns = 1;
 		lEstIzq.makeColumnsEqualWidth = true;
 		cEstIzq.setLayout(lEstIzq);
+		
+		
+		final Composite cEstDer = new Composite (cEstadisticas, SWT.BORDER);
+		cEstDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		GridLayout lEstDer = new GridLayout();
+		lEstDer.numColumns = 1;
+		lEstDer.makeColumnsEqualWidth = true;
+		cEstDer.setLayout(lEstDer);
+
+		final Label lTitulo	= new Label(cEstIzq, SWT.CENTER);
+		lTitulo.setText(this.bundle.getString("opcionvis"));
+		lTitulo.setFont(new org.eclipse.swt.graphics.Font(
+			        org.eclipse.swt.widgets.Display.getDefault(), "Arial", 10,
+			        org.eclipse.swt.SWT.BOLD));
+		lTitulo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
+		
+		
+		final Label lTiempo	= new Label(cEstIzq, SWT.LEFT);
+		lTiempo.setText(this.bundle.getString("tiempodatos"));
+		lTiempo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
+		Combo cTiempo = new Combo(cEstIzq, SWT.BORDER | SWT.READ_ONLY);
+		cTiempo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		cTiempo.setItems(new String[] {bundle.getString("semana"), bundle.getString("quincena"), bundle.getString("mes"),bundle.getString("año")});
+		cTiempo.select(0);
+		
+		final Label lComparar	= new Label(cEstIzq, SWT.LEFT);
+		lComparar.setText(bundle.getString("compararcon"));
+		lComparar.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
+		Combo cComparar = new Combo(cEstIzq, SWT.BORDER | SWT.READ_ONLY);
+		cComparar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		cComparar.setItems(new String[] {
+				bundle.getString("nadie"),
+				bundle.getString("empleadomedio"),
+				bundle.getString("mejorsemana"),
+				bundle.getString("mejormes"),
+				bundle.getString("mejoraño")
+				});
+		
+		cComparar.select(0);
+		cComparar.setVisibleItemCount(6);
+		
+		final Label lTipoGrafico	= new Label(cEstIzq, SWT.CENTER);
+		lTipoGrafico.setText(bundle.getString("datosvis"));
+		lTipoGrafico.setFont(new org.eclipse.swt.graphics.Font(
+			        org.eclipse.swt.widgets.Display.getDefault(), "Arial", 9,
+			        org.eclipse.swt.SWT.BOLD));
+		lTipoGrafico.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
+		
+		final Button bVentasTotales = new Button(cEstIzq, SWT.RADIO);
+		bVentasTotales.setText(bundle.getString("verventastot"));
+		bVentasTotales.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		//Creamos un oyente
+		bVentasTotales.addFocusListener(new FocusListener(){
+			//Seleccionado por semanas
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("Ventas totales in");
+				
+			}
+			
+			//No seleccionado por semanas
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("Ventas totales out");			
+			}
+		}
+		);
+		
+		
+		final Button bVentasPTiempo = new Button(cEstIzq, SWT.RADIO);
+		bVentasPTiempo.setText(this.bundle.getString("ventaspertime"));
+		bVentasPTiempo.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		//Creamos un oyente
+		bVentasPTiempo.addFocusListener(new FocusListener(){
+			//Seleccionado por semanas
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("Ventas por tiempo de trabajo in");
+				
+			}
+			
+			//No seleccionado por semanas
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("Ventas por tiempo de trabajo out");			
+			}
+		}
+		);
+		
+		final Button bVentasPPrecio = new Button(cEstIzq, SWT.RADIO);
+		bVentasPPrecio.setText(this.bundle.getString("ventasporprecio"));
+		bVentasPPrecio.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		//Creamos un oyente
+		bVentasPPrecio.addFocusListener(new FocusListener(){
+			//Seleccionado por semanas
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("Ventas por precio producto in");
+				
+			}
+			
+			//No seleccionado por semanas
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("Ventas por precio producto out");			
+			}
+		}
+		);
+
+		
+		final Button bVentasPDepartamento = new Button(cEstIzq, SWT.RADIO);
+		bVentasPDepartamento.setText(this.bundle.getString("ventaspordpto"));
+		bVentasPDepartamento.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		//Creamos un oyente
+		bVentasPDepartamento.addFocusListener(new FocusListener(){
+			//Seleccionado por semanas
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("Ventas por departamento in");
+				
+			}
+			
+			//No seleccionado por semanas
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("Ventas por departamento out");			
+			}
+		}
+		);
+
+		
+		final Label lPrueba2 = new Label (cEstDer, SWT.SIMPLE);
+		lPrueba2.setText("Aqui se visualizarian las graficas");
+		lPrueba2.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 	}
 		
 	/**
