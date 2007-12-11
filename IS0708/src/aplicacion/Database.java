@@ -123,7 +123,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO usuario values ('" + id + "', '"
+			st.executeUpdate("INSERT INTO USUARIO values ('" + id + "', '"
 					+ nombre + "', '" + apellido1 + "' ,'" + apellido2 + "','"
 					+ fechaNac + "','" + sexo + "','" + email + "','"
 					+ password + "','" + indicadorGrupo + fechaContrato + "','"
