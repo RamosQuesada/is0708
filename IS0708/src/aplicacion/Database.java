@@ -122,16 +122,7 @@ public class Database extends Thread {
 			String fechaEntrada, int horasExtras, int idDept, String rango,
 			int idContrato, int idTurno) {
 		boolean correcto = false;
-		try {
-			/*Date fNac = new Date(fechaNac);
-			Date fCon = new Date(fechaContrato);
-			Date fEnt = new Date(fechaEntrada);
-			
-			Date fContr = java.sql.Date.valueOf(fechaContrato);
-			Date fEntr =  java.sql.Date.valueOf(fechaEntrada);
-			Date fNac =  java.sql.Date.valueOf(fechaNac);
-			*/
-			
+		try {			
 			st = con.createStatement();
 			st.executeUpdate("INSERT INTO USUARIO values ('" + id + "', '"
 					+ nombre + "', '" + apellido1 + "' ,'" + apellido2 + "','"
