@@ -205,7 +205,7 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO distribucion values ('" + Hora + "', '" + DiaSemana + "', '" + Patron + "', '" +NumMax+ "', '" +NumMin+ "', '" +IdDepartamento+ "')");
+			st.executeUpdate("INSERT INTO DISTRIBUCION values ('" + Hora + "', '" + DiaSemana + "', '" + Patron + "', '" +NumMax+ "', '" +NumMin+ "', '" +IdDepartamento+ "')");
 			System.out.println("Distribucion insertada");
 			correcto = true;
 		} catch (SQLException e) {
@@ -235,7 +235,7 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO festivos values ('" + Hora + "', '" + FechaInicio + "', '" + FechaFin+ "', '" + Patron + "', '" +NumMax+ "', '" +NumMin+ "', '" +IdDepartamento+ "')");
+			st.executeUpdate("INSERT INTO FESTIVOS values ('" + Hora + "', '" + FechaInicio + "', '" + FechaFin+ "', '" + Patron + "', '" +NumMax+ "', '" +NumMin+ "', '" +IdDepartamento+ "')");
 			System.out.println("Festivo insertado");
 			correcto = true;
 		} catch (SQLException e) {
@@ -276,6 +276,9 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 					
 		
 		prueba.insertarTurno(1, "prueba", h, h, h, 10);
+		prueba.insertarDistribucion(9, "Martes", "1e5p", 10, 7, 1);
+	    Date d = new Date(2007,12,11);
+	    prueba.insertarFestivo(9, d, d,"2e7p", 15, 10, 1);
 		prueba.cerrarConexion();
 	}
 }
