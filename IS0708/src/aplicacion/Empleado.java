@@ -16,24 +16,24 @@ import org.eclipse.swt.graphics.*;
  * <ul>
  * <li>	0 - Administrador<br>
  * 		El administrador es un superusuario que tiene 
- * 		permiso para crear gerentes y configurar la aplicación.
+ * 		permiso para crear gerentes y configurar la aplicaciï¿½n.
  * 		No es considerado un empleado, y no se le pueden asignar
  * 		departamentos. Por tanto tampoco puede consultar un cuadrante
  * 		ni su rendimiento.
  * <li>	1 - Empleado<br>
- * 		Un empleado es un usuario básico. Puede consultar su horario
- * 		y el de su departamento. Puede utilizar la mensajería, y
+ * 		Un empleado es un usuario bï¿½sico. Puede consultar su horario
+ * 		y el de su departamento. Puede utilizar la mensajerï¿½a, y
  * 		comprobar su rendimiento personal comparado al de otros
  * 		vendedores de su departamento.
  * <li> 2 - Jefe<br>
- * 		Un jefe es un empleado que tiene a su cargo uno o más
- * 		departamentos. Además de lo que puede hacer un empleado,
+ * 		Un jefe es un empleado que tiene a su cargo uno o mï¿½s
+ * 		departamentos. Ademï¿½s de lo que puede hacer un empleado,
  * 		puede cambiar los cuadrantes de sus departamentos y mirar
- * 		sus estadísticas e índices de rendimiento.
+ * 		sus estadï¿½sticas e ï¿½ndices de rendimiento.
  * <li> 3 - Gerente<br>
  * 		El gerente es un empleado que tiene a su cargo empleados
- * 		que son jefes. Puede tener también la función de jefe si
- * 		tiene algún departamento a su cargo, y además puede crear
+ * 		que son jefes. Puede tener tambiï¿½n la funciï¿½n de jefe si
+ * 		tiene algï¿½n departamento a su cargo, y ademï¿½s puede crear
  * 		jefes, departamentos y asignar jefes a departamentos.
  * 
  * @author Daniel Dionne
@@ -49,7 +49,7 @@ public class Empleado implements Drawable {
 	// TODO quitar esta clase
 	private class Contrato {};
 	
-	private Empleado superior;
+	private int idSuperior;
 	private String nombre, apellido1, apellido2;
 	private Color color;
 	private int nvend;
@@ -62,17 +62,17 @@ public class Empleado implements Drawable {
 	private Contrato contrato;
 	private Date fContrato;
 	private Date fAlta;
-	private ArrayList<Empleado> subordinados;
+	private ArrayList<Integer> subordinados;
 	private ArrayList<Departamento> departamentos;
-	// TODO Eliminar el turno, que irá en el Contrato
-	// ahora sólo sirve para hacer prubas de interfaz
+	// TODO Eliminar el turno, que irï¿½ en el Contrato
+	// ahora sï¿½lo sirve para hacer prubas de interfaz
 	public Turno turno;
 	
  
 	/**
-	 * Constructor de un empleado. No se hace ninguna comprobación de ninguno de los datos.
+	 * Constructor de un empleado. No se hace ninguna comprobaciï¿½n de ninguno de los datos.
 	 * @param superior		el empleado superior, normalmente, el que llama al constructor
-	 * @param nvend			el número de empleado, debe ser un número de 8 cifras
+	 * @param nvend			el nï¿½mero de empleado, debe ser un nï¿½mero de 8 cifras
 	 * @param nombre		el nombre del empleado
 	 * @param apellido1		el primer apellido del empleado
 	 * @param apellido2		el segundo apellido del empleado
@@ -81,8 +81,8 @@ public class Empleado implements Drawable {
 	 * 												<li>0 - femenino
 	 * 												<li>1 - masculino
 	 * 												</ul>
-	 * @param email			la dirección de email del empleado
-	 * @param password		la contraseña de acceso del empleado
+	 * @param email			la direcciï¿½n de email del empleado
+	 * @param password		la contraseï¿½a de acceso del empleado
 	 * @param grupo			la experiencia del empleado:	<ul>
 	 * 														<li>0 - principiante
 	 * 														<li>1 - experto
@@ -97,12 +97,12 @@ public class Empleado implements Drawable {
 	 * @param contrato		el contrato del empleado
 	 * @param fContrato		fecha en que el empleado empieza a aparecer en los cuadrantes de este departamento
 	 * @param fAlta			fecha en que el empleado empieza a trabajar en la empresa
-	 * @param color			un color con el que se representará al empleado en los cuadrantes
+	 * @param color			un color con el que se representarï¿½ al empleado en los cuadrantes
 	 */
-	public Empleado (Empleado superior, int nvend, String nombre, String apellido1, String apellido2, 
+	public Empleado (int idSuperior, int nvend, String nombre, String apellido1, String apellido2, 
 			Date fechaNac, int sexo, String email, String password, int grupo,
 			Departamento departamento, Contrato contrato, Date fContrato, Date fAlta, Color color) {
-		this.superior	= superior;
+		this.idSuperior	= idSuperior;
 		this.nvend		= nvend;
 		this.nombre		= nombre;
 		this.apellido1	= apellido1;
@@ -117,7 +117,8 @@ public class Empleado implements Drawable {
 		this.fContrato	= fContrato;
 		this.fAlta		= fAlta;
 		this.color = color;
-		this.subordinados = new ArrayList<Empleado>();
+		// TODO Rellenar la lista de subordinados
+		this.subordinados = new ArrayList<Integer>();
 	}
 
 	/**
@@ -198,19 +199,19 @@ public class Empleado implements Drawable {
 	}
 
 	/**
-	 * Devuelve el número de vendedor de un empleado.
-	 * @return	el número de vendedor del empleado.
+	 * Devuelve el nï¿½mero de vendedor de un empleado.
+	 * @return	el nï¿½mero de vendedor del empleado.
 	 */
 	public int getNVend() {
 		return nvend;
 	}
 	
 	/**
-	 * Intenta asignar un número de vendedor a un empleado, que debe ser un número de 8 cifras.
-	 * Si no es correcto, no produce ningún cambio.
-	 * @param	nvend el número de vendedor a asignar al empleado.
-	 * @return	<i>true</i> si se ha asignado correctamente el número, <i>false</i> si 
-	 * 			el string no tiene longitud 8 o no es un número.
+	 * Intenta asignar un nï¿½mero de vendedor a un empleado, que debe ser un nï¿½mero de 8 cifras.
+	 * Si no es correcto, no produce ningï¿½n cambio.
+	 * @param	nvend el nï¿½mero de vendedor a asignar al empleado.
+	 * @return	<i>true</i> si se ha asignado correctamente el nï¿½mero, <i>false</i> si 
+	 * 			el string no tiene longitud 8 o no es un nï¿½mero.
 	 */
 	public boolean setNVend(String nvend){
 		int n = Util.convertirNVend(nvend);
@@ -275,32 +276,32 @@ public class Empleado implements Drawable {
 	}
 	
 	/**
-	 * Devuelve la dirección de email del empleado.
-	 * @return la dirección de email del empleado.
+	 * Devuelve la direcciï¿½n de email del empleado.
+	 * @return la direcciï¿½n de email del empleado.
 	 */
 	public String getEmail() {
 		return email;
 	}
 	
 	/**
-	 * Asigna una dirección de email a un empleado. No hace ninguna comprobación.
-	 * @param email la dirección de email
+	 * Asigna una direcciï¿½n de email a un empleado. No hace ninguna comprobaciï¿½n.
+	 * @param email la direcciï¿½n de email
 	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
 	
 	/**
-	 * Devuelve la contraseña de un empleado.
-	 * @return la contraseña del empleado
+	 * Devuelve la contraseï¿½a de un empleado.
+	 * @return la contraseï¿½a del empleado
 	 */
 	public String getPassword(){
 		return password;
 	}
 	
 	/**
-	 * Asigna una contraseña a un empleado.
-	 * @param password la contraseña
+	 * Asigna una contraseï¿½a a un empleado.
+	 * @param password la contraseï¿½a
 	 */
 	public void setPassword(String password) {
 		this.password = password;
@@ -315,8 +316,8 @@ public class Empleado implements Drawable {
 	}
 
 	/**
-	 * Asigna un grupo de experiencia al empleado. El parámetro debe ser 0 ó 1,
-	 * o no se hará ninguna modificación.
+	 * Asigna un grupo de experiencia al empleado. El parï¿½metro debe ser 0 ï¿½ 1,
+	 * o no se harï¿½ ninguna modificaciï¿½n.
 	 * @param grupo 0 si es principiante, 1 si es experto
 	 */
 	public void setGrupo(int grupo) {
@@ -333,9 +334,9 @@ public class Empleado implements Drawable {
 	}
 
 	/**
-	 * Devuelve el departamento en la posición i de la lista de
+	 * Devuelve el departamento en la posiciï¿½n i de la lista de
 	 * departamentos del empleado.
-	 * @return el departamento número 'i' del usuario
+	 * @return el departamento nï¿½mero 'i' del usuario
 	 */
 	public Departamento getDepartamento(int i) {
 		return departamentos.get(i);
@@ -343,7 +344,7 @@ public class Empleado implements Drawable {
 	
 	/**
 	 * Devuelve el rango de un usuario.
-	 * NO HAY setRango, el rango se ajusta automáticamente al añadir
+	 * NO HAY setRango, el rango se ajusta automï¿½ticamente al aï¿½adir
 	 * subordinados o departamentos
 	 * @return el rango del empleado
 	 */
@@ -358,7 +359,8 @@ public class Empleado implements Drawable {
 	private boolean esGerente() {
 		int i = 0; boolean b = false;
 		while (i<subordinados.size() && !b) {
-			if (subordinados.get(i).getRango()>1) b = true;
+			// TODO
+			//if (subordinados.get(i).getRango()>1) b = true;
 		}
 		return b;
 	}
@@ -376,8 +378,8 @@ public class Empleado implements Drawable {
 	}
 	
 	/**
-	 * Actualiza el rango de un empleado, según los departamentos
-	 * que tenga y si tiene algún subordinado jefe
+	 * Actualiza el rango de un empleado, segï¿½n los departamentos
+	 * que tenga y si tiene algï¿½n subordinado jefe
 	 */
 	public void actualizarRango() {
 		rango = 1;
@@ -390,7 +392,7 @@ public class Empleado implements Drawable {
 	/**
 	 * Asigna un departamento a un usuario y actualiza su rango.
 	 * @param departamento el nombre del departamento
-	 * @return <i>true</i> si el departamento se ha añadido, false en caso contrario
+	 * @return <i>true</i> si el departamento se ha aï¿½adido, false en caso contrario
 	 */
 	public boolean addDepartamento(Departamento departamento) {
 		boolean esta = departamentos.contains(departamento);
@@ -398,19 +400,20 @@ public class Empleado implements Drawable {
 			departamentos.add(departamento);
 		}
 		// Si era un empleado, ha pasado a ser jefe.
-		// Si era gerente no hay modificación.
+		// Si era gerente no hay modificaciï¿½n.
 		if (rango==1) rango = 2;
 		return !esta;
 	}
 	
 	public boolean removeDepartamento(Departamento departamento) {
 		boolean b = departamentos.remove(departamento);
-		// quitar departamentos afecta a la condición de jefe,
+		// quitar departamentos afecta a la condiciï¿½n de jefe,
 		// pero deja intacta la de gerente
-		// hay que mirar si todavía tiene algún departamento
+		// hay que mirar si todavï¿½a tiene algï¿½n departamento
 		if (rango == 2 && !esJefe()) {
 			rango=1;
-			superior.actualizarRango();
+			// TODO
+			//superior.actualizarRango();
 		}
 		return b;
 	}
@@ -419,21 +422,21 @@ public class Empleado implements Drawable {
 	 * Devuelve la lista de subordinados del empleado 
 	 * @return la lista  de subordinados
 	 */
-	public ArrayList<Empleado> getSubordinados() {
+	public ArrayList<Integer> getSubordinados() {
 		return subordinados;
 	}
 		
 	/**
-	 * Añade un subordinado y actualiza el rango del empleado.
+	 * Aï¿½ade un subordinado y actualiza el rango del empleado.
 	 * @param empleado el empleado subordinado
-	 * @return <i>true</i> si se ha añadido el Empleado, <i>false</i> si
+	 * @return <i>true</i> si se ha aï¿½adido el Empleado, <i>false</i> si
 	 * ya estaba en la lista de subordinados
 	 */
 	public boolean addSubordinado(Empleado empleado) {
 		boolean esta = subordinados.contains(empleado);
 		if (!esta) {
-			subordinados.add(empleado);
-			// Si he añadido a un jefe, el rango pasa a ser gerente
+			subordinados.add(empleado.nvend);
+			// Si he aï¿½adido a un jefe, el rango pasa a ser gerente
 			if (empleado.getRango()==2) rango=3;
 		}
 		return !esta;
@@ -443,18 +446,19 @@ public class Empleado implements Drawable {
 	 * Elimina a un Empleado de la lista de subordinados y actualiza el rango.
 	 * @param e el Empleado a eliminar de la lista de subordinados
 	 * @return <i>true</i> si se ha eliminado el empleado, <i>false</i>
-	 * si no existía en la lista de subordinados del empleado 
+	 * si no existï¿½a en la lista de subordinados del empleado 
 	 */
 	public boolean removeSubordinado (Empleado e) {
 		boolean b = subordinados.remove(e);
 
-		// quitar subordinados afecta a la condición de gerente
-		// hay que mirar si todavía tiene algún subordinado jefe
+		// quitar subordinados afecta a la condiciï¿½n de gerente
+		// hay que mirar si todavï¿½a tiene algï¿½n subordinado jefe
 		if (subordinados.isEmpty()) rango=1;
 		else {
 			int i = 0;
 			while (i<subordinados.size() && rango==2) {
-				if (subordinados.get(i).getRango()>1) rango=3;
+				// TODO
+				//if (subordinados.get(i).getRango()>1) rango=3;
 			}
 		}
 		// si se ha quedado sin subordinados jefes pero tiene departamentos,
