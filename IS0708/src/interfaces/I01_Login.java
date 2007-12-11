@@ -42,7 +42,11 @@ public class I01_Login extends Thread{
 				dialog.getDisplay().asyncExec(new Runnable () {
 					public void run() {
 						// Rellenar la barra de progreso
-						pbProgreso.setSelection(100);
+						// Por alguna razón oculta de los threads, aun habiendo comprobado
+						// antes si el dialog sigue presente, si no lo compruebo de nuevo
+						// a veces da error.
+						if (!dialog.isDisposed()) 
+							pbProgreso.setSelection(100);
 					}
 				});
 			}

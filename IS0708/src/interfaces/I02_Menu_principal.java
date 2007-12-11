@@ -1184,10 +1184,10 @@ public class I02_Menu_principal {
 		estado.setLayout(new GridLayout(2,false));
 		Label lEstado = new Label(estado,SWT.LEFT);
 		ProgressBar pbEstado = new ProgressBar(estado,SWT.RIGHT);
-		lEstado.setText("Conectando con la base de datos.");
+		lEstado.setText("Conectado.");
 		lEstado.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1,1));
 		pbEstado.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,1));
-		pbEstado.setSelection(85);
+		pbEstado.setVisible(false);
 
 		// Ajustar el tamaño de la ventana
 		shell.setSize(700,500);
