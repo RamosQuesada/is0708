@@ -26,7 +26,7 @@ public class TurnoMatic {
 	public TurnoMatic(int m, int year){
 		
 		/* Llamada a la base de datos para que nos
-		 * dé todos los empleados del departamento.
+		 * dï¿½ todos los empleados del departamento.
 		 */
 		ArrayList<Empleado> personal = new ArrayList<Empleado>();
 		this.anio = year;
@@ -37,18 +37,18 @@ public class TurnoMatic {
 		
 	}
 	
-	// Aqui vendría el algoritmo
+	// Aqui vendrï¿½a el algoritmo
 	
 	/**
-	 * Método que devuelve el cuadrante de ese mes
+	 * Mï¿½todo que devuelve el cuadrante de ese mes
 	 * @param mes Mes para el cual se quiere realizar el cuadrante
-	 * @param anio Año al que pertenece el mes.
+	 * @param anio Aï¿½o al que pertenece el mes.
 	 * @return cuadrante Cuadrante resultante de aplicar el algoritmo
 	 * El arrayList disp es solo para pruebas
 	 */
 	public  Cuadrante ejecutaAlgoritmo(ArrayList<Empleado> disp){
 	
-		//Colocamos a los empleados correspondientes a cada día
+		//Colocamos a los empleados correspondientes a cada dï¿½a
 		
 		ListasEmpleados[][] horario = estruc.getDias();
 		ArrayList<Empleado> reser;
@@ -59,6 +59,9 @@ public class TurnoMatic {
 		for(int i=0; i<Util.dameDias(mes,anio); i++){
 			//dividimos en el numero de franjas de cada dia
 			for(int j=0; j<estruc.getNumTrozos(); j++){
+				// Comentado para quitar los errores
+				// Daniel
+				/*
 				Time inif = estruc.getTrozosHorario()[j];
 				Time finf = estruc.getTrozosHorario()[j+1];
 				dispo = horario[i][j].getEmpleados();
@@ -74,8 +77,9 @@ public class TurnoMatic {
 				}
 				horario[i][j].setDisponibles(dispo);
 				horario[i][j].setReserva(reser);
+				*/
 			}	
-			//coloca sólo a los empleados fijos.
+			//coloca sï¿½lo a los empleados fijos.
 			colocaFijos(i,disp);
 		}
 		
@@ -83,8 +87,8 @@ public class TurnoMatic {
 	}
 	
 	/**
-	 * Método que se encarga de colocar a los empleados fijos
-	 * @param día Dia del mes
+	 * Mï¿½todo que se encarga de colocar a los empleados fijos
+	 * @param dï¿½a Dia del mes
 	 * El arrayList disp es solo para pruebas
 	 */
 	private void colocaFijos(int dia, ArrayList<Empleado> disp){
@@ -111,8 +115,8 @@ public class TurnoMatic {
 
 			for(int j=0;j<disponibles.size();j++){
 				
-				/* Aquí se debe mirar el tipo de contrato de cada
-				 * empleado y si este es fijo habría que insertarlo 
+				/* Aquï¿½ se debe mirar el tipo de contrato de cada
+				 * empleado y si este es fijo habrï¿½a que insertarlo 
 				 * en la estructura y en el cuadrante.
 				 */
 			/*	emp = disponibles.get(j);

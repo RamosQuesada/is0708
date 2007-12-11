@@ -17,25 +17,25 @@ public class I02CuadranteEmpleado {
 	private Display display;
 	private int ancho;
 	private int alto;
-	private int margenIzq, margenDer, margenSup, margenInf; // Márgenes del cuadrante
+	private int margenIzq, margenDer, margenSup, margenInf; // Mï¿½rgenes del cuadrante
 	private int margenNombres; // Un margen para pintar los nombres a la izquierda
 	//private int alto_franjas;
-	private int tamañoFila;
+	private int tamanoFila;
 	//private int sep_vert_franjas;
-	private int horaInicio, horaFin; // Definen de qué hora a qué hora es el cuadrante
+	private int horaInicio, horaFin; // Definen de quï¿½ hora a quï¿½ hora es el cuadrante
 	private int tamHora;
 	//, tamSubdiv;
-	public  int subdivisiones; // Cuántas subdivisiones hacer por hora (0 = sin subdivisiones)
+	public  int subdivisiones; // Cuï¿½ntas subdivisiones hacer por hora (0 = sin subdivisiones)
 	public Empleado empleado;
-	private int tamaño =8;
+	private int tamano =8;
 	private ResourceBundle _bundle;
 	
 
 
 	/**
 	 * Constructor del cuadrante.
-	 * @param d				Display sobre el que se dibujará el cuadrante
-	 * @param subdivisiones	Número de subdivisiones que se muestran en el cuadrante.  
+	 * @param d				Display sobre el que se dibujarï¿½ el cuadrante
+	 * @param subdivisiones	Nï¿½mero de subdivisiones que se muestran en el cuadrante.  
 	 * 						<ul>
 	 * 						<li>12	(cada 5 min),
 	 * 						<li>6	(cada 10 min),
@@ -45,12 +45,12 @@ public class I02CuadranteEmpleado {
 	 * 						</ul>
 	 * @param horaInicio	Hora de inicio del cuadrante
 	 * @param horaFin		Hora de fin del cuadrante. Las horas pasadas de las 24 se muestran
-	 * 						como la madrugada del día siguiente.
-	 * @param margenIzq		Margen izquierdo en píxeles
-	 * @param margenDer		Margen derecho en píxeles
-	 * @param margenSup		Margen superior en píxeles
-	 * @param margenInf		Margen inferior en píxeles
-	 * @param margenNombres	Margen de los nombres en píxeles (indica dónde empieza a dibujarse
+	 * 						como la madrugada del dï¿½a siguiente.
+	 * @param margenIzq		Margen izquierdo en pï¿½xeles
+	 * @param margenDer		Margen derecho en pï¿½xeles
+	 * @param margenSup		Margen superior en pï¿½xeles
+	 * @param margenInf		Margen inferior en pï¿½xeles
+	 * @param margenNombres	Margen de los nombres en pï¿½xeles (indica dï¿½nde empieza a dibujarse
 	 * 						el cuadrante a partir del margen izquierdo, dejando un espacio para
 	 * 						los nombres.
 	 */
@@ -78,27 +78,27 @@ public class I02CuadranteEmpleado {
 	}
 	/**
 	 * Dibuja el cuadrante, resaltando el empleado activo.
-	 * @param gc				El GC del display sobre el que se dibujará el cuadrante.
-	 * @param empleadoActivo	La posición del empleado a resaltar en la lista de empleados.
+	 * @param gc				El GC del display sobre el que se dibujarï¿½ el cuadrante.
+	 * @param empleadoActivo	La posiciï¿½n del empleado a resaltar en la lista de empleados.
 	 */
-	// TODO Debería lanzar una excepción si empleadoActivo > empleados.size
+	// TODO Deberï¿½a lanzar una excepciï¿½n si empleadoActivo > empleados.size
 	public void dibujarCuadranteDia(GC gc, int empleadoActivo) {
 		dibujarDias(gc);
 	}
 	
 	public void dibujarCuadranteMes(GC gc){
 		Calendar c = Calendar.getInstance();
-		// Esto coge el día 1 de este mes
+		// Esto coge el dï¿½a 1 de este mes
 		c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),1);
-		// Y esto en qué día de la semana cae
+		// Y esto en quï¿½ dï¿½a de la semana cae
 		int primerDia = c.get(Calendar.DAY_OF_WEEK);
 		c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),1);
-		c.roll(Calendar.DAY_OF_MONTH,false); // Pasa al último día del este mes
+		c.roll(Calendar.DAY_OF_MONTH,false); // Pasa al ï¿½ltimo dï¿½a del este mes
 		int ultimoDia = c.get(Calendar.DAY_OF_MONTH);
 		int anchoMes = ancho - margenIzq - margenDer - margenNombres;
 		int anchoDia = anchoMes/ultimoDia;
 		int altoFila = 20;
-		// Dibujar números de los días
+		// Dibujar nï¿½meros de los dï¿½as
 		if (anchoDia>14)
 			for (int j=0; j < ultimoDia; j++) {
 				gc.drawText(String.valueOf(j+1), margenIzq + margenNombres + j*anchoDia + anchoDia/2, margenSup);
@@ -121,7 +121,7 @@ public class I02CuadranteEmpleado {
 	}
 	/**
 	 * Dibuja lineas verticales representando los dias.
-	 * @param gc	El GC del display sobre el que se dibujará el cuadrante.
+	 * @param gc	El GC del display sobre el que se dibujarï¿½ el cuadrante.
 	 */
 	private void dibujarDias(GC gc) {
 		//cambiarPincel(gc, 40,80,40);
@@ -131,23 +131,23 @@ public class I02CuadranteEmpleado {
 		h=7;
 		int sep = (ancho - m - margenDer)/h;
 		//int subsep = sep/subdivisiones;
-		tamañoFila=(alto)/15;
+		tamanoFila=(alto)/15;
 		cambiarPincel(gc, 0,143,65);
 		this.cambiarRelleno(gc, 180,230,180);
-		int inferior=((int)((alto-margenInf-(tamañoFila+this.margenSup))
+		int inferior=((int)((alto-margenInf-(tamanoFila+this.margenSup))
 				/(horaFin-horaInicio)))*(horaFin-horaInicio);
-		gc.fillGradientRectangle(m,tamañoFila+this.margenSup,7*sep,inferior,false);
-		int inferior_total=tamañoFila+margenSup+inferior;
+		gc.fillGradientRectangle(m,tamanoFila+this.margenSup,7*sep,inferior,false);
+		int inferior_total=tamanoFila+margenSup+inferior;
 		this.cambiarPincel(gc, 10, 160, 90);
 		this.cambiarRelleno(gc, 0, 143, 65);
-		gc.fillGradientRectangle(m,this.margenSup,7*sep,tamañoFila,true);
+		gc.fillGradientRectangle(m,this.margenSup,7*sep,tamanoFila,true);
 		
 		cambiarPincel(gc, 0,0,0);
 		gc.drawLine(m, this.margenSup, m+7*sep, this.margenSup);
-		gc.drawLine(m, tamañoFila+this.margenSup, m+7*sep, tamañoFila+this.margenSup);
+		gc.drawLine(m, tamanoFila+this.margenSup, m+7*sep, tamanoFila+this.margenSup);
 		gc.drawLine(m, inferior_total, m+7*sep, inferior_total);
-		gc.drawRoundRectangle(m,this.margenSup,7*sep,tamañoFila,8,8);
-		gc.drawRectangle(m, this.margenSup, 7*sep, tamañoFila);
+		gc.drawRoundRectangle(m,this.margenSup,7*sep,tamanoFila,8,8);
+		gc.drawRectangle(m, this.margenSup, 7*sep, tamanoFila);
 		for (int i=0; i<=h; i++) {
 			gc.setLineStyle(SWT.LINE_SOLID);
 			cambiarPincel(gc, 0,0,0);
@@ -164,17 +164,17 @@ public class I02CuadranteEmpleado {
 					_bundle.getString("sabado"),
 					_bundle.getString("domingo")
 					};
-				int tamaño1= sep/10;
-				int tamaño2= tamañoFila/2;
-				if (tamaño1<tamaño2){
-					tamaño = tamaño1;
+				int tamano1= sep/10;
+				int tamano2= tamanoFila/2;
+				if (tamano1<tamano2){
+					tamano = tamano1;
 					}
 				else{
-					tamaño=tamaño2;
+					tamano=tamano2;
 				}
 
 				Font fuente=gc.getFont();
-				gc.setFont(new Font(display,"Verdana",tamaño,SWT.BOLD|SWT.ITALIC));
+				gc.setFont(new Font(display,"Verdana",tamano,SWT.BOLD|SWT.ITALIC));
 				String text = diasSemana[((i)%7)];
 		        Point textSize = gc.textExtent(text);
 		        gc.drawText(diasSemana[((i)%7)],((m+i*sep)+((m+(i+1)*sep)))/2-textSize.x/2, margenSup+(alto/50), true);
@@ -204,8 +204,8 @@ public class I02CuadranteEmpleado {
 	}
 	
 	/**
-	 * Cambia el color del pincel (foreground) sin exceder los límites de Color.
-	 * Si se excede un límite, se pone a 0 o 255, respectivamente.
+	 * Cambia el color del pincel (foreground) sin exceder los lï¿½mites de Color.
+	 * Si se excede un lï¿½mite, se pone a 0 o 255, respectivamente.
 	 * @param gc	El GC del que cambiar el color
 	 * @param r		Valor del componente rojo
 	 * @param g		Valor del componente verde
@@ -213,7 +213,7 @@ public class I02CuadranteEmpleado {
 	 * @see #cambiarRelleno(GC, int, int, int)
 	 */
 	private void cambiarPincel (GC gc, int r, int g, int b) {
-		// Controlar límites de colores
+		// Controlar lï¿½mites de colores
 		if (r<0) r=0;
 		if (g<0) g=0;
 		if (b<0) b=0;
@@ -223,8 +223,8 @@ public class I02CuadranteEmpleado {
 		gc.setForeground(new Color(display,r, g, b));
 	}
 	/**
-	 * Cambia el color del fondo (background) sin exceder los límites de Color.
-	 * Si se excede un límite, se pone a 0 o 255, respectivamente.
+	 * Cambia el color del fondo (background) sin exceder los lï¿½mites de Color.
+	 * Si se excede un lï¿½mite, se pone a 0 o 255, respectivamente.
 	 * @param gc	El GC del que cambiar el color
 	 * @param r		Valor del componente rojo
 	 * @param g		Valor del componente verde
@@ -232,7 +232,7 @@ public class I02CuadranteEmpleado {
 	 * @see #cambiarPincel(GC, int, int, int)
 	 */
 	private void cambiarRelleno(GC gc, int r, int g, int b) {
-		// Controlar límites de colores
+		// Controlar lï¿½mites de colores
 		if (r<0) r=0;
 		if (g<0) g=0;
 		if (b<0) b=0;
@@ -243,19 +243,19 @@ public class I02CuadranteEmpleado {
 	}
 
 	/**
-	 * Pega el valor x al más cercano dentro de la rejilla. El tamaño de la rejilla está determinado
-	 * por el número de subdivisiones.
+	 * Pega el valor x al mï¿½s cercano dentro de la rejilla. El tamaï¿½o de la rejilla estï¿½ determinado
+	 * por el nï¿½mero de subdivisiones.
 	 * @param x		El valor a ajustar
 	 * @return		El valor ajustado a la rejilla
 	 */
 
 	/**
-	 * Actualiza el tamaño del cuadrante, el tamaño de las horas y las subdivisiones, y para cada
-	 * franja, actualiza sus píxeles inicial y final en función de sus valores pinicio y pfin.
-	 * @param ancho	El ancho nuevo, en píxeles
-	 * @param alto	El alto nuevo, en píxeles
+	 * Actualiza el tamaï¿½o del cuadrante, el tamaï¿½o de las horas y las subdivisiones, y para cada
+	 * franja, actualiza sus pï¿½xeles inicial y final en funciï¿½n de sus valores pinicio y pfin.
+	 * @param ancho	El ancho nuevo, en pï¿½xeles
+	 * @param alto	El alto nuevo, en pï¿½xeles
 	 */
-	public void setTamaño(int ancho, int alto) {
+	public void setTamano(int ancho, int alto) {
 		this.alto = alto;
 		this.ancho = ancho;
 		tamHora = (ancho - margenIzq-margenDer-margenNombres)/(horaFin-horaInicio);
@@ -290,23 +290,23 @@ public class I02CuadranteEmpleado {
 		this.cambiarPincel(gc, 0, 0, 0);
 		gc.drawRoundRectangle(x_comienzo_c,y_comienzo,longitud,y_fin-y_comienzo,8,8);
 		int sep=(ancho - m - margenDer)/h;
-		float tamañox= sep/12;
-		float tamañoy= tamañoFila/3;
+		float tamanox= sep/12;
+		float tamanoy= tamanoFila/3;
 		
 
-		if (tamañox<tamañoy){
+		if (tamanox<tamanoy){
 			System.out.println("1");
-			System.out.println(tamañoy-tamañox);
-			tamaño = (int)(tamañox);
+			System.out.println(tamanoy-tamanox);
+			tamano = (int)(tamanox);
 			}
 		else{
 			System.out.println("2");
-			System.out.println(tamañox-tamañoy);
-			tamaño= (int)tamañoy;
+			System.out.println(tamanox-tamanoy);
+			tamano= (int)tamanoy;
 		}
 		
 		Font fuente=gc.getFont();
-		gc.setFont(new Font(display,"Verdana",tamaño,SWT.BOLD));
+		gc.setFont(new Font(display,"Verdana",tamano,SWT.BOLD));
 		gc.drawText(String.valueOf((int)horaComienzo),x_comienzo, (y_comienzo), true);
 		String text = Departamento;
         Point textSize = gc.textExtent(text);
@@ -338,9 +338,9 @@ public class I02CuadranteEmpleado {
 		
 		Float hora_relativa = hora- horaInicio;
 		int duracion = horaFin-horaInicio;
-		int tamaño=alto-margenInf-(tamañoFila+this.margenSup);
-		int posicion_relativa = (int)((tamaño / duracion)*hora_relativa);
-		int posicion_absoluta =tamañoFila+this.margenSup+posicion_relativa;
+		int tamano=alto-margenInf-(tamanoFila+this.margenSup);
+		int posicion_relativa = (int)((tamano / duracion)*hora_relativa);
+		int posicion_absoluta =tamanoFila+this.margenSup+posicion_relativa;
 		return posicion_absoluta;
 	}
 	
