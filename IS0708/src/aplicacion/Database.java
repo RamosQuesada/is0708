@@ -6,7 +6,7 @@ import java.sql.*;
 /**
  * Aqu� se encuentran los m�todos de acceso a la base de datos.
  * 
- * @author Camilo & chema & Agust�n
+ * @author 
  * 
  */
 public class Database extends Thread {
