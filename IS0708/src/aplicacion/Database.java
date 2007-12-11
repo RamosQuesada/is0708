@@ -215,7 +215,7 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 	}
 
 	/**
-	 * Método que inserta en la tabla Distribucion los valores correspondientes a una nueva distribución
+	 * Método que inserta en la tabla Festivos los valores correspondientes a una distribución para días festivos o promociones
 	 * @param Hora    Franja horaria  dividida en unidades de una hora (por ej. De 9:00 – 10:00) representado por la hora de inicio (ej. 9)
 	 *            
 	 * @param FechaInicio   Fecha de Inicio de la distribución especial para festivos o promociones
