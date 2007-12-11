@@ -10,7 +10,7 @@ import java.util.Locale;
 import aplicacion.Posicion;
 import aplicacion.FranjaDib;
 import aplicacion.Empleado;
-//De dónde coger javadoc: http://javashoplm.sun.com/ECom/docs/Welcome.jsp?StoreId=22&PartDetailId=jdk-6u3-oth-JPR&SiteId=JSC&TransactionId=noreg
+//De dï¿½nde coger javadoc: http://javashoplm.sun.com/ECom/docs/Welcome.jsp?StoreId=22&PartDetailId=jdk-6u3-oth-JPR&SiteId=JSC&TransactionId=noreg
 
 /**
  * Dibuja un cuadrante sobre un GC.
@@ -23,13 +23,13 @@ public class Cuadrante {
 	private Display display;
 	private int ancho;
 	private int alto;
-	private int margenIzq, margenDer, margenSup, margenInf; // Márgenes del cuadrante
+	private int margenIzq, margenDer, margenSup, margenInf; // Mï¿½rgenes del cuadrante
 	private int margenNombres; // Un margen para pintar los nombres a la izquierda
 	public int alto_franjas;
 	public int sep_vert_franjas;
-	private int horaInicio, horaFin; // Definen de qué hora a qué hora es el cuadrante
+	private int horaInicio, horaFin; // Definen de quï¿½ hora a quï¿½ hora es el cuadrante
 	public int tamHora, tamSubdiv;
-	public int subdivisiones; // Cuántas subdivisiones hacer por hora (0 = sin subdivisiones)
+	public int subdivisiones; // Cuï¿½ntas subdivisiones hacer por hora (0 = sin subdivisiones)
 	public ArrayList<Empleado> empleados;
 
 
@@ -45,8 +45,8 @@ public class Cuadrante {
 	}
 	/**
 	 * Constructor del cuadrante.
-	 * @param d				Display sobre el que se dibujará el cuadrante
-	 * @param subdivisiones	Número de subdivisiones que se muestran en el cuadrante.  
+	 * @param d				Display sobre el que se dibujarï¿½ el cuadrante
+	 * @param subdivisiones	Nï¿½mero de subdivisiones que se muestran en el cuadrante.  
 	 * 						<ul>
 	 * 						<li>12	(cada 5 min),
 	 * 						<li>6	(cada 10 min),
@@ -56,12 +56,12 @@ public class Cuadrante {
 	 * 						</ul>
 	 * @param horaInicio	Hora de inicio del cuadrante
 	 * @param horaFin		Hora de fin del cuadrante. Las horas pasadas de las 24 se muestran
-	 * 						como la madrugada del día siguiente.
-	 * @param margenIzq		Margen izquierdo en píxeles
-	 * @param margenDer		Margen derecho en píxeles
-	 * @param margenSup		Margen superior en píxeles
-	 * @param margenInf		Margen inferior en píxeles
-	 * @param margenNombres	Margen de los nombres en píxeles (indica dónde empieza a dibujarse
+	 * 						como la madrugada del dï¿½a siguiente.
+	 * @param margenIzq		Margen izquierdo en pï¿½xeles
+	 * @param margenDer		Margen derecho en pï¿½xeles
+	 * @param margenSup		Margen superior en pï¿½xeles
+	 * @param margenInf		Margen inferior en pï¿½xeles
+	 * @param margenNombres	Margen de los nombres en pï¿½xeles (indica dï¿½nde empieza a dibujarse
 	 * 						el cuadrante a partir del margen izquierdo, dejando un espacio para
 	 * 						los nombres.
 	 */
@@ -84,10 +84,10 @@ public class Cuadrante {
 	}
 	/**
 	 * Dibuja el cuadrante, resaltando el empleado activo.
-	 * @param gc				El GC del display sobre el que se dibujará el cuadrante.
-	 * @param empleadoActivo	La posición del empleado a resaltar en la lista de empleados.
+	 * @param gc				El GC del display sobre el que se dibujarï¿½ el cuadrante.
+	 * @param empleadoActivo	La posiciï¿½n del empleado a resaltar en la lista de empleados.
 	 */
-	// TODO Debería lanzar una excepción si empleadoActivo > empleados.size
+	// TODO Deberï¿½a lanzar una excepciï¿½n si empleadoActivo > empleados.size
 	public void dibujarCuadranteDia(GC gc, int empleadoActivo) {
 		dibujarSeleccion(gc, empleadoActivo);
 		dibujarHoras(gc);
@@ -102,17 +102,17 @@ public class Cuadrante {
 	
 	public void dibujarCuadranteMes(GC gc){
 		Calendar c = Calendar.getInstance();
-		// Esto coge el día 1 de este mes
+		// Esto coge el dï¿½a 1 de este mes
 		c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),1);
-		// Y esto en qué día de la semana cae
+		// Y esto en quï¿½ dï¿½a de la semana cae
 		int primerDia = c.get(Calendar.DAY_OF_WEEK);
 		c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),1);
-		c.roll(Calendar.DAY_OF_MONTH,false); // Pasa al último día del este mes
+		c.roll(Calendar.DAY_OF_MONTH,false); // Pasa al ï¿½ltimo dï¿½a del este mes
 		int ultimoDia = c.get(Calendar.DAY_OF_MONTH);
 		int anchoMes = ancho - margenIzq - margenDer - margenNombres;
 		int anchoDia = anchoMes/ultimoDia;
 		int altoFila = 20;
-		// Dibujar números de los días
+		// Dibujar nï¿½meros de los dï¿½as
 		if (anchoDia>14)
 			for (int j=0; j < ultimoDia; j++) {
 				gc.drawText(String.valueOf(j+1), margenIzq + margenNombres + j*anchoDia + anchoDia/2, margenSup);
@@ -136,7 +136,7 @@ public class Cuadrante {
 	}
 	/**
 	 * Dibuja lineas verticales representando las horas y las subdivisiones del cuadrante.
-	 * @param gc	El GC del display sobre el que se dibujará el cuadrante.
+	 * @param gc	El GC del display sobre el que se dibujarï¿½ el cuadrante.
 	 */
 	private void dibujarHoras(GC gc) {
 		gc.setForeground(new Color(display, 40,80,40));
@@ -161,12 +161,12 @@ public class Cuadrante {
 	}
 	/**
 	 * Dibuja un fondo distinguido para el empleado seleccionado, basado en el color del empleado
-	 * pero más pálido.
+	 * pero mï¿½s pï¿½lido.
 	 * @param gc	El GC sobre el que resaltar el empleado
-	 * @param emp	La posición del empleado a resaltar en la lista de empleados. Se considera
-	 * 				que -1 significa que no hay ningún empleado seleccionado.
+	 * @param emp	La posiciï¿½n del empleado a resaltar en la lista de empleados. Se considera
+	 * 				que -1 significa que no hay ningï¿½n empleado seleccionado.
 	 */
-	// TODO Lanzar excepción si emp > empleados.size
+	// TODO Lanzar excepciï¿½n si emp > empleados.size
 	private void dibujarSeleccion (GC gc, int emp) {
 		if (emp!=-1) {
 			gc.setForeground(new Color(display, 255-(255-empleados.get(emp).dameColor().getRed())/5, 255-(255-empleados.get(emp).dameColor().getGreen())/5, 255-(255-empleados.get(emp).dameColor().getBlue())/5));
@@ -174,8 +174,8 @@ public class Cuadrante {
 		}
 	}
 	/**
-	 * Pega el valor x al más cercano dentro de la rejilla. El tamaño de la rejilla está determinado
-	 * por el número de subdivisiones.
+	 * Pega el valor x al mï¿½s cercano dentro de la rejilla. El tamaï¿½o de la rejilla estï¿½ determinado
+	 * por el nï¿½mero de subdivisiones.
 	 * @param x		El valor a ajustar
 	 * @return		El valor ajustado a la rejilla
 	 */
@@ -186,18 +186,18 @@ public class Cuadrante {
 			// Para evitar resultados del tipo 14:60
 			p = new Posicion(1+y/tamHora+horaInicio,0);
 		else
-			// En otro caso, hay que tener en cuenta cómo se dibuja el cuadrante para evitar
+			// En otro caso, hay que tener en cuenta cï¿½mo se dibuja el cuadrante para evitar
 			// desfases entre las lineas horarias y las franjas.
 			p = new Posicion(y/tamHora+horaInicio,((y%tamHora)/(tamHora/subdivisiones))*12/subdivisiones);
 		return p;
 	}
 	/**
-	 * Actualiza el tamaño del cuadrante, el tamaño de las horas y las subdivisiones, y para cada
-	 * franja, actualiza sus píxeles inicial y final en función de sus valores pinicio y pfin.
-	 * @param ancho	El ancho nuevo, en píxeles
-	 * @param alto	El alto nuevo, en píxeles
+	 * Actualiza el tamaï¿½o del cuadrante, el tamaï¿½o de las horas y las subdivisiones, y para cada
+	 * franja, actualiza sus pï¿½xeles inicial y final en funciï¿½n de sus valores pinicio y pfin.
+	 * @param ancho	El ancho nuevo, en pï¿½xeles
+	 * @param alto	El alto nuevo, en pï¿½xeles
 	 */
-	public void setTamaño(int ancho, int alto) {
+	public void setTamano(int ancho, int alto) {
 		this.alto = alto;
 		this.ancho = ancho;
 		tamHora = (ancho - margenIzq-margenDer-margenNombres)/(horaFin-horaInicio);

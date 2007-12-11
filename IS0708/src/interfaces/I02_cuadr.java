@@ -3,13 +3,13 @@
  *   por Daniel Dionne
  *   
  * Crea un canvas con un cuadrante editable.
- * Importa la clase cuadrante que es la que lo dibuja. Esta clase sólo se encarga
- * de los movimientos y pulsaciones del ratón.
+ * Importa la clase cuadrante que es la que lo dibuja. Esta clase sï¿½lo se encarga
+ * de los movimientos y pulsaciones del ratï¿½n.
  * 
  * ver 0.1
  *******************************************************************************/
 
-// TODO Hacer que reduzca la resolución del grid en función del tamaño de la pantalla
+// TODO Hacer que reduzca la resoluciï¿½n del grid en funciï¿½n del tamaï¿½o de la pantalla
 package interfaces;
 
 import java.util.ArrayList;
@@ -26,33 +26,33 @@ import aplicacion.Posicion;
 import aplicacion.FranjaDib;
 
 /**
- * Dada una instancia de Canvas, que se le pasa como parámetro al constructor,
+ * Dada una instancia de Canvas, que se le pasa como parï¿½metro al constructor,
  * crea un cuadrante sobre la misma.
  * @author Daniel
  *
  */
 public class I02_cuadr {
 	/* TODO
-	 * Las barras de tamaño cero se quedan
-	 * bug: al hacer muchas franjas pequeñitas, no se pegan bien (ver si sigue pasando)
+	 * Las barras de tamaï¿½o cero se quedan
+	 * bug: al hacer muchas franjas pequeï¿½itas, no se pegan bien (ver si sigue pasando)
 	 */
 	private Canvas canvas;
 	private Cuadrante cuadrante;
 	private int alto, ancho;
 	private Display display;
 	private ArrayList<Empleado> empleados;
-	private int despl; // Este es para cuando movemos una barra, para saber de dónde la
+	private int despl; // Este es para cuando movemos una barra, para saber de dï¿½nde la
 				// he cogido
 	private Boolean creando, terminadoDeCrear;
 	// La variable terminadoDeCrear sirve para que una franja nueva no desaparezca al crearla
 	private Boolean diario; // 1: muestra cuadrante diario, 0: muestra cuadrante mensual
 	private int empleadoActivo;
-	private int horaInicio, horaFin; // Definen de qué hora a qué hora es el
+	private int horaInicio, horaFin; // Definen de quï¿½ hora a quï¿½ hora es el
 								// cuadrante
 
 	private Image cuadranteImg;
 	private final Point imgSize = new Point(800,800);
-	private int margenIzq, margenDer, margenSup, margenInf; // Márgenes del cuadrante
+	private int margenIzq, margenDer, margenSup, margenInf; // Mï¿½rgenes del cuadrante
 	private int margenNombres; // Un margen para pintar los nombres a la izquierda
 	private FranjaDib franjaActiva;
 	private int movimiento;
@@ -64,16 +64,16 @@ public class I02_cuadr {
 	private MouseMoveListener mouseMoveListenerCuadrSemanal;
 	private MouseMoveListener mouseMoveListenerCuadrMensual;
 
-	private void calcularTamaño() {
+	private void calcularTamano() {
 		ancho = canvas.getClientArea().width;
 		alto = canvas.getClientArea().height;
-		cuadrante.setTamaño(ancho, alto);
+		cuadrante.setTamano(ancho, alto);
 	}
 
 	private void redibujar() {
-		// Redibuja sólo las franjas que corresponden, para evitar calculos
+		// Redibuja sï¿½lo las franjas que corresponden, para evitar calculos
 		// innecesarios
-		// TODO ¿Merece la pena? Hay que ver si hay alguna diferencia en el rendimiento.
+		// TODO ï¿½Merece la pena? Hay que ver si hay alguna diferencia en el rendimiento.
 		// c.redraw(0, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1),
 		// ancho, 18, false);
 		//c.redraw(0, 0, ancho, alto, false);
@@ -163,7 +163,7 @@ public class I02_cuadr {
 		redibujar();
 	}
 	/**
-	 * Constructora que recibe como parámetro el Composite donde colocar los botones
+	 * Constructora que recibe como parï¿½metro el Composite donde colocar los botones
 	 * y el cuadrante.
 	 * @param c	Composite sobre el que dibujar el cuadrante
 	 */
@@ -176,7 +176,7 @@ public class I02_cuadr {
 		final Label lCuadranteTitulo= new Label (c, SWT.LEFT);
 		String fname = lCuadranteTitulo.getFont().getFontData()[0].getName();
 		lCuadranteTitulo.setFont(new Font(c.getDisplay(),fname,15,0));
-		// TODO Esto tendrá que cambiarse por la fecha elegida en el calendario
+		// TODO Esto tendrï¿½ que cambiarse por la fecha elegida en el calendario
 		lCuadranteTitulo.setText("12 de noviembre de 2007");
 		lCuadranteTitulo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		
@@ -217,7 +217,7 @@ public class I02_cuadr {
 		horaInicio = 9;
 		horaFin = 23;
 		cuadrante = new Cuadrante(display, 4, horaInicio, horaFin, margenIzq, margenDer, margenSup, margenInf, margenNombres, empleados);
-		calcularTamaño();
+		calcularTamano();
 		display = canvas.getDisplay();
 		canvas.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent event) {
@@ -227,15 +227,15 @@ public class I02_cuadr {
 		canvas.addControlListener(new ControlListener() {
 			public void controlMoved(ControlEvent e) {}
 			public void controlResized(ControlEvent e) {
-				calcularTamaño();
+				calcularTamano();
 			}
 		});			
 				
 		mouseMoveListenerCuadrSemanal = new MouseMoveListener() {
 			public void mouseMove(MouseEvent e) {
 				FranjaDib f = dameFranjaActiva();
-				// Si acabo de apretar el botón para crear una franja, pero
-				// todavía no he movido el ratón
+				// Si acabo de apretar el botï¿½n para crear una franja, pero
+				// todavï¿½a no he movido el ratï¿½n
 				if (creando && empleadoActivo != -1) {
 					Posicion p = cuadrante.sticky(e.x);
 					FranjaDib nuevaFranja = new FranjaDib(p, p);
@@ -288,7 +288,7 @@ public class I02_cuadr {
 					}
 					f.actualizarPixeles(margenIzq, margenNombres, cuadrante.tamHora, cuadrante.tamSubdiv, cuadrante.subdivisiones, horaInicio);
 
-					// Comprobar si la barra es de tamaño menor o igual que 0
+					// Comprobar si la barra es de tamaï¿½o menor o igual que 0
 					if (f.inicio > f.fin) {
 						desactivarFranja();
 						cuadrante.empleados.get(empleadoActivo).turno.franjas.remove(f);
@@ -322,7 +322,7 @@ public class I02_cuadr {
 						f.pfin.ponCMin(0);
 					}
 					f.actualizarPixeles(margenIzq, margenNombres, cuadrante.tamHora, cuadrante.tamSubdiv, cuadrante.subdivisiones, horaInicio);
-					// Comprobar si la barra es de tamaño menor o igual que 0
+					// Comprobar si la barra es de tamaï¿½o menor o igual que 0
 					if (f.inicio > f.fin) {
 						desactivarFranja();
 						cuadrante.empleados.get(empleadoActivo).turno.franjas
@@ -348,7 +348,7 @@ public class I02_cuadr {
 					redibujar();
 				}
 				// Si no estoy moviendo ninguna franja,
-				// comprobar si el cursor está en alguna franja, una por una
+				// comprobar si el cursor estï¿½ en alguna franja, una por una
 				else {
 					// Comprueba el empleado activo (vertical)
 					int i = 0;
@@ -386,7 +386,7 @@ public class I02_cuadr {
 		
 		mouseListenerCuadrSemanal = new MouseListener() {
 			public void mouseDown(MouseEvent e) {
-				// Botón derecho: Borra una franja (podría mostrar un menú si hace falta)
+				// Botï¿½n derecho: Borra una franja (podrï¿½a mostrar un menï¿½ si hace falta)
 				if (empleadoActivo!=-1 && e.button == 3) {
 					int i = 0;
 					FranjaDib f;
@@ -432,9 +432,9 @@ public class I02_cuadr {
 							.size(); i++) {
 						f = cuadrante.empleados.get(empleadoActivo).turno.franjas
 								.get(i);
-						// Si acabo de crear una franja, comprobar que no está
-						// del revés, y si lo está, darle la vuelta
-						// Comprobar también si se cruza con otra.
+						// Si acabo de crear una franja, comprobar que no estï¿½
+						// del revï¿½s, y si lo estï¿½, darle la vuelta
+						// Comprobar tambiï¿½n si se cruza con otra.
 						if (!terminadoDeCrear) {
 							if (f.inicio > f.fin) {
 								int aux = f.inicio;
@@ -478,7 +478,7 @@ public class I02_cuadr {
 					if (f.contienePixelInt(e.x)) {
 						f = cuadrante.empleados.get(empleadoActivo).turno.franjas
 								.get(i);
-						// TODO que calcule el sticky en el que está
+						// TODO que calcule el sticky en el que estï¿½
 						// Franja f2 = cuadrante.new Franja (f.inicio, e.x-10);
 						// f.inicio=e.x+10;
 						// cuadrante.empleados.get(empleadoActivo).franjas.add(f2);
@@ -525,9 +525,9 @@ public class I02_cuadr {
 		cuadranteImg = new Image(this.display, imgSize.x, imgSize.y);
 		GC gc1 = new GC(cuadranteImg);
 		Cuadrante c = new Cuadrante(display,4,9,23,0,0,0,0,0,empleados);
-		c.setTamaño(imgSize.x-10, imgSize.y-10);
+		c.setTamano(imgSize.x-10, imgSize.y-10);
 		c.dibujarCuadranteDia(gc1,-1);	
-		calcularTamaño();
+		calcularTamano();
 		gc1.dispose();
 	}
 	
@@ -542,9 +542,9 @@ public class I02_cuadr {
 		cuadranteImg = new Image(this.display, imgSize.x, imgSize.y);
 		GC gc2 = new GC(cuadranteImg);
 		Cuadrante c = new Cuadrante(display,4,9,23,0,0,0,0,0,empleados);
-		c.setTamaño(imgSize.x-10, imgSize.y-10);
+		c.setTamano(imgSize.x-10, imgSize.y-10);
 		c.dibujarCuadranteMes(gc2);
-		calcularTamaño();
+		calcularTamano();
 		gc2.dispose();
 		
 	}

@@ -3,13 +3,13 @@
  *   por Daniel Dionne
  *   
  * Crea un canvas con un cuadrante editable.
- * Importa la clase cuadrante que es la que lo dibuja. Esta clase sólo se encarga
- * de los movimientos y pulsaciones del ratón.
+ * Importa la clase cuadrante que es la que lo dibuja. Esta clase sï¿½lo se encarga
+ * de los movimientos y pulsaciones del ratï¿½n.
  * 
  * ver 0.1
  *******************************************************************************/
 
-// TODO Hacer que reduzca la resolución del grid en función del tamaño de la pantalla
+// TODO Hacer que reduzca la resoluciï¿½n del grid en funciï¿½n del tamaï¿½o de la pantalla
 package interfaces;
 
 import java.util.ResourceBundle;
@@ -25,31 +25,31 @@ import aplicacion.Franja;
 
 
 /**
- * Dada una instancia de Canvas, que se le pasa como parámetro al constructor,
+ * Dada una instancia de Canvas, que se le pasa como parï¿½metro al constructor,
  * crea un cuadrante sobre la misma.
  * @author Daniel
  *
  */
 public class I02_cuadrEmpl {
 	/* TODO
-	 * Las barras de tamaño cero se quedan
-	 * bug: al hacer muchas franjas pequeñitas, no se pegan bien (ver si sigue pasando)
+	 * Las barras de tamaï¿½o cero se quedan
+	 * bug: al hacer muchas franjas pequeï¿½itas, no se pegan bien (ver si sigue pasando)
 	 */
 	private Canvas canvas;
 	private I02CuadranteEmpleado cuadrante;
 	private int alto, ancho;
 	private Display display;
 	private ResourceBundle _bundle;
-	private int despl; // Este es para cuando movemos una barra, para saber de dónde la
+	private int despl; // Este es para cuando movemos una barra, para saber de dï¿½nde la
 				// he cogido
 	private Boolean creando, terminadoDeCrear;
 	// La variable terminadoDeCrear sirve para que una franja nueva no desaparezca al crearla
 	private Boolean semanal; // 1: muestra cuadrante diario, 0: muestra cuadrante mensual
 	private int empleadoActivo;
-	private int horaInicio, horaFin; // Definen de qué hora a qué hora es el
+	private int horaInicio, horaFin; // Definen de quï¿½ hora a quï¿½ hora es el
 								// cuadrante
 
-	private int margenIzq, margenDer, margenSup, margenInf; // Márgenes del cuadrante
+	private int margenIzq, margenDer, margenSup, margenInf; // Mï¿½rgenes del cuadrante
 	private int margenNombres; // Un margen para pintar los nombres a la izquierda
 	private Franja franjaActiva;
 	private int movimiento;
@@ -61,16 +61,16 @@ public class I02_cuadrEmpl {
 	private MouseMoveListener mouseMoveListenerCuadrSemanal;
 	private MouseMoveListener mouseMoveListenerCuadrMensual;
 
-	private void calcularTamaño() {
+	private void calcularTamano() {
 		ancho = canvas.getClientArea().width;
 		alto = canvas.getClientArea().height;
-		cuadrante.setTamaño(ancho, alto);
+		cuadrante.setTamano(ancho, alto);
 	}
 
 	private void redibujar() {
-		// Redibuja sólo las franjas que corresponden, para evitar calculos
+		// Redibuja sï¿½lo las franjas que corresponden, para evitar calculos
 		// innecesarios
-		// TODO ¿Merece la pena? Hay que ver si hay alguna diferencia en el rendimiento.
+		// TODO ï¿½Merece la pena? Hay que ver si hay alguna diferencia en el rendimiento.
 		// c.redraw(0, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1),
 		// ancho, 18, false);
 		//c.redraw(0, 0, ancho, alto, false);
@@ -157,7 +157,7 @@ public class I02_cuadrEmpl {
 		redibujar();
 	}
 	/**
-	 * Constructora que recibe como parámetro el Composite donde colocar los botones
+	 * Constructora que recibe como parï¿½metro el Composite donde colocar los botones
 	 * y el cuadrante.
 	 * @param c	Composite sobre el que dibujar el cuadrante
 	 */
@@ -170,7 +170,7 @@ public class I02_cuadrEmpl {
 		final Label lCuadranteTitulo= new Label (c, SWT.LEFT);
 		String fname = lCuadranteTitulo.getFont().getFontData()[0].getName();
 		lCuadranteTitulo.setFont(new Font(c.getDisplay(),fname,15,0));
-		// TODO Esto tendrá que cambiarse por la fecha elegida en el calendario
+		// TODO Esto tendrï¿½ que cambiarse por la fecha elegida en el calendario
 		lCuadranteTitulo.setText("12 de noviembre de 2007");
 		lCuadranteTitulo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		
@@ -211,7 +211,7 @@ public class I02_cuadrEmpl {
 		horaInicio = 9;
 		horaFin = 23;
 		cuadrante = new I02CuadranteEmpleado(display, 4, horaInicio, horaFin, margenIzq, margenDer, margenSup, margenInf, margenNombres,_bundle);
-		calcularTamaño();
+		calcularTamano();
 		display = canvas.getDisplay();
 		canvas.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent event) {
@@ -221,7 +221,7 @@ public class I02_cuadrEmpl {
 		canvas.addControlListener(new ControlListener() {
 			public void controlMoved(ControlEvent e) {}
 			public void controlResized(ControlEvent e) {
-				calcularTamaño();
+				calcularTamano();
 			}
 		});			
 				

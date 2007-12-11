@@ -1,6 +1,6 @@
 package interfaces;
 /*******************************************************************************
- * INTERFAZ I-09.1 :: Creación de un turno
+ * INTERFAZ I-09.1 :: Creaciï¿½n de un turno
  *   por Daniel Dionne
  *   
  * Interfaz para crear un nuevo turno.
@@ -80,9 +80,9 @@ public class I09_1_1_Creacion_turnos {
 // Grupo 2 - Turno
 		grupo2.setLayout(new GridLayout(1,false));
 
-		// TODO ESTO ES UN CACHO DE APAÑO PARA QUE SALGA ALGO
-		// No debería crearse un empleado para hacer un turno
-		// Debería haber un método en Cuadrante que muestre un turno
+		// TODO ESTO ES UN CACHO DE APAï¿½O PARA QUE SALGA ALGO
+		// No deberï¿½a crearse un empleado para hacer un turno
+		// Deberï¿½a haber un mï¿½todo en Cuadrante que muestre un turno
 		Empleado e1 = new Empleado(1, "M. Jackson", new Color (shell.getDisplay(), 104, 228,  85));
 		e1.turno.franjaNueva(new Posicion( 9,  6), new Posicion(14,  0));
 		e1.turno.franjaNueva(new Posicion(16,  0), new Posicion(18,  0));
@@ -121,14 +121,14 @@ public class I09_1_1_Creacion_turnos {
 //		bFAlta.addSelectionListener(sabFAlta);
 		
 		
-		// Un listener con lo que hace el botón bCancelar
+		// Un listener con lo que hace el botï¿½n bCancelar
 		SelectionAdapter sabCancelar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 					shell.dispose();	
 			}
 		};
 
-		// Un listener con lo que hace el botón bAceptar
+		// Un listener con lo que hace el botï¿½n bAceptar
 		SelectionAdapter sabAceptar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 			}
@@ -142,13 +142,13 @@ public class I09_1_1_Creacion_turnos {
 			public void controlResized(ControlEvent e) {
 				ancho = canvas.getClientArea().width;
 				alto = canvas.getClientArea().height;
-				cuadrante.setTamaño(ancho, alto);
+				cuadrante.setTamano(ancho, alto);
 			}
 		});			
 
-		// Botón por defecto bAceptar
+		// Botï¿½n por defecto bAceptar
 		shell.setDefaultButton(bAceptar);
-		// Ajustar el tamaño de la ventana al contenido
+		// Ajustar el tamaï¿½o de la ventana al contenido
 		shell.pack();
 		shell.setSize(new Point(350, shell.getSize().y));
 		// Mostrar ventana centrada sobre el padre
