@@ -21,8 +21,8 @@ public class I17_Seleccion_fecha {
 	//private Double fechaNumerica;
 	private DateTime calendario;
 	private boolean seleccionado=false;
-	
-	public I17_Seleccion_fecha(Shell padre,Text texto) {
+	private String fecha;
+	public I17_Seleccion_fecha(Shell padre, Text texto) {
 		this.padre = padre;
 		texto_asociado=texto;
 		mostrarVentana();
@@ -59,7 +59,9 @@ public class I17_Seleccion_fecha {
 				final String fecha2;
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
 				fecha2=(String.valueOf(calendario.getDay()) + " de " + meses[calendario.getMonth()]+ " de " + String.valueOf(calendario.getYear()));
-				texto_asociado.setText(fecha2);
+				fecha = String.valueOf(calendario.getYear()) + "-" + aplicacion.Util.aString(calendario.getMonth())+ "-" + aplicacion.Util.aString(calendario.getDay());
+				// TODO Poner esto más mono usando fecha2
+				texto_asociado.setText(fecha);
 				shell.dispose();
 			}				
 		});
@@ -86,32 +88,4 @@ public class I17_Seleccion_fecha {
 		// TODO Auto-generated method stub
 		return (calendario.getYear()*10000+calendario.getMonth()*100+calendario.getDay());
 	}
-	
-	/**
-	 * Devuelve el día seleccionado.
-	 * @return el día seleccionado
-	 * @author Daniel Dionne
-	 */
-	public int getDay() {
-		return calendario.getDay();
-	}
-	
-	/**
-	 * Devuelve el mes seleccionado.
-	 * @return el mes seleccionado
-	 * @author Daniel Dionne
-	 */
-	public int getMonth() {
-		return calendario.getMonth();
-	}
-	
-	/**
-	 * Devuelve el año seleccionado.
-	 * @return el año seleccionado
-	 * @author Daniel Dionne
-	 */
-	public int getYear() {
-		return calendario.getYear();
-	}
-	
 }

@@ -26,16 +26,15 @@ import org.eclipse.swt.widgets.ColorDialog;
 import aplicacion.Util;
 import aplicacion.Database;
 import java.util.ResourceBundle;
-import java.util.GregorianCalendar;
 
 // TODO Mostrar elección de rangos inferiores al usuario
 public class I08_1_Anadir_empleado {
 	private Shell padre = null;
 	private ResourceBundle bundle;
 	private Database db;
-	private GregorianCalendar fechaContrato;
-	private GregorianCalendar fechaAlta;
-	private GregorianCalendar fechaNacimiento;
+	private String fechaContrato;
+	private String fechaAlta;
+	private String fechaNacimiento;
 	//http://java.sun.com/j2se/1.4.2/docs/api/java/util/GregorianCalendar.html 
 	public I08_1_Anadir_empleado(Shell padre, ResourceBundle bundle, Database db) {
 		this.padre = padre;
@@ -44,11 +43,7 @@ public class I08_1_Anadir_empleado {
 		mostrarVentana();
 	}
 	
-	public void mostrarVentana() {
-		fechaContrato = new GregorianCalendar(0,0,0);
-		fechaAlta = new GregorianCalendar(0,0,0);
-		fechaNacimiento = new GregorianCalendar(0,0,0);
-		
+	public void mostrarVentana() {		
 		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 
 		final Image ico_chico = new Image(padre.getDisplay(), I01_Login.class.getResourceAsStream("ico_chico.gif"));
@@ -187,8 +182,7 @@ public class I08_1_Anadir_empleado {
 		// Listener para el selector de fecha de nacimiento
 		SelectionAdapter sabFNacimiento = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
-				I17_Seleccion_fecha I17 = new I17_Seleccion_fecha(shell, tFNacimiento);
-				fechaNacimiento.set(I17.getDay(), I17.getMonth(), I17.getYear());
+				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shell, tFNacimiento);
 			}
 		};
 		bFNacimiento.addSelectionListener(sabFNacimiento);
@@ -196,8 +190,7 @@ public class I08_1_Anadir_empleado {
 		// Listener para el selector de fecha de contrato
 		SelectionAdapter sabFContrato = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
-				I17_Seleccion_fecha I17 = new I17_Seleccion_fecha(shell, tFContrato);
-				fechaContrato.set(I17.getDay(), I17.getMonth(), I17.getYear());
+				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shell, tFContrato);
 			}
 		};
 		bFContrato.addSelectionListener(sabFContrato);
@@ -205,8 +198,7 @@ public class I08_1_Anadir_empleado {
 		// Listener para el selector de fecha de alta
 		SelectionAdapter sabFAlta = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
-				I17_Seleccion_fecha I17 = new I17_Seleccion_fecha(shell, tFAlta);
-				fechaAlta.set(I17.getDay(), I17.getMonth(), I17.getYear());
+				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shell, tFAlta);
 			}
 		};
 		bFAlta.addSelectionListener(sabFAlta);
@@ -258,9 +250,21 @@ public class I08_1_Anadir_empleado {
 					tEMail.selectAll();
 				}
 				else {
+					fechaNacimiento = tFNacimiento.getText();
+					fechaContrato = tFContrato.getText();
+					fechaAlta = tFAlta.getText();
+
 					// TODO BD Guardar empleado nuevo con todos sus datos en la BD
 					// Daniel Dionne :: Ya estoy yo con esta
-					db.insertarUsuario(n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento.getTime(), cSexo.getText(), tEMail.getText(), tPassword.getText(), cExperiencia.getText(), fechaContrato.getTime(), fechaAlta.getTime(), 0, 0, "Empleado", 0, 0);
+					/*
+					String sFechaNacimiento	= String.valueOf(fechaNacimiento.get(GregorianCalendar.YEAR)) + "-" + String.valueOf(fechaNacimiento.get(GregorianCalendar.MONTH)) + "-" + String.valueOf(fechaNacimiento.get(GregorianCalendar.DATE));
+					String sFechaContrato	= String.valueOf(fechaContrato.get(GregorianCalendar.YEAR)) + "-" + String.valueOf(fechaContrato.get(GregorianCalendar.MONTH)) + "-" + String.valueOf(fechaContrato.get(GregorianCalendar.DATE));
+					String sFechaAlta		= String.valueOf(fechaAlta.get(GregorianCalendar.YEAR)) + "-" + String.valueOf(fechaAlta.get(GregorianCalendar.MONTH)) + "-" + String.valueOf(fechaAlta.get(GregorianCalendar.DATE));
+					
+					System.out.println(sFechaNacimiento);
+					*/
+					System.out.println(fechaNacimiento);
+					db.insertarUsuario(n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getText(), tEMail.getText(), tPassword.getText(), cExperiencia.getText(), fechaContrato, fechaAlta, 0, 0, "Empleado", 0, 0);
 
 					shell.dispose();
 				}
