@@ -26,12 +26,17 @@ import org.eclipse.swt.widgets.ColorDialog;
 import aplicacion.Util;
 import aplicacion.Database;
 import java.util.ResourceBundle;
+import java.util.GregorianCalendar;
 
 // TODO Mostrar elección de rangos inferiores al usuario
 public class I08_1_Anadir_empleado {
 	private Shell padre = null;
 	private ResourceBundle bundle;
 	private Database db;
+	private GregorianCalendar fechaContrato;
+	private GregorianCalendar fechaAlta;
+	private GregorianCalendar fechaNacimiento;
+	//http://java.sun.com/j2se/1.4.2/docs/api/java/util/GregorianCalendar.html 
 	public I08_1_Anadir_empleado(Shell padre, ResourceBundle bundle, Database db) {
 		this.padre = padre;
 		this.bundle = bundle;
@@ -40,6 +45,10 @@ public class I08_1_Anadir_empleado {
 	}
 	
 	public void mostrarVentana() {
+		fechaContrato = new GregorianCalendar(0,0,0);
+		fechaAlta = new GregorianCalendar(0,0,0);
+		fechaNacimiento = new GregorianCalendar(0,0,0);
+		
 		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 
 		final Image ico_chico = new Image(padre.getDisplay(), I01_Login.class.getResourceAsStream("ico_chico.gif"));
@@ -73,8 +82,8 @@ public class I08_1_Anadir_empleado {
 		final Text   tApell2		= new Text  (grupoIzq, SWT.BORDER);
 		final Label  lEMail			= new Label (grupoIzq, SWT.LEFT);
 		final Text   tEMail			= new Text  (grupoIzq, SWT.BORDER);
-		final Label  lAnoNac		= new Label (grupoIzq, SWT.LEFT);
-		final Text   tAnoNac		= new Text  (grupoIzq, SWT.BORDER);
+		final Button bFNacimiento	= new Button(grupoIzq, SWT.PUSH);
+		final Text   tFNacimiento	= new Text  (grupoIzq, SWT.BORDER | SWT.READ_ONLY);
 		final Label  lSexo			= new Label (grupoIzq, SWT.LEFT);
 		final Combo  cSexo			= new Combo (grupoIzq, SWT.BORDER | SWT.READ_ONLY);
 		final Label  lContrato		= new Label (grupoDer, SWT.LEFT);
@@ -99,7 +108,7 @@ public class I08_1_Anadir_empleado {
 		lNombre			.setText(bundle.getString("Nombre"));
 		lApell1			.setText(bundle.getString("I08_lab_Apellido1"));
 		lApell2			.setText(bundle.getString("I08_lab_Apellido2"));
-		lAnoNac			.setText(bundle.getString("I08_lab_AnoNacimiento"));
+		bFNacimiento	.setText(bundle.getString("I08_lab_FNacimiento"));
 		lSexo			.setText(bundle.getString("Sexo"));
 		lContrato		.setText(bundle.getString("I08_lab_TipoContrato"));
 		lExperiencia	.setText(bundle.getString("Experiencia"));
@@ -120,8 +129,8 @@ public class I08_1_Anadir_empleado {
 		tApell1		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		lApell2		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
 		tApell2		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		lAnoNac		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
-		tAnoNac		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		bFNacimiento.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
+		tFNacimiento.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		lSexo		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
 		cSexo		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		lContrato	.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
@@ -175,10 +184,20 @@ public class I08_1_Anadir_empleado {
 		};
 		cSexo.addSelectionListener(sacSexo);
 		
+		// Listener para el selector de fecha de nacimiento
+		SelectionAdapter sabFNacimiento = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e){
+				I17_Seleccion_fecha I17 = new I17_Seleccion_fecha(shell, tFNacimiento);
+				fechaNacimiento.set(I17.getDay(), I17.getMonth(), I17.getYear());
+			}
+		};
+		bFNacimiento.addSelectionListener(sabFNacimiento);
+
 		// Listener para el selector de fecha de contrato
 		SelectionAdapter sabFContrato = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
-				new I17_Peticion_fecha(shell, tFContrato);
+				I17_Seleccion_fecha I17 = new I17_Seleccion_fecha(shell, tFContrato);
+				fechaContrato.set(I17.getDay(), I17.getMonth(), I17.getYear());
 			}
 		};
 		bFContrato.addSelectionListener(sabFContrato);
@@ -186,7 +205,8 @@ public class I08_1_Anadir_empleado {
 		// Listener para el selector de fecha de alta
 		SelectionAdapter sabFAlta = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
-				new I17_Peticion_fecha(shell, tFAlta);
+				I17_Seleccion_fecha I17 = new I17_Seleccion_fecha(shell, tFAlta);
+				fechaAlta.set(I17.getDay(), I17.getMonth(), I17.getYear());
 			}
 		};
 		bFAlta.addSelectionListener(sabFAlta);
@@ -221,7 +241,7 @@ public class I08_1_Anadir_empleado {
 				if (n<0) {
 					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
 					messageBox.setText (bundle.getString("Mensaje"));
-					messageBox.setMessage (bundle.getString("I01_err_NumVendedor"));
+					messageBox.setMessage (bundle.getString("I01_err_NumVendedor1"));
 					e.doit = messageBox.open () == SWT.YES;
 					// Enfocar tNVend y seleccionar texto
 					tNVend.setFocus();
@@ -240,8 +260,8 @@ public class I08_1_Anadir_empleado {
 				else {
 					// TODO BD Guardar empleado nuevo con todos sus datos en la BD
 					// Daniel Dionne :: Ya estoy yo con esta
-					//db.insertarUsuario(n, tNombre.getText(), tApell1.getText(), tApell2.getText(), , cSexo.getText(), tEMail.getText(), tPassword.getText(), indicadorGrupo, fechaContrato, fechaEntrada, horasExtras, idDept, rango, idContrato, idTurno)
-					
+					db.insertarUsuario(n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento.getTime(), cSexo.getText(), tEMail.getText(), tPassword.getText(), cExperiencia.getText(), fechaContrato.getTime(), fechaAlta.getTime(), 0, 0, "Empleado", 0, 0);
+
 					shell.dispose();
 				}
 			}
