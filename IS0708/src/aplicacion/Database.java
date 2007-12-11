@@ -244,6 +244,16 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		return correcto;
 	}
 
+	/**
+	 * Metodo que inserta un turno en la BD
+	 * @param idTurno Pendiente de revision
+	 * @param Descripcion Una breve descripcion del turno
+	 * @param HoraEntrada La hora de entrada en formato Time
+	 * @param HoraSalida La hora de salida en formato Time
+	 * @param HoraInicioDescanso La hora de inicio de descanso en formato Time
+	 * @param Duracion La duracion del descanso en formato int - Pendiente de revision
+	 * @return
+	 */
 	public boolean insertarTurno(int idTurno,String Descripcion,Time HoraEntrada,Time HoraSalida,Time HoraInicioDescanso, int Duracion) {
 		boolean correcto = false;
 		try {
