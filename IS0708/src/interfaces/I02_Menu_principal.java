@@ -1105,6 +1105,34 @@ public class I02_Menu_principal {
 	}
 
 	/**
+	 * Crea un tab de gerente para mostrar las estadisticas
+	 * @param tabFolder
+	 */
+	private void crearTabGerenteEstadisticas(TabFolder tabFolder){
+		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
+		tabItem.setText("Gerente:Estadisticas");
+		tabItem.setImage(ico_chico);
+		
+//		Creamos el contenido de la pestaña estadisticas
+		final Composite cEstadisticas = new Composite (tabFolder, SWT.NONE);
+		tabItem.setControl(cEstadisticas);
+
+		cEstadisticas.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
+		//Le añadimos un layout
+		GridLayout lEstadisticas = new GridLayout();
+		lEstadisticas.numColumns = 2;
+		cEstadisticas.setLayout(lEstadisticas);
+		
+//		Creamos el contenido interno de la pestaña cuadrantes
+		//Creamos un composite para los botones
+		final Composite cEstIzq = new Composite (cEstadisticas, SWT.BORDER);
+		cEstIzq.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
+		GridLayout lEstIzq = new GridLayout();
+		lEstIzq.numColumns = 1;
+		lEstIzq.makeColumnsEqualWidth = true;
+		cEstIzq.setLayout(lEstIzq);
+	}
+	/**
 	 * Crea un tabFolder.
 	 * TODO que haga los tabs dependiendo del usuario autentificado
 	 */
