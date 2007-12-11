@@ -16,36 +16,30 @@ import org.eclipse.swt.graphics.*;
  * <ul>
  * <li>	0 - Administrador<br>
  * 		El administrador es un superusuario que tiene 
- * 		permiso para crear gerentes y configurar la aplicaci�n.
+ * 		permiso para crear gerentes y configurar la aplicación.
  * 		No es considerado un empleado, y no se le pueden asignar
  * 		departamentos. Por tanto tampoco puede consultar un cuadrante
  * 		ni su rendimiento.
  * <li>	1 - Empleado<br>
- * 		Un empleado es un usuario b�sico. Puede consultar su horario
- * 		y el de su departamento. Puede utilizar la mensajer�a, y
+ * 		Un empleado es un usuario básico. Puede consultar su horario
+ * 		y el de su departamento. Puede utilizar la mensajería, y
  * 		comprobar su rendimiento personal comparado al de otros
  * 		vendedores de su departamento.
  * <li> 2 - Jefe<br>
- * 		Un jefe es un empleado que tiene a su cargo uno o m�s
- * 		departamentos. Adem�s de lo que puede hacer un empleado,
+ * 		Un jefe es un empleado que tiene a su cargo uno o más
+ * 		departamentos. Además de lo que puede hacer un empleado,
  * 		puede cambiar los cuadrantes de sus departamentos y mirar
- * 		sus estad�sticas e �ndices de rendimiento.
+ * 		sus estad�sticas e índices de rendimiento.
  * <li> 3 - Gerente<br>
  * 		El gerente es un empleado que tiene a su cargo empleados
- * 		que son jefes. Puede tener tambi�n la funci�n de jefe si
- * 		tiene alg�n departamento a su cargo, y adem�s puede crear
+ * 		que son jefes. Puede tener también la función de jefe si
+ * 		tiene algún departamento a su cargo, y además puede crear
  * 		jefes, departamentos y asignar jefes a departamentos.
  * 
  * @author Daniel Dionne
  *
  */
-public class Empleado implements Drawable {
-	/** @deprecated */
-	// TODO quitar esta clase
-	private class Departamento {
-		public Empleado getJefe() {return null;}
-	};
-	
+public class Empleado implements Drawable {	
 	/** @deprecated */
 	// TODO quitar esta clase
 	private class Contrato {};
@@ -84,8 +78,8 @@ public class Empleado implements Drawable {
  
 	/**
 	 * Constructor de un empleado. No se hace ninguna comprobaci�n de ninguno de los datos.
-	 * @param superior		el empleado superior, normalmente, el que llama al constructor
-	 * @param nvend			el n�mero de empleado, debe ser un n�mero de 8 cifras
+	 * @param idSuperior	el id del empleado superior. Normalmente, el que llama al constructor
+	 * @param nvend			el id del empleado o número de vendedor, debe ser un número de 8 cifras
 	 * @param nombre		el nombre del empleado
 	 * @param apellido1		el primer apellido del empleado
 	 * @param apellido2		el segundo apellido del empleado
@@ -94,8 +88,8 @@ public class Empleado implements Drawable {
 	 * 												<li>0 - femenino
 	 * 												<li>1 - masculino
 	 * 												</ul>
-	 * @param email			la direcci�n de email del empleado
-	 * @param password		la contrase�a de acceso del empleado
+	 * @param email			la dirección de email del empleado
+	 * @param password		la contraseña de acceso del empleado
 	 * @param grupo			la experiencia del empleado:	<ul>
 	 * 														<li>0 - principiante
 	 * 														<li>1 - experto
@@ -110,7 +104,7 @@ public class Empleado implements Drawable {
 	 * @param contrato		el contrato del empleado
 	 * @param fContrato		fecha en que el empleado empieza a aparecer en los cuadrantes de este departamento
 	 * @param fAlta			fecha en que el empleado empieza a trabajar en la empresa
-	 * @param color			un color con el que se representar� al empleado en los cuadrantes
+	 * @param color			un color con el que se representará al empleado en los cuadrantes
 	 */
 	public Empleado (int idSuperior, int nvend, String nombre, String apellido1, String apellido2, 
 			Date fechaNac, int sexo, String email, String password, int grupo,
@@ -214,19 +208,19 @@ public class Empleado implements Drawable {
 	}
 
 	/**
-	 * Devuelve el n�mero de vendedor de un empleado.
-	 * @return	el n�mero de vendedor del empleado.
+	 * Devuelve el número de vendedor de un empleado.
+	 * @return	el número de vendedor del empleado.
 	 */
 	public int getNVend() {
 		return nvend;
 	}
 	
 	/**
-	 * Intenta asignar un n�mero de vendedor a un empleado, que debe ser un n�mero de 8 cifras.
-	 * Si no es correcto, no produce ning�n cambio.
-	 * @param	nvend el n�mero de vendedor a asignar al empleado.
-	 * @return	<i>true</i> si se ha asignado correctamente el n�mero, <i>false</i> si 
-	 * 			el string no tiene longitud 8 o no es un n�mero.
+	 * Intenta asignar un número de vendedor a un empleado, que debe ser un número de 8 cifras.
+	 * Si no es correcto, no produce ningún cambio.
+	 * @param	nvend el número de vendedor a asignar al empleado.
+	 * @return	<i>true</i> si se ha asignado correctamente el número, <i>false</i> si 
+	 * 			el string no tiene longitud 8 o no es un número.
 	 */
 	public boolean setNVend(String nvend){
 		int n = Util.convertirNVend(nvend);
@@ -291,32 +285,32 @@ public class Empleado implements Drawable {
 	}
 	
 	/**
-	 * Devuelve la direcci�n de email del empleado.
-	 * @return la direcci�n de email del empleado.
+	 * Devuelve la dirección de email del empleado.
+	 * @return la dirección de email del empleado.
 	 */
 	public String getEmail() {
 		return email;
 	}
 	
 	/**
-	 * Asigna una direcci�n de email a un empleado. No hace ninguna comprobaci�n.
-	 * @param email la direcci�n de email
+	 * Asigna una dirección de email a un empleado. No hace ninguna comprobación.
+	 * @param email la dirección de email
 	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
 	
 	/**
-	 * Devuelve la contrase�a de un empleado.
-	 * @return la contrase�a del empleado
+	 * Devuelve la contraseña de un empleado.
+	 * @return la contraseña del empleado
 	 */
 	public String getPassword(){
 		return password;
 	}
 	
 	/**
-	 * Asigna una contrase�a a un empleado.
-	 * @param password la contrase�a
+	 * Asigna una contraseña a un empleado.
+	 * @param password la contraseña
 	 */
 	public void setPassword(String password) {
 		this.password = password;
@@ -331,8 +325,8 @@ public class Empleado implements Drawable {
 	}
 
 	/**
-	 * Asigna un grupo de experiencia al empleado. El par�metro debe ser 0 � 1,
-	 * o no se har� ninguna modificaci�n.
+	 * Asigna un grupo de experiencia al empleado. El parámetro debe ser 0 ó 1,
+	 * o no se hará ninguna modificación.
 	 * @param grupo 0 si es principiante, 1 si es experto
 	 */
 	public void setGrupo(int grupo) {
@@ -350,9 +344,9 @@ public class Empleado implements Drawable {
 	}
 
 	/**
-	 * Devuelve el departamento en la posici�n i de la lista de
+	 * Devuelve el departamento en la posición <i>i</i> de la lista de
 	 * departamentos del empleado.
-	 * @return el departamento n�mero 'i' del usuario
+	 * @return el departamento número <i>i</i> del usuario
 	 */
 	public Departamento getDepartamento(int i) {
 		//TODO Controlar que la lista esté inicializada
@@ -361,7 +355,7 @@ public class Empleado implements Drawable {
 	
 	/**
 	 * Devuelve el rango de un usuario.
-	 * NO HAY setRango, el rango se ajusta autom�ticamente al a�adir
+	 * NO HAY setRango, el rango se ajusta automáticamente al añadir
 	 * subordinados o departamentos
 	 * @return el rango del empleado
 	 */
@@ -390,14 +384,14 @@ public class Empleado implements Drawable {
 		int i = 0; boolean b = false;
 		while (i<idDepartamentos.size() && !b) {
 			// TODO Controlar que la lista esté inicializada
-			if (this == departamentos.get(i).getJefe()) b = true;
+			if (this == departamentos.get(i).getJefeDepartamento()) b = true;
 		}
 		return b;
 	}
 	
 	/**
-	 * Actualiza el rango de un empleado, seg�n los departamentos
-	 * que tenga y si tiene alg�n subordinado jefe
+	 * Actualiza el rango de un empleado, según los departamentos
+	 * que tenga y si tiene algún subordinado jefe
 	 */
 	public void actualizarRango() {
 		rango = 1;
@@ -449,7 +443,7 @@ public class Empleado implements Drawable {
 	/**
 	 * A�ade un subordinado y actualiza el rango del empleado.
 	 * @param empleado el empleado subordinado
-	 * @return <i>true</i> si se ha a�adido el Empleado, <i>false</i> si
+	 * @return <i>true</i> si se ha añadido el Empleado, <i>false</i> si
 	 * ya estaba en la lista de subordinados
 	 */
 	public boolean addSubordinado(Empleado empleado) {
@@ -466,7 +460,7 @@ public class Empleado implements Drawable {
 	 * Elimina a un Empleado de la lista de subordinados y actualiza el rango.
 	 * @param e el Empleado a eliminar de la lista de subordinados
 	 * @return <i>true</i> si se ha eliminado el empleado, <i>false</i>
-	 * si no exist�a en la lista de subordinados del empleado 
+	 * si no existía en la lista de subordinados del empleado 
 	 */
 	public boolean removeSubordinado (Empleado e) {
 		// TODO Controlar que la lista esté actualizada
