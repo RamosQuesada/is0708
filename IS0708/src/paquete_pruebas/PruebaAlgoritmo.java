@@ -63,20 +63,16 @@ public class PruebaAlgoritmo {
 		System.out.println(horas.toString()); // Sin ordenar
 		// Ordenar la lista
 		int numTrozos = horas.size();
-		ArrayList<Time> orden = new ArrayList<Time>();
-		for (int i=0; i<horas.size(); i++){
+		ArrayList<Time> trozosHorario = new ArrayList<Time>();
+		for (int i=0; i<numTrozos; i++){
 			int j=0;
-			while (j<orden.size() && orden.get(j).getTime()<horas.get(i).getTime())
+			while (j<trozosHorario.size() && trozosHorario.get(j).getTime()<horas.get(i).getTime())
 				j++;
-			orden.add(j,horas.get(i));
+			trozosHorario.add(j,horas.get(i));
 		}
-		System.out.println(orden.toString()); // Ordenada
-		Time[] trozosHorario = new Time[numTrozos];
-		for (int i=0; i<numTrozos; i++)
-			trozosHorario[i] = orden.get(i);
-		for (int i=0; i<numTrozos; i++)
-			System.out.print(trozosHorario[i]+", ");    // Ordenada en Array
+		System.out.println(trozosHorario.toString()); // Ordenada
 		
+				
 		System.out.println();
 		
 		
