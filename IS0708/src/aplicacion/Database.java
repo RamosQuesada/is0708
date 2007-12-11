@@ -150,7 +150,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO departamento values ('" + nombre + "', '" + jefe + "')");
+			st.executeUpdate("INSERT INTO DEPARTAMENTO values ('" + nombre + "', '" + jefe + "')");
 			System.out.println("Departamento insertado");
 			correcto = true;
 		} catch (SQLException e) {
@@ -169,7 +169,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO numerosDpto values ('" + numero + "', '" + nombre + "')");
+			st.executeUpdate("INSERT INTO NumerosDpto values ('" + numero + "', '" + nombre + "')");
 			System.out.println("Departamento insertado");
 			correcto = true;
 		} catch (SQLException e) {
@@ -316,6 +316,12 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		prueba.insertarDistribucion(9, "Martes", "1e5p", 10, 7, 1);
 		prueba.insertarMensaje(1,new Time(0),"prueba","que gran prueba");
 		prueba.insertarListaDestinatarios(1, 1);
+		//prueba.insertarDepartamento("is", Integer.);
+		//prueba.insertarUsuario(1235, "Pablo", "Gervas", "Gomez_Navarro","2007-12-11" , "m", "gervas@is.com", "ballenas", "p","2007-12-11" , "2007-12-11", 0, 123, "empleado", 1, 1);
+		//prueba.insertarUsuario(1234, "Pablo", "Gervas", "Gomez_Navarro","2007-12-11" , "m", "gervas@is.com", "ballenas", "p","2007-12-11" , "2007-12-11", 0, 123, "empleado", 1, 1);
+		prueba.insertarDepartamento("is", 123);
+		prueba.insertarNumerosDepartamento("123", "is");
+		
 	  //  Date d = new Date(10000000);
 	    prueba.insertarFestivo(9, "2007-12-11", "2007-12-11","2e7p", 15, 10, 1);
 		prueba.cerrarConexion();
