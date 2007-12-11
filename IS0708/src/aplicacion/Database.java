@@ -117,28 +117,29 @@ public class Database extends Thread {
 	 * @return Informa sobre si se ha podido realizar la inserción o no
 	 */
 	public boolean insertarUsuario(int id, String nombre, String apellido1,
-			String apellido2, java.util.Date fechaNac, String sexo, String email,
-			String password, String indicadorGrupo, java.util.Date fechaContrato,
-			java.util.Date fechaEntrada, int horasExtras, int idDept, String rango,
+			String apellido2, String fechaNac, String sexo, String email,
+			String password, String indicadorGrupo, String fechaContrato,
+			String fechaEntrada, int horasExtras, int idDept, String rango,
 			int idContrato, int idTurno) {
 		boolean correcto = false;
 		try {
-			/*
+			/*Date fNac = new Date(fechaNac);
+			Date fCon = new Date(fechaContrato);
+			Date fEnt = new Date(fechaEntrada);
+			
 			Date fContr = java.sql.Date.valueOf(fechaContrato);
 			Date fEntr =  java.sql.Date.valueOf(fechaEntrada);
 			Date fNac =  java.sql.Date.valueOf(fechaNac);
 			*/
+			
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO USUARIO (NumVendedor) values ('" + id + "')");
-/*
 			st.executeUpdate("INSERT INTO USUARIO values ('" + id + "', '"
 					+ nombre + "', '" + apellido1 + "' ,'" + apellido2 + "','"
 					+ fechaNac + "','" + sexo + "','" + email + "','"
-					+ password + "','" + indicadorGrupo + fechaContrato + "','"
+					+ password + "','" + indicadorGrupo + "','" + fechaContrato + "','"
 					+ fechaEntrada + "','" + horasExtras + "','" + idDept
 					+ "','" + rango + "','" + idContrato + "','" + idTurno
 					+ "')");
-*/
 			System.out.println("Usuario insertado");
 			correcto = true;
 		} catch (SQLException e) {
