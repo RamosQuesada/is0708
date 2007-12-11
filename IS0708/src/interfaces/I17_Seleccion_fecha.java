@@ -15,14 +15,14 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-public class I17_Peticion_fecha {
+public class I17_Seleccion_fecha {
 	private Shell padre = null;
 	private Text texto_asociado;
 	//private Double fechaNumerica;
 	private DateTime calendario;
 	private boolean seleccionado=false;
 	
-	public I17_Peticion_fecha(Shell padre,Text texto) {
+	public I17_Seleccion_fecha(Shell padre,Text texto) {
 		this.padre = padre;
 		texto_asociado=texto;
 		mostrarVentana();
@@ -44,15 +44,11 @@ public class I17_Peticion_fecha {
 		final String fecha3;
 		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 2, 1));
 		
-		
-		
 		final Composite cAcepCanc = new Composite (shell, SWT.BORDER);
 		cAcepCanc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
 		GridLayout lAcepCanc = new GridLayout();
 		lAcepCanc.numColumns = 2;
 		cAcepCanc.setLayout(lAcepCanc);
-		
-		
 		
 		final Button bEnviar	= new Button(cAcepCanc, SWT.PUSH);
 		bEnviar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -60,7 +56,6 @@ public class I17_Peticion_fecha {
 		//Introducimos los valores y eventos de Fecha Inicio
 		bEnviar.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-			//	I02PeticionFecha ventana = new I02PeticionFecha(shell,cFechaInicio);
 				final String fecha2;
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
 				fecha2=(String.valueOf(calendario.getDay()) + " de " + meses[calendario.getMonth()]+ " de " + String.valueOf(calendario.getYear()));
@@ -91,6 +86,32 @@ public class I17_Peticion_fecha {
 		// TODO Auto-generated method stub
 		return (calendario.getYear()*10000+calendario.getMonth()*100+calendario.getDay());
 	}
-
+	
+	/**
+	 * Devuelve el día seleccionado.
+	 * @return el día seleccionado
+	 * @author Daniel Dionne
+	 */
+	public int getDay() {
+		return calendario.getDay();
+	}
+	
+	/**
+	 * Devuelve el mes seleccionado.
+	 * @return el mes seleccionado
+	 * @author Daniel Dionne
+	 */
+	public int getMonth() {
+		return calendario.getMonth();
+	}
+	
+	/**
+	 * Devuelve el año seleccionado.
+	 * @return el año seleccionado
+	 * @author Daniel Dionne
+	 */
+	public int getYear() {
+		return calendario.getYear();
+	}
 	
 }

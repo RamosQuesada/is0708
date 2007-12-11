@@ -27,7 +27,7 @@ public class I18_Cambio_horario {
 	private Shell padre = null;
 	private ResourceBundle _bundle;
 	
-	private I17_Peticion_fecha ventana;
+	private I17_Seleccion_fecha ventana;
 	private Text cFechaInicio;
 	private Text cFechaFin;
 	private Integer iFechaInicio=0;
@@ -86,7 +86,7 @@ public class I18_Cambio_horario {
 		//Introducimos los valores y eventos de Fecha Inicio
 		bFechaInicio.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				ventana = new I17_Peticion_fecha(shell,cFechaInicio);
+				ventana = new I17_Seleccion_fecha(shell,cFechaInicio);
 				//
 			}				
 		});
@@ -110,7 +110,7 @@ public class I18_Cambio_horario {
 		//Introducimos los valores y eventos de Fecha Inicio
 		bFechaFin.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				ventana = new I17_Peticion_fecha(shell,cFechaFin);
+				ventana = new I17_Seleccion_fecha(shell,cFechaFin);
 				//iFechaFin=ventana.dameCatDia();
 			}				
 		});		

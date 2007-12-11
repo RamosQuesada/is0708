@@ -26,7 +26,7 @@ public class I16_Peticion_baja {
 	private Text cFechaInicio;
 	private Text cFechaFin;
 	
-	private I17_Peticion_fecha ventana;
+	private I17_Seleccion_fecha ventana;
 	private Integer iFechaInicio=0;
 	private Integer iFechaFin=0;
 	
@@ -67,7 +67,7 @@ public class I16_Peticion_baja {
 		//Introducimos los valores y eventos de Fecha Inicio
 		bFechaInicio.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				ventana = new I17_Peticion_fecha(shell,cFechaInicio);
+				ventana = new I17_Seleccion_fecha(shell,cFechaInicio);
 				//iFechaInicio=ventana.dameCatDia();
 			}				
 		});
@@ -92,7 +92,7 @@ public class I16_Peticion_baja {
 
 		bFechaFin.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				ventana = new I17_Peticion_fecha(shell,cFechaFin);
+				ventana = new I17_Seleccion_fecha(shell,cFechaFin);
 				//iFechaFin=ventana.dameCatDia();
 
 			}				
