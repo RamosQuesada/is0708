@@ -4,9 +4,9 @@ import java.sql.*;
 
 
 /**
- * Aquí se encuentran los métodos de acceso a la base de datos.
+ * Aquï¿½ se encuentran los mï¿½todos de acceso a la base de datos.
  * 
- * @author Camilo & chema & Agustín
+ * @author Camilo & chema & Agustï¿½n
  * 
  */
 public class Database extends Thread {
@@ -23,7 +23,7 @@ public class Database extends Thread {
 	// Tras una hora de pelea con Eclipse y MySQL, por fin tenemos
 	// conexion con la BD ;)
 	/**
-	 * Abre una conexión nueva con la base de datos
+	 * Abre una conexiï¿½n nueva con la base de datos
 	 */
 	public synchronized void abrirConexion() {
 		try {
@@ -33,15 +33,15 @@ public class Database extends Thread {
 			String url = "jdbc:mysql://72.34.56.241:3306/" + bd;
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			con = DriverManager.getConnection(url, userName, password);
-			System.out.println("Conexión a la BD");
+			System.out.println("Conexiï¿½n a la BD");
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Error en conexión");
+			System.out.println("Error en conexiï¿½n");
 		}
 	}
 
 	/**
-	 * Cierra la conexión con la base de datos
+	 * Cierra la conexiï¿½n con la base de datos
 	 * 
 	 */
 	public void cerrarConexion() {
@@ -55,9 +55,9 @@ public class Database extends Thread {
 	}
 
 	/**
-	 * Comprueba si hay una conexión abierta con la base de datos
-	 * @return	<i>true</i> si la conexión está abierta, <i>false</i> en caso
-	 * 			contrario o si hay alguna excepción
+	 * Comprueba si hay una conexiï¿½n abierta con la base de datos
+	 * @return	<i>true</i> si la conexiï¿½n estï¿½ abierta, <i>false</i> en caso
+	 * 			contrario o si hay alguna excepciï¿½n
 	 * @author Daniel Dionne
 	 */
 	public boolean conexionAbierta() {
@@ -76,9 +76,9 @@ public class Database extends Thread {
 	}
 
 	/**
-	 * Método que inserta en la tabla usuario los valores correspondientes a un nuevo usuario
+	 * Mï¿½todo que inserta en la tabla usuario los valores correspondientes a un nuevo usuario
 	 * @param id
-	 *            Es el identificador único de cada empleado, que se corresponde
+	 *            Es el identificador ï¿½nico de cada empleado, que se corresponde
 	 *            con la clave primaria en la tabla.
 	 * @param nombre
 	 *            Nombre del empleado
@@ -91,12 +91,12 @@ public class Database extends Thread {
 	 * @param sexo
 	 *            Sexo del empleado
 	 * @param email
-	 *            Representa el correo electrónico del empleado
+	 *            Representa el correo electrï¿½nico del empleado
 	 * @param password
-	 *            Se corresponde con la contraseña para autenticarse en el
+	 *            Se corresponde con la contraseï¿½a para autenticarse en el
 	 *            sistema
 	 * @param indicadorGrupo
-	 *            Clasifica al usuario según su antigüedad en la empresa
+	 *            Clasifica al usuario segï¿½n su antigï¿½edad en la empresa
 	 * @param fechaContrato
 	 *            Fecha del primer dia en la que el usuario trabaja con el tipo
 	 *            de contrato actual
@@ -106,15 +106,15 @@ public class Database extends Thread {
 	 *            Lleva en cuenta el numero de horas extras. Debe ser un entero
 	 *            para saber cuando debe horas o le deben horas
 	 * @param idDept
-	 *            Hace referencia a la sección dentro del departamento en
-	 *            cuestión
+	 *            Hace referencia a la secciï¿½n dentro del departamento en
+	 *            cuestiï¿½n
 	 * @param rango
-	 *            Posición del empleado en la empresa
+	 *            Posiciï¿½n del empleado en la empresa
 	 * @param idContrato
 	 *            Hace referencia al tipo de contrato
 	 * @param idTurno
 	 *            Turno preferido por el empleado
-	 * @return Informa sobre si se ha podido realizar la inserción o no
+	 * @return Informa sobre si se ha podido realizar la inserciï¿½n o no
 	 */
 	public boolean insertarUsuario(int id, String nombre, String apellido1,
 			String apellido2, String fechaNac, String sexo, String email,
@@ -141,10 +141,10 @@ public class Database extends Thread {
 	}
 
 	/**
-	 * Método que inserta en la tabla Departamento los valores correspondientes a un nuevo departamento
+	 * Mï¿½todo que inserta en la tabla Departamento los valores correspondientes a un nuevo departamento
 	 * @param nombre	Nombre representativo de las actividades llevadas a cabo dentro del departamento 
 	 * @param jefe		Persona que dirige le departamento
-	 * @return			Informa sobre si se ha podido realizar la inserción o no
+	 * @return			Informa sobre si se ha podido realizar la inserciï¿½n o no
 	 */
 	public boolean insertarDepartamento(String nombre,int jefe) {
 		boolean correcto = false;
@@ -160,10 +160,10 @@ public class Database extends Thread {
 	}
 	
 	/**
-	 * Método que inserta en la tabla numerosDpto los valores correspondientes
+	 * Mï¿½todo que inserta en la tabla numerosDpto los valores correspondientes
 	 * @param numero	Numero del subdepartamento
 	 * @param nombre	Nombre del departamento
-	 * @return			Informa sobre si se ha podido realizar la inserción o no
+	 * @return			Informa sobre si se ha podido realizar la inserciï¿½n o no
 	 */
 	public boolean insertarNumerosDepartamento(String numero,String nombre) {
 		boolean correcto = false;
@@ -178,20 +178,20 @@ public class Database extends Thread {
 		return correcto;
 	}
 	/**
-	 * Método que inserta en la tabla Distribucion los valores correspondientes a una nueva distribución
-	 * @param Hora    Franja horaria  dividida en unidades de una hora (por ej. De 9:00 – 10:00) representado por la hora de inicio (ej. 9)
+	 * Mï¿½todo que inserta en la tabla Distribucion los valores correspondientes a una nueva distribuciï¿½n
+	 * @param Hora    Franja horaria  dividida en unidades de una hora (por ej. De 9:00 ï¿½ 10:00) representado por la hora de inicio (ej. 9)
 	 *            
-	 * @param DiaSemana  Dia (Lunes, Martes,...,Domingo) en el que se aplica la distribución
+	 * @param DiaSemana  Dia (Lunes, Martes,...,Domingo) en el que se aplica la distribuciï¿½n
 	 *            
-	 * @param Patrón   Nos dice cómo se distribuyen los grupos (expertos y novatos)
+	 * @param Patrï¿½n   Nos dice cï¿½mo se distribuyen los grupos (expertos y novatos)
 	 *           
-	 * @param NumMax   Nos acota el número máximo de trabajadores requeridos dicho día en una cierta franja horaria 
+	 * @param NumMax   Nos acota el nï¿½mero mï¿½ximo de trabajadores requeridos dicho dï¿½a en una cierta franja horaria 
 
-	 * @param NumMin  Nos acota el número mínimo de trabajadores requeridos dicho día en una cierta franja horaria 
+	 * @param NumMin  Nos acota el nï¿½mero mï¿½nimo de trabajadores requeridos dicho dï¿½a en una cierta franja horaria 
 	 * 
 	 * @param IdDepartamento  identificador del dpto.
 	
-	 * @return Informa sobre si se ha podido realizar la inserción o no
+	 * @return Informa sobre si se ha podido realizar la inserciï¿½n o no
 	 */
 public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int NumMax, int NumMin,int IdDepartamento) {
 		boolean correcto = false;
@@ -207,21 +207,21 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 	}
 
 	/**
-	 * Método que inserta en la tabla Festivos los valores correspondientes a una distribución para días festivos o promociones
-	 * @param Hora    Franja horaria  dividida en unidades de una hora (por ej. De 9:00 – 10:00) representado por la hora de inicio (ej. 9)
+	 * Mï¿½todo que inserta en la tabla Festivos los valores correspondientes a una distribuciï¿½n para dï¿½as festivos o promociones
+	 * @param Hora    Franja horaria  dividida en unidades de una hora (por ej. De 9:00 ï¿½ 10:00) representado por la hora de inicio (ej. 9)
 	 *            
-	 * @param FechaInicio   Fecha de Inicio de la distribución especial para festivos o promociones
+	 * @param FechaInicio   Fecha de Inicio de la distribuciï¿½n especial para festivos o promociones
 	 * 
-	 * @param FechaFin   Fecha de Finalizacion de la distribución especial para festivos o promociones
-	 * @param Patrón   Nos dice cómo se distribuyen los grupos (expertos y novatos)
+	 * @param FechaFin   Fecha de Finalizacion de la distribuciï¿½n especial para festivos o promociones
+	 * @param Patrï¿½n   Nos dice cï¿½mo se distribuyen los grupos (expertos y novatos)
 	 *           
-	 * @param NumMax   Nos acota el número máximo de trabajadores requeridos dicho día en una cierta franja horaria 
+	 * @param NumMax   Nos acota el nï¿½mero mï¿½ximo de trabajadores requeridos dicho dï¿½a en una cierta franja horaria 
 	
-	 * @param NumMin  Nos acota el número mínimo de trabajadores requeridos dicho día en una cierta franja horaria 
+	 * @param NumMin  Nos acota el nï¿½mero mï¿½nimo de trabajadores requeridos dicho dï¿½a en una cierta franja horaria 
 	 * 
 	 * @param IdDepartamento  identificador del dpto.
 	
-	 * @return Informa sobre si se ha podido realizar la inserción o no
+	 * @return Informa sobre si se ha podido realizar la inserciï¿½n o no
 	 */
 	public boolean insertarFestivo(int Hora,String FechaInicio,String FechaFin,String Patron,int NumMax, int NumMin,int IdDepartamento) {
 		boolean correcto = false;
@@ -258,6 +258,52 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		}
 		return correcto;
 	}
+	/**
+	 * 
+	 * @param remitente representa el remitente de un mensaje
+	 * @param fecha fecha en la que se ha guardado el mensaje
+	 * @param asunto campo que indica que contiene el mensaje de forma breve
+	 * @param texto contenido de los mensajes
+	 * @return true si se ha realizado correctamente o false en caso contrario
+	 */
+	
+	public boolean insertarMensaje(int remitente,Time fecha,String asunto,String texto) {
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("INSERT INTO MENSAJE values ( 0 , " + remitente 
+					+  ", '" + fecha + "', '" + asunto + "', '" + texto + "');");
+			System.out.println("Mesaje insertado");
+			correcto = true;
+		} catch (SQLException e) {
+			correcto = false;
+		}
+		return correcto;
+	}
+	
+	
+	/**
+	 * 
+	 * @param numVendedor representa el destinatario al que se ha enviado el mensaje
+	 * @param idMensaje representa el mensaje que se recibe
+	 * @return true si se ha realizado correctamente o false en caso contrario
+	 */
+	public boolean insertarListaDestinatarios(int numVendedor,int idMensaje) {
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("INSERT INTO DESTINATARIO values (" + numVendedor + ", " + idMensaje + ");");
+			System.out.println("Destinatario insertado");
+			correcto = true;
+		} catch (SQLException e) {
+			correcto = false;
+		}
+		return correcto;
+	}
+	
+	
+	
+	
 	
 	public static void main(String[] IS0708) {
 		Database prueba = new Database();
@@ -268,6 +314,8 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		
 		prueba.insertarTurno(1, "prueba", h, h, h, 10);
 		prueba.insertarDistribucion(9, "Martes", "1e5p", 10, 7, 1);
+		prueba.insertarMensaje(1,new Time(0),"prueba","que gran prueba");
+		prueba.insertarListaDestinatarios(1, 1);
 	  //  Date d = new Date(10000000);
 	    prueba.insertarFestivo(9, "2007-12-11", "2007-12-11","2e7p", 15, 10, 1);
 		prueba.cerrarConexion();
