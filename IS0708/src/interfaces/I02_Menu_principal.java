@@ -9,6 +9,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
 
+
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.Locale;
@@ -1132,6 +1133,7 @@ public class I02_Menu_principal {
 		lEstIzq.makeColumnsEqualWidth = true;
 		cEstIzq.setLayout(lEstIzq);
 	}
+		
 	/**
 	 * Crea un tabFolder.
 	 * TODO que haga los tabs dependiendo del usuario autentificado
@@ -1159,6 +1161,7 @@ public class I02_Menu_principal {
 		case 3:
 			//Tabs de gerente
 			crearTabMensajes(tabFolder);
+			crearTabGerenteEstadisticas(tabFolder);
 			break;
 		default:
 			// Tabs de empleado
