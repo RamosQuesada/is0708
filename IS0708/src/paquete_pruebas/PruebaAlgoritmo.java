@@ -25,6 +25,8 @@ public class PruebaAlgoritmo {
 		//public turnoString idTurno, String descripcion,String horaEntrada, String horaSalida, String horaDescanso, int descanso
 		//t1 = new Turno("1","M1","9:00:00","14:00:00","12:30:00",20);
 		//t2 = new Turno("2","T1","9:00:00","17:00:00","14:30:00",25);
+		/*
+		 * Os comento esta parte, que da error porque se han cambiado las clases Turno y Empleado
 		t1=new aplicacion.Turno(1,"23","2");
 		t2=new aplicacion.Turno(2,"12","21");
 		emp1 = new Empleado(1,"emp1",t1);
@@ -33,6 +35,7 @@ public class PruebaAlgoritmo {
 		disponibles.add(emp1);
 		disponibles.add(emp2);
 		disponibles.add(emp3);
+		*/
 		cuad = new Cuadrante(12,2007);
 		System.out.println(cuad.getNumDias());
 		
