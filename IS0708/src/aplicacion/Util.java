@@ -1,6 +1,7 @@
 package aplicacion;
 
 import java.util.Random;
+import java.lang.String;
 import java.sql.Time;
 
 /**
@@ -127,6 +128,44 @@ public class Util {
 	public static Time calculaFinDescanso(Time horaInicio, int minutos){
 		Time fin = new Time(horaInicio.getTime() + minutos*60000);
 		return fin;
+	}
+	
+	/**
+	 * Devuelve el número de expertos a partir del patrón.
+	 * Si el patrón es incorrecto devuelve "-1"
+	 * @param patron String del tipo "1e5p"
+	 * @return Número de expertos del patrón
+	 */	
+	public static int numExpertos(String patron){
+		int expertos = -1;
+		if (patron.length()==4 && patron.indexOf('e')==1 && patron.indexOf('p')==3)
+			if (patron.charAt(0) >= 48 && patron.charAt(0) <= 57)
+				expertos = Integer.valueOf(patron.substring(0,1));
+		return expertos;
+	}
+	
+	/**
+	 * Devuelve el número de principiantes a partir del patrón.
+	 * Si el patrón es incorrecto devuelve "-1"
+	 * @param patron String del tipo "1e5p"
+	 * @return Número de principiantes del patrón
+	 */	
+	public static int numPrincipiantes(String patron){
+		int principiantes = -1;
+		if (patron.length()==4 && patron.indexOf('e')==1 && patron.indexOf('p')==3)
+			if (patron.charAt(2) >= 48 && patron.charAt(2) <= 57)
+				principiantes = Integer.valueOf(patron.substring(2,3));
+		return principiantes;
+	}
+	
+	/**
+	 * Devuelve un patron a partir de expertos y principiantes
+	 * @param expertos
+	 * @param principiantes
+	 * @return patron
+	 */
+	public static String patron(int expertos, int principiantes){
+		return (expertos+"e"+principiantes+"p");
 	}
 	
 }
