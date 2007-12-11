@@ -138,9 +138,16 @@ public class Util {
 	 */	
 	public static int numExpertos(String patron){
 		int expertos = -1;
-		if (patron.length()==4 && patron.indexOf('e')==1 && patron.indexOf('p')==3)
-			if (patron.charAt(0) >= 48 && patron.charAt(0) <= 57)
-				expertos = Integer.valueOf(patron.substring(0,1));
+		int posE = patron.indexOf('e');
+		int posP = patron.indexOf('p');
+		if (posE<posP && posE<patron.length() && posE>0){
+			// Comprobar que solo está compuesto por digitos
+			int i = 0;
+			while (i<posE && patron.charAt(i)>=48 && patron.charAt(i)<=57){
+				i++;
+			}
+			if (i == posE) expertos = Integer.valueOf(patron.substring(0,posE));
+		}
 		return expertos;
 	}
 	
@@ -152,9 +159,16 @@ public class Util {
 	 */	
 	public static int numPrincipiantes(String patron){
 		int principiantes = -1;
-		if (patron.length()==4 && patron.indexOf('e')==1 && patron.indexOf('p')==3)
-			if (patron.charAt(2) >= 48 && patron.charAt(2) <= 57)
-				principiantes = Integer.valueOf(patron.substring(2,3));
+		int posE = patron.indexOf('e');
+		int posP = patron.indexOf('p');
+		if (posE<posP && posP==patron.length()-1 && posE>0){
+			// Comprobar que solo está compuesto por digitos
+			int i = posE+1;
+			while (i<posP && patron.charAt(i)>=48 && patron.charAt(i)<=57){
+				i++;
+			}
+			if (i == posP) principiantes = Integer.valueOf(patron.substring(posE+1,posP));
+		}
 		return principiantes;
 	}
 	
