@@ -360,7 +360,7 @@ public class I02_Menu_principal {
 
 		bEmplNuevo.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				new I08_1_Anadir_empleado(shell, bundle);
+				new I08_1_Anadir_empleado(shell, bundle, db);
 			}
 		});
 
@@ -449,7 +449,7 @@ public class I02_Menu_principal {
 /*TODO the arrayDB should be String[]array witch datas from DB (taken from select query with data of Department)
  * (in this place should be methods of class servicing DB)*/
 				String[]arrayDB = {"nazwaDepartamentu","1 parametr","2 parametr"};
-				new I10_Config_departamento(shell, bundle, bundle.getString("I02_but_Config_dep"),arrayDB);
+				new I10_Config_departamento(shell, bundle, bundle.getString("I02_but_Config_dep"),arrayDB, db);
 			}
 		});
 		
