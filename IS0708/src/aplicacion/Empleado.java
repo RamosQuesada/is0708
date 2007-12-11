@@ -45,11 +45,20 @@ public class Empleado implements Drawable {
 	private class Departamento {
 		public Empleado getJefe() {return null;}
 	};
+	
 	/** @deprecated */
 	// TODO quitar esta clase
 	private class Contrato {};
 	
+	// TODO Para algunas variables, se guarda un entero al identificador de la clase 
+	// y también un puntero. La idea es inicializar el puntero a null, y actualizarlo
+	// en el primer acceso. Así se ahorran accesos innecesarios a la base de datos.
+	// Hay que hacer los getters y setters con cuidado.
+	// 
+	// Dani (yo me entiendo...)
+	
 	private int idSuperior;
+	private Empleado superior;
 	private String nombre, apellido1, apellido2;
 	private Color color;
 	private int nvend;
@@ -59,11 +68,15 @@ public class Empleado implements Drawable {
 	private String password;
 	private int grupo; // 0 principiante, 1 experto
 	private int rango; // 0 administrador, 1 empleado, 2 jefe, 3 gerente
+	private int idContrato;
 	private Contrato contrato;
 	private Date fContrato;
 	private Date fAlta;
-	private ArrayList<Integer> subordinados;
+	private ArrayList<Integer> idSubordinados;
+	private ArrayList<Empleado> subordinados;
+	private ArrayList<Integer> idDepartamentos;
 	private ArrayList<Departamento> departamentos;
+	
 	// TODO Eliminar el turno, que ir� en el Contrato
 	// ahora s�lo sirve para hacer prubas de interfaz
 	public Turno turno;
@@ -101,7 +114,8 @@ public class Empleado implements Drawable {
 	 */
 	public Empleado (int idSuperior, int nvend, String nombre, String apellido1, String apellido2, 
 			Date fechaNac, int sexo, String email, String password, int grupo,
-			Departamento departamento, Contrato contrato, Date fContrato, Date fAlta, Color color) {
+			int departamento, int contrato, Date fContrato, Date fAlta, Color color,
+			ArrayList<Integer> idDepartamentos, ArrayList<Integer> idSubordinados) {
 		this.idSuperior	= idSuperior;
 		this.nvend		= nvend;
 		this.nombre		= nombre;
@@ -113,12 +127,13 @@ public class Empleado implements Drawable {
 		this.password	= password;
 		this.grupo		= grupo;
 		this.rango		= rango;
-		this.contrato	= contrato;
+		this.idContrato	= contrato;
 		this.fContrato	= fContrato;
 		this.fAlta		= fAlta;
 		this.color = color;
-		// TODO Rellenar la lista de subordinados
-		this.subordinados = new ArrayList<Integer>();
+		// TODO Rellenar la lista de subordinados y de departamentos
+		this.idSubordinados = idSubordinados;
+		this.idDepartamentos = idDepartamentos;
 	}
 
 	/**
@@ -330,6 +345,7 @@ public class Empleado implements Drawable {
 	 * @return la lista de departamentos del usuario
 	 */
 	public ArrayList<Departamento> getDepartamento() {
+		//TODO Controlar que la lista esté inicializada
 		return departamentos;
 	}
 
@@ -339,6 +355,7 @@ public class Empleado implements Drawable {
 	 * @return el departamento n�mero 'i' del usuario
 	 */
 	public Departamento getDepartamento(int i) {
+		//TODO Controlar que la lista esté inicializada
 		return departamentos.get(i);
 	}
 	
@@ -358,7 +375,7 @@ public class Empleado implements Drawable {
 	 */
 	private boolean esGerente() {
 		int i = 0; boolean b = false;
-		while (i<subordinados.size() && !b) {
+		while (i<idSubordinados.size() && !b) {
 			// TODO
 			//if (subordinados.get(i).getRango()>1) b = true;
 		}
@@ -371,7 +388,8 @@ public class Empleado implements Drawable {
 	 */
 	public boolean esJefe() {
 		int i = 0; boolean b = false;
-		while (i<departamentos.size() && !b) {
+		while (i<idDepartamentos.size() && !b) {
+			// TODO Controlar que la lista esté inicializada
 			if (this == departamentos.get(i).getJefe()) b = true;
 		}
 		return b;
@@ -384,7 +402,7 @@ public class Empleado implements Drawable {
 	public void actualizarRango() {
 		rango = 1;
 		// Si tiene departamentos a su cargo, es jefe
-		if (!departamentos.isEmpty()) rango = 2;
+		if (!idDepartamentos.isEmpty()) rango = 2;
 		// Si alguno de sus empleados es jefe, entonces es gerente
 		if (esGerente()) rango=3;
 	}
@@ -395,8 +413,9 @@ public class Empleado implements Drawable {
 	 * @return <i>true</i> si el departamento se ha a�adido, false en caso contrario
 	 */
 	public boolean addDepartamento(Departamento departamento) {
-		boolean esta = departamentos.contains(departamento);
+		boolean esta = idDepartamentos.contains(departamento);
 		if (!esta) {
+			// TODO Controlar que la lista esté inicializada
 			departamentos.add(departamento);
 		}
 		// Si era un empleado, ha pasado a ser jefe.
@@ -406,7 +425,7 @@ public class Empleado implements Drawable {
 	}
 	
 	public boolean removeDepartamento(Departamento departamento) {
-		boolean b = departamentos.remove(departamento);
+		boolean b = idDepartamentos.remove(departamento);
 		// quitar departamentos afecta a la condici�n de jefe,
 		// pero deja intacta la de gerente
 		// hay que mirar si todav�a tiene alg�n departamento
@@ -422,7 +441,8 @@ public class Empleado implements Drawable {
 	 * Devuelve la lista de subordinados del empleado 
 	 * @return la lista  de subordinados
 	 */
-	public ArrayList<Integer> getSubordinados() {
+	public ArrayList<Empleado> getSubordinados() {
+		// TODO controlar que la lista esté actualizada
 		return subordinados;
 	}
 		
@@ -433,9 +453,9 @@ public class Empleado implements Drawable {
 	 * ya estaba en la lista de subordinados
 	 */
 	public boolean addSubordinado(Empleado empleado) {
-		boolean esta = subordinados.contains(empleado);
+		boolean esta = idSubordinados.contains(empleado);
 		if (!esta) {
-			subordinados.add(empleado.nvend);
+			idSubordinados.add(empleado.nvend);
 			// Si he a�adido a un jefe, el rango pasa a ser gerente
 			if (empleado.getRango()==2) rango=3;
 		}
@@ -449,21 +469,22 @@ public class Empleado implements Drawable {
 	 * si no exist�a en la lista de subordinados del empleado 
 	 */
 	public boolean removeSubordinado (Empleado e) {
+		// TODO Controlar que la lista esté actualizada
 		boolean b = subordinados.remove(e);
 
 		// quitar subordinados afecta a la condici�n de gerente
 		// hay que mirar si todav�a tiene alg�n subordinado jefe
-		if (subordinados.isEmpty()) rango=1;
+		if (idSubordinados.isEmpty()) rango=1;
 		else {
 			int i = 0;
-			while (i<subordinados.size() && rango==2) {
+			while (i<idSubordinados.size() && rango==2) {
 				// TODO
 				//if (subordinados.get(i).getRango()>1) rango=3;
 			}
 		}
 		// si se ha quedado sin subordinados jefes pero tiene departamentos,
 		// entonces se queda como jefe
-		if (!departamentos.isEmpty() && rango==1) rango=2;
+		if (!idDepartamentos.isEmpty() && rango==1) rango=2;
 		return b;
 	}
 	
