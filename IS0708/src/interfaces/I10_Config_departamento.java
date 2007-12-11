@@ -42,9 +42,9 @@ import com.sun.org.apache.xalan.internal.xsltc.compiler.util.ErrorMsg;
 
 import aplicacion.Empleado;
 import aplicacion.Posicion;
-
+import aplicacion.Database;
 public class I10_Config_departamento {
-
+	private Database db;
 	private Shell padre = null;
 	
 	private Shell shellWindow =null;
@@ -72,9 +72,10 @@ public class I10_Config_departamento {
 	
 	/**constructor for editing department*/
 	public I10_Config_departamento(Shell padre, ResourceBundle bundle,
-			String windowName, String[] newArrayDB) {
+			String windowName, String[] newArrayDB, Database db) {
 		this.padre = padre;
 		this.bundle = bundle;
+		this.db = db;
 		//String[] newArrayLabel = {bundle.getString("Nombre"), bundle.getString("I10_dep_num"), bundle.getString("I10_dep_jefe")};
 		
 		arrayDB = newArrayDB;
@@ -140,7 +141,7 @@ public class I10_Config_departamento {
 		// on action "New Boss"
 		SelectionAdapter onNewBoss = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				I08_1_Anadir_empleado I08_1_instance = new I08_1_Anadir_empleado(padre, bundle);
+				I08_1_Anadir_empleado I08_1_instance = new I08_1_Anadir_empleado(padre, bundle, db);
 			}
 		};
 		

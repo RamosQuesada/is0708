@@ -24,15 +24,18 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ColorDialog;
 import aplicacion.Util;
+import aplicacion.Database;
 import java.util.ResourceBundle;
 
 // TODO Mostrar elección de rangos inferiores al usuario
 public class I08_1_Anadir_empleado {
 	private Shell padre = null;
 	private ResourceBundle bundle;
-	public I08_1_Anadir_empleado(Shell padre, ResourceBundle bundle) {
+	private Database db;
+	public I08_1_Anadir_empleado(Shell padre, ResourceBundle bundle, Database db) {
 		this.padre = padre;
 		this.bundle = bundle;
+		this.db = db;
 		mostrarVentana();
 	}
 	
@@ -236,6 +239,9 @@ public class I08_1_Anadir_empleado {
 				}
 				else {
 					// TODO BD Guardar empleado nuevo con todos sus datos en la BD
+					// Daniel Dionne :: Ya estoy yo con esta
+					//db.insertarUsuario(n, tNombre.getText(), tApell1.getText(), tApell2.getText(), , cSexo.getText(), tEMail.getText(), tPassword.getText(), indicadorGrupo, fechaContrato, fechaEntrada, horasExtras, idDept, rango, idContrato, idTurno)
+					
 					shell.dispose();
 				}
 			}
