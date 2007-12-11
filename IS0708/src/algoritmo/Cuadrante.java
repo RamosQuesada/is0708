@@ -19,6 +19,7 @@ public class Cuadrante {
 		this.mes=mes;
 		this.numDias=Util.dameDias(mes, anio);
 		this.cuad = new ArrayList[numDias];
+		this.anio = anio;
 		for(int i=0;i<numDias;i++){
 			cuad[i]=new ArrayList<Trabaja>();
 		}
