@@ -7,11 +7,8 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.RGB;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.layout.*;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
@@ -109,7 +106,11 @@ public class Chart {
 		Display display = new Display();
 		final Shell shell = new Shell(display);
 		shell.setText("SWT Image");
-		shell.setImages(new Image[] { a.dameImagen(convertToSWT(a.creaImagen()),display) });
+		shell.setLayout(new GridLayout(1,false));
+		Canvas c = new Canvas(shell,SWT.NONE);
+		c.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		c.setBackgroundImage(a.dameImagen(convertToSWT(a.creaImagen()),display));
+
 		shell.setSize(700,500);
 		// Mostrar ventana centrada en la pantalla
 		shell.setLocation(
