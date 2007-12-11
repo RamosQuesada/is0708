@@ -46,6 +46,11 @@ public class Estructura {
 		return dias;
 	}
 	
+	public void setDias(ListasEmpleados[][] l){
+		
+		dias = l;
+	}
+	
 	private void inicializaTrozos(){
 		// ArrayList<Turno> turnos = Database.getTurnos(idDepartamento) // Método en proceso
 		ArrayList<Turno> turnos = new ArrayList<Turno>();		
@@ -88,6 +93,9 @@ public class Estructura {
 		return trozosHorario;
 	}	
 	
+	public Calendario getCalendario(){
+		return cal;
+	}
 
 	
 }
