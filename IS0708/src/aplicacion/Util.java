@@ -195,11 +195,7 @@ public class Util {
 	 * @param fecha la fecha a convertir
 	 * @return el String con el formato apropiado
 	 */
-	public static String dateAString(Date fecha) {
-		String sFecha = "0000-00-00";
-		if (fecha!=null) sFecha = String.valueOf(fecha.getYear()) + "-" + aString(fecha.getMonth())+ "-" + aString(fecha.getDay());
-		return sFecha;
-	}
+
 	public static String dateAString2(Date fecha) {
 		DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
 		return formatter.format(fecha);
@@ -209,6 +205,7 @@ public class Util {
 	 * @param s el String a convertir
 	 * @return la fecha
 	 */
+	
 	public static Date stringADate(String dateString) throws Exception{
 		Date date; 		
 		DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");	
