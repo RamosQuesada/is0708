@@ -9,19 +9,19 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
 
+import aplicacion.Controlador;
+import aplicacion.Departamento;
+import aplicacion.Empleado;
+import aplicacion.Posicion;
+import aplicacion.Util;
+
 
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.Locale;
 
-import aplicacion.Controlador;
-import aplicacion.Departamento;
-import aplicacion.Empleado;
-import aplicacion.Database;
 import impresion.Imprimir;
-import interfaces.I02_cuadr;
-import interfaces.I08_1_Anadir_empleado;
-import interfaces.I09_1_Creacion_contratos;
+import aplicacion.Vista;
 
 
 /**
@@ -29,34 +29,26 @@ import interfaces.I09_1_Creacion_contratos;
  * @author Daniel Dionne
  * 
  */
-public class I02_Menu_principal {
-	Controlador controlador;
+public class I02_Principal {
+	Vista vista;
 	Shell shell;
 	Display display;
 	ResourceBundle bundle;
 	Locale locale;
 	Image icoGr, icoPq, ico_imprimir, ico_mens_l, ico_mens, ico_cuadrante, ico_chico, ico_chica, ico_chicos;
 	Cuadrante cuadranteActual;
-	Empleado empleadoActual;
-	Database db;
-	
-	private ArrayList<Empleado> empleados;
+
 	
 	private ImageData Img;
 
-	public I02_Menu_principal(Shell shell, Display display,
-			ResourceBundle bundle, Locale locale,
-			ArrayList<Empleado> empleados, int rango,
-			Empleado empleadoActual, Database db, Controlador controlador) {
+	public I02_Principal(Shell shell, Display display, ResourceBundle bundle, Locale locale, Vista vista) {
 		this.shell = shell;
 		this.display = display;
-		this.empleados = empleados;
 		this.bundle = bundle;
 		this.locale = locale;
-		this.empleadoActual = empleadoActual;
-		this.db = db;
-		this.controlador=controlador;
-		crearVentana(rango);
+		this.vista = vista;
+		//crearVentana(vista.getEmpleadoActual().getRango());
+		crearVentana(2);
 		//ponImageDia();
 	}
 	
@@ -152,7 +144,7 @@ public class I02_Menu_principal {
 
 		Combo cDepartamentos = new Combo(cCuadrantes, SWT.BORDER | SWT.READ_ONLY);
 		cDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		cDepartamentos.setItems(new String[] { "Ba�os", "Cocinas" });
+		cDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
 		cDepartamentos.select(0);
 
 		// Un canvas para albergar el gr�fico de los cuadrantes
@@ -160,6 +152,37 @@ public class I02_Menu_principal {
 		Composite cCuadrante = new Composite(cCuadrantes, SWT.BORDER);
 		cCuadrante.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 5));
 
+		//final I02_cuadr cuadrante = new I02_cuadr(cCuadrante, false, vista.getEmpleado(null, vista.getEmpleadoActual().getIdDepartamento(), null, null, null, null));
+
+		// TODO quitar de aquí la lista de empleados 
+		final ArrayList<Empleado> empleados;
+		empleados = new ArrayList<Empleado>();
+		
+		// TODO Quitar esta lista provisional de empleados para hacer pruebas:
+		Empleado e1 = new Empleado(1, "M. Jackson", new Color (shell.getDisplay(), 104, 228,  85));
+		Empleado e2 = new Empleado(2, "J. Mayer",   new Color (shell.getDisplay(), 130, 130, 225));
+		Empleado e3 = new Empleado(3, "B. Jovi",    new Color (shell.getDisplay(), 240, 190, 150));
+		Empleado e4 = new Empleado(4, "H. Day",     new Color (shell.getDisplay(), 150, 150, 150));
+		Empleado e5 = new Empleado(5, "N. Furtado", new Color (shell.getDisplay(), 200, 80, 180));
+		Empleado e6 = new Empleado(6, "L. Kravitz", new Color (shell.getDisplay(), 200, 80, 100));
+		e1.turno.franjaNueva(new Posicion( 9,  6), new Posicion(14,  0));
+		e1.turno.franjaNueva(new Posicion(16,  0), new Posicion(18,  0));
+		e2.turno.franjaNueva(new Posicion(15,  0), new Posicion(22,  0));
+		e3.turno.franjaNueva(new Posicion(12,  3), new Posicion(16,  0));
+		e3.turno.franjaNueva(new Posicion(18,  0), new Posicion(22,  3));
+		e4.turno.franjaNueva(new Posicion(15,  0), new Posicion(19,  9));
+		e5.turno.franjaNueva(new Posicion(12,  0), new Posicion(16,  0));
+		e6.turno.franjaNueva(new Posicion(10,  5), new Posicion(14,  0));
+		e6.turno.franjaNueva(new Posicion(16, 10), new Posicion(19,  0));		
+		empleados.add(e1);
+		empleados.add(e2);
+		empleados.add(e3);
+		empleados.add(e4);
+		empleados.add(e5);
+		empleados.add(e6);
+
+		
+		
 		final I02_cuadr cuadrante = new I02_cuadr(cCuadrante, false, empleados);
 		Img = cuadrante.dameImageImprimible();
 		
@@ -358,8 +381,7 @@ public class I02_Menu_principal {
 			tablaEmpleados.getColumn(i).pack();
 		}
 		// table.setSize (table.computeSize (SWT.DEFAULT, 200));
-		tablaEmpleados.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-				true, 4, 1));			
+		tablaEmpleados.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));			
 		
 		final Button bEmplNuevo = new Button(cEmplDer, SWT.PUSH);
 		bEmplNuevo.setText(bundle.getString("Nuevo"));
@@ -367,7 +389,7 @@ public class I02_Menu_principal {
 
 		bEmplNuevo.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				new I08_1_Anadir_empleado(shell, bundle, db);
+				new I08_1_Anadir_empleado(shell, bundle, vista);
 			}
 		});
 
@@ -380,8 +402,7 @@ public class I02_Menu_principal {
 				
 				// employee created for tests
 				Color col = new Color(display, 10, 0, 50);
-				
-				
+		
 				Empleado emp = new Empleado(1, 12345678, "phil", "colins", "-", new Date("12/12/09"), 1, "phil.colins@gmail.com", "", 1, 1, 1, new Date("12/12/09"),new Date("12/12/09"), col,null, null);
 				new I08_2_Consultar_empleado(shell, emp, bundle);
 			}
@@ -448,15 +469,15 @@ public class I02_Menu_principal {
 		Button bConfig = new Button(cBut, SWT.PUSH);
 		bConfig.setText(bundle.getString("I02_but_Config_dep"));
 		bConfig.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		final I02_Menu_principal vista=this;
+		//final Vista vista=this;
 		bConfig.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				System.out.println("Pulsado Configuraci�n departamentos: "+cmbDepartamentos.getText().toString());
+				System.out.println("Pulsado Configuración departamentos: "+cmbDepartamentos.getText().toString());
 				//take arrayDB from DB this is only for to show interface
 /*TODO the arrayDB should be String[]array witch datas from DB (taken from select query with data of Department)
  * (in this place should be methods of class servicing DB)*/
-				String[]arrayDB = {"nazwaDepartamentu","1 parametr","2 parametr"};
-				new I10_Config_departamento(shell, bundle, bundle.getString("I02_but_Config_dep"),arrayDB,vista, db);
+				//String[]arrayDB = {"nazwaDepartamentu","1 parametr","2 parametr"};
+				new I10_Config_departamento(shell, bundle, bundle.getString("I02_but_Config_dep"),vista);
 			}
 		});
 		
@@ -555,7 +576,7 @@ public class I02_Menu_principal {
 		tabItemAdminInicio.setControl(cInicio);
 		
 		Image _fondo_turnomatic;
-		_fondo_turnomatic = new Image(display, I02_Menu_principal.class.getResourceAsStream("admin_fondo.jpg"));
+		_fondo_turnomatic = new Image(display, I02_Principal.class.getResourceAsStream("admin_fondo.jpg"));
 		
 		cInicio.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		//Le a�adimos un layout
@@ -1319,15 +1340,15 @@ public class I02_Menu_principal {
 		shell.setText(bundle.getString("Turno-matic"));// idiomas igual siempre
 
 		// Cargar iconos
-		icoGr			= new Image(display, I02_Menu_principal.class.getResourceAsStream("icoGr.gif"));
-		icoPq			= new Image(display, I02_Menu_principal.class.getResourceAsStream("icoPq.gif"));
-		ico_imprimir	= new Image(display, I02_Menu_principal.class.getResourceAsStream("ico_imprimir.gif"));
-		ico_mens_l		= new Image(display, I02_Menu_principal.class.getResourceAsStream("ico_mens1_v.gif"));
-		ico_mens		= new Image(display, I02_Menu_principal.class.getResourceAsStream("ico_mens2_v.gif"));
-		ico_cuadrante	= new Image(display, I02_Menu_principal.class.getResourceAsStream("ico_cuadrante.gif"));
-		ico_chico		= new Image(display, I02_Menu_principal.class.getResourceAsStream("ico_chico.gif"));
-		ico_chica		= new Image(display, I02_Menu_principal.class.getResourceAsStream("ico_chica.gif"));
-		ico_chicos		= new Image(display, I02_Menu_principal.class.getResourceAsStream("ico_chicos.gif"));
+		icoGr			= new Image(display, I02_Principal.class.getResourceAsStream("icoGr.gif"));
+		icoPq			= new Image(display, I02_Principal.class.getResourceAsStream("icoPq.gif"));
+		ico_imprimir	= new Image(display, I02_Principal.class.getResourceAsStream("ico_imprimir.gif"));
+		ico_mens_l		= new Image(display, I02_Principal.class.getResourceAsStream("ico_mens1_v.gif"));
+		ico_mens		= new Image(display, I02_Principal.class.getResourceAsStream("ico_mens2_v.gif"));
+		ico_cuadrante	= new Image(display, I02_Principal.class.getResourceAsStream("ico_cuadrante.gif"));
+		ico_chico		= new Image(display, I02_Principal.class.getResourceAsStream("ico_chico.gif"));
+		ico_chica		= new Image(display, I02_Principal.class.getResourceAsStream("ico_chica.gif"));
+		ico_chicos		= new Image(display, I02_Principal.class.getResourceAsStream("ico_chicos.gif"));
 
 		// Dos iconos de tama�o diferente para SO's que los necesiten
 		shell.setImages(new Image[] { icoPq, icoGr });
@@ -1379,13 +1400,5 @@ public class I02_Menu_principal {
 				e.doit = messageBox.open() == SWT.YES;
 			}
 		});
-	}
-	
-	public void guardaDepartamento(Departamento departamento){
-		controlador.guardaDepartamento(departamento);
-	}
-	
-	public Empleado obtenEmpleado(String nombreEmpleado){
-		return (controlador.obtenEmpleado(nombreEmpleado));
 	}
 }

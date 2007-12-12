@@ -23,6 +23,8 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import aplicacion.Vista;
+
 public class I18_Cambio_horario {
 	private Shell padre = null;
 	private ResourceBundle _bundle;
@@ -48,7 +50,7 @@ public class I18_Cambio_horario {
 	public void mostrarVentana() {
 		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 
-		final Image ico_mens_l = new Image(padre.getDisplay(), I02_Menu_principal.class.getResourceAsStream("ico_mens1_v.gif"));
+		final Image ico_mens_l = new Image(padre.getDisplay(), Vista.class.getResourceAsStream("ico_mens1_v.gif"));
 		
 		//Establecemos el layout del shell
 		GridLayout lShell = new GridLayout();
@@ -177,7 +179,7 @@ public class I18_Cambio_horario {
 		final Combo coTodosDias = new Combo(cTodosDias, SWT.BORDER | SWT.READ_ONLY);
 		coTodosDias.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 0, 0));
 		coTodosDias.setItems(new String[] {
-				_bundle.getString("turnomañ"), 
+				_bundle.getString("turnomaï¿½"), 
 				_bundle.getString("turnotarde"),
 				_bundle.getString("turnonoche")});
 		coTodosDias.select(0);
@@ -209,7 +211,7 @@ public class I18_Cambio_horario {
 			aux.setEnabled(false);
 			comboDias.add(cont, new Combo(cDiaDia,SWT.BORDER | SWT.READ_ONLY));
 			final String[] texto= new String[] {
-					_bundle.getString("turnomañ"), 
+					_bundle.getString("turnomaï¿½"), 
 					_bundle.getString("turnotarde"),
 					_bundle.getString("turnonoche")
 					};
@@ -316,9 +318,9 @@ public class I18_Cambio_horario {
 			}				
 		});
 		
-		// Botón por defecto bAceptar
+		// Botï¿½n por defecto bAceptar
 		shell.setDefaultButton(bAceptar);
-		// Ajustar el tamaño de la ventana al contenido
+		// Ajustar el tamaï¿½o de la ventana al contenido
 		
 		shell.pack();
 		// Mostrar ventana centrada sobre el padre

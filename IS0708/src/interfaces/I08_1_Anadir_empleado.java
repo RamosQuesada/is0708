@@ -24,22 +24,24 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ColorDialog;
 import aplicacion.Util;
-import aplicacion.Database;
+import aplicacion.Vista;
+import aplicacion.Empleado;
 import java.util.ResourceBundle;
+import java.util.Date;
 
 // TODO Mostrar elecci�n de rangos inferiores al usuario
 public class I08_1_Anadir_empleado {
 	private Shell padre = null;
 	private ResourceBundle bundle;
-	private Database db;
-	private String fechaContrato;
-	private String fechaAlta;
-	private String fechaNacimiento;
+	private Vista vista;
+	private Date fechaContrato;
+	private Date fechaAlta;
+	private Date fechaNacimiento;
 	//http://java.sun.com/j2se/1.4.2/docs/api/java/util/GregorianCalendar.html 
-	public I08_1_Anadir_empleado(Shell padre, ResourceBundle bundle, Database db) {
+	public I08_1_Anadir_empleado(Shell padre, ResourceBundle bundle, Vista vista) {
 		this.padre = padre;
 		this.bundle = bundle;
-		this.db = db;
+		this.vista = vista;
 		mostrarVentana();
 	}
 	
@@ -182,7 +184,10 @@ public class I08_1_Anadir_empleado {
 		// Listener para el selector de fecha de nacimiento
 		SelectionAdapter sabFNacimiento = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
-				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shell, tFNacimiento);
+				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shell);
+				fechaNacimiento = i17.getFecha(); 
+				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
+				tFNacimiento.setText(String.valueOf(fechaNacimiento.getDay()) + " de " + meses[fechaNacimiento.getMonth()]+ " de " + String.valueOf(fechaNacimiento.getYear()));
 			}
 		};
 		bFNacimiento.addSelectionListener(sabFNacimiento);
@@ -190,7 +195,10 @@ public class I08_1_Anadir_empleado {
 		// Listener para el selector de fecha de contrato
 		SelectionAdapter sabFContrato = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
-				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shell, tFContrato);
+				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shell);
+				fechaContrato = i17.getFecha(); 
+				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
+				tFContrato.setText(String.valueOf(fechaContrato.getDay()) + " de " + meses[fechaContrato.getMonth()]+ " de " + String.valueOf(fechaContrato.getYear()));
 			}
 		};
 		bFContrato.addSelectionListener(sabFContrato);
@@ -198,7 +206,10 @@ public class I08_1_Anadir_empleado {
 		// Listener para el selector de fecha de alta
 		SelectionAdapter sabFAlta = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
-				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shell, tFAlta);
+				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shell);
+				fechaAlta = i17.getFecha(); 
+				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
+				tFAlta.setText(String.valueOf(fechaAlta.getDay()) + " de " + meses[fechaAlta.getMonth()]+ " de " + String.valueOf(fechaAlta.getYear()));
 			}
 		};
 		bFAlta.addSelectionListener(sabFAlta);
@@ -250,22 +261,14 @@ public class I08_1_Anadir_empleado {
 					tEMail.selectAll();
 				}
 				else {
-					fechaNacimiento = tFNacimiento.getText();
-					fechaContrato = tFContrato.getText();
-					fechaAlta = tFAlta.getText();
 
-					// TODO BD Guardar empleado nuevo con todos sus datos en la BD
+					// Guardar empleado nuevo con todos sus datos
 					// Daniel Dionne :: Ya estoy yo con esta
-					/*
-					String sFechaNacimiento	= String.valueOf(fechaNacimiento.get(GregorianCalendar.YEAR)) + "-" + String.valueOf(fechaNacimiento.get(GregorianCalendar.MONTH)) + "-" + String.valueOf(fechaNacimiento.get(GregorianCalendar.DATE));
-					String sFechaContrato	= String.valueOf(fechaContrato.get(GregorianCalendar.YEAR)) + "-" + String.valueOf(fechaContrato.get(GregorianCalendar.MONTH)) + "-" + String.valueOf(fechaContrato.get(GregorianCalendar.DATE));
-					String sFechaAlta		= String.valueOf(fechaAlta.get(GregorianCalendar.YEAR)) + "-" + String.valueOf(fechaAlta.get(GregorianCalendar.MONTH)) + "-" + String.valueOf(fechaAlta.get(GregorianCalendar.DATE));
-					
-					System.out.println(sFechaNacimiento);
-					*/
-					System.out.println(fechaNacimiento);
-					db.insertarUsuario(n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getText(), tEMail.getText(), tPassword.getText(), cExperiencia.getText(), fechaContrato, fechaAlta, 0, 0, "Empleado", 0, 0);
 
+					System.out.println(fechaNacimiento);
+					// TODO
+					Empleado emp = new Empleado(vista.getEmpleadoActual().getIdEmpl(), n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, 0, fechaContrato, fechaAlta, null, null, null);
+					vista.insertEmpleado(emp);
 					shell.dispose();
 				}
 			}

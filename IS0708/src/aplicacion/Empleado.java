@@ -482,6 +482,14 @@ public class Empleado implements Drawable {
 		return b;
 	}
 	
+	/**
+	 * Devuelve el identificador de su departamento principal
+	 * @return el identificador
+	 */
+	public int getIdDepartamento() {
+		return idDepartamentos.get(0);
+	}
+	
 /*
  * TODO faltan estos getters y setters
  * 

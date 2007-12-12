@@ -1,26 +1,41 @@
 package aplicacion;
 
-import interfaces.I02_Menu_principal;
 import java.util.ArrayList;
 
 /**
  * Esta clase conecta el modelo (la base de datos) con la vista (los interfaces)
  * @author David Rodilla y Daniel Dionne
- *
  */
 public class Controlador {
-	private I02_Menu_principal _vista;
+	private Vista _vista;
 	private Database _baseDatos;
+	private Empleado empleadoActual;
 	
-	public Controlador(Database baseDatos){
+	public Controlador(Database baseDatos, int idEmp){
 		this._baseDatos=baseDatos;
+		setEmpleadoActual(idEmp);
 	}
 	
-	public void incluyeVista(I02_Menu_principal vista){
+	/**
+	 * Asigna el empleado que ha iniciado sesión.
+	 * @param emp el empleado que ha iniciado sesión.
+	 */
+	public void setEmpleadoActual(int idEmp) {
+		empleadoActual = _baseDatos.dameEmpleado(idEmp);
+	}
+	
+	/**
+	 * Devuelve el empleado que ha iniciado sesión.
+	 * @return el empleado que ha iniciado sesión.
+	 */
+	public Empleado getEmpleadoActual() {
+		return empleadoActual;
+	}
+	public void incluyeVista(Vista vista){
 		this._vista=vista;
 	}
 	
-	public Controlador(I02_Menu_principal vista,Database baseDatos){
+	public Controlador(Vista vista,Database baseDatos){
 		this._vista=vista;
 		this._baseDatos=baseDatos;
 	}
@@ -28,12 +43,14 @@ public class Controlador {
  * Métodos relacionados con empleados
  */
 	
+	
 	/**
 	 * Carga un empleado desde la base de datos, dado su número de vendedor o identificador.
 	 * @param idEmpl el identificador del empleado o número de vendedor
 	 * @return una instancia nueva del empleado
 	 */
 	public Empleado getEmpleado(int idEmpl) {
+		_baseDatos.dameEmpleado(idEmpl);
 		return null;
 	}
 
@@ -48,8 +65,17 @@ public class Controlador {
 	 * @param apellido2		el segundo apellido del empleado
 	 * @return una lista de empleados que coincida con los datos dados
 	 */
-	public ArrayList<Empleado> getEmpleado(int idEmpl, int idDpto, int idContrato, String nombre, String apellido1, String apellido2) {
+	public ArrayList<Empleado> getEmpleado(Integer idEmpl, Integer idDpto, Integer idContrato, String nombre, String apellido1, String apellido2) {
 		return null;
+	}
+
+	/**
+	 * Inserta un empleado en la base de datos.
+	 * @param empleado el empleado a insertar
+	 * @return <i>true</i> si el empleado ha sido insertado
+	 */
+	public boolean insertEmpleado(Empleado empleado) {
+		return false;
 	}
 	
 
@@ -69,9 +95,10 @@ public class Controlador {
 	/**
 	 * Guarda un departamento en la base de datos
 	 * @param departamento el departamento a guardar
+	 * @return <i>true</i> si el departamento ha sido insertado
 	 */
-	public void insertDepartamento(Departamento departamento){
-		
+	public boolean insertDepartamento(Departamento departamento){
+		return false;
 	}
 	
 /****************************************************************************

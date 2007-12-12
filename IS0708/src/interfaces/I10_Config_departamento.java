@@ -30,10 +30,11 @@ import org.eclipse.swt.widgets.Text;
 import aplicacion.Database;
 import aplicacion.Departamento;
 import aplicacion.Empleado;
+import aplicacion.Vista;
 public class I10_Config_departamento {
 	private Database db;
 	private Shell padre = null;
-	private I02_Menu_principal vista=null;
+	private Vista vista=null;
 	private Shell shellWindow =null;
 	private String[] arrayDB = {"","",""};
 	
@@ -59,7 +60,7 @@ public class I10_Config_departamento {
 	
 	/**constructor for editing department*/
 	public I10_Config_departamento(Shell padre, ResourceBundle bundle,
-			String windowName, String[] newArrayDB, I02_Menu_principal vista,
+			String windowName, String[] newArrayDB, Vista vista,
 			Database db) {
 		this.padre = padre;
 		this.bundle = bundle;
@@ -73,7 +74,7 @@ public class I10_Config_departamento {
 	
 	/**constructor for new department*/
 	public I10_Config_departamento(Shell padre, ResourceBundle bundle,
-			String windowName,I02_Menu_principal vista) {
+			String windowName,Vista vista) {
 		this.padre = padre;
 		this.bundle = bundle;
 		this.vista = vista;
@@ -94,7 +95,7 @@ public class I10_Config_departamento {
 		closeOnECS(shellWindow);
 		
 		//adding icon to window
-		iconDep = new Image(padre.getDisplay(), I02_Menu_principal.class.getResourceAsStream("ico_chicos.gif"));
+		iconDep = new Image(padre.getDisplay(), Vista.class.getResourceAsStream("ico_chicos.gif"));
 		shellWindow.setImage(iconDep);
 
 		//add Components into Window
@@ -207,13 +208,13 @@ public class I10_Config_departamento {
 		//CREACION DEL JEFE Y DEL DEPARTAMENTO
 		
 		String nombreJefe = comboBoss.getText();
-		Empleado jefe= this.vista.obtenEmpleado(nombreJefe);
+		Empleado jefe= this.vista.getEmpleado(nombreJefe);
 		String nombreDepartamento = tName.getText();
 		String numeroDepartamento = tNumber.getText();
 		Departamento departamento = new Departamento(nombreDepartamento,
 				numeroDepartamento, jefe);
 		
-		this.vista.guardaDepartamento(departamento);
+		this.vista.insertDepartamento(departamento);
 		
 		butNewBoss		= new Button(group, SWT.PUSH);
 		//butNewBoss	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));

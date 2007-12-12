@@ -14,6 +14,8 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Button;
 
+import aplicacion.Vista;
+
 import java.io.File;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -59,7 +61,7 @@ public class I12_Ayuda {
 
 		display = d;
 		shell = new Shell(display);
-		icoPq = new Image(display, I02_Menu_principal.class.getResourceAsStream("icoPq.gif"));
+		icoPq = new Image(display, Vista.class.getResourceAsStream("icoPq.gif"));
 
 		htmlDefault = "<html> \n <head> \n " + "</head>"
 			+ "<body>" + bundle.getString("I12_err_fileNotFound")
