@@ -6,7 +6,7 @@ import java.sql.*;
 /**
  * Aqu� se encuentran los m�todos de acceso a la base de datos.
  * 
- * @author 
+ * @author grupo bases de datos
  * 
  */
 public class Database extends Thread {
@@ -58,7 +58,6 @@ public class Database extends Thread {
 	 * Comprueba si hay una conexi�n abierta con la base de datos
 	 * @return	<i>true</i> si la conexi�n est� abierta, <i>false</i> en caso
 	 * 			contrario o si hay alguna excepci�n
-	 * @author Daniel Dionne
 	 */
 	public boolean conexionAbierta() {
 		boolean b = false;
@@ -71,32 +70,74 @@ public class Database extends Thread {
 	/**
 	 * Devuelve el empleado con identificador nvend
 	 * @param nvend el identificador del empleado
-	 * @return una instancia del empleado
-	 * @author Daniel Dionne
+	 * @return un ResultSet con el resultado de la consulta
 	 */
-	public Empleado dameEmpleado(int nvend) {
-		ResultSet r;
-		String nombre = "";
-		String apellido1 = "";
-		String apellido2 = "";
-		String fechaNac = "";
+	public ResultSet dameEmpleado(int nvend) {
+		ResultSet r=null;		
 		try {			
 			st = con.createStatement();
 			r = st.executeQuery(
-					"SELECT * FROM USUARIO WHERE NumVendedor = '" + String.valueOf(nvend) + "'");
-			r.first();
-			nombre		= r.getString("Nombre");
-			apellido1	= r.getString("Apellido1");
-			apellido2	= r.getString("Apellido2");
-			fechaNac	= r.getString("FechaNacimiento");
+					"SELECT * FROM USUARIO WHERE NumVendedor = " + nvend);			
 		}
-		catch (Exception e) {
+		catch (SQLException e) {
 			// TODO: handle exception
+			System.out.println("Error al realizar la consulta del empleado ");
 		}
-		return new Empleado(nvend, nombre, (Turno)null);
-		//return new Empleado(0, nvend, nombre, apellido1, apellido2, 
+		return r;		
 	}
-
+	
+	/**
+	 * 
+	 *	@param nvend el identificador del empleado
+	 *  @return un ResultSet con el id del superior del empleado
+	 */
+	public ResultSet obtenSuperior(int nvend){
+		ResultSet r=null;		
+		try {			
+			st = con.createStatement();
+			r = st.executeQuery(
+					"SELECT JefeDepartamento FROM USUARIO,NumerosDpto,DEPARTAMENTO WHERE NumVendedor = " + 
+					nvend + "and IdDepartamento=numero and Nombre=nombre");			
+		}
+		catch (SQLException e) {
+			// TODO: handle exception
+			System.out.println("Error al realizar la consulta del empleado ");
+		}
+		return r;
+	}
+	//hay q cambiar el cuerpo
+	public ResultSet obtenIdsSubordinados(int nvend){
+		ResultSet r=null;		
+		try {			
+			st = con.createStatement();
+			r = st.executeQuery(
+					"SELECT JefeDepartamento FROM USUARIO,NumerosDpto,DEPARTAMENTO WHERE NumVendedor = " + 
+					nvend + "and IdDepartamento=numero and Nombre=nombre");			
+		}
+		catch (SQLException e) {
+			// TODO: handle exception
+			System.out.println("Error al realizar la consulta del empleado ");
+		}
+		return r;
+	}
+	
+	//	hay q cambiar el cuerpo
+	public ResultSet obtenIdsDepartamentos(int nvend){
+		ResultSet r=null;		
+		try {			
+			st = con.createStatement();
+			r = st.executeQuery(
+					"SELECT JefeDepartamento FROM USUARIO,NumerosDpto,DEPARTAMENTO WHERE NumVendedor = " + 
+					nvend + "and IdDepartamento=numero and Nombre=nombre");			
+		}
+		catch (SQLException e) {
+			// TODO: handle exception
+			System.out.println("Error al realizar la consulta del empleado ");
+		}
+		return r;
+	}
+	
+	
 	/**
 	 * Método que inserta en la tabla usuario los valores correspondientes a un nuevo usuario
 	 * @param id
