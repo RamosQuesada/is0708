@@ -9,27 +9,17 @@ package interfaces;
  *******************************************************************************/
  /**draws window for to add/edid department*/
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
 
+import java.util.ResourceBundle;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.events.ControlListener;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Dialog;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -37,16 +27,13 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.ErrorMsg;
-
-import aplicacion.Empleado;
-import aplicacion.Posicion;
 import aplicacion.Database;
+import aplicacion.Departamento;
+import aplicacion.Empleado;
 public class I10_Config_departamento {
 	private Database db;
 	private Shell padre = null;
-	
+	private I02_Menu_principal vista=null;
 	private Shell shellWindow =null;
 	private String[] arrayDB = {"","",""};
 	
@@ -66,16 +53,18 @@ public class I10_Config_departamento {
 
 	private ResourceBundle bundle;
 
-	private aplicacion.Turno turno;
+	//private aplicacion.Turno turno;
 	
 	private Image iconDep;
 	
 	/**constructor for editing department*/
 	public I10_Config_departamento(Shell padre, ResourceBundle bundle,
-			String windowName, String[] newArrayDB, Database db) {
+			String windowName, String[] newArrayDB, I02_Menu_principal vista,
+			Database db) {
 		this.padre = padre;
 		this.bundle = bundle;
 		this.db = db;
+		this.vista=vista;
 		//String[] newArrayLabel = {bundle.getString("Nombre"), bundle.getString("I10_dep_num"), bundle.getString("I10_dep_jefe")};
 		
 		arrayDB = newArrayDB;
@@ -84,9 +73,10 @@ public class I10_Config_departamento {
 	
 	/**constructor for new department*/
 	public I10_Config_departamento(Shell padre, ResourceBundle bundle,
-			String windowName) {
+			String windowName,I02_Menu_principal vista) {
 		this.padre = padre;
 		this.bundle = bundle;
+		this.vista = vista;
 
 		//String[] newArrayLabel = {bundle.getString("Nombre"), bundle.getString("I10_dep_num"), bundle.getString("I10_dep_jefe")};
 
@@ -211,10 +201,15 @@ public class I10_Config_departamento {
 		//comboBoss.setSize(100,20);
 		comboBoss.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
 		
+		Empleado jefe= this.vista.obtenEmpleado("nombrejefe");
+		//String nombreDepartamento = 
+		Departamento departamento = new Departamento("nombreDep", 00, jefe);
+		this.vista.guardaDepartamento(departamento);
 		butNewBoss		= new Button(group, SWT.PUSH);
 		//butNewBoss	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		butNewBoss	.setText(bundle.getString("I10_dep_nuevo_jefe"));
 		butNewBoss	.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		
 	}
 	
 	/**add components out of group (button Accept and Cancel)*/
