@@ -414,6 +414,25 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		return correcto;
 	}
 	
+	/**
+	 * 
+	 * @param numVendedor representa el empleado que ha realizado las ventas
+	 * @param fecha dia en el que se han realizado las ventas
+	 * @param importe coste total de las ventas
+	 * @return true si se ha realizado correctamente o false en caso contrario
+	 */
+	public boolean insertarVenta(int numVendedor,Time fecha,double importe){
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("INSERT INTO VENTAS values (" + numVendedor + ", " + fecha +"', " + importe +"');");
+			System.out.println("venta insertada");
+			correcto = true;
+		} catch (SQLException e) {
+			correcto = false;
+		}
+		return correcto;
+	}
 	
 	
 	
