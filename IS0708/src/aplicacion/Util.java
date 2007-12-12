@@ -200,16 +200,19 @@ public class Util {
 		if (fecha!=null) sFecha = String.valueOf(fecha.getYear()) + "-" + aString(fecha.getMonth())+ "-" + aString(fecha.getDay());
 		return sFecha;
 	}
-	
+	public static String dateAString2(Date fecha) {
+		DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+		return formatter.format(fecha);
+	}
 	/**
 	 * Convierte un String con formato YYYY-MM-DD en una fecha de tipo Date.
 	 * @param s el String a convertir
 	 * @return la fecha
 	 */
 	public static Date stringADate(String dateString) throws Exception{
-		Date date; 
-		DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");		
-		date = (Date)formatter.parse(dateString);
+		Date date; 		
+		DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");	
+		date = (Date)formatter.parse(dateString);		
 		return date;
     }
 }
