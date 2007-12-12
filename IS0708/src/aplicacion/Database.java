@@ -68,17 +68,40 @@ public class Database extends Thread {
 		return b;
 	}
 	
+	/**
+	 * Devuelve el empleado con identificador nvend
+	 * @param nvend el identificador del empleado
+	 * @return una instancia del empleado
+	 * @author Daniel Dionne
+	 */
 	public Empleado dameEmpleado(int nvend) {
-
-		// Pongo return null para que no diga que hay un error
-		return null;
-
+		ResultSet r;
+		String nombre = "";
+		String apellido1 = "";
+		String apellido2 = "";
+		String fechaNac = "";
+		try {			
+			st = con.createStatement();
+			r = st.executeQuery(
+					"SELECT * FROM USUARIO WHERE NumVendedor = '" + String.valueOf(nvend) + "'");
+			r.first();
+			nombre		= r.getString("Nombre");
+			apellido1	= r.getString("Apellido1");
+			apellido2	= r.getString("Apellido2");
+			fechaNac	= r.getString("FechaNacimiento");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		return new Empleado(nvend, nombre, (Turno)null);
+		//return new Empleado(0, nvend, nombre, apellido1, apellido2, 
 	}
 
 	/**
-	 * M�todo que inserta en la tabla usuario los valores correspondientes a un nuevo usuario
+	 * Método que inserta en la tabla usuario los valores correspondientes a un nuevo usuario
 	 * @param id
-	 *            Es el identificador �nico de cada empleado, que se corresponde
+	 *            Es el identificador único de cada empleado, que se corresponde
 	 *            con la clave primaria en la tabla.
 	 * @param nombre
 	 *            Nombre del empleado

@@ -25,6 +25,7 @@ public class I17_Seleccion_fecha {
 	private DateTime calendario;
 	private boolean seleccionado=false;
 	private Date fecha;
+	private Shell shell; 
 	public I17_Seleccion_fecha(Shell padre) {
 		this.padre = padre;
 		mostrarVentana();
@@ -38,7 +39,7 @@ public class I17_Seleccion_fecha {
 		return fecha;
 	}
 	public void mostrarVentana() {
-		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
+		shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 
 		final Image ico_mens_l = new Image(padre.getDisplay(), I17_Seleccion_fecha.class.getResourceAsStream("ico_mens1_v.gif"));
 		
@@ -50,7 +51,6 @@ public class I17_Seleccion_fecha {
 
 		//Introducimos los textos a los botones
 		calendario = new DateTime (shell, SWT.CALENDAR);
-		final String fecha3;
 		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 2, 1));
 		
 		final Composite cAcepCanc = new Composite (shell, SWT.BORDER);
@@ -83,7 +83,7 @@ public class I17_Seleccion_fecha {
 		});
 		
 
-		// Ajustar el tama�o de la ventana al contenido
+		// Ajustar el tamaño de la ventana al contenido
 		shell.pack();
 		// Mostrar ventana centrada sobre el padre
 		shell.setLocation(padre.getBounds().width/2 + padre.getBounds().x - shell.getSize().x/2, padre.getBounds().height/2 + padre.getBounds().y - shell.getSize().y/2);
@@ -93,5 +93,8 @@ public class I17_Seleccion_fecha {
 	public Integer dameCatDia() {
 		// TODO Auto-generated method stub
 		return (calendario.getYear()*10000+calendario.getMonth()*100+calendario.getDay());
+	}
+	public boolean isDisposed() {
+		return shell.isDisposed(); 
 	}
 }

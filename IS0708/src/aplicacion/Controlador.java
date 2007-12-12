@@ -8,11 +8,11 @@ import java.util.ArrayList;
  */
 public class Controlador {
 	private Vista _vista;
-	private Database _baseDatos;
+	private Database db;
 	private Empleado empleadoActual;
 	
 	public Controlador(Database baseDatos, int idEmp){
-		this._baseDatos=baseDatos;
+		this.db=baseDatos;
 		setEmpleadoActual(idEmp);
 	}
 	
@@ -21,7 +21,7 @@ public class Controlador {
 	 * @param emp el empleado que ha iniciado sesión.
 	 */
 	public void setEmpleadoActual(int idEmp) {
-		empleadoActual = _baseDatos.dameEmpleado(idEmp);
+		empleadoActual = db.dameEmpleado(idEmp);
 	}
 	
 	/**
@@ -37,7 +37,7 @@ public class Controlador {
 	
 	public Controlador(Vista vista,Database baseDatos){
 		this._vista=vista;
-		this._baseDatos=baseDatos;
+		this.db=baseDatos;
 	}
 /****************************************************************************
  * Métodos relacionados con empleados
@@ -50,8 +50,7 @@ public class Controlador {
 	 * @return una instancia nueva del empleado
 	 */
 	public Empleado getEmpleado(int idEmpl) {
-		_baseDatos.dameEmpleado(idEmpl);
-		return null;
+		return db.dameEmpleado(idEmpl);
 	}
 
 	/**
@@ -75,7 +74,27 @@ public class Controlador {
 	 * @return <i>true</i> si el empleado ha sido insertado
 	 */
 	public boolean insertEmpleado(Empleado empleado) {
-		return false;
+		String sexo = "Femenino";
+		if (empleado.getSexo()==1) sexo = "Masculino";
+		String grupo = "Principiante";
+		if (empleado.getGrupo()==1) grupo = "Experto";
+		return db.insertarUsuario(
+				empleado.getIdEmpl(),
+				empleado.getNombre(),
+				empleado.getApellido1(),
+				empleado.getApellido2(),
+				aplicacion.Util.dateAString(empleado.getFechaNac()),
+				sexo, 
+				empleado.getEmail(),
+				empleado.getPassword(),
+				grupo,
+				"0000-00-00",
+				"0000-00-00",
+				0,
+				0,
+				"Empleado",
+				0,
+				0);
 	}
 	
 

@@ -185,9 +185,14 @@ public class I08_1_Anadir_empleado {
 		SelectionAdapter sabFNacimiento = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
 				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shell);
-				fechaNacimiento = i17.getFecha(); 
+				while (!i17.isDisposed()) {
+					if (!shell.getDisplay().readAndDispatch()) {
+						shell.getDisplay().sleep();
+					}
+				}
+				fechaNacimiento = i17.getFecha();
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
-				tFNacimiento.setText(String.valueOf(fechaNacimiento.getDay()) + " de " + meses[fechaNacimiento.getMonth()]+ " de " + String.valueOf(fechaNacimiento.getYear()));
+				tFNacimiento.setText(String.valueOf(fechaNacimiento.getDate()) + " de " + meses[fechaNacimiento.getMonth()]+ " de " + String.valueOf(fechaNacimiento.getYear()));
 			}
 		};
 		bFNacimiento.addSelectionListener(sabFNacimiento);
@@ -196,9 +201,14 @@ public class I08_1_Anadir_empleado {
 		SelectionAdapter sabFContrato = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
 				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shell);
+				while (!i17.isDisposed()) {
+					if (!shell.getDisplay().readAndDispatch()) {
+						shell.getDisplay().sleep();
+					}
+				}
 				fechaContrato = i17.getFecha(); 
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
-				tFContrato.setText(String.valueOf(fechaContrato.getDay()) + " de " + meses[fechaContrato.getMonth()]+ " de " + String.valueOf(fechaContrato.getYear()));
+				tFContrato.setText(String.valueOf(fechaContrato.getDate()) + " de " + meses[fechaContrato.getMonth()]+ " de " + String.valueOf(fechaContrato.getYear()));
 			}
 		};
 		bFContrato.addSelectionListener(sabFContrato);
@@ -207,9 +217,14 @@ public class I08_1_Anadir_empleado {
 		SelectionAdapter sabFAlta = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
 				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shell);
+				while (!i17.isDisposed()) {
+					if (!shell.getDisplay().readAndDispatch()) {
+						shell.getDisplay().sleep();
+					}
+				}
 				fechaAlta = i17.getFecha(); 
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
-				tFAlta.setText(String.valueOf(fechaAlta.getDay()) + " de " + meses[fechaAlta.getMonth()]+ " de " + String.valueOf(fechaAlta.getYear()));
+				tFAlta.setText(String.valueOf(fechaAlta.getDate()) + " de " + meses[fechaAlta.getMonth()]+ " de " + String.valueOf(fechaAlta.getYear()));
 			}
 		};
 		bFAlta.addSelectionListener(sabFAlta);
@@ -267,7 +282,8 @@ public class I08_1_Anadir_empleado {
 
 					System.out.println(fechaNacimiento);
 					// TODO
-					Empleado emp = new Empleado(vista.getEmpleadoActual().getIdEmpl(), n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, 0, fechaContrato, fechaAlta, null, null, null);
+					//Empleado emp = new Empleado(vista.getEmpleadoActual().getIdEmpl(), n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, 0, fechaContrato, fechaAlta, null, null, null);
+					Empleado emp = new Empleado(1, n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, 0, fechaContrato, fechaAlta, null, null, null);
 					vista.insertEmpleado(emp);
 					shell.dispose();
 				}
@@ -277,7 +293,7 @@ public class I08_1_Anadir_empleado {
 		bCancelar.addSelectionListener(sabCancelar);
 		bAceptar.addSelectionListener(sabAceptar);
 
-		// Bot�n por defecto bAceptar
+		// Botón por defecto bAceptar
 		shell.setDefaultButton(bAceptar);
 		// Ajustar el tama�o de la ventana al contenido
 		shell.pack();
