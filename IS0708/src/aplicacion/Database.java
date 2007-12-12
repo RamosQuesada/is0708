@@ -425,7 +425,7 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO VENTAS values (" + numVendedor + ", " + fecha +"', " + importe +"');");
+			st.executeUpdate("INSERT INTO VENTAS values (" + numVendedor + ", '" + fecha +"', " + importe +");");
 			System.out.println("venta insertada");
 			correcto = true;
 		} catch (SQLException e) {
@@ -434,6 +434,24 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		return correcto;
 	}
 	
+	/**
+	 * 
+	 * @param idTurno identificador del turno correpondiente al contrato
+	 * @param idContrato identificador del contrato
+	 * @return true si se ha realizado correctamente o false en caso contrario
+	 */
+	public boolean insertarTurnoPorContrato(int idTurno,int idContrato){
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("INSERT INTO VENTAS values (" + idTurno + ", " + idContrato +");");
+			System.out.println("turnoPorContrato insertado");
+			correcto = true;
+		} catch (SQLException e) {
+			correcto = false;
+		}
+		return correcto;
+	}
 	
 	
 	
