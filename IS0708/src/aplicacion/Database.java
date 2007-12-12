@@ -240,6 +240,56 @@ public class Database extends Thread {
 		}
 		return correcto;
 	}
+	
+	/**
+	 * M�todo que inserta en la tabla Ventas los valores correspondientes a cada dia para un determinado usuario
+	 * @param idUsuario		Numero que identifica al usuario
+	 *            
+	 * @param Fecha		String que representa un dia del año concreto. El formato es Dd/mm/aaaa
+	 *            
+	 * @param NumeroVentas	Entero que representa la cantidad vendida para un determinado dia. Valor mayor o igual a 0
+	 * @return Informa sobre si se ha podido realizar la inserci�n o no
+	 */
+	
+	public boolean insertarVentas (int idUsuario, String Fecha, int numVentas ){
+		boolean correcto=false;
+		try{
+			st = con.createStatement();
+			st.executeUpdate("INSERT INTO VENTAS values ('" + Fecha + "', '" + numVentas + "', '" + idUsuario + "')");
+			System.out.println("Ventas insertada");
+			correcto = true;
+		} catch (SQLException e) {
+			correcto = false;
+		}
+		return correcto;
+		
+	}
+	
+	/**
+	 * M�todo que inserta en la tabla Trabaja los valores correspondientes a lo trabajado cada dia por un usuario
+	 * @param idUsuario		Numero que identifica al usuario
+	 *            
+	 * @param idTurno	Numero que identifica al turno en el que trabaja el usuario           
+	 * @param Fecha		String que representa un dia del año concreto. El formato es Dd/mm/aaaa
+	 *            
+	 * @param HoraEntrada	Hora a la que entro el usuario a trabajar ese dia en formato time
+	 * @param HoraSalida	Hora a la que salio el usuario de trabajar ese dia en formato time
+	 * @return Informa sobre si se ha podido realizar la inserci�n o no
+	 */
+	
+	public boolean insertarTrabaja (int idUsuario, int idTurno, String Fecha, Time HoraEntrada, Time HoraSalida ){
+		boolean correcto=false;
+		try{
+			st = con.createStatement();
+			st.executeUpdate("INSERT INTO TRABAJA values ('" +idTurno  + "', '" + Fecha + "', '" + HoraEntrada + "', '" + HoraSalida + "', '" +idUsuario+ "')");
+			System.out.println("trabaja insertada");
+			correcto = true;
+		} catch (SQLException e) {
+			correcto = false;
+		}
+		return correcto;
+		
+	}
 	/**
 	 * M�todo que inserta en la tabla Distribucion los valores correspondientes a una nueva distribuci�n
 	 * @param Hora    Franja horaria  dividida en unidades de una hora (por ej. De 9:00 � 10:00) representado por la hora de inicio (ej. 9)

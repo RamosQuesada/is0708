@@ -73,14 +73,23 @@ public class Departamento {
 	public String getNombreDepartamento(){
 		return _nombreDepartamento;
 	}
+	/**
+	 * Setter del nombre del departamento 
+	 * @param String con el nombre del departamento
+	 */
+	public void setNombreDepartamento(String nombreDep){
+		this._nombreDepartamento=nombreDep;
+	}
 	
 	/**
 	 * Getter del jefe de departamento
-	 * @return Empleado jefe de departamento
+	 * @return 
 	 */
 	public Empleado getJefeDepartamento(){
 		return _jefeDepartamento;
 	}
+	
+
 	
 	/**
 	 * Getter de la lista de empleados
@@ -96,6 +105,13 @@ public class Departamento {
 	 */
 	public int getNumeroDepartamento(){
 		return _numeroDepartamento;
+	}
+	/**
+	 * Setter del numero del departamento 
+	 * @param Entero con el numero del departamento
+	 */
+	public void setNumeroDepartamento(int num){
+		this._numeroDepartamento=num;
 	}
 	
 	
