@@ -332,7 +332,7 @@ public class I02_Menu_principal {
 		tablaEmpleados.setHeaderVisible(true);
 		String[] titles2 = { " ", bundle.getString("I02_lab_NVend"),
 				bundle.getString("Nombre"), bundle.getString("Departamento"),
-				bundle.getString("Contrato"), bundle.getString("Tel�fono"), "" };
+				bundle.getString("Contrato"), bundle.getString("Telefono"), "" };
 		for (int i = 0; i < titles2.length; i++) {
 			TableColumn column = new TableColumn(tablaEmpleados, SWT.NONE);
 			column.setText(titles2[i]);

@@ -93,7 +93,7 @@ public class Database extends Thread {
 	 * @param email
 	 *            Representa el correo electr�nico del empleado
 	 * @param password
-	 *            Se corresponde con la contrase�a para autenticarse en el
+	 *            Se corresponde con la contraseña para autenticarse en el
 	 *            sistema
 	 * @param indicadorGrupo
 	 *            Clasifica al usuario seg�n su antig�edad en la empresa
