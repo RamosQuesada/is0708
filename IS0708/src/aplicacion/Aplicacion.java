@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.Shell;
 import idiomas.LanguageChanger;
 
 /**
- * Este es el Controlador o clase principal de la aplicación.
+ * Este es el Controlador o clase principal de la aplicaciï¿½n.
  * @author Daniel Dionne
  */
 public class Aplicacion {
@@ -27,9 +27,9 @@ public class Aplicacion {
 		empleados = new ArrayList<Empleado>();
 		
 		LanguageChanger l = new LanguageChanger();
-		// 0 español
+		// 0 espaï¿½ol
 		// 1 polaco
-		// 2 inglés
+		// 2 inglï¿½s
 		l.cambiarLocale(0);
 
 		display = new Display ();
@@ -60,7 +60,7 @@ public class Aplicacion {
 
 		Database db = new Database();
 			
-		// Login y conexión a la base de datos
+		// Login y conexiï¿½n a la base de datos
 		I01_Login login = new I01_Login(shell, l.getBundle(), db);
 		boolean identificado = false;
 		while (!identificado) {
@@ -71,7 +71,7 @@ public class Aplicacion {
 				}
 			}
 			if (login.getBotonPulsado()==1) {
-				// Si llega aquí, ya ha conexión con la base de datos
+				// Si llega aquï¿½, ya ha conexiï¿½n con la base de datos
 				if (login.getNumeroVendedor()==0) {
 					if (login.getPassword()=="admin")
 						System.out.println("Administrador identificado");
@@ -85,7 +85,7 @@ public class Aplicacion {
 				// si no, mostrar mensaje de error
 			}
 			else {
-				//Salir de la aplicación
+				//Salir de la aplicaciï¿½n
 				display.dispose();
 				identificado = true; // Para que salga del bucle
 				if (db.conexionAbierta())
@@ -93,11 +93,13 @@ public class Aplicacion {
 			}
 		}
 		
-		// Si todavía no he cerrado el display
+		// Si todavï¿½a no he cerrado el display
 		if (!display.isDisposed()) {
 			// TODO Cambiar por acceso a la vista
+			Controlador controlador = new Controlador(db);
 			// Poblar ventana: 0 administrador, 1 empleado, 2 jefe, 3 gerente
-			new I02_Menu_principal(shell, display, l.getBundle(), l.getCurrentLocale(), empleados, login.getNumeroVendedor(), empleadoActual, db);
+			I02_Menu_principal vista= new I02_Menu_principal(shell, display, l.getBundle(), l.getCurrentLocale(), empleados, login.getNumeroVendedor(), empleadoActual, db,controlador);
+			controlador.incluyeVista(vista);
 			// Este bucle mantiene la ventana abierta
 			while (!shell.isDisposed()) {
 				if (!display.readAndDispatch()) {
@@ -105,7 +107,7 @@ public class Aplicacion {
 				}
 			}
 			display.dispose();
-			// TODO Controlar si se había conectado antes
+			// TODO Controlar si se habï¿½a conectado antes
 			db.cerrarConexion();
 		}
 	}
