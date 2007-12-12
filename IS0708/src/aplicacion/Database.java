@@ -345,6 +345,7 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 	}
 	
 	
+	
 	/**
 	 * 
 	 * @param numVendedor representa el destinatario al que se ha enviado el mensaje
@@ -357,6 +358,30 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 			st = con.createStatement();
 			st.executeUpdate("INSERT INTO DESTINATARIO values (" + numVendedor + ", " + idMensaje + ");");
 			System.out.println("Destinatario insertado");
+			correcto = true;
+		} catch (SQLException e) {
+			correcto = false;
+		}
+		return correcto;
+	}
+	
+	
+	/**
+	 * 
+	 * @param idContrato representa el identificador del contrato
+	 * @param turnoInicial turno con el que empieza en el contrato
+	 * @param nombre nombre del contrato
+	 * @param patron distribucion de los dias que trabaja y los que no
+	 * @param duracionCiclo periodo de tiempo que le corresponde al patron
+	 * @param salario paga del empleado 
+	 * @return
+	 */
+	public boolean insertarContrato(int idContrato,int turnoInicial,String nombre,String patron,int duracionCiclo,float salario){
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("INSERT INTO CONTRATO values (" + idContrato + ", " + turnoInicial + ", '" + nombre +"', '" + patron +"', " + duracionCiclo +", " + salario +");");
+			System.out.println("Contrato insertado");
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
