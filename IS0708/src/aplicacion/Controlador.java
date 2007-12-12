@@ -18,10 +18,7 @@ public class Controlador {
 		this._vista=vista;
 		this._baseDatos=baseDatos;
 	}
-	//TODO BD
-	public Empleado dameEmpleado(){
-		return null;
-	}
+	
 	
 	//TODO BD
 	public void guardaDepartamento(Departamento departamento){
