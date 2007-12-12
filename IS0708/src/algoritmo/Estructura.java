@@ -2,8 +2,7 @@ package algoritmo;
 
 import java.util.ArrayList;
 import java.sql.Time;
-import aplicacion.Empleado;
-import aplicacion.Util;
+import aplicacion.*;
 
 /**
  * La primera dimensión representa el mes en cuestión (una posición por cada dia del mes)
