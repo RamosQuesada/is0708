@@ -91,7 +91,6 @@ public class Database extends Thread {
 			fechaNac	= r.getString("FechaNacimiento");
 		}
 		catch (Exception e) {
-			e.printStackTrace();
 			// TODO: handle exception
 		}
 		return new Empleado(nvend, nombre, (Turno)null);
