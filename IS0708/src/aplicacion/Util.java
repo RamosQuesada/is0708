@@ -1,5 +1,7 @@
 package aplicacion;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Random;
 import java.lang.String;
 import java.sql.Time;
@@ -204,8 +206,10 @@ public class Util {
 	 * @param s el String a convertir
 	 * @return la fecha
 	 */
-	public static Date stringADate(String s) {
-		 
-		return null;
-	}
+	public static Date stringADate(String dateString) throws Exception{
+		Date date; 
+		DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");		
+		date = (Date)formatter.parse(dateString);
+		return date;
+    }
 }
