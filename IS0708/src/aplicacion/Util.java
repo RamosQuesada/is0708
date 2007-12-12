@@ -99,7 +99,7 @@ public class Util {
 	 * @param mes
 	 * @param anio
 	 * @return entero que representa el numero de dias del mes
-	 * @author Miguel �ngel
+	 * @author Miguel Angel Diaz
 	 */
 	public static int dameDias(int mes, int anio){ //esta funcion devuelve el numero de dias del mes
 		
@@ -125,6 +125,7 @@ public class Util {
 	 * @param horaInicio 
 	 * @param minutos duracion del descanso 
 	 * @return Time que representa la hora del fin del descanso
+	 * @author Miguel Angel Diaz
 	 */
 	public static Time calculaFinDescanso(Time horaInicio, int minutos){
 		Time fin = new Time(horaInicio.getTime() + minutos*60000);
@@ -132,17 +133,18 @@ public class Util {
 	}
 	
 	/**
-	 * Devuelve el n�mero de expertos a partir del patr�n.
-	 * Si el patr�n es incorrecto devuelve "-1"
+	 * Devuelve el numero de expertos a partir del patron.
+	 * Si el patron es incorrecto devuelve "-1"
 	 * @param patron String del tipo "1e5p"
-	 * @return N�mero de expertos del patr�n
+	 * @return Numero de expertos del patron
+	 * @author Miguel Angel Diaz
 	 */	
 	public static int numExpertos(String patron){
 		int expertos = -1;
 		int posE = patron.indexOf('e');
 		int posP = patron.indexOf('p');
 		if (posE<posP && posE<patron.length() && posE>0){
-			// Comprobar que solo est� compuesto por digitos
+			// Comprobar que solo esta compuesto por digitos
 			int i = 0;
 			while (i<posE && patron.charAt(i)>=48 && patron.charAt(i)<=57){
 				i++;
@@ -153,10 +155,11 @@ public class Util {
 	}
 	
 	/**
-	 * Devuelve el n�mero de principiantes a partir del patr�n.
-	 * Si el patr�n es incorrecto devuelve "-1"
+	 * Devuelve el numero de principiantes a partir del patron.
+	 * Si el patron es incorrecto devuelve "-1"
 	 * @param patron String del tipo "1e5p"
-	 * @return N�mero de principiantes del patr�n
+	 * @return Numero de principiantes del patron
+	 * @author Miguel Angel Diaz
 	 */	
 	public static int numPrincipiantes(String patron){
 		int principiantes = -1;
@@ -178,6 +181,7 @@ public class Util {
 	 * @param expertos
 	 * @param principiantes
 	 * @return patron
+	 * @author Miguel Angel Diaz
 	 */
 	public static String patron(int expertos, int principiantes){
 		return (expertos+"e"+principiantes+"p");
