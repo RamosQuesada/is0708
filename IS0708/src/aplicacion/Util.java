@@ -3,22 +3,23 @@ package aplicacion;
 import java.util.Random;
 import java.lang.String;
 import java.sql.Time;
+import java.util.Date;
 
 /**
- * El cajón desastre de las funciones que no tienen cabida en ninguna clase,
- * pero que interesa que estén juntas para usarse en distintos ámbitos. 
+ * El cajï¿½n desastre de las funciones que no tienen cabida en ninguna clase,
+ * pero que interesa que estï¿½n juntas para usarse en distintos ï¿½mbitos. 
  */
 public class Util {
 	
 	/**
-	 * Comprueba si una dirección de email dada en un String es correcta
+	 * Comprueba si una direcciï¿½n de email dada en un String es correcta
 	 * @param email	la cadena a comprobar
 	 * @return		<i>true</i> si la cadena es un email, <i>false</i> en caso contrario
 	 * @author Daniel Dionne
 	 */
 	public static boolean comprobarEmail(String email) {
 		boolean valido = true;
-		// Comprobar que todos los caracteres son válidos
+		// Comprobar que todos los caracteres son vï¿½lidos
 		String caracteresValidos = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.-_";
 		int i=0;
 		while  (i < email.length() && valido) {
@@ -30,7 +31,7 @@ public class Util {
 		if (email.indexOf("@") < 1) valido = false;
 	    // Debe haber un punto tras la @
 	    else if (email.lastIndexOf(".") <= email.indexOf("@")) valido = false;
-	    // La @ no debe ser el último caracter
+	    // La @ no debe ser el ï¿½ltimo caracter
 	    else if (email.indexOf("@") == email.length()-1) valido = false;
 		// No se permiten dos puntos seguidos 
 	    else if (email.indexOf("..") >=0) valido = false;
@@ -40,9 +41,9 @@ public class Util {
 	}
 
 	/**
-	 * Convierte un string a número de vendedor, comprobando que es válido. Devuelve -1 si no lo es.
+	 * Convierte un string a nï¿½mero de vendedor, comprobando que es vï¿½lido. Devuelve -1 si no lo es.
 	 * @param nvend el string a convertir
-	 * @return el número de vendedor, o -1 si el string es incorrecto
+	 * @return el nï¿½mero de vendedor, o -1 si el string es incorrecto
 	 * @author Daniel Dionne
 	 */
 	public static int convertirNVend(String nvend) {
@@ -52,7 +53,7 @@ public class Util {
 				n = Integer.valueOf(nvend);
 			}
 			catch (NumberFormatException e) {
-				System.out.println("I08.1_Empleado nuevo: Número de vendedor incorrecto.");
+				System.out.println("I08.1_Empleado nuevo: Nï¿½mero de vendedor incorrecto.");
 			}
 		}
 		return n;
@@ -60,7 +61,7 @@ public class Util {
 	
 	/**
 	 * Convierte un entero a un String de dos cifras, con un cero delante si es necesario.
-	 * @param i el número a convertir
+	 * @param i el nï¿½mero a convertir
 	 * @return un String con el entero en formato xx.
 	 * @author David Rodilla
 	 */
@@ -98,7 +99,7 @@ public class Util {
 	 * @param mes
 	 * @param anio
 	 * @return entero que representa el numero de dias del mes
-	 * @author Miguel Ángel
+	 * @author Miguel ï¿½ngel
 	 */
 	public static int dameDias(int mes, int anio){ //esta funcion devuelve el numero de dias del mes
 		
@@ -131,17 +132,17 @@ public class Util {
 	}
 	
 	/**
-	 * Devuelve el número de expertos a partir del patrón.
-	 * Si el patrón es incorrecto devuelve "-1"
+	 * Devuelve el nï¿½mero de expertos a partir del patrï¿½n.
+	 * Si el patrï¿½n es incorrecto devuelve "-1"
 	 * @param patron String del tipo "1e5p"
-	 * @return Número de expertos del patrón
+	 * @return Nï¿½mero de expertos del patrï¿½n
 	 */	
 	public static int numExpertos(String patron){
 		int expertos = -1;
 		int posE = patron.indexOf('e');
 		int posP = patron.indexOf('p');
 		if (posE<posP && posE<patron.length() && posE>0){
-			// Comprobar que solo está compuesto por digitos
+			// Comprobar que solo estï¿½ compuesto por digitos
 			int i = 0;
 			while (i<posE && patron.charAt(i)>=48 && patron.charAt(i)<=57){
 				i++;
@@ -152,17 +153,17 @@ public class Util {
 	}
 	
 	/**
-	 * Devuelve el número de principiantes a partir del patrón.
-	 * Si el patrón es incorrecto devuelve "-1"
+	 * Devuelve el nï¿½mero de principiantes a partir del patrï¿½n.
+	 * Si el patrï¿½n es incorrecto devuelve "-1"
 	 * @param patron String del tipo "1e5p"
-	 * @return Número de principiantes del patrón
+	 * @return Nï¿½mero de principiantes del patrï¿½n
 	 */	
 	public static int numPrincipiantes(String patron){
 		int principiantes = -1;
 		int posE = patron.indexOf('e');
 		int posP = patron.indexOf('p');
 		if (posE<posP && posP==patron.length()-1 && posE>0){
-			// Comprobar que solo está compuesto por digitos
+			// Comprobar que solo estï¿½ compuesto por digitos
 			int i = posE+1;
 			while (i<posP && patron.charAt(i)>=48 && patron.charAt(i)<=57){
 				i++;
@@ -182,4 +183,25 @@ public class Util {
 		return (expertos+"e"+principiantes+"p");
 	}
 	
+	/**
+	 * Convierte un fecha de tipo Date en un String con el formato YYYY-MM-DD.
+	 * Si la fecha es null, devuelve 0000-00-00.
+	 * @param fecha la fecha a convertir
+	 * @return el String con el formato apropiado
+	 */
+	public static String dateAString(Date fecha) {
+		String sFecha = "0000-00-00";
+		if (fecha!=null) sFecha = String.valueOf(fecha.getYear()) + "-" + aString(fecha.getMonth())+ "-" + aString(fecha.getDay());
+		return sFecha;
+	}
+	
+	/**
+	 * Convierte un String con formato YYYY-MM-DD en una fecha de tipo Date.
+	 * @param s el String a convertir
+	 * @return la fecha
+	 */
+	public static Date stringADate(String s) {
+		 
+		return null;
+	}
 }
