@@ -62,6 +62,7 @@ public class Empleado implements Drawable {
 	private String password;
 	private int grupo; // 0 principiante, 1 experto
 	private int rango; // 0 administrador, 1 empleado, 2 jefe, 3 gerente
+	private int departamento;
 	private int idContrato;
 	private Contrato contrato;
 	private Date fContrato;
@@ -108,7 +109,7 @@ public class Empleado implements Drawable {
 	 */
 	public Empleado (int idSuperior, int idEmpl, String nombre, String apellido1, String apellido2, 
 			Date fechaNac, int sexo, String email, String password, int grupo,
-			int departamento, int contrato, Date fContrato, Date fAlta, Color color,
+			int departamento,int rango, int contrato, Date fContrato, Date fAlta, Color color,
 			ArrayList<Integer> idDepartamentos, ArrayList<Integer> idSubordinados) {
 		this.idSuperior	= idSuperior;
 		this.idEmpl		= idEmpl;
@@ -120,6 +121,7 @@ public class Empleado implements Drawable {
 		this.email		= email;
 		this.password	= password;
 		this.grupo		= grupo;
+		this.departamento=departamento;
 		this.rango		= rango;
 		this.idContrato	= contrato;
 		this.fContrato	= fContrato;
@@ -522,6 +524,10 @@ public class Empleado implements Drawable {
 	
 	public Color dameColor() {
 		return color;
+	}
+
+	public void setDepartamento(int departamento) {
+		this.departamento = departamento;
 	}
 
 }
