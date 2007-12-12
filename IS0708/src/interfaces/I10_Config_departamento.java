@@ -185,36 +185,36 @@ public class I10_Config_departamento {
 
 		labName = new Label (group, SWT.NONE);
 		labName.setText(bundle.getString("Nombre"));
-		labName.setLayoutData	(new GridData(SWT.CENTER,SWT.CENTER,true,true,1,1));	
+		labName.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));	
 		
 		tName = new Text  (group, SWT.BORDER);	
 		tName.setText(this.getArrayDB()[0]);	
 		tName.setSize(100,20);
-		tName.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,true,true,1,1));
+		tName.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
 		
 		labNumber = new Label (group, SWT.NONE);
 		labNumber.setText(bundle.getString("I10_dep_num"));
-		labNumber.setLayoutData	(new GridData(SWT.CENTER,SWT.CENTER,true,true,1,1));	
+		labNumber.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));	
 	
 		tNumber = new Text  (group, SWT.BORDER);	
 		tNumber.setText(this.getArrayDB()[1]);	
 		tNumber.setSize(100,20);
-		tNumber.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,true,true,1,1));
+		tNumber.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
 		
 		labBoss = new Label (group, SWT.NONE);
 		labBoss.setText(bundle.getString("I10_dep_jefe"));
-		labBoss.setLayoutData	(new GridData(SWT.CENTER,SWT.CENTER,true,true,1,1));	
+		labBoss.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));	
 		
 		comboBoss = new Combo  (group, SWT.DROP_DOWN );	
 //TODO combo gets items from DB (about possible boss)
 		comboBoss.setText(this.getArrayDB()[2]);	
-		comboBoss.setSize(100,20);
-		comboBoss.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,true,true,1,1));
+		//comboBoss.setSize(100,20);
+		comboBoss.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
 		
 		butNewBoss		= new Button(group, SWT.PUSH);
-		butNewBoss	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		//butNewBoss	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		butNewBoss	.setText(bundle.getString("I10_dep_nuevo_jefe"));
-		butNewBoss	.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		butNewBoss	.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 	}
 	
 	/**add components out of group (button Accept and Cancel)*/

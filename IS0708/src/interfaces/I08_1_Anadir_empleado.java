@@ -1,6 +1,6 @@
 package interfaces;
 /*******************************************************************************
- * INTERFAZ I-08.1 :: Creación de empleado
+ * INTERFAZ I-08.1 :: Creaciï¿½n de empleado
  *   por Daniel Dionne
  *   
  * Interfaz para dar de alta un empleado nuevo.
@@ -27,7 +27,7 @@ import aplicacion.Util;
 import aplicacion.Database;
 import java.util.ResourceBundle;
 
-// TODO Mostrar elección de rangos inferiores al usuario
+// TODO Mostrar elecciï¿½n de rangos inferiores al usuario
 public class I08_1_Anadir_empleado {
 	private Shell padre = null;
 	private ResourceBundle bundle;
@@ -98,7 +98,7 @@ public class I08_1_Anadir_empleado {
 		final Button bCancelar		= new Button(shell, SWT.PUSH);
 		
 		lNVend			.setText(bundle.getString("Vendedor"));
-		lPassword		.setText(bundle.getString("Contraseña"));
+		lPassword		.setText(bundle.getString("Contrasena"));
 		lEMail			.setText(bundle.getString("EMail"));
 		lNombre			.setText(bundle.getString("Nombre"));
 		lApell1			.setText(bundle.getString("I08_lab_Apellido1"));
@@ -148,9 +148,9 @@ public class I08_1_Anadir_empleado {
 		grupoDer.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
 		
 		cSexo.setItems (new String [] {bundle.getString("Femenino"), bundle.getString("Masculino"),});
-		cContrato.setItems (new String [] {"6:40", "Días sueltos",});
+		cContrato.setItems (new String [] {"6:40", "Dias sueltos",});
 		cExperiencia.setItems (new String [] {bundle.getString("Principiante"), bundle.getString("Experto"),});
-		cDepto.setItems (new String [] {"Cocina", "Baño",});
+		cDepto.setItems (new String [] {"Cocina", "Bano",});
 		cSexo.select(0);
 		cContrato.select(0);
 		cExperiencia.select(0);
@@ -218,17 +218,17 @@ public class I08_1_Anadir_empleado {
 		bColor.addSelectionListener(sabColor);
 
 		
-		// Un listener con lo que hace el botón bCancelar
+		// Un listener con lo que hace el botï¿½n bCancelar
 		SelectionAdapter sabCancelar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 					shell.dispose();	
 			}
 		};
 
-		// Un listener con lo que hace el botón bAceptar
+		// Un listener con lo que hace el botï¿½n bAceptar
 		SelectionAdapter sabAceptar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				// Comprueba el número de vendedor (campo obligatorio)
+				// Comprueba el nï¿½mero de vendedor (campo obligatorio)
 				int n = Util.convertirNVend(tNVend.getText());
 				if (n<0) {
 					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
@@ -239,7 +239,7 @@ public class I08_1_Anadir_empleado {
 					tNVend.setFocus();
 					tNVend.selectAll();
 				}
-				// Comprueba la dirección de email (campo no obligatorio)
+				// Comprueba la direcciï¿½n de email (campo no obligatorio)
 				else if (tEMail.getText().length()!=0 && !Util.comprobarEmail(tEMail.getText())) {
 					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
 					messageBox.setText (bundle.getString("Mensaje"));
@@ -274,9 +274,9 @@ public class I08_1_Anadir_empleado {
 		bCancelar.addSelectionListener(sabCancelar);
 		bAceptar.addSelectionListener(sabAceptar);
 
-		// Botón por defecto bAceptar
+		// Botï¿½n por defecto bAceptar
 		shell.setDefaultButton(bAceptar);
-		// Ajustar el tamaño de la ventana al contenido
+		// Ajustar el tamaï¿½o de la ventana al contenido
 		shell.pack();
 		// Mostrar ventana centrada sobre el padre
 		shell.setLocation(padre.getBounds().width/2 + padre.getBounds().x - shell.getSize().x/2, padre.getBounds().height/2 + padre.getBounds().y - shell.getSize().y/2);
