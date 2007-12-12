@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
 import aplicacion.Database;
 
 /**
- * Interfaz de usuario I-01 :: Identificación
+ * Interfaz de usuario I-01 :: Identificaciï¿½n
  * @author Daniel Dionne
  */
 public class I01_Login extends Thread{
@@ -42,7 +42,7 @@ public class I01_Login extends Thread{
 				dialog.getDisplay().asyncExec(new Runnable () {
 					public void run() {
 						// Rellenar la barra de progreso
-						// Por alguna razón oculta de los threads, aun habiendo comprobado
+						// Por alguna razï¿½n oculta de los threads, aun habiendo comprobado
 						// antes si el dialog sigue presente, si no lo compruebo de nuevo
 						// a veces da error.
 						if (!dialog.isDisposed()) 
@@ -51,7 +51,7 @@ public class I01_Login extends Thread{
 				});
 			}
 		else {
-			// En este caso se ha cerrado la aplicación antes de que termine de conectar.			
+			// En este caso se ha cerrado la aplicaciï¿½n antes de que termine de conectar.			
 			if (db.conexionAbierta())
 				db.cerrarConexion();
 		}
@@ -92,7 +92,7 @@ public class I01_Login extends Thread{
 		final Button bAceptar  = new Button(contenido, SWT.PUSH);
 		final Button bCancelar = new Button(contenido, SWT.PUSH);
 
-		// Dos iconos de tamaño diferente para SO's que los necesiten
+		// Dos iconos de tamaï¿½o diferente para SO's que los necesiten
 		Image icoGr = new Image(padre.getDisplay(), I01_Login.class.getResourceAsStream("icoGr.gif"));
 		Image icoPq = new Image(padre.getDisplay(), I01_Login.class.getResourceAsStream("icoPq.gif"));
 		dialog.setImages(new Image[] {icoPq,icoGr});
@@ -105,7 +105,7 @@ public class I01_Login extends Thread{
 		tUsuario.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 5, 1));
 		tUsuario.setTextLimit(8);
 		lPassword.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 3, 1));
-		lPassword.setText(bundle.getString("Contraseña"));
+		lPassword.setText(bundle.getString("Contrasena"));
 		//TODO quitar esto
 		tUsuario.setText("00000002");
 		tPassword.setText("blabla");
@@ -126,7 +126,7 @@ public class I01_Login extends Thread{
 		pbProgreso.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true, 8, 1));
 		pbProgreso.setSelection(50);
 		
-		// Un SelectionAdapter con lo que hace el botón bCancelar
+		// Un SelectionAdapter con lo que hace el botï¿½n bCancelar
 		SelectionAdapter sabCancelar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				botonPulsado=0;
@@ -134,7 +134,7 @@ public class I01_Login extends Thread{
 			}
 		};
 
-		// Un SelectionAdapter con lo que hace el botón bAceptar
+		// Un SelectionAdapter con lo que hace el botï¿½n bAceptar
 		SelectionAdapter sabAceptar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				if (tUsuario.getText().length()!=8) {
@@ -156,7 +156,7 @@ public class I01_Login extends Thread{
 						bAceptar.setEnabled(false);
 						tUsuario.setEnabled(false);
 						tPassword.setEnabled(false);
-						// TODO esperar por si todavía no ha terminado
+						// TODO esperar por si todavï¿½a no ha terminado
 						while (!db.conexionAbierta()) {
 							if (!dialog.isDisposed() && !dialog.getDisplay().readAndDispatch()) {
 								dialog.getDisplay().sleep();
@@ -180,10 +180,10 @@ public class I01_Login extends Thread{
 		bCancelar.addSelectionListener(sabCancelar);
 		bAceptar.addSelectionListener(sabAceptar);
 
-		// Botón por defecto bAceptar
+		// Botï¿½n por defecto bAceptar
 		dialog.setDefaultButton(bAceptar);
 
-		// Ajustar el tamaño de la ventana al contenido
+		// Ajustar el tamaï¿½o de la ventana al contenido
 		dialog.setBackgroundImage(fondo);
 		dialog.setSize(500,400);
 
@@ -193,8 +193,8 @@ public class I01_Login extends Thread{
 	}
 
 	/**
-	 * Devuelve el número de vendedor introducido por el usuario.
-	 * @return un entero con el número de vendedor
+	 * Devuelve el nï¿½mero de vendedor introducido por el usuario.
+	 * @return un entero con el nï¿½mero de vendedor
 	 * @author Daniel Dionne
 	 */
 	public int getNumeroVendedor() {
@@ -211,8 +211,8 @@ public class I01_Login extends Thread{
 	}
 	
 	/**
-	 * Devuelve el botón que se ha pulsado
-	 * @return	<li>-1 - Ningún botón
+	 * Devuelve el botï¿½n que se ha pulsado
+	 * @return	<li>-1 - Ningï¿½n botï¿½n
 	 * 			<li> 0 - Cancelar
 	 * 			<li> 1 - Aceptar
 	 * @author Daniel Dionne
