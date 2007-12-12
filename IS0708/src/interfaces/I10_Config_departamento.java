@@ -201,10 +201,20 @@ public class I10_Config_departamento {
 		//comboBoss.setSize(100,20);
 		comboBoss.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
 		
-		Empleado jefe= this.vista.obtenEmpleado("nombrejefe");
-		//String nombreDepartamento = 
-		Departamento departamento = new Departamento("nombreDep", 00, jefe);
+		
+		
+		
+		//CREACION DEL JEFE Y DEL DEPARTAMENTO
+		
+		String nombreJefe = comboBoss.getText();
+		Empleado jefe= this.vista.obtenEmpleado(nombreJefe);
+		String nombreDepartamento = tName.getText();
+		String numeroDepartamento = tNumber.getText();
+		Departamento departamento = new Departamento(nombreDepartamento,
+				numeroDepartamento, jefe);
+		
 		this.vista.guardaDepartamento(departamento);
+		
 		butNewBoss		= new Button(group, SWT.PUSH);
 		//butNewBoss	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		butNewBoss	.setText(bundle.getString("I10_dep_nuevo_jefe"));
