@@ -79,11 +79,11 @@ public class PruebaAlgoritmo {
 		System.out.println(trozosHorario.toString()); // Ordenada
 		*/
 		
-		/*
+		
 		// Prueba de las funciones Util.numExpertos(patron)
 		//                         Util.numPrincipiantes(patron)
 		//                         Util.patron(int expertos, int principiantes)
-		System.out.println("Expertos: "+Util.numExpertos("3e5p"));
+		/*System.out.println("Expertos: "+Util.numExpertos("3e5p"));
 		System.out.println("Expertos: "+Util.numExpertos("re5p"));
 		System.out.println("Expertos: "+Util.numExpertos("10e5p"));
 		System.out.println("Expertos: "+Util.numExpertos("1s2j"));
