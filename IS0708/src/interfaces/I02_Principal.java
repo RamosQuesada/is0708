@@ -9,12 +9,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
 
-import aplicacion.Controlador;
-import aplicacion.Departamento;
 import aplicacion.Empleado;
 import aplicacion.Posicion;
-import aplicacion.Util;
-
 
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -37,7 +33,8 @@ public class I02_Principal {
 	Locale locale;
 	Image icoGr, icoPq, ico_imprimir, ico_mens_l, ico_mens, ico_cuadrante, ico_chico, ico_chica, ico_chicos;
 	Cuadrante cuadranteActual;
-
+	Label lEstado;
+	ProgressBar pbEstado;
 	
 	private ImageData Img;
 
@@ -53,16 +50,16 @@ public class I02_Principal {
 	}
 	
 	private void crearBarraMenu() {
-		// Una barra de men�s
+		// Una barra de menús
 		Menu barra = new Menu(shell, SWT.BAR);
 		shell.setMenuBar(barra);
 		// Con un elemento "archivo"
 		MenuItem archivoItem = new MenuItem(barra, SWT.CASCADE);
 		archivoItem.setText(bundle.getString("I02_men_Archivo"));
-		// Y un submen� de persiana asociado al elemento
+		// Y un submenú de persiana asociado al elemento
 		Menu submenu = new Menu(shell, SWT.DROP_DOWN);
 		archivoItem.setMenu(submenu);
-		// Aqu� los elementos del submen�
+		// Aquí los elementos del submenú
 		// Item Abrir
 		MenuItem itemAbrir = new MenuItem(submenu, SWT.PUSH);
 		itemAbrir.addListener(SWT.Selection, new Listener() {
@@ -70,9 +67,9 @@ public class I02_Principal {
 				System.out.println("Pulsado abrir");
 			}
 		});
-		// Texto del item de men�
+		// Texto del item de menú
 		itemAbrir.setText(bundle.getString("I02_men_itm_Abrir") + "\tCtrl+"+ bundle.getString("I02_men_itm_abriracc"));
-		// Acceso r�pido (ctrl+a)
+		// Acceso rápido (ctrl+a)
 		itemAbrir.setAccelerator(SWT.MOD1 + bundle.getString("I02_men_itm_abriracc").charAt(0));
 
 		// Item Imprimir
@@ -96,10 +93,10 @@ public class I02_Principal {
 				shell.close();
 			}
 		});
-		// Texto del item de men�
+		// Texto del item de menú
 		itemSalir.setText(bundle.getString("I02_men_itm_Salir") + "\tCtrl+"
 				+ bundle.getString("I02_men_itm_saliracc"));
-		// Acceso r�pido (ctrl+s)
+		// Acceso rápido (ctrl+s)
 		itemSalir.setAccelerator(SWT.MOD1
 				+ bundle.getString("I02_men_itm_saliracc").charAt(0));
 
@@ -123,7 +120,7 @@ public class I02_Principal {
 
 	private void crearTabJefeCuadrantes(TabFolder tabFolder) {
 		// TODO BD Cargar el cuadrante del departamento de empleadoActual
-		// con la fecha del calendario (definido m�s abajo) 
+		// con la fecha del calendario (definido más abajo) 
 		// en la variable cuadranteActual
 
 		// Crear el tabItem
@@ -133,7 +130,7 @@ public class I02_Principal {
 
 		final Composite cCuadrantes = new Composite(tabFolder, SWT.NONE);
 		tabItemCuadrantes.setControl(cCuadrantes);
-		// Configuraci�n del composite
+		// Configuración del composite
 		cCuadrantes.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
 		cCuadrantes.setLayout(new GridLayout(5, false));
 
@@ -147,7 +144,7 @@ public class I02_Principal {
 		cDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
 		cDepartamentos.select(0);
 
-		// Un canvas para albergar el gr�fico de los cuadrantes
+		// Un canvas para albergar el gráfico de los cuadrantes
 		// NO_BACKGROUND + doble buffer para evitar parpadeo
 		Composite cCuadrante = new Composite(cCuadrantes, SWT.BORDER);
 		cCuadrante.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 5));
@@ -180,8 +177,6 @@ public class I02_Principal {
 		empleados.add(e4);
 		empleados.add(e5);
 		empleados.add(e6);
-
-		
 		
 		final I02_cuadr cuadrante = new I02_cuadr(cCuadrante, false, empleados);
 		Img = cuadrante.dameImageImprimible();
@@ -235,7 +230,7 @@ public class I02_Principal {
 	}
 
 	/**
-	 * Crea un tab de mensajer�a
+	 * Crea un tab de mensajería
 	 * @param tabFolder el tabFolder donde colocarlo
 	 * @author Daniel Dionne
 	 */
@@ -268,7 +263,7 @@ public class I02_Principal {
 			tItem.setImage(ico_mens);
 			tItem.setText(1, "Remitente");
 			tItem.setText(2, "Asunto del mensaje");
-			tItem.setText(3, "Aqu� va lo que quepa del principio del mensaje");
+			tItem.setText(3, "Aquí va lo que quepa del principio del mensaje");
 			tItem.setText(4, "25/10/2007");
 		}
 		for (int i = 0; i < titles.length; i++) {
@@ -371,7 +366,7 @@ public class I02_Principal {
 			TableItem tItem = new TableItem(tablaEmpleados, SWT.NONE);
 			tItem.setImage(ico_chica);
 			tItem.setText(1, "56468546");
-			tItem.setText(2, "Mandarina Gonz�lez");
+			tItem.setText(2, "Mandarina González");
 			tItem.setText(3, "Discos");
 			tItem.setText(4, "6:40h");
 			tItem.setText(5, "911234567");
@@ -458,7 +453,7 @@ public class I02_Principal {
 		final Combo cmbDepartamentos = new Combo(cDepartamentos,SWT.BORDER |SWT.READ_ONLY);
 		cmbDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 1, 1));
-		cmbDepartamentos.setItems(new String[] { "Ba�os", "Cocinas" });
+		cmbDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
 		cmbDepartamentos.select(0);
 
 		//Composite for Buttons: "New Department" and "Configure Department"
@@ -498,7 +493,7 @@ public class I02_Principal {
 		cInfo.setLayout(new GridLayout(2, false));
 		cInfo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		Label lContenido = new Label(cInfo, SWT.CENTER);
-		lContenido.setText("Aqu� va informaci�n del departamento");
+		lContenido.setText("Aquí va información del departamento");
 		lContenido.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 2, 1));
 
 	}
@@ -533,7 +528,7 @@ public class I02_Principal {
 		tItem.setText(1, "Mike Olfield, Lou Vega, Paul McCartney, Ricky Martin");
 		tItem.setText(2, "4");
 		tItem = new TableItem(tablaContratos, SWT.NONE);
-		tItem.setText(0, "D�as sueltos");
+		tItem.setText(0, "Días sueltos");
 		tItem.setText(1, "Alicia Keys, Ana Torroja, Marylin Manson");
 		tItem.setText(2, "3");
 		for (int i = 0; i < titles.length; i++) {
@@ -570,7 +565,7 @@ public class I02_Principal {
 		tabItemAdminInicio.setText("Admin:Inicio");
 		tabItemAdminInicio.setImage(ico_cuadrante);
 		
-		//Creamos el contenido de la pesta�a cuadrantes
+		//Creamos el contenido de la pestaña cuadrantes
 		
 		Composite cInicio = new Composite (tabFolder, SWT.NONE);
 		tabItemAdminInicio.setControl(cInicio);
@@ -579,7 +574,7 @@ public class I02_Principal {
 		_fondo_turnomatic = new Image(display, I02_Principal.class.getResourceAsStream("admin_fondo.jpg"));
 		
 		cInicio.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		//Le a�adimos un layout
+		//Le añadimos un layout
 		GridLayout lInicio = new GridLayout();
 		lInicio.numColumns = 2;
 		cInicio.setLayout(lInicio);
@@ -604,7 +599,7 @@ public class I02_Principal {
 		tabItemEmpleados.setText("Admin:Nuevo Gerente");
 		tabItemEmpleados.setImage(ico_chico);
 
-		//Creamos el contenido de la pesta�a cuadrantes
+		//Creamos el contenido de la pestaña cuadrantes
 		final Composite cNuevoGerente = new Composite (tabFolder, SWT.BORDER);
 		tabItemEmpleados.setControl(cNuevoGerente);
 
@@ -709,7 +704,7 @@ public class I02_Principal {
 			public void widgetSelected (SelectionEvent e) {
 				MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
 				messageBox.setText ("CONFIRMACION");
-				messageBox.setMessage ("�Desea guardar el nuevo gerente?");
+				messageBox.setMessage ("¿Desea guardar el nuevo gerente?");
 				if( messageBox.open () == SWT.YES)
 				{
 					tNombreUsuario.setText("");
@@ -739,7 +734,7 @@ public class I02_Principal {
 		tabItemEmpleados.setText("Admin:Elimina Gerente");
 		tabItemEmpleados.setImage(ico_chico);
 
-		//Creamos un composite para la pesta�a de mensajes
+		//Creamos un composite para la pestaña de mensajes
 		final Composite cEliminaGerente = new Composite (tabFolder, SWT.NONE);
 		tabItemEmpleados.setControl(cEliminaGerente);
 
@@ -748,7 +743,7 @@ public class I02_Principal {
 		lTJ.numColumns = 1;
 		lTJ.makeColumnsEqualWidth = true;
 		cEliminaGerente.setLayout(lTJ);
-		//1� elegimos el gerente que queremos eliminar
+		//1º elegimos el gerente que queremos eliminar
 		final Label nombreGerente=new Label(cEliminaGerente,SWT.None);
 		nombreGerente.setText("Escoja el gerente a eliminar:");
 		final Combo comboGerenteElim = new Combo(cEliminaGerente,SWT.BORDER | SWT.READ_ONLY);
@@ -763,7 +758,7 @@ public class I02_Principal {
 
 		
 		final Label opcionJefes=new Label(cEliminaGerente,SWT.None);
-		opcionJefes.setText("�Que desea hacer con los empleados del gerente seleccionado?:");
+		opcionJefes.setText("¿Que desea hacer con los empleados del gerente seleccionado?:");
 
 		
 
@@ -888,18 +883,18 @@ public class I02_Principal {
 		tabItem.setText("Empleado:Cuadrantes");
 		tabItem.setImage(ico_chico);
 		
-		//Creamos el contenido de la pesta�a cuadrantes
+		//Creamos el contenido de la pestaña cuadrantes
 		Composite cCuadrantes = new Composite (tabFolder, SWT.NONE);
 		tabItem.setControl(cCuadrantes);
 
 		
 		cCuadrantes.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
-		//Le a�adimos un layout
+		//Le añadimos un layout
 		GridLayout lCuadrantes = new GridLayout();
 		lCuadrantes.numColumns = 2;
 		cCuadrantes.setLayout(lCuadrantes);
 		
-		//Creamos el contenido interno de la pesta�a cuadrantes
+		//Creamos el contenido interno de la pestaña cuadrantes
 		//Creamos un composite para los botones
 		final Composite cBotones = new Composite (cCuadrantes, SWT.BORDER);
 		cBotones.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
@@ -919,7 +914,7 @@ public class I02_Principal {
 		lCuadrantesDer.numColumns = 1;
 		cCuadrantesDer.setLayout(lCuadrantesDer);
 		//final Label lCuadr1=new Label (cCuadrantesDer, SWT.CENTER);
-		//lCuadr1.setText("Aqu� se mostrar�n los cuadrantes");
+		//lCuadr1.setText("Aquí se mostrarían los cuadrantes");
 		final I02_cuadrEmpl cuadrante = new I02_cuadrEmpl(cCuadrantesDer, false,bundle);	
 		cuadrante.setSemanal();
 		//Creamos el calendario		
@@ -977,17 +972,17 @@ public class I02_Principal {
 		tabItem.setText("Empleado:Estadisticas");
 		tabItem.setImage(ico_chico);
 		
-		//Creamos el contenido de la pesta�a estadisticas
+		//Creamos el contenido de la pestaña estadisticas
 		final Composite cEstadisticas = new Composite (tabFolder, SWT.NONE);
 		tabItem.setControl(cEstadisticas);
 
 		cEstadisticas.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
-		//Le a�adimos un layout
+		//Le añadimos un layout
 		GridLayout lEstadisticas = new GridLayout();
 		lEstadisticas.numColumns = 2;
 		cEstadisticas.setLayout(lEstadisticas);
 		
-		//Creamos el contenido interno de la pesta�a cuadrantes
+		//Creamos el contenido interno de la pestaña cuadrantes
 		//Creamos un composite para los botones
 		final Composite cEstIzq = new Composite (cEstadisticas, SWT.BORDER);
 		cEstIzq.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
@@ -1017,7 +1012,7 @@ public class I02_Principal {
 		lTiempo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
 		Combo cTiempo = new Combo(cEstIzq, SWT.BORDER | SWT.READ_ONLY);
 		cTiempo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		cTiempo.setItems(new String[] {bundle.getString("semana"), bundle.getString("quincena"), bundle.getString("mes"),bundle.getString("a�o")});
+		cTiempo.setItems(new String[] {bundle.getString("semana"), bundle.getString("quincena"), bundle.getString("mes"),bundle.getString("año")});
 		cTiempo.select(0);
 		
 		final Label lComparar	= new Label(cEstIzq, SWT.LEFT);
@@ -1030,7 +1025,7 @@ public class I02_Principal {
 				bundle.getString("empleadomedio"),
 				bundle.getString("mejorsemana"),
 				bundle.getString("mejormes"),
-				bundle.getString("mejora�o")
+				bundle.getString("mejoraño")
 				});
 		
 		cComparar.select(0);
@@ -1140,17 +1135,17 @@ public class I02_Principal {
 		tabItem.setText("Gerente:Estadisticas");
 		tabItem.setImage(ico_chico);
 		
-		//Creamos el contenido de la pesta�a estadisticas
+		//Creamos el contenido de la pestaña estadisticas
 		final Composite cEstadisticas = new Composite (tabFolder, SWT.NONE);
 		tabItem.setControl(cEstadisticas);
 
 		cEstadisticas.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
-		//Le a�adimos un layout
+		//Le añadimos un layout
 		GridLayout lEstadisticas = new GridLayout();
 		lEstadisticas.numColumns = 2;
 		cEstadisticas.setLayout(lEstadisticas);
 		
-		//Creamos el contenido interno de la pesta�a cuadrantes
+		//Creamos el contenido interno de la pestaña cuadrantes
 		//Creamos un composite para los botones
 		final Composite cEstIzq = new Composite (cEstadisticas, SWT.BORDER);
 		cEstIzq.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
@@ -1180,7 +1175,7 @@ public class I02_Principal {
 		lTiempo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
 		Combo cTiempo = new Combo(cEstIzq, SWT.BORDER | SWT.READ_ONLY);
 		cTiempo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		cTiempo.setItems(new String[] {bundle.getString("semana"), bundle.getString("quincena"), bundle.getString("mes"),bundle.getString("a�o")});
+		cTiempo.setItems(new String[] {bundle.getString("semana"), bundle.getString("quincena"), bundle.getString("mes"),bundle.getString("año")});
 		cTiempo.select(0);
 		
 		final Label lComparar	= new Label(cEstIzq, SWT.LEFT);
@@ -1193,7 +1188,7 @@ public class I02_Principal {
 				bundle.getString("empleadomedio"),
 				bundle.getString("mejorsemana"),
 				bundle.getString("mejormes"),
-				bundle.getString("mejora�o")
+				bundle.getString("mejoraño")
 				});
 		
 		cComparar.select(0);
@@ -1335,7 +1330,6 @@ public class I02_Principal {
 	 * Crea la ventana con el rango del empleado.
 	 */
 	public void crearVentana(int rango) {
-
 		// Crear la ventana
 		shell.setText(bundle.getString("Turno-matic"));// idiomas igual siempre
 
@@ -1350,7 +1344,7 @@ public class I02_Principal {
 		ico_chica		= new Image(display, I02_Principal.class.getResourceAsStream("ico_chica.gif"));
 		ico_chicos		= new Image(display, I02_Principal.class.getResourceAsStream("ico_chicos.gif"));
 
-		// Dos iconos de tama�o diferente para SO's que los necesiten
+		// Dos iconos de tamaño diferente para SO's que los necesiten
 		shell.setImages(new Image[] { icoPq, icoGr });
 
 		crearBarraMenu();
@@ -1372,22 +1366,22 @@ public class I02_Principal {
 		// Crear una barra de estado
 		Composite estado = new Composite(shell,SWT.BORDER);
 		estado.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1,1));
-		estado.setLayout(new GridLayout(2,false));
-		Label lEstado = new Label(estado,SWT.LEFT);
-		ProgressBar pbEstado = new ProgressBar(estado,SWT.RIGHT);
+		estado.setLayout(new GridLayout(2,true));
+		lEstado = new Label(estado,SWT.LEFT);
+		pbEstado = new ProgressBar(estado,SWT.RIGHT);
 		lEstado.setText("Conectado.");
-		lEstado.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1,1));
+		lEstado.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,1));
 		pbEstado.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,1));
 		pbEstado.setVisible(false);
 
-		// Ajustar el tama�o de la ventana
+		// Ajustar el tamaño de la ventana
 		shell.setSize(700,500);
+
 		// Mostrar ventana centrada en la pantalla
 		shell.setLocation(
 				display.getBounds().width  / 2 - shell.getSize().x / 2, 
 				display.getBounds().height / 2 - shell.getSize().y / 2  );
 		shell.open();
-
 
 		// Preguntar antes de salir
 		shell.addListener(SWT.Close, new Listener() {
@@ -1401,4 +1395,27 @@ public class I02_Principal {
 			}
 		});
 	}
+	
+	/**
+	 * Muestra el parámetro en la barra de abajo.
+	 * @param estado el String a mostrar
+	 */
+	public void setTextoEstado(String estado) {
+		lEstado.setText(estado);
+	}
+	
+	/**
+	 * Ajusta la barra de progreso al valor del parámetro, y la hace
+	 * desaparecer si ha terminado.
+	 * @param i Un valor de 0 a 99, ó 100 para que desaparezca.
+	 */
+	public void setProgreso(int i){
+		if (i>=0 && i<100) {
+			pbEstado.setVisible(true);
+			pbEstado.setSelection(i);
+		}
+		else if (i==100) {
+			pbEstado.setVisible(false);
+		}
+	}	
 }

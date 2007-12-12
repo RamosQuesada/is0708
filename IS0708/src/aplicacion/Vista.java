@@ -16,80 +16,106 @@ public class Vista {
 	private Shell shell;
 	private ResourceBundle bundle;
 	private Locale locale;
+	private I02_Principal i02;
 	public Vista (Shell shell, ResourceBundle bundle, Locale locale, Controlador controlador, Database db) {			
 		this.shell = shell;
 		this.bundle = bundle;
 		this.locale = locale;
 		this.controlador = controlador;
 		this.db = db;
-
-
-		I02_Principal i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);
+		i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);
 	}
-	/****************************************************************************
-	 * Métodos relacionados con empleados
+	
+	/**
+	 * Muestra el parámetro en la barra de abajo de la ventana principal.
+	 * @param estado el String a mostrar
 	 */
-		
-		/**
-		 * Devuelve el empleado que ha iniciado la sesión.
-		 * @return el empleado que ha iniciado la sesión
-		 */
-		public Empleado getEmpleadoActual() {
-			return controlador.getEmpleadoActual();
-		}
-		/**
-		 * Obtiene un empleado, dado su número de vendedor o identificador.
-		 * @param idEmpl el identificador del empleado o número de vendedor
-		 * @return una instancia nueva del empleado
-		 */
-		public Empleado getEmpleado(int idEmpl) {
-			return controlador.getEmpleado(idEmpl);
-		}
-
-		/**
-		 * Obtiene uno o varios empleados, que coincidan con los datos
-		 * dados del mismo. Los parámetros pueden ser nulos.
-		 * @param idEmpl		el identificador del empleado
-		 * @param idDpto		el identificador del departamento al que pertenece
-		 * @param idContrato	el identificador del contrato que tiene
-		 * @param nombre		el nombre del empleado
-		 * @param apellido1		el primer apellido del empleado
-		 * @param apellido2		el segundo apellido del empleado
-		 * @return una lista de empleados que coincida con los datos dados
-		 */
-		public ArrayList<Empleado> getEmpleado(Integer idEmpl, Integer idDpto, Integer idContrato, String nombre, String apellido1, String apellido2) {
-			return controlador.getEmpleado(idEmpl, idDpto, idContrato, nombre, apellido1, apellido2);
-		}
-
-		/**
-		 * Guarda un empleado.
-		 * @param empleado el empleado a guardar
-		 * @return <i>true</i> si el empleado ha sido guardado
-		 */
-		public boolean insertEmpleado(Empleado empleado) {
-			return controlador.insertEmpleado(empleado);
-		}
-		
-
-	/****************************************************************************
-	 * Métodos relacionados con departamentos
+	public void setTextoEstado(String estado) {
+		i02.setTextoEstado(estado);
+	}
+	
+	/**
+	 * Ajusta la barra de progreso de la ventana principal al valor del 
+	 * parámetro, y la hace desaparecer si ha terminado.
+	 * @param i Un valor de 0 a 99, ó 100 para que desaparezca.
 	 */
-		
-		/**
-		 * Obtiene un departamento, dado su identificador.
-		 * @param id el identificador del departamento
-		 * @return una instancia del departamento
-		 */
-		public Departamento getDepartamento(int id){
-			return controlador.getDepartamento(id);
-		}
-		
-		/**
-		 * Guarda un departamento.
-		 * @param departamento el departamento a guardar
-		 * @return <i>true</i> si el departamento ha sido guardado
-		 */
-		public boolean insertDepartamento(Departamento departamento){
-			return controlador.insertDepartamento(departamento);
-		}
+	public void setProgreso(int i){
+		i02.setProgreso(i);
+	}
+
+	
+/****************************************************************************
+ * Métodos relacionados con empleados
+ */
+	
+	/**
+	 * Devuelve el empleado que ha iniciado la sesión.
+	 * @return el empleado que ha iniciado la sesión
+	 */
+	public Empleado getEmpleadoActual() {
+		return controlador.getEmpleadoActual();
+	}
+	/**
+	 * Obtiene un empleado, dado su número de vendedor o identificador.
+	 * @param idEmpl el identificador del empleado o número de vendedor
+	 * @return una instancia nueva del empleado
+	 */
+	public Empleado getEmpleado(int idEmpl) {
+		return controlador.getEmpleado(idEmpl);
+	}
+
+	/**
+	 * Obtiene uno o varios empleados, que coincidan con los datos
+	 * dados del mismo. Los parámetros pueden ser nulos.
+	 * @param idEmpl		el identificador del empleado
+	 * @param idDpto		el identificador del departamento al que pertenece
+	 * @param idContrato	el identificador del contrato que tiene
+	 * @param nombre		el nombre del empleado
+	 * @param apellido1		el primer apellido del empleado
+	 * @param apellido2		el segundo apellido del empleado
+	 * @return una lista de empleados que coincida con los datos dados
+	 */
+	public ArrayList<Empleado> getEmpleado(Integer idEmpl, Integer idDpto, Integer idContrato, String nombre, String apellido1, String apellido2) {
+		return controlador.getEmpleado(idEmpl, idDpto, idContrato, nombre, apellido1, apellido2);
+	}
+
+	/**
+	 * Guarda un empleado.
+	 * @param empleado el empleado a guardar
+	 * @return <i>true</i> si el empleado ha sido guardado
+	 */
+	public boolean insertEmpleado(Empleado empleado) {
+		setProgreso(50);
+		setTextoEstado("Insertando empleado");
+		boolean b = controlador.insertEmpleado(empleado);
+		setProgreso(100);
+		if (b)
+			setTextoEstado("Empleado insertado");
+		else 
+			setTextoEstado("No se pudo insertar el empleado");
+		return b;
+	}
+	
+
+/****************************************************************************
+ * Métodos relacionados con departamentos
+ */
+	
+	/**
+	 * Obtiene un departamento, dado su identificador.
+	 * @param id el identificador del departamento
+	 * @return una instancia del departamento
+	 */
+	public Departamento getDepartamento(int id){
+		return controlador.getDepartamento(id);
+	}
+	
+	/**
+	 * Guarda un departamento.
+	 * @param departamento el departamento a guardar
+	 * @return <i>true</i> si el departamento ha sido guardado
+	 */
+	public boolean insertDepartamento(Departamento departamento){
+		return controlador.insertDepartamento(departamento);
+	}
 }
