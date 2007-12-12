@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.Locale;
 
+import aplicacion.Controlador;
+import aplicacion.Departamento;
 import aplicacion.Empleado;
 import aplicacion.Database;
 import impresion.Imprimir;
@@ -28,7 +30,7 @@ import interfaces.I09_1_Creacion_contratos;
  * 
  */
 public class I02_Menu_principal {
-
+	Controlador controlador;
 	Shell shell;
 	Display display;
 	ResourceBundle bundle;
@@ -42,7 +44,10 @@ public class I02_Menu_principal {
 	
 	private ImageData Img;
 
-	public I02_Menu_principal(Shell shell, Display display, ResourceBundle bundle, Locale locale, ArrayList<Empleado> empleados, int rango, Empleado empleadoActual, Database db) {
+	public I02_Menu_principal(Shell shell, Display display,
+			ResourceBundle bundle, Locale locale,
+			ArrayList<Empleado> empleados, int rango,
+			Empleado empleadoActual, Database db, Controlador controlador) {
 		this.shell = shell;
 		this.display = display;
 		this.empleados = empleados;
@@ -50,6 +55,7 @@ public class I02_Menu_principal {
 		this.locale = locale;
 		this.empleadoActual = empleadoActual;
 		this.db = db;
+		this.controlador=controlador;
 		crearVentana(rango);
 		//ponImageDia();
 	}
@@ -442,7 +448,7 @@ public class I02_Menu_principal {
 		Button bConfig = new Button(cBut, SWT.PUSH);
 		bConfig.setText(bundle.getString("I02_but_Config_dep"));
 		bConfig.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-
+		final I02_Menu_principal vista=this;
 		bConfig.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				System.out.println("Pulsado Configuraci�n departamentos: "+cmbDepartamentos.getText().toString());
@@ -450,7 +456,7 @@ public class I02_Menu_principal {
 /*TODO the arrayDB should be String[]array witch datas from DB (taken from select query with data of Department)
  * (in this place should be methods of class servicing DB)*/
 				String[]arrayDB = {"nazwaDepartamentu","1 parametr","2 parametr"};
-				new I10_Config_departamento(shell, bundle, bundle.getString("I02_but_Config_dep"),arrayDB, db);
+				new I10_Config_departamento(shell, bundle, bundle.getString("I02_but_Config_dep"),arrayDB,vista, db);
 			}
 		});
 		
@@ -458,11 +464,10 @@ public class I02_Menu_principal {
 		Button bNew = new Button(cBut, SWT.PUSH);
 		bNew.setText(bundle.getString("I02_but_Nuevo_dep"));
 		bNew.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-
 		bNew.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				System.out.println("Pulsado Nuevo Departamento");
-				new I10_Config_departamento(shell, bundle, bundle.getString("I02_but_Nuevo_dep"));
+				new I10_Config_departamento(shell, bundle, bundle.getString("I02_but_Nuevo_dep"),vista);
 			}
 		});
 	
@@ -1374,5 +1379,13 @@ public class I02_Menu_principal {
 				e.doit = messageBox.open() == SWT.YES;
 			}
 		});
+	}
+	
+	public void guardaDepartamento(Departamento departamento){
+		controlador.guardaDepartamento(departamento);
+	}
+	
+	public Empleado obtenEmpleado(String nombreEmpleado){
+		return (controlador.obtenEmpleado(nombreEmpleado));
 	}
 }
