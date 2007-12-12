@@ -3,7 +3,7 @@ package algoritmo;
 import java.util.ArrayList;
 
 /**
- * Esta clase contiene el max/min numero de personas y patrón de expertos/principiantes, que se van a utilizar en la clase calendario
+ * Esta clase contiene el max/min numero de personas y patron de expertos/principiantes, que se van a utilizar en la clase calendario
  * @author DavidMartin
  */
 public class HoraCalendario {
@@ -14,7 +14,7 @@ public class HoraCalendario {
 	private int principiantes;
 	
 	/**
-	 * Constructora por defecto. Inicializa atributos min y max a 0 y patrón a 1
+	 * Constructora por defecto. Inicializa atributos min y max a 0 y patron a 1
 	 */
 	public HoraCalendario(){
 		max=0;
@@ -24,11 +24,11 @@ public class HoraCalendario {
 	}
 	
 	/**
-	 * Constructora con parámetros
-	 * @param max Número máximo de empleados simultaneos en el departamento
-	 * @param min Número mínimo de empleados simultaneos en el departamento
-	 * @param exp Número de empleados expertos por cada inexpert 
-	 * @param inexpert Número de empleados principiantes simultaneos en el departamento
+	 * Constructora con parametros
+	 * @param max Numero maximo de empleados simultaneos en el departamento
+	 * @param min Numero minimo de empleados simultaneos en el departamento
+	 * @param exp Numero de empleados expertos por cada inexpert 
+	 * @param inexpert Numero de empleados principiantes simultaneos en el departamento
 	 */
 	public HoraCalendario(int max,int min,int exp,int inexpert){//Otra constructora
 		this.max=max;
@@ -38,38 +38,38 @@ public class HoraCalendario {
 	}
 	
 	/**
-	 * Recupera el número máximo de empleados simultaneos en el departamento
-	 * @return Número máximo de empleados
+	 * Recupera el numero maximo de empleados simultaneos en el departamento
+	 * @return Numero maximo de empleados
 	 */
 	public int getMax() {
 		return max;
 	}
 	
 	/**
-	 * Cambia el número máximo de empleados simultaneos en el departamento
-	 * @param max Número máximo de empleados
+	 * Cambia el numero maximo de empleados simultaneos en el departamento
+	 * @param max Numero maximo de empleados
 	 */
 	public void setMax(int max) {
 		this.max = max;
 	}
 	/**
-	 * Recupera el número mínimo de empleados simultaneos en el departamento
-	 * @return Número mínimo de empleados
+	 * Recupera el numero minimo de empleados simultaneos en el departamento
+	 * @return Numero minimo de empleados
 	 */
 	public int getMin() {
 		return min;
 	}
 	
 	/**
-	 * Cambia el número mínimo de empleados simultaneos en el departamento
-	 * @param min Número mínimo de empleados
+	 * Cambia el numero minimo de empleados simultaneos en el departamento
+	 * @param min Numero minimo de empleados
 	 */
 	public void setMin(int min) {
 		this.min = min;
 	}
 	
 	/**
-	 * Consulta el número de expertos del patrón
+	 * Consulta el numero de expertos del patron
 	 * @return
 	 */
 	public int getExpertos() {
@@ -77,7 +77,7 @@ public class HoraCalendario {
 	}
 	
 	/**
-	 * Modifica el número de expertos del patrón
+	 * Modifica el numero de expertos del patron
 	 * @param expertos
 	 */
 	public void setExpertos(int expertos) {
@@ -85,7 +85,7 @@ public class HoraCalendario {
 	}
 	
 	/**
-	 * Consulta el número de principiantes del patrón
+	 * Consulta el numero de principiantes del patron
 	 * @return principiantes
 	 */
 	public int getPrincipiantes() {
@@ -93,7 +93,7 @@ public class HoraCalendario {
 	}
 	
 	/**
-	 * Modifica el número de principiantes del patrón
+	 * Modifica el numero de principiantes del patron
 	 * @param principiantes
 	 */
 	public void setPrincipiantes(int principiantes) {
