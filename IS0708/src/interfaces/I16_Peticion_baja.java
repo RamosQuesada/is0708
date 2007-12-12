@@ -19,6 +19,8 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import aplicacion.Vista;
+
 public class I16_Peticion_baja {
 	private Shell _padre = null;
 	private ResourceBundle _bundle;
@@ -40,7 +42,7 @@ public class I16_Peticion_baja {
 	public void mostrarVentana() {
 		final Shell shell = new Shell (_padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 
-		final Image ico_mens_l = new Image(_padre.getDisplay(), I02_Menu_principal.class.getResourceAsStream("ico_mens1_v.gif"));
+		final Image ico_mens_l = new Image(_padre.getDisplay(), Vista.class.getResourceAsStream("ico_mens1_v.gif"));
 		
 		//Establecemos el layout del shell
 		GridLayout lShell = new GridLayout();
@@ -197,9 +199,9 @@ public class I16_Peticion_baja {
 			}				
 		});
 		
-		// Botón por defecto bAceptar
+		// Botï¿½n por defecto bAceptar
 		shell.setDefaultButton(bAceptar);
-		// Ajustar el tamaño de la ventana al contenido
+		// Ajustar el tamaï¿½o de la ventana al contenido
 		
 		shell.setSize(_padre.getSize());
 		// Mostrar ventana centrada sobre el padre

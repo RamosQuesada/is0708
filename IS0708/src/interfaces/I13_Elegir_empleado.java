@@ -36,6 +36,7 @@ import sun.misc.Sort;
 
 import aplicacion.Database;
 import aplicacion.Empleado;
+import aplicacion.Vista;
 import aplicacion.Posicion;
 
 public class I13_Elegir_empleado {
@@ -58,7 +59,7 @@ public class I13_Elegir_empleado {
 
 	public void mostrarVentana() {
 		
-		icoPq = new Image(shell.getDisplay(), I02_Menu_principal.class.getResourceAsStream("icoPq.gif"));
+		icoPq = new Image(shell.getDisplay(), Vista.class.getResourceAsStream("icoPq.gif"));
 		shell.setImage(icoPq);
 		shell.setText("Search");
 	//Establecemos el layout del shell
@@ -169,7 +170,7 @@ public class I13_Elegir_empleado {
 		bCancel .setLayoutData (new GridData(SWT.RIGHT,  SWT.DOWN, true, true, 1, 1));
 	//Button Listeners
 	//Definicions	
-	// Un listener con lo que hace el botón bCancelar
+	// Un listener con lo que hace el botï¿½n bCancelar
 		SelectionAdapter sabCancelar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 					shell.dispose();	

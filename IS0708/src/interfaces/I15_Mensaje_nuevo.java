@@ -16,6 +16,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
+import aplicacion.Vista;
+
 /**
  * Clase que crea la ventana de eleccion de tipo de mensaje
  * @author David Rodilla
@@ -61,7 +63,7 @@ public class I15_Mensaje_nuevo {
 	public void mostrarVentana() {
 		final Shell shell = new Shell (_padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 
-		final Image ico_mens_l = new Image(_padre.getDisplay(), I02_Menu_principal.class.getResourceAsStream("ico_mens1_v.gif"));
+		final Image ico_mens_l = new Image(_padre.getDisplay(), Vista.class.getResourceAsStream("ico_mens1_v.gif"));
 		
 		//Establecemos el layout del shell
 		GridLayout lShell = new GridLayout();
@@ -193,9 +195,9 @@ public class I15_Mensaje_nuevo {
 			}				
 		});
 		
-		// Botón por defecto bAceptar
+		// Botï¿½n por defecto bAceptar
 		shell.setDefaultButton(bAceptar);
-		// Ajustar el tamaño de la ventana al contenido
+		// Ajustar el tamaï¿½o de la ventana al contenido
 		shell.pack();
 		// Mostrar ventana centrada sobre el padre
 		shell.setLocation(_padre.getBounds().width/2 + _padre.getBounds().x - shell.getSize().x/2, _padre.getBounds().height/2 + _padre.getBounds().y - shell.getSize().y/2);

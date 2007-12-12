@@ -15,6 +15,9 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+
+import aplicacion.Vista;
+
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -39,7 +42,7 @@ public class I14_Mensajeria_Interna {
 	public void mostrarVentana() {
 		final Shell shell = new Shell (_padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 
-		final Image ico_mens_l = new Image(_padre.getDisplay(), I02_Menu_principal.class.getResourceAsStream("ico_mens1_v.gif"));
+		final Image ico_mens_l = new Image(_padre.getDisplay(), Vista.class.getResourceAsStream("ico_mens1_v.gif"));
 		
 		//Establecemos el layout del shell
 		GridLayout lShell = new GridLayout();
@@ -60,7 +63,7 @@ public class I14_Mensajeria_Interna {
 		lDestinatario.setText(_bundle.getString("destinatario"));
 		Combo cDestinatarios = new Combo(cGrupo, SWT.BORDER | SWT.READ_ONLY);
 		cDestinatarios.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 0, 0));
-		cDestinatarios.setItems(new String[] {"Ramon Alcarria Jareño", "Fernando Gonzalez Angulo", "Carlos Eskudero Palmeiro","Tomas Villar Sánchez"});
+		cDestinatarios.setItems(new String[] {"Ramon Alcarria Jareï¿½o", "Fernando Gonzalez Angulo", "Carlos Eskudero Palmeiro","Tomas Villar Sï¿½nchez"});
 		cDestinatarios.select(0);
 		final Label lAsunto	= new Label(cGrupo, SWT.LEFT);
 		lAsunto.setText(_bundle.getString("asunto"));
@@ -138,9 +141,9 @@ public class I14_Mensajeria_Interna {
 			}				
 		});
 		
-		// Botón por defecto bAceptar
+		// Botï¿½n por defecto bAceptar
 		shell.setDefaultButton(bAceptar);
-		// Ajustar el tamaño de la ventana al contenido
+		// Ajustar el tamaï¿½o de la ventana al contenido
 		
 		shell.setSize(_padre.getSize());
 		// Mostrar ventana centrada sobre el padre

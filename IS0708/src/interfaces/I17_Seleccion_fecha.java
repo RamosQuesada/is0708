@@ -14,6 +14,9 @@ import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import java.util.Date;
+
+import aplicacion.Vista;
 
 public class I17_Seleccion_fecha {
 	private Shell padre = null;
@@ -21,17 +24,23 @@ public class I17_Seleccion_fecha {
 	//private Double fechaNumerica;
 	private DateTime calendario;
 	private boolean seleccionado=false;
-	private String fecha;
-	public I17_Seleccion_fecha(Shell padre, Text texto) {
+	private Date fecha;
+	public I17_Seleccion_fecha(Shell padre) {
 		this.padre = padre;
-		texto_asociado=texto;
 		mostrarVentana();
-		}
+	}
 	
+	/**
+	 * Devuelve la fecha seleccionada
+	 * @return la fecha seleccionada
+	 */
+	public Date getFecha(){
+		return fecha;
+	}
 	public void mostrarVentana() {
 		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 
-		final Image ico_mens_l = new Image(padre.getDisplay(), I02_Menu_principal.class.getResourceAsStream("ico_mens1_v.gif"));
+		final Image ico_mens_l = new Image(padre.getDisplay(), I17_Seleccion_fecha.class.getResourceAsStream("ico_mens1_v.gif"));
 		
 		//Establecemos el layout del shell
 		GridLayout lShell = new GridLayout();
@@ -56,12 +65,9 @@ public class I17_Seleccion_fecha {
 		//Introducimos los valores y eventos de Fecha Inicio
 		bEnviar.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				final String fecha2;
-				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
-				fecha2=(String.valueOf(calendario.getDay()) + " de " + meses[calendario.getMonth()]+ " de " + String.valueOf(calendario.getYear()));
-				fecha = String.valueOf(calendario.getYear()) + "-" + aplicacion.Util.aString(calendario.getMonth())+ "-" + aplicacion.Util.aString(calendario.getDay());
-				// TODO Poner esto más mono usando fecha2
-				texto_asociado.setText(fecha);
+				// TODO Cambiar a clase Calendar o GregorianCalendar
+				fecha = new Date(calendario.getYear(),calendario.getMonth(),calendario.getDay());
+				//fecha = String.valueOf(calendario.getYear()) + "-" + aplicacion.Util.aString(calendario.getMonth())+ "-" + aplicacion.Util.aString(calendario.getDay());
 				shell.dispose();
 			}				
 		});
@@ -77,7 +83,7 @@ public class I17_Seleccion_fecha {
 		});
 		
 
-		// Ajustar el tamaño de la ventana al contenido
+		// Ajustar el tamaï¿½o de la ventana al contenido
 		shell.pack();
 		// Mostrar ventana centrada sobre el padre
 		shell.setLocation(padre.getBounds().width/2 + padre.getBounds().x - shell.getSize().x/2, padre.getBounds().height/2 + padre.getBounds().y - shell.getSize().y/2);
