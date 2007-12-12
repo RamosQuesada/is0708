@@ -1,6 +1,6 @@
 package algoritmo;
 
-import java.util.ArrayList;
+import aplicacion.Util;
 
 /**
  * Esta clase contiene el max/min numero de personas y patron de expertos/principiantes, que se van a utilizar en la clase calendario
@@ -17,10 +17,10 @@ public class HoraCalendario {
 	 * Constructora por defecto. Inicializa atributos min y max a 0 y patron a 1
 	 */
 	public HoraCalendario(){
-		max=0;
-		min=0;
-		expertos=1;
-		principiantes=1;	
+		max = 0;
+		min = 0;
+		expertos = 1;
+		principiantes = 1;	
 	}
 	
 	/**
@@ -31,10 +31,23 @@ public class HoraCalendario {
 	 * @param inexpert Numero de empleados principiantes simultaneos en el departamento
 	 */
 	public HoraCalendario(int max,int min,int exp,int inexpert){//Otra constructora
-		this.max=max;
-		this.min=min;
-		this.expertos=exp;
-		this.principiantes=inexpert;	
+		this.max = max;
+		this.min = min;
+		this.expertos = exp;
+		this.principiantes = inexpert;	
+	}
+	
+	/**
+	 * Constructora con parametros
+	 * @param max Numero maximo de empleados simultaneos en el departamento
+	 * @param min Numero minimo de empleados simultaneos en el departamento
+	 * @param patron Patron de empleados "XeYp"
+	 */
+	public HoraCalendario(int max,int min,String patron){//Otra constructora
+		this.max = max;
+		this.min = min;
+		expertos = Util.numExpertos(patron);
+		principiantes=Util.numPrincipiantes(patron);	
 	}
 	
 	/**
@@ -98,6 +111,23 @@ public class HoraCalendario {
 	 */
 	public void setPrincipiantes(int principiantes) {
 		this.principiantes = principiantes;
+	}
+	
+	/**
+	 * Consulta el patron "XeYp"
+	 * @return patron
+	 */
+	public String getPatron(){
+		return Util.patron(expertos, principiantes);
+	}
+	
+	/**
+	 * Modifica el patron "XeYp"
+	 * @param patron
+	 */
+	public void setPatron(String patron){
+		expertos = Util.numExpertos(patron);
+		principiantes = Util.numPrincipiantes(patron);
 	}
 	
 }
