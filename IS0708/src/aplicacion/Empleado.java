@@ -55,7 +55,7 @@ public class Empleado implements Drawable {
 	private Empleado superior;
 	private String nombre, apellido1, apellido2;
 	private Color color;
-	private int nvend;
+	private int idEmpl;
 	private Date fechaNac;
 	private int sexo; // 0 femenino, 1 masculino
 	private String email;
@@ -79,7 +79,7 @@ public class Empleado implements Drawable {
 	/**
 	 * Constructor de un empleado. No se hace ninguna comprobaci�n de ninguno de los datos.
 	 * @param idSuperior	el id del empleado superior. Normalmente, el que llama al constructor
-	 * @param nvend			el id del empleado o número de vendedor, debe ser un número de 8 cifras
+	 * @param idEmpl			el id del empleado o número de vendedor, debe ser un número de 8 cifras
 	 * @param nombre		el nombre del empleado
 	 * @param apellido1		el primer apellido del empleado
 	 * @param apellido2		el segundo apellido del empleado
@@ -106,12 +106,12 @@ public class Empleado implements Drawable {
 	 * @param fAlta			fecha en que el empleado empieza a trabajar en la empresa
 	 * @param color			un color con el que se representará al empleado en los cuadrantes
 	 */
-	public Empleado (int idSuperior, int nvend, String nombre, String apellido1, String apellido2, 
+	public Empleado (int idSuperior, int idEmpl, String nombre, String apellido1, String apellido2, 
 			Date fechaNac, int sexo, String email, String password, int grupo,
 			int departamento, int contrato, Date fContrato, Date fAlta, Color color,
 			ArrayList<Integer> idDepartamentos, ArrayList<Integer> idSubordinados) {
 		this.idSuperior	= idSuperior;
-		this.nvend		= nvend;
+		this.idEmpl		= idEmpl;
 		this.nombre		= nombre;
 		this.apellido1	= apellido1;
 		this.apellido2	= apellido2;
@@ -134,8 +134,8 @@ public class Empleado implements Drawable {
 	 * Constructor para hacer pruebas
 	 * @deprecated eliminar cuando ya no sea necesario
 	 */
-	public Empleado(int nvend, String nombre, Color color){
-		this.nvend = nvend;
+	public Empleado(int idEmpl, String nombre, Color color){
+		this.idEmpl = idEmpl;
 		this.nombre = nombre;
 		this.color = color;
 		turno = new Turno();
@@ -145,8 +145,8 @@ public class Empleado implements Drawable {
 	 * Constructor para hacer pruebas, Algoritmo
 	 * @deprecated eliminar cuando ya no sea necesario
 	 */
-	public Empleado(int nvend, String nombre, Turno tur){
-		this.nvend = nvend;
+	public Empleado(int idEmpl, String nombre, Turno tur){
+		this.idEmpl = idEmpl;
 		this.nombre = nombre;
 		turno = tur;
 	}
@@ -211,20 +211,20 @@ public class Empleado implements Drawable {
 	 * Devuelve el número de vendedor de un empleado.
 	 * @return	el número de vendedor del empleado.
 	 */
-	public int getNVend() {
-		return nvend;
+	public int getIdEmpl() {
+		return idEmpl;
 	}
 	
 	/**
 	 * Intenta asignar un número de vendedor a un empleado, que debe ser un número de 8 cifras.
 	 * Si no es correcto, no produce ningún cambio.
-	 * @param	nvend el número de vendedor a asignar al empleado.
+	 * @param	idEmpl el número de vendedor a asignar al empleado.
 	 * @return	<i>true</i> si se ha asignado correctamente el número, <i>false</i> si 
 	 * 			el string no tiene longitud 8 o no es un número.
 	 */
-	public boolean setNVend(String nvend){
-		int n = Util.convertirNVend(nvend);
-		if (n>0) this.nvend = n;
+	public boolean setIdEmpl(String idEmpl){
+		int n = Util.convertirNVend(idEmpl);
+		if (n>0) this.idEmpl = n;
 		return n>0;
 	}
 
@@ -449,7 +449,7 @@ public class Empleado implements Drawable {
 	public boolean addSubordinado(Empleado empleado) {
 		boolean esta = idSubordinados.contains(empleado);
 		if (!esta) {
-			idSubordinados.add(empleado.nvend);
+			idSubordinados.add(empleado.idEmpl);
 			// Si he a�adido a un jefe, el rango pasa a ser gerente
 			if (empleado.getRango()==2) rango=3;
 		}

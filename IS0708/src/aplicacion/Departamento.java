@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Clase que representa un departamento
- * @author David Rodilla Rodr�guez
+ * @author David Rodilla Rodríguez
  */
 public class Departamento {
 	/** @deprecated */
@@ -20,7 +20,7 @@ public class Departamento {
 	/**
 	 * Numero asociado del departamento
 	 */
-	private String _numeroDepartamento;
+	private int _numeroDepartamento;
 	/**
 	 * Jefe del departamento
 	 */
@@ -41,7 +41,7 @@ public class Departamento {
 	 * @param listaEmpleados lista de empleados del departamento
 	 * @param calendario calendario de festivos del departamento
 	 */
-	public Departamento(String nombreDepartamento,String numeroDepartamento,
+	public Departamento(String nombreDepartamento, int numeroDepartamento,
 			Empleado jefeDepartamento,ArrayList<Empleado> listaEmpleados,Calendario calendario){
 		this._numeroDepartamento=numeroDepartamento;
 		this._jefeDepartamento=jefeDepartamento;
@@ -58,7 +58,7 @@ public class Departamento {
 	 * @param numeroDepartamento Numero del departamento
 	 * @param jefeDepartamento Jefe del departamento
 	 */
-	public Departamento(String nombreDepartamento,String numeroDepartamento,
+	public Departamento(String nombreDepartamento, int numeroDepartamento,
 			Empleado jefeDepartamento){
 		this._numeroDepartamento=numeroDepartamento;
 		this._jefeDepartamento=jefeDepartamento;
@@ -94,7 +94,7 @@ public class Departamento {
 	 * Getter del numero asociado del departamento
 	 * @return Integer numero asociado
 	 */
-	public String getNumeroDepartamento(){
+	public int getNumeroDepartamento(){
 		return _numeroDepartamento;
 	}
 	

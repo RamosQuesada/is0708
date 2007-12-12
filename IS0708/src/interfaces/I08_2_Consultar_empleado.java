@@ -106,7 +106,7 @@ public class I08_2_Consultar_empleado {
 		final Button bCancelar		= new Button(shell, SWT.PUSH);
 		// Labels
 		lNVend			.setText(bundle.getString("Vendedor"));
-		lPassword		.setText(bundle.getString("Contraseña"));
+		lPassword		.setText(bundle.getString("Contraseï¿½a"));
 		lEMail			.setText(bundle.getString("EMail"));
 		lNombre			.setText(bundle.getString("Nombre"));
 		lApell1			.setText(bundle.getString("I08_lab_Apellido1"));
@@ -121,7 +121,7 @@ public class I08_2_Consultar_empleado {
 		lColor			.setText(bundle.getString("I08_lab_SelColor"));
 		// pone datos de empleado
 		try{
-			tNVend			.setText(""+empleado.getNVend());
+			tNVend			.setText(""+empleado.getIdEmpl());
 			//tPassword		.setText(empleado.getPassword());
 			tPassword		.setText("********");
 			tEMail			.setText(empleado.getEmail());
@@ -203,7 +203,7 @@ public class I08_2_Consultar_empleado {
 
 
 		
-		// Un listener con lo que hace el botón bCancelar
+		// Un listener con lo que hace el botï¿½n bCancelar
 		SelectionAdapter sabCancelar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 					shell.dispose();	
@@ -223,9 +223,9 @@ public class I08_2_Consultar_empleado {
 			}	
 		});
 
-		// Botón por defecto bAceptar
+		// Botï¿½n por defecto bAceptar
 		shell.setDefaultButton(bImprimir);
-		// Ajustar el tamaño de la ventana al contenido
+		// Ajustar el tamaï¿½o de la ventana al contenido
 		shell.pack();
 		// Mostrar ventana centrada sobre el padre
 		shell.setLocation(padre.getBounds().width/2 + padre.getBounds().x - shell.getSize().x/2, padre.getBounds().height/2 + padre.getBounds().y - shell.getSize().y/2);
