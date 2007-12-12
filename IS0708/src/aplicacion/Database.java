@@ -374,14 +374,39 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 	 * @param patron distribucion de los dias que trabaja y los que no
 	 * @param duracionCiclo periodo de tiempo que le corresponde al patron
 	 * @param salario paga del empleado 
-	 * @return
+	 * @return true si se ha realizado correctamente o false en caso contrario
 	 */
-	public boolean insertarContrato(int idContrato,int turnoInicial,String nombre,String patron,int duracionCiclo,float salario){
+	public boolean insertarContrato(int idContrato,int turnoInicial,String nombre,String patron,
+			int duracionCiclo,double salario){
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO CONTRATO values (" + idContrato + ", " + turnoInicial + ", '" + nombre +"', '" + patron +"', " + duracionCiclo +", " + salario +");");
+			st.executeUpdate("INSERT INTO CONTRATO values (" + idContrato + ", " + turnoInicial + ", '" 
+					+ nombre +"', '" + patron +"', " + duracionCiclo +", " + salario +");");
 			System.out.println("Contrato insertado");
+			correcto = true;
+		} catch (SQLException e) {
+			correcto = false;
+		}
+		return correcto;
+	}
+	
+	/**
+	 * 
+	 * @param numVendedor representa al trabajador
+	 * @param idTurno indica el turno con el que ha trabajado el empleado
+	 * @param fecha dia en el que un empleado a trabajado con un turno determinado
+	 * @param horaEntrada hora a la que entra a trabajar
+	 * @param horaSalida hora a la que sale
+	 * @return true si se ha realizado correctamente o false en caso contrario
+	 */
+	public boolean insertarTrabaja(int numVendedor,int idTurno,Time fecha,Time horaEntrada,Time horaSalida){
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("INSERT INTO trabaja values (" + numVendedor + ", " + idTurno + ", '" + fecha 
+					+"', '" + horaEntrada +"', '" + horaSalida +"');");
+			System.out.println("insertado en la tabla trabaja");
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
@@ -393,12 +418,13 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 	
 	
 	
+	
+	
 	public static void main(String[] IS0708) {
 		Database prueba = new Database();
 		prueba.abrirConexion();
 		
-		Time h = new Time(10000000);
-					
+		Time h = new Time(10000000);					
 		
 		prueba.insertarTurno(1, "prueba", h, h, h, 10);
 		prueba.insertarDistribucion(9, "Martes", "1e5p", 10, 7, 1);
@@ -409,6 +435,7 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		//prueba.insertarUsuario(1234, "Pablo", "Gervas", "Gomez_Navarro","2007-12-11" , "m", "gervas@is.com", "ballenas", "p","2007-12-11" , "2007-12-11", 0, 123, "empleado", 1, 1);
 		prueba.insertarDepartamento("is", 123);
 		prueba.insertarNumerosDepartamento("123", "is");
+		prueba.insertarContrato(1, 1, "turnoUno", "3t4d", 7, 123.123);
 		
 	  //  Date d = new Date(10000000);
 	    prueba.insertarFestivo(9, "2007-12-11", "2007-12-11","2e7p", 15, 10, 1);
