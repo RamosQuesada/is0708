@@ -1416,12 +1416,14 @@ public class I02_Principal {
 	 * desaparecer si ha terminado.
 	 * @param i Un valor de 0 a 99, ó 100 para que desaparezca.
 	 */
-	public void setProgreso(int i){
+	public void setProgreso(String mensaje, int i){
 		if (i>=0 && i<100) {
+			lEstado.setText(mensaje);
 			pbEstado.setVisible(true);
 			pbEstado.setSelection(i);
 		}
 		else if (i==100) {
+			lEstado.setText("");
 			pbEstado.setVisible(false);
 		}
 	}	

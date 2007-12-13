@@ -43,10 +43,11 @@ public class Util {
 	}
 
 	/**
-	 * Convierte un string a n�mero de vendedor, comprobando que es v�lido. Devuelve -1 si no lo es.
-	 * @param nvend el string a convertir
-	 * @return el n�mero de vendedor, o -1 si el string es incorrecto
-	 * @author Daniel Dionne
+	 * Convierte un string a número de vendedor, comprobando que es válido. Devuelve -1
+	 * si no lo es.
+	 * @param	nvend el string a convertir
+	 * @return	el número de vendedor, o -1 si el string es incorrecto
+	 * @author	Daniel Dionne
 	 */
 	public static int convertirNVend(String nvend) {
 		int n = -1;
@@ -55,7 +56,7 @@ public class Util {
 				n = Integer.valueOf(nvend);
 			}
 			catch (NumberFormatException e) {
-				System.out.println("I08.1_Empleado nuevo: N�mero de vendedor incorrecto.");
+				System.out.println("aplicacion.Util: Número de vendedor incorrecto.");
 			}
 		}
 		return n;

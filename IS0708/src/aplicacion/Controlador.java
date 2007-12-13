@@ -347,4 +347,17 @@ public class Controlador {
 	// }
 	// TODO hacer insertarContrato
 
+	
+/***************************************************************************
+ * Otros métodos 
+ */
+
+	/**
+	 * Informa del progreso actual de la tarea en el interfaz
+	 * @param mensaje el mensaje a mostrar
+	 * @param i el progreso, de 0 a 100
+	 */
+	public void setProgreso(String mensaje, int i) {
+		_vista.setProgreso(mensaje, i);
+	}
 }
