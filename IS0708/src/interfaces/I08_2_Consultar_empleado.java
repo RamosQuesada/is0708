@@ -106,19 +106,19 @@ public class I08_2_Consultar_empleado {
 		final Button bCancelar		= new Button(shell, SWT.PUSH);
 		// Labels
 		lNVend			.setText(bundle.getString("Vendedor"));
-		lPassword		.setText(bundle.getString("Contrase�a"));
+		lPassword		.setText(bundle.getString("Contrasena"));
 		lEMail			.setText(bundle.getString("EMail"));
 		lNombre			.setText(bundle.getString("Nombre"));
 		lApell1			.setText(bundle.getString("I08_lab_Apellido1"));
 		lApell2			.setText(bundle.getString("I08_lab_Apellido2"));
-		lAnoNac			.setText(bundle.getString("I08_lab_AnoNacimiento"));
+		lAnoNac			.setText(bundle.getString("I08_2_lab_FNacimiento"));
 		lSexo			.setText(bundle.getString("Sexo"));
 		lContrato		.setText(bundle.getString("I08_lab_TipoContrato"));
 		lExperiencia	.setText(bundle.getString("Experiencia"));
 		lDepto			.setText(bundle.getString("Departamento"));
-		lFAlta			.setText(bundle.getString("I08_lab_FAlta"));
-		lFContrato		.setText(bundle.getString("I08_lab_FContr"));
-		lColor			.setText(bundle.getString("I08_lab_SelColor"));
+		lFAlta			.setText(bundle.getString("I08_2_lab_FAlta"));
+		lFContrato		.setText(bundle.getString("I08_2_lab_FContr"));
+		lColor			.setText(bundle.getString("I08_2_lab_SelColor"));
 		// pone datos de empleado
 		try{
 			tNVend			.setText(""+empleado.getIdEmpl());
