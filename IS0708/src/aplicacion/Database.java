@@ -494,7 +494,7 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO VENTAS values (" + idTurno + ", " + idContrato +");");
+			st.executeUpdate("INSERT INTO ListaTurnosPorContrato values (" + idTurno + ", " + idContrato +");");
 			System.out.println("turnoPorContrato insertado");
 			correcto = true;
 		} catch (SQLException e) {
@@ -502,6 +502,50 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		}
 		return correcto;
 	}
+	
+	/**
+	 * 
+	 * @param idIncidencia identificador de la incidencia
+	 * @param descripcion breve descripcion de la incidencia
+	 * @return true si se ha realizado correctamente o false en caso contrario
+	 */
+	public boolean insertarIncidencia(String descripcion){
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("INSERT INTO INCIDENCIAS values (" + 0 + ", '" + descripcion +"');");
+			System.out.println("incidencia insertada");
+			correcto = true;
+		} catch (SQLException e) {
+			correcto = false;
+		}
+		return correcto;
+	}
+	
+	/**
+	 * 
+	 * @param idIncidencia identificador de la incidencia
+	 * @param numVendedor identificador del empleado
+	 * @param fechaInicio fecha de inicio de la incidencia
+	 * @param fechaFin fecha de finalizacion de la incidencia
+	 * @return true si se ha realizado correctamente o false en caso contrario
+	 */
+	public boolean insertarTieneIncidencia(int idIncidencia,int numVendedor,Time fechaInicio,Time fechaFin){
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("INSERT INTO TieneIncidencia values (" + idIncidencia + ", " + numVendedor 
+					+ ", '" + fechaInicio +"','" + fechaFin +"');");
+			System.out.println("incidencia de una persona insertada");
+			correcto = true;
+		} catch (SQLException e) {
+			correcto = false;
+		}
+		return correcto;
+	}
+	
+	
+	
 	
 	
 	
@@ -522,7 +566,14 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		//prueba.insertarUsuario(1234, "Pablo", "Gervas", "Gomez_Navarro","2007-12-11" , "m", "gervas@is.com", "ballenas", "p","2007-12-11" , "2007-12-11", 0, 123, "empleado", 1, 1);
 		prueba.insertarDepartamento("is", 123);
 		prueba.insertarNumerosDepartamento("123", "is");
+		
+		
 		prueba.insertarContrato(1, 1, "turnoUno", "3t4d", 7, 123.123);
+		prueba.insertarIncidencia("preñadasssssss");
+		prueba.insertarTieneIncidencia(1, 1, new Time(0), new Time(10));
+		prueba.insertarTrabaja(1, 1, new Time(0),  new Time(0), new Time(0));
+		prueba.insertarTurnoPorContrato(1, 1);
+		prueba.insertarVenta(1, new Time(0), 123.43);
 		
 	  //  Date d = new Date(10000000);
 	    prueba.insertarFestivo(9, "2007-12-11", "2007-12-11","2e7p", 15, 10, 1);
