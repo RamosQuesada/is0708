@@ -153,7 +153,7 @@ public class Controlador {
 	private ArrayList<Integer> getIdsDepartamentos(int idEmpl) {
 		// TODO Auto-generated method stub
 		ArrayList<Integer> depts=new ArrayList<Integer>();
-		ResultSet rs=db.obtenIdsDepartamentos(idEmpl);
+		ResultSet rs=_db.obtenIdsDepartamentos(idEmpl);
 		try {
 			while (rs.next()) {
 				int idDept = rs.getInt(0);
@@ -174,7 +174,7 @@ public class Controlador {
 	private ArrayList<Integer> getIdsSubordinados(int idEmpl) {
 		// TODO Auto-generated method stub
 		ArrayList<Integer> subs=new ArrayList<Integer>();
-		ResultSet rs=db.obtenIdsSubordinados(idEmpl);
+		ResultSet rs=_db.obtenIdsSubordinados(idEmpl);
 		try {
 			while (rs.next()) {
 				int idSub = rs.getInt(0);
