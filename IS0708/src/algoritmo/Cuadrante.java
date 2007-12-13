@@ -17,7 +17,7 @@ public class Cuadrante {
 	
 	public Cuadrante(int mes,int anio){//creacion de un cuadrante vacio
 		this.mes=mes;
-		this.numDias=Util.dameDias(mes, anio);
+		this.numDias=Util.dameDias(mes,anio);
 		this.cuad = new ArrayList[numDias];
 		this.anio = anio;
 		for(int i=0;i<numDias;i++){
