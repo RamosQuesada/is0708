@@ -548,7 +548,20 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		return correcto;
 	}
 	
-	
+	public ResultSet obtenDistribucion (int idDepartamento, String DiaSemana){
+		ResultSet r=null;		
+		try {			
+			st = con.createStatement();
+			r = st.executeQuery(
+					"SELECT * FROM DISTRIBUCION WHERE idDepartamento = idDepartamento AND DiaSemana=DiaSemana");			
+			
+		}
+		catch (SQLException e) {
+			// TODO: handle exception
+			System.out.println("Error al realizar la consulta del empleado ");
+		}
+		return r;
+	}
 	
 	
 	

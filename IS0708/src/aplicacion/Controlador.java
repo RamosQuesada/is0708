@@ -232,6 +232,12 @@ public class Controlador {
 	public boolean insertDepartamento(Departamento departamento) {
 		return false;
 	}
+	
+	public ArrayList getDistribucion (int idDepartamento){
+		ArrayList lista= new ArrayList();
+		ResultSet r;
+		r=db.obtenDistribucion(idDepartamento);
+	}
 
 /***************************************************************************
  * Métodos relacionados con contratos
