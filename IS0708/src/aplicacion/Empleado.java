@@ -540,10 +540,11 @@ public class Empleado implements Drawable {
 					puede = false;
 				}
 			}
+		return puede;
 		}
 		
-		return puede;
-	}
+		
+	
 	
 	public Color dameColor() {
 		return color;
