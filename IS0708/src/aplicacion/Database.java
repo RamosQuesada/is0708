@@ -168,6 +168,10 @@ public class Database extends Thread {
 	 * @param horasExtras
 	 *            Lleva en cuenta el numero de horas extras. Debe ser un entero
 	 *            para saber cuando debe horas o le deben horas
+	 * @param felicidad
+	 * 			  Grado de satisfaccion de un usuario con su horario
+	 * @param idioma
+	 * 			  Idioma de la aplicacion para el usuario
 	 * @param idDept
 	 *            Hace referencia a la secci�n dentro del departamento en
 	 *            cuesti�n
@@ -182,7 +186,7 @@ public class Database extends Thread {
 	public boolean insertarUsuario(int id, String nombre, String apellido1,
 			String apellido2, String fechaNac, String sexo, String email,
 			String password, String indicadorGrupo, String fechaContrato,
-			String fechaEntrada, int horasExtras, int idDept, String rango,
+			String fechaEntrada, int horasExtras,int felicidad, int idioma, int idDept, String rango,
 			int idContrato, int idTurno) {
 		boolean correcto = false;
 		try {			
@@ -191,7 +195,7 @@ public class Database extends Thread {
 					+ nombre + "', '" + apellido1 + "' ,'" + apellido2 + "','"
 					+ fechaNac + "','" + sexo + "','" + email + "','"
 					+ password + "','" + indicadorGrupo + "','" + fechaContrato + "','"
-					+ fechaEntrada + "','" + horasExtras + "','" + idDept
+					+ fechaEntrada + "','" + horasExtras + "','" + felicidad + "','" + idioma+ "','" + idDept
 					+ "','" + rango + "','" + idContrato + "','" + idTurno
 					+ "')");
 			System.out.println("Usuario insertado");
