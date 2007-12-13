@@ -591,7 +591,29 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		return rs;
 	}
 	
+	/**
+	 * 
+	 *
+	 * @return Devuelve un ResultSet con los turnos de los empleados
+	 */
 	
+	public ResultSet dameListaTurnosEmpleados() {
+		ResultSet r=null;	
+		
+		try {			
+			st = con.createStatement();
+			r = st.executeQuery(
+					"SELECT * FROM TURNOS " );	
+
+		
+		}
+		
+		catch (SQLException e) {
+			// TODO: handle exception
+			System.out.println("Error al realizar la consulta Lista de Turnos ");
+		}
+		return r;		
+	}
 	
 	
 	public static void main(String[] IS0708) {
