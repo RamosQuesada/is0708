@@ -94,12 +94,12 @@ public class Controlador {
 			Color color=null;
 			int idSuperior=this.getIdSuperior(idEmpl);
 			ArrayList<Integer> idSubordinados=this.getIdsSubordinados(idEmpl);
-			ArrayList<Integer> idDepartamentos=this.getIdsDepartamentos(idEmpl);
+			ArrayList<String> idDepartamentos=this.getIdsDepartamentos(idEmpl);
 			int felicidad=rs.getInt("Felicidad");
 			int idioma=rs.getInt("Idioma");
 			emp=new Empleado(idSuperior,id,nombre,apellido1,apellido2,fechaNac,sexo,
 							 email,password,grupo,rango,idContrato,fechaContrato,
-							 fechaAlta,color,idSubordinados,idDepartamentos,felicidad,idioma);
+							 fechaAlta,color,idDepartamentos,idSubordinados,felicidad,idioma);
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println("Error al obtener el Empleado de la base de datos");
@@ -150,13 +150,13 @@ public class Controlador {
 	 * @param idEmpl	identificador del empleado
 	 * @return			los departamentos a los que pertenece el empleado
 	 */
-	private ArrayList<Integer> getIdsDepartamentos(int idEmpl) {
+	private ArrayList<String> getIdsDepartamentos(int idEmpl) {
 		// TODO Auto-generated method stub
-		ArrayList<Integer> depts=new ArrayList<Integer>();
+		ArrayList<String> depts=new ArrayList<String>();
 		ResultSet rs=_db.obtenIdsDepartamentos(idEmpl);
 		try {
 			while (rs.next()) {
-				int idDept = rs.getInt(0);
+				String idDept = rs.getString(0);
 				depts.add(idDept);
 			}
 		} catch (Exception e) {
@@ -182,7 +182,7 @@ public class Controlador {
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error al obtener Lista de Departamentos en la base de datos");
+			System.out.println("Error al obtener Lista de Subordinados en la base de datos");
 		}		
 		return subs;
 	}

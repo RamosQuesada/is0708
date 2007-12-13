@@ -9,10 +9,13 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.graphics.*;
 
-import java.util.Date;
+import java.sql.Date;
 import java.sql.Time;
 
 import aplicacion.Controlador;
+
+//DANIEL HE CAMBIADO METODOS EN LOS QUE INTERVENIA CONTACTOS CON BD CON RELACION A LOS CAMIOS DE ESTA MAÑANA
+//CHEMA
 
 /**
  * Esta clase representa a un empleado.
@@ -66,6 +69,7 @@ public class Empleado implements Drawable {
 	private Date fContrato;
 	private Date fAlta;
 	private int felicidad;
+	private int idioma;
 	private ArrayList<Integer> idSubordinados;
 	private ArrayList<Empleado> subordinados;
 	private ArrayList<String> idDepartamentos;
@@ -209,15 +213,14 @@ public class Empleado implements Drawable {
 	 * @param fAlta			fecha en que el empleado empieza a trabajar en la empresa
 	 * @param idSubordinados
 	 * @param idDepartamentos
+	 * @param felicidad		Grado de satisfaccion de un usuario con su horario
+	 * @param idioma 		Idioma de la aplicacion para el usuario
 	 * 
 	 */
-	public Empleado (Integer idSuperior, int idEmpl,
-			String nombre, String apellido1, String apellido2, Color color,
-			Date fechaNac, int sexo, String email, String password,
-			int grupo, int rango, int contrato,
-			Date fContrato,	Date fAlta, int felicidad,
-			ArrayList<String> idDepartamentos,
-			ArrayList<Integer> idSubordinados) {
+	public Empleado (Integer idSuperior, int idEmpl, String nombre, String apellido1,
+			String apellido2, Date fechaNac, int sexo, String email, String password,
+			int grupo, int rango, int contrato, Date fContrato, Date fAlta, Color color,
+			ArrayList<String> idDepartamentos, ArrayList<Integer> idSubordinados,int felicidad, int idioma) {
 		if (idSuperior==null) this.idSuperior=0;
 		else setIdSuperior(idSuperior);
 		setIdEmpl(idEmpl);
@@ -240,6 +243,10 @@ public class Empleado implements Drawable {
 		felicidad = 0;
 		subordinados	= new ArrayList<Empleado>();
 		departamentos	= new ArrayList<Departamento>();
+		this.felicidad=felicidad;
+		this.idioma=idioma;
+		
+
 	}
 
 	/**
@@ -675,6 +682,7 @@ public class Empleado implements Drawable {
 		boolean esta = idSubordinados.contains(empleado.getIdEmpl());
 		if (!esta) {
 			idSubordinados.add(empleado.idEmpl);
+			subordinados.add(empleado);
 			// Si he añadido a un jefe, el rango pasa a ser gerente
 			if (empleado.getRango()==2) rango=3;
 		}
@@ -780,7 +788,6 @@ public class Empleado implements Drawable {
 	public Color dameColor() {
 		return color;
 	}
-
 	
 	
 	/**
