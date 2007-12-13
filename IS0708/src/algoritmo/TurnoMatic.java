@@ -137,7 +137,9 @@ public class TurnoMatic {
 				if(turno.getIdTurno() == "1" && empleados.size()<max){
 					
 					empleados.add(emp);
-					trab = new Trabaja(emp.getIdEmpl(),0,0);
+					Time pr1 = new Time(19,49,00);
+					Time pr2 = new Time(19,49,00);
+					trab = new Trabaja(emp.getIdEmpl(),pr1,pr2);
 					cu[i].add(trab);
 						
 				}				

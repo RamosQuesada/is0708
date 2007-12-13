@@ -45,18 +45,17 @@ public class PruebaAlgoritmo {
 		alg.ejecutaAlgoritmo(disponibles);
 		alg.imprimeCuadrante();
 		//alg.imprimeEstructura();
-		/*Time pr1 = new Time(19,49,00);
+		Time pr1 = new Time(19,49,00);
 		System.out.println(pr1.toString());
 		Time pr2 = Util.calculaFinDescanso(pr1, 20);
 		System.out.println(pr2.toString());
-		*/
 		
 
-		// Prueba de inicializaTrozos
-		/*ArrayList<Turno> turnos = new ArrayList<Turno>();
+		//Prueba de inicializaTrozos
+		//ArrayList<Turno> turnos = new ArrayList<Turno>();
 		//turnos.add(t1);
 		//turnos.add(t2);
-		ArrayList<Time> horas = new ArrayList<Time>();
+		/*ArrayList<Time> horas = new ArrayList<Time>();
 		for (int i=0; i<turnos.size(); i++){
 			if (!horas.contains(turnos.get(i).getHoraEntrada()))
 				horas.add(turnos.get(i).getHoraEntrada());
@@ -79,9 +78,9 @@ public class PruebaAlgoritmo {
 			trozosHorario.add(j,horas.get(i));
 		}
 		System.out.println(trozosHorario.toString()); // Ordenada
+		
+		
 		*/
-		
-		
 		// Prueba de las funciones Util.numExpertos(patron)
 		//                         Util.numPrincipiantes(patron)
 		//                         Util.patron(int expertos, int principiantes)
