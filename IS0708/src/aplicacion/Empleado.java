@@ -44,22 +44,17 @@ import aplicacion.Controlador;
  *
  */
 public class Empleado implements Drawable {	
-	/** @deprecated */
-	// TODO quitar esta clase
-	private class Contrato {};
 	
-	// TODO Para algunas variables, se guarda un entero al identificador de la clase 
+	// Para algunas variables, se guarda un entero al identificador de la clase 
 	// y también un puntero. La idea es inicializar el puntero a null, y actualizarlo
 	// en el primer acceso. Así se ahorran accesos innecesarios a la base de datos.
-	// Hay que hacer los getters y setters con cuidado.
-	// 
 	// Dani (yo me entiendo...)
 	
 	private int idSuperior;
 	private Empleado superior;
+	private int idEmpl;
 	private String nombre, apellido1, apellido2;
 	private Color color;
-	private int idEmpl;
 	private Date fechaNac;
 	private int sexo; // 0 femenino, 1 masculino
 	private String email;
@@ -73,7 +68,7 @@ public class Empleado implements Drawable {
 	private int felicidad;
 	private ArrayList<Integer> idSubordinados;
 	private ArrayList<Empleado> subordinados;
-	private ArrayList<Integer> idDepartamentos;
+	private ArrayList<String> idDepartamentos;
 	private ArrayList<Departamento> departamentos;
 	
 	// TODO Eliminar el turno, que irá en el Contrato
@@ -127,30 +122,57 @@ public class Empleado implements Drawable {
 	}
 	
 	/**
+	 * Actualiza el contrato cargándolo de la BD
+	 * @param c
+	 */
+	private void actualizarContrato(Controlador c) {
+		// Actualizar el contrato si hace falta
+		if (contrato==null && idContrato!=0) {
+			c.setProgreso("Cargando contrato", 50);
+			contrato= c.getContrato(idContrato);
+			c.setProgreso("",100);
+		}
+	}
+	
+	/**
 	 * Comprueba si un empleado es gerente.
 	 * @return <i>true</i> si es gerente
 	 */
-	private boolean esGerente() {
+	private boolean esGerente(Controlador c) {
+		// Un empleado es gerente cuando subordinados que son jefes o gerentes
 		int i = 0; boolean b = false;
-		while (i<idSubordinados.size() && !b) {
-			// TODO
-			//if (subordinados.get(i).getRango()>1) b = true;
+		actualizarSubordinados(c);
+		while (i<subordinados.size() && !b) {
+			if (subordinados.get(i).getRango()>1) b = true;
 		}
 		return b;
 	}
 
 	/**
-	 * Comprueba si un empleado es jefe
+	 * Comprueba si un empleado es jefe.
 	 * @return <i>true</i> si es jefe
 	 */
-	private boolean esJefe() {
+	private boolean esJefe(Controlador c) {
+		// Un empleado es jefe si tiene departamentos a su cargo
+		// Dicho de otra manera, si es jefe de alguno de sus departamentos
 		int i = 0; boolean b = false;
-		while (i<idDepartamentos.size() && !b) {
-			// TODO Controlar que la lista esté inicializada
+		actualizarDepartamentos(c);
+		while (i<departamentos.size() && !b) {
 			if (this == departamentos.get(i).getJefeDepartamento()) b = true;
 		}
 		return b;
 	}
+	
+	/**
+	 * Actualiza el rango de un empleado.
+	 */
+	private void actualizarRango(Controlador c) {
+		rango = 1;
+		if (esJefe(c)) rango = 2;
+		else if (esGerente(c)) rango=3;
+	}
+
+	
 /*****************************************************************************************
  * Constructor, getters y setters:
  */
@@ -164,6 +186,7 @@ public class Empleado implements Drawable {
 	 * @param nombre		el nombre del empleado
 	 * @param apellido1		el primer apellido del empleado
 	 * @param apellido2		el segundo apellido del empleado
+	 * @param color			un color con el que se representará al empleado en los cuadrantes
 	 * @param fechaNac		la fecha de nacimiento del empleado
 	 * @param sexo			el sexo del vendedor:	<ul>
 	 * 												<li>0 - femenino
@@ -184,19 +207,24 @@ public class Empleado implements Drawable {
 	 * @param contrato		el contrato del empleado
 	 * @param fContrato		fecha en que el empleado empieza a aparecer en los cuadrantes de este departamento
 	 * @param fAlta			fecha en que el empleado empieza a trabajar en la empresa
-	 * @param color			un color con el que se representará al empleado en los cuadrantes
+	 * @param idSubordinados
+	 * @param idDepartamentos
 	 * 
 	 */
-	public Empleado (Integer idSuperior, int idEmpl, String nombre, String apellido1,
-			String apellido2, Date fechaNac, int sexo, String email, String password,
-			int grupo, int rango, int contrato, Date fContrato, Date fAlta, Color color,
-			ArrayList<Integer> idDepartamentos, ArrayList<Integer> idSubordinados) {
+	public Empleado (Integer idSuperior, int idEmpl,
+			String nombre, String apellido1, String apellido2, Color color,
+			Date fechaNac, int sexo, String email, String password,
+			int grupo, int rango, int contrato,
+			Date fContrato,	Date fAlta, int felicidad,
+			ArrayList<String> idDepartamentos,
+			ArrayList<Integer> idSubordinados) {
 		if (idSuperior==null) this.idSuperior=0;
 		else setIdSuperior(idSuperior);
 		setIdEmpl(idEmpl);
 		this.nombre		= nombre;
 		this.apellido1	= apellido1;
 		this.apellido2	= apellido2;
+		this.color = color;
 		this.fechaNac	= fechaNac;
 		this.sexo		= sexo;
 		this.email		= email;
@@ -206,13 +234,12 @@ public class Empleado implements Drawable {
 		this.idContrato	= contrato;
 		this.fContrato	= fContrato;
 		this.fAlta		= fAlta;
-		this.color = color;
 		this.idSubordinados = idSubordinados;
 		this.idDepartamentos = idDepartamentos;
 		superior = null;
+		felicidad = 0;
 		subordinados	= new ArrayList<Empleado>();
 		departamentos	= new ArrayList<Departamento>();
-		
 	}
 
 	/**
@@ -507,8 +534,63 @@ public class Empleado implements Drawable {
 		return rango;
 	}
 	
+	/**
+	 * Asigna un identificador de contrato al empleado.
+	 * @param id el identificador del contrato
+	 */
+	public void setIdContrato(int id) {
+		idContrato = id;
+	}
 	
+	/**
+	 * Asigna un contrato a un empleado.
+	 * @param c el contrato a asignar
+	 */
+	public void setContrato(Contrato c) {
+		// TODO
+		//idContrato = c.getId();
+		contrato = c;
+	}
 	
+	/**
+	 * Devuelve el identificador del contrato de un empleado.
+	 * @return el identificador del contrato
+	 */
+	public int getIdContrato() {
+		return idContrato;
+	}
+	
+	/**
+	 * Devuelve el contrato asignado al empleado.
+	 * @param c el controlador de la aplicación
+	 * @return el contrato del empleado
+	 */
+	public Contrato getContrato(Controlador c) {
+		actualizarContrato(c);
+		return contrato;
+	}
+	
+	/*
+	 * TODO faltan estos getters y setters
+	 * 
+		Date fContrato;
+		Date fAlta;
+	*/
+
+	/**
+	 * Devuelve el parámetro felicidad del empleado.
+	 */
+	public int getFelicidad() {
+		return felicidad;
+	}
+
+	/**
+	 * Asigna un valor de felicidad al empleado.
+	 * @param felicidad el valor de felicidad a asignar
+	 */
+	public void setFelicidad(int felicidad) {
+		this.felicidad = felicidad;
+	}
 	
 	/**
 	 * Devuelve los departamentos a los que pertenece el empleado.
@@ -520,8 +602,10 @@ public class Empleado implements Drawable {
 	}
 
 	/**
-	 * Devuelve el departamento en la posición <i>i</i> de la lista de
-	 * departamentos del empleado.
+	 * Devuelve el departamento en la posición <i>i</i> de la lista de departamentos del 
+	 * empleado. 
+	 * <b>NOTA</b>: Los empleados normales sólo tienen un departamento, el de la posición
+	 * cero.
 	 * @return el departamento número <i>i</i> del usuario
 	 */
 	public Departamento getDepartamento(Controlador c, int i) {
@@ -529,55 +613,52 @@ public class Empleado implements Drawable {
 		return departamentos.get(i);
 	}
 	
-
-	
-
-	
 	/**
-	 * Actualiza el rango de un empleado, según los departamentos
-	 * que tenga y si tiene algún subordinado jefe
+	 * Devuelve el identificador de su departamento principal
+	 * @return el identificador
 	 */
-	public void actualizarRango() {
-		rango = 1;
-		// Si tiene departamentos a su cargo, es jefe
-		if (!idDepartamentos.isEmpty()) rango = 2;
-		// Si alguno de sus empleados es jefe, entonces es gerente
-		if (esGerente()) rango=3;
+	public String getIdDepartamento() {
+		return idDepartamentos.get(0);
 	}
-
+	
 	/**
-	 * Asigna un departamento a un usuario y actualiza su rango.
-	 * @param departamento el nombre del departamento
-	 * @return <i>true</i> si el departamento se ha a�adido, false en caso contrario
+	 * Añade/asigna un departamento a un usuario y actualiza su rango.
+	 * @param c el controlador de la aplicación
+	 * @param departamento el departamento
+	 * @return <i>true</i> si el departamento se ha añadido, false en caso contrario
 	 */
 	public boolean addDepartamento(Departamento departamento) {
-		boolean esta = idDepartamentos.contains(departamento);
+		boolean esta = idDepartamentos.contains(departamento.getNombreDepartamento());
 		if (!esta) {
-			// TODO Controlar que la lista esté inicializada
-			departamentos.add(departamento);
+			idDepartamentos.add(departamento.getNombreDepartamento());
 		}
-		// Si era un empleado, ha pasado a ser jefe.
-		// Si era gerente no hay modificaci�n.
-		if (rango==1) rango = 2;
+		// Si era empleado y ahora tiene más de un departamento, ha pasado a jefe
+		// TODO Esto no me convence nada
+		if (rango==1 && idDepartamentos.size()>1) rango = 2;
+		// Si era jefe o gerente no hay modificación.
 		return !esta;
 	}
 	
-	public boolean removeDepartamento(Departamento departamento) {
-		boolean b = idDepartamentos.remove(departamento);
-		// quitar departamentos afecta a la condici�n de jefe,
-		// pero deja intacta la de gerente
-		// hay que mirar si todav�a tiene alg�n departamento
-		if (rango == 2 && !esJefe()) {
+	/**
+	 * Quita un departamento de un empleado.
+	 * @param c el controlador de la aplicación
+	 * @param departamento el departamento a quitar
+	 * @return
+	 */
+	public boolean removeDepartamento(Controlador c, Departamento departamento) {
+		boolean b = idDepartamentos.remove(departamento.getNombreDepartamento());
+		// Quitar departamentos afecta a la condición de jefe, pero deja intacta la de 
+		// gerente. Hay que mirar si todavía tiene algún departamento.
+		if (rango == 2 && !esJefe(c)) {
 			rango=1;
-			// TODO
-			//superior.actualizarRango();
+			superior.actualizarRango(c);
 		}
 		return b;
 	}
 	
 	/**
 	 * Devuelve la lista de subordinados del empleado 
-	 * @return la lista  de subordinados
+	 * @return la lista de subordinados
 	 */
 	public ArrayList<Empleado> getSubordinados(Controlador c) {
 		actualizarSubordinados(c);
@@ -591,10 +672,9 @@ public class Empleado implements Drawable {
 	 * ya estaba en la lista de subordinados
 	 */
 	public boolean addSubordinado(Empleado empleado) {
-		boolean esta = idSubordinados.contains(empleado);
+		boolean esta = idSubordinados.contains(empleado.getIdEmpl());
 		if (!esta) {
 			idSubordinados.add(empleado.idEmpl);
-			subordinados.add(emp);
 			// Si he añadido a un jefe, el rango pasa a ser gerente
 			if (empleado.getRango()==2) rango=3;
 		}
@@ -627,21 +707,8 @@ public class Empleado implements Drawable {
 		return b;
 	}
 	
-	/**
-	 * Devuelve el identificador de su departamento principal
-	 * @return el identificador
-	 */
-	public int getIdDepartamento() {
-		return idDepartamentos.get(0);
-	}
+
 	
-/*
- * TODO faltan estos getters y setters
- * 
-	Contrato contrato;
-	Date fContrato;
-	Date fAlta;
-*/
 	
 	public ImageData getDrawableImage() {
 		// TODO
@@ -718,11 +785,6 @@ public class Empleado implements Drawable {
 		return color;
 	}
 
-	public void setDepartamento(int departamento) {
-		this.departamento = departamento;
-	}
-
-	
 	
 	
 	/**
@@ -745,4 +807,6 @@ public class Empleado implements Drawable {
 		this.nombre = nombre;
 		turno = tur;
 	}
+
+
 }
