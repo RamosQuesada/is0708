@@ -283,7 +283,7 @@ public class I08_1_Anadir_empleado {
 					System.out.println(fechaNacimiento);
 					// TODO
 					//Empleado emp = new Empleado(vista.getEmpleadoActual().getIdEmpl(), n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, 0, fechaContrato, fechaAlta, null, null, null);
-					Empleado emp = new Empleado(1, n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, 0, fechaContrato, fechaAlta, null, null, null);
+					Empleado emp = new Empleado(1, n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, 0, 0, fechaContrato, fechaAlta, null, null, null);
 					vista.insertEmpleado(emp);
 					shell.dispose();
 				}

@@ -1,4 +1,4 @@
-package interfaces;
+package aplicacion;
 /**
  * 
  * @author Carlos Sanchez Garcia
