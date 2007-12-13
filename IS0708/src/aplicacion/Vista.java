@@ -57,7 +57,11 @@ public class Vista extends Thread {
 	}
 
 	/**
-	 * Constructor de la vista
+	 * Constructor de la vista:<ul>
+	 * <li>Crea el display y el shell
+	 * <li>Crea el gestor de idiomas
+	 * <li>Conecta con la base de datos
+	 * <li>Identifica al usuario
 	 * @param controlador el controlador de la aplicación
 	 * @param db la base de datos de la aplicación
 	 */
@@ -97,7 +101,7 @@ public class Vista extends Thread {
 				// Login de administrador
 				if (login.getNumeroVendedor()==0 && login.getPassword().compareTo("admin")==0) {
 						System.out.println("Administrador identificado");
-						controlador.setEmpleadoActual(new Empleado(0,0,"Administrador","","",null,0,"","admin",0,0,0,0,null,null,null,null,null));
+						controlador.setEmpleadoActual(new Empleado(0,0,"Administrador","","",null,null,0,"","admin",0,0,0,null,null,0,null,null));
 						identificado = true;
 				}
 				else {
@@ -156,17 +160,7 @@ public class Vista extends Thread {
 		i02.setTextoEstado(estado);
 	}
 	
-	/**
-	 * Ajusta la barra de progreso de la ventana principal al valor del 
-	 * parámetro, y la hace desaparecer si ha terminado.
-	 * @param i Un valor de 0 a 99, ó 100 para que desaparezca.
-	 */
-	public void setProgreso(int i){
-		i02.setProgreso(i);
-	}
-
-	
-/****************************************************************************
+/*****************************************************************************************
  * Métodos relacionados con empleados
  */
 	
@@ -207,28 +201,26 @@ public class Vista extends Thread {
 	 * @return <i>true</i> si el empleado ha sido guardado
 	 */
 	public boolean insertEmpleado(Empleado empleado) {
-		setProgreso(50);
-		setTextoEstado("Insertando empleado");
+		setProgreso("Insertando empleado", 50);
 		boolean b = controlador.insertEmpleado(empleado);
-		setProgreso(100);
 		if (b)
-			setTextoEstado("Empleado insertado");
+			setProgreso("Empleado insertado",100);
 		else 
-			setTextoEstado("No se pudo insertar el empleado");
+			setProgreso("No se pudo insertar el empleado", 100);
 		return b;
 	}
 	
 
-/****************************************************************************
+/*****************************************************************************************
  * Métodos relacionados con departamentos
  */
 	
 	/**
-	 * Obtiene un departamento, dado su identificador.
+	 * Obtiene un departamento, dado su nombre.
 	 * @param id el identificador del departamento
 	 * @return una instancia del departamento
 	 */
-	public Departamento getDepartamento(int id){
+	public Departamento getDepartamento(String id){
 		return controlador.getDepartamento(id);
 	}
 	
@@ -241,16 +233,43 @@ public class Vista extends Thread {
 		return controlador.insertDepartamento(departamento);
 	}
 
-/****************************************************************************
- * Otros métodos
+/*****************************************************************************************
+ * Métodos relacionados con mensajes
  */
 	
 	/**
-	 * Muestra el progreso de la tarea actual 
-	 * @param mensaje el mensaje a mostrar
-	 * @param i el progreso, entre 0 y 100
+	 * Obtiene una lista de <i>b</i> mensajes entrantes por orden cronológico, del más
+	 * nuevo al más antiguo, empezando desde el mensaje <i>a</i>.
+	 * @param idEmpl el empleado destinatario de los mensajes
+	 * @param a mensaje por el que empezar, siendo 1 el más reciente
+	 * @param b cuántos mensajes coger
+	 * @return
 	 */
-	public void setProgreso(String mensaje, int i){
-		i02.setProgreso(i);
+	public ArrayList<Mensaje> getMensajesEntrantes(int idEmpl, int a, int b){
+		return controlador.getMensajesEntrantes(idEmpl, a, b);
+	}
+
+	/**
+	 * Obtiene una lista de <i>b</i> mensajes salientes por orden cronológico, del más
+	 * nuevo al más antiguo, empezando desde el mensaje <i>a</i>.
+	 * @param idEmpl el empleado remitente de los mensajes
+	 * @param a mensaje por el que empezar, siendo 1 el más reciente
+	 * @param b cuántos mensajes coger
+	 * @return
+	 */
+	public ArrayList<Mensaje> getMensajesSalientes(int idEmpl, int a, int b){
+		return controlador.getMensajesSalientes(idEmpl, a, b);
+	}
+
+/*****************************************************************************************
+ * Otros métodos
+ */
+	/**
+	 * Ajusta la barra de progreso de la ventana principal al valor del 
+	 * parámetro, y la hace desaparecer si ha terminado.
+	 * @param i Un valor de 0 a 99, ó 100 para que desaparezca.
+	 */
+	public void setProgreso(String s, int i){
+		i02.setProgreso(s,i);
 	}
 }

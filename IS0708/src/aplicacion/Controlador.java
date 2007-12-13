@@ -16,12 +16,12 @@ import algoritmo.HoraCalendario;
  */
 public class Controlador {
 	private Vista _vista;
-	private Database db;
-	private Empleado empleadoActual;
+	private Database _db;
+	private Empleado _empleadoActual;
 
 	
 	public Controlador(Database baseDatos) {
-		this.db = baseDatos;
+		this._db = baseDatos;
 	}
 
 	/**
@@ -30,7 +30,7 @@ public class Controlador {
 	 * @param emp el empleado que ha iniciado sesión
 	 */
 	public void setEmpleadoActual(int idEmp) {
-		empleadoActual = this.getEmpleado(idEmp);
+		_empleadoActual = this.getEmpleado(idEmp);
 	}
 	
 	/**
@@ -39,7 +39,7 @@ public class Controlador {
 	 * @param emp el empleado que ha iniciado sesión
 	 */	
 	public void setEmpleadoActual(Empleado emp) {
-		empleadoActual = emp;
+		_empleadoActual = emp;
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class Controlador {
 	 * @return el empleado que ha iniciado sesión.
 	 */
 	public Empleado getEmpleadoActual() {
-		return empleadoActual;
+		return _empleadoActual;
 	}
 
 	public void incluyeVista(Vista vista) {
@@ -57,10 +57,10 @@ public class Controlador {
 
 	public Controlador(Vista vista, Database baseDatos) {
 		this._vista = vista;
-		this.db = baseDatos;
+		this._db = baseDatos;
 	}
 
-/**************************************************************************
+	/******************************************************************************************
  * Métodos relacionados con empleados
  */
 
@@ -75,7 +75,7 @@ public class Controlador {
 	public Empleado getEmpleado(int idEmpl) {
 		Empleado emp = null;
 		try {
-			ResultSet rs = db.dameEmpleado(idEmpl);
+			ResultSet rs = _db.dameEmpleado(idEmpl);
 			rs.first();
 			String nombre = rs.getString("Nombre");
 			String apellido1 = rs.getString("Apellido1");
@@ -119,7 +119,7 @@ public class Controlador {
 	public ArrayList<Turno> getTurnosEmpleados() {
         ArrayList<Turno> turnos= new ArrayList<Turno>();
 		try {
-			ResultSet rs = db.dameListaTurnosEmpleados();
+			ResultSet rs = _db.dameListaTurnosEmpleados();
 			while(rs.next()){
 			String idTurn = rs.getString("IdTurno");
 			String descr = rs.getString("Descripcion");
@@ -195,7 +195,7 @@ public class Controlador {
 	private int getIdSuperior(int idEmpl) {
 		// TODO Auto-generated method stub
 		int idSup=0;
-		ResultSet rs=db.obtenSuperior(idEmpl);
+		ResultSet rs=_db.obtenSuperior(idEmpl);
 		try {
 			idSup = rs.getInt("JefeEmpleado");
 		} catch (Exception e) {
@@ -240,14 +240,14 @@ public class Controlador {
 	public boolean insertEmpleado(Empleado empleado) {		
 		int sexo=empleado.getSexo();
 		int grupo=empleado.getGrupo();
-		return db.insertarUsuario(empleado.getIdEmpl(), empleado.getNombre(),
+		return _db.insertarUsuario(empleado.getIdEmpl(), empleado.getNombre(),
 				empleado.getApellido1(), empleado.getApellido2(),
 				empleado.getFechaNac(), sexo,
 				empleado.getEmail(), empleado.getPassword(), grupo,
 				Date.valueOf("0000-00-00"), Date.valueOf("0000-00-00"), 0,0,0,1, 0, 0);
 	}
 
-/***************************************************************************
+/******************************************************************************************
  * Métodos relacionados con departamentos
  */
 
@@ -284,7 +284,7 @@ public class Controlador {
 		ArrayList lista= new ArrayList();		
 		ResultSet r;
 		int[] vector = new int[3];
-		r=db.obtenFestivos(idDepartamento, Fecha);
+		r=_db.obtenFestivos(idDepartamento, Fecha);
 		//se ha supuesto que fecha esta en formato string
 		try{
 			r.last();
@@ -302,7 +302,7 @@ public class Controlador {
 				Date d=Date.valueOf(Fecha);
 				int diaSemana=d.getDay();
 				
-				r=db.obtenDistribucion(idDepartamento, diaSemana);
+				r=_db.obtenDistribucion(idDepartamento, diaSemana);
 				r.last();
 				if (r.getRow()>0){
 					r.beforeFirst();
@@ -324,12 +324,42 @@ public class Controlador {
 		return lista;
 	}
 
-	public ArrayList getMensajes(int id) {
-		// TODO BD Funcion q devuelva todos los mensajes de este usuario en un ArrayList
+
+/******************************************************************************************
+ * Métodos relacionados con mensajes
+ */
+	
+	/**
+	 * Obtiene una lista de <i>b</i> mensajes entrantes por orden cronológico, del más
+	 * nuevo al más antiguo, empezando desde el mensaje <i>a</i>.
+	 * @param idEmpl el empleado destinatario de los mensajes
+	 * @param a mensaje por el que empezar, siendo 1 el más reciente
+	 * @param b cuántos mensajes coger
+	 * @return la lista de mensajes
+	 */
+	public ArrayList<Mensaje> getMensajesEntrantes(int idEmpl, int a, int b){
 		return null;
 	}
 
-/***************************************************************************
+	/**
+	 * Obtiene una lista de <i>b</i> mensajes salientes por orden cronológico, del más
+	 * nuevo al más antiguo, empezando desde el mensaje <i>a</i>.
+	 * @param idEmpl el empleado remitente de los mensajes
+	 * @param a mensaje por el que empezar, siendo 1 el más reciente
+	 * @param b cuántos mensajes coger
+	 * @return la lista de mensajes
+	 */
+	public ArrayList<Mensaje> getMensajesSalientes(int idEmpl, int a, int b){
+		return null;
+	}
+	
+	public ArrayList<Mensaje> getMensajes(int id) {
+		// TODO BD Funcion q devuelva todos los mensajes de este usuario en un ArrayList
+		// Dani: ¿De verdad hacer falta recuperar todos todos los mensajes a la vez?
+		return null;
+	}
+
+/******************************************************************************************
  * Métodos relacionados con contratos
  */
 
@@ -354,7 +384,7 @@ public class Controlador {
 	}
 
 	
-/***************************************************************************
+/******************************************************************************************
  * Otros métodos 
  */
 
