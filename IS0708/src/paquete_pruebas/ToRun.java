@@ -1,8 +1,9 @@
 package paquete_pruebas;
 
 import idiomas.LanguageChanger;
+import impresion.Imprimir;
 import interfaces.I13_Elegir_empleado;
-
+import aplicacion.Util.*;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -14,9 +15,22 @@ import aplicacion.Empleado;
 
 
 public class ToRun {
-
+	
 	private I13_Elegir_empleado elejirEmpleado;
 	public static void main (String[] args) {
+
+		
+		Date date= new Date();
+		
+		try{
+		date = aplicacion.Util.stringADate("1984/02/03");
+		System.out.println(" date is :");
+		System.out.println(+date.getYear()+"-"+date.getMonth()+"-"+date.getDay());
+		}catch (Exception e){};
+		
+		System.out.println(" and now " + aplicacion.Util.dateAString(date));
+		
+		
 		// La lista de empleados
 		final ArrayList<Empleado> empleados;
 		empleados = new ArrayList<Empleado>();		
@@ -26,7 +40,7 @@ public class ToRun {
 		Display display = new Display ();
 		Shell mainshell = new Shell(display);
 		mainshell.setLocation(100,100);
-		
+		/*
 		// TODO Lista provisional de empleados para hacer pruebas:
 		
 		Color col = new Color(display, 108, 0, 50);
@@ -47,13 +61,23 @@ public class ToRun {
 		I13_Elegir_empleado elejirEmpleado = new I13_Elegir_empleado(mainshell, l.getBundle(), empleados);
 		elejirEmpleado.mostrarVentana();
 		
-			// Este bucle mantiene la ventana abierta
-			while (!mainshell.isDisposed()) {
-				if (!display.readAndDispatch()) {
-					display.sleep();
-				}
-			}
-			display.dispose();
+		*/
+		ArrayList<Integer> aList = new ArrayList<Integer>();
+		aList.add(12);
+		aList.add(13);
+		Empleado empleado;
+	try{
+		empleado = new Empleado(101,110,"kuba","chudzinski","-",aplicacion.Util.stringADate("1985-06-14"),1,
+										"moki@onet.pl","123",1,1,2,123,aplicacion.Util.stringADate("2007-06-14"),
+									aplicacion.Util.stringADate("2005-06-14"),new Color(display, 12,0,0),aList,aList);
+	}catch(Exception e){ empleado=null ;};
+	
+	mainshell.open();
+	System.out.println(empleado.getApellido1());
+	Imprimir imprimir = new Imprimir(display);
+	imprimir.imprimirImage(empleado.getPrintableImage(display,l.getBundle(), true));
+
+	display.dispose();
 
 	}
 
