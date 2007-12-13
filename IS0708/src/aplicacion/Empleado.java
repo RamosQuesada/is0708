@@ -68,8 +68,7 @@ public class Empleado implements Drawable {
 	private int felicidad;
 	private ArrayList<Integer> idSubordinados;
 	private ArrayList<Empleado> subordinados;
-	// TODO Esto debería ser unarray de strings
-	private ArrayList<Integer> idDepartamentos;
+	private ArrayList<String> idDepartamentos;
 	private ArrayList<Departamento> departamentos;
 	
 	// TODO Eliminar el turno, que irá en el Contrato
@@ -217,7 +216,7 @@ public class Empleado implements Drawable {
 			Date fechaNac, int sexo, String email, String password,
 			int grupo, int rango, int contrato,
 			Date fContrato,	Date fAlta, int felicidad,
-			ArrayList<Integer> idDepartamentos,
+			ArrayList<String> idDepartamentos,
 			ArrayList<Integer> idSubordinados) {
 		if (idSuperior==null) this.idSuperior=0;
 		else setIdSuperior(idSuperior);
@@ -618,7 +617,7 @@ public class Empleado implements Drawable {
 	 * Devuelve el identificador de su departamento principal
 	 * @return el identificador
 	 */
-	public int getIdDepartamento() {
+	public String getIdDepartamento() {
 		return idDepartamentos.get(0);
 	}
 	
@@ -629,9 +628,9 @@ public class Empleado implements Drawable {
 	 * @return <i>true</i> si el departamento se ha añadido, false en caso contrario
 	 */
 	public boolean addDepartamento(Departamento departamento) {
-		boolean esta = idDepartamentos.contains(departamento.getNumeroDepartamento());
+		boolean esta = idDepartamentos.contains(departamento.getNombreDepartamento());
 		if (!esta) {
-			idDepartamentos.add(departamento.getNumeroDepartamento());
+			idDepartamentos.add(departamento.getNombreDepartamento());
 		}
 		// Si era empleado y ahora tiene más de un departamento, ha pasado a jefe
 		// TODO Esto no me convence nada
