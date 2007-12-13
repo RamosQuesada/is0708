@@ -10,37 +10,94 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
+import idiomas.LanguageChanger;
 import interfaces.*;
 
-public class Vista {
+public class Vista extends Thread {
 	private Controlador controlador;
 	private Database db;
 	private Shell shell;
+	private Display display;
 	private ResourceBundle bundle;
 	private Locale locale;
+	private I01_Login login; 
 	private I02_Principal i02;
-	public Vista (Shell shell, ResourceBundle bundle, Locale locale, Controlador controlador, Database db) {			
-		this.shell = shell;
-		this.bundle = bundle;
-		this.locale = locale;
+	
+	public void run() {
+		setName("Conexión base de datos");
+		// Conectar con la base de datos
+		db.abrirConexion();
+		if (!login.isDisposed())
+			if (!db.conexionAbierta()) {
+				shell.getDisplay().asyncExec(new Runnable () {
+					public void run() {
+						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
+						messageBox.setText (bundle.getString("Error"));
+						messageBox.setMessage (bundle.getString("I01_err_Conexion"));
+					}
+				});
+			}
+			else {
+				shell.getDisplay().asyncExec(new Runnable () {
+					public void run() {
+						// Rellenar la barra de progreso
+						// Por alguna raz�n oculta de los threads, aun habiendo comprobado
+						// antes si el dialog sigue presente, si no lo compruebo de nuevo
+						// a veces da error.
+						if (!login.isDisposed()) 
+							login.setProgreso("Conectado.");
+					}
+				});
+			}
+		else {
+			// En este caso se ha cerrado la aplicación antes de que termine de conectar.			
+			if (db.conexionAbierta())
+				db.cerrarConexion();
+		}
+	}
+
+	/**
+	 * Constructor de la vista
+	 * @param controlador el controlador de la aplicación
+	 * @param db la base de datos de la aplicación
+	 */
+	public Vista (Controlador controlador, Database db) {			
 		this.controlador = controlador;
 		this.db = db;
 
+		// Creación del display y el shell
+		display = new Display ();
+		shell = new Shell(display);
+		
+		// Creación del gestor de idiomas
+		LanguageChanger l = new LanguageChanger();
+		// TODO Poner esto después del login
+		// 0 español
+		// 1 polaco
+		// 2 inglés
+		l.cambiarLocale(0);
+		
+		bundle = l.getBundle();
+		locale = l.getCurrentLocale();
+		
 		// Login y conexión a la base de datos
-		I01_Login login = new I01_Login(shell, bundle, db);
+		login = new I01_Login(shell, bundle, db);
+		start();
 		boolean identificado = false;
 		while (!identificado) {
-			login.mostrarVentana();
-			while (!login.dialog.isDisposed()) {
+			if (db.conexionAbierta()) login.mostrarVentana("Conectado.");
+			else login.mostrarVentana("Conectando...");
+			while (!login.isDisposed()) {
 				if (!shell.getDisplay().readAndDispatch()) {
 					shell.getDisplay().sleep();
 				}
 			}
 			if (login.getBotonPulsado()==1) {
 				// Si llega aquí, ya hay conexión con la base de datos
-				
+				// Login de administrador
 				if (login.getNumeroVendedor()==0 && login.getPassword().compareTo("admin")==0) {
 						System.out.println("Administrador identificado");
+						controlador.setEmpleadoActual(new Empleado(0,0,"Administrador","","",null,0,"","admin",0,0,0,0,null,null,null,null,null));
 						identificado = true;
 				}
 				else {

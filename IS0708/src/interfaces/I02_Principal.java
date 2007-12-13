@@ -44,8 +44,7 @@ public class I02_Principal {
 		this.bundle = bundle;
 		this.locale = locale;
 		this.vista = vista;
-		//crearVentana(vista.getEmpleadoActual().getRango());
-		crearVentana(2);
+		crearVentana(vista.getEmpleadoActual().getRango());
 		//ponImageDia();
 	}
 	
@@ -1012,7 +1011,7 @@ public class I02_Principal {
 		lTiempo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
 		Combo cTiempo = new Combo(cEstIzq, SWT.BORDER | SWT.READ_ONLY);
 		cTiempo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		cTiempo.setItems(new String[] {bundle.getString("semana"), bundle.getString("quincena"), bundle.getString("mes"),bundle.getString("año")});
+		cTiempo.setItems(new String[] {bundle.getString("semana"), bundle.getString("quincena"), bundle.getString("mes"),bundle.getString("ano")});
 		cTiempo.select(0);
 		
 		final Label lComparar	= new Label(cEstIzq, SWT.LEFT);
@@ -1025,7 +1024,7 @@ public class I02_Principal {
 				bundle.getString("empleadomedio"),
 				bundle.getString("mejorsemana"),
 				bundle.getString("mejormes"),
-				bundle.getString("mejoraño")
+				bundle.getString("mejorano")
 				});
 		
 		cComparar.select(0);
@@ -1175,7 +1174,7 @@ public class I02_Principal {
 		lTiempo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
 		Combo cTiempo = new Combo(cEstIzq, SWT.BORDER | SWT.READ_ONLY);
 		cTiempo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		cTiempo.setItems(new String[] {bundle.getString("semana"), bundle.getString("quincena"), bundle.getString("mes"),bundle.getString("año")});
+		cTiempo.setItems(new String[] {bundle.getString("semana"), bundle.getString("quincena"), bundle.getString("mes"),bundle.getString("ano")});
 		cTiempo.select(0);
 		
 		final Label lComparar	= new Label(cEstIzq, SWT.LEFT);
@@ -1188,7 +1187,7 @@ public class I02_Principal {
 				bundle.getString("empleadomedio"),
 				bundle.getString("mejorsemana"),
 				bundle.getString("mejormes"),
-				bundle.getString("mejoraño")
+				bundle.getString("mejorano")
 				});
 		
 		cComparar.select(0);
@@ -1304,6 +1303,14 @@ public class I02_Principal {
 			crearTabAdminInicio(tabFolder);
 			crearTabAdminNuevoGerente(tabFolder);
 			crearTabAdminEliminaGerente(tabFolder);
+			crearTabJefeCuadrantes(tabFolder);
+			crearTabMensajes(tabFolder);
+			crearTabJefeEmpleados(tabFolder);		
+			crearTabJefeDepartamentos(tabFolder);
+			crearTabJefeContratos(tabFolder);
+			crearTabGerenteEstadisticas(tabFolder);
+			crearTabEmpleadoEstadisticas(tabFolder);
+			crearTabEmpleadoCuadrantes(tabFolder);
 			break;
 		case 2:
 			// Tabs de jefe
