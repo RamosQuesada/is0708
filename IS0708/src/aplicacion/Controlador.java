@@ -13,11 +13,10 @@ import org.eclipse.swt.graphics.Color;
  */
 public class Controlador {
 	private Vista _vista;
-
 	private Database db;
-
 	private Empleado empleadoActual;
 
+	
 	public Controlador(Database baseDatos) {
 		this.db = baseDatos;
 	}
@@ -244,7 +243,7 @@ public class Controlador {
 				empleado.getApellido1(), empleado.getApellido2(),
 				aplicacion.Util.dateAString(empleado.getFechaNac()), sexo,
 				empleado.getEmail(), empleado.getPassword(), grupo,
-				"0000-00-00", "0000-00-00", 0, 0, "Empleado", 0, 0);
+				"0000-00-00", "0000-00-00", 0,0,0,0, "Empleado", 0, 0);
 	}
 
 /***************************************************************************

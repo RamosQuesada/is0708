@@ -23,39 +23,8 @@ public class I01_Login extends Thread{
 	private int botonPulsado;
 	Database db;
 	Text tEstado;
-	ProgressBar pbProgreso;
+	private Label progreso;
 	
-	public void run() {
-		// Conectar con la base de datos
-		db.abrirConexion();
-		if (!dialog.isDisposed())
-			if (!db.conexionAbierta()) {
-				dialog.getDisplay().asyncExec(new Runnable () {
-					public void run() {
-						MessageBox messageBox = new MessageBox(dialog, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
-						messageBox.setText (bundle.getString("Error"));
-						messageBox.setMessage (bundle.getString("I01_err_Conexion"));
-					}
-				});
-			}
-			else {
-				dialog.getDisplay().asyncExec(new Runnable () {
-					public void run() {
-						// Rellenar la barra de progreso
-						// Por alguna raz�n oculta de los threads, aun habiendo comprobado
-						// antes si el dialog sigue presente, si no lo compruebo de nuevo
-						// a veces da error.
-						if (!dialog.isDisposed()) 
-							pbProgreso.setSelection(100);
-					}
-				});
-			}
-		else {
-			// En este caso se ha cerrado la aplicaci�n antes de que termine de conectar.			
-			if (db.conexionAbierta())
-				db.cerrarConexion();
-		}
-	}
 	
 	public I01_Login(Shell padre, ResourceBundle bundle, Database db) {
 		this.padre = padre;
@@ -69,9 +38,10 @@ public class I01_Login extends Thread{
 		
 	/**	
 	 * Crea la ventana
+	 * @param s El string a mostrar en la parte inferior de la ventana
 	 * @author Daniel Dionne
 	 */
-	public synchronized void mostrarVentana() {
+	public synchronized void mostrarVentana(String s) {
 		Image fondo = new Image(padre.getDisplay(), I01_Login.class.getResourceAsStream("intro.png"));
 		dialog = new Shell (padre, SWT.NONE | SWT.APPLICATION_MODAL);
 		
@@ -107,8 +77,8 @@ public class I01_Login extends Thread{
 		lPassword.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 3, 1));
 		lPassword.setText(bundle.getString("Contrasena"));
 		//TODO quitar esto
-		tUsuario.setText("55555555");
-		tPassword.setText("blabla");
+		tUsuario.setText("00000000");
+		tPassword.setText("admin");
 		
 		tPassword.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 5, 1));
 
@@ -118,19 +88,14 @@ public class I01_Login extends Thread{
 		bCancelar.setText(bundle.getString("Cancelar"));
 		bCancelar.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 4, 1));
 
-		//tEstado = new Text(contenido, SWT.LEFT);
-		//tEstado.setText("Conectando con la base de datos");
-		//tEstado.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true, 4, 1));
-
-		pbProgreso = new ProgressBar(contenido,SWT.FILL);
-		pbProgreso.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true, 8, 1));
-		pbProgreso.setSelection(50);
-		
+		progreso = new Label(contenido,SWT.FILL);
+		progreso.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true, 8, 1));
+		progreso.setText(s);
 		// Un SelectionAdapter con lo que hace el bot�n bCancelar
 		SelectionAdapter sabCancelar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				botonPulsado=0;
-				dialog.dispose();	
+				dialog.dispose();
 			}
 		};
 
@@ -219,5 +184,21 @@ public class I01_Login extends Thread{
 	 */
 	public int getBotonPulsado() {
 		return botonPulsado;
+	}
+	
+	/**
+	 * Devuelve si la ventana se ha cerrado
+	 * @return <i>true</i> si la ventana se ha cerrado
+	 */
+	public boolean isDisposed() {
+		return dialog.isDisposed();
+	}
+	
+	/**
+	 * Modifica el texto que se muestra en la parte de abajo del diálogo
+	 * @param s el string a mostrar
+	 */
+	public void setProgreso(String s) {
+		progreso.setText(s);
 	}
 }
