@@ -97,8 +97,8 @@ public class Database extends Thread {
 		try {			
 			st = con.createStatement();
 			r = st.executeQuery(
-					"SELECT JefeDepartamento FROM USUARIO,NumerosDpto,DEPARTAMENTO WHERE NumVendedor = " + 
-					nvend + "and IdDepartamento=numero and Nombre=nombre");			
+					"SELECT JefeDepartamento FROM DepartamentoUsuario,DEPARTAMENTO WHERE Numero = " + 
+					nvend + " and DEPARTAMENTO.Nombre=NombreDepartamento");			
 		}
 		catch (SQLException e) {
 			// TODO: handle exception
@@ -106,14 +106,19 @@ public class Database extends Thread {
 		}
 		return r;
 	}
-	//hay q cambiar el cuerpo
+
+	/**
+	 * Metodo que obtiene los subordinados del empleado si los tuviera
+	 * @param nvend el identificador del empleado
+	 * @return un ResultSet con los subordinados del empleado si los tuviera
+	 */
 	public ResultSet obtenIdsSubordinados(int nvend){
 		ResultSet r=null;		
 		try {			
 			st = con.createStatement();
 			r = st.executeQuery(
-					"SELECT JefeDepartamento FROM USUARIO,NumerosDpto,DEPARTAMENTO WHERE NumVendedor = " + 
-					nvend + "and IdDepartamento=numero and Nombre=nombre");			
+					"SELECT NumVendedor FROM DepartamentoUsuario,DEPARTAMENTO WHERE JefeDepartamento = " + 
+					nvend + " and DEPARTAMENTO.Nombre=NombreDepartamento");			
 		}
 		catch (SQLException e) {
 			// TODO: handle exception
@@ -122,14 +127,18 @@ public class Database extends Thread {
 		return r;
 	}
 	
-	//	hay q cambiar el cuerpo
+	/**
+	 * Metodo que devuelve de la bd los departamentos a los que pertenece el empleado
+	 * @param nvend el identificador del empleado
+	 * @return un ResultSet con los departamentos a los que pertenece el empleado
+	 */
 	public ResultSet obtenIdsDepartamentos(int nvend){
 		ResultSet r=null;		
 		try {			
 			st = con.createStatement();
 			r = st.executeQuery(
-					"SELECT JefeDepartamento FROM USUARIO,NumerosDpto,DEPARTAMENTO WHERE NumVendedor = " + 
-					nvend + "and IdDepartamento=numero and Nombre=nombre");			
+					"SELECT Numero FROM NumerosDEPARTAMENTOs,DepartamentoUsuario WHERE NumVendedor = " + 
+					nvend + " and NombreDepartamento=NumerosDEPARTAMENTOs.Nombre");			
 		}
 		catch (SQLException e) {
 			// TODO: handle exception
@@ -185,9 +194,9 @@ public class Database extends Thread {
 	 * @return Informa sobre si se ha podido realizar la inserci�n o no
 	 */
 	public boolean insertarUsuario(int id, String nombre, String apellido1,
-			String apellido2, String fechaNac, String sexo, String email,
-			String password, String indicadorGrupo, String fechaContrato,
-			String fechaEntrada, int horasExtras,int felicidad, int idioma, int idDept, String rango,
+			String apellido2, Date fechaNac, int sexo, String email,
+			String password, int indicadorGrupo, Date fechaContrato,
+			Date fechaEntrada, int horasExtras,int felicidad, int idioma, int rango,
 			int idContrato, int idTurno) {
 		boolean correcto = false;
 		try {			
@@ -196,7 +205,7 @@ public class Database extends Thread {
 					+ nombre + "', '" + apellido1 + "' ,'" + apellido2 + "','"
 					+ fechaNac + "','" + sexo + "','" + email + "','"
 					+ password + "','" + indicadorGrupo + "','" + fechaContrato + "','"
-					+ fechaEntrada + "','" + horasExtras + "','" + felicidad + "','" + idioma+ "','" + idDept
+					+ fechaEntrada + "','" + horasExtras + "','" + felicidad + "','" + idioma
 					+ "','" + rango + "','" + idContrato + "','" + idTurno
 					+ "')");
 			System.out.println("Usuario insertado");
@@ -228,7 +237,7 @@ public class Database extends Thread {
 	}
 	
 	/**
-	 * M�todo que inserta en la tabla numerosDpto los valores correspondientes
+	 * M�todo que inserta en la tabla NumerosDEPARTAMENTOS los valores correspondientes
 	 * @param numero	Numero del subdepartamento
 	 * @param nombre	Nombre del departamento
 	 * @return			Informa sobre si se ha podido realizar la inserci�n o no
@@ -237,7 +246,26 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO NumerosDpto values ('" + numero + "', '" + nombre + "')");
+			st.executeUpdate("INSERT INTO NumerosDEPARTAMENTOs values ('" + numero + "', '" + nombre + "')");
+			System.out.println("Departamento insertado");
+			correcto = true;
+		} catch (SQLException e) {
+			correcto = false;
+		}
+		return correcto;
+	}
+	
+	/**
+	 * MEtodo que inserta en la tabla DepartamentoUsuario los valores correspondientes
+	 * @param nvend		Es el identificador único de cada empleado
+	 * @param nombre	Nombre del departamento al que pertenece el empleado
+	 * @return			Informa sobre si se ha podido realizar la inserci�n o no
+	 */
+	public boolean insertarDepartamentoUsuario(int nvend,String nombre) {
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("INSERT INTO DepartamentoUsuario values ('" + nvend + "', '" + nombre + "')");
 			System.out.println("Departamento insertado");
 			correcto = true;
 		} catch (SQLException e) {
