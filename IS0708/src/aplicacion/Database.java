@@ -1,6 +1,7 @@
 package aplicacion;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 
 /**
@@ -548,22 +549,47 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		return correcto;
 	}
 	
-	public ResultSet obtenDistribucion (int idDepartamento, String DiaSemana){
-		ResultSet r=null;		
+	/**
+	 * Metodo que selecciona de la tabla de distribucion aquellas filas cuyo departamento y dia de la semana coincide
+	 * con los pasados como parametros de la funcion
+	 * @param idDepartamento
+	 * @param DiaSemana (domingo = 0, lunes = 1....)
+	 * @return ResultSet con las filas que coinciden con el departamento y el dia de la semana
+	 */
+	public ResultSet obtenDistribucion (int idDepartamento, int DiaSemana){
+		
 		try {			
 			st = con.createStatement();
-			r = st.executeQuery(
-					"SELECT * FROM DISTRIBUCION WHERE idDepartamento = idDepartamento AND DiaSemana=DiaSemana");			
+			rs = st.executeQuery(
+					"SELECT * FROM DISTRIBUCION WHERE idDepartamento ="+ idDepartamento+" AND DiaSemana="+DiaSemana);			
 			
 		}
 		catch (SQLException e) {
 			// TODO: handle exception
-			System.out.println("Error al realizar la consulta del empleado ");
+			System.out.println("Error al realizar la consulta de la distribucion ");
 		}
-		return r;
+		return rs;
 	}
 	
-	
+	/**
+	 * Metodo que selecciona de la tabla de festivos aquellas filas cuyo departamento y fecha coinciden con los parametros 
+	 * @param idDepartamento
+	 * @param Fecha
+	 * @return ResultSet con las filas que coinciden con el departamento y la fecha
+	 */
+	public ResultSet obtenFestivos (int idDepartamento, String Fecha){		
+		try {			
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT * FROM FESTIVOS WHERE idDepartamento ="+ idDepartamento + " AND FechaInicio<='"+Fecha+"' AND FechaFin>='"+Fecha+"'");
+					
+		}
+		catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			System.out.println("Error al realizar la consulta de los festivos ");
+		}
+		return rs;
+	}
 	
 	
 	
@@ -572,8 +598,9 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		Database prueba = new Database();
 		prueba.abrirConexion();
 		
-		Time h = new Time(10000000);					
-		
+		Time h = new Time(10000000);
+	
+		prueba.obtenFestivos(3, "2007-12-12");
 		prueba.insertarTurno(1, "prueba", h, h, h, 10);
 		prueba.insertarDistribucion(9, "Martes", "1e5p", 10, 7, 1);
 		prueba.insertarMensaje(1,new Time(0),"prueba","que gran prueba");
