@@ -640,9 +640,20 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		//prueba.insertarTrabaja(2, 2, new Time(0),  new Time(0), new Time(0));
 		prueba.insertarTurnoPorContrato(1, 1);
 		prueba.insertarVenta(1, new Time(0), 123.43);
-		
-	  //  Date d = new Date(10000000);
 	    prueba.insertarFestivo(9, "2007-12-11", "2007-12-11","2e7p", 15, 10, 1);
+	   //Prueba método ObtenerLista de Turnos
+	    Controlador c= new Controlador(prueba);
+	    ArrayList<Turno> t = new ArrayList<Turno>();
+	    t = c.getTurnosEmpleados();
+	    for (int i=0; i<t.size(); i++){
+	    	System.out.print(t.get(i).getIdTurno()+ "  ");
+	    	System.out.print(t.get(i).getDescripcion()+ "  ");
+	    	System.out.print(t.get(i).getHoraEntrada()+ "  ");
+	    	System.out.print(t.get(i).getHoraSalida()+ "  ");
+	    	System.out.print(t.get(i).getHoraDescanso()+ "  ");
+	    	System.out.print(t.get(i).getTDescanso()+ "  ");
+	    	System.out.println();
+	    			}
 		prueba.cerrarConexion();
 	}
 }

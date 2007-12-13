@@ -137,7 +137,6 @@ public class Controlador {
         ArrayList<Turno> turnos= new ArrayList<Turno>();
 		try {
 			ResultSet rs = db.dameListaTurnosEmpleados();
-			//rs.first();
 			while(rs.next()){
 			String idTurn = rs.getString("IdTurno");
 			String descr = rs.getString("Descripcion");
