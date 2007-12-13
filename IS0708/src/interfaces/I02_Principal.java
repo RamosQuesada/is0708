@@ -398,7 +398,7 @@ public class I02_Principal {
 				// employee created for tests
 				Color col = new Color(display, 10, 0, 50);
 		
-				Empleado emp = new Empleado(1, 12345678, "phil", "colins", "-", new Date("12/12/09"), 1, "phil.colins@gmail.com", "", 1, 1, 1, new Date("12/12/09"),new Date("12/12/09"), col,null, null);
+				Empleado emp = new Empleado(1, 12345678, "phil", "colins", "-", new Date("12/12/09"), 1, "phil.colins@gmail.com", "", 1, 1, 1,1, new Date("12/12/09"),new Date("12/12/09"), col,null, null);
 				new I08_2_Consultar_empleado(shell, emp, bundle);
 			}
 		});
