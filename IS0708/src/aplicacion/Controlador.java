@@ -279,6 +279,11 @@ public class Controlador {
 		r=db.obtenDistribucion(idDepartamento);
 	}
 
+	public ArrayList getMensajes(int id) {
+		// TODO BD Funcion q devuelva todos los mensajes de este usuario en un ArrayList
+		return null;
+	}
+
 /***************************************************************************
  * Métodos relacionados con contratos
  */
