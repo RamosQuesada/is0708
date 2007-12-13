@@ -3,7 +3,6 @@ package aplicacion;
 import java.sql.*;
 import java.util.ArrayList;
 
-
 /**
  * Aqu� se encuentran los m�todos de acceso a la base de datos.
  * 
@@ -57,50 +56,54 @@ public class Database extends Thread {
 
 	/**
 	 * Comprueba si hay una conexi�n abierta con la base de datos
-	 * @return	<i>true</i> si la conexi�n est� abierta, <i>false</i> en caso
-	 * 			contrario o si hay alguna excepci�n
+	 * 
+	 * @return <i>true</i> si la conexi�n est� abierta, <i>false</i> en caso
+	 *         contrario o si hay alguna excepci�n
 	 */
 	public boolean conexionAbierta() {
 		boolean b = false;
 		try {
 			b = !con.isClosed();
-		} catch (Exception e) {}
+		} catch (Exception e) {
+		}
 		return b;
 	}
-	
+
 	/**
 	 * Devuelve el empleado con identificador nvend
-	 * @param nvend el identificador del empleado
+	 * 
+	 * @param nvend
+	 *            el identificador del empleado
 	 * @return un ResultSet con el resultado de la consulta
 	 */
 	public ResultSet dameEmpleado(int nvend) {
-		ResultSet r=null;		
-		try {			
+		ResultSet r = null;
+		try {
 			st = con.createStatement();
-			r = st.executeQuery(
-					"SELECT * FROM USUARIO WHERE NumVendedor = " + nvend);			
-		}
-		catch (SQLException e) {
+			r = st.executeQuery("SELECT * FROM USUARIO WHERE NumVendedor = "
+					+ nvend);
+		} catch (SQLException e) {
 			// TODO: handle exception
 			System.out.println("Error al realizar la consulta del empleado ");
 		}
-		return r;		
+		return r;
 	}
-	
+
 	/**
 	 * 
-	 *	@param nvend el identificador del empleado
-	 *  @return un ResultSet con el id del superior del empleado
+	 * @param nvend
+	 *            el identificador del empleado
+	 * @return un ResultSet con el id del superior del empleado
 	 */
-	public ResultSet obtenSuperior(int nvend){
-		ResultSet r=null;		
-		try {			
+	public ResultSet obtenSuperior(int nvend) {
+		ResultSet r = null;
+		try {
 			st = con.createStatement();
-			r = st.executeQuery(
-					"SELECT JefeDepartamento FROM DepartamentoUsuario,DEPARTAMENTO WHERE Numero = " + 
-					nvend + " and DEPARTAMENTO.Nombre=NombreDepartamento");			
-		}
-		catch (SQLException e) {
+			r = st
+					.executeQuery("SELECT JefeDepartamento FROM DepartamentoUsuario,DEPARTAMENTO WHERE Numero = "
+							+ nvend
+							+ " and DEPARTAMENTO.Nombre=NombreDepartamento");
+		} catch (SQLException e) {
 			// TODO: handle exception
 			System.out.println("Error al realizar la consulta del empleado ");
 		}
@@ -109,47 +112,53 @@ public class Database extends Thread {
 
 	/**
 	 * Metodo que obtiene los subordinados del empleado si los tuviera
-	 * @param nvend el identificador del empleado
+	 * 
+	 * @param nvend
+	 *            el identificador del empleado
 	 * @return un ResultSet con los subordinados del empleado si los tuviera
 	 */
-	public ResultSet obtenIdsSubordinados(int nvend){
-		ResultSet r=null;		
-		try {			
+	public ResultSet obtenIdsSubordinados(int nvend) {
+		ResultSet r = null;
+		try {
 			st = con.createStatement();
-			r = st.executeQuery(
-					"SELECT NumVendedor FROM DepartamentoUsuario,DEPARTAMENTO WHERE JefeDepartamento = " + 
-					nvend + " and DEPARTAMENTO.Nombre=NombreDepartamento");			
-		}
-		catch (SQLException e) {
+			r = st
+					.executeQuery("SELECT NumVendedor FROM DepartamentoUsuario,DEPARTAMENTO WHERE JefeDepartamento = "
+							+ nvend
+							+ " and DEPARTAMENTO.Nombre=NombreDepartamento");
+		} catch (SQLException e) {
 			// TODO: handle exception
 			System.out.println("Error al realizar la consulta del empleado ");
 		}
 		return r;
 	}
-	
+
 	/**
-	 * Metodo que devuelve de la bd los departamentos a los que pertenece el empleado
-	 * @param nvend el identificador del empleado
-	 * @return un ResultSet con los departamentos a los que pertenece el empleado
+	 * Metodo que devuelve de la bd los departamentos a los que pertenece el
+	 * empleado
+	 * 
+	 * @param nvend
+	 *            el identificador del empleado
+	 * @return un ResultSet con los departamentos a los que pertenece el
+	 *         empleado
 	 */
-	public ResultSet obtenIdsDepartamentos(int nvend){
-		ResultSet r=null;		
-		try {			
+	public ResultSet obtenIdsDepartamentos(int nvend) {
+		ResultSet r = null;
+		try {
 			st = con.createStatement();
-			r = st.executeQuery(
-					"SELECT Numero FROM NumerosDEPARTAMENTOs,DepartamentoUsuario WHERE NumVendedor = " + 
-					nvend + " and NombreDepartamento=NumerosDEPARTAMENTOs.Nombre");			
-		}
-		catch (SQLException e) {
+			r = st
+					.executeQuery("SELECT Nombre FROM DepartamentoUsuario WHERE NumVendedor = "
+							+ nvend);
+		} catch (SQLException e) {
 			// TODO: handle exception
 			System.out.println("Error al realizar la consulta del empleado ");
 		}
 		return r;
 	}
-	
-	
+
 	/**
-	 * Método que inserta en la tabla usuario los valores correspondientes a un nuevo usuario
+	 * Método que inserta en la tabla usuario los valores correspondientes a un
+	 * nuevo usuario
+	 * 
 	 * @param id
 	 *            Es el identificador único de cada empleado, que se corresponde
 	 *            con la clave primaria en la tabla.
@@ -179,9 +188,9 @@ public class Database extends Thread {
 	 *            Lleva en cuenta el numero de horas extras. Debe ser un entero
 	 *            para saber cuando debe horas o le deben horas
 	 * @param felicidad
-	 * 			  Grado de satisfaccion de un usuario con su horario
+	 *            Grado de satisfaccion de un usuario con su horario
 	 * @param idioma
-	 * 			  Idioma de la aplicacion para el usuario
+	 *            Idioma de la aplicacion para el usuario
 	 * @param idDept
 	 *            Hace referencia a la secci�n dentro del departamento en
 	 *            cuesti�n
@@ -196,18 +205,18 @@ public class Database extends Thread {
 	public boolean insertarUsuario(int id, String nombre, String apellido1,
 			String apellido2, Date fechaNac, int sexo, String email,
 			String password, int indicadorGrupo, Date fechaContrato,
-			Date fechaEntrada, int horasExtras,int felicidad, int idioma, int rango,
-			int idContrato, int idTurno) {
+			Date fechaEntrada, int horasExtras, int felicidad, int idioma,
+			int rango, int idContrato, int idTurno) {
 		boolean correcto = false;
-		try {			
+		try {
 			st = con.createStatement();
 			st.executeUpdate("INSERT INTO USUARIO values ('" + id + "', '"
 					+ nombre + "', '" + apellido1 + "' ,'" + apellido2 + "','"
 					+ fechaNac + "','" + sexo + "','" + email + "','"
-					+ password + "','" + indicadorGrupo + "','" + fechaContrato + "','"
-					+ fechaEntrada + "','" + horasExtras + "','" + felicidad + "','" + idioma
-					+ "','" + rango + "','" + idContrato + "','" + idTurno
-					+ "')");
+					+ password + "','" + indicadorGrupo + "','" + fechaContrato
+					+ "','" + fechaEntrada + "','" + horasExtras + "','"
+					+ felicidad + "','" + idioma + "','" + rango + "','"
+					+ idContrato + "','" + idTurno + "')");
 			System.out.println("Usuario insertado");
 			correcto = true;
 		} catch (SQLException e) {
@@ -218,132 +227,185 @@ public class Database extends Thread {
 	}
 
 	/**
-	 * M�todo que inserta en la tabla Departamento los valores correspondientes a un nuevo departamento
-	 * @param nombre	Nombre representativo de las actividades llevadas a cabo dentro del departamento 
-	 * @param jefe		Persona que dirige le departamento
-	 * @return			Informa sobre si se ha podido realizar la inserci�n o no
-	 */
-	public boolean insertarDepartamento(String nombre,int jefe) {
-		boolean correcto = false;
-		try {
-			st = con.createStatement();
-			st.executeUpdate("INSERT INTO DEPARTAMENTO values ('" + nombre + "', '" + jefe + "')");
-			System.out.println("Departamento insertado");
-			correcto = true;
-		} catch (SQLException e) {
-			correcto = false;
-		}
-		return correcto;
-	}
-	
-	/**
-	 * M�todo que inserta en la tabla NumerosDEPARTAMENTOS los valores correspondientes
-	 * @param numero	Numero del subdepartamento
-	 * @param nombre	Nombre del departamento
-	 * @return			Informa sobre si se ha podido realizar la inserci�n o no
-	 */
-	public boolean insertarNumerosDepartamento(String numero,String nombre) {
-		boolean correcto = false;
-		try {
-			st = con.createStatement();
-			st.executeUpdate("INSERT INTO NumerosDEPARTAMENTOs values ('" + numero + "', '" + nombre + "')");
-			System.out.println("Departamento insertado");
-			correcto = true;
-		} catch (SQLException e) {
-			correcto = false;
-		}
-		return correcto;
-	}
-	
-	/**
-	 * MEtodo que inserta en la tabla DepartamentoUsuario los valores correspondientes
-	 * @param nvend		Es el identificador único de cada empleado
-	 * @param nombre	Nombre del departamento al que pertenece el empleado
-	 * @return			Informa sobre si se ha podido realizar la inserci�n o no
-	 */
-	public boolean insertarDepartamentoUsuario(int nvend,String nombre) {
-		boolean correcto = false;
-		try {
-			st = con.createStatement();
-			st.executeUpdate("INSERT INTO DepartamentoUsuario values ('" + nvend + "', '" + nombre + "')");
-			System.out.println("Departamento insertado");
-			correcto = true;
-		} catch (SQLException e) {
-			correcto = false;
-		}
-		return correcto;
-	}
-	
-	/**
-	 * M�todo que inserta en la tabla Ventas los valores correspondientes a cada dia para un determinado usuario
-	 * @param idUsuario		Numero que identifica al usuario
-	 *            
-	 * @param Fecha		String que representa un dia del año concreto. El formato es Dd/mm/aaaa
-	 *            
-	 * @param NumeroVentas	Entero que representa la cantidad vendida para un determinado dia. Valor mayor o igual a 0
+	 * M�todo que inserta en la tabla Departamento los valores correspondientes
+	 * a un nuevo departamento
+	 * 
+	 * @param nombre
+	 *            Nombre representativo de las actividades llevadas a cabo
+	 *            dentro del departamento
+	 * @param jefe
+	 *            Persona que dirige le departamento
 	 * @return Informa sobre si se ha podido realizar la inserci�n o no
 	 */
-	
-	public boolean insertarVentas (int idUsuario, String Fecha, int numVentas ){
-		boolean correcto=false;
-		try{
+	public boolean insertarDepartamento(String nombre, int jefe) {
+		boolean correcto = false;
+		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO VENTAS values ('" + Fecha + "', '" + numVentas + "', '" + idUsuario + "')");
+			st.executeUpdate("INSERT INTO DEPARTAMENTO values ('" + nombre
+					+ "', '" + jefe + "')");
+			System.out.println("Departamento insertado");
+			correcto = true;
+		} catch (SQLException e) {
+			correcto = false;
+		}
+		return correcto;
+	}
+
+	/**
+	 * M�todo que inserta en la tabla NumerosDEPARTAMENTOS los valores
+	 * correspondientes
+	 * 
+	 * @param numero
+	 *            Numero del subdepartamento
+	 * @param nombre
+	 *            Nombre del departamento
+	 * @return Informa sobre si se ha podido realizar la inserci�n o no
+	 */
+	public boolean insertarNumerosDepartamento(String numero, String nombre) {
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("INSERT INTO NumerosDEPARTAMENTOs values ('"
+					+ numero + "', '" + nombre + "')");
+			System.out.println("Departamento insertado");
+			correcto = true;
+		} catch (SQLException e) {
+			correcto = false;
+		}
+		return correcto;
+	}
+
+	/**
+	 * MEtodo que inserta en la tabla DepartamentoUsuario los valores
+	 * correspondientes
+	 * 
+	 * @param nvend
+	 *            Es el identificador único de cada empleado
+	 * @param nombre
+	 *            Nombre del departamento al que pertenece el empleado
+	 * @return Informa sobre si se ha podido realizar la inserci�n o no
+	 */
+	public boolean insertarDepartamentoUsuario(int nvend, String nombre) {
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("INSERT INTO DepartamentoUsuario values ('"
+					+ nvend + "', '" + nombre + "')");
+			System.out.println("Departamento insertado");
+			correcto = true;
+		} catch (SQLException e) {
+			correcto = false;
+		}
+		return correcto;
+	}
+
+	/**
+	 * M�todo que inserta en la tabla Ventas los valores correspondientes a cada
+	 * dia para un determinado usuario
+	 * 
+	 * @param idUsuario
+	 *            Numero que identifica al usuario
+	 * 
+	 * @param Fecha
+	 *            String que representa un dia del año concreto. El formato es
+	 *            Dd/mm/aaaa
+	 * 
+	 * @param NumeroVentas
+	 *            Entero que representa la cantidad vendida para un determinado
+	 *            dia. Valor mayor o igual a 0
+	 * @return Informa sobre si se ha podido realizar la inserci�n o no
+	 */
+
+	public boolean insertarVentas(int idUsuario, String Fecha, int numVentas) {
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("INSERT INTO VENTAS values ('" + Fecha + "', '"
+					+ numVentas + "', '" + idUsuario + "')");
 			System.out.println("Ventas insertada");
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
 		}
 		return correcto;
-		
+
 	}
-	
+
 	/**
-	 * M�todo que inserta en la tabla Trabaja los valores correspondientes a lo trabajado cada dia por un usuario
-	 * @param idUsuario		Numero que identifica al usuario
-	 *            
-	 * @param idTurno	Numero que identifica al turno en el que trabaja el usuario           
-	 * @param Fecha		String que representa un dia del año concreto. El formato es Dd/mm/aaaa
-	 *            
-	 * @param HoraEntrada	Hora a la que entro el usuario a trabajar ese dia en formato time
-	 * @param HoraSalida	Hora a la que salio el usuario de trabajar ese dia en formato time
+	 * M�todo que inserta en la tabla Trabaja los valores correspondientes a lo
+	 * trabajado cada dia por un usuario
+	 * 
+	 * @param idUsuario
+	 *            Numero que identifica al usuario
+	 * 
+	 * @param idTurno
+	 *            Numero que identifica al turno en el que trabaja el usuario
+	 * @param Fecha
+	 *            String que representa un dia del año concreto. El formato es
+	 *            Dd/mm/aaaa
+	 * 
+	 * @param HoraEntrada
+	 *            Hora a la que entro el usuario a trabajar ese dia en formato
+	 *            time
+	 * @param HoraSalida
+	 *            Hora a la que salio el usuario de trabajar ese dia en formato
+	 *            time
 	 * @return Informa sobre si se ha podido realizar la inserci�n o no
 	 */
-	
-	public boolean insertarTrabaja (int idUsuario, int idTurno, String Fecha, Time HoraEntrada, Time HoraSalida ){
-		boolean correcto=false;
-		try{
+
+	public boolean insertarTrabaja(int idUsuario, int idTurno, String Fecha,
+			Time HoraEntrada, Time HoraSalida) {
+		boolean correcto = false;
+		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO TRABAJA values ('" +idTurno  + "', '" + Fecha + "', '" + HoraEntrada + "', '" + HoraSalida + "', '" +idUsuario+ "')");
+			st.executeUpdate("INSERT INTO TRABAJA values ('" + idTurno + "', '"
+					+ Fecha + "', '" + HoraEntrada + "', '" + HoraSalida
+					+ "', '" + idUsuario + "')");
 			System.out.println("trabaja insertada");
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
 		}
 		return correcto;
-		
-	}
-	/**
-	 * M�todo que inserta en la tabla Distribucion los valores correspondientes a una nueva distribuci�n
-	 * @param Hora    Franja horaria  dividida en unidades de una hora (por ej. De 9:00 � 10:00) representado por la hora de inicio (ej. 9)
-	 *            
-	 * @param DiaSemana  Dia (Lunes, Martes,...,Domingo) en el que se aplica la distribuci�n
-	 *            
-	 * @param Patr�n   Nos dice c�mo se distribuyen los grupos (expertos y novatos)
-	 *           
-	 * @param NumMax   Nos acota el n�mero m�ximo de trabajadores requeridos dicho d�a en una cierta franja horaria 
 
-	 * @param NumMin  Nos acota el n�mero m�nimo de trabajadores requeridos dicho d�a en una cierta franja horaria 
+	}
+
+	/**
+	 * M�todo que inserta en la tabla Distribucion los valores correspondientes
+	 * a una nueva distribuci�n
 	 * 
-	 * @param IdDepartamento  identificador del dpto.
-	
+	 * @param Hora
+	 *            Franja horaria dividida en unidades de una hora (por ej. De
+	 *            9:00 � 10:00) representado por la hora de inicio (ej. 9)
+	 * 
+	 * @param DiaSemana
+	 *            Dia (Lunes, Martes,...,Domingo) en el que se aplica la
+	 *            distribuci�n
+	 * 
+	 * @param Patr�n
+	 *            Nos dice c�mo se distribuyen los grupos (expertos y novatos)
+	 * 
+	 * @param NumMax
+	 *            Nos acota el n�mero m�ximo de trabajadores requeridos dicho
+	 *            d�a en una cierta franja horaria
+	 * 
+	 * @param NumMin
+	 *            Nos acota el n�mero m�nimo de trabajadores requeridos dicho
+	 *            d�a en una cierta franja horaria
+	 * 
+	 * @param IdDepartamento
+	 *            identificador del dpto.
+	 * 
 	 * @return Informa sobre si se ha podido realizar la inserci�n o no
 	 */
-public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int NumMax, int NumMin,int IdDepartamento) {
+	public boolean insertarDistribucion(int Hora, String DiaSemana,
+			String Patron, int NumMax, int NumMin, int IdDepartamento) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO DISTRIBUCION values ('" + Hora + "', '" + DiaSemana + "', '" + Patron + "', '" +NumMax+ "', '" +NumMin+ "', '" +IdDepartamento+ "')");
+			st.executeUpdate("INSERT INTO DISTRIBUCION values ('" + Hora
+					+ "', '" + DiaSemana + "', '" + Patron + "', '" + NumMax
+					+ "', '" + NumMin + "', '" + IdDepartamento + "')");
 			System.out.println("Distribucion insertada");
 			correcto = true;
 		} catch (SQLException e) {
@@ -353,27 +415,46 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 	}
 
 	/**
-	 * M�todo que inserta en la tabla Festivos los valores correspondientes a una distribuci�n para d�as festivos o promociones
-	 * @param Hora    Franja horaria  dividida en unidades de una hora (por ej. De 9:00 � 10:00) representado por la hora de inicio (ej. 9)
-	 *            
-	 * @param FechaInicio   Fecha de Inicio de la distribuci�n especial para festivos o promociones
+	 * M�todo que inserta en la tabla Festivos los valores correspondientes a
+	 * una distribuci�n para d�as festivos o promociones
 	 * 
-	 * @param FechaFin   Fecha de Finalizacion de la distribuci�n especial para festivos o promociones
-	 * @param Patr�n   Nos dice c�mo se distribuyen los grupos (expertos y novatos)
-	 *           
-	 * @param NumMax   Nos acota el n�mero m�ximo de trabajadores requeridos dicho d�a en una cierta franja horaria 
-	
-	 * @param NumMin  Nos acota el n�mero m�nimo de trabajadores requeridos dicho d�a en una cierta franja horaria 
+	 * @param Hora
+	 *            Franja horaria dividida en unidades de una hora (por ej. De
+	 *            9:00 � 10:00) representado por la hora de inicio (ej. 9)
 	 * 
-	 * @param IdDepartamento  identificador del dpto.
-	
+	 * @param FechaInicio
+	 *            Fecha de Inicio de la distribuci�n especial para festivos o
+	 *            promociones
+	 * 
+	 * @param FechaFin
+	 *            Fecha de Finalizacion de la distribuci�n especial para
+	 *            festivos o promociones
+	 * @param Patr�n
+	 *            Nos dice c�mo se distribuyen los grupos (expertos y novatos)
+	 * 
+	 * @param NumMax
+	 *            Nos acota el n�mero m�ximo de trabajadores requeridos dicho
+	 *            d�a en una cierta franja horaria
+	 * 
+	 * @param NumMin
+	 *            Nos acota el n�mero m�nimo de trabajadores requeridos dicho
+	 *            d�a en una cierta franja horaria
+	 * 
+	 * @param IdDepartamento
+	 *            identificador del dpto.
+	 * 
 	 * @return Informa sobre si se ha podido realizar la inserci�n o no
 	 */
-	public boolean insertarFestivo(int Hora,String FechaInicio,String FechaFin,String Patron,int NumMax, int NumMin,int IdDepartamento) {
+	public boolean insertarFestivo(int Hora, String FechaInicio,
+			String FechaFin, String Patron, int NumMax, int NumMin,
+			int IdDepartamento) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO FESTIVOS values ('" + Hora + "', '" + FechaInicio + "', '" + FechaFin+ "', '" + Patron + "', '" +NumMax+ "', '" +NumMin+ "', '" +IdDepartamento+ "')");
+			st.executeUpdate("INSERT INTO FESTIVOS values ('" + Hora + "', '"
+					+ FechaInicio + "', '" + FechaFin + "', '" + Patron
+					+ "', '" + NumMax + "', '" + NumMin + "', '"
+					+ IdDepartamento + "')");
 			System.out.println("Festivo insertado");
 			correcto = true;
 		} catch (SQLException e) {
@@ -384,19 +465,31 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 
 	/**
 	 * Metodo que inserta un turno en la BD
-	 * @param idTurno Pendiente de revision
-	 * @param Descripcion Una breve descripcion del turno
-	 * @param HoraEntrada La hora de entrada en formato Time
-	 * @param HoraSalida La hora de salida en formato Time
-	 * @param HoraInicioDescanso La hora de inicio de descanso en formato Time
-	 * @param Duracion La duracion del descanso en formato int - Pendiente de revision
+	 * 
+	 * @param idTurno
+	 *            Pendiente de revision
+	 * @param Descripcion
+	 *            Una breve descripcion del turno
+	 * @param HoraEntrada
+	 *            La hora de entrada en formato Time
+	 * @param HoraSalida
+	 *            La hora de salida en formato Time
+	 * @param HoraInicioDescanso
+	 *            La hora de inicio de descanso en formato Time
+	 * @param Duracion
+	 *            La duracion del descanso en formato int - Pendiente de
+	 *            revision
 	 * @return
 	 */
-	public boolean insertarTurno(int idTurno,String Descripcion,Time HoraEntrada,Time HoraSalida,Time HoraInicioDescanso, int Duracion) {
+	public boolean insertarTurno(int idTurno, String Descripcion,
+			Time HoraEntrada, Time HoraSalida, Time HoraInicioDescanso,
+			int Duracion) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO TURNOS values ('" + idTurno + "', '" + Descripcion + "', '" + HoraEntrada + "', '" + HoraSalida + "', '" + HoraInicioDescanso + "', '" + Duracion + "')");
+			st.executeUpdate("INSERT INTO TURNOS values ('" + idTurno + "', '"
+					+ Descripcion + "', '" + HoraEntrada + "', '" + HoraSalida
+					+ "', '" + HoraInicioDescanso + "', '" + Duracion + "')");
 			System.out.println("Turno insertado");
 			correcto = true;
 		} catch (SQLException e) {
@@ -404,21 +497,27 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		}
 		return correcto;
 	}
+
 	/**
 	 * 
-	 * @param remitente representa el remitente de un mensaje
-	 * @param fecha fecha en la que se ha guardado el mensaje
-	 * @param asunto campo que indica que contiene el mensaje de forma breve
-	 * @param texto contenido de los mensajes
+	 * @param remitente
+	 *            representa el remitente de un mensaje
+	 * @param fecha
+	 *            fecha en la que se ha guardado el mensaje
+	 * @param asunto
+	 *            campo que indica que contiene el mensaje de forma breve
+	 * @param texto
+	 *            contenido de los mensajes
 	 * @return true si se ha realizado correctamente o false en caso contrario
 	 */
-	
-	public boolean insertarMensaje(int remitente,Time fecha,String asunto,String texto) {
+
+	public boolean insertarMensaje(int remitente, Time fecha, String asunto,
+			String texto) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO MENSAJE values ( 0 , " + remitente 
-					+  ", '" + fecha + "', '" + asunto + "', '" + texto + "');");
+			st.executeUpdate("INSERT INTO MENSAJE values ( 0 , " + remitente
+					+ ", '" + fecha + "', '" + asunto + "', '" + texto + "');");
 			System.out.println("Mesaje insertado");
 			correcto = true;
 		} catch (SQLException e) {
@@ -426,20 +525,21 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		}
 		return correcto;
 	}
-	
-	
-	
+
 	/**
 	 * 
-	 * @param numVendedor representa el destinatario al que se ha enviado el mensaje
-	 * @param idMensaje representa el mensaje que se recibe
+	 * @param numVendedor
+	 *            representa el destinatario al que se ha enviado el mensaje
+	 * @param idMensaje
+	 *            representa el mensaje que se recibe
 	 * @return true si se ha realizado correctamente o false en caso contrario
 	 */
-	public boolean insertarListaDestinatarios(int numVendedor,int idMensaje) {
+	public boolean insertarListaDestinatarios(int numVendedor, int idMensaje) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO DESTINATARIO values (" + numVendedor + ", " + idMensaje + ");");
+			st.executeUpdate("INSERT INTO DESTINATARIO values (" + numVendedor
+					+ ", " + idMensaje + ");");
 			System.out.println("Destinatario insertado");
 			correcto = true;
 		} catch (SQLException e) {
@@ -447,25 +547,31 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		}
 		return correcto;
 	}
-	
-	
+
 	/**
 	 * 
-	 * @param idContrato representa el identificador del contrato
-	 * @param turnoInicial turno con el que empieza en el contrato
-	 * @param nombre nombre del contrato
-	 * @param patron distribucion de los dias que trabaja y los que no
-	 * @param duracionCiclo periodo de tiempo que le corresponde al patron
-	 * @param salario paga del empleado 
+	 * @param idContrato
+	 *            representa el identificador del contrato
+	 * @param turnoInicial
+	 *            turno con el que empieza en el contrato
+	 * @param nombre
+	 *            nombre del contrato
+	 * @param patron
+	 *            distribucion de los dias que trabaja y los que no
+	 * @param duracionCiclo
+	 *            periodo de tiempo que le corresponde al patron
+	 * @param salario
+	 *            paga del empleado
 	 * @return true si se ha realizado correctamente o false en caso contrario
 	 */
-	public boolean insertarContrato(int idContrato,int turnoInicial,String nombre,String patron,
-			int duracionCiclo,double salario){
+	public boolean insertarContrato(int idContrato, int turnoInicial,
+			String nombre, String patron, int duracionCiclo, double salario) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO CONTRATO values (" + idContrato + ", " + turnoInicial + ", '" 
-					+ nombre +"', '" + patron +"', " + duracionCiclo +", " + salario +");");
+			st.executeUpdate("INSERT INTO CONTRATO values (" + idContrato
+					+ ", " + turnoInicial + ", '" + nombre + "', '" + patron
+					+ "', " + duracionCiclo + ", " + salario + ");");
 			System.out.println("Contrato insertado");
 			correcto = true;
 		} catch (SQLException e) {
@@ -473,22 +579,29 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		}
 		return correcto;
 	}
-	
+
 	/**
 	 * 
-	 * @param numVendedor representa al trabajador
-	 * @param idTurno indica el turno con el que ha trabajado el empleado
-	 * @param fecha dia en el que un empleado a trabajado con un turno determinado
-	 * @param horaEntrada hora a la que entra a trabajar
-	 * @param horaSalida hora a la que sale
+	 * @param numVendedor
+	 *            representa al trabajador
+	 * @param idTurno
+	 *            indica el turno con el que ha trabajado el empleado
+	 * @param fecha
+	 *            dia en el que un empleado a trabajado con un turno determinado
+	 * @param horaEntrada
+	 *            hora a la que entra a trabajar
+	 * @param horaSalida
+	 *            hora a la que sale
 	 * @return true si se ha realizado correctamente o false en caso contrario
 	 */
-	public boolean insertarTrabaja(int numVendedor,int idTurno,Time fecha,Time horaEntrada,Time horaSalida){
+	public boolean insertarTrabaja(int numVendedor, int idTurno, Time fecha,
+			Time horaEntrada, Time horaSalida) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO trabaja values (" + numVendedor + ", " + idTurno + ", '" + fecha 
-					+"', '" + horaEntrada +"', '" + horaSalida +"');");
+			st.executeUpdate("INSERT INTO trabaja values (" + numVendedor
+					+ ", " + idTurno + ", '" + fecha + "', '" + horaEntrada
+					+ "', '" + horaSalida + "');");
 			System.out.println("insertado en la tabla trabaja");
 			correcto = true;
 		} catch (SQLException e) {
@@ -496,19 +609,23 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		}
 		return correcto;
 	}
-	
+
 	/**
 	 * 
-	 * @param numVendedor representa el empleado que ha realizado las ventas
-	 * @param fecha dia en el que se han realizado las ventas
-	 * @param importe coste total de las ventas
+	 * @param numVendedor
+	 *            representa el empleado que ha realizado las ventas
+	 * @param fecha
+	 *            dia en el que se han realizado las ventas
+	 * @param importe
+	 *            coste total de las ventas
 	 * @return true si se ha realizado correctamente o false en caso contrario
 	 */
-	public boolean insertarVenta(int numVendedor,Time fecha,double importe){
+	public boolean insertarVenta(int numVendedor, Time fecha, double importe) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO VENTAS values (" + numVendedor + ", '" + fecha +"', " + importe +");");
+			st.executeUpdate("INSERT INTO VENTAS values (" + numVendedor
+					+ ", '" + fecha + "', " + importe + ");");
 			System.out.println("venta insertada");
 			correcto = true;
 		} catch (SQLException e) {
@@ -516,18 +633,21 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		}
 		return correcto;
 	}
-	
+
 	/**
 	 * 
-	 * @param idTurno identificador del turno correpondiente al contrato
-	 * @param idContrato identificador del contrato
+	 * @param idTurno
+	 *            identificador del turno correpondiente al contrato
+	 * @param idContrato
+	 *            identificador del contrato
 	 * @return true si se ha realizado correctamente o false en caso contrario
 	 */
-	public boolean insertarTurnoPorContrato(int idTurno,int idContrato){
+	public boolean insertarTurnoPorContrato(int idTurno, int idContrato) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO ListaTurnosPorContrato values (" + idTurno + ", " + idContrato +");");
+			st.executeUpdate("INSERT INTO ListaTurnosPorContrato values ("
+					+ idTurno + ", " + idContrato + ");");
 			System.out.println("turnoPorContrato insertado");
 			correcto = true;
 		} catch (SQLException e) {
@@ -535,18 +655,21 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		}
 		return correcto;
 	}
-	
+
 	/**
 	 * 
-	 * @param idIncidencia identificador de la incidencia
-	 * @param descripcion breve descripcion de la incidencia
+	 * @param idIncidencia
+	 *            identificador de la incidencia
+	 * @param descripcion
+	 *            breve descripcion de la incidencia
 	 * @return true si se ha realizado correctamente o false en caso contrario
 	 */
-	public boolean insertarIncidencia(String descripcion){
+	public boolean insertarIncidencia(String descripcion) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO INCIDENCIAS values (" + 0 + ", '" + descripcion +"');");
+			st.executeUpdate("INSERT INTO INCIDENCIAS values (" + 0 + ", '"
+					+ descripcion + "');");
 			System.out.println("incidencia insertada");
 			correcto = true;
 		} catch (SQLException e) {
@@ -554,21 +677,27 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		}
 		return correcto;
 	}
-	
+
 	/**
 	 * 
-	 * @param idIncidencia identificador de la incidencia
-	 * @param numVendedor identificador del empleado
-	 * @param fechaInicio fecha de inicio de la incidencia
-	 * @param fechaFin fecha de finalizacion de la incidencia
+	 * @param idIncidencia
+	 *            identificador de la incidencia
+	 * @param numVendedor
+	 *            identificador del empleado
+	 * @param fechaInicio
+	 *            fecha de inicio de la incidencia
+	 * @param fechaFin
+	 *            fecha de finalizacion de la incidencia
 	 * @return true si se ha realizado correctamente o false en caso contrario
 	 */
-	public boolean insertarTieneIncidencia(int idIncidencia,int numVendedor,Time fechaInicio,Time fechaFin){
+	public boolean insertarTieneIncidencia(int idIncidencia, int numVendedor,
+			Time fechaInicio, Time fechaFin) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO TieneIncidencia values (" + idIncidencia + ", " + numVendedor 
-					+ ", '" + fechaInicio +"','" + fechaFin +"');");
+			st.executeUpdate("INSERT INTO TieneIncidencia values ("
+					+ idIncidencia + ", " + numVendedor + ", '" + fechaInicio
+					+ "','" + fechaFin + "');");
 			System.out.println("incidencia de una persona insertada");
 			correcto = true;
 		} catch (SQLException e) {
@@ -576,112 +705,128 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		}
 		return correcto;
 	}
-	
+
 	/**
-	 * Metodo que selecciona de la tabla de distribucion aquellas filas cuyo departamento y dia de la semana coincide
-	 * con los pasados como parametros de la funcion
+	 * Metodo que selecciona de la tabla de distribucion aquellas filas cuyo
+	 * departamento y dia de la semana coincide con los pasados como parametros
+	 * de la funcion
+	 * 
 	 * @param idDepartamento
-	 * @param DiaSemana (domingo = 0, lunes = 1....)
-	 * @return ResultSet con las filas que coinciden con el departamento y el dia de la semana
+	 * @param DiaSemana
+	 *            (domingo = 0, lunes = 1....)
+	 * @return ResultSet con las filas que coinciden con el departamento y el
+	 *         dia de la semana
 	 */
-	public ResultSet obtenDistribucion (int idDepartamento, int DiaSemana){
-		
-		try {			
+	public ResultSet obtenDistribucion(int idDepartamento, int DiaSemana) {
+
+		try {
 			st = con.createStatement();
-			rs = st.executeQuery(
-					"SELECT * FROM DISTRIBUCION WHERE idDepartamento ="+ idDepartamento+" AND DiaSemana="+DiaSemana);			
-			
-		}
-		catch (SQLException e) {
+			rs = st
+					.executeQuery("SELECT * FROM DISTRIBUCION WHERE idDepartamento ="
+							+ idDepartamento + " AND DiaSemana=" + DiaSemana);
+
+		} catch (SQLException e) {
 			// TODO: handle exception
-			System.out.println("Error al realizar la consulta de la distribucion ");
+			System.out
+					.println("Error al realizar la consulta de la distribucion ");
 		}
 		return rs;
 	}
-	
+
 	/**
-	 * Metodo que selecciona de la tabla de festivos aquellas filas cuyo departamento y fecha coinciden con los parametros 
+	 * Metodo que selecciona de la tabla de festivos aquellas filas cuyo
+	 * departamento y fecha coinciden con los parametros
+	 * 
 	 * @param idDepartamento
 	 * @param Fecha
-	 * @return ResultSet con las filas que coinciden con el departamento y la fecha
+	 * @return ResultSet con las filas que coinciden con el departamento y la
+	 *         fecha
 	 */
-	public ResultSet obtenFestivos (int idDepartamento, String Fecha){		
-		try {			
+	public ResultSet obtenFestivos(int idDepartamento, String Fecha) {
+		try {
 			st = con.createStatement();
-			rs = st.executeQuery("SELECT * FROM FESTIVOS WHERE idDepartamento ="+ idDepartamento + " AND FechaInicio<='"+Fecha+"' AND FechaFin>='"+Fecha+"'");
-					
-		}
-		catch (SQLException e) {
+			rs = st
+					.executeQuery("SELECT * FROM FESTIVOS WHERE idDepartamento ="
+							+ idDepartamento
+							+ " AND FechaInicio<='"
+							+ Fecha
+							+ "' AND FechaFin>='" + Fecha + "'");
+
+		} catch (SQLException e) {
 			// TODO: handle exception
 			e.printStackTrace();
-			System.out.println("Error al realizar la consulta de los festivos ");
+			System.out
+					.println("Error al realizar la consulta de los festivos ");
 		}
 		return rs;
 	}
-	
+
 	/**
 	 * 
-	 *
+	 * 
 	 * @return Devuelve un ResultSet con los turnos de los empleados
 	 */
-	
-	public ResultSet dameListaTurnosEmpleados() {
-		ResultSet r=null;	
-		
-		try {			
-			st = con.createStatement();
-			r = st.executeQuery(
-					"SELECT * FROM TURNOS " );	
 
-		
+	public ResultSet dameListaTurnosEmpleados() {
+		ResultSet r = null;
+
+		try {
+			st = con.createStatement();
+			r = st.executeQuery("SELECT * FROM TURNOS ");
+
 		}
-		
+
 		catch (SQLException e) {
 			// TODO: handle exception
-			System.out.println("Error al realizar la consulta Lista de Turnos ");
+			System.out
+					.println("Error al realizar la consulta Lista de Turnos ");
 		}
-		return r;		
+		return r;
 	}
-	
-	
+
 	public static void main(String[] IS0708) {
 		Database prueba = new Database();
 		prueba.abrirConexion();
-		
+
 		Time h = new Time(10000000);
-	
+
 		prueba.obtenFestivos(3, "2007-12-12");
 		prueba.insertarTurno(1, "prueba", h, h, h, 10);
 		prueba.insertarDistribucion(9, "Martes", "1e5p", 10, 7, 1);
-		prueba.insertarMensaje(1,new Time(0),"prueba","que gran prueba");
+		prueba.insertarMensaje(1, new Time(0), "prueba", "que gran prueba");
 		prueba.insertarListaDestinatarios(1, 1);
-		//prueba.insertarDepartamento("is", Integer.);
-		//prueba.insertarUsuario(1235, "Pablo", "Gervas", "Gomez_Navarro","2007-12-11" , "m", "gervas@is.com", "ballenas", "p","2007-12-11" , "2007-12-11", 0, 123, "empleado", 1, 1);
-		//prueba.insertarUsuario(1234, "Pablo", "Gervas", "Gomez_Navarro","2007-12-11" , "m", "gervas@is.com", "ballenas", "p","2007-12-11" , "2007-12-11", 0, 123, "empleado", 1, 1);
+		// prueba.insertarDepartamento("is", Integer.);
+		// prueba.insertarUsuario(1235, "Pablo", "Gervas",
+		// "Gomez_Navarro","2007-12-11" , "m", "gervas@is.com", "ballenas",
+		// "p","2007-12-11" , "2007-12-11", 0, 123, "empleado", 1, 1);
+		// prueba.insertarUsuario(1234, "Pablo", "Gervas",
+		// "Gomez_Navarro","2007-12-11" , "m", "gervas@is.com", "ballenas",
+		// "p","2007-12-11" , "2007-12-11", 0, 123, "empleado", 1, 1);
 		prueba.insertarDepartamento("is", 123);
 		prueba.insertarNumerosDepartamento("123", "is");
-		
-		
+
 		prueba.insertarContrato(1, 1, "turnoUno", "3t4d", 7, 123.123);
 		prueba.insertarIncidencia("preñadasssssss");
 		prueba.insertarTieneIncidencia(1, 1, new Time(0), new Time(10));
-		//prueba.insertarTrabaja(2, 2, new Time(0),  new Time(0), new Time(0));
+		// prueba.insertarTrabaja(2, 2, new Time(0), new Time(0), new Time(0));
 		prueba.insertarTurnoPorContrato(1, 1);
 		prueba.insertarVenta(1, new Time(0), 123.43);
-	    prueba.insertarFestivo(9, "2007-12-11", "2007-12-11","2e7p", 15, 10, 1);
-	   //Prueba método ObtenerLista de Turnos
-	    Controlador c= new Controlador(prueba);
-	    ArrayList<Turno> t = new ArrayList<Turno>();
-	    t = c.getTurnosEmpleados();
-	    for (int i=0; i<t.size(); i++){
-	    	System.out.print(t.get(i).getIdTurno()+ "  ");
-	    	System.out.print(t.get(i).getDescripcion()+ "  ");
-	    	System.out.print(t.get(i).getHoraEntrada()+ "  ");
-	    	System.out.print(t.get(i).getHoraSalida()+ "  ");
-	    	System.out.print(t.get(i).getHoraDescanso()+ "  ");
-	    	System.out.print(t.get(i).getTDescanso()+ "  ");
-	    	System.out.println();
-	    			}
+		prueba
+				.insertarFestivo(9, "2007-12-11", "2007-12-11", "2e7p", 15, 10,
+						1);
+		// Prueba método ObtenerLista de Turnos
+		Controlador c = new Controlador(prueba);
+		ArrayList<Turno> t = new ArrayList<Turno>();
+		t = c.getTurnosEmpleados();
+		for (int i = 0; i < t.size(); i++) {
+			System.out.print(t.get(i).getIdTurno() + "  ");
+			System.out.print(t.get(i).getDescripcion() + "  ");
+			System.out.print(t.get(i).getHoraEntrada() + "  ");
+			System.out.print(t.get(i).getHoraSalida() + "  ");
+			System.out.print(t.get(i).getHoraDescanso() + "  ");
+			System.out.print(t.get(i).getTDescanso() + "  ");
+			System.out.println();
+		}
 		prueba.cerrarConexion();
 	}
 }
