@@ -1,6 +1,7 @@
 package aplicacion;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.sql.Time;
@@ -271,11 +272,58 @@ public class Controlador {
 	public boolean insertDepartamento(Departamento departamento) {
 		return false;
 	}
-	
-	public ArrayList getDistribucion (int idDepartamento){
+	/**
+	 * Metodo que a partir de un identificador de departamento y un dia de la semana (entero) nos devuelve 
+	 * una lista dividida en horas con sus correspondientes limites de numero de empleados maximo y minimo. 
+	 * @param idDepartamento
+	 * @param Fecha
+	 * @return devuelve un arraylist donde cada elemento es un vector de tres dimensiones de tal forma que
+	 * vector[0]= Hora
+	 * vector[1]= numero minimo de empleados para esa hora
+	 * vector[2]= numero maximo de empleados para esa hora
+	 */
+	public ArrayList<Integer[]> getDistribucion (int idDepartamento, String Fecha){
 		ArrayList lista= new ArrayList();
 		ResultSet r;
-		r=db.obtenDistribucion(idDepartamento);
+		int[] vector = new int[3];
+		r=db.obtenFestivos(idDepartamento, Fecha);
+		//se ha supuesto que fecha esta en formato string
+		try{
+			r.last();
+			if (r.getRow()>0){
+				r.beforeFirst();
+				while (r.next()){
+					vector[0]=r.getInt("Hora");
+					vector[1]=r.getInt("NumMin");
+					vector[2]=r.getInt("NumMax");
+					lista.add(vector);
+				}
+			}else{
+				
+				
+				Date d=Util.stringADate(Fecha);
+				int diaSemana=d.getDay();
+				
+				r=db.obtenDistribucion(idDepartamento, diaSemana);
+				r.last();
+				if (r.getRow()>0){
+					r.beforeFirst();
+					while (r.next()){
+						vector[0]=r.getInt("Hora");
+						vector[1]=r.getInt("NumMin");
+						vector[2]=r.getInt("NumMax");
+						lista.add(vector);
+					}
+				}
+			}
+		
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			System.out.println("Error al realizar la consulta de los festivos ");
+		}
+		return lista;
 	}
 
 	public ArrayList getMensajes(int id) {
