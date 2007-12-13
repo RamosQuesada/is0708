@@ -3,7 +3,7 @@ package paquete_pruebas;
 import algoritmo.*;
 import aplicacion.Util;
 import aplicacion.Empleado;
-//import aplicacion.Turno; // Utilizamos la clase turno de nuestro "gran paquete"
+import aplicacion.Turno; // Utilizamos la clase turno de nuestro "gran paquete"
 import java.util.ArrayList;
 import java.sql.Time;
 
@@ -18,7 +18,7 @@ public class PruebaAlgoritmo {
 		TurnoMatic alg;
 		Cuadrante cuad;
 		Empleado emp1,emp2,emp3;
-		aplicacion.Turno t1,t2;
+		Turno t1,t2;
 		ArrayList<Empleado> disponibles;
 		
 		disponibles = new ArrayList<Empleado>();
@@ -26,23 +26,24 @@ public class PruebaAlgoritmo {
 		//t1 = new Turno("1","M1","9:00:00","14:00:00","12:30:00",20);
 		//t2 = new Turno("2","T1","9:00:00","17:00:00","14:30:00",25);
 		/*
-		 * Os comento esta parte, que da error porque se han cambiado las clases Turno y Empleado
-		t1=new aplicacion.Turno(1,"23","2");
-		t2=new aplicacion.Turno(2,"12","21");
+		 * Os comento esta parte, que da error porque se han cambiado las clases Turno y Empleado*/
+		
+		t1=new Turno("1");
+		t2=new Turno("2");
 		emp1 = new Empleado(1,"emp1",t1);
 		emp2 = new Empleado(2,"emp2",t2);
 		emp3 = new Empleado(3,"emp3",t1);
 		disponibles.add(emp1);
 		disponibles.add(emp2);
 		disponibles.add(emp3);
-		*/
+	
 		cuad = new Cuadrante(12,2007);
 		System.out.println(cuad.getNumDias());
 		
 		alg = new TurnoMatic(6,2007);
-		//alg.ejecutaAlgoritmo(disponibles);
-		//alg.imprimeCuadrante();
-		//alg.imprimeEstructura();
+		alg.ejecutaAlgoritmo(disponibles);
+		alg.imprimeCuadrante();
+		alg.imprimeEstructura();
 		/*Time pr1 = new Time(19,49,00);
 		System.out.println(pr1.toString());
 		Time pr2 = Util.calculaFinDescanso(pr1, 20);
