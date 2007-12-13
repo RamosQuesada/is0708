@@ -175,7 +175,7 @@ public class Controlador {
 	 */
 	public ArrayList<Empleado> getEmpleado(Integer idEmpl, Integer idDpto,
 			Integer idContrato, String nombre, String apellido1,
-			String apellido2) {
+			String apellido2,int rango) {
 		return null;
 	}
 
