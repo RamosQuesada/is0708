@@ -57,9 +57,11 @@ public class Estructura {
 		// Calcular el numero de trozos en que se divide el horario
 		// Recuperar de la base de datos la lista de todos los turnos del departamento
 		// y ver en cuantos trozos vas a partir cada dia
+		
+		this.turnos = t;
 		inicializaTrozos(); 
 		
-		turnos = t;
+		this.turnos = t;
 		
 		int numDias = Util.dameDias(mes,anio);//calculamos el numero de dias
 		dias = new ListasEmpleados[numDias][numTrozos];
@@ -99,9 +101,9 @@ public class Estructura {
 				horas.add(finDescanso);
 		}
 		// Ordenar la lista
-		numTrozos = horas.size();
+		numTrozos = horas.size()-1;
 		trozosHorario = new ArrayList<Time>();
-		for (int i=0; i<numTrozos; i++){
+		for (int i=0; i<numTrozos+1; i++){
 			int j=0;
 			while (j<trozosHorario.size() && trozosHorario.get(j).getTime()<horas.get(i).getTime())
 				j++;

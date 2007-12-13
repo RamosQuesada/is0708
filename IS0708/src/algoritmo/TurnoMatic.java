@@ -110,9 +110,9 @@ public class TurnoMatic {
 		int max;
 		
 		listas = estruc.getDias();
-		//numTrozos = listas[0].length;
+		numTrozos = estruc.getNumTrozos();
 		//prueba
-		numTrozos = 4;
+		//numTrozos = 4;
 		max = hora.getMax();
 		
 		//Para cada franja horaria
