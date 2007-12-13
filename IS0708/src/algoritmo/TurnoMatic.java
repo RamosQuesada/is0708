@@ -66,31 +66,28 @@ public class TurnoMatic {
 		for(int i=0; i<Util.dameDias(mes,anio); i++){
 			
 			//dividimos en el numero de franjas de cada dia
-			//for(int j=0; j<estruc.getNumTrozos(); j++){
-			//prueba
-			for(int j=0; j<disp.size(); j++){
-				/*Time inif = estruc.getTrozosHorario().get(j); Doria, mírate estas instrucciones
-				Time finf = estruc.getTrozosHorario().get(j+1); dan fuera de rango.
+			for(int j=0; j<estruc.getNumTrozos(); j++){
+			//for(int j=0; j<disp.size(); j++){
+				Time inif = estruc.getTrozosHorario().get(j); 
+				Time finf = estruc.getTrozosHorario().get(j+1);
 				dispo = horario[i][j].getEmpleados();
 				reser = horario[i][j].getReserva();
 				
+				//Comprobamos la disponibilidad de cada empleado
 				for(int k=0; k<disp.size(); k++){
 					e = disp.get(k);
-					/*if(e.estaDisponible(inif,finf)){
+					if(e.estaDisponible(i,inif,finf)){
 						dispo.add(e);						
 					}else{
 						reser.add(e);
-					}*/
-				/*}
+					}
+				}
 				horario[i][j].setDisponibles(dispo);
-				horario[i][j].setReserva(reser);*/
+				horario[i][j].setReserva(reser);
 				
 				//coloca sólo a los empleados fijos.
 				colocaFijos(i,disp,cal[i][j],cuad);
 			}	
-			
-			
-			
 		}		
 		return this.cuadrante;
 }
@@ -146,10 +143,8 @@ public class TurnoMatic {
 			}
 			//listas[dia][i].setEmpleados(empleados);  
 			cuadrante.setCuad(cu);
-
 		}
 		this.estruc.setDias(listas);
-		
 	}
 	
 	/**
@@ -174,9 +169,7 @@ public class TurnoMatic {
 				System.out.println("Empleado: "+trab.getIdEmpl());
 				
 			}
-		}
-			
-			
+		}	
 	}
 	
 	public void imprimeEstructura(){
