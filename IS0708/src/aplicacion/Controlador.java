@@ -252,21 +252,19 @@ public class Controlador {
  */
 
 	/**
-	 * Carga un departamento desde la base de datos, dado su identificador.
+	 * Carga un departamento desde la base de datos, dado su nombre.
 	 * 
-	 * @param id
-	 *            el identificador del departamento
-	 * @return una instancia del departamento cargado
+	 * @param id	el nombre del departamento
+	 * @return		una instancia del departamento cargado
 	 */
-	public Departamento getDepartamento(int id) {
+	public Departamento getDepartamento(String id) {
 		return null;
 	}
 
 	/**
 	 * Guarda un departamento en la base de datos
 	 * 
-	 * @param departamento
-	 *            el departamento a guardar
+	 * @param departamento el departamento a guardar
 	 * @return <i>true</i> si el departamento ha sido insertado
 	 */
 	public boolean insertDepartamento(Departamento departamento) {
@@ -337,15 +335,23 @@ public class Controlador {
 
 	/**
 	 * Carga un contrato desde la base de datos, dado su identificador.
-	 * 
-	 * @param id
-	 *            el identificador del contrato
-	 * @return uan instancia del contrato cargado
+	 * @param id	el identificador del contrato
+	 * @return		una instancia del contrato cargado
 	 */
-	// public Contrato getContrato(int id) {
-	// return null;
-	// }
-	// TODO hacer insertarContrato
+	public Contrato getContrato(int id) {
+		// TODO BD
+	  return null;
+	}
+	
+	/**
+	 * Inserta un contrato en la base de datos.
+	 * @param c		el contrato a insertar
+	 * @return		<i>true</i> si se ha insertado el contrato correctamente
+	 */
+	public boolean insertContrato(Contrato c) {
+		// TODO BD
+		return false;
+	}
 
 	
 /***************************************************************************
