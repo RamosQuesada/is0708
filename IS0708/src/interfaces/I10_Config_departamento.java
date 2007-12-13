@@ -199,8 +199,15 @@ public class I10_Config_departamento {
 		
 		comboBoss = new Combo  (group, SWT.DROP_DOWN );	
 //TODO combo gets items from DB (about possible boss)
-		comboBoss.setText(this.getArrayDB()[2]);	
-		//comboBoss.setSize(100,20);
+		ArrayList<Empleado> listaCoincidencias= this.vista.getEmpleado(null, null, null, null, null, null,2);
+		String[] nombresEmpleados= new String[listaCoincidencias.size()];
+		for(int cont=0;cont<listaCoincidencias.size();cont++){
+			
+			nombresEmpleados[cont]=(listaCoincidencias.get(cont).getNombre()+" "
+			+listaCoincidencias.get(cont).getApellido1()+" "+listaCoincidencias.get(cont).getApellido2());
+		}
+		comboBoss.setItems(nombresEmpleados);
+
 		comboBoss.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
 		
 		
@@ -211,8 +218,7 @@ public class I10_Config_departamento {
 		String nombreJefe = comboBoss.getText();
 		//TODO separar nombres y apellidos y ¿coger primer empleado?
 		int numeroDepartamento = Integer.valueOf(tNumber.getText());
-		ArrayList<Empleado> listaCoincidencias= this.vista.getEmpleado(null, numeroDepartamento, null, nombreJefe, null, null,2);
-		Empleado jefe=listaCoincidencias.get(0);
+		Empleado jefe=listaCoincidencias.get(comboBoss.getSelectionIndex());
 		String nombreDepartamento = tName.getText();
 		
 		Departamento departamento = new Departamento(nombreDepartamento,
