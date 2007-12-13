@@ -10,6 +10,7 @@ package interfaces;
  /**draws window for to add/edid department*/
 
 
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -132,7 +133,7 @@ public class I10_Config_departamento {
 		// on action "New Boss"
 		SelectionAdapter onNewBoss = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				I08_1_Anadir_empleado I08_1_instance = new I08_1_Anadir_empleado(padre, bundle, db);
+				I08_1_Anadir_empleado I08_1_instance = new I08_1_Anadir_empleado(padre, bundle, vista);
 			}
 		};
 		
@@ -208,9 +209,12 @@ public class I10_Config_departamento {
 		//CREACION DEL JEFE Y DEL DEPARTAMENTO
 		
 		String nombreJefe = comboBoss.getText();
-		Empleado jefe= this.vista.getEmpleado(nombreJefe);
+		//TODO separar nombres y apellidos y ¿coger primer empleado?
+		int numeroDepartamento = Integer.valueOf(tNumber.getText());
+		ArrayList<Empleado> listaCoincidencias= this.vista.getEmpleado(null, numeroDepartamento, null, nombreJefe, null, null,2);
+		Empleado jefe=listaCoincidencias.get(0);
 		String nombreDepartamento = tName.getText();
-		String numeroDepartamento = tNumber.getText();
+		
 		Departamento departamento = new Departamento(nombreDepartamento,
 				numeroDepartamento, jefe);
 		
