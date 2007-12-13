@@ -107,7 +107,7 @@ public class I01_Login extends Thread{
 		lPassword.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 3, 1));
 		lPassword.setText(bundle.getString("Contrasena"));
 		//TODO quitar esto
-		tUsuario.setText("00000002");
+		tUsuario.setText("55555555");
 		tPassword.setText("blabla");
 		
 		tPassword.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 5, 1));
