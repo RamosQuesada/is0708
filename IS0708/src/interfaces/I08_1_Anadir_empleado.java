@@ -149,6 +149,7 @@ public class I08_1_Anadir_empleado {
 		grupoIzq.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
 		grupoDer.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
 		
+		tNVend.setTextLimit(8);
 		cSexo.setItems (new String [] {bundle.getString("Femenino"), bundle.getString("Masculino"),});
 		cContrato.setItems (new String [] {"6:40", "Dias sueltos",});
 		cExperiencia.setItems (new String [] {bundle.getString("Principiante"), bundle.getString("Experto"),});

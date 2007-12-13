@@ -1,15 +1,15 @@
 package aplicacion;
 
 import java.util.ArrayList;
-import aplicacion.Util.*;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.graphics.*;
+
 import java.util.Date;
 import java.sql.Time;
 
-import javax.print.attribute.SetOfIntegerSyntax;
-import org.eclipse.swt.graphics.*;
+import aplicacion.Controlador;
 
 /**
  * Esta clase representa a un empleado.
@@ -63,25 +63,101 @@ public class Empleado implements Drawable {
 	private String password;
 	private int grupo; // 0 principiante, 1 experto
 	private int rango; // 0 administrador, 1 empleado, 2 jefe, 3 gerente
-	private int departamento;
 	private int idContrato;
 	private Contrato contrato;
 	private Date fContrato;
 	private Date fAlta;
+	private int felicidad;
 	private ArrayList<Integer> idSubordinados;
 	private ArrayList<Empleado> subordinados;
 	private ArrayList<Integer> idDepartamentos;
 	private ArrayList<Departamento> departamentos;
 	
-	// TODO Eliminar el turno, que ir� en el Contrato
-	// ahora s�lo sirve para hacer prubas de interfaz
+	// TODO Eliminar el turno, que irá en el Contrato
+	// ahora sólo sirve para hacer prubas de interfaz
+	/** @deprecated */
 	public Turno turno;
 	
+/*****************************************************************************************
+ * Métodos privados:
+ */
+
+	/**
+	 * Actualiza la lista de departamentos cargándolos de la BD
+	 * @param c
+	 */
+	private void actualizarDepartamentos(Controlador c) {
+		// Actualizar la lista si hace falta
+		if (idDepartamentos.size() > departamentos.size())
+			departamentos.clear();
+			for (int i = 0; i < idDepartamentos.size(); i++) {
+				c.setProgreso("Cargando departamentos", (100/idDepartamentos.size())*i);
+				departamentos.add(c.getDepartamento(idDepartamentos.get(i)));
+			}
+	}
+	
+	/**
+	 * Actualiza la lista de subordinados cargándolos de la BD
+	 * @param c
+	 */
+	private void actualizarSubordinados(Controlador c) {
+		// Actualizar la lista si hace falta
+		if (idSubordinados.size() > subordinados.size())
+			subordinados.clear();
+			for (int i = 0; i < idSubordinados.size(); i++) {
+				c.setProgreso("Cargando empleados", (100/idSubordinados.size())*i);
+				subordinados.add(c.getEmpleado(idSubordinados.get(i)));
+			}
+	}
+
+	/**
+	 * Actualiza el empleado superior cargándolo de la BD
+	 * @param c
+	 */
+	private void actualizarSuperior(Controlador c) {
+		// Actualizar el superior si hace falta
+		if (superior==null && idSuperior!=0) {
+			c.setProgreso("Cargando empleado", 50);
+			superior= c.getEmpleado(idSuperior);
+			c.setProgreso("",100);
+		}
+	}
+	
+	/**
+	 * Comprueba si un empleado es gerente.
+	 * @return <i>true</i> si es gerente
+	 */
+	private boolean esGerente() {
+		int i = 0; boolean b = false;
+		while (i<idSubordinados.size() && !b) {
+			// TODO
+			//if (subordinados.get(i).getRango()>1) b = true;
+		}
+		return b;
+	}
+
+	/**
+	 * Comprueba si un empleado es jefe
+	 * @return <i>true</i> si es jefe
+	 */
+	private boolean esJefe() {
+		int i = 0; boolean b = false;
+		while (i<idDepartamentos.size() && !b) {
+			// TODO Controlar que la lista esté inicializada
+			if (this == departamentos.get(i).getJefeDepartamento()) b = true;
+		}
+		return b;
+	}
+/*****************************************************************************************
+ * Constructor, getters y setters:
+ */
  
 	/**
-	 * Constructor de un empleado. No se hace ninguna comprobaci�n de ninguno de los datos.
-	 * @param idSuperior	el id del empleado superior. Normalmente, el que llama al constructor
-	 * @param idEmpl			el id del empleado o número de vendedor, debe ser un número de 8 cifras
+	 * Constructor de un empleado. No se hace comprobación de la mayoría de los datos.
+	 * @param idSuperior	el id del empleado superior. Si no tiene empleado superior
+	 * 						se puede dejar como <b>null</b> o cero.
+	 * @param idEmpl		el id del empleado o número de vendedor, debe ser un número 
+	 * 						de 8 cifras mayor que cero.
 	 * @param nombre		el nombre del empleado
 	 * @param apellido1		el primer apellido del empleado
 	 * @param apellido2		el segundo apellido del empleado
@@ -95,8 +171,7 @@ public class Empleado implements Drawable {
 	 * @param grupo			la experiencia del empleado:	<ul>
 	 * 														<li>0 - principiante
 	 * 														<li>1 - experto
-	 * 														</ul>
-	 * @param departamento	el nombre del departamento al que pertenece	
+	 * 														</ul>	
 	 * @param rango			el rango del empleado:	<ul>
 	 * 												<li>0 - administrador
 	 * 												<li>1 - empleado
@@ -107,13 +182,15 @@ public class Empleado implements Drawable {
 	 * @param fContrato		fecha en que el empleado empieza a aparecer en los cuadrantes de este departamento
 	 * @param fAlta			fecha en que el empleado empieza a trabajar en la empresa
 	 * @param color			un color con el que se representará al empleado en los cuadrantes
+	 * 
 	 */
-	public Empleado (int idSuperior, int idEmpl, String nombre, String apellido1, String apellido2, 
-			Date fechaNac, int sexo, String email, String password, int grupo,
-			int departamento,int rango, int contrato, Date fContrato, Date fAlta, Color color,
+	public Empleado (Integer idSuperior, int idEmpl, String nombre, String apellido1,
+			String apellido2, Date fechaNac, int sexo, String email, String password,
+			int grupo, int rango, int contrato, Date fContrato, Date fAlta, Color color,
 			ArrayList<Integer> idDepartamentos, ArrayList<Integer> idSubordinados) {
-		this.idSuperior	= idSuperior;
-		this.idEmpl		= idEmpl;
+		if (idSuperior==null) this.idSuperior=0;
+		else setIdSuperior(idSuperior);
+		setIdEmpl(idEmpl);
 		this.nombre		= nombre;
 		this.apellido1	= apellido1;
 		this.apellido2	= apellido2;
@@ -122,36 +199,95 @@ public class Empleado implements Drawable {
 		this.email		= email;
 		this.password	= password;
 		this.grupo		= grupo;
-		this.departamento=departamento;
 		this.rango		= rango;
 		this.idContrato	= contrato;
 		this.fContrato	= fContrato;
 		this.fAlta		= fAlta;
 		this.color = color;
-		// TODO Rellenar la lista de subordinados y de departamentos
 		this.idSubordinados = idSubordinados;
 		this.idDepartamentos = idDepartamentos;
+		superior = null;
+		subordinados	= new ArrayList<Empleado>();
+		departamentos	= new ArrayList<Departamento>();
+		
 	}
 
 	/**
-	 * Constructor para hacer pruebas
-	 * @deprecated eliminar cuando ya no sea necesario
+	 * Devuelve el número de vendedor del superior. Si no tiene, devuelve cero.
+	 * @return
 	 */
-	public Empleado(int idEmpl, String nombre, Color color){
-		this.idEmpl = idEmpl;
-		this.nombre = nombre;
-		this.color = color;
-		turno = new Turno();
+	public int getIdSuperior() {
+		return idSuperior;
 	}
 	
 	/**
-	 * Constructor para hacer pruebas, Algoritmo
-	 * @deprecated eliminar cuando ya no sea necesario
+	 * Asigna el id del superior al empleado actual. El número debe ser un valor
+	 * mayor que 1 y debe tener menos de ocho cifras.
+	 * @param id el número a asignar
+	 * @return <i>true</i> si se ha realizado la asignación
 	 */
-	public Empleado(int idEmpl, String nombre, Turno tur){
-		this.idEmpl = idEmpl;
-		this.nombre = nombre;
-		turno = tur;
+	public boolean setIdSuperior(int id) {
+		boolean b = false;
+		if (id>1 && id<99999999) {
+			idSuperior = id;
+			b = true;
+		}
+		return b;
+	}
+	
+	/**
+	 * Devuelve el empleado superior. Si no tiene, devuelve null;
+	 * @param c el controlador de la aplicación.
+	 * @return
+	 */
+	public Empleado getSuperior(Controlador c) {
+		actualizarSuperior(c);
+		return superior;
+	}
+	
+	/**
+	 * Asigna un superior al empleado.
+	 * @param e el empleado superior
+	 */
+	public void setSuperior(Empleado e) {
+		superior = e;
+		idSuperior = e.getIdEmpl();
+	}
+	
+	/**
+	 * Devuelve el número de vendedor de un empleado.
+	 * @return	el número de vendedor del empleado.
+	 */
+	public int getIdEmpl() {
+		return idEmpl;
+	}
+	
+	/**
+	 * Intenta asignar un número de vendedor a un empleado, que debe ser un número de 8
+	 * cifras mayor que 0. Si no es correcto, no se produce ningún cambio.
+	 * @param	idEmpl el número de vendedor a asignar al empleado.
+	 * @return	<i>true</i> si se ha asignado correctamente el número, <i>false</i> si 
+	 * 			el string no tiene longitud 8 o no es un número.
+	 */
+	public boolean setIdEmpl (String idEmpl){
+		int n = Util.convertirNVend(idEmpl);
+		if (n>0) this.idEmpl = n;
+		return n>0;
+	}
+	
+	/**
+	 * Asigna el id al empleado actual. El número debe ser un valor mayor que 1 y debe
+	 * tener menos de ocho cifras.
+	 * @param id el número a asignar
+	 * @return <i>true</i> si se ha realizado la asignación
+	 */
+	public boolean setIdEmpl (int id) {
+		boolean b = false;
+		if (id>1 && id<99999999) {
+			idEmpl = id;
+			b = true;
+		}
+		return b;
 	}
 	
 	/**
@@ -211,27 +347,6 @@ public class Empleado implements Drawable {
 	}
 
 	/**
-	 * Devuelve el número de vendedor de un empleado.
-	 * @return	el número de vendedor del empleado.
-	 */
-	public int getIdEmpl() {
-		return idEmpl;
-	}
-	
-	/**
-	 * Intenta asignar un número de vendedor a un empleado, que debe ser un número de 8 cifras.
-	 * Si no es correcto, no produce ningún cambio.
-	 * @param	idEmpl el número de vendedor a asignar al empleado.
-	 * @return	<i>true</i> si se ha asignado correctamente el número, <i>false</i> si 
-	 * 			el string no tiene longitud 8 o no es un número.
-	 */
-	public boolean setIdEmpl(String idEmpl){
-		int n = Util.convertirNVend(idEmpl);
-		if (n>0) this.idEmpl = n;
-		return n>0;
-	}
-
-	/**
 	 * Devuelve el color que representa al empleado.
 	 * @return el color que represena al empleado
 	 */
@@ -246,7 +361,7 @@ public class Empleado implements Drawable {
 	public void setColor(Color color) {
 		this.color = color;
 	}
-	
+
 	/**
 	 * Devuelve la fecha de nacimiento de un empleado.
 	 * @return la fecha de nacimiento del empleado
@@ -272,7 +387,22 @@ public class Empleado implements Drawable {
 	}
 	
 	/**
+	 * Asigna un sexo al empleado:
+	 * <ul>
+	 * 		<li>0 - femenino
+	 * 		<li>1 - masculino
+	 * 	</ul>
+	 * @param s cero para femenino, uno para masculino
+	 * @see #setSexoFemenino()
+	 * @see #setSexoMasculino()
+	 */
+	public void setSexo(int s) {
+		if (s == 0 | s== 1)
+			sexo = s;
+	}
+	/**
 	 * Asigna sexo femenino al empleado.
+	 * @see #setSexo
 	 * @see #setSexoMasculino()
 	 */
 	public void setSexoFemenino() {
@@ -281,6 +411,7 @@ public class Empleado implements Drawable {
 	
 	/**
 	 * Asigna sexo masculino al empleado.
+	 * @see #setSexo
 	 * @see #setSexoFemenino()
 	 */
 	public void setSexoMasculino() {
@@ -302,7 +433,7 @@ public class Empleado implements Drawable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	/**
 	 * Devuelve la contraseña de un empleado.
 	 * @return la contraseña del empleado
@@ -331,6 +462,8 @@ public class Empleado implements Drawable {
 	 * Asigna un grupo de experiencia al empleado. El parámetro debe ser 0 ó 1,
 	 * o no se hará ninguna modificación.
 	 * @param grupo 0 si es principiante, 1 si es experto
+	 * @see #setGrupoPrincipiante()
+	 * @see #setGrupoExperto()
 	 */
 	public void setGrupo(int grupo) {
 		if (grupo == 0 | grupo == 1)
@@ -338,11 +471,48 @@ public class Empleado implements Drawable {
 	}
 	
 	/**
-	 * Devuelve los departamentos los que pertenece el empleado.
+	 * Pone al empleado como principiante.
+	 * @see #setGrupo(int)
+	 * @see #setGrupoExperto()
+	 */
+	public void setGrupoPrincipiante() {
+		grupo = 0;
+	}
+
+	/**
+	 * Pone al empleado como experto.
+	 * @see #setGrupo(int)
+	 * @see #setGrupoPrincipiante()()
+	 */
+	public void setGrupoExperto() {
+		grupo = 1;
+	}
+	
+	/**
+	 * Devuelve el rango de un empleado.
+	 * <ul>
+	 * <li>0 - administrador
+	 * <li>1 - empleado
+	 * <li>2 - jefe
+	 * <li>3 - gerente
+	 * </ul>
+	 * NO HAY setRango, el rango se ajusta automáticamente al añadir subordinados o
+	 * departamentos al empleado.
+	 * @return el rango del empleado
+	 */
+	public int getRango() {
+		return rango;
+	}
+	
+	
+	
+	
+	/**
+	 * Devuelve los departamentos a los que pertenece el empleado.
 	 * @return la lista de departamentos del usuario
 	 */
-	public ArrayList<Departamento> getDepartamento() {
-		//TODO Controlar que la lista esté inicializada
+	public ArrayList<Departamento> getDepartamentos(Controlador c) {
+		actualizarDepartamentos(c);
 		return departamentos;
 	}
 
@@ -351,46 +521,14 @@ public class Empleado implements Drawable {
 	 * departamentos del empleado.
 	 * @return el departamento número <i>i</i> del usuario
 	 */
-	public Departamento getDepartamento(int i) {
-		//TODO Controlar que la lista esté inicializada
+	public Departamento getDepartamento(Controlador c, int i) {
+		actualizarDepartamentos(c);
 		return departamentos.get(i);
 	}
 	
-	/**
-	 * Devuelve el rango de un usuario.
-	 * NO HAY setRango, el rango se ajusta automáticamente al añadir
-	 * subordinados o departamentos
-	 * @return el rango del empleado
-	 */
-	public int getRango() {
-		return rango;
-	}
-	
-	/**
-	 * Comprueba si un empleado es gerente
-	 * @return <i>true</i> si es gerente
-	 */
-	private boolean esGerente() {
-		int i = 0; boolean b = false;
-		while (i<idSubordinados.size() && !b) {
-			// TODO
-			//if (subordinados.get(i).getRango()>1) b = true;
-		}
-		return b;
-	}
 
-	/**
-	 * Comprueba si un empleado es jefe
-	 * @return <i>true</i> si es jefe
-	 */
-	public boolean esJefe() {
-		int i = 0; boolean b = false;
-		while (i<idDepartamentos.size() && !b) {
-			// TODO Controlar que la lista esté inicializada
-			if (this == departamentos.get(i).getJefeDepartamento()) b = true;
-		}
-		return b;
-	}
+	
+
 	
 	/**
 	 * Actualiza el rango de un empleado, según los departamentos
@@ -438,13 +576,13 @@ public class Empleado implements Drawable {
 	 * Devuelve la lista de subordinados del empleado 
 	 * @return la lista  de subordinados
 	 */
-	public ArrayList<Empleado> getSubordinados() {
-		// TODO controlar que la lista esté actualizada
+	public ArrayList<Empleado> getSubordinados(Controlador c) {
+		actualizarSubordinados(c);
 		return subordinados;
 	}
 		
 	/**
-	 * A�ade un subordinado y actualiza el rango del empleado.
+	 * Añade un subordinado y actualiza el rango del empleado.
 	 * @param empleado el empleado subordinado
 	 * @return <i>true</i> si se ha añadido el Empleado, <i>false</i> si
 	 * ya estaba en la lista de subordinados
@@ -453,7 +591,8 @@ public class Empleado implements Drawable {
 		boolean esta = idSubordinados.contains(empleado);
 		if (!esta) {
 			idSubordinados.add(empleado.idEmpl);
-			// Si he a�adido a un jefe, el rango pasa a ser gerente
+			subordinados.add(emp);
+			// Si he añadido a un jefe, el rango pasa a ser gerente
 			if (empleado.getRango()==2) rango=3;
 		}
 		return !esta;
@@ -468,9 +607,9 @@ public class Empleado implements Drawable {
 	public boolean removeSubordinado (Empleado e) {
 		// TODO Controlar que la lista esté actualizada
 		boolean b = subordinados.remove(e);
-
-		// quitar subordinados afecta a la condici�n de gerente
-		// hay que mirar si todav�a tiene alg�n subordinado jefe
+		if (b) idSubordinados.remove(e.getIdEmpl());
+		// quitar subordinados afecta a la condición de gerente
+		// hay que mirar si todavía tiene algún subordinado jefe
 		if (idSubordinados.isEmpty()) rango=1;
 		else {
 			int i = 0;
@@ -553,4 +692,27 @@ public class Empleado implements Drawable {
 		this.departamento = departamento;
 	}
 
+	
+	
+	
+	/**
+	 * Constructor para hacer pruebas TODO
+	 * @deprecated eliminar cuando ya no sea necesario
+	 */
+	public Empleado(int idEmpl, String nombre, Color color){
+		this.idEmpl = idEmpl;
+		this.nombre = nombre;
+		this.color = color;
+		turno = new Turno();
+	}
+	
+	/**
+	 * Constructor para hacer pruebas, Algoritmo TODO
+	 * @deprecated eliminar cuando ya no sea necesario
+	 */
+	public Empleado(int idEmpl, String nombre, Turno tur){
+		this.idEmpl = idEmpl;
+		this.nombre = nombre;
+		turno = tur;
+	}
 }

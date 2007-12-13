@@ -41,7 +41,7 @@ public class Vista extends Thread {
 				shell.getDisplay().asyncExec(new Runnable () {
 					public void run() {
 						// Rellenar la barra de progreso
-						// Por alguna raz�n oculta de los threads, aun habiendo comprobado
+						// TODO Por alguna razón oculta de los threads, aun habiendo comprobado
 						// antes si el dialog sigue presente, si no lo compruebo de nuevo
 						// a veces da error.
 						if (!login.isDisposed()) 
@@ -239,5 +239,18 @@ public class Vista extends Thread {
 	 */
 	public boolean insertDepartamento(Departamento departamento){
 		return controlador.insertDepartamento(departamento);
+	}
+
+/****************************************************************************
+ * Otros métodos
+ */
+	
+	/**
+	 * Muestra el progreso de la tarea actual 
+	 * @param mensaje el mensaje a mostrar
+	 * @param i el progreso, entre 0 y 100
+	 */
+	public void setProgreso(String mensaje, int i){
+		i02.setProgreso(i);
 	}
 }
