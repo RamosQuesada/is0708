@@ -24,7 +24,8 @@ public class TurnoMatic {
 		
 	}
 	
-	public TurnoMatic(int m, int year){
+	//El array list turnos es de prueba.
+	public TurnoMatic(int m, int year,ArrayList<Turno> turnos){
 		
 		/* Llamada a la base de datos para que nos
 		 * dé todos los empleados del departamento.
@@ -32,7 +33,7 @@ public class TurnoMatic {
 		ArrayList<Empleado> personal = new ArrayList<Empleado>();
 		this.anio = year;
 		this.mes = m;
-		this.estruc = new Estructura(mes,year,personal);
+		this.estruc = new Estructura(mes,year,personal, turnos);
 		this.cuadrante = new Cuadrante(mes,year);
 		
 	}
@@ -44,9 +45,9 @@ public class TurnoMatic {
 	 * @param mes Mes para el cual se quiere realizar el cuadrante
 	 * @param anio Año al que pertenece el mes.
 	 * @return cuadrante Cuadrante resultante de aplicar el algoritmo
-	 * El arrayList disp es solo para pruebas
+	 * El arrayList disp es solo para pruebas.
 	 */
-	public  Cuadrante ejecutaAlgoritmo(ArrayList<Empleado> disp){
+	public Cuadrante ejecutaAlgoritmo(ArrayList<Empleado> disp){
 	
 		//Colocamos a los empleados correspondientes a cada día
 		

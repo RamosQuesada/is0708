@@ -5,8 +5,8 @@ import java.sql.Time;
 import aplicacion.*;
 
 /**
- * La primera dimensión representa el mes en cuestión (una posición por cada dia del mes)
- * la segunda dimensión representa el horario de cada dia (los turnos)
+ * La primera dimensiï¿½n representa el mes en cuestiï¿½n (una posiciï¿½n por cada dia del mes)
+ * la segunda dimensiï¿½n representa el horario de cada dia (los turnos)
  * @author madctol
  *
  */
@@ -14,11 +14,14 @@ public class Estructura {
 	
 
 	private ListasEmpleados[][] dias;
-	private ArrayList<Empleado> personal;//aqui estarán todos los empleados
+	private ArrayList<Empleado> personal;//aqui estarï¿½n todos los empleados
 	private Calendario cal;//calendario donde se almacena min/max perso,exp/inexp... 
 	private ArrayList<Time> trozosHorario; // Lista con el inicio de cada turno y el fin del ultimo
 	                                       // tamanio: nTrozos+1;
 	private int numTrozos;
+	//Atributo de prueba turnos
+	ArrayList<Turno> turnos;
+	
 
 	
 	public Estructura(int mes,int anio,ArrayList<Empleado> personal){//constructora de la estructura
@@ -30,7 +33,37 @@ public class Estructura {
 		
 		int numDias = Util.dameDias(mes,anio);//calculamos el numero de dias
 		dias = new ListasEmpleados[numDias][numTrozos];
-		// Se podría no asignar listas a los dias que no se trabaja
+		// Se podrï¿½a no asignar listas a los dias que no se trabaja
+		for (int i=0; i<numDias; i++){
+			for (int j=0; j<numTrozos; j++){
+				dias[i][j] = new ListasEmpleados();
+			}
+		}
+		personal = new ArrayList<Empleado>();
+		//rellenar lista empleados
+		cal=new Calendario(numDias,mes,anio);//creamos calendario
+	}
+	
+	/**
+	 * Esta constructora es de prueba, sirve para pasar un array de turnos
+	 * y poder hacer pruebas.
+	 * @param mes
+	 * @param anio
+	 * @param personal
+	 * @deprecated borrar
+	 */
+	public Estructura(int mes,int anio,ArrayList<Empleado> personal, ArrayList<Turno> t){//constructora de la estructura
+		this.personal = personal;
+		// Calcular el numero de trozos en que se divide el horario
+		// Recuperar de la base de datos la lista de todos los turnos del departamento
+		// y ver en cuantos trozos vas a partir cada dia
+		inicializaTrozos(); 
+		
+		turnos = t;
+		
+		int numDias = Util.dameDias(mes,anio);//calculamos el numero de dias
+		dias = new ListasEmpleados[numDias][numTrozos];
+		// Se podrï¿½a no asignar listas a los dias que no se trabaja
 		for (int i=0; i<numDias; i++){
 			for (int j=0; j<numTrozos; j++){
 				dias[i][j] = new ListasEmpleados();
@@ -51,8 +84,8 @@ public class Estructura {
 	}
 	
 	private void inicializaTrozos(){
-		// ArrayList<Turno> turnos = Database.getTurnos(idDepartamento) // Método en proceso
-		ArrayList<Turno> turnos = new ArrayList<Turno>();		
+		// ArrayList<Turno> turnos = Database.getTurnos(idDepartamento) // Mï¿½todo en proceso
+		//ArrayList<Turno> turnos = new ArrayList<Turno>();	Comentado para prueba	
 		ArrayList<Time> horas = new ArrayList<Time>();
 		for (int i=0; i<turnos.size(); i++){
 			if (!horas.contains(turnos.get(i).getHoraEntrada()))
