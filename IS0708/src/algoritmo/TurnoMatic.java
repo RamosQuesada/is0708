@@ -7,7 +7,7 @@ import aplicacion.*;
 
 /**
  * Esta contiene los algoritmos que vamos a utilizar para el calculo automatico de un cuadrante
- * @author madctol
+ * @author Alberto Maqueda & Javier Doria & Carlos Gil 
  *
  */
 public class TurnoMatic {
@@ -144,7 +144,7 @@ public class TurnoMatic {
 						
 				}				
 			}
-			//listas[dia][i].setEmpleados(empleados);  
+			listas[dia][i].setEmpleados(empleados);  
 			cuadrante.setCuad(cu);
 		}
 		this.estruc.setDias(listas);
