@@ -7,6 +7,7 @@ import aplicacion.Turno; // Utilizamos la clase turno de nuestro "gran paquete"
 import java.util.ArrayList;
 import java.sql.Time;
 
+
 public class PruebaAlgoritmo {
 
 	/**
@@ -97,7 +98,7 @@ public class PruebaAlgoritmo {
 		*/
 		
 		System.out.println();
-		
+
 		
 		
 	}
