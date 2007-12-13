@@ -1,9 +1,12 @@
 package aplicacion;
 
 import java.util.ArrayList;
+import java.util.ResourceBundle;
+
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.graphics.*;
 
 import java.util.Date;
@@ -645,9 +648,36 @@ public class Empleado implements Drawable {
 		return null;
 	}
 	
-	public ImageData getPrintableImage(boolean bn) {
-		// TODO
-		return null;
+	public ImageData getPrintableImage(Display display, ResourceBundle bundle, boolean bn) {
+		Image image = new Image(display, 1500,1000);
+		GC gc = new GC(image);
+		int marginLeft = 150;
+		int marginTop = 100;
+		int marginVertical = 30;
+		
+		gc.setForeground(new Color(display, 0, 0, 200));
+		Shell shell = new Shell(display);
+		Font font =  shell.getFont();
+		shell.dispose();
+		gc.setFont(font);
+		gc.drawRectangle(0, 0, 1300, 700);
+		gc.drawString(bundle.getString("Vendedor")+" : "+ this.idEmpl,                marginLeft, marginTop+1*marginVertical);
+		gc.drawString(bundle.getString("Contrasena")+" : "+ this.password,            marginLeft, marginTop+2*marginVertical);
+		gc.drawString(bundle.getString("EMail")+" : "+ this.email,                    marginLeft, marginTop+3*marginVertical);
+		gc.drawString(bundle.getString("Nombre")+" : "+ this.nombre,                  marginLeft, marginTop+4*marginVertical);
+		gc.drawString(bundle.getString("I08_lab_Apellido1")+" : "+ this.apellido1,    marginLeft, marginTop+5*marginVertical);
+		gc.drawString(bundle.getString("I08_lab_Apellido2")+" : "+ this.apellido2,    marginLeft, marginTop+6*marginVertical);
+		gc.drawString(bundle.getString("I08_2_lab_FNacimiento")+" : "+ this.fechaNac, marginLeft, marginTop+7*marginVertical);
+		gc.drawString(bundle.getString("Sexo")+" : "+ this.sexo,                      marginLeft, marginTop+8*marginVertical);
+		gc.drawString(bundle.getString("I08_lab_TipoContrato")+" : "+ this.contrato,  marginLeft, marginTop+9*marginVertical);
+		gc.drawString(bundle.getString("Experiencia")+" : "+ this.contrato,           marginLeft, marginTop+10*marginVertical);
+		gc.drawString(bundle.getString("Departamento")+" : "+ this.departamentos,     marginLeft, marginTop+11*marginVertical);
+		gc.drawString(bundle.getString("I08_2_lab_FAlta")+" : "+ this.fAlta,          marginLeft, marginTop+12*marginVertical);
+		gc.drawString(bundle.getString("I08_2_lab_FContr")+" : "+ this.fContrato,     marginLeft, marginTop+13*marginVertical);
+		gc.drawString(bundle.getString("I08_2_lab_SelColor")+" : "+ this.color,       marginLeft, marginTop+14*marginVertical);
+		gc.drawString("Empleado", 100, 100);
+		gc.dispose();
+		return image.getImageData();
 	}
 	
 	

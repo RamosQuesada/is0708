@@ -1,5 +1,8 @@
 package aplicacion;
+import java.util.ResourceBundle;
+
 import org.eclipse.swt.graphics.*;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * Este interfaz sirve para especificar objetos dibujables e imprimibles
@@ -8,15 +11,15 @@ import org.eclipse.swt.graphics.*;
  */
 public interface Drawable {
 	/**
-	 * Este método devuelve un ImageData que se pueda imprimir.
+	 * Este mï¿½todo devuelve un ImageData que se pueda imprimir.
 	 * @param bn true si queremos una imagen en escala de grises
 	 * @return el ImageData a imprimir
 	 * @see #getDrawableImage()
 	 */
-	public ImageData getPrintableImage(boolean bn);
+	public ImageData getPrintableImage(Display display, ResourceBundle bundle, boolean bn);
 	
 	/**
-	 * Este método devuelve un ImageData que se puede dibujar en la pantalla. 
+	 * Este mï¿½todo devuelve un ImageData que se puede dibujar en la pantalla. 
 	 * @return el ImageData a dibujar en la pantalla
 	 * @see #getPrintableImage(boolean)
 	 */
