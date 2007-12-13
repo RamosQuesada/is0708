@@ -135,8 +135,7 @@ public class Controlador {
         ArrayList<Turno> turnos= new ArrayList<Turno>();
 		try {
 			ResultSet rs = db.dameListaTurnosEmpleados();
-			rs.first();
-			int i=1;
+			//rs.first();
 			while(rs.next()){
 			String idTurn = rs.getString("IdTurno");
 			String descr = rs.getString("Descripcion");
@@ -147,19 +146,18 @@ public class Controlador {
 			//las funciones que calculan la hora, minutos y segundos estan depreciadas aqui en JAVA
 			Time duracion = rs.getTime("DuracionDescanso");
 			//paso el Time a String y me quedo con el substring de la franja de los minutos HH:MM:SS
-			String duracionStr = duracion.toString().substring(3,4);
+			String duracionStr = duracion.toString().substring(3,5);
 			//lo paso a int (que es como esta duracionDescanso en JAVA)
 			Integer duracionInt= (int)Integer.valueOf(duracionStr);
 			Turno t = new Turno(idTurn,descr,HoraE,HoraS,HoraI,duracionInt);
-			turnos.add(i,t);
-			i++;
+			turnos.add(t);
 			}
 			
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error al obtener el Empleado de la base de datos");
+			System.out.println("Error al obtener Lista de Turnos en la base de datos");
 		}
-	System.out.print(turnos);	
+		
 	return  turnos;
 	}
 	
