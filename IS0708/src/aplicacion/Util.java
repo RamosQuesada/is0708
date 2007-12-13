@@ -131,7 +131,7 @@ public class Util {
 	 */
 	public static Time calculaFinDescanso(Time horaInicio, int minutos){
 		Time fin = new Time(horaInicio.getTime() + minutos*60000);
-		return fin;
+		return fin;		
 	}
 	
 	/**
