@@ -23,7 +23,53 @@ public class Vista {
 		this.locale = locale;
 		this.controlador = controlador;
 		this.db = db;
-		i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);
+
+		// Login y conexión a la base de datos
+		I01_Login login = new I01_Login(shell, bundle, db);
+		boolean identificado = false;
+		while (!identificado) {
+			login.mostrarVentana();
+			while (!login.dialog.isDisposed()) {
+				if (!shell.getDisplay().readAndDispatch()) {
+					shell.getDisplay().sleep();
+				}
+			}
+			if (login.getBotonPulsado()==1) {
+				// Si llega aquí, ya ha conexión con la base de datos
+				if (login.getNumeroVendedor()==0) {
+					if (login.getPassword()=="admin")
+						System.out.println("Administrador identificado");
+				}
+				else {
+					controlador.setEmpleadoActual(getEmpleado(login.getNumeroVendedor()));
+					System.out.println("Empleado identificado: " + controlador.getEmpleadoActual().getNombreCompleto());
+				}
+				identificado = true;
+				// si no, mostrar mensaje de error
+			}
+			else {
+				//Salir de la aplicación
+				shell.getDisplay().dispose();
+				identificado = true; // Para que salga del bucle
+				if (db.conexionAbierta())
+					db.cerrarConexion();
+			}
+		}
+		
+		// Si todavía no he cerrado el display, ya he hecho login correctamente
+		if (!shell.getDisplay().isDisposed()) {
+			i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);	
+			// Este bucle mantiene la ventana abierta
+			while (!shell.isDisposed()) {
+				if (!shell.getDisplay().readAndDispatch()) {
+					shell.getDisplay().sleep();
+				}
+			}
+			if (!shell.getDisplay().isDisposed())
+				shell.getDisplay().dispose();
+			if (!db.conexionAbierta())
+				db.cerrarConexion();
+		}
 	}
 	
 	/**

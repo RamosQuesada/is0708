@@ -18,19 +18,26 @@ public class Controlador {
 
 	private Empleado empleadoActual;
 
-	public Controlador(Database baseDatos, int idEmp) {
+	public Controlador(Database baseDatos) {
 		this.db = baseDatos;
-		setEmpleadoActual(idEmp);
 	}
 
 	/**
 	 * Asigna el empleado que ha iniciado sesión.
 	 * 
-	 * @param emp
-	 *            el empleado que ha iniciado sesión.
+	 * @param emp el empleado que ha iniciado sesión
 	 */
 	public void setEmpleadoActual(int idEmp) {
 		empleadoActual = this.getEmpleado(idEmp);
+	}
+	
+	/**
+	 * Asigna el empleado que ha iniciado sesión.
+	 * 
+	 * @param emp el empleado que ha iniciado sesión
+	 */	
+	public void setEmpleadoActual(Empleado emp) {
+		empleadoActual = emp;
 	}
 
 	/**

@@ -198,7 +198,7 @@ public class Util {
 	 */
 
 	public static String dateAString(Date fecha) {
-		DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		return formatter.format(fecha);
 	}
 	/**
@@ -210,7 +210,7 @@ public class Util {
 	
 	public static Date stringADate(String dateString) throws Exception{
 		Date date; 		
-		DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");	
+		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");	
 		date = (Date)formatter.parse(dateString);		
 		return date;
     }
