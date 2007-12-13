@@ -38,33 +38,33 @@ public class Vista {
 			}
 			if (login.getBotonPulsado()==1) {
 				// Si llega aquí, ya hay conexión con la base de datos
-				if (login.getNumeroVendedor()==0) {
-					if (login.getPassword()=="admin") {
+				
+				if (login.getNumeroVendedor()==0 && login.getPassword().compareTo("admin")==0) {
 						System.out.println("Administrador identificado");
 						identificado = true;
-					}
 				}
 				else {
-					// TODO Falta comprobar la clave
-					try{
 					Empleado emp = getEmpleado(login.getNumeroVendedor());
 					if (emp!=null) {
-						controlador.setEmpleadoActual(emp);
-						identificado = true;
+						// Comprobar la clave
+						if (emp.getPassword()==login.getPassword()) {
+							controlador.setEmpleadoActual(emp);
+							identificado = true;
+						}
+						else {
+							// Si el password no coincide
+							MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_ERROR | SWT.OK);
+							messageBox.setText (bundle.getString("Error"));
+							messageBox.setMessage (bundle.getString("I01_err_Login2"));
+							messageBox.open();							
+						}
 					}
 					else {
-						// si no, mostrar mensaje de error
+						// Si el usuario no existe en la base de datos
 						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_ERROR | SWT.OK);
 						messageBox.setText (bundle.getString("Error"));
 						messageBox.setMessage (bundle.getString("I01_err_Login1"));
 						messageBox.open();
-					}
-					}
-					catch(Exception e){
-						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_ERROR | SWT.OK);
-						messageBox.setText (bundle.getString("Error"));
-						messageBox.setMessage (bundle.getString("I01_err_Login1"));
-						messageBox.open();						
 					}
 				}
 			}
