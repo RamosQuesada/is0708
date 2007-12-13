@@ -75,6 +75,16 @@ public class Turno {
 		this.horaDescanso=Time.valueOf(horaDescanso);
 	}
 	/**
+	 * Prueba, algoritmo
+	 * @param id
+	 * @deprecared
+	 */
+	public Turno(String id){
+		this.idTurno = id;
+		
+	}
+	
+	/**
 	 * 
 	 * @param t	horas y minutos
 	 * @return  devuelve la hora del tiempo introducido
