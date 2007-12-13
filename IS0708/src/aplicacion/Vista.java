@@ -46,6 +46,7 @@ public class Vista {
 				}
 				else {
 					// TODO Falta comprobar la clave
+					try{
 					Empleado emp = getEmpleado(login.getNumeroVendedor());
 					if (emp!=null) {
 						controlador.setEmpleadoActual(emp);
@@ -57,6 +58,13 @@ public class Vista {
 						messageBox.setText (bundle.getString("Error"));
 						messageBox.setMessage (bundle.getString("I01_err_Login1"));
 						messageBox.open();
+					}
+					}
+					catch(Exception e){
+						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_ERROR | SWT.OK);
+						messageBox.setText (bundle.getString("Error"));
+						messageBox.setMessage (bundle.getString("I01_err_Login1"));
+						messageBox.open();						
 					}
 				}
 			}
