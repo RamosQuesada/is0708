@@ -7,6 +7,8 @@ import java.util.Date;
 import java.sql.Time;
 import org.eclipse.swt.graphics.Color;
 
+import algoritmo.HoraCalendario;
+
 /**
  * Esta clase conecta el modelo (la base de datos) con la vista (los interfaces)
  * 
@@ -281,7 +283,7 @@ public class Controlador {
 	 * vector[2]= numero maximo de empleados para esa hora
 	 */
 	public ArrayList<Integer[]> getDistribucion (int idDepartamento, String Fecha){
-		ArrayList lista= new ArrayList();
+		ArrayList lista= new ArrayList();		
 		ResultSet r;
 		int[] vector = new int[3];
 		r=db.obtenFestivos(idDepartamento, Fecha);
@@ -290,7 +292,7 @@ public class Controlador {
 			r.last();
 			if (r.getRow()>0){
 				r.beforeFirst();
-				while (r.next()){
+				while (r.next()){					
 					vector[0]=r.getInt("Hora");
 					vector[1]=r.getInt("NumMin");
 					vector[2]=r.getInt("NumMax");
