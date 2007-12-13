@@ -529,19 +529,19 @@ public class Empleado implements Drawable {
 		//COMPROBAR SI TRABAJA UN DIA	
 		//COMPROBAR SI ESTA DE VACACIONES
 
-		if ((turno.getHoraSalida().getTime() > iniH.getTime()) || (turno.getHoraSalida().getTime() < finH.getTime())){
+		if ((turno.getHoraEntrada().getTime() > iniH.getTime()) || (turno.getHoraSalida().getTime() < finH.getTime())){
 			puede = false;
 		} else {
-			if ((iniH.getTime() > turno.getHoraDescanso().getTime()) && (iniH.getTime() < Util.calculaFinDescanso(turno.getHoraDescanso(),turno.getTDescanso()).getTime())){
+			if ((iniH.getTime() >= turno.getHoraDescanso().getTime()) && (iniH.getTime() < Util.calculaFinDescanso(turno.getHoraDescanso(),turno.getTDescanso()).getTime())){
 				puede = false;
-			} else {
-				if ((finH.getTime() > turno.getHoraDescanso().getTime()) && (finH.getTime() < Util.calculaFinDescanso(turno.getHoraDescanso(),turno.getTDescanso()).getTime()))
-					puede = false;
-				}
+			//} else {
+			//	if ((finH.getTime() > turno.getHoraDescanso().getTime()) && (finH.getTime() < Util.calculaFinDescanso(turno.getHoraDescanso(),turno.getTDescanso()).getTime()))
+			//		puede = false;
+			//	}
 			}
-		return puede;
 		}
-		
+		return puede;
+	}
 		
 	
 	
