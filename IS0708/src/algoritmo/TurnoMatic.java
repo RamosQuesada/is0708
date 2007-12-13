@@ -144,7 +144,7 @@ public class TurnoMatic {
 						
 				}				
 			}
-			listas[dia][i].setEmpleados(empleados);
+			//listas[dia][i].setEmpleados(empleados);  
 			cuadrante.setCuad(cu);
 
 		}

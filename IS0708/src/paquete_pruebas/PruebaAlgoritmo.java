@@ -43,7 +43,7 @@ public class PruebaAlgoritmo {
 		alg = new TurnoMatic(6,2007);
 		alg.ejecutaAlgoritmo(disponibles);
 		alg.imprimeCuadrante();
-		alg.imprimeEstructura();
+		//alg.imprimeEstructura();
 		/*Time pr1 = new Time(19,49,00);
 		System.out.println(pr1.toString());
 		Time pr2 = Util.calculaFinDescanso(pr1, 20);
