@@ -3,7 +3,7 @@ package aplicacion;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
-
+import java.sql.Time;
 import org.eclipse.swt.graphics.Color;
 
 /**
@@ -121,6 +121,42 @@ public class Controlador {
 		}
 
 		return emp;
+	
+	}
+	
+	
+	/**
+	 * 
+	 * 
+	 * 
+	 * @return Devuelve lista de los turnos de los empleados en un ArrayList
+	 */
+	public ArrayList<Turno> getTurnosEmpleados() {
+        ArrayList<Turno> turnos= new ArrayList<Turno>();
+		try {
+			ResultSet rs = db.dameListaTurnosEmpleados();
+			rs.first();
+			int i=1;
+			while(rs.next()){
+			String idTurn = rs.getString("IdTurno");
+			String descr = rs.getString("Descripcion");
+			Time HoraE = rs.getTime("HoraEntrada");
+			Time HoraS = rs.getTime("HoraSalida");
+			Time HoraI = rs.getTime("HoraInicioDescanso");
+			Time duracion = rs.getTime("DuracionDescanso");
+			String duracionStr = duracion.toString().substring(3,4);
+			Integer duracionInt= (int)Integer.valueOf(duracionStr);
+			Turno t = new Turno(idTurn,descr,HoraE,HoraS,HoraI,duracionInt);
+			turnos.add(i,t);
+			i++;
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error al obtener el Empleado de la base de datos");
+		}
+
+	return  turnos;
 	}
 	
 	/**
