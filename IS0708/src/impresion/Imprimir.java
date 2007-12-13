@@ -9,6 +9,7 @@ package impresion;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -31,6 +32,7 @@ public class Imprimir {
 	private Shell imShell;
 	private Display imDisplay;
 	private Font font;
+	private Printer printer;
 	
 	   /** 
 	    * Class constructor. 
@@ -51,35 +53,39 @@ public class Imprimir {
 		//printDialog.setPrintToFile(true);
 		return printerData = printDialog.open();
 	}
+	public void setPrinter(PrinterData printerData){
+		if (!(printerData == null)) {
+	          printer = new Printer(printerData);
+	          //System.out.print(printer.getClientArea());
+		}
+	}
 	
-	public void imprimirImage(ImageData image){	
+	public void imprimirImage(ImageData imageData){	
 		printDialog.setText("PrintDialog");
 		printDialog.setScope(PrinterData.ALL_PAGES);
 		//printDialog.setPrintToFile(true);
 		
 		printerData = printDialog.open();
-		if (!(printerData == null)) {
-	          Printer p = new Printer(printerData);
-	          font = new Font(p,"courier", 10, 0);
-	          p.startJob("PrintJob");
-	          p.startPage();
+		setPrinter(printerData);
+		Image image = new Image(printer, imageData);
+		font = new Font(printer,"courier", 8, 0);
+	    printer.startJob("PrintJob");
+	    printer.startPage();
 	          //Point size = imShell.getSize();    
-	          GC gc = new GC(p);
+	    GC gc = new GC(printer);
+	    if (!image.isDisposed()){
+	    	//System.out.println(p.getClientArea().width);
+	        gc.setFont(font);
+	        gc.drawString("Datos personales", 100, 100, true);
+	        gc.drawImage(image, 200, 200);
+	    }
 
-	          Image printImage = new Image(p, image);
-	          if (!printImage.isDisposed()){
-	        	  //System.out.println(p.getClientArea().width);
-	        	  gc.setFont(font);
-	        	  gc.drawString("Imprimir Ejemplo", 50, 50, true);
-	        	  gc.drawImage(printImage, 750, 150);
-	          }
-
-	          p.endPage();
-	          gc.dispose();
-	          p.endJob();
-	          p.dispose();
-	        }
+	    printer.endPage();
+	    gc.dispose();
+	    printer.endJob();
+	    printer.dispose();
 	}
+
 	public void imprimirComposite(Composite composite){	
 		printDialog.setText("PrintDialog");
 		printDialog.setScope(PrinterData.ALL_PAGES);
