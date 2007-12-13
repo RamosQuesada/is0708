@@ -571,7 +571,7 @@ public boolean insertarDistribucion(int Hora,String DiaSemana,String Patron,int 
 		prueba.insertarContrato(1, 1, "turnoUno", "3t4d", 7, 123.123);
 		prueba.insertarIncidencia("preñadasssssss");
 		prueba.insertarTieneIncidencia(1, 1, new Time(0), new Time(10));
-		prueba.insertarTrabaja(1, 1, new Time(0),  new Time(0), new Time(0));
+		//prueba.insertarTrabaja(2, 2, new Time(0),  new Time(0), new Time(0));
 		prueba.insertarTurnoPorContrato(1, 1);
 		prueba.insertarVenta(1, new Time(0), 123.43);
 		
