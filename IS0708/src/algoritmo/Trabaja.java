@@ -1,6 +1,8 @@
 package algoritmo;
 
 import java.util.ArrayList;
+import java.sql.Time;
+import aplicacion.*;
 
 /**
  * Esta clase representa el tipo de datos que llevara el cuadrante en cada posicion,es decir,
@@ -11,15 +13,12 @@ import java.util.ArrayList;
 public class Trabaja {
 
 	private int IdEmpl;//id del empleado
-	private int FichIni;//Fichaje inicial,hay que mirar bien los tipos que van a llevar las fechas
-	private int FichFin;//Fichaje final
+	private Time FichIni;//Fichaje inicial,hay que mirar bien los tipos que van a llevar las fechas
+	private Time FichFin;//Fichaje final
 	
 	public Trabaja(){//constructora por defecto
-		IdEmpl=0;
-		FichIni=0;
-		FichFin=0;
 	}
-	public Trabaja(int Id,int Ini,int Fin){//Otra constructora
+	public Trabaja(int Id,Time Ini,Time Fin){//Otra constructora
 		this.IdEmpl=Id;
 		this.FichIni=Ini;
 		this.FichFin=Fin;
@@ -31,17 +30,18 @@ public class Trabaja {
 	public void setIdEmpl(int idEmpl) {
 		IdEmpl = idEmpl;
 	}
-	public int getFichIni() {
+	public Time getFichIni() {
 		return FichIni;
 	}
-	public void setFichIni(int fichIni) {
+	public void setFichIni(Time fichIni) {
 		FichIni = fichIni;
 	}
-	public int getFichFin() {
+	public Time getFichFin() {
 		return FichFin;
 	}
-	public void setFichFin(int fichFin) {
+	public void setFichFin(Time fichFin) {
 		FichFin = fichFin;
 	}
+	
 	
 }
