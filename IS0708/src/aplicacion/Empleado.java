@@ -526,8 +526,7 @@ public class Empleado implements Drawable {
 	public boolean estaDisponible(int dia, Time iniH, Time finH){
 		boolean puede = true;
 		
-		//COMPROBAR SI TRABAJA UN DIA O NO
-		
+		//COMPROBAR SI TRABAJA UN DIA	
 		//COMPROBAR SI ESTA DE VACACIONES
 
 		if ((turno.getHoraSalida().getTime() > iniH.getTime()) || (turno.getHoraSalida().getTime() < finH.getTime())){
