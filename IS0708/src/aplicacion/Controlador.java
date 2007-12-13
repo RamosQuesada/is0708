@@ -3,7 +3,7 @@ package aplicacion;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.sql.Time;
 import org.eclipse.swt.graphics.Color;
 
@@ -60,7 +60,7 @@ public class Controlador {
 		this.db = baseDatos;
 	}
 
-/***************************************************************************
+/**************************************************************************
  * Métodos relacionados con empleados
  */
 
@@ -80,43 +80,26 @@ public class Controlador {
 			String nombre = rs.getString("Nombre");
 			String apellido1 = rs.getString("Apellido1");
 			String apellido2 = rs.getString("Apellido2");
-			Date fechaNac = Util.stringADate(rs.getString("FechaNacimiento"));
+			Date fechaNac = rs.getDate("FechaNacimiento");
 			int id = rs.getInt("NumVendedor");
 			String email = rs.getString("Email");
 			String password = rs.getString("Password");
-			String sex = rs.getString("Sexo");
-			int sexo;
-			if (sex.equalsIgnoreCase("femenino"))
-				sexo = 0;
-			else
-				sexo = 1;
-			String g = rs.getString("IndicadorGrupo");
-			int grupo;
-			if (g.equalsIgnoreCase("principiante"))
-				grupo = 0;
-			else
-				grupo = 1;
+			int sexo = rs.getInt("Sexo");			
+			int grupo=rs.getInt("IndicadorGrupo");;			
 			String rg = rs.getString("Rango");
-			int rango;
-			if (rg.equalsIgnoreCase("empleado"))
-				rango = 1;
-			else if (rg.equalsIgnoreCase("jefe"))
-				rango = 2;
-			else if (rg.equalsIgnoreCase("gerente"))
-				rango = 3;
-			else
-				rango = 0;
+			int rango=rs.getInt("Rango");			
 			int idContrato=rs.getInt("IdContrato");
-			Date fechaContrato = Util.stringADate(rs.getString("FechaContrato"));
-			Date fechaAlta = Util.stringADate(rs.getString("FechaEntrada"));
-			int dept=rs.getInt("IdDepartamento");
+			Date fechaContrato = rs.getDate("FechaContrato");
+			Date fechaAlta = rs.getDate("FechaEntrada");
 			Color color=null;
 			int idSuperior=this.getIdSuperior(idEmpl);
 			ArrayList<Integer> idSubordinados=this.getIdsSubordinados(idEmpl);
 			ArrayList<Integer> idDepartamentos=this.getIdsDepartamentos(idEmpl);
+			int felicidad=rs.getInt("Felicidad");
+			int idioma=rs.getInt("Idioma");
 			emp=new Empleado(idSuperior,id,nombre,apellido1,apellido2,fechaNac,sexo,
-							 email,password,grupo,dept,rango,idContrato,fechaContrato,
-							 fechaAlta,color,idSubordinados,idDepartamentos);
+							 email,password,grupo,rango,idContrato,fechaContrato,
+							 fechaAlta,color,idSubordinados,idDepartamentos,felicidad,idioma);
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println("Error al obtener el Empleado de la base de datos");
@@ -163,27 +146,49 @@ public class Controlador {
 	}
 	
 	/**
-	 * 
+	 * Metodo que devuelve los departamentos a los que pertenece el empleado
 	 * @param idEmpl	identificador del empleado
-	 * @return
+	 * @return			los departamentos a los que pertenece el empleado
 	 */
 	private ArrayList<Integer> getIdsDepartamentos(int idEmpl) {
 		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Integer> depts=new ArrayList<Integer>();
+		ResultSet rs=db.obtenIdsDepartamentos(idEmpl);
+		try {
+			while (rs.next()) {
+				int idDept = rs.getInt(0);
+				depts.add(idDept);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error al obtener Lista de Departamentos en la base de datos");
+		}		
+		return depts;
 	}
 
 	/**
-	 * 
+	 * Metodo que obtiene los subordinados del empleado si los tuviera
 	 * @param idEmpl identificador del empleado 
 	 * @return		 los subordinados del empleado en cuestion
 	 */
 	private ArrayList<Integer> getIdsSubordinados(int idEmpl) {
 		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Integer> subs=new ArrayList<Integer>();
+		ResultSet rs=db.obtenIdsSubordinados(idEmpl);
+		try {
+			while (rs.next()) {
+				int idSub = rs.getInt(0);
+				subs.add(idSub);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error al obtener Lista de Departamentos en la base de datos");
+		}		
+		return subs;
 	}
 
 	/**
-	 * 
+	 * Metodo que obtiene el superior de un empleado dado(si es 0 no tiene superior)
 	 * @param idEmpl  el identificador del empleado o número de vendedor
 	 * @return		  el identificador del superior del empleado
 	 */
@@ -232,18 +237,14 @@ public class Controlador {
 	 *            el empleado a insertar
 	 * @return <i>true</i> si el empleado ha sido insertado
 	 */
-	public boolean insertEmpleado(Empleado empleado) {
-		String sexo = "Femenino";
-		if (empleado.getSexo() == 1)
-			sexo = "Masculino";
-		String grupo = "Principiante";
-		if (empleado.getGrupo() == 1)
-			grupo = "Experto";
+	public boolean insertEmpleado(Empleado empleado) {		
+		int sexo=empleado.getSexo();
+		int grupo=empleado.getGrupo();
 		return db.insertarUsuario(empleado.getIdEmpl(), empleado.getNombre(),
 				empleado.getApellido1(), empleado.getApellido2(),
-				aplicacion.Util.dateAString(empleado.getFechaNac()), sexo,
+				empleado.getFechaNac(), sexo,
 				empleado.getEmail(), empleado.getPassword(), grupo,
-				"0000-00-00", "0000-00-00", 0,0,0,0, "Empleado", 0, 0);
+				Date.valueOf("0000-00-00"), Date.valueOf("0000-00-00"), 0,0,0,1, 0, 0);
 	}
 
 /***************************************************************************
@@ -298,7 +299,7 @@ public class Controlador {
 			}else{
 				
 				
-				Date d=Util.stringADate(Fecha);
+				Date d=Date.valueOf(Fecha);
 				int diaSemana=d.getDay();
 				
 				r=db.obtenDistribucion(idDepartamento, diaSemana);
