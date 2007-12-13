@@ -9,7 +9,7 @@ import org.eclipse.swt.graphics.Color;
 /**
  * Esta clase conecta el modelo (la base de datos) con la vista (los interfaces)
  * 
- * @author David Rodilla y Daniel Dionne
+ * @author Todos
  */
 public class Controlador {
 	private Vista _vista;
@@ -58,9 +58,9 @@ public class Controlador {
 		this.db = baseDatos;
 	}
 
-	/***************************************************************************
-	 * Métodos relacionados con empleados
-	 */
+/***************************************************************************
+ * Métodos relacionados con empleados
+ */
 
 	/**
 	 * Carga un empleado desde la base de datos, dado su número de vendedor o
@@ -109,7 +109,7 @@ public class Controlador {
 			Date fechaAlta = Util.stringADate(rs.getString("FechaEntrada"));
 			int dept=rs.getInt("IdDepartamento");
 			Color color=null;
-			int idSuperior=this.getSuperior(idEmpl);
+			int idSuperior=this.getIdSuperior(idEmpl);
 			ArrayList<Integer> idSubordinados=this.getIdsSubordinados(idEmpl);
 			ArrayList<Integer> idDepartamentos=this.getIdsDepartamentos(idEmpl);
 			emp=new Empleado(idSuperior,id,nombre,apellido1,apellido2,fechaNac,sexo,
@@ -148,7 +148,7 @@ public class Controlador {
 	 * @param idEmpl  el identificador del empleado o número de vendedor
 	 * @return		  el identificador del superior del empleado
 	 */
-	private int getSuperior(int idEmpl) {
+	private int getIdSuperior(int idEmpl) {
 		// TODO Auto-generated method stub
 		int idSup=0;
 		ResultSet rs=db.obtenSuperior(idEmpl);
@@ -164,7 +164,7 @@ public class Controlador {
 	
 	/**
 	 * Carga uno o varios empleados desde la base de datos, que coincidan con
-	 * los datos dados del mismo. Los parámetros pueden ser nulos.
+	 * los datos dados. Los parámetros pueden ser nulos.
 	 * 
 	 * @param idEmpl
 	 *            el identificador del empleado
@@ -182,7 +182,7 @@ public class Controlador {
 	 */
 	public ArrayList<Empleado> getEmpleado(Integer idEmpl, Integer idDpto,
 			Integer idContrato, String nombre, String apellido1,
-			String apellido2,int rango) {
+			String apellido2, Integer rango) {
 		return null;
 	}
 
@@ -207,9 +207,9 @@ public class Controlador {
 				"0000-00-00", "0000-00-00", 0, 0, "Empleado", 0, 0);
 	}
 
-	/***************************************************************************
-	 * Métodos relacionados con departamentos
-	 */
+/***************************************************************************
+ * Métodos relacionados con departamentos
+ */
 
 	/**
 	 * Carga un departamento desde la base de datos, dado su identificador.
@@ -233,9 +233,9 @@ public class Controlador {
 		return false;
 	}
 
-	/***************************************************************************
-	 * Métodos relacionados con contratos
-	 */
+/***************************************************************************
+ * Métodos relacionados con contratos
+ */
 
 	/**
 	 * Carga un contrato desde la base de datos, dado su identificador.
