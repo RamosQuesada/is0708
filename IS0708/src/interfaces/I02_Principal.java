@@ -12,7 +12,6 @@ import org.eclipse.swt.graphics.*;
 import aplicacion.Empleado;
 import aplicacion.Posicion;
 
-import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.Locale;
 
@@ -26,17 +25,18 @@ import aplicacion.Vista;
  * 
  */
 public class I02_Principal {
-	Vista vista;
-	Shell shell;
-	Display display;
-	ResourceBundle bundle;
-	Locale locale;
-	Image icoGr, icoPq, ico_imprimir, ico_mens_l, ico_mens, ico_cuadrante, ico_chico, ico_chica, ico_chicos;
-	Cuadrante cuadranteActual;
-	Label lEstado;
-	ProgressBar pbEstado;
+	private Vista vista;
+	private Shell shell;
+	private Display display;
+	private ResourceBundle bundle;
+	private Locale locale;
+	private Image icoGr, icoPq, ico_imprimir, ico_mens_l, ico_mens, ico_cuadrante, ico_chico, ico_chica, ico_chicos;
+	private Cuadrante cuadranteActual;
+	private Label lEstado;
+	private ProgressBar pbEstado;
 	
 	private ImageData Img;
+	
 
 	public I02_Principal(Shell shell, Display display, ResourceBundle bundle, Locale locale, Vista vista) {
 		this.shell = shell;
@@ -255,8 +255,9 @@ public class I02_Principal {
 			column.setText(titles[i]);
 		}
 		// TODO BD Cargar, por ejemplo, los 10 primeros mensajes
-		// de empleadoActual y ponerlos en la tabla usando el siguiente
-		// bucle
+		// ¿Aquí entra la mensajería?
+		ArrayList<Mensaje>vista.getMensajesEntrantes(vista.getEmpleadoActual().getIdEmpl(), 0, 10);
+		
 		for (int i = 0; i < 10; i++) {
 			TableItem tItem = new TableItem(tablaMensajes, SWT.NONE);
 			tItem.setImage(ico_mens);
@@ -397,8 +398,8 @@ public class I02_Principal {
 				// employee created for tests
 				Color col = new Color(display, 10, 0, 50);
 		
-				Empleado emp = new Empleado(1, 12345678, "phil", "colins", "-", new Date("12/12/09"), 1, "phil.colins@gmail.com", "", 1, 1, 1,1, new Date("12/12/09"),new Date("12/12/09"), col,null, null);
-				new I08_2_Consultar_empleado(shell, emp, bundle);
+				//Empleado emp = new Empleado(1, 12345678, "phil", "colins", "-", new Date("12/12/09"), 1, "phil.colins@gmail.com", "", 1, 1, 1,1, new Date("12/12/09"),new Date("12/12/09"), col,null, null);
+				//new I08_2_Consultar_empleado(shell, emp, bundle);
 			}
 		});
 

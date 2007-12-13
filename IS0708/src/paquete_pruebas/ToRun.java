@@ -63,13 +63,14 @@ public class ToRun {
 		
 		*/
 		ArrayList<Integer> aList = new ArrayList<Integer>();
+		ArrayList<String> bList = new ArrayList<String>();
 		aList.add(12);
 		aList.add(13);
 		Empleado empleado;
 	try{
-		empleado = new Empleado(101,110,"kuba","chudzinski","-",aplicacion.Util.stringADate("1985-06-14"),1,
-										"moki@onet.pl","123",1,1,2,123,aplicacion.Util.stringADate("2007-06-14"),
-									aplicacion.Util.stringADate("2005-06-14"),new Color(display, 12,0,0),aList,aList);
+		empleado = new Empleado(101,110,"kuba","chudzinski","-",new Color(display, 12,0,0),aplicacion.Util.stringADate("1985-06-14"),1,
+										"moki@onet.pl","123",1,1,123,aplicacion.Util.stringADate("2007-06-14"),
+									aplicacion.Util.stringADate("2005-06-14"),0,bList,aList);
 	}catch(Exception e){ empleado=null ;};
 	
 	mainshell.open();

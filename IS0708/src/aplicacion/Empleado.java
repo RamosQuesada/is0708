@@ -687,28 +687,24 @@ public class Empleado implements Drawable {
 	 * @return <i>true</i> si se ha eliminado el empleado, <i>false</i>
 	 * si no existía en la lista de subordinados del empleado 
 	 */
-	public boolean removeSubordinado (Empleado e) {
-		// TODO Controlar que la lista esté actualizada
-		boolean b = subordinados.remove(e);
+	public boolean removeSubordinado (Controlador c, Empleado e) {
+		boolean b = idSubordinados.remove((Integer)e.getIdEmpl());
 		if (b) idSubordinados.remove(e.getIdEmpl());
 		// quitar subordinados afecta a la condición de gerente
 		// hay que mirar si todavía tiene algún subordinado jefe
 		if (idSubordinados.isEmpty()) rango=1;
 		else {
 			int i = 0;
+			actualizarSubordinados(c);
 			while (i<idSubordinados.size() && rango==2) {
-				// TODO
-				//if (subordinados.get(i).getRango()>1) rango=3;
+				if (subordinados.get(i).getRango()>1) rango=3;
 			}
 		}
 		// si se ha quedado sin subordinados jefes pero tiene departamentos,
 		// entonces se queda como jefe
 		if (!idDepartamentos.isEmpty() && rango==1) rango=2;
 		return b;
-	}
-	
-
-	
+	}	
 	
 	public ImageData getDrawableImage() {
 		// TODO
