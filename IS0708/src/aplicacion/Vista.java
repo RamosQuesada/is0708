@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
 import interfaces.*;
@@ -35,17 +37,28 @@ public class Vista {
 				}
 			}
 			if (login.getBotonPulsado()==1) {
-				// Si llega aquí, ya ha conexión con la base de datos
+				// Si llega aquí, ya hay conexión con la base de datos
 				if (login.getNumeroVendedor()==0) {
-					if (login.getPassword()=="admin")
+					if (login.getPassword()=="admin") {
 						System.out.println("Administrador identificado");
+						identificado = true;
+					}
 				}
 				else {
-					controlador.setEmpleadoActual(getEmpleado(login.getNumeroVendedor()));
-					System.out.println("Empleado identificado: " + controlador.getEmpleadoActual().getNombreCompleto());
+					// TODO Falta comprobar la clave
+					Empleado emp = getEmpleado(login.getNumeroVendedor());
+					if (emp!=null) {
+						controlador.setEmpleadoActual(emp);
+						identificado = true;
+					}
+					else {
+						// si no, mostrar mensaje de error
+						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_ERROR | SWT.OK);
+						messageBox.setText (bundle.getString("Error"));
+						messageBox.setMessage (bundle.getString("I01_err_Login1"));
+						messageBox.open();
+					}
 				}
-				identificado = true;
-				// si no, mostrar mensaje de error
 			}
 			else {
 				//Salir de la aplicación
@@ -57,7 +70,7 @@ public class Vista {
 		}
 		
 		// Si todavía no he cerrado el display, ya he hecho login correctamente
-		if (!shell.getDisplay().isDisposed()) {
+		if (!shell.isDisposed()) {
 			i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);	
 			// Este bucle mantiene la ventana abierta
 			while (!shell.isDisposed()) {
@@ -65,8 +78,6 @@ public class Vista {
 					shell.getDisplay().sleep();
 				}
 			}
-			if (!shell.getDisplay().isDisposed())
-				shell.getDisplay().dispose();
 			if (!db.conexionAbierta())
 				db.cerrarConexion();
 		}
