@@ -6,6 +6,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.widgets.Display;
 import java.util.Date;
+import java.sql.Time;
 
 import javax.print.attribute.SetOfIntegerSyntax;
 import org.eclipse.swt.graphics.*;
@@ -520,6 +521,28 @@ public class Empleado implements Drawable {
 			gc.drawText(String.valueOf(subDivs/12)+":"+String.valueOf(Util.aString(subDivs%12*60/12)), margenNombres-10, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1), true);
 		}
 		turno.dibujarFranjas(display, gc, posV, color, margenIzq, margenNombres, margenSup, sep_vert_franjas, alto_franjas);
+	}
+	
+	public boolean estaDisponible(int dia, Time iniH, Time finH){
+		boolean puede = true;
+		
+		//COMPROBAR SI TRABAJA UN DIA O NO
+		
+		//COMPROBAR SI ESTA DE VACACIONES
+
+		if ((turno.getHoraSalida() > iniH) || (turno.getHoraSalida() < finH)){
+			puede = false;
+		} else {
+			if ((iniH > turno.getHoraDescanso()) && (iniH < Util.calculaFinDescanso(turno.getHoraDescanso(),turno.getTDescanso()))){
+				puede = false;
+			} else {
+				if ((finH > turno.getHoraDescanso()) && (finH < Util.calculaFinDescanso(turno.getHoraDescanso(),turno.getTDescanso())))
+					puede = false;
+				}
+			}
+		}
+		
+		return puede;
 	}
 	
 	public Color dameColor() {
