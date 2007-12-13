@@ -254,10 +254,10 @@ public class Controlador {
 	/**
 	 * Carga un departamento desde la base de datos, dado su nombre.
 	 * 
-	 * @param id	el nombre del departamento
+	 * @param id	el identificador del departamento
 	 * @return		una instancia del departamento cargado
 	 */
-	public Departamento getDepartamento(String id) {
+	public Departamento getDepartamento(int id) {
 		return null;
 	}
 
