@@ -44,7 +44,7 @@ public class PruebaAlgoritmo {
 		
 		
 		
-		alg = new TurnoMatic(6,2007,turnos);
+		alg = new TurnoMatic(6,2007,turnos,007);  // 007 es un numero de depart, por ejemplo
 		alg.ejecutaAlgoritmo(disponibles);
 		alg.imprimeCuadrante();
 		//alg.imprimeEstructura();
@@ -99,9 +99,13 @@ public class PruebaAlgoritmo {
 		System.out.println("Patron: "+Util.patron(10, 5));
 		*/
 		
-		System.out.println();
-
-		
+		// Pruebas de la clase Calendario
+		/*Calendario cal = new Calendario(12,2007,007);
+		System.out.println(cal.getMaxHora(14, 19));
+		cal.actualizaHora(14, 19, 5, 3, 1, 1);
+		System.out.println(cal.getMaxHora(14, 19));
+		System.out.println(cal.getMaxHora(15, 24));
+		*/
 		
 	}
 
