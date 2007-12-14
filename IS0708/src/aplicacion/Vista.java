@@ -101,14 +101,14 @@ public class Vista extends Thread {
 				// Login de administrador
 				if (login.getNumeroVendedor()==0 && login.getPassword().compareTo("admin")==0) {
 						System.out.println("Administrador identificado");
-						controlador.setEmpleadoActual(new Empleado(0,0,"Administrador","","",null,null,0,"","admin",0,0,0,null,null,0,null,null));
+						controlador.setEmpleadoActual(new Empleado(0,0,"Administrador","","",null,0,"","admin",0,0,0,null,null,null,null,null,0,0));
 						identificado = true;
 				}
 				else {
 					Empleado emp = getEmpleado(login.getNumeroVendedor());
 					if (emp!=null) {
 						// Comprobar la clave
-						if (emp.getPassword()==login.getPassword()) {
+						if (emp.getPassword().compareTo(login.getPassword())==0) {
 							controlador.setEmpleadoActual(emp);
 							identificado = true;
 						}
@@ -209,7 +209,6 @@ public class Vista extends Thread {
 			setProgreso("No se pudo insertar el empleado", 100);
 		return b;
 	}
-	
 
 /*****************************************************************************************
  * Métodos relacionados con departamentos

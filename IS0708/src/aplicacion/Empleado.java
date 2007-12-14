@@ -14,9 +14,6 @@ import java.sql.Time;
 
 import aplicacion.Controlador;
 
-//DANIEL HE CAMBIADO METODOS EN LOS QUE INTERVENIA CONTACTOS CON BD CON RELACION A LOS CAMIOS DE ESTA MAÑANA
-//CHEMA
-
 /**
  * Esta clase representa a un empleado.
  * <h1>Rango</h1>
@@ -223,7 +220,7 @@ public class Empleado implements Drawable {
 			ArrayList<String> idDepartamentos, ArrayList<Integer> idSubordinados,int felicidad, int idioma) {
 		if (idSuperior==null) this.idSuperior=0;
 		else setIdSuperior(idSuperior);
-		setIdEmpl(idEmpl);
+		setEmplId(idEmpl);
 		this.nombre		= nombre;
 		this.apellido1	= apellido1;
 		this.apellido2	= apellido2;
@@ -288,14 +285,14 @@ public class Empleado implements Drawable {
 	 */
 	public void setSuperior(Empleado e) {
 		superior = e;
-		idSuperior = e.getIdEmpl();
+		idSuperior = e.getEmplId();
 	}
 	
 	/**
 	 * Devuelve el número de vendedor de un empleado.
 	 * @return	el número de vendedor del empleado.
 	 */
-	public int getIdEmpl() {
+	public int getEmplId() {
 		return idEmpl;
 	}
 	
@@ -306,7 +303,7 @@ public class Empleado implements Drawable {
 	 * @return	<i>true</i> si se ha asignado correctamente el número, <i>false</i> si 
 	 * 			el string no tiene longitud 8 o no es un número.
 	 */
-	public boolean setIdEmpl (String idEmpl){
+	public boolean setEmplId (String idEmpl){
 		int n = Util.convertirNVend(idEmpl);
 		if (n>0) this.idEmpl = n;
 		return n>0;
@@ -318,7 +315,7 @@ public class Empleado implements Drawable {
 	 * @param id el número a asignar
 	 * @return <i>true</i> si se ha realizado la asignación
 	 */
-	public boolean setIdEmpl (int id) {
+	public boolean setEmplId (int id) {
 		boolean b = false;
 		if (id>1 && id<99999999) {
 			idEmpl = id;
@@ -563,7 +560,7 @@ public class Empleado implements Drawable {
 	 * Devuelve el identificador del contrato de un empleado.
 	 * @return el identificador del contrato
 	 */
-	public int getIdContrato() {
+	public int getContratoId() {
 		return idContrato;
 	}
 	
@@ -607,6 +604,14 @@ public class Empleado implements Drawable {
 		actualizarDepartamentos(c);
 		return departamentos;
 	}
+	
+	/**
+	 * Devuelve los nombres de los departamentos a los que pertenece el empleado.
+	 * @return la lista de nombres de los departamentos del usuario
+	 */
+	public ArrayList<String> getDepartamentosId() {
+		return idDepartamentos;
+	}
 
 	/**
 	 * Devuelve el departamento en la posición <i>i</i> de la lista de departamentos del 
@@ -624,7 +629,7 @@ public class Empleado implements Drawable {
 	 * Devuelve el identificador de su departamento principal
 	 * @return el identificador
 	 */
-	public String getIdDepartamento() {
+	public String getDepartamentoId() {
 		return idDepartamentos.get(0);
 	}
 	
@@ -679,7 +684,7 @@ public class Empleado implements Drawable {
 	 * ya estaba en la lista de subordinados
 	 */
 	public boolean addSubordinado(Empleado empleado) {
-		boolean esta = idSubordinados.contains(empleado.getIdEmpl());
+		boolean esta = idSubordinados.contains(empleado.getEmplId());
 		if (!esta) {
 			idSubordinados.add(empleado.idEmpl);
 			subordinados.add(empleado);
@@ -696,8 +701,8 @@ public class Empleado implements Drawable {
 	 * si no existía en la lista de subordinados del empleado 
 	 */
 	public boolean removeSubordinado (Controlador c, Empleado e) {
-		boolean b = idSubordinados.remove((Integer)e.getIdEmpl());
-		if (b) idSubordinados.remove(e.getIdEmpl());
+		boolean b = idSubordinados.remove((Integer)e.getEmplId());
+		if (b) idSubordinados.remove(e.getEmplId());
 		// quitar subordinados afecta a la condición de gerente
 		// hay que mirar si todavía tiene algún subordinado jefe
 		if (idSubordinados.isEmpty()) rango=1;

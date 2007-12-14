@@ -139,7 +139,7 @@ public class TurnoMatic {
 					empleados.add(emp);
 					Time pr1 = new Time(19,49,00);
 					Time pr2 = new Time(19,49,00);
-					trab = new Trabaja(emp.getIdEmpl(),pr1,pr2);
+					trab = new Trabaja(emp.getEmplId(),pr1,pr2);
 					cu[i].add(trab);
 						
 				}				
@@ -196,19 +196,19 @@ public class TurnoMatic {
 				System.out.println("Lista de empleados: ");
 				for(int k=0;k<emp.size();k++){
 					e=emp.get(k);
-					System.out.println(e.getIdEmpl());
+					System.out.println(e.getEmplId());
 				}
 				
 				System.out.println("Lista de empleados disponibles: ");
 				for(int k=0;k<disp.size();k++){
 					e=disp.get(k);
-					System.out.println(e.getIdEmpl());
+					System.out.println(e.getEmplId());
 				}
 				
 				System.out.println("Lista de empleados reserva: ");
 				for(int k=0;k<reser.size();k++){
 					e=reser.get(k);
-					System.out.println(e.getIdEmpl());
+					System.out.println(e.getEmplId());
 				}
 			}
 		}

@@ -121,7 +121,7 @@ public class I08_2_Consultar_empleado {
 		lColor			.setText(bundle.getString("I08_2_lab_SelColor"));
 		// pone datos de empleado
 		try{
-			tNVend			.setText(""+empleado.getIdEmpl());
+			tNVend			.setText(""+empleado.getEmplId());
 			//tPassword		.setText(empleado.getPassword());
 			tPassword		.setText("********");
 			tEMail			.setText(empleado.getEmail());
