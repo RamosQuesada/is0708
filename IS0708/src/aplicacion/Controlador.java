@@ -270,10 +270,10 @@ public class Controlador {
 			if (r.getRow()>0){
 				r.beforeFirst();
 				while (r.next()){					
-					vector[0]=r.getInt("Hora");
-					vector[1]=r.getInt("NumMin");
-					vector[2]=r.getInt("NumMax");
-					vector[3]=r.getString("Patron");
+					vector[0]=(Integer)r.getInt("Hora");
+					vector[1]=(Integer)r.getInt("NumMin");
+					vector[2]=(Integer)r.getInt("NumMax");
+					vector[3]=(String)r.getString("Patron");
 					lista.add(vector);
 				}
 			}else{
@@ -287,10 +287,10 @@ public class Controlador {
 				if (r.getRow()>0){
 					r.beforeFirst();
 					while (r.next()){
-						vector[0]=r.getInt("Hora");
-						vector[1]=r.getInt("NumMin");
-						vector[2]=r.getInt("NumMax");
-						vector[3]=r.getString("Patron");
+						vector[0]=(Integer)r.getInt("Hora");
+						vector[1]=(Integer)r.getInt("NumMin");
+						vector[2]=(Integer)r.getInt("NumMax");
+						vector[3]=(String)r.getString("Patron");
 						lista.add(vector);
 					}
 				}
