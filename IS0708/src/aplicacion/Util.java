@@ -228,7 +228,6 @@ public class Util {
 		int horas =Integer.valueOf(s.substring(0,2));
 		int minutos =Integer.valueOf(s.substring(3,5));
 		return (60*horas + minutos);
-		//return horas;
 }
 	
 	
