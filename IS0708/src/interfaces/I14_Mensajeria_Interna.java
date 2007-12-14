@@ -42,7 +42,7 @@ public class I14_Mensajeria_Interna {
 	public void mostrarVentana() {
 		final Shell shell = new Shell (_padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 
-		final Image ico_mens_l = new Image(_padre.getDisplay(), Vista.class.getResourceAsStream("ico_mens1_v.gif"));
+		final Image ico_mens_l = new Image(_padre.getDisplay(), I14_Mensajeria_Interna.class.getResourceAsStream("ico_mens1_v.gif"));
 		
 		//Establecemos el layout del shell
 		GridLayout lShell = new GridLayout();
