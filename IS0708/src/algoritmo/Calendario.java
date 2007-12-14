@@ -216,5 +216,13 @@ public class Calendario {
 	private boolean existeHora(int dia, int hora){
 		return (cal[dia][hora] != null);
 	}
+
+	public int getIdDepartamento() {
+		return idDepartamento;
+	}
+
+	public void setIdDepartamento(int idDepartamento) {
+		this.idDepartamento = idDepartamento;
+	}
 	
 }
