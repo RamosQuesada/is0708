@@ -3,11 +3,12 @@ package aplicacion;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.sql.Date;
 import java.sql.Time;
 import org.eclipse.swt.graphics.Color;
 
-import algoritmo.HoraCalendario;
+import algoritmo.Calendario;
 
 /**
  * Esta clase conecta el modelo (la base de datos) con la vista (los interfaces)
@@ -256,13 +257,14 @@ public class Controlador {
 	 * vector[1]= numero minimo de empleados para esa hora
 	 * vector[2]= numero maximo de empleados para esa hora
 	 */
-	public ArrayList<Integer[]> getDistribucion (int idDepartamento, String Fecha){
+	public ArrayList<Object[]> getDistribucionDia (int idDepartamento, String Fecha){
 		ArrayList lista= new ArrayList();		
 		ResultSet r;
-		int[] vector = new int[3];
-		r=_db.obtenFestivos(idDepartamento, Fecha);
+		Object[] vector = new Object[4];
+		
 		//se ha supuesto que fecha esta en formato string
 		try{
+			r=_db.obtenFestivos(idDepartamento, Fecha);
 			r.last();
 			if (r.getRow()>0){
 				r.beforeFirst();
@@ -270,6 +272,7 @@ public class Controlador {
 					vector[0]=r.getInt("Hora");
 					vector[1]=r.getInt("NumMin");
 					vector[2]=r.getInt("NumMax");
+					vector[3]=r.getString("Patron");
 					lista.add(vector);
 				}
 			}else{
@@ -286,6 +289,7 @@ public class Controlador {
 						vector[0]=r.getInt("Hora");
 						vector[1]=r.getInt("NumMin");
 						vector[2]=r.getInt("NumMax");
+						vector[3]=r.getString("Patron");
 						lista.add(vector);
 					}
 				}
@@ -300,6 +304,19 @@ public class Controlador {
 		return lista;
 	}
 
+	public void getDistribucionMes(int idDepartamento, Calendario cal) {
+		int i=0,j=0;
+		for (i=0; i<cal.getNumDias(); i++) {
+			String dia = cal.getAnio()+"-"+cal.getMes()+"-"+(i+1);
+			ArrayList<Object[]> temp = getDistribucionDia(idDepartamento,dia);
+			for (j=0; j<24; j++) {
+				Object[] t = new Object[4];
+				t = temp.get(j);
+				cal.actualizaHora(i, (Integer)t[0], (Integer)t[2], (Integer)t[1], Util.numExpertos((String)t[3]), Util.numPrincipiantes((String)t[3]));
+			}
+		}
+		System.out.println("Hecho");
+	}
 
 /******************************************************************************************
  * Métodos relacionados con mensajes
