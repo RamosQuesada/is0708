@@ -3,6 +3,8 @@ package aplicacion;
 import java.sql.*;
 import java.util.ArrayList;
 
+import algoritmo.Calendario;
+
 /**
  * Aqu� se encuentran los m�todos de acceso a la base de datos.
  * 
@@ -789,7 +791,9 @@ public class Database extends Thread {
 		prueba.abrirConexion();
 
 		Time h = new Time(10000000);
-
+		Calendario cal = new Calendario(12, 2007);
+		Controlador c1 = new Controlador(prueba);
+		c1.getDistribucionMes(3, cal);
 		prueba.obtenFestivos(3, "2007-12-12");
 		prueba.insertarTurno(1, "prueba", h, h, h, 10);
 		prueba.insertarTurno(4, "prueba", h, h, h, 14500);
