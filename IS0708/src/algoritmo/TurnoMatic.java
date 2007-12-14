@@ -36,7 +36,7 @@ public class TurnoMatic {
 		this.anio = year;
 		this.mes = m;
 		this.estruc = new Estructura(mes,year,personal, turnos, idDepartamento);
-		this.cuadrante = new Cuadrante(mes,year);
+		this.cuadrante = new Cuadrante(mes,year, idDepartamento);
 		
 	}
 	
