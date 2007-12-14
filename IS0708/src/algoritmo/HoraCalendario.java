@@ -12,6 +12,7 @@ public class HoraCalendario {
 	private int min;
 	private int expertos;
 	private int principiantes;
+	private String idTurno;
 	
 	/**
 	 * Constructora por defecto. Inicializa atributos min y max a 0 y patron a 1
@@ -21,6 +22,7 @@ public class HoraCalendario {
 		min = 0;
 		expertos = 1;
 		principiantes = 1;	
+		idTurno="";
 	}
 	
 	/**
@@ -30,11 +32,12 @@ public class HoraCalendario {
 	 * @param exp Numero de empleados expertos por cada inexpert 
 	 * @param inexpert Numero de empleados principiantes simultaneos en el departamento
 	 */
-	public HoraCalendario(int max,int min,int exp,int inexpert){//Otra constructora
+	public HoraCalendario(int max,int min,int exp,int inexpert,String turno){//Otra constructora
 		this.max = max;
 		this.min = min;
 		this.expertos = exp;
 		this.principiantes = inexpert;	
+		this.idTurno=turno;
 	}
 	
 	/**
@@ -43,11 +46,12 @@ public class HoraCalendario {
 	 * @param min Numero minimo de empleados simultaneos en el departamento
 	 * @param patron Patron de empleados "XeYp"
 	 */
-	public HoraCalendario(int max,int min,String patron){//Otra constructora
+	public HoraCalendario(int max,int min,String patron,String turno){//Otra constructora
 		this.max = max;
 		this.min = min;
 		expertos = Util.numExpertos(patron);
 		principiantes=Util.numPrincipiantes(patron);	
+		this.idTurno=turno;
 	}
 	
 	/**
@@ -128,6 +132,14 @@ public class HoraCalendario {
 	public void setPatron(String patron){
 		expertos = Util.numExpertos(patron);
 		principiantes = Util.numPrincipiantes(patron);
+	}
+
+	public String getIdTurno() {
+		return idTurno;
+	}
+
+	public void setIdTurno(String idTurno) {
+		this.idTurno = idTurno;
 	}
 	
 }
