@@ -160,6 +160,14 @@ public class Vista extends Thread {
 		i02.setTextoEstado(estado);
 	}
 	
+	/**
+	 * Devuelve el controlador de la aplicación
+	 * @return el controlador de la aplicación
+	 */
+	public Controlador getControlador() {
+		return controlador;
+	}
+	
 /*****************************************************************************************
  * Métodos relacionados con empleados
  */
