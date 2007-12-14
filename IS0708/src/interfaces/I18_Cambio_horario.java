@@ -56,7 +56,7 @@ public class I18_Cambio_horario {
 		GridLayout lShell = new GridLayout();
 		lShell.numColumns = 1;		
 		shell.setLayout(lShell);
-		shell.setText(_bundle.getString("peticion"));
+		shell.setText(_bundle.getString("I18_tit_peticion"));
 		shell.setImage(ico_mens_l);
 		
 		/*    */
@@ -69,9 +69,9 @@ public class I18_Cambio_horario {
 		cDuracion.setLayout(lDuracion);
 		
 		final Button bIndefinida		= new Button(cDuracion, SWT.RADIO);
-		bIndefinida.setText(_bundle.getString("petind"));
+		bIndefinida.setText(_bundle.getString("I18_but_petind"));
 		final Button bTemporal		= new Button(cDuracion, SWT.RADIO);
-		bTemporal.setText(_bundle.getString("pettem"));
+		bTemporal.setText(_bundle.getString("I18_but_pettem"));
 		
 		final Composite cFecha = new Composite (cDuracion, SWT.BORDER);
 		cFecha.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 0, 0));
@@ -175,13 +175,13 @@ public class I18_Cambio_horario {
 		//final Label lbTodosDias	= new Label(cTodosDias, SWT.LEFT);
 		//Boton para la mensajeria interna
 		final Button bTodosDias		= new Button(cTodosDias, SWT.RADIO);
-		bTodosDias.setText("Pedir cambio todos los dias: ");
+		bTodosDias.setText("I18_but_todosdias");
 		final Combo coTodosDias = new Combo(cTodosDias, SWT.BORDER | SWT.READ_ONLY);
 		coTodosDias.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 0, 0));
 		coTodosDias.setItems(new String[] {
-				_bundle.getString("turnoma�"), 
-				_bundle.getString("turnotarde"),
-				_bundle.getString("turnonoche")});
+				_bundle.getString("I18_com_turnoman"), 
+				_bundle.getString("I18_com_turnotarde"),
+				_bundle.getString("I18_com_turnonoche")});
 		coTodosDias.select(0);
 		
 		final Composite cDiaDia = new Composite (shell, SWT.BORDER);
@@ -251,13 +251,13 @@ public class I18_Cambio_horario {
 
 		
 		final Button bDia		= new Button(cTodosDias, SWT.RADIO);
-		bDia.setText(_bundle.getString("pedirhora"));
+		bDia.setText(_bundle.getString("I18_but_pedirH"));
 
 		bDia.addFocusListener(new FocusListener(){
 
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("peticion nuevo");
+				//System.out.println("peticion nuevo");
 				_opcion_actual=I18_Cambio_horario.TODOSDIAS;
 				coTodosDias.setEnabled(false);
 				for(int cont=0;cont<nombreDias.size();cont++){
@@ -288,7 +288,7 @@ public class I18_Cambio_horario {
 		
 		//Introducimos los textos a los botones
 		bAceptar.setText(_bundle.getString("enviar"));
-		bCancelar.setText(_bundle.getString("cancelar1"));
+		bCancelar.setText(_bundle.getString("cancelar"));
 				//Introducimos los valores y eventos de Aceptar
 		bAceptar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		bAceptar.addSelectionListener (new SelectionAdapter () {
@@ -296,7 +296,7 @@ public class I18_Cambio_horario {
 				if(iFechaFin<iFechaInicio){
 					MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
 					messageBox.setText (_bundle.getString("Mensaje"));
-					messageBox.setMessage (_bundle.getString("errper"));
+					messageBox.setMessage (_bundle.getString("I18_err_per"));
 					messageBox.open();
 					//if( messageBox.open () == SWT.YES){
 					//	shell.dispose();
