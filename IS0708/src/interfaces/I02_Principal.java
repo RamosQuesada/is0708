@@ -256,7 +256,7 @@ public class I02_Principal {
 		}
 		// TODO BD Cargar, por ejemplo, los 10 primeros mensajes
 		// ¿Aquí entra la mensajería?
-		ArrayList<Mensaje>vista.getMensajesEntrantes(vista.getEmpleadoActual().getIdEmpl(), 0, 10);
+		//ArrayList<Mensaje>vista.getMensajesEntrantes(vista.getEmpleadoActual().getIdEmpl(), 0, 10);
 		
 		for (int i = 0; i < 10; i++) {
 			TableItem tItem = new TableItem(tablaMensajes, SWT.NONE);
@@ -447,13 +447,20 @@ public class I02_Principal {
 
 		Label lDepartamentos = new Label(cDepartamentos, SWT.LEFT);
 		lDepartamentos.setText(bundle.getString("Departamento"));
-		lDepartamentos.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
-				false, 1, 1));
+		lDepartamentos.setLayoutData(
+				new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 
 		final Combo cmbDepartamentos = new Combo(cDepartamentos,SWT.BORDER |SWT.READ_ONLY);
-		cmbDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-				false, 1, 1));
-		cmbDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
+		cmbDepartamentos.setLayoutData(
+				new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		ArrayList<String> array = vista.getEmpleadoActual().getDepartamentosId();
+		if (array!=null) {
+			for (int i = 0; i < array.size(); i++) {
+				cmbDepartamentos.add(array.get(i));
+			}
+		}	
+		//cmbDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
 		cmbDepartamentos.select(0);
 
 		//Composite for Buttons: "New Department" and "Configure Department"
@@ -464,14 +471,10 @@ public class I02_Principal {
 		Button bConfig = new Button(cBut, SWT.PUSH);
 		bConfig.setText(bundle.getString("I02_but_Config_dep"));
 		bConfig.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		//final Vista vista=this;
+		
 		bConfig.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				System.out.println("Pulsado Configuración departamentos: "+cmbDepartamentos.getText().toString());
-				//take arrayDB from DB this is only for to show interface
-/*TODO the arrayDB should be String[]array witch datas from DB (taken from select query with data of Department)
- * (in this place should be methods of class servicing DB)*/
-				//String[]arrayDB = {"nazwaDepartamentu","1 parametr","2 parametr"};
+				System.out.println("I02 :: Pulsado Configuración departamentos: "+cmbDepartamentos.getText());
 				new I10_Config_departamento(shell, bundle, bundle.getString("I02_but_Config_dep"),vista);
 			}
 		});
@@ -482,7 +485,7 @@ public class I02_Principal {
 		bNew.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		bNew.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				System.out.println("Pulsado Nuevo Departamento");
+				System.out.println("I02 :: Pulsado Nuevo Departamento");
 				new I10_Config_departamento(shell, bundle, bundle.getString("I02_but_Nuevo_dep"),vista);
 			}
 		});

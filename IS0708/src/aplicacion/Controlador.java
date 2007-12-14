@@ -60,7 +60,7 @@ public class Controlador {
 		this._db = baseDatos;
 	}
 
-	/******************************************************************************************
+/******************************************************************************************
  * Métodos relacionados con empleados
  */
 
@@ -84,10 +84,9 @@ public class Controlador {
 			int id = rs.getInt("NumVendedor");
 			String email = rs.getString("Email");
 			String password = rs.getString("Password");
-			int sexo = rs.getInt("Sexo");			
-			int grupo=rs.getInt("IndicadorGrupo");;			
-			String rg = rs.getString("Rango");
-			int rango=rs.getInt("Rango");			
+			int sexo = rs.getInt("Sexo");
+			int grupo=rs.getInt("IndicadorGrupo");
+			int rango=rs.getInt("Rango");
 			int idContrato=rs.getInt("IdContrato");
 			Date fechaContrato = rs.getDate("FechaContrato");
 			Date fechaAlta = rs.getDate("FechaEntrada");
@@ -108,50 +107,14 @@ public class Controlador {
 		return emp;
 	
 	}
-	
-	
-	/**
-	 * 
-	 * 
-	 * 
-	 * @return Devuelve lista de los turnos de los empleados en un ArrayList
-	 */
-	public ArrayList<Turno> getTurnosEmpleados() {
-        ArrayList<Turno> turnos= new ArrayList<Turno>();
-		try {
-			ResultSet rs = _db.dameListaTurnosEmpleados();
-			while(rs.next()){
-			String idTurn = rs.getString("IdTurno");
-			String descr = rs.getString("Descripcion");
-			Time HoraE = rs.getTime("HoraEntrada");
-			Time HoraS = rs.getTime("HoraSalida");
-			Time HoraI = rs.getTime("HoraInicioDescanso");
-			//duracion del descanso como Time en la BBDD???
-			//las funciones que calculan la hora, minutos y segundos estan depreciadas aqui en JAVA
-			Time duracion = rs.getTime("DuracionDescanso");
-			//paso el Time a String y me quedo con el substring de la franja de los minutos HH:MM:SS
-			String duracionStr = duracion.toString().substring(3,5);
-			//lo paso a int (que es como esta duracionDescanso en JAVA)
-			Integer duracionInt= (int)Integer.valueOf(duracionStr);
-			Turno t = new Turno(idTurn,descr,HoraE,HoraS,HoraI,duracionInt);
-			turnos.add(t);
-			}
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println("Error al obtener Lista de Turnos en la base de datos");
-		}
 		
-	return  turnos;
-	}
-	
 	/**
-	 * Metodo que devuelve los departamentos a los que pertenece el empleado
+	 * Método que devuelve los nombres de los departamentos a los que pertenece el 
+	 * empleado.
 	 * @param idEmpl	identificador del empleado
 	 * @return			los departamentos a los que pertenece el empleado
 	 */
 	private ArrayList<String> getIdsDepartamentos(int idEmpl) {
-		// TODO Auto-generated method stub
 		ArrayList<String> depts=new ArrayList<String>();
 		ResultSet rs=_db.obtenIdsDepartamentos(idEmpl);
 		try {
@@ -160,19 +123,34 @@ public class Controlador {
 				depts.add(idDept);
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 			System.out.println("Error al obtener Lista de Departamentos en la base de datos");
 		}		
 		return depts;
 	}
 
 	/**
+	 * Carga los nombres de los departamentos de un empleado, buscando recursivamente.
+	 * <br>Por ejemplo, para un gerente, devuelve los nombres de sus departamentos,
+	 * y recursivamente los de los de sus subordinados. Si el parámetro es <b>null</b>,
+	 * se devuelven todos los departamentos que hay en la base de datos.
+	 * Si alguien se pregunta para qué leches sirve esto, sirve para las estadísticas.
+	 * @param idEmpl	el empleado del que coger recursivamente los empleados, 
+	 * 					<b>null</b> si se quieren coger todos los departamentos
+	 * @return			la lista de los nombres de los departamentos
+	 */
+	public ArrayList<String> getIdsDepartamentosRec(Integer idEmpl) {
+		ArrayList<String> depts = new ArrayList<String>();
+		//TODO
+		return depts;
+	}
+
+	
+	/**
 	 * Metodo que obtiene los subordinados del empleado si los tuviera
 	 * @param idEmpl identificador del empleado 
 	 * @return		 los subordinados del empleado en cuestion
 	 */
 	private ArrayList<Integer> getIdsSubordinados(int idEmpl) {
-		// TODO Auto-generated method stub
 		ArrayList<Integer> subs=new ArrayList<Integer>();
 		ResultSet rs=_db.obtenIdsSubordinados(idEmpl);
 		try {
@@ -193,7 +171,6 @@ public class Controlador {
 	 * @return		  el identificador del superior del empleado
 	 */
 	private int getIdSuperior(int idEmpl) {
-		// TODO Auto-generated method stub
 		int idSup=0;
 		ResultSet rs=_db.obtenSuperior(idEmpl);
 		try {
@@ -240,7 +217,7 @@ public class Controlador {
 	public boolean insertEmpleado(Empleado empleado) {		
 		int sexo=empleado.getSexo();
 		int grupo=empleado.getGrupo();
-		return _db.insertarUsuario(empleado.getIdEmpl(), empleado.getNombre(),
+		return _db.insertarUsuario(empleado.getEmplId(), empleado.getNombre(),
 				empleado.getApellido1(), empleado.getApellido2(),
 				empleado.getFechaNac(), sexo,
 				empleado.getEmail(), empleado.getPassword(), grupo,
@@ -253,14 +230,13 @@ public class Controlador {
 
 	/**
 	 * Carga un departamento desde la base de datos, dado su nombre.
-	 * 
 	 * @param id	el nombre del departamento
 	 * @return		una instancia del departamento cargado
 	 */
 	public Departamento getDepartamento(String id) {
 		return null;
 	}
-
+		
 	/**
 	 * Guarda un departamento en la base de datos
 	 * 
@@ -355,7 +331,7 @@ public class Controlador {
 	
 	public ArrayList<Mensaje> getMensajes(int id) {
 		// TODO BD Funcion q devuelva todos los mensajes de este usuario en un ArrayList
-		// Dani: ¿De verdad hacer falta recuperar todos todos los mensajes a la vez?
+		// Dani: ¿Hace falta recuperar todos todos los mensajes a la vez?
 		return null;
 	}
 
@@ -383,6 +359,44 @@ public class Controlador {
 		return false;
 	}
 
+/******************************************************************************************
+ * Métodos relacionados con turnos 
+ */
+
+	/**
+	 * 
+	 * 
+	 * 
+	 * @return Devuelve lista de los turnos de los empleados en un ArrayList
+	 */
+	public ArrayList<Turno> getTurnosEmpleados() {
+        ArrayList<Turno> turnos= new ArrayList<Turno>();
+		try {
+			ResultSet rs = _db.dameListaTurnosEmpleados();
+			while(rs.next()){
+			String idTurn = rs.getString("IdTurno");
+			String descr = rs.getString("Descripcion");
+			Time HoraE = rs.getTime("HoraEntrada");
+			Time HoraS = rs.getTime("HoraSalida");
+			Time HoraI = rs.getTime("HoraInicioDescanso");
+			//duracion del descanso como Time en la BBDD???
+			//las funciones que calculan la hora, minutos y segundos estan depreciadas aqui en JAVA
+			Time duracion = rs.getTime("DuracionDescanso");
+			//paso el Time a String y me quedo con el substring de la franja de los minutos HH:MM:SS
+			String duracionStr = duracion.toString().substring(3,5);
+			//lo paso a int (que es como esta duracionDescanso en JAVA)
+			Integer duracionInt= (int)Integer.valueOf(duracionStr);
+			Turno t = new Turno(idTurn,descr,HoraE,HoraS,HoraI,duracionInt);
+			turnos.add(t);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error al obtener Lista de Turnos en la base de datos");
+		}
+		
+	return  turnos;
+	}	
 	
 /******************************************************************************************
  * Otros métodos 

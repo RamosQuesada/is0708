@@ -27,7 +27,7 @@ import aplicacion.Util;
 import aplicacion.Vista;
 import aplicacion.Empleado;
 import java.util.ResourceBundle;
-import java.util.Date;
+import java.sql.Date;
 
 // TODO Mostrar elecci�n de rangos inferiores al usuario
 public class I08_1_Anadir_empleado {
@@ -42,6 +42,9 @@ public class I08_1_Anadir_empleado {
 		this.padre = padre;
 		this.bundle = bundle;
 		this.vista = vista;
+		fechaContrato = new Date(0);
+		fechaAlta = new Date(0);
+		fechaNacimiento = new Date(0);
 		mostrarVentana();
 	}
 	
@@ -171,7 +174,7 @@ public class I08_1_Anadir_empleado {
 		bCancelar.setText(bundle.getString("Cancelar"));
 		bCancelar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 
-		// Un listener para el selector de sexo
+		// Listener para el selector de sexo
 		SelectionAdapter sacSexo = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
 				if (cSexo.getSelectionIndex()==0)
@@ -245,46 +248,50 @@ public class I08_1_Anadir_empleado {
 		bColor.addSelectionListener(sabColor);
 
 		
-		// Un listener con lo que hace el bot�n bCancelar
+		// Listener con lo que hace el botón bCancelar
 		SelectionAdapter sabCancelar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 					shell.dispose();	
 			}
 		};
 
-		// Un listener con lo que hace el bot�n bAceptar
+		// Listener con lo que hace el botón bAceptar
 		SelectionAdapter sabAceptar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				// Comprueba el n�mero de vendedor (campo obligatorio)
+				// Comprueba el número de vendedor (campo obligatorio)
 				int n = Util.convertirNVend(tNVend.getText());
 				if (n<0) {
-					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
-					messageBox.setText (bundle.getString("Mensaje"));
+					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
+					messageBox.setText (bundle.getString("Error"));
 					messageBox.setMessage (bundle.getString("I01_err_NumVendedor1"));
 					e.doit = messageBox.open () == SWT.YES;
 					// Enfocar tNVend y seleccionar texto
 					tNVend.setFocus();
 					tNVend.selectAll();
 				}
-				// Comprueba la direcci�n de email (campo no obligatorio)
+				// Comprueba que la contraseña no es vacía (campo obligatorio)
+				else if (tPassword.getText().length()==0) {
+					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
+					messageBox.setText (bundle.getString("Error"));
+					messageBox.setMessage (bundle.getString("I01_err_Password"));					
+					e.doit = messageBox.open () == SWT.YES;
+					// Enfocar tPassword y seleccionar texto
+					tPassword.setFocus();
+					tPassword.selectAll();
+				}
+				// Comprueba la dirección de email (campo no obligatorio)
 				else if (tEMail.getText().length()!=0 && !Util.comprobarEmail(tEMail.getText())) {
-					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
-					messageBox.setText (bundle.getString("Mensaje"));
+					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
+					messageBox.setText (bundle.getString("Error"));
 					messageBox.setMessage (bundle.getString("I08_err_EmailNoValido"));
 					e.doit = messageBox.open () == SWT.YES;
 					// Enfocar tEMail y seleccionar texto
 					tEMail.setFocus();
 					tEMail.selectAll();
 				}
+				// Si todo está bien, inserta el empleado
 				else {
-
-					// Guardar empleado nuevo con todos sus datos
-					// Daniel Dionne :: Ya estoy yo con esta
-
-					System.out.println(fechaNacimiento);
-					// TODO
-					//Empleado emp = new Empleado(vista.getEmpleadoActual().getIdEmpl(), n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, 0, fechaContrato, fechaAlta, null, null, null);
-					Empleado emp = new Empleado(1, n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, 0, 0, fechaContrato, fechaAlta, null, null, null);
+					Empleado emp = new Empleado(vista.getEmpleadoActual().getEmplId(), n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, 0, fechaContrato, fechaAlta, null, null, null, 0, 0);
 					vista.insertEmpleado(emp);
 					shell.dispose();
 				}

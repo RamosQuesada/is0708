@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import java.util.Date;
+import java.sql.Date;
 
 import aplicacion.Vista;
 
@@ -65,9 +65,8 @@ public class I17_Seleccion_fecha {
 		//Introducimos los valores y eventos de Fecha Inicio
 		bEnviar.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				// TODO Cambiar a clase Calendar o GregorianCalendar
+				// TODO ¿Se puede evitar usar métodos obsoletos?
 				fecha = new Date(calendario.getYear(),calendario.getMonth(),calendario.getDay());
-				//fecha = String.valueOf(calendario.getYear()) + "-" + aplicacion.Util.aString(calendario.getMonth())+ "-" + aplicacion.Util.aString(calendario.getDay());
 				shell.dispose();
 			}				
 		});
