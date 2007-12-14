@@ -48,7 +48,7 @@ public class I16_Peticion_baja {
 		GridLayout lShell = new GridLayout();
 		lShell.numColumns = 1;		
 		shell.setLayout(lShell);
-		shell.setText(_bundle.getString("peticionbaja"));
+		shell.setText(_bundle.getString("I16_tit_petibaja"));
 		shell.setImage(ico_mens_l);
 		
 		/*    */
@@ -60,7 +60,7 @@ public class I16_Peticion_baja {
 		cGrupo.setLayout(lGrupo);
 		
 		final Label lFechaInicio	= new Label(cGrupo, SWT.LEFT);
-		lFechaInicio.setText(_bundle.getString("fechaini"));
+		lFechaInicio.setText(_bundle.getString("I16_lab_fechaini"));
 		cFechaInicio =new Text (cGrupo, SWT.BORDER);
 		cFechaInicio.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 0, 0));
 	
@@ -85,7 +85,7 @@ public class I16_Peticion_baja {
 		
 		
 		final Label lFechaFin	= new Label(cGrupo, SWT.LEFT);
-		lFechaFin.setText(_bundle.getString("fechafin"));
+		lFechaFin.setText(_bundle.getString("I16_lab_fechafin"));
 		cFechaFin =new Text (cGrupo, SWT.BORDER);
 		cFechaFin.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 0, 0));
 		final Button bFechaFin	= new Button(cGrupo, SWT.PUSH);
@@ -116,7 +116,7 @@ public class I16_Peticion_baja {
 		
 		
 		final Label lMotivo	= new Label(cGrupo, SWT.LEFT);
-		lMotivo.setText(_bundle.getString("motivobaja"));
+		lMotivo.setText(_bundle.getString("I16_lab_motivobaja"));
 		final Text  tMotivo	= new Text (cGrupo, SWT.BORDER);
 		tMotivo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 0, 0));
 
@@ -127,7 +127,7 @@ public class I16_Peticion_baja {
 		lCuerpoMen.numColumns = 1;
 		cCuerpoMen.setLayout(lCuerpoMen);
 		final Label lExposicion	= new Label(cCuerpoMen, SWT.LEFT);		
-		lExposicion.setText(_bundle.getString("exppet"));
+		lExposicion.setText(_bundle.getString("I16_lab_exppet"));
 		final Text  tExposicion	= new Text (cCuerpoMen, SWT.BORDER|SWT.MULTI | SWT.WRAP| SWT.V_SCROLL);
 		tExposicion.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 0, 0));
 		
@@ -156,7 +156,7 @@ public class I16_Peticion_baja {
 				if(iFechaFin<iFechaInicio){
 					MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
 					messageBox.setText (_bundle.getString("Mensaje"));
-					messageBox.setMessage (_bundle.getString("errperbaj"));
+					messageBox.setMessage (_bundle.getString("I16_err_perbaj"));
 					messageBox.open();
 									
 				}
