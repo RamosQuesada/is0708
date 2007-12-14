@@ -215,4 +215,22 @@ public class Util {
 		date = (Date)formatter.parse(dateString);		
 		return date;
     }
+	
+	/**
+	 * 
+	 * @param t  Time del que sacamos el numero de minutos
+	 * @return numero de minutos de t
+	 * @author Agustin-Daniel Delgado Muñoz
+	 */
+	public static int dameMinutos(Time t){
+		String s = t.toString();
+		//s tiene el formato HH:MM:SS 
+		int horas =Integer.valueOf(s.substring(0,2));
+		int minutos =Integer.valueOf(s.substring(3,5));
+		return (60*horas + minutos);
+		//return horas;
+}
+	
+	
+	
 }

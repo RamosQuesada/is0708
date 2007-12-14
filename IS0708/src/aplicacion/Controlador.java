@@ -382,11 +382,8 @@ public class Controlador {
 			//duracion del descanso como Time en la BBDD???
 			//las funciones que calculan la hora, minutos y segundos estan depreciadas aqui en JAVA
 			Time duracion = rs.getTime("DuracionDescanso");
-			//paso el Time a String y me quedo con el substring de la franja de los minutos HH:MM:SS
-			String duracionStr = duracion.toString().substring(3,5);
-			//lo paso a int (que es como esta duracionDescanso en JAVA)
-			Integer duracionInt= (int)Integer.valueOf(duracionStr);
-			Turno t = new Turno(idTurn,descr,HoraE,HoraS,HoraI,duracionInt);
+			int descanso = aplicacion.Util.dameMinutos(duracion);
+			Turno t = new Turno(idTurn,descr,HoraE,HoraS,HoraI,descanso);
 			turnos.add(t);
 			}
 			

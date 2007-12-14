@@ -792,6 +792,8 @@ public class Database extends Thread {
 
 		prueba.obtenFestivos(3, "2007-12-12");
 		prueba.insertarTurno(1, "prueba", h, h, h, 10);
+		prueba.insertarTurno(4, "prueba", h, h, h, 14500);
+
 		prueba.insertarDistribucion(9, "Martes", "1e5p", 10, 7, 1);
 		prueba.insertarMensaje(1, new Time(0), "prueba", "que gran prueba");
 		prueba.insertarListaDestinatarios(1, 1);
