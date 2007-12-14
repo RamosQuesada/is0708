@@ -3,7 +3,7 @@ package algoritmo;
 import aplicacion.Util;
 
 /**
- * Esta clase contiene el max/min numero de personas y patron de expertos/principiantes, que se van a utilizar en la clase calendario
+ * Esta clase contiene el max/min numero de personas,patron de expertos/principiantes e idTurno que se van a utilizar en la clase calendario
  * @author DavidMartin
  */
 public class HoraCalendario {
@@ -31,6 +31,7 @@ public class HoraCalendario {
 	 * @param min Numero minimo de empleados simultaneos en el departamento
 	 * @param exp Numero de empleados expertos por cada inexpert 
 	 * @param inexpert Numero de empleados principiantes simultaneos en el departamento
+	 * @param idturno Especifica el turno del trabajador
 	 */
 	public HoraCalendario(int max,int min,int exp,int inexpert,String turno){//Otra constructora
 		this.max = max;
@@ -134,10 +135,18 @@ public class HoraCalendario {
 		principiantes = Util.numPrincipiantes(patron);
 	}
 
+	/**
+	 * Consulta idTurno
+	 * @return idTurno
+	 */
 	public String getIdTurno() {
 		return idTurno;
 	}
 
+	/**
+	 * Modifica el Turno
+	 * @param idTurno
+	 */
 	public void setIdTurno(String idTurno) {
 		this.idTurno = idTurno;
 	}
