@@ -15,6 +15,7 @@ import algoritmo.Calendario;
  * 
  * @author Todos
  */
+
 public class Controlador {
 	private Vista _vista;
 	private Database _db;
@@ -52,7 +53,7 @@ public class Controlador {
 		return _empleadoActual;
 	}
 
-	public void incluyeVista(Vista vista) {
+	public void setVista(Vista vista) {
 		this._vista = vista;
 	}
 
@@ -352,6 +353,15 @@ public class Controlador {
 		return null;
 	}
 
+	/**
+	 * Inserta un mensaje en la base de datos.
+	 * @param mensaje
+	 * @return <i>true</i> si el mensaje se ha insertado correctamente
+	 */
+	public boolean insertMensaje (Mensaje mensaje) {
+		return false;
+	}
+	
 /******************************************************************************************
  * Métodos relacionados con contratos
  */
