@@ -14,12 +14,12 @@ import algoritmo.Calendario;
  * Esta clase conecta el modelo (la base de datos) con la vista (los interfaces)
  * Resumen de los métodos que hay: (si añadís alguno, por favor, añadidlo aquí también)
  * 
- * - Métodos relacionados con empleados:
+ * - Métodos relacionados con empleados: (P = pendiente)
  * 		getEmpleado(int)			Carga un empleado
- * P	getEmpleados(...)			Carga uno o varios empleados que coincidan con los 
+ *	P	getEmpleados(...)			Carga uno o varios empleados que coincidan con los 
  * 									parámetros dados
  * 		getIdsDepartamentos(int)	Carga los nombres de sus departamentos
- * P	getIdsDepartamentosRec(int)	Lo mismo pero recursivamente
+ *	P	getIdsDepartamentosRec(int)	Lo mismo pero recursivamente
  * 		getIdsSubordinados(int)		Carga los subordinados
  * 		getIdSuperior(int)			Carga el identificador del superior
  *		insertEmpleado(Empleado)	Inserta un empleado en la base de datos
