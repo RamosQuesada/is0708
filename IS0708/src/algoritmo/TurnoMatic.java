@@ -17,6 +17,7 @@ public class TurnoMatic {
 	private Estructura estruc;
 	private int mes;
 	private int anio;
+	private int idDepartamento;
 	
 	
 	public TurnoMatic(){
@@ -25,12 +26,13 @@ public class TurnoMatic {
 	}
 	
 	//El array list turnos es de prueba.
-	public TurnoMatic(int m, int year,ArrayList<Turno> turnos){
+	public TurnoMatic(int m, int year,ArrayList<Turno> turnos,int idDepartamento){
 		
 		/* Llamada a la base de datos para que nos
 		 * dé todos los empleados del departamento.
 		 */
 		ArrayList<Empleado> personal = new ArrayList<Empleado>();
+		this.idDepartamento=idDepartamento;
 		this.anio = year;
 		this.mes = m;
 		this.estruc = new Estructura(mes,year,personal, turnos);
@@ -212,6 +214,46 @@ public class TurnoMatic {
 				}
 			}
 		}
+	}
+
+	public Cuadrante getCuadrante() {
+		return cuadrante;
+	}
+
+	public void setCuadrante(Cuadrante cuadrante) {
+		this.cuadrante = cuadrante;
+	}
+
+	public Estructura getEstruc() {
+		return estruc;
+	}
+
+	public void setEstruc(Estructura estruc) {
+		this.estruc = estruc;
+	}
+
+	public int getMes() {
+		return mes;
+	}
+
+	public void setMes(int mes) {
+		this.mes = mes;
+	}
+
+	public int getAnio() {
+		return anio;
+	}
+
+	public void setAnio(int anio) {
+		this.anio = anio;
+	}
+
+	public int getIdDepartamento() {
+		return idDepartamento;
+	}
+
+	public void setIdDepartamento(int idDepartamento) {
+		this.idDepartamento = idDepartamento;
 	}
 
 		
