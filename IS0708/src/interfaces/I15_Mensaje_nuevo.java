@@ -93,11 +93,11 @@ public class I15_Mensaje_nuevo {
 		final Button bCancelar		= new Button(cAceptarCancelar, SWT.PUSH);
 		
 		//Introducimos los textos a los botones
-		bMInterna.setText(this._bundle.getString("mensajeriaint"));
-		bPetBaja.setText(this._bundle.getString("peticionbaja"));
-		bPCHorario.setText(this._bundle.getString("peticioncambhorario"));
-		bAceptar.setText(this._bundle.getString("aceptar1"));
-		bCancelar.setText(this._bundle.getString("cancelar1"));
+		bMInterna.setText(this._bundle.getString("I15_but_mensajeriaint"));
+		bPetBaja.setText(this._bundle.getString("I15_but_peticionbaja"));
+		bPCHorario.setText(this._bundle.getString("I15_but_peticioncambhorario"));
+		bAceptar.setText(this._bundle.getString("Aceptar"));
+		bCancelar.setText(this._bundle.getString("Cancelar"));
 		
 		//Introducimos los valores y eventos de peticion de Mensajeria interna
 		bMInterna.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));

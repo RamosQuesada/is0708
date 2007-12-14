@@ -48,7 +48,7 @@ public class I14_Mensajeria_Interna {
 		GridLayout lShell = new GridLayout();
 		lShell.numColumns = 1;		
 		shell.setLayout(lShell);
-		shell.setText(_bundle.getString("mensajeriaint"));
+		shell.setText(_bundle.getString("I14_tit_mensajeriaint"));
 		shell.setImage(ico_mens_l);
 		
 		/*    */
@@ -95,8 +95,8 @@ public class I14_Mensajeria_Interna {
 		final Button bCancelar		= new Button(cAceptarCancelar, SWT.PUSH);
 		
 		//Introducimos los textos a los botones
-		bAceptar.setText(_bundle.getString("enviar"));
-		bCancelar.setText(_bundle.getString("cancelar1"));
+		bAceptar.setText(_bundle.getString("Enviar"));
+		bCancelar.setText(_bundle.getString("Cancelar"));
 				//Introducimos los valores y eventos de Aceptar
 		bAceptar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1));
 		bAceptar.addSelectionListener (new SelectionAdapter () {
