@@ -12,10 +12,41 @@ import algoritmo.Calendario;
 
 /**
  * Esta clase conecta el modelo (la base de datos) con la vista (los interfaces)
+ * Resumen de los métodos que hay: (si añadís alguno, por favor, añadidlo aquí también)
+ * 
+ * - Métodos relacionados con empleados:
+ * 		getEmpleado(int)			Carga un empleado
+ * P	getEmpleados(...)			Carga uno o varios empleados que coincidan con los 
+ * 									parámetros dados
+ * 		getIdsDepartamentos(int)	Carga los nombres de sus departamentos
+ * P	getIdsDepartamentosRec(int)	Lo mismo pero recursivamente
+ * 		getIdsSubordinados(int)		Carga los subordinados
+ * 		getIdSuperior(int)			Carga el identificador del superior
+ *		insertEmpleado(Empleado)	Inserta un empleado en la base de datos
+ * 
+ * - Métodos relacionados con departamentos:
+ * 	P	getDepartamento(String)		Carga un departamento
+ * 	P	insertDepartamento(Dep)		Inserta un departamento
+ * 		getDistribucionDia(int, String)	Carga la distribución de un departamento para
+ * 									un día concreto.
+ * 									NOTA: El idDepartamento debería ser un string - Dani
+ * 		getDistribucionMes
+ * 
+ * - Métodos relacionados con mensajes:
+ * 	P	getMensajesEntrantes(...)	Carga un número determinado de mensajes entrantes
+ *	P	getMensajesSalientes(...)	Carga un número determinado de mensajes salientes
+ *	?	getMensajes(int)			Carga todos los mensajes (¿necesario?)
+ *	P	insertMensaje(Mensaje)		Inserta un mensaje
+ * 
+ * - Métodos relacionados con contratos
+ *	P	getContrato(int)			Carga un contrato dado su id
+ *	P	insertContrato(Contrato)	Inserta un contrato
+ *
+ * - Métodos relacionados con turnos
+ * 		getTurnosEmpleados()		Carga una lista de turnos
  * 
  * @author Todos
  */
-
 public class Controlador {
 	private Vista _vista;
 	private Database _db;
@@ -146,7 +177,6 @@ public class Controlador {
 		return depts;
 	}
 
-	
 	/**
 	 * Metodo que obtiene los subordinados del empleado si los tuviera
 	 * @param idEmpl identificador del empleado 
@@ -183,7 +213,6 @@ public class Controlador {
 		}
 		return idSup;
 	}
-
 	
 	/**
 	 * Carga uno o varios empleados desde la base de datos, que coincidan con
@@ -203,7 +232,7 @@ public class Controlador {
 	 *            el segundo apellido del empleado
 	 * @return una lista de empleados que coincida con los datos dados
 	 */
-	public ArrayList<Empleado> getEmpleado(Integer idEmpl, Integer idDpto,
+	public ArrayList<Empleado> getEmpleados(Integer idEmpl, Integer idDpto,
 			Integer idContrato, String nombre, String apellido1,
 			String apellido2, Integer rango) {
 		return null;
@@ -248,6 +277,7 @@ public class Controlador {
 	public boolean insertDepartamento(Departamento departamento) {
 		return false;
 	}
+	
 	/**
 	 * Metodo que a partir de un identificador de departamento y un dia de la semana (entero) nos devuelve 
 	 * una lista dividida en horas con sus correspondientes limites de numero de empleados maximo y minimo. 
