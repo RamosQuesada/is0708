@@ -19,13 +19,15 @@ public class Estructura {
 	private ArrayList<Time> trozosHorario; // Lista con el inicio de cada turno y el fin del ultimo
 	                                       // tamanio: nTrozos+1;
 	private int numTrozos;
+	private int idDepartamento;
 	//Atributo de prueba turnos
 	ArrayList<Turno> turnos;
 	
 
 	
-	public Estructura(int mes,int anio,ArrayList<Empleado> personal){//constructora de la estructura
+	public Estructura(int mes,int anio,ArrayList<Empleado> personal,int idDepartamento){//constructora de la estructura
 		this.personal = personal;
+		this.idDepartamento=idDepartamento;
 		// Calcular el numero de trozos en que se divide el horario
 		// Recuperar de la base de datos la lista de todos los turnos del departamento
 		// y ver en cuantos trozos vas a partir cada dia
@@ -52,12 +54,12 @@ public class Estructura {
 	 * @param personal
 	 * @deprecated borrar
 	 */
-	public Estructura(int mes,int anio,ArrayList<Empleado> personal, ArrayList<Turno> t){//constructora de la estructura
+	public Estructura(int mes,int anio,ArrayList<Empleado> personal, ArrayList<Turno> t,int idDepartamento){//constructora de la estructura
 		this.personal = personal;
 		// Calcular el numero de trozos en que se divide el horario
 		// Recuperar de la base de datos la lista de todos los turnos del departamento
 		// y ver en cuantos trozos vas a partir cada dia
-		
+		this.idDepartamento=idDepartamento;
 		this.turnos = t;
 		inicializaTrozos(); 
 		
@@ -129,6 +131,46 @@ public class Estructura {
 	
 	public Calendario getCalendario(){
 		return cal;
+	}
+
+	public ArrayList<Empleado> getPersonal() {
+		return personal;
+	}
+
+	public void setPersonal(ArrayList<Empleado> personal) {
+		this.personal = personal;
+	}
+
+	public Calendario getCal() {
+		return cal;
+	}
+
+	public void setCal(Calendario cal) {
+		this.cal = cal;
+	}
+
+	public int getIdDepartamento() {
+		return idDepartamento;
+	}
+
+	public void setIdDepartamento(int idDepartamento) {
+		this.idDepartamento = idDepartamento;
+	}
+
+	public ArrayList<Turno> getTurnos() {
+		return turnos;
+	}
+
+	public void setTurnos(ArrayList<Turno> turnos) {
+		this.turnos = turnos;
+	}
+
+	public void setTrozosHorario(ArrayList<Time> trozosHorario) {
+		this.trozosHorario = trozosHorario;
+	}
+
+	public void setNumTrozos(int numTrozos) {
+		this.numTrozos = numTrozos;
 	}
 
 	
