@@ -15,6 +15,8 @@ import aplicacion.Posicion;
 import java.util.ResourceBundle;
 import java.util.Locale;
 
+import java.sql.Date;
+
 import impresion.Imprimir;
 import aplicacion.Vista;
 
@@ -177,8 +179,6 @@ public class I02_Principal {
 		empleados.add(e5);
 		empleados.add(e6);
 		
-		final I02_cuadr cuadrante = new I02_cuadr(cCuadrante, false, empleados);
-		Img = cuadrante.dameImageImprimible();
 		
 		Label lCalendario = new Label(cCuadrantes, SWT.LEFT);
 		lCalendario.setText(bundle.getString("Calendario"));
@@ -203,6 +203,10 @@ public class I02_Principal {
 			}
 		});
 		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));
+		Date fecha = new Date(calendario.getYear(),calendario.getMonth(),calendario.getDay());
+		final I02_cuadr cuadrante = new I02_cuadr(cCuadrante, false, empleados,fecha);
+		Img = cuadrante.dameImageImprimible();
+
 		final Button bPorMes = new Button(cCuadrantes, SWT.RADIO);
 		bPorMes.setText(bundle.getString("I02_but_Verpormes"));
 		bPorMes.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));
@@ -697,7 +701,7 @@ public class I02_Principal {
 		//Introducimos los textos a los botones
 //		bOClave.setText("Obtener clave");
 		bAceptar.setText("Aceptar");
-		bCancelar.setText(bundle.getString("cancelar1"));
+		bCancelar.setText(bundle.getString("Cancelar"));
 				//Introducimos los valores y eventos de Aceptar
 		
 

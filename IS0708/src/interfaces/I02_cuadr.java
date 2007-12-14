@@ -20,6 +20,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.events.*;
+import java.sql.Date;
 
 import aplicacion.Empleado;
 import aplicacion.Posicion;
@@ -167,7 +168,7 @@ public class I02_cuadr {
 	 * y el cuadrante.
 	 * @param c	Composite sobre el que dibujar el cuadrante
 	 */
-	public I02_cuadr(Composite c, Boolean diario, ArrayList<Empleado> empleados) {
+	public I02_cuadr(Composite c, Boolean diario, ArrayList<Empleado> empleados, Date fecha) {
 		this.diario = diario;
 		this.empleados = empleados;
 		final GridLayout l = new GridLayout(3,false);
@@ -176,8 +177,8 @@ public class I02_cuadr {
 		final Label lCuadranteTitulo= new Label (c, SWT.LEFT);
 		String fname = lCuadranteTitulo.getFont().getFontData()[0].getName();
 		lCuadranteTitulo.setFont(new Font(c.getDisplay(),fname,15,0));
-		// TODO Esto tendr� que cambiarse por la fecha elegida en el calendario
-		lCuadranteTitulo.setText("12 de noviembre de 2007");
+		String sFecha = fecha.getDate() + " de " + fecha.getMonth() + " de " + fecha.getYear(); 
+		lCuadranteTitulo.setText(sFecha);
 		lCuadranteTitulo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		
 		lGridCuadrante= new Label (c, SWT.LEFT);
