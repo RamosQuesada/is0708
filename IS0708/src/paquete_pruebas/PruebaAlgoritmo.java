@@ -16,6 +16,7 @@ public class PruebaAlgoritmo {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
+		int idDepartamento = 007; // Por ejemplo
 		TurnoMatic alg;
 		Cuadrante cuad;
 		Empleado emp1,emp2,emp3;
@@ -39,12 +40,12 @@ public class PruebaAlgoritmo {
 		disponibles.add(emp2);
 		disponibles.add(emp3);
 	
-		cuad = new Cuadrante(12,2007);
+		cuad = new Cuadrante(12,2007,idDepartamento);
 		System.out.println("Numero de dias del mes "+cuad.getNumDias());
 		
 		
 		
-		alg = new TurnoMatic(6,2007,turnos,007);  // 007 es un numero de depart, por ejemplo
+		alg = new TurnoMatic(6,2007,turnos,idDepartamento);  // 007 es un numero de depart, por ejemplo
 		alg.ejecutaAlgoritmo(disponibles);
 		alg.imprimeCuadrante();
 		//alg.imprimeEstructura();
@@ -100,7 +101,7 @@ public class PruebaAlgoritmo {
 		*/
 		
 		// Pruebas de la clase Calendario
-		/*Calendario cal = new Calendario(12,2007,007);
+		/*Calendario cal = new Calendario(12, 2007, idDepartamento);
 		System.out.println(cal.getMaxHora(14, 19));
 		cal.actualizaHora(14, 19, 5, 3, 1, 1);
 		System.out.println(cal.getMaxHora(14, 19));

@@ -5,7 +5,7 @@ import aplicacion.Util;
 
 /**
  * Esta clase corresponde con la salida del algoritmo,un arraylist de objetos de la clase Trabaja
- * @author DavidMartin
+ * @author DavidMartin & Miguel Angel Diaz
  */
 
 public class Cuadrante {
@@ -51,10 +51,30 @@ public class Cuadrante {
 		this.numDias = numDias;
 	}
 
+	public ArrayList<Trabaja> getListaTrabajaDia(int dia){
+		return cuad[dia];
+	}
+	
+	public void setTrabajaDia(int dia, Trabaja trab){
+		cuad[dia].add(trab);
+	}
+	
+	
+	
+	/**
+	 * 
+	 * @return
+	 * @deprecated "funcion guarra": se pierde la ocultacion
+	 */
 	public ArrayList<Trabaja>[] getCuad() {
 		return cuad;
 	}
 
+	/**
+	 * 
+	 * @param cuad
+	 * @deprecated "funcion guarra": se pierde la ocultacion
+	 */
 	public void setCuad(ArrayList<Trabaja>[] cuad) {
 		this.cuad = cuad;
 	}

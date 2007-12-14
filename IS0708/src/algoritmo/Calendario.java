@@ -37,14 +37,14 @@ public class Calendario {
 		this.idDepartamento = idDepartamento;
 		//el calendario tiene un numero de dias segun el mes y de 0 a 23 horas
 		cal = new HoraCalendario[numDias][24]; 
-		//ahora inicializamos el calendario
-		//for (int i=0;i<numDias;i++){
-			//for (int j=0;j<24;j++){
-				//cal[i][j]=new HoraCalendario(0,0,0,0);
+		//TODO borrar para ahorrar memoria cuando no se utilicen "funciones guarras" de calendario y cuadrante
+		for (int i=0;i<numDias;i++){
+			for (int j=0;j<24;j++){
+				cal[i][j]=new HoraCalendario(0,0,0,0);
 				//PRUEBA
 				//cal[i][j]=new HoraCalendario(4,0,0,0);
-		//	}
-		//}
+			}
+		}
 		
 	}
 	
@@ -98,8 +98,8 @@ public class Calendario {
 	
 	/**
 	 * 
-	 * @return
-	 * @deprecated 
+	 * @return estructura del calendario
+	 * @deprecated  "funcion guarra": se pierde la ocultacion
 	 */
 	public HoraCalendario[][] getCal() {
 		return cal;
@@ -109,7 +109,7 @@ public class Calendario {
 	/**
 	 * 
 	 * @param cal
-	 * @deprecated
+	 * @deprecated "funcion guarra": se pierde la ocultacion
 	 */
 	public void setCal(HoraCalendario[][] cal) {
 		this.cal = cal;

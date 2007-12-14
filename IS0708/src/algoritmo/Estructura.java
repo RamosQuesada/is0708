@@ -38,7 +38,7 @@ public class Estructura {
 		// Se podr�a no asignar listas a los dias que no se trabaja
 		for (int i=0; i<numDias; i++){
 			for (int j=0; j<numTrozos; j++){
-				dias[i][j] = new ListasEmpleados();
+				dias[i][j] = new ListasEmpleados(idDepartamento);
 			}
 		}
 		personal = new ArrayList<Empleado>();
@@ -70,7 +70,7 @@ public class Estructura {
 		// Se podr�a no asignar listas a los dias que no se trabaja
 		for (int i=0; i<numDias; i++){
 			for (int j=0; j<numTrozos; j++){
-				dias[i][j] = new ListasEmpleados();
+				dias[i][j] = new ListasEmpleados(idDepartamento);
 			}
 		}
 		personal = new ArrayList<Empleado>();
