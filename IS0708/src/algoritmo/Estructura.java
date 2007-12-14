@@ -7,7 +7,7 @@ import aplicacion.*;
 /**
  * La primera dimensi�n representa el mes en cuesti�n (una posici�n por cada dia del mes)
  * la segunda dimensi�n representa el horario de cada dia (los turnos)
- * @author madctol
+ * @author DavidMartin & Miguel Angel Diaz
  *
  */
 public class Estructura {
@@ -31,7 +31,7 @@ public class Estructura {
 		// y ver en cuantos trozos vas a partir cada dia
 		inicializaTrozos(); 
 		
-		int numDias = Util.dameDias(mes,anio);//calculamos el numero de dias
+		int numDias = Util.dameDias(mes, anio);//calculamos el numero de dias
 		dias = new ListasEmpleados[numDias][numTrozos];
 		// Se podr�a no asignar listas a los dias que no se trabaja
 		for (int i=0; i<numDias; i++){
@@ -41,7 +41,7 @@ public class Estructura {
 		}
 		personal = new ArrayList<Empleado>();
 		//rellenar lista empleados
-		cal=new Calendario(numDias,mes,anio);//creamos calendario
+		cal=new Calendario(mes, anio);//creamos calendario
 	}
 	
 	/**
@@ -73,7 +73,7 @@ public class Estructura {
 		}
 		personal = new ArrayList<Empleado>();
 		//rellenar lista empleados
-		cal=new Calendario(numDias,mes,anio);//creamos calendario
+		cal=new Calendario(mes, anio);//creamos calendario
 	}
 	
 	public ListasEmpleados[][] getDias(){
