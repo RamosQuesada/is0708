@@ -1,6 +1,5 @@
 package algoritmo;
 
-import java.util.ArrayList;
 import aplicacion.Util;
 
 /**
@@ -10,6 +9,7 @@ import aplicacion.Util;
  */
 public class Calendario {
 	
+	private int idDepartamento;
 	private int mes;
 	private int anio;
 	private int numDias; //numero de dias del mes
@@ -30,20 +30,21 @@ public class Calendario {
 	 * @param mes
 	 * @param anio
 	 */
-	public Calendario(int mes,int anio){
+	public Calendario(int mes,int anio, int idDepartamento){
 		this.mes = mes;
 		this.anio = anio;
 		numDias = Util.dameDias(mes,anio); 
+		this.idDepartamento = idDepartamento;
 		//el calendario tiene un numero de dias segun el mes y de 0 a 23 horas
 		cal = new HoraCalendario[numDias][24]; 
 		//ahora inicializamos el calendario
-		for (int i=0;i<numDias;i++){
-			for (int j=0;j<24;j++){
-				cal[i][j]=new HoraCalendario(0,0,0,0);
+		//for (int i=0;i<numDias;i++){
+			//for (int j=0;j<24;j++){
+				//cal[i][j]=new HoraCalendario(0,0,0,0);
 				//PRUEBA
 				//cal[i][j]=new HoraCalendario(4,0,0,0);
-			}
-		}
+		//	}
+		//}
 		
 	}
 	
@@ -126,52 +127,75 @@ public class Calendario {
 	 */
 	public void actualizaHora(int dia, int hora, int max, int min, int exp, int princ){
 		if (esCorrecto(dia, hora)){
-			cal[dia][hora].setMax(max);
-			cal[dia][hora].setMin(min);
-			cal[dia][hora].setExpertos(exp);
-			cal[dia][hora].setPrincipiantes(princ);
+			if (!existeHora(dia, hora))
+				cal[dia][hora] = new HoraCalendario(max,min,exp,princ);
+			else {
+				cal[dia][hora].setMax(max);
+				cal[dia][hora].setMin(min);
+				cal[dia][hora].setExpertos(exp);
+				cal[dia][hora].setPrincipiantes(princ);
+			}
 		}
 	}
 	
 	/**
 	 * Consulta el numero maximo de empleados para un dia y una hora del calendario
+	 * Si el dia o la hora son incorrectos devuelve "-1"
 	 * @return Numero maximo de empleados
 	 */
 	public int getMaxHora(int dia, int hora){
-		if (esCorrecto(dia, hora))
-			return cal[dia][hora].getMax();
+		if (esCorrecto(dia, hora)){
+			if (existeHora(dia, hora))
+				return cal[dia][hora].getMax();
+			else
+				return 0;
+		}
 		else return -1;
 	}
 	
 	/**
 	 * Consulta el numero minimo de empleados para un dia y una hora del calendario
+	 * Si el dia o la hora son incorrectos devuelve "-1"
 	 * @return Numero minimo de empleados
 	 */
 	public int getMinHora(int dia, int hora){
-		if (esCorrecto(dia, hora))
-			return cal[dia][hora].getMin();
-		else return -1;
+		if (esCorrecto(dia, hora)){
+			if (existeHora(dia, hora))
+				return cal[dia][hora].getMin();
+			else
+				return 0;
 		}
+		else return -1;
+	}
 	
 	/**
 	 * Consulta el numero de expertos del patron para un dia y una hora del calendario
+	 * Si el dia o la hora son incorrectos devuelve "-1"
 	 * @return numero de expertos
 	 */
 	public int getExpHora(int dia, int hora){
-		if (esCorrecto(dia, hora))
-			return cal[dia][hora].getExpertos();
-		else return -1;
+		if (esCorrecto(dia, hora)){
+			if (existeHora(dia, hora))
+				return cal[dia][hora].getExpertos();
+			else
+				return 1;
 		}
+		else return -1;
+	}
 	
 	/**
 	 * Consulta el numero de principiantes del patron para un dia y una hora del calendario
+	 * Si el dia o la hora son incorrectos devuelve "-1"
 	 * @return numero de principiantes
 	 */
 	public int getPrincHora(int dia, int hora){
-		if (esCorrecto(dia, hora))
-			return cal[dia][hora].getPrincipiantes();
-		else return -1;
+		if (esCorrecto(dia, hora)){
+			if (existeHora(dia, hora))
+				return cal[dia][hora].getPrincipiantes();
+			else return 1;
 		}
+		else return -1;
+	}
 	
 	/**
 	 * Metodo para comprobar si los indices con los que se accede al calendario son correctos
@@ -182,4 +206,15 @@ public class Calendario {
 	private boolean esCorrecto(int dia, int hora){
 		return (dia>=1 && dia<=numDias && hora>=0 && hora<24);
 	}
+	
+	/**
+	 * Metodo para comprobar si una hora ya esta creada
+	 * @param dia
+	 * @param hora
+	 * @return true si la hora estaba creada
+	 */
+	private boolean existeHora(int dia, int hora){
+		return (cal[dia][hora] != null);
+	}
+	
 }

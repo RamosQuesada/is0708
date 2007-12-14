@@ -43,7 +43,7 @@ public class Estructura {
 		}
 		personal = new ArrayList<Empleado>();
 		//rellenar lista empleados
-		cal=new Calendario(mes, anio);//creamos calendario
+		cal=new Calendario(mes, anio, idDepartamento);//creamos calendario
 	}
 	
 	/**
@@ -75,7 +75,7 @@ public class Estructura {
 		}
 		personal = new ArrayList<Empleado>();
 		//rellenar lista empleados
-		cal=new Calendario(mes, anio);//creamos calendario
+		cal=new Calendario(mes, anio, idDepartamento);//creamos calendario
 	}
 	
 	public ListasEmpleados[][] getDias(){
