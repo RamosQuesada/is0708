@@ -6,7 +6,7 @@ import aplicacion.*;
 
 /**
  * Esta clase representa el tipo de datos que llevara el cuadrante en cada posicion,es decir,
- * para cada dia y para cada hora/turno habra una idEmpleado,horaIni y HoraFin.
+ * para cada dia y para cada hora/turno habra una idEmpleado,horaIni,HoraFin e idTurno.
  * @author DavidMartin
  *
  */
@@ -15,13 +15,15 @@ public class Trabaja {
 	private int IdEmpl;//id del empleado
 	private Time FichIni;//Fichaje inicial,hay que mirar bien los tipos que van a llevar las fechas
 	private Time FichFin;//Fichaje final
+	private String idTurno;
 	
 	public Trabaja(){//constructora por defecto
 	}
-	public Trabaja(int Id,Time Ini,Time Fin){//Otra constructora
+	public Trabaja(int Id,Time Ini,Time Fin,String Turno){//Otra constructora
 		this.IdEmpl=Id;
 		this.FichIni=Ini;
 		this.FichFin=Fin;
+		this.idTurno=Turno;
 		
 	}
 	public int getIdEmpl() {
@@ -41,6 +43,12 @@ public class Trabaja {
 	}
 	public void setFichFin(Time fichFin) {
 		FichFin = fichFin;
+	}
+	public String getIdTurno() {
+		return idTurno;
+	}
+	public void setIdTurno(String idTurno) {
+		this.idTurno = idTurno;
 	}
 	
 	

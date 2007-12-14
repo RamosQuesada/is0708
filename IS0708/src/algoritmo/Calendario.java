@@ -26,7 +26,7 @@ public class Calendario {
 			for(int j=0;j<24;j++){
 				//Aqui debemos rellenar los datos accediendo a las base de datos
 				//PRUEBA
-				cal[i][j]=new HoraCalendario(4,0,0,0,"");
+				cal[i][j]=new HoraCalendario(4,0,0,0);
 			}
 		}
 		
