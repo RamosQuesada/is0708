@@ -859,6 +859,22 @@ public class Database extends Thread {
 		return r;
 	}
 	
+	public ResultSet dameDepartamento(String nombre) {
+		ResultSet r = null;
+
+		try {
+			st = con.createStatement();
+			r = st.executeQuery("SELECT * FROM DEPARTAMENTO WHERE Nombre='"+nombre+"'");
+		}
+
+		catch (SQLException e) {
+			// TODO: handle exception
+			System.out
+					.println("Error al realizar la consulta Lista de Turnos ");
+		}
+		return r;
+	}
+	
 	public static void main(String[] IS0708) {
 		//paquete_pruebas->clase PruebasBaseDatos
 	}
