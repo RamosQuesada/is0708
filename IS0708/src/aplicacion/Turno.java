@@ -16,7 +16,7 @@ import aplicacion.Posicion;
  *
  */
 public class Turno {
-	private String idTurno;
+	private int idTurno;
 	private String descripcion;
 	private Time horaEntrada;
 	private Time horaSalida;
@@ -42,7 +42,7 @@ public class Turno {
 	 * @param descanso		 Tiempo asignado a descanso (en minutos)
 
 	 */
-	public Turno(String idTurno, String descripcion, Time horaEntrada, Time horaSalida, Time horaDescanso, int descanso) {
+	public Turno(int idTurno, String descripcion, Time horaEntrada, Time horaSalida, Time horaDescanso, int descanso) {
 		super();
 		this.idTurno = idTurno;
 		this.descripcion = descripcion;
@@ -65,7 +65,7 @@ public class Turno {
 	 * 						 (en String recuperado de la BBDD con JDBC)
 	 * @param descanso		 Tiempo asignado a descanso (en minutos)
 	 */
-	public Turno(String idTurno, String descripcion,String horaEntrada, String horaSalida, String horaDescanso, int descanso) {
+	public Turno(int idTurno, String descripcion,String horaEntrada, String horaSalida, String horaDescanso, int descanso) {
 		super();
 		this.idTurno = idTurno;
 		this.descripcion = descripcion;
@@ -79,7 +79,7 @@ public class Turno {
 	 * @param id
 	 * @deprecared
 	 */
-	public Turno(String id){
+	public Turno(int id){
 		this.idTurno = id;
 		
 	}
@@ -143,10 +143,10 @@ public class Turno {
 	public void setHoraSalida(Time horaSalida) {
 		this.horaSalida = horaSalida;
 	}
-	public String getIdTurno() {
+	public int getIdTurno() {
 		return idTurno;
 	}
-	public void setIdTurno(String idTurno) {
+	public void setIdTurno(int idTurno) {
 		this.idTurno = idTurno;
 	}
 	public int getTDescanso() {

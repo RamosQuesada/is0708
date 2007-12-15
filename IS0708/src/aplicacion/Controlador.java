@@ -431,7 +431,7 @@ public class Controlador {
 		try {
 			ResultSet rs = _db.dameListaTurnosEmpleados();
 			while(rs.next()){
-			String idTurn = rs.getString("IdTurno");
+			int idTurn = rs.getInt("IdTurno");
 			String descr = rs.getString("Descripcion");
 			Time HoraE = rs.getTime("HoraEntrada");
 			Time HoraS = rs.getTime("HoraSalida");
