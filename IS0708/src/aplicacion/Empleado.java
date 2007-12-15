@@ -43,6 +43,10 @@ import aplicacion.Controlador;
  * @author Daniel Dionne
  *
  */
+/**
+ * @author Daniel Dionne
+ *
+ */
 public class Empleado implements Drawable {	
 	
 	// Para algunas variables, se guarda un entero al identificador de la clase 
@@ -583,6 +587,7 @@ public class Empleado implements Drawable {
 
 	/**
 	 * Devuelve el parámetro felicidad del empleado.
+	 * @return el valor de felicidad
 	 */
 	public int getFelicidad() {
 		return felicidad;
@@ -596,6 +601,28 @@ public class Empleado implements Drawable {
 		this.felicidad = felicidad;
 	}
 	
+	/**
+	 * Devuelve el idioma del empleado:<ul>
+	 * <li>1 - Español
+	 * <li>2 - Inglés
+	 * <li>3 - Polaco
+	 * @return el idioma del empleado
+	 */
+	public int getIdioma() {
+		return idioma;
+	}
+
+	/**
+	 * Asigna un idioma al empleado:<ul>
+	 * <li>1 - Español
+	 * <li>2 - Inglés
+	 * <li>3 - Polaco
+	 * @param idioma el idioma a asignar
+	 */
+	public void setIdioma(int idioma) {
+		this.idioma = idioma;
+	}
+
 	/**
 	 * Devuelve los departamentos a los que pertenece el empleado.
 	 * @return la lista de departamentos del usuario

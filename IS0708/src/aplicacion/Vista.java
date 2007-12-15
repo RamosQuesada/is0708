@@ -40,7 +40,6 @@ public class Vista extends Thread {
 			else {
 				shell.getDisplay().asyncExec(new Runnable () {
 					public void run() {
-						// Rellenar la barra de progreso
 						// TODO Por alguna razón oculta de los threads, aun habiendo comprobado
 						// antes si el dialog sigue presente, si no lo compruebo de nuevo
 						// a veces da error.
@@ -75,11 +74,6 @@ public class Vista extends Thread {
 		
 		// Creación del gestor de idiomas
 		LanguageChanger l = new LanguageChanger();
-		// TODO Poner esto después del login
-		// 0 español
-		// 1 polaco
-		// 2 inglés
-		l.cambiarLocale(0);
 		
 		bundle = l.getBundle();
 		locale = l.getCurrentLocale();
@@ -137,6 +131,14 @@ public class Vista extends Thread {
 					db.cerrarConexion();
 			}
 		}
+	
+		// TODO Poner esto después del login
+		// 0 español
+		// 1 inglés
+		// 2 polaco
+		l.cambiarLocale(controlador.getEmpleadoActual().getIdioma());
+		bundle = l.getBundle();
+		locale = l.getCurrentLocale();
 		
 		// Si todavía no he cerrado el display, ya he hecho login correctamente
 		if (!shell.isDisposed()) {

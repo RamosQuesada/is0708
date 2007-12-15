@@ -1,6 +1,6 @@
 package interfaces;
 /*******************************************************************************
- * INTERFAZ I-08.1 :: Creaci�n de empleado
+ * INTERFAZ I-08.1 :: Creación de empleado
  *   por Daniel Dionne
  *   
  * Interfaz para dar de alta un empleado nuevo.
@@ -29,7 +29,7 @@ import aplicacion.Empleado;
 import java.util.ResourceBundle;
 import java.sql.Date;
 
-// TODO Mostrar elecci�n de rangos inferiores al usuario
+// TODO Mostrar elección de rangos inferiores al usuario
 public class I08_1_Anadir_empleado {
 	private Shell padre = null;
 	private ResourceBundle bundle;
@@ -86,6 +86,8 @@ public class I08_1_Anadir_empleado {
 		final Text   tFNacimiento	= new Text  (grupoIzq, SWT.BORDER | SWT.READ_ONLY);
 		final Label  lSexo			= new Label (grupoIzq, SWT.LEFT);
 		final Combo  cSexo			= new Combo (grupoIzq, SWT.BORDER | SWT.READ_ONLY);
+		final Label  lIdioma		= new Label (grupoIzq, SWT.LEFT);
+		final Combo  cIdioma		= new Combo (grupoIzq, SWT.BORDER | SWT.READ_ONLY);
 		final Label  lContrato		= new Label (grupoDer, SWT.LEFT);
 		final Combo  cContrato		= new Combo (grupoDer, SWT.BORDER | SWT.READ_ONLY);
 		final Label  lExperiencia	= new Label (grupoDer, SWT.LEFT);
@@ -110,6 +112,7 @@ public class I08_1_Anadir_empleado {
 		lApell2			.setText(bundle.getString("I08_lab_Apellido2"));
 		bFNacimiento	.setText(bundle.getString("I08_lab_FNacimiento"));
 		lSexo			.setText(bundle.getString("Sexo"));
+		lIdioma			.setText(bundle.getString("Idioma"));
 		lContrato		.setText(bundle.getString("I08_lab_TipoContrato"));
 		lExperiencia	.setText(bundle.getString("Experiencia"));
 		lDepto			.setText(bundle.getString("Departamento"));
@@ -133,6 +136,8 @@ public class I08_1_Anadir_empleado {
 		tFNacimiento.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		lSexo		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
 		cSexo		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		lIdioma		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
+		cIdioma		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		lContrato	.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
 		cContrato	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		lExperiencia.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
@@ -153,14 +158,20 @@ public class I08_1_Anadir_empleado {
 		grupoDer.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
 		
 		tNVend.setTextLimit(8);
-		cSexo.setItems (new String [] {bundle.getString("Femenino"), bundle.getString("Masculino"),});
-		cContrato.setItems (new String [] {"6:40", "Dias sueltos",});
-		cExperiencia.setItems (new String [] {bundle.getString("Principiante"), bundle.getString("Experto"),});
-		cDepto.setItems (new String [] {"Cocina", "Bano",});
+		cSexo.setItems (new String [] {	bundle.getString("Femenino"),
+										bundle.getString("Masculino")});
+		cIdioma.setItems (new String [] {	bundle.getString("esp"),
+											bundle.getString("eng"),
+											bundle.getString("pol")});
+		cContrato.setItems (new String [] {"6:40", "Dias sueltos"});
+		cExperiencia.setItems (new String [] {	bundle.getString("Principiante"),
+												bundle.getString("Experto")});
+		cDepto.setItems (new String [] {"Cocina", "Baño"});
 		cSexo.select(0);
 		cContrato.select(0);
 		cExperiencia.select(0);
 		cDepto.select(0);
+		cIdioma.select(0);
 		
 		shell.setImage(ico_chico);
 
@@ -291,7 +302,7 @@ public class I08_1_Anadir_empleado {
 				}
 				// Si todo está bien, inserta el empleado
 				else {
-					Empleado emp = new Empleado(vista.getEmpleadoActual().getEmplId(), n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, 0, fechaContrato, fechaAlta, null, null, null, 0, 0);
+					Empleado emp = new Empleado(vista.getEmpleadoActual().getEmplId(), n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, 0, fechaContrato, fechaAlta, null, null, null, 0, cIdioma.getSelectionIndex());
 					vista.insertEmpleado(emp);
 					shell.dispose();
 				}
