@@ -8,7 +8,7 @@ import java.sql.Date;
 import java.sql.Time;
 import org.eclipse.swt.graphics.Color;
 
-import algoritmo.Calendario;
+import algoritmo.*;
 
 /**
  * Esta clase conecta el modelo (la base de datos) con la vista (los interfaces)
@@ -451,7 +451,23 @@ public class Controlador {
 		
 	return  turnos;
 	}	
+/******************************************************************************************
+ * Metodos relacionados con Cuadrante
+ */	
 	
+	public void insertCuadrante(Cuadrante cuadrante){
+		for(int dia=0;dia<cuadrante.getNumDias();dia++){
+			ArrayList<Trabaja> cuad=cuadrante.getListaTrabajaDia(dia);
+			for(int i=0;i<cuad.size();i++){
+				Trabaja trabaja=cuad.get(i);
+				_db.abrirConexion();
+				String fecha=cuadrante.getAnio()+" "+cuadrante.getMes()+" "+dia;
+				_db.insertarTrabaja(trabaja.getIdEmpl(), trabaja.getIdTurno(), fecha, trabaja.getFichIni(),
+						trabaja.getFichFin());
+				_db.cerrarConexion();
+			}
+		}
+	}
 /******************************************************************************************
  * Otros métodos 
  */
