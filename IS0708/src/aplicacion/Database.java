@@ -875,7 +875,7 @@ public class Database extends Thread {
 		return r;
 	}
 	
-	public ResultSet dameContrato(int idContrato){
+	public ResultSet obtenContrato(int idContrato){
 		ResultSet result=null;
 		try {
 			st = con.createStatement();
