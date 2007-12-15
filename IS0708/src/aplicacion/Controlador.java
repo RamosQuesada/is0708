@@ -534,17 +534,17 @@ public class Controlador {
 	 * @param cuadrante cuadrante que se quiere guardar
 	 */
 	public void insertCuadrante(Cuadrante cuadrante){
+		_db.abrirConexion();
 		for(int dia=0;dia<cuadrante.getNumDias();dia++){
 			ArrayList<Trabaja> cuad=cuadrante.getListaTrabajaDia(dia);
 			for(int i=0;i<cuad.size();i++){
 				Trabaja trabaja=cuad.get(i);
-				_db.abrirConexion();
-				String fecha=cuadrante.getAnio()+" "+cuadrante.getMes()+" "+dia;
+				String fecha=cuadrante.getAnio()+"-"+cuadrante.getMes()+"-"+(dia+1);
 				_db.insertarTrabaja(trabaja.getIdEmpl(), trabaja.getIdTurno(), fecha, trabaja.getFichIni(),
 						trabaja.getFichFin());
-				_db.cerrarConexion();
 			}
 		}
+		_db.cerrarConexion();
 	}
 	
 	
