@@ -141,7 +141,7 @@ public class TurnoMatic {
 					empleados.add(emp);
 					Time pr1 = new Time(19,49,00);
 					Time pr2 = new Time(19,49,00);
-					trab = new Trabaja(emp.getEmplId(),pr1,pr2,"");//tenemos que meterle el turno que le corresponda
+					trab = new Trabaja(emp.getEmplId(),pr1,pr2,0);//tenemos que meterle el turno que le corresponda
 					cu[i].add(trab);
 						
 				}				
