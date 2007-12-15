@@ -451,10 +451,14 @@ public class Controlador {
 		
 	return  turnos;
 	}	
+
 /******************************************************************************************
  * Metodos relacionados con Cuadrante
  */	
-	
+	/**
+	 * Guarda un cuadrante en la base de datos
+	 * @param cuadrante cuadrante que se quiere guardar
+	 */
 	public void insertCuadrante(Cuadrante cuadrante){
 		for(int dia=0;dia<cuadrante.getNumDias();dia++){
 			ArrayList<Trabaja> cuad=cuadrante.getListaTrabajaDia(dia);
