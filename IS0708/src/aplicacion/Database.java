@@ -155,6 +155,11 @@ public class Database extends Thread {
 		return r;
 	}
 	
+	/**
+	 * Método que obtiene los empleados que pertenecen al id del departemento dado
+	 * @param idDept	identificador de departamento
+	 * @return			los empleados que pertenecen al id del departemento dado
+	 */
 	public ResultSet obtenEmpleadosDepartamento(int idDept){
 		ResultSet r = null;
 		String subconsulta="SELECT NumVendedor FROM DepartamentoUsuario,NumerosDEPARTAMENTOs WHERE Numero ="+idDept+
@@ -238,6 +243,24 @@ public class Database extends Thread {
 		}
 		return correcto;
 	}
+	
+	/**
+	 * Método que elimina de la base de datos al usuario cuyo NumVendedor se facilita
+	 * @param id	Número de vendedor del usuario
+	 * @return		Informa sobre si se ha podido realizar el borrado o no
+	 */
+	public boolean borraUsuario(int id){
+		boolean correcto = false;
+	    try{
+	        st=con.createStatement();
+	        st.executeUpdate( "DELETE FROM USUARIOS WHERE NumVendedor="+id);
+	        System.out.println("Usuario Borrado");
+	        correcto=true;
+	    }catch(SQLException e) {
+	        System.out.println("Error al Borrar el usuario");
+	    }
+	    return correcto;
+	}
 
 	/**
 	 * M�todo que inserta en la tabla Departamento los valores correspondientes
@@ -259,9 +282,28 @@ public class Database extends Thread {
 			System.out.println("Departamento insertado");
 			correcto = true;
 		} catch (SQLException e) {
+			System.out.println("Error al insertar el departamento");
 			correcto = false;
 		}
 		return correcto;
+	}
+	
+	/**
+	 * Método que elimina de la base de datos al departamento cuyo nombre se facilita
+	 * @param nombre	Nombre del departamento
+	 * @return		Informa sobre si se ha podido realizar el borrado o no
+	 */
+	public boolean borraDepartamento(String nombre){
+		boolean correcto = false;
+	    try{
+	        st=con.createStatement();
+	        st.executeUpdate( "DELETE FROM DEPARTAMENTO WHERE Nombre="+nombre);
+	        System.out.println("Departamento Borrado");
+	        correcto=true;
+	    }catch(SQLException e) {
+	        System.out.println("Error al Borrar el departamento");
+	    }
+	    return correcto;
 	}
 
 	/**
@@ -283,6 +325,7 @@ public class Database extends Thread {
 			System.out.println("Departamento insertado");
 			correcto = true;
 		} catch (SQLException e) {
+			System.out.println("Error al insertar en NumerosDepartamento");
 			correcto = false;
 		}
 		return correcto;
@@ -308,6 +351,7 @@ public class Database extends Thread {
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
+			System.out.println("Error al insertar en DepartamentoUsuario");
 		}
 		return correcto;
 	}
@@ -329,7 +373,7 @@ public class Database extends Thread {
 	 * @return Informa sobre si se ha podido realizar la inserci�n o no
 	 */
 
-	public boolean insertarVentas(int idUsuario, String Fecha, int numVentas) {
+	public boolean insertarVentas(int idUsuario, Date Fecha, int numVentas) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
@@ -374,7 +418,7 @@ public class Database extends Thread {
 	 * 
 	 * @return Informa sobre si se ha podido realizar la inserci�n o no
 	 */
-	public boolean insertarDistribucion(int Hora, String DiaSemana,
+	public boolean insertarDistribucion(int Hora, int DiaSemana,
 			String Patron, int NumMax, int NumMin, int IdDepartamento) {
 		boolean correcto = false;
 		try {
@@ -421,8 +465,8 @@ public class Database extends Thread {
 	 * 
 	 * @return Informa sobre si se ha podido realizar la inserci�n o no
 	 */
-	public boolean insertarFestivo(int Hora, String FechaInicio,
-			String FechaFin, String Patron, int NumMax, int NumMin,
+	public boolean insertarFestivo(int Hora, Date FechaInicio,
+			Date FechaFin, String Patron, int NumMax, int NumMin,
 			int IdDepartamento) {
 		boolean correcto = false;
 		try {
@@ -455,7 +499,7 @@ public class Database extends Thread {
 	 * @param Duracion
 	 *            La duracion del descanso en formato int - Pendiente de
 	 *            revision
-	 * @return
+	 * @return	Informa sobre si se ha podido realizar la inserci�n o no
 	 */
 	public boolean insertarTurno(int idTurno, String Descripcion,
 			Time HoraEntrada, Time HoraSalida, Time HoraInicioDescanso,
@@ -470,12 +514,31 @@ public class Database extends Thread {
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
+			System.out.println("Error al insertar el Turno");
 		}
 		return correcto;
 	}
-
+	
 	/**
-	 * 
+	 * Método que elimina un turno de la base de datos
+	 * @param id	Identificador del turno
+	 * @return		Informa sobre si se ha podido realizar el borrado o no	
+	 */
+	public boolean borraTurno(int id){
+		boolean correcto = false;
+	    try{
+	        st=con.createStatement();
+	        st.executeUpdate( "DELETE FROM TURNOS WHERE IdTurno="+id);
+	        System.out.println("Turno Borrado");
+	        correcto=true;
+	    }catch(SQLException e) {
+	        System.out.println("Error al Borrar el turno");
+	    }
+	    return correcto;
+	}
+	
+	/**
+	 * Método que inserta un mensaje en la base de datos
 	 * @param remitente
 	 *            representa el remitente de un mensaje
 	 * @param fecha
@@ -494,16 +557,35 @@ public class Database extends Thread {
 			st = con.createStatement();
 			st.executeUpdate("INSERT INTO MENSAJE values ( 0 , " + remitente
 					+ ", '" + fecha + "', '" + asunto + "', '" + texto + "');");
-			System.out.println("Mesaje insertado");
+			System.out.println("Mensaje insertado");
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
+			System.out.println("Error al insertar el mensaje");
 		}
 		return correcto;
 	}
 
 	/**
-	 * 
+	 * Método que elimina un mensaje de la base de datos
+	 * @param id	Identificador del mensaje
+	 * @return		Informa sobre si se ha podido realizar el borrado o no	
+	 */
+	public boolean borraMensaje(int id){
+		boolean correcto = false;
+	    try{
+	        st=con.createStatement();
+	        st.executeUpdate( "DELETE FROM MENSAJE WHERE IdMensaje="+id);
+	        System.out.println("Mensaje Borrado");
+	        correcto=true;
+	    }catch(SQLException e) {
+	        System.out.println("Error al Borrar el mensaje");
+	    }
+	    return correcto;
+	}
+	
+	/**
+	 * Método que inserta en la tabla ListaDestinatarios
 	 * @param numVendedor
 	 *            representa el destinatario al que se ha enviado el mensaje
 	 * @param idMensaje
@@ -520,12 +602,13 @@ public class Database extends Thread {
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
+			System.out.println("Error al insertar en ListaDestinatarios");
 		}
 		return correcto;
 	}
 
 	/**
-	 * 
+	 * Método que inserta un contrato en la base de datos
 	 * @param idContrato
 	 *            representa el identificador del contrato
 	 * @param turnoInicial
@@ -552,12 +635,31 @@ public class Database extends Thread {
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
+			System.out.println("Error al insertar el contrato");
 		}
 		return correcto;
 	}
+	
+	/**
+	 * Método que elimina un contrato de la base de datos
+	 * @param id	Identificador del contrato
+	 * @return		Informa sobre si se ha podido realizar el borrado o no	
+	 */
+	public boolean borraContrato(int id){
+		boolean correcto = false;
+	    try{
+	        st=con.createStatement();
+	        st.executeUpdate( "DELETE FROM CONTRATO WHERE IdContrato="+id);
+	        System.out.println("Contrato Borrado");
+	        correcto=true;
+	    }catch(SQLException e) {
+	        System.out.println("Error al Borrar el contrato");
+	    }
+	    return correcto;
+	}
 
 	/**
-	 * 
+	 * Método que inserta en la tabla trabaja (que refleja los cuadrantes)
 	 * @param numVendedor
 	 *            representa al trabajador
 	 * @param idTurno
@@ -578,40 +680,18 @@ public class Database extends Thread {
 			st.executeUpdate("INSERT INTO Trabaja values (" + numVendedor
 					+ ", " + idTurno + ", '" + fecha + "', '" + horaEntrada
 					+ "', '" + horaSalida + "');");
-			System.out.println("insertado en la tabla trabaja");
+			System.out.println("Insertado en la tabla trabaja");
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
+			System.out.println("Error al insrtar en Trabaja");
 		}
 		return correcto;
 	}
 
-	/**
-	 * 
-	 * @param numVendedor
-	 *            representa el empleado que ha realizado las ventas
-	 * @param fecha
-	 *            dia en el que se han realizado las ventas
-	 * @param importe
-	 *            coste total de las ventas
-	 * @return true si se ha realizado correctamente o false en caso contrario
-	 */
-	public boolean insertarVenta(int numVendedor, Time fecha, double importe) {
-		boolean correcto = false;
-		try {
-			st = con.createStatement();
-			st.executeUpdate("INSERT INTO VENTAS values (" + numVendedor
-					+ ", '" + fecha + "', " + importe + ");");
-			System.out.println("venta insertada");
-			correcto = true;
-		} catch (SQLException e) {
-			correcto = false;
-		}
-		return correcto;
-	}
 
 	/**
-	 * 
+	 * Método que inserta en ListaTurnosPorContrato
 	 * @param idTurno
 	 *            identificador del turno correpondiente al contrato
 	 * @param idContrato
@@ -628,12 +708,13 @@ public class Database extends Thread {
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
+			System.out.println("Error al insertar enListaTurnosPorContrato");
 		}
 		return correcto;
 	}
 
 	/**
-	 * 
+	 * Método que inserta una incidencia en la base de datos
 	 * @param idIncidencia
 	 *            identificador de la incidencia
 	 * @param descripcion
@@ -646,16 +727,17 @@ public class Database extends Thread {
 			st = con.createStatement();
 			st.executeUpdate("INSERT INTO INCIDENCIAS values (" + 0 + ", '"
 					+ descripcion + "');");
-			System.out.println("incidencia insertada");
+			System.out.println("Incidencia insertada");
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
+			System.out.println("Error al insertar la incidencia");
 		}
 		return correcto;
 	}
 
 	/**
-	 * 
+	 * Metodo que inserta en la tabla TieneIncidencia
 	 * @param idIncidencia
 	 *            identificador de la incidencia
 	 * @param numVendedor
@@ -678,6 +760,7 @@ public class Database extends Thread {
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
+			System.out.println("Error al insertar la ListaTurnosPorContrato");
 		}
 		return correcto;
 	}
@@ -718,7 +801,7 @@ public class Database extends Thread {
 	 * @return ResultSet con las filas que coinciden con el departamento y la
 	 *         fecha
 	 */
-	public ResultSet obtenFestivos(int idDepartamento, String Fecha) {
+	public ResultSet obtenFestivos(int idDepartamento, Date Fecha) {
 		try {
 			st = con.createStatement();
 			rs = st
