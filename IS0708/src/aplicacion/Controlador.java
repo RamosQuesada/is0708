@@ -281,7 +281,7 @@ public class Controlador {
 				empleado.getApellido1(), empleado.getApellido2(),
 				empleado.getFechaNac(), sexo,
 				empleado.getEmail(), empleado.getPassword(), grupo,
-				Date.valueOf("0000-00-00"), Date.valueOf("0000-00-00"), 0,0,0,1, 0, 0);
+				Date.valueOf("0000-00-00"), Date.valueOf("0000-00-00"), 0,0,empleado.getIdioma(),1,0,0);
 	}
 
 /******************************************************************************************

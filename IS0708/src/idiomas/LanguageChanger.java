@@ -7,8 +7,8 @@ public class LanguageChanger {
 	 private ResourceBundle labels;
 	 private Locale[] supportedLocales = {
 			new Locale("es","ES"),
-			new Locale("pl","POL"),
-			new Locale("en","US")
+			new Locale("en","US"),
+			new Locale("pl","POL")
 		};
 	public LanguageChanger(){		
 		currentLocale = supportedLocales[0];
