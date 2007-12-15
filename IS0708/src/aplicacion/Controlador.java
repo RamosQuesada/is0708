@@ -292,8 +292,18 @@ public class Controlador {
 	 * Carga un departamento desde la base de datos, dado su nombre.
 	 * @param id	el nombre del departamento
 	 * @return		una instancia del departamento cargado
+	 * NO ACABADO
 	 */
 	public Departamento getDepartamento(String id) {
+		ResultSet r = _db.obtenDepartamento(id);
+		
+		try {
+			r.next();
+			Departamento d = new Departamento(id, 1, r.getString("Jefe"));
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 		return null;
 	}
 		
@@ -419,7 +429,7 @@ public class Controlador {
 		ArrayList temp = new ArrayList();
 		
 		try {
-			ResultSet r = _db.dameMensajes(idEmpl, a, b);
+			ResultSet r = _db.obtenMensajes(idEmpl, a, b);
 			r.last();
 			if (r.getRow()>0){
 				r.beforeFirst();
