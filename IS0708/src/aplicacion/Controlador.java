@@ -341,12 +341,18 @@ public class Controlador {
 		int i=0,j=0;
 		for (i=0; i<cal.getNumDias(); i++) {
 			String dia = cal.getAnio()+"-"+cal.getMes()+"-"+(i+1);
-			ArrayList<Object[]> temp = getDistribucionDia(idDepartamento,dia);
-			for (j=0; j<24; j++) {
+			ArrayList<Object[]> temp = getDistribucionDia(idDepartamento,dia);			
+			for (j=0; j<temp.size(); j++) {
 				Object[] t = new Object[4];
 				t = temp.get(j);
 				cal.actualizaHora(i, (Integer)t[0], (Integer)t[2], (Integer)t[1], Util.numExpertos((String)t[3]), Util.numPrincipiantes((String)t[3]));
 			}
+			
+			while (j<24) {
+				cal.actualizaHora(i, j, -1, -1, -1, -1);
+				j++;
+			}
+				
 		}
 		
 	}
