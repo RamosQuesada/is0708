@@ -18,7 +18,7 @@ public class PruebasBaseDatos {
 		prueba.abrirConexion();
 
 		Time h = new Time(10000000);
-		Calendario cal = new Calendario(12, 2007);
+		Calendario cal = new Calendario(12, 2007, 3);
 		Controlador c1 = new Controlador(prueba);
 		c1.getDistribucionMes(3, cal);
 		prueba.obtenFestivos(3, "2007-12-12");
