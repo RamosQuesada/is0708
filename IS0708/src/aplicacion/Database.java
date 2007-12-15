@@ -875,7 +875,14 @@ public class Database extends Thread {
 		return r;
 	}
 	
-	public static void main(String[] IS0708) {
-		//paquete_pruebas->clase PruebasBaseDatos
+	public ResultSet dameContrato(int idContrato){
+		ResultSet result=null;
+		try {
+			st = con.createStatement();
+			result = st.executeQuery("SELECT * FROM CONTRATO WHERE IdContrato = "+ idContrato+";");
+		} catch (SQLException e) {
+			System.out.println("Error de lectura de Contrato");
+		}
+		return result;
 	}
 }

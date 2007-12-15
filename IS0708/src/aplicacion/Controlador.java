@@ -503,11 +503,30 @@ public class Controlador {
 	 * @param id	el identificador del contrato
 	 * @return		una instancia del contrato cargado
 	 */
-	
-	//Roberto
 	public Contrato getContrato(int id) {
 		// TODO BD
-	  return null;
+		ResultSet result = _db.dameContrato(id);
+		int _numeroContrato;
+		int _turnoInicial;
+		String _nombreContrato;
+		String _patron;
+		int _duracionCiclo;
+		double _salario;
+		Contrato contrato=null;
+		try {
+			_numeroContrato = result.getInt(0);
+			_turnoInicial = result.getInt(1);
+			_nombreContrato = result.getString(2);
+			_patron = result.getString(3);
+			_duracionCiclo = result.getInt(4);
+			_salario = result.getDouble(5);
+			contrato=new Contrato(_nombreContrato,_numeroContrato , _turnoInicial, _duracionCiclo, _patron, _salario);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	  return contrato;
 	}
 	
 	/**
