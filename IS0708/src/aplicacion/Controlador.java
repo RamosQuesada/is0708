@@ -294,7 +294,7 @@ public class Controlador {
 	 * @return		una instancia del departamento cargado
 	 * NO ACABADO
 	 */
-	public Departamento getDepartamento(String id) {
+	/*public Departamento getDepartamento(String id) {
 		ResultSet r = _db.obtenDepartamento(id);
 		
 		try {
@@ -305,7 +305,7 @@ public class Controlador {
 		}
 		
 		return null;
-	}
+	}*/
 		
 	/**
 	 * Guarda un departamento en la base de datos
@@ -503,6 +503,8 @@ public class Controlador {
 	 * @param id	el identificador del contrato
 	 * @return		una instancia del contrato cargado
 	 */
+	
+	//Roberto
 	public Contrato getContrato(int id) {
 		// TODO BD
 	  return null;
@@ -513,6 +515,8 @@ public class Controlador {
 	 * @param c		el contrato a insertar
 	 * @return		<i>true</i> si se ha insertado el contrato correctamente
 	 */
+	
+	//roberto
 	public boolean insertContrato(Contrato c) {
 		// TODO BD
 		return false;
