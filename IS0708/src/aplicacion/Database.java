@@ -752,7 +752,7 @@ public class Database extends Thread {
 							+ idDepartamento
 							+ " AND FechaInicio<='"
 							+ Fecha
-							+ "' AND FechaFin>='" + Fecha + "' ORDER BY Hora");
+							+ "' AND FechaFin>='" + Fecha + "' ORDER BY Hora ASC");
 
 		} catch (SQLException e) {
 			// TODO: handle exception
