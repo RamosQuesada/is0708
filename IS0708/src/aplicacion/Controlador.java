@@ -434,7 +434,7 @@ public class Controlador {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return temp;
 	}
 
 	/**
