@@ -199,7 +199,7 @@ public class Vista extends Thread {
 	 * @param apellido2		el segundo apellido del empleado
 	 * @return una lista de empleados que coincida con los datos dados
 	 */
-	public ArrayList<Empleado> getEmpleado(Integer idEmpl, Integer idDpto, Integer idContrato, String nombre, String apellido1, String apellido2, int rango) {
+	public ArrayList<Empleado> getEmpleados(Integer idEmpl, Integer idDpto, Integer idContrato, String nombre, String apellido1, String apellido2, int rango) {
 		return controlador.getEmpleados(idEmpl, idDpto, idContrato, nombre, apellido1, apellido2,rango);
 	}
 

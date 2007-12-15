@@ -235,7 +235,9 @@ public class Controlador {
 	public ArrayList<Empleado> getEmpleados(Integer idEmpl, Integer idDpto,
 			Integer idContrato, String nombre, String apellido1,
 			String apellido2, Integer rango) {
-		return null;
+		ArrayList<Empleado> listaCoincidencias=new ArrayList<Empleado>();
+		//TODO BD RELLENAR LISTACOINCIDENCIAS
+		return listaCoincidencias;
 	}
 
 	/**
