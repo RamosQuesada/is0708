@@ -759,12 +759,12 @@ public class Database extends Thread {
 		return r;
 	}
 
-	public ResultSet dameMensajes(int inicio, int desp) {
+	public ResultSet dameMensajes(int id, int inicio, int desp) {
 		ResultSet r = null;
 
 		try {
 			st = con.createStatement();
-			r = st.executeQuery("SELECT * FROM MENSAJE ORDER BY Fecha LIMIT "+inicio+","+(inicio+desp));
+			r = st.executeQuery("SELECT * FROM MENSAJE WHERE Remitente="+id+" ORDER BY Fecha LIMIT "+inicio+","+(inicio+desp));
 
 		}
 
