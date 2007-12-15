@@ -416,6 +416,24 @@ public class Controlador {
 	 * @return la lista de mensajes
 	 */
 	public ArrayList<Mensaje> getMensajesEntrantes(int idEmpl, int a, int b){
+		ArrayList temp = new ArrayList();
+		
+		try {
+			ResultSet r = _db.dameMensajes(idEmpl, a, b);
+			r.last();
+			if (r.getRow()>0){
+				r.beforeFirst();
+				
+				while (r.next()) {
+					Mensaje m = new Mensaje(r.getInt("idMensaje"), idEmpl, r.getDate("Fecha"), r.getString("Asunto"), r.getString("Texto"));					
+					temp.add(m);
+				}
+			} else {
+				return null;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
