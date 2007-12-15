@@ -1,5 +1,3 @@
-package paquete_pruebas;
-
 import java.sql.Time;
 import java.util.ArrayList;
 
@@ -15,13 +13,20 @@ public class PruebasBaseDatos {
 	/**
 	 * @param args
 	 */
+	
+	//CUIDADO!!!!!!!!!!!!
+	//NO inserteis en las tablas un string cuando en la base de datos del servidor 
+	//esta como date porque luego peta al insertar asi q por favor cambiad las pruebas
 	public static void main(String[] args) {
 		Database prueba = new Database();
-		/*prueba.abrirConexion();
+		prueba.abrirConexion();
 		
 		ArrayList a = new ArrayList();
 		
 		Time h = new Time(10000000);
+		//Calendario cal = new Calendario(12, 2007);
+		Controlador c1 = new Controlador(prueba);
+		//c1.getDistribucionMes(3, cal);
 		Calendario cal = new Calendario(12, 2007, 3);
 		Controlador c1 = new Controlador(prueba);
 		c1.getDistribucionMes(3, cal);
@@ -33,7 +38,6 @@ public class PruebasBaseDatos {
 		prueba.insertarDistribucion(9, "Martes", "1e5p", 10, 7, 1);
 		prueba.insertarMensaje(1, new Time(0), "prueba", "que gran prueba");
 		prueba.insertarListaDestinatarios(1, 1);
-		// prueba.insertarDepartamento("is", Integer.);
 		// prueba.insertarUsuario(1235, "Pablo", "Gervas",
 		// "Gomez_Navarro","2007-12-11" , "m", "gervas@is.com", "ballenas",
 		// "p","2007-12-11" , "2007-12-11", 0, 123, "empleado", 1, 1);
@@ -49,14 +53,17 @@ public class PruebasBaseDatos {
 		// prueba.insertarTrabaja(2, 2, new Time(0), new Time(0), new Time(0));
 		prueba.insertarTurnoPorContrato(1, 1);
 		prueba.insertarVenta(1, new Time(0), 123.43);
-		prueba
-				.insertarFestivo(9, "2007-12-11", "2007-12-11", "2e7p", 15, 10,
-						1);
-		
-		*/
+		prueba.insertarFestivo(9, "2007-12-11", "2007-12-11", "2e7p", 15, 10,1);
+
+		// Prueba método ObtenerLista de Turnos*/
+
 		// Prueba método ObtenerLista de Turnos
+
 		Controlador c = new Controlador(prueba);
-		/*ArrayList<Turno> t = new ArrayList<Turno>();
+
+		ArrayList<Empleado> emps=c.getEmpleadosDepartamento(1);
+		ArrayList<Turno> t = new ArrayList<Turno>();
+
 		t = c.getTurnosEmpleados();
 		for (int i = 0; i < t.size(); i++) {
 			System.out.print(t.get(i).getIdTurno() + "  ");
@@ -66,7 +73,7 @@ public class PruebasBaseDatos {
 			System.out.print(t.get(i).getHoraDescanso() + "  ");
 			System.out.print(t.get(i).getTDescanso() + "  ");
 			System.out.println();
-		}*/
+		}
 		
 		
 		Cuadrante cuad=new Cuadrante(12,2007,1);
@@ -80,3 +87,4 @@ public class PruebasBaseDatos {
 	}
 
 }
+

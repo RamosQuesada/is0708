@@ -317,7 +317,7 @@ public class Controlador {
 	 * vector[1]= numero minimo de empleados para esa hora
 	 * vector[2]= numero maximo de empleados para esa hora
 	 */
-	public ArrayList<Object[]> getDistribucionDia (int idDepartamento, String Fecha){
+	public ArrayList<Object[]> getDistribucionDia (int idDepartamento, Date Fecha){
 		ArrayList lista= new ArrayList();		
 		ResultSet r;
 		Object[] vector = new Object[4];
@@ -338,7 +338,7 @@ public class Controlador {
 			}else{
 				
 				
-				Date d=Date.valueOf(Fecha);
+				Date d=Fecha;
 				int diaSemana=d.getDay();
 				
 				r=_db.obtenDistribucion(idDepartamento, diaSemana);
@@ -367,7 +367,7 @@ public class Controlador {
 	public void getDistribucionMes(int idDepartamento, Calendario cal) {
 		int i=0,j=0;
 		for (i=0; i<cal.getNumDias(); i++) {
-			String dia = cal.getAnio()+"-"+cal.getMes()+"-"+(i+1);
+			Date dia = Date.valueOf(cal.getAnio()+"-"+cal.getMes()+"-"+(i+1));
 			ArrayList<Object[]> temp = getDistribucionDia(idDepartamento,dia);			
 			for (j=0; j<temp.size(); j++) {
 				Object[] t = new Object[4];
