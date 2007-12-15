@@ -20,7 +20,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -51,7 +51,7 @@ public class I10_Config_departamento {
 	
 	private Text tName = null;
 	private Text tNumber = null;
-	private Combo comboBoss = null;
+	private Text textBoss = null;
 
 	private ResourceBundle bundle;
 
@@ -90,7 +90,7 @@ public class I10_Config_departamento {
 	private void createWindow(String windowName) {
 		//final Shell shellWindow = new Shell(padre, SWT.CLOSE | SWT.RESIZE
 		shellWindow = new Shell(padre, SWT.CLOSE | SWT.CLOSE
-				| SWT.APPLICATION_MODAL);
+				| SWT.APPLICATION_MODAL );
 		shellWindow.setText(windowName);
 		shellWindow.setLayout(new GridLayout(2,true));
 		
@@ -116,7 +116,7 @@ public class I10_Config_departamento {
 			public void widgetSelected(SelectionEvent e) {
 				if(integerCheck(tNumber.getText())==true){
 /*TODO BD reference to a class which connects DB and takes the values of 
-  labels texts and combo (labName, labNumber ,labBoss, tName, tNumber, comboBoss ) and sends it to DB
+  labels texts and combo (labName, labNumber ,labBoss, tName, tNumber, textBoss ) and sends it to DB
   DB check if this department exists if not add new, if yes edid with new datas*/
 					shellWindow.dispose();
 				}else{
@@ -146,7 +146,7 @@ public class I10_Config_departamento {
 		shellWindow.setDefaultButton(bAccept);
 //*************************************************************************************************************		
 		shellWindow.pack();
-		shellWindow.setSize(new Point(350, shellWindow.getSize().y));
+		shellWindow.setSize(new Point(200, shellWindow.getSize().y));
 		shellWindow.setLocation(padre.getBounds().width / 2 + padre.getBounds().x
 				- shellWindow.getSize().x / 2, padre.getBounds().height / 2
 				+ padre.getBounds().y - shellWindow.getSize().y / 2);
@@ -158,12 +158,12 @@ public class I10_Config_departamento {
 //		******Adding Components into Window*********************************************************************
 		final Group group = new Group(shellWindow, SWT.NONE);
 		group.setText(bundle.getString("Departamento"));
-		group.setLayout(new GridLayout(1,true));
+		group.setLayout(new GridLayout(1,false));
 		group.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,2,1));
 		
 
 		//Group - Keeps Variables of Department 
-		group.setLayout(new GridLayout(2,true));
+		group.setLayout(new GridLayout(3,false));
 		group.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,2,1));
 		
 		//components inside Group
@@ -183,7 +183,7 @@ public class I10_Config_departamento {
 		tName = new Text  (group, SWT.BORDER);	
 		tName.setText(this.getArrayDB()[0]);	
 		tName.setSize(100,20);
-		tName.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
+		tName.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,2,1));
 		
 		labNumber = new Label (group, SWT.NONE);
 		labNumber.setText(bundle.getString("I10_dep_num"));
@@ -192,13 +192,13 @@ public class I10_Config_departamento {
 		tNumber = new Text  (group, SWT.BORDER);	
 		tNumber.setText(this.getArrayDB()[1]);	
 		tNumber.setSize(100,20);
-		tNumber.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
+		tNumber.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,2,1));
 		
 		labBoss = new Label (group, SWT.NONE);
 		labBoss.setText(bundle.getString("I10_dep_jefe"));
 		labBoss.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));	
 		
-		comboBoss = new Combo  (group, SWT.DROP_DOWN );	
+		textBoss = new Text  (group, SWT.BORDER );	
 //TODO combo gets items from DB (about possible boss)
 		listaCoincidencias= this.vista.getEmpleados(null, null, null, null, null, null,2);
 		String[] nombresEmpleados= new String[listaCoincidencias.size()];
@@ -207,20 +207,27 @@ public class I10_Config_departamento {
 			nombresEmpleados[cont]=(listaCoincidencias.get(cont).getNombre()+" "
 			+listaCoincidencias.get(cont).getApellido1()+" "+listaCoincidencias.get(cont).getApellido2());
 		}
-		comboBoss.setItems(nombresEmpleados);
+	//	textBoss.setItems(nombresEmpleados);
 
-		comboBoss.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
+		SelectionAdapter bossSelectionListener = new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent e) {
+				I13_Elegir_empleado elegir = new I13_Elegir_empleado(shellWindow, bundle, null);
+			}
+		};
+		textBoss.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
 		
-		
-		
+		Button bBoss = new Button(group, SWT.NONE);
+		bBoss.setText("Select");
+		bBoss.setLayoutData(new GridData(SWT.LEFT,SWT.CENTER,true,true,1,1))	;	
+		bBoss.addSelectionListener(bossSelectionListener);
 		
 		//CREACION DEL JEFE Y DEL DEPARTAMENTO
 		/*
-		String nombreJefe = comboBoss.getText();
+		String nombreJefe = textBoss.getText();
 		//TODO separar nombres y apellidos y ¿coger primer empleado?
 		// volver a poner
 		int numeroDepartamento = Integer.valueOf(tNumber.getText());
-		Empleado jefe=listaCoincidencias.get(comboBoss.getSelectionIndex());
+		Empleado jefe=listaCoincidencias.get(textBoss.getSelectionIndex());
 		String nombreDepartamento = tName.getText();
 		
 		Departamento departamento = new Departamento(nombreDepartamento,
@@ -231,7 +238,7 @@ public class I10_Config_departamento {
 		butNewBoss		= new Button(group, SWT.PUSH);
 		//butNewBoss	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		butNewBoss	.setText(bundle.getString("I10_dep_nuevo_jefe"));
-		butNewBoss	.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		butNewBoss	.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
 	}
 	
@@ -248,17 +255,17 @@ public class I10_Config_departamento {
 				new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
 				
-				String nombreJefe = comboBoss.getText();
+				String nombreJefe = textBoss.getText();
 				//TODO separar nombres y apellidos y ¿coger primer empleado?
 				// volver a poner
 				int numeroDepartamento = Integer.valueOf(tNumber.getText());
-				Empleado jefe = listaCoincidencias.get(comboBoss.getSelectionIndex());
+				//Empleado jefe = listaCoincidencias.get(textBoss.getSelectionIndex());
 				String nombreDepartamento = tName.getText();
 				
-				Departamento departamento = new Departamento(nombreDepartamento,
-						numeroDepartamento, jefe);
+				//Departamento departamento = new Departamento(nombreDepartamento,
+				//		numeroDepartamento, jefe);
 				
-				vista.insertDepartamento(departamento);
+				//vista.insertDepartamento(departamento);
 						
 			}
 			}
@@ -333,8 +340,8 @@ public class I10_Config_departamento {
 	public Text getTNumber(){
 		return tNumber;
 	}
-	public Combo getComboBoss(){
-		return comboBoss;
+	public Text getComboBoss(){
+		return textBoss;
 	}
 /**SET methods*/
 	public void setIconDep(Image newImage){
@@ -370,8 +377,8 @@ public class I10_Config_departamento {
 	public void setTNumber(Text newTNumber){
 		tNumber = newTNumber;
 	}
-	public void setComboBoss(Combo newComboBoss){
-		comboBoss = newComboBoss;
+	public void setComboBoss(Text newComboBoss){
+		textBoss = newComboBoss;
 	}
 	
 }
