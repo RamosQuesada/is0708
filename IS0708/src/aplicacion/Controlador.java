@@ -304,7 +304,7 @@ public class Controlador {
 	 * @return <i>true</i> si el departamento ha sido insertado
 	 */
 	public boolean insertDepartamento(Departamento departamento) {
-		return false;
+		return _db.insertarDepartamento(departamento.getNombreDepartamento(), departamento.getJefeDepartamento().getEmplId());		
 	}
 	
 	/**
