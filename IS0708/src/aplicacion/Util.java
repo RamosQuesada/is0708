@@ -216,6 +216,20 @@ public class Util {
 		return date;
     }
 	
+	
+	/**
+	 * 
+	 * @param t  Time del que sacamos el numero de horas
+	 * @return numero de horas de t
+	 * @author Agustin-Daniel Delgado Muñoz
+	 */
+	public static int dameHoras(Time t){
+		String s = t.toString();
+		//s tiene el formato HH:MM:SS 
+		int horas =Integer.valueOf(s.substring(0,2));
+		return horas;
+}	
+	
 	/**
 	 * 
 	 * @param t  Time del que sacamos el numero de minutos
@@ -229,7 +243,21 @@ public class Util {
 		int minutos =Integer.valueOf(s.substring(3,5));
 		return (60*horas + minutos);
 }
-	
+
+	/**
+	 * 
+	 * @param t  Time del que sacamos el numero de segundos
+	 * @return numero de segundos de t
+	 * @author Agustin-Daniel Delgado Muñoz
+	 */
+	public static int dameSegundos(Time t){
+		String s = t.toString();
+		//s tiene el formato HH:MM:SS 
+		int horas =Integer.valueOf(s.substring(0,2));
+		int minutos =Integer.valueOf(s.substring(3,5));
+		int segundos = Integer.valueOf(s.substring(6,8));
+		return (3600*horas + 60*minutos + segundos);
+}
 	
 	
 }
