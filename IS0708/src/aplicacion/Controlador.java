@@ -504,8 +504,9 @@ public class Controlador {
 	 * @return		una instancia del contrato cargado
 	 */
 	public Contrato getContrato(int id) {
-		// TODO BD
+		_db.abrirConexion();
 		ResultSet result = _db.dameContrato(id);
+		_db.cerrarConexion();
 		int _numeroContrato;
 		int _turnoInicial;
 		String _nombreContrato;
@@ -520,25 +521,31 @@ public class Controlador {
 			_patron = result.getString(3);
 			_duracionCiclo = result.getInt(4);
 			_salario = result.getDouble(5);
-			contrato=new Contrato(_nombreContrato,_numeroContrato , _turnoInicial, _duracionCiclo, _patron, _salario);
+			contrato=new Contrato(_nombreContrato,_numeroContrato , _turnoInicial, _duracionCiclo, _patron, _salario);			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	  return contrato;
 	}
 	
+	
 	/**
 	 * Inserta un contrato en la base de datos.
 	 * @param c		el contrato a insertar
 	 * @return		<i>true</i> si se ha insertado el contrato correctamente
-	 */
-	
-	//roberto
+	 */	
 	public boolean insertContrato(Contrato c) {
-		// TODO BD
-		return false;
+		int idContrato=c.getNumeroContrato();
+		int turnoInicial=c.getTurnoInicial();
+		String nombre=c.getNombreContrato();
+		String patron=c.getPatron();
+		int duracionCiclo=c.getDuracionCiclo();
+		double salario=c.getSalario();
+		_db.abrirConexion();
+		boolean exito=_db.insertarContrato(idContrato, turnoInicial, nombre, patron, duracionCiclo, salario);
+		_db.cerrarConexion();
+		return exito;
 	}
 
 /******************************************************************************************
