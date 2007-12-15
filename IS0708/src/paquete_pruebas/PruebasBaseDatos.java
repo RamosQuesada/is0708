@@ -1,9 +1,12 @@
+package paquete_pruebas;
+
 import java.sql.Time;
 import java.util.ArrayList;
 
 import algoritmo.Calendario;
 import algoritmo.Cuadrante;
 import algoritmo.Trabaja;
+import aplicacion.Contrato;
 import aplicacion.Controlador;
 import aplicacion.Database;
 import aplicacion.Turno;
@@ -20,7 +23,8 @@ public class PruebasBaseDatos {
 	public static void main(String[] args) {
 		Database prueba = new Database();
 		prueba.abrirConexion();
-		
+		Controlador c = new Controlador(prueba);
+		/*
 		ArrayList a = new ArrayList();
 		
 		Time h = new Time(10000000);
@@ -55,7 +59,7 @@ public class PruebasBaseDatos {
 		prueba.insertarVenta(1, new Time(0), 123.43);
 		prueba.insertarFestivo(9, "2007-12-11", "2007-12-11", "2e7p", 15, 10,1);
 
-		// Prueba método ObtenerLista de Turnos*/
+		// Prueba método ObtenerLista de Turnos
 
 		// Prueba método ObtenerLista de Turnos
 
@@ -76,14 +80,27 @@ public class PruebasBaseDatos {
 		}
 		
 		
+		//prueba insertCuadrante
+		Controlador c = new Controlador(prueba);
 		Cuadrante cuad=new Cuadrante(12,2007,1);
 		Trabaja trab=new Trabaja(2,null,null,1);
 		for(int i=0;i<cuad.getNumDias();i++){
 			cuad.setTrabajaDia(i, trab);
 		}
-		c.insertCuadrante(cuad);
+		c.insertCuadrante(cuad); */
+		
+		
+		//prueba insertContrato
+		int idContrato=2;
+		int turnoInicial=2;
+		String nombre= "Tarde";
+		String patron= "2d3f";
+		int duracionCiclo=5;
+		double salario=1200.0;
+		Contrato contrato=new Contrato(nombre,idContrato,turnoInicial,duracionCiclo,patron,salario);	
 		prueba.cerrarConexion();
 
+			
 	}
 
 }
