@@ -18,11 +18,14 @@ public class PruebasBaseDatos {
 	public static void main(String[] args) {
 		Database prueba = new Database();
 		/*prueba.abrirConexion();
-
+		
+		ArrayList a = new ArrayList();
+		
 		Time h = new Time(10000000);
 		Calendario cal = new Calendario(12, 2007, 3);
 		Controlador c1 = new Controlador(prueba);
 		c1.getDistribucionMes(3, cal);
+		a = c1.getMensajesEntrantes(1,0,30);
 		prueba.obtenFestivos(3, "2007-12-12");
 		prueba.insertarTurno(1, "prueba", h, h, h, 10);
 		prueba.insertarTurno(4, "prueba", h, h, h, 14500);
