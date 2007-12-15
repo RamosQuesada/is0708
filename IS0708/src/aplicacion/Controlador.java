@@ -507,21 +507,21 @@ public class Controlador {
 		_db.abrirConexion();
 		ResultSet result = _db.dameContrato(id);
 		_db.cerrarConexion();
-		int _numeroContrato;
-		int _turnoInicial;
-		String _nombreContrato;
-		String _patron;
-		int _duracionCiclo;
-		double _salario;
+		int numeroContrato;
+		int turnoInicial;
+		String nombreContrato;
+		String patron;
+		int duracionCiclo;
+		double salario;
 		Contrato contrato=null;
 		try {
-			_numeroContrato = result.getInt(0);
-			_turnoInicial = result.getInt(1);
-			_nombreContrato = result.getString(2);
-			_patron = result.getString(3);
-			_duracionCiclo = result.getInt(4);
-			_salario = result.getDouble(5);
-			contrato=new Contrato(_nombreContrato,_numeroContrato , _turnoInicial, _duracionCiclo, _patron, _salario);			
+			numeroContrato = result.getInt(0);
+			turnoInicial = result.getInt(1);
+			nombreContrato = result.getString(2);
+			patron = result.getString(3);
+			duracionCiclo = result.getInt(4);
+			salario = result.getDouble(5);
+			contrato=new Contrato(nombreContrato,numeroContrato , turnoInicial, duracionCiclo, patron, salario);			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
