@@ -101,8 +101,7 @@ public class Database extends Thread {
 		ResultSet r = null;
 		try {
 			st = con.createStatement();
-			r = st
-					.executeQuery("SELECT JefeDepartamento FROM DepartamentoUsuario,DEPARTAMENTO WHERE Numero = "
+			r = st.executeQuery("SELECT JefeDepartamento FROM DepartamentoUsuario,DEPARTAMENTO WHERE NumVendedor = "
 							+ nvend
 							+ " and DEPARTAMENTO.Nombre=NombreDepartamento");
 		} catch (SQLException e) {
@@ -147,8 +146,7 @@ public class Database extends Thread {
 		ResultSet r = null;
 		try {
 			st = con.createStatement();
-			r = st
-					.executeQuery("SELECT Nombre FROM DepartamentoUsuario WHERE NumVendedor = "
+			r = st.executeQuery("SELECT NombreDepartamento FROM DepartamentoUsuario WHERE NumVendedor = "
 							+ nvend);
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -156,7 +154,20 @@ public class Database extends Thread {
 		}
 		return r;
 	}
-
+	
+	public ResultSet obtenEmpleadosDepartamento(int idDept){
+		ResultSet r = null;
+		String subconsulta="SELECT NumVendedor FROM DepartamentoUsuario,NumerosDEPARTAMENTOs WHERE Numero ="+idDept+
+							" and NombreDepartamento=Nombre";
+		try {
+			st = con.createStatement();
+			r = st.executeQuery("SELECT * FROM USUARIO WHERE NumVendedor IN ("+subconsulta+") ORDER BY IdContrato");
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.out.println("Error al realizar la consulta del empleado ");
+		}
+		return r;
+	}
 	/**
 	 * Método que inserta en la tabla usuario los valores correspondientes a un
 	 * nuevo usuario

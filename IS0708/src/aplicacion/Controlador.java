@@ -31,6 +31,7 @@ import algoritmo.*;
  * 									un día concreto.
  * 									NOTA: El idDepartamento debería ser un string - Dani
  * 		getDistribucionMes
+ * 		getEmpleadosDepartamento	listar todos los empleados de un departamento
  * 
  * - Métodos relacionados con mensajes:
  * 	P	getMensajesEntrantes(...)	Carga un número determinado de mensajes entrantes
@@ -44,6 +45,9 @@ import algoritmo.*;
  *
  * - Métodos relacionados con turnos
  * 		getTurnosEmpleados()		Carga una lista de turnos
+ * 
+ * - Métodos relacionados con cuadrantes
+ * 		insertCuadrante(Cuadrante)	Guarda un cuadrante en la base de datos 
  * 
  * @author Todos
  */
@@ -152,7 +156,7 @@ public class Controlador {
 		ResultSet rs=_db.obtenIdsDepartamentos(idEmpl);
 		try {
 			while (rs.next()) {
-				String idDept = rs.getString(0);
+				String idDept = rs.getString(1);
 				depts.add(idDept);
 			}
 		} catch (Exception e) {
@@ -187,7 +191,7 @@ public class Controlador {
 		ResultSet rs=_db.obtenIdsSubordinados(idEmpl);
 		try {
 			while (rs.next()) {
-				int idSub = rs.getInt(0);
+				int idSub = rs.getInt(1);
 				subs.add(idSub);
 			}
 		} catch (Exception e) {
@@ -206,7 +210,10 @@ public class Controlador {
 		int idSup=0;
 		ResultSet rs=_db.obtenSuperior(idEmpl);
 		try {
-			idSup = rs.getInt("JefeEmpleado");
+			if(rs.next()){
+				rs.first();			
+				idSup = rs.getInt("JefeDepartamento");
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println("Error al obtener el superior de la base de datos");
@@ -355,6 +362,25 @@ public class Controlador {
 				
 		}
 		
+	}
+	
+	/**
+	 * Método para listar todos los empleados de un departamento
+	 * @param idDept	identificador del departamento
+	 * @return			lista de los empleados de un departamento
+	 */
+	public ArrayList<Empleado> getEmpleadosDepartamento(int idDept){
+		ArrayList<Empleado> emps=new ArrayList<Empleado>();
+		ResultSet rs=_db.obtenEmpleadosDepartamento(idDept);
+		try {
+			while (rs.next()) {
+				int id=rs.getInt("NumVendedor");
+				emps.add(this.getEmpleado(id));
+			}
+		} catch (Exception e) {
+			System.out.println("Error al obtener Lista de Departamentos en la base de datos");
+		}		
+		return emps;
 	}
 
 /******************************************************************************************
