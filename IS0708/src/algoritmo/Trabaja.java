@@ -15,11 +15,11 @@ public class Trabaja {
 	private int IdEmpl;//id del empleado
 	private Time FichIni;//Fichaje inicial,hay que mirar bien los tipos que van a llevar las fechas
 	private Time FichFin;//Fichaje final
-	private String idTurno;//Identificador del turno
+	private int idTurno;//Identificador del turno
 	
 	public Trabaja(){//constructora por defecto
 	}
-	public Trabaja(int Id,Time Ini,Time Fin,String Turno){//Otra constructora
+	public Trabaja(int Id,Time Ini,Time Fin,int Turno){//Otra constructora
 		this.IdEmpl=Id;
 		this.FichIni=Ini;
 		this.FichFin=Fin;
@@ -70,13 +70,13 @@ public class Trabaja {
 	 * Recupera el identificador del Turno
 	 * @return IdTurno
 	 */
-	public String getIdTurno() {
+	public int getIdTurno() {
 		return idTurno;
 	}
 	/**Cambia el identificador del Turno
 	 * @param idTurno
 	 */
-	public void setIdTurno(String idTurno) {
+	public void setIdTurno(int idTurno) {
 		this.idTurno = idTurno;
 	}
 	
