@@ -89,16 +89,20 @@ public class PruebasBaseDatos {
 		}
 		c.insertCuadrante(cuad); */
 		
-		
+		/*
 		//prueba insertContrato
 		int idContrato=2;
-		int turnoInicial=2;
+		int turnoInicial=1;
 		String nombre= "Tarde";
 		String patron= "2d3f";
 		int duracionCiclo=5;
 		double salario=1200.0;
-		Contrato contrato=new Contrato(nombre,idContrato,turnoInicial,duracionCiclo,patron,salario);	
+		Contrato contrato=new Contrato(nombre,idContrato,turnoInicial,duracionCiclo,patron,salario);
+		c.insertContrato(contrato);
 		prueba.cerrarConexion();
+		
+		//leer contrato
+		Contrato contrato=c.getContrato(1);*/
 
 			
 	}
