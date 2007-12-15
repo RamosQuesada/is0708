@@ -759,6 +759,23 @@ public class Database extends Thread {
 		return r;
 	}
 
+	public ResultSet dameMensajes(int inicio, int desp) {
+		ResultSet r = null;
+
+		try {
+			st = con.createStatement();
+			r = st.executeQuery("SELECT * FROM MENSAJE ORDER BY Fecha LIMIT "+inicio+","+(inicio+desp));
+
+		}
+
+		catch (SQLException e) {
+			// TODO: handle exception
+			System.out
+					.println("Error al realizar la consulta Lista de Turnos ");
+		}
+		return r;
+	}
+	
 	public static void main(String[] IS0708) {
 		//paquete_pruebas->clase PruebasBaseDatos
 	}
