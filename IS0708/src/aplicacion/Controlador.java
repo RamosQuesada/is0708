@@ -243,7 +243,27 @@ public class Controlador {
 			Integer idContrato, String nombre, String apellido1,
 			String apellido2, Integer rango) {
 		ArrayList<Empleado> listaCoincidencias=new ArrayList<Empleado>();
-		//TODO BD RELLENAR LISTACOINCIDENCIAS
+		//TODO BD RELLENAR LISTACOINCIDENCIAS	Empleado e1 = new Empleado(1, "M. Jackson", new Color (shell.getDisplay(), 104, 228,  85));
+		
+		
+		
+		
+		//TODO ELIMINAR HASTA FIN-ELIMINAR, HECHA PARA PRUEBAS
+		Color color;
+		color		= new Color(null, 1,1,1);
+		Empleado e2 = new Empleado(2, "J. Mayer",   color);
+		Empleado e3 = new Empleado(3, "B. Jovi",    color);
+		Empleado e4 = new Empleado(4, "H. Day",     color);
+		Empleado e5 = new Empleado(5, "N. Furtado", color);
+		Empleado e6 = new Empleado(6, "L. Kravitz", color);
+		listaCoincidencias.add(e2);
+		listaCoincidencias.add(e3);
+		listaCoincidencias.add(e4);
+		listaCoincidencias.add(e5);
+		listaCoincidencias.add(e6);
+		//TODO FIN-ELIMINAR 
+		
+		
 		return listaCoincidencias;
 	}
 
@@ -425,6 +445,26 @@ public class Controlador {
 	public boolean insertMensaje (Mensaje mensaje) {
 		return false;
 	}
+	
+	/**
+	 * Inserta un mensaje en la base de datos.
+	 * @param mensaje
+	 * @return <i>true</i> si el mensaje se ha insertado correctamente
+	 */
+	public boolean eliminaMensaje (Mensaje mensaje) {
+		return false;
+	}
+	
+	/**
+	 * Inserta un mensaje en la base de datos.
+	 * @param mensaje
+	 * @return <i>true</i> si el mensaje se ha insertado correctamente
+	 */
+	public boolean marcarMensaje (Mensaje mensaje) {
+		return false;
+	}
+	
+	
 	
 /******************************************************************************************
  * Métodos relacionados con contratos
