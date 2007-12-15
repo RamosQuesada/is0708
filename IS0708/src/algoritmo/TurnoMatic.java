@@ -136,7 +136,7 @@ public class TurnoMatic {
 				
 				//comprobamos si tiene turno fijo
 				
-				if(turno.getIdTurno() == "1" && empleados.size()<max){
+				if(turno.getIdTurno() == 1 && empleados.size()<max){
 					
 					empleados.add(emp);
 					Time pr1 = new Time(19,49,00);
