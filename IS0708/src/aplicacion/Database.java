@@ -842,7 +842,7 @@ public class Database extends Thread {
 		return r;
 	}
 
-	public ResultSet dameMensajes(int id, int inicio, int desp) {
+	public ResultSet obtenMensajes(int id, int inicio, int desp) {
 		ResultSet r = null;
 
 		try {
@@ -859,7 +859,7 @@ public class Database extends Thread {
 		return r;
 	}
 	
-	public ResultSet dameDepartamento(String nombre) {
+	public ResultSet obtenDepartamento(String nombre) {
 		ResultSet r = null;
 
 		try {
