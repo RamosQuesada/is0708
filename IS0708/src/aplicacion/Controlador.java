@@ -348,7 +348,7 @@ public class Controlador {
 				cal.actualizaHora(i, (Integer)t[0], (Integer)t[2], (Integer)t[1], Util.numExpertos((String)t[3]), Util.numPrincipiantes((String)t[3]));
 			}
 		}
-		System.out.println("Hecho");
+		
 	}
 
 /******************************************************************************************
