@@ -344,44 +344,7 @@ public class Database extends Thread {
 
 	}
 
-	/**
-	 * M�todo que inserta en la tabla Trabaja los valores correspondientes a lo
-	 * trabajado cada dia por un usuario
-	 * 
-	 * @param idUsuario
-	 *            Numero que identifica al usuario
-	 * 
-	 * @param idTurno
-	 *            Numero que identifica al turno en el que trabaja el usuario
-	 * @param Fecha
-	 *            String que representa un dia del año concreto. El formato es
-	 *            Dd/mm/aaaa
-	 * 
-	 * @param HoraEntrada
-	 *            Hora a la que entro el usuario a trabajar ese dia en formato
-	 *            time
-	 * @param HoraSalida
-	 *            Hora a la que salio el usuario de trabajar ese dia en formato
-	 *            time
-	 * @return Informa sobre si se ha podido realizar la inserci�n o no
-	 */
-
-	public boolean insertarTrabaja(int idUsuario, int idTurno, String Fecha,
-			Time HoraEntrada, Time HoraSalida) {
-		boolean correcto = false;
-		try {
-			st = con.createStatement();
-			st.executeUpdate("INSERT INTO TRABAJA values ('" + idTurno + "', '"
-					+ Fecha + "', '" + HoraEntrada + "', '" + HoraSalida
-					+ "', '" + idUsuario + "')");
-			System.out.println("trabaja insertada");
-			correcto = true;
-		} catch (SQLException e) {
-			correcto = false;
-		}
-		return correcto;
-
-	}
+	
 
 	/**
 	 * M�todo que inserta en la tabla Distribucion los valores correspondientes
@@ -607,12 +570,12 @@ public class Database extends Thread {
 	 *            hora a la que sale
 	 * @return true si se ha realizado correctamente o false en caso contrario
 	 */
-	public boolean insertarTrabaja(int numVendedor, int idTurno, Time fecha,
+	public boolean insertarTrabaja(int numVendedor, int idTurno, String fecha,
 			Time horaEntrada, Time horaSalida) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO trabaja values (" + numVendedor
+			st.executeUpdate("INSERT INTO Trabaja values (" + numVendedor
 					+ ", " + idTurno + ", '" + fecha + "', '" + horaEntrada
 					+ "', '" + horaSalida + "');");
 			System.out.println("insertado en la tabla trabaja");

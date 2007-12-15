@@ -4,6 +4,8 @@ import java.sql.Time;
 import java.util.ArrayList;
 
 import algoritmo.Calendario;
+import algoritmo.Cuadrante;
+import algoritmo.Trabaja;
 import aplicacion.Controlador;
 import aplicacion.Database;
 import aplicacion.Turno;
@@ -15,7 +17,7 @@ public class PruebasBaseDatos {
 	 */
 	public static void main(String[] args) {
 		Database prueba = new Database();
-		prueba.abrirConexion();
+		/*prueba.abrirConexion();
 
 		Time h = new Time(10000000);
 		Calendario cal = new Calendario(12, 2007, 3);
@@ -47,9 +49,11 @@ public class PruebasBaseDatos {
 		prueba
 				.insertarFestivo(9, "2007-12-11", "2007-12-11", "2e7p", 15, 10,
 						1);
+		
+		*/
 		// Prueba método ObtenerLista de Turnos
 		Controlador c = new Controlador(prueba);
-		ArrayList<Turno> t = new ArrayList<Turno>();
+		/*ArrayList<Turno> t = new ArrayList<Turno>();
 		t = c.getTurnosEmpleados();
 		for (int i = 0; i < t.size(); i++) {
 			System.out.print(t.get(i).getIdTurno() + "  ");
@@ -59,7 +63,15 @@ public class PruebasBaseDatos {
 			System.out.print(t.get(i).getHoraDescanso() + "  ");
 			System.out.print(t.get(i).getTDescanso() + "  ");
 			System.out.println();
+		}*/
+		
+		
+		Cuadrante cuad=new Cuadrante(12,2007,1);
+		Trabaja trab=new Trabaja(2,null,null,1);
+		for(int i=0;i<cuad.getNumDias();i++){
+			cuad.setTrabajaDia(i, trab);
 		}
+		c.insertCuadrante(cuad);
 		prueba.cerrarConexion();
 
 	}
