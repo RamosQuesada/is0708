@@ -505,7 +505,7 @@ public class Controlador {
 	 */
 	public Contrato getContrato(int id) {
 		_db.abrirConexion();
-		ResultSet result = _db.dameContrato(id);		
+		ResultSet result = _db.obtenContrato(id);		
 		int numeroContrato;
 		int turnoInicial;
 		String nombreContrato;
