@@ -752,13 +752,12 @@ public class Database extends Thread {
 							+ idDepartamento
 							+ " AND FechaInicio<='"
 							+ Fecha
-							+ "' AND FechaFin>='" + Fecha + "'");
+							+ "' AND FechaFin>='" + Fecha + "' ORDER BY Hora");
 
 		} catch (SQLException e) {
 			// TODO: handle exception
 			e.printStackTrace();
-			System.out
-					.println("Error al realizar la consulta de los festivos ");
+			System.out.println("Error al realizar la consulta de los festivos ");
 		}
 		return rs;
 	}
