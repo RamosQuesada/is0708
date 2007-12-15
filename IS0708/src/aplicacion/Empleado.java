@@ -237,7 +237,7 @@ public class Empleado implements Drawable {
 		this.idSubordinados = idSubordinados;
 		this.idDepartamentos = idDepartamentos;
 		superior = null;
-		felicidad = 0;
+		//felicidad = 0;//se recupera de la bd muxas veces luego es la felicidad que tenga
 		subordinados	= new ArrayList<Empleado>();
 		departamentos	= new ArrayList<Departamento>();
 		this.felicidad=felicidad;
