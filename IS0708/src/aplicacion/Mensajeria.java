@@ -1,6 +1,7 @@
 package aplicacion;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Clase que implementa la mensajeria de un empleado, esto es el conjunto
@@ -96,6 +97,13 @@ public class Mensajeria {
 		Mensaje mensajeAEliminar = this.mensajesActuales.get(numRelativo);
 		this.controlador.eliminaMensaje(mensajeAEliminar);
 		dameMensajesSalientes(inicio,tamaño);
+	}
+	
+	/**
+	 * Funcion que introduce crea un mensaje 
+	 */
+	public void creaMensaje(int idmensaje, int remitente, Date fecha, String asunto, String texto){
+		this.controlador.insertMensaje(new Mensaje(idmensaje, remitente,  fecha,  asunto, texto));
 	}
 	
 	
