@@ -311,7 +311,7 @@ public class Controlador {
 			r.last();
 			if (r.getRow() > 0) {
 				r.first();
-				Empleado e = getEmpleado(r.getInt("Jefe")); 
+				Empleado e = getEmpleado(r.getInt("JefeDepartamento")); 
 				Departamento d = new Departamento(id, 0, e);
 				return d;
 			}

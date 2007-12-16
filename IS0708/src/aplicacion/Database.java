@@ -971,7 +971,7 @@ public class Database extends Thread {
 		catch (SQLException e) {
 			// TODO: handle exception
 			System.out
-					.println("Error al realizar la consulta Lista de Turnos ");
+					.println("Error al realizar la consulta en departamento ");
 		}
 		return r;
 	}
