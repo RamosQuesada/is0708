@@ -123,7 +123,7 @@ public class I10_Config_departamento {
 		SelectionAdapter bossSelectionListener = new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent e) {
 				// TODO
-				// new I13_Elegir_empleado(shell, bundle, vista);
+				 new I08_1_Anadir_empleado(shell, bundle, vista);
 			}
 		};
 		bSelect.addSelectionListener(bossSelectionListener);
