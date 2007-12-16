@@ -42,19 +42,21 @@ import aplicacion.Posicion;
 public class I13_Elegir_empleado {
 	private Shell shell;
 	private ResourceBundle bundle;
+	private Vista vista;
 	private Image icoPq;
 	private String numero;
 	private String apeido;
 	private String departamiento;
 	int itemNumbers [];
-	private ArrayList<Empleado> empleadoIN;
-	private ArrayList<Empleado> empleadoOUT;
+	//private ArrayList<Empleado> empleadoIN;
+	//private ArrayList<Empleado> empleadoOUT;
 	
-	public I13_Elegir_empleado(Shell padre, ResourceBundle bundle, ArrayList<Empleado> empleados ) {
+	public I13_Elegir_empleado(Shell padre, ResourceBundle bundle, Vista vista) {
 		this.bundle   = bundle;
-		this.empleadoIN = empleados;
+		//this.empleadoIN = empleados;
 		this.shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 		this.shell.setLocation(padre.getBounds().width/2 + padre.getBounds().x - shell.getSize().x/2, padre.getBounds().height/2 + padre.getBounds().y - shell.getSize().y/2);
+		mostrarVentana();
 }
 
 	public void mostrarVentana() {
@@ -114,11 +116,11 @@ public class I13_Elegir_empleado {
 		});
 		lLApellido.setText("Surname");
 		lBApellido.setText("->");
-		String EmplList [] = new String[empleadoIN.size()];
-		for(int i = 0; i<empleadoIN.size(); i++){
-			EmplList [i] = empleadoIN.get(i).getApellido1()+" "+empleadoIN.get(i).getApellido2()+" "+empleadoIN.get(i).getNombre();			
-		}
-		lCApellido.setItems(EmplList);		
+		//String EmplList [] = new String[empleadoIN.size()];
+		//for(int i = 0; i<empleadoIN.size(); i++){
+		//	EmplList [i] = empleadoIN.get(i).getApellido1()+" "+empleadoIN.get(i).getApellido2()+" "+empleadoIN.get(i).getNombre();			
+		//}
+		//lCApellido.setItems(EmplList);		
 	//DEPT
 		final Label lLDept = new Label(grupoIzq, SWT.NONE);
 		final Combo lCDept = new Combo(grupoIzq, SWT.NONE);

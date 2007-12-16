@@ -24,7 +24,7 @@ public class Vista extends Thread {
 	private I02_Principal i02;
 	
 	public void run() {
-		setName("Conexión base de datos");
+		setName("Conexion base de datos");
 		// Conectar con la base de datos
 		db.abrirConexion();
 		if (!login.isDisposed())
