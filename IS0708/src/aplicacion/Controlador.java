@@ -475,7 +475,11 @@ public class Controlador {
 	 * @return <i>true</i> si el mensaje se ha eliminado correctamente
 	 */
 	public boolean eliminaMensaje (Mensaje mensaje) {
-		return _db.borraMensaje(mensaje.getIdmensaje());
+		_db.abrirConexion();
+
+		boolean b= _db.borraMensaje(mensaje.getIdmensaje());
+		_db.cerrarConexion();
+		return b;
 	}
 	
 	/**
@@ -546,7 +550,29 @@ public class Controlador {
 /******************************************************************************************
  * Métodos relacionados con turnos 
  */
-
+	/**
+	 * Inserta un contrato en la base de datos.
+	 * @param t	el turno a insertar
+	 * @return		<i>true</i> si se ha insertado el contrato correctamente
+	 */
+	public boolean insertTurno(Turno t) {
+		_db.abrirConexion();
+		boolean exito=_db.insertarTurno(t.getIdTurno(), t.getDescripcion(), t.getHoraEntrada(), t.getHoraSalida(), t.getHoraDescanso(), t.getTDescanso());
+		_db.cerrarConexion();
+		return exito;
+	}
+	/**
+	 * Elimina un turno en la base de datos.
+	 * @param t	el turno a eliminar
+	 * @return		<i>true</i> si se ha eliminado el contrato correctamente
+	 */
+	public boolean eliminaTurno(Turno t) {
+		_db.abrirConexion();
+		boolean exito=_db.borraTurno(t.getIdTurno());
+		_db.cerrarConexion();
+		return exito;
+	}
+	
 	/**
 	 * 
 	 * 
