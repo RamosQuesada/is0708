@@ -44,7 +44,7 @@ import algoritmo.*;
  *	P	insertContrato(Contrato)	Inserta un contrato
  *
  * - Métodos relacionados con turnos
- * 		getTurnosEmpleados()		Carga una lista de turnos
+ * 		getListaTurnosEmpleados()		Carga una lista de turnos
  * 
  * - Métodos relacionados con cuadrantes
  * 		insertCuadrante(Cuadrante)	Guarda un cuadrante en la base de datos 
@@ -466,16 +466,16 @@ public class Controlador {
 	 * @return <i>true</i> si el mensaje se ha insertado correctamente
 	 */
 	public boolean insertMensaje (Mensaje mensaje) {
-		return false;
-	}
+			return _db.insertarMensaje(mensaje.getRemitente(), (Time)mensaje.getFecha(), mensaje.getAsunto(), mensaje.getTexto());
+	    }
 	
 	/**
-	 * Inserta un mensaje en la base de datos.
+	 * Elimina un mensaje en la base de datos.
 	 * @param mensaje
-	 * @return <i>true</i> si el mensaje se ha insertado correctamente
+	 * @return <i>true</i> si el mensaje se ha eliminado correctamente
 	 */
 	public boolean eliminaMensaje (Mensaje mensaje) {
-		return false;
+		return _db.borraMensaje(mensaje.getIdmensaje());
 	}
 	
 	/**
@@ -553,18 +553,16 @@ public class Controlador {
 	 * 
 	 * @return Devuelve lista de los turnos de los empleados en un ArrayList
 	 */
-	public ArrayList<Turno> getTurnosEmpleados() {
+	public ArrayList<Turno> getListaTurnosEmpleados() {
         ArrayList<Turno> turnos= new ArrayList<Turno>();
 		try {
-			ResultSet rs = _db.dameListaTurnosEmpleados();
+			ResultSet rs = _db.obtenListaTurnosEmpleados();
 			while(rs.next()){
 			int idTurn = rs.getInt("IdTurno");
 			String descr = rs.getString("Descripcion");
 			Time HoraE = rs.getTime("HoraEntrada");
 			Time HoraS = rs.getTime("HoraSalida");
 			Time HoraI = rs.getTime("HoraInicioDescanso");
-			//duracion del descanso como Time en la BBDD???
-			//las funciones que calculan la hora, minutos y segundos estan depreciadas aqui en JAVA
 			Time duracion = rs.getTime("DuracionDescanso");
 			int descanso = aplicacion.Util.dameMinutos(duracion);
 			Turno t = new Turno(idTurn,descr,HoraE,HoraS,HoraI,descanso);
