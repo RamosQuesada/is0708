@@ -174,6 +174,24 @@ public class Database extends Thread {
 		return r;
 	}
 	
+	/**
+	 * Carga uno o varios empleados desde la base de datos, que coincidan con
+	 * los datos dados. Los parámetros pueden ser nulos.
+	 * 
+	 * @param idEmpl
+	 *            el identificador del empleado
+	 * @param idDpto
+	 *            el identificador del departamento al que pertenece
+	 * @param idContrato
+	 *            el identificador del contrato que tiene
+	 * @param nombre
+	 *            el nombre del empleado
+	 * @param apellido1
+	 *            el primer apellido del empleado
+	 * @param apellido2
+	 *            el segundo apellido del empleado
+	 * @return los empleados que coincidan con los datos dados
+	 */
 	public ResultSet obtenEmpleadoAlaCarta(Integer idEmpl, String idDpto,
 			Integer idContrato, String nombre, String apellido1,
 			String apellido2, Integer rango) {
