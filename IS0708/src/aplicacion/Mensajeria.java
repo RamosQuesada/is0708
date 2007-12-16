@@ -53,11 +53,10 @@ public class Mensajeria {
 	 * Función que devuelve un ArrayList mensajes entrantes indicados
 	 * @return
 	*/
-	public void dameMensajesEntrantes(int inicio,int num_mensajes){
+	public ArrayList<Mensaje> dameMensajesEntrantes(int inicio,int num_mensajes){
 		//ArrayList<Mensaje> lista=controlador.getMensajes(id);
-		this.mensajesActuales=controlador.getMensajesEntrantes(id, inicio, num_mensajes);
-	}
-	
+		return(this.mensajesActuales=controlador.getMensajesEntrantes(id, inicio, num_mensajes));
+		
 	/**
 	 * Función que devuelve un ArrayList mensajes salientes indicados
 	 * @return

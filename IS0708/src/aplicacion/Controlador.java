@@ -438,8 +438,6 @@ public class Controlador {
 					Mensaje m = new Mensaje(r.getInt("idMensaje"), idEmpl, r.getDate("Fecha"), r.getString("Asunto"), r.getString("Texto"));					
 					temp.add(m);
 				}
-			} else {
-				return null;
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
