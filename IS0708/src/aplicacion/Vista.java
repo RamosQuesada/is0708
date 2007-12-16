@@ -219,6 +219,10 @@ public class Vista extends Thread {
 			setProgreso("No se pudo insertar el empleado", 100);
 		return b;
 	}
+	
+	public ArrayList<Empleado> getEmpleadosDepartamento(String idDept) {
+		return controlador.getEmpleadosDepartamento(0);
+	}
 
 /*****************************************************************************************
  * Métodos relacionados con departamentos

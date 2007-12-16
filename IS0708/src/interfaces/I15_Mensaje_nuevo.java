@@ -46,7 +46,7 @@ public class I15_Mensaje_nuevo {
 	private final static int CAMBIO_HORARIO=3;
 
 	/** Entero que indica la opcion seleccionada en un momento */
-	private int opcion_actual= NO_INICIALIZADO;
+	private int opcion_actual= MENSAJERIA_INTERNA;
 	
 	/** Constructor
 	 * @param padre ventana que llama a la actual
@@ -83,6 +83,7 @@ public class I15_Mensaje_nuevo {
 		//Boton para la peticion del cambio de horario
 		final Button bPCHorario		= new Button(shell, SWT.RADIO);
 		
+		bMInterna.setSelection(true);
 		
 		final Composite cAceptarCancelar = new Composite (shell, SWT.BORDER);
 		cAceptarCancelar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -172,7 +173,7 @@ public class I15_Mensaje_nuevo {
 					e.doit = messageBox.open () == SWT.CLOSE;
 				}
 				if(opcion_actual==MENSAJERIA_INTERNA){
-					I14_Mensajeria_Interna ventana = new I14_Mensajeria_Interna(_padre,_bundle, _vista);
+					I14_Escribir_mensaje ventana = new I14_Escribir_mensaje(_padre,_bundle, _vista);
 					shell.dispose();
 
 				}
