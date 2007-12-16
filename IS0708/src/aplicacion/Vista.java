@@ -132,14 +132,11 @@ public class Vista extends Thread {
 			}
 		}
 	
-		// TODO Poner esto después del login
-		// 0 español
-		// 1 inglés
-		// 2 polaco
-		l.cambiarLocale(controlador.getEmpleadoActual().getIdioma());
-		bundle = l.getBundle();
-		locale = l.getCurrentLocale();
-		
+		if (identificado) {
+			l.cambiarLocale(controlador.getEmpleadoActual().getIdioma());
+			bundle = l.getBundle();
+			locale = l.getCurrentLocale();
+		}
 		// Si todavía no he cerrado el display, ya he hecho login correctamente
 		if (!shell.isDisposed()) {
 			i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);	

@@ -3,6 +3,8 @@ package interfaces;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
@@ -39,20 +41,26 @@ public class I17_Seleccion_fecha {
 		return fecha;
 	}
 	public void mostrarVentana() {
-		shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
-
-		final Image ico_mens_l = new Image(padre.getDisplay(), I17_Seleccion_fecha.class.getResourceAsStream("ico_mens1_v.gif"));
+		shell = new Shell (padre, SWT.BORDER | SWT.APPLICATION_MODAL);
 		
 		//Establecemos el layout del shell
 		GridLayout lShell = new GridLayout();
 		lShell.numColumns = 1;		
 		shell.setLayout(lShell);
 		
-
 		//Introducimos los textos a los botones
 		calendario = new DateTime (shell, SWT.CALENDAR);
 		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 2, 1));
 		
+		calendario.addMouseListener(new MouseListener () {
+			public void mouseDoubleClick(MouseEvent e) {
+				// TODO ¿Y esto por qué no va?
+				fecha = new Date(calendario.getYear(),calendario.getMonth(),calendario.getDay());
+				shell.dispose();
+			}
+			public void mouseUp(MouseEvent e) {};
+			public void mouseDown(MouseEvent e) {};
+		});
 		final Composite cAcepCanc = new Composite (shell, SWT.BORDER);
 		cAcepCanc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
 		GridLayout lAcepCanc = new GridLayout();
@@ -61,7 +69,7 @@ public class I17_Seleccion_fecha {
 		
 		final Button bEnviar	= new Button(cAcepCanc, SWT.PUSH);
 		bEnviar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		bEnviar.setText("Enviar");
+		bEnviar.setText("Seleccionar");
 		//Introducimos los valores y eventos de Fecha Inicio
 		bEnviar.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
@@ -84,8 +92,8 @@ public class I17_Seleccion_fecha {
 
 		// Ajustar el tamaño de la ventana al contenido
 		shell.pack();
-		// Mostrar ventana centrada sobre el padre
-		shell.setLocation(padre.getBounds().width/2 + padre.getBounds().x - shell.getSize().x/2, padre.getBounds().height/2 + padre.getBounds().y - shell.getSize().y/2);
+		// Mostrar ventana centrada sobre el cursor
+		shell.setLocation(shell.getDisplay().getCursorLocation().x + - shell.getSize().x/2, shell.getDisplay().getCursorLocation().y  - shell.getSize().y/2);
 		shell.open();
 	}
 

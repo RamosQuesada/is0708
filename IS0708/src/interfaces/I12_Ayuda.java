@@ -61,7 +61,7 @@ public class I12_Ayuda {
 
 		display = d;
 		shell = new Shell(display);
-		icoPq = new Image(display, Vista.class.getResourceAsStream("icoPq.gif"));
+		icoPq = new Image(display, I12_Ayuda.class.getResourceAsStream("icoPq.gif"));
 
 		htmlDefault = "<html> \n <head> \n " + "</head>"
 			+ "<body>" + bundle.getString("I12_err_fileNotFound")

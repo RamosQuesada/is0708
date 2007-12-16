@@ -26,15 +26,8 @@ public class I14_Escribir_mensaje {
 	private Shell _padre = null;
 	private ResourceBundle _bundle;
 	private Vista _vista;
-	
-	private final static int NO_INICIALIZADO=0;
-	private final static int MENSAJERIA_INSTANTANEA=1;
-	private final static int PETICION_BAJA=2;
-	private final static int CAMBIO_HORARIO=3;
 	private Shell shell;
 	private I13_Elegir_empleado tNombre;
-	
-	private int opcion_actual= NO_INICIALIZADO;
 	
 	public I14_Escribir_mensaje(Shell padre, ResourceBundle bundle, Vista vista) {
 		_padre = padre;
@@ -45,7 +38,6 @@ public class I14_Escribir_mensaje {
 	
 	public void mostrarVentana() {
 		shell = new Shell (_padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
-
 		final Image ico_mens_l = new Image(_padre.getDisplay(), I14_Escribir_mensaje.class.getResourceAsStream("ico_mens1_v.gif"));
 		
 		//Establecemos el layout del shell
@@ -62,7 +54,7 @@ public class I14_Escribir_mensaje {
 		cGrupo.setLayout(lGrupo);
 		Label lNombre = new Label(cGrupo, SWT.LEFT);
 		lNombre.setLayoutData(new GridData(SWT.LEFT,  SWT.CENTER, false, true, 1, 1));
-		lNombre.setText(_bundle.getString("Nombre"));
+		lNombre.setText(_bundle.getString("Para"));
 
 		tNombre = new I13_Elegir_empleado(cGrupo,_vista);
 		
@@ -98,7 +90,6 @@ public class I14_Escribir_mensaje {
 		bAceptar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1));
 		bAceptar.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				System.out.println(opcion_actual);
 				if((tAsunto.getCharCount()==0)&&(tMensaje.getCharCount()==0)){
 					MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO | SWT.ICON_INFORMATION);
 					messageBox.setText (_bundle.getString("Mensaje"));

@@ -2,6 +2,7 @@ package interfaces;
 
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.sql.Date;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
@@ -32,8 +33,8 @@ public class I18_Cambio_horario {
 	private I17_Seleccion_fecha ventana;
 	private Text cFechaInicio;
 	private Text cFechaFin;
-	private Integer iFechaInicio=0;
-	private Integer iFechaFin=0;
+	private Date iFechaInicio;
+	private Date iFechaFin;
 	
 	private int _opcion_actual= I18_Cambio_horario.NOINICIALIZADO;
 	
@@ -88,20 +89,15 @@ public class I18_Cambio_horario {
 		//Introducimos los valores y eventos de Fecha Inicio
 		bFechaInicio.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				ventana = new I17_Seleccion_fecha(shell,cFechaInicio);
-				//
+				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shell);
+				while (!i17.isDisposed()) {
+					if (!shell.getDisplay().readAndDispatch()) {
+						shell.getDisplay().sleep();
+					}
+				}
+				iFechaInicio = i17.getFecha();			
 			}				
 		});
-		
-		cFechaInicio.addModifyListener(new ModifyListener(){
-
-			public void modifyText(ModifyEvent e) {
-				// TODO Auto-generated method stub
-				iFechaInicio=ventana.dameCatDia();
-			}
-			
-		});
-		
 		
 		final Label lFechaFin	= new Label(cFecha, SWT.LEFT);
 		lFechaFin.setText(_bundle.getString("fechafin"));
@@ -112,19 +108,15 @@ public class I18_Cambio_horario {
 		//Introducimos los valores y eventos de Fecha Inicio
 		bFechaFin.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				ventana = new I17_Seleccion_fecha(shell,cFechaFin);
-				//iFechaFin=ventana.dameCatDia();
+				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shell);
+				while (!i17.isDisposed()) {
+					if (!shell.getDisplay().readAndDispatch()) {
+						shell.getDisplay().sleep();
+					}
+				}
+				iFechaFin = i17.getFecha();
 			}				
 		});		
-		
-		cFechaFin.addModifyListener(new ModifyListener(){
-
-			public void modifyText(ModifyEvent e) {
-				// TODO Auto-generated method stub
-				iFechaFin=ventana.dameCatDia();
-			}
-			
-		});
 		
 		bIndefinida.setSelection(true);
 		bIndefinida.addFocusListener(new FocusListener(){
@@ -293,7 +285,7 @@ public class I18_Cambio_horario {
 		bAceptar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		bAceptar.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				if(iFechaFin<iFechaInicio){
+				if(iFechaFin.before(iFechaInicio)){
 					MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
 					messageBox.setText (_bundle.getString("Mensaje"));
 					messageBox.setMessage (_bundle.getString("I18_err_per"));

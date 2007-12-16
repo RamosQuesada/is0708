@@ -243,6 +243,8 @@ public class I02_Principal {
      * @author Daniel Dionne
      */
 	private void crearTabMensajes(TabFolder tabFolder) {
+		final int prevTextoMens = 50; // Los caracteres a previsualizar de un mensaje
+		final int prevAsuntoMens = 20; // Los caracteres a previsualizar de un asunto de mensaje
 		TabItem tabItemMensajes = new TabItem(tabFolder, SWT.NONE);
 		tabItemMensajes.setText(bundle.getString("Mensajes"));
 		tabItemMensajes.setImage(ico_mens_l);
@@ -277,8 +279,8 @@ public class I02_Principal {
 			remitente = vista.getEmpleado(mensajesEntrantes.get(i).getRemitente());
 			nombre_remitente=(remitente.getNombreCompleto());
 			tItem.setText(1, nombre_remitente);
-			tItem.setText(2, mensajesEntrantes.get(i).getAsunto());
-			tItem.setText(3, mensajesEntrantes.get(i).getTexto());
+			tItem.setText(2, Util.recortarTexto(mensajesEntrantes.get(i).getAsunto(),prevAsuntoMens));
+			tItem.setText(3, Util.recortarTexto(mensajesEntrantes.get(i).getTexto(),prevTextoMens));
 			tItem.setText(4, Util.dateAString(mensajesEntrantes.get(i).getFecha()));
 			i++;
 		}

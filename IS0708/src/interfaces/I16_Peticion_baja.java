@@ -1,7 +1,7 @@
 package interfaces;
 
 import java.util.ResourceBundle;
-
+import java.sql.Date;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -29,8 +29,8 @@ public class I16_Peticion_baja {
 	private Text cFechaFin;
 	
 	private I17_Seleccion_fecha ventana;
-	private Integer iFechaInicio=0;
-	private Integer iFechaFin=0;
+	private Date iFechaInicio;
+	private Date iFechaFin;
 	
 	public I16_Peticion_baja(Shell padre,ResourceBundle bundle) {
 		this._padre = padre;
@@ -69,20 +69,15 @@ public class I16_Peticion_baja {
 		//Introducimos los valores y eventos de Fecha Inicio
 		bFechaInicio.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				ventana = new I17_Seleccion_fecha(shell,cFechaInicio);
-				//iFechaInicio=ventana.dameCatDia();
+				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shell);
+				while (!i17.isDisposed()) {
+					if (!shell.getDisplay().readAndDispatch()) {
+						shell.getDisplay().sleep();
+					}
+				}
+				iFechaInicio = i17.getFecha();
 			}				
 		});
-		
-		cFechaInicio.addModifyListener(new ModifyListener(){
-
-			public void modifyText(ModifyEvent e) {
-				// TODO Auto-generated method stub
-				iFechaInicio=ventana.dameCatDia();
-			}
-			
-		});
-		
 		
 		final Label lFechaFin	= new Label(cGrupo, SWT.LEFT);
 		lFechaFin.setText(_bundle.getString("I16_lab_fechafin"));
@@ -94,33 +89,21 @@ public class I16_Peticion_baja {
 
 		bFechaFin.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				ventana = new I17_Seleccion_fecha(shell,cFechaFin);
-				//iFechaFin=ventana.dameCatDia();
-
+				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shell);
+				while (!i17.isDisposed()) {
+					if (!shell.getDisplay().readAndDispatch()) {
+						shell.getDisplay().sleep();
+					}
+				}
+				iFechaFin = i17.getFecha();
 			}				
 		});		
-		
-		
-		cFechaFin.addModifyListener(new ModifyListener(){
-
-			public void modifyText(ModifyEvent e) {
-				// TODO Auto-generated method stub
-				iFechaFin=ventana.dameCatDia();
-			}
-			
-		});
-		
-		
-		
-		
-		
 		
 		final Label lMotivo	= new Label(cGrupo, SWT.LEFT);
 		lMotivo.setText(_bundle.getString("I16_lab_motivobaja"));
 		final Text  tMotivo	= new Text (cGrupo, SWT.BORDER);
 		tMotivo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 0, 0));
 
-		
 		final Composite cCuerpoMen = new Composite (shell, SWT.BORDER);
 		cCuerpoMen.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		GridLayout lCuerpoMen = new GridLayout();
@@ -153,7 +136,7 @@ public class I16_Peticion_baja {
 			public void widgetSelected (SelectionEvent e) {
 				System.out.println("Fecha inicio"+iFechaInicio);
 				System.out.println("Fecha fin"+iFechaFin);
-				if(iFechaFin<iFechaInicio){
+				if(iFechaFin.before(iFechaInicio)){
 					MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
 					messageBox.setText (_bundle.getString("Mensaje"));
 					messageBox.setMessage (_bundle.getString("I16_err_perbaj"));
