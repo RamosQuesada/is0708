@@ -257,7 +257,20 @@ public class Util {
 		int minutos =Integer.valueOf(s.substring(3,5));
 		int segundos = Integer.valueOf(s.substring(6,8));
 		return (3600*horas + 60*minutos + segundos);
-}
+	}
 	
-	
+	/**
+	 * Recorta el final de una cadena te texto, añadiendo al final "..." si se ha 
+	 * recortado.
+	 * @param texto el texto a recortar
+	 * @param x el límite de tamaño de la cadena, contando los puntos
+	 * @return la cadena recortada
+	 */
+	public static String recortarTexto(String texto, int x) {
+		String s = texto;
+		if (texto.length()>x) {
+			s = texto.substring(0, x-3) + "...";
+		}		
+		return s;
+	}
 }
