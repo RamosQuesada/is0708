@@ -31,7 +31,8 @@ public class I14_Escribir_mensaje {
 	private final static int MENSAJERIA_INSTANTANEA=1;
 	private final static int PETICION_BAJA=2;
 	private final static int CAMBIO_HORARIO=3;
-	private Shell shell; 
+	private Shell shell;
+	private I13_Elegir_empleado tNombre;
 	
 	private int opcion_actual= NO_INICIALIZADO;
 	
@@ -63,7 +64,7 @@ public class I14_Escribir_mensaje {
 		lNombre.setLayoutData(new GridData(SWT.LEFT,  SWT.CENTER, false, true, 1, 1));
 		lNombre.setText(_bundle.getString("Nombre"));
 
-		new I13_Elegir_empleado(cGrupo,_vista);
+		tNombre = new I13_Elegir_empleado(cGrupo,_vista);
 		
 		final Label lAsunto	= new Label(cGrupo, SWT.LEFT);
 		lAsunto.setText(_bundle.getString("asunto"));
@@ -122,9 +123,15 @@ public class I14_Escribir_mensaje {
 						shell.dispose();
 					}
 				}
-				else{
+				else if (tNombre.getIdEmpl()==0) {
+					MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
+					messageBox.setText (_bundle.getString("Error"));
+					messageBox.setMessage (_bundle.getString("I14_err_sinDestinatario"));
+					messageBox.open ();
+				}
+				else {
 					Mensajeria m = new Mensajeria(_vista.getControlador(), _vista.getEmpleadoActual().getEmplId());
-					m.creaMensaje(0, tAsunto.getText(), tMensaje.getText());
+					m.creaMensaje(tNombre.getIdEmpl(), tAsunto.getText(), tMensaje.getText());
 					shell.dispose();
 				}
 			}	

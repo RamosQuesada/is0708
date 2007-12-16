@@ -25,6 +25,7 @@ public class I13_Elegir_empleado {
 	private List listFiltro;
 	private ArrayList<Empleado> empleadosIn, empleadosOut;
 	private Shell listShell;
+	private int idEmpl = 0;
 	public I13_Elegir_empleado(Composite padre, Vista vista) {
 		this.padre = padre;
 		// Esta búsqueda debería coger sólo un departamento, porque el número de 
@@ -73,14 +74,18 @@ public class I13_Elegir_empleado {
 		listShell.setVisible(false);
 		listFiltro.addKeyListener(new KeyListener() {
 			public void keyPressed(KeyEvent e) {
-				if (e.keyCode==13)				
-					tNombre.setText(listFiltro.getItem(listFiltro.getSelectionIndex()));		
+				if (e.keyCode==13) {				
+					idEmpl = empleadosOut.get(listFiltro.getSelectionIndex()).getEmplId();
+					tNombre.setText(listFiltro.getItem(listFiltro.getSelectionIndex()));
+					System.out.println("i13; "+idEmpl);
+				}
 			}
 			public void keyReleased(KeyEvent e) {}
 		});
 		listFiltro.addMouseListener(new MouseListener() {
 			public void mouseDoubleClick(MouseEvent e) {}
 			public void mouseDown(MouseEvent e) {
+				idEmpl = empleadosOut.get(listFiltro.getSelectionIndex()).getEmplId();
 				tNombre.setText(listFiltro.getItem(listFiltro.getSelectionIndex()));
 			}
 			public void mouseUp(MouseEvent e) {}
@@ -118,5 +123,9 @@ public class I13_Elegir_empleado {
 				listShell.setVisible(false);
 		}
 		else listShell.setVisible(false);
+	}
+	
+	public int getIdEmpl() {
+		return idEmpl;
 	}
 }
