@@ -13,22 +13,13 @@ public class Departamento {
 		
 	};
 	
-	/**
-	 * Nombre del departamento
-	 */
+	/** Nombre del departamento */
 	private String _nombreDepartamento;
-	/**
-	 * Numero asociado del departamento
-	 */
-	private int _numeroDepartamento;
-	/**
-	 * Jefe del departamento
-	 */
+	/** Numero asociado del departamento */
+	private ArrayList<Integer> _numerosDepartamento;
+	/** Jefe del departamento */
 	private Empleado _jefeDepartamento;
-	
-	/**
-	 * Conjunto de empleados que trabajan para el departamento
-	 */
+	/** Conjunto de empleados que trabajan para el departamento */
 	private ArrayList<Empleado> _listaEmpleados;
 	private Calendario _calendario;
 	
@@ -36,20 +27,19 @@ public class Departamento {
 	 * Constructor que se obtiene cuando se carga de la base de datos
 	 * con todos los datos del departamento
 	 * @param nombreDepartamento Nombre del departamento
-	 * @param numeroDepartamento Numero del departamento
 	 * @param jefeDepartamento Jefe del departamento
 	 * @param listaEmpleados lista de empleados del departamento
 	 * @param calendario calendario de festivos del departamento
 	 */
 	public Departamento(String nombreDepartamento, int numeroDepartamento,
 			Empleado jefeDepartamento,ArrayList<Empleado> listaEmpleados,Calendario calendario){
-		this._numeroDepartamento=numeroDepartamento;
+		_numerosDepartamento = new ArrayList<Integer>();
+		_numerosDepartamento.add(numeroDepartamento);
 		this._jefeDepartamento=jefeDepartamento;
 		this._nombreDepartamento=nombreDepartamento;
 		this._listaEmpleados=listaEmpleados;
 		this._calendario=calendario;
-	}
-	
+	}	
 	
 	/**
 	 * Constructor en el que no importan los empleados, se usa cuando se crea un 
@@ -60,7 +50,8 @@ public class Departamento {
 	 */
 	public Departamento(String nombreDepartamento, int numeroDepartamento,
 			Empleado jefeDepartamento){
-		this._numeroDepartamento=numeroDepartamento;
+		_numerosDepartamento = new ArrayList<Integer>();
+		_numerosDepartamento.add(numeroDepartamento);
 		this._jefeDepartamento=jefeDepartamento;
 		this._nombreDepartamento=nombreDepartamento;
 		this._listaEmpleados=null;
@@ -89,8 +80,6 @@ public class Departamento {
 		return _jefeDepartamento;
 	}
 	
-
-	
 	/**
 	 * Getter de la lista de empleados
 	 * @return ArrayList<Empleado> lista de empleados del departamento
@@ -103,18 +92,16 @@ public class Departamento {
 	 * Getter del numero asociado del departamento
 	 * @return Integer numero asociado
 	 */
-	public int getNumeroDepartamento(){
-		return _numeroDepartamento;
+	public ArrayList<Integer> getNumerosDepartamento(){
+		return _numerosDepartamento;
 	}
-	/**
-	 * Setter del numero del departamento 
-	 * @param Entero con el numero del departamento
-	 */
-	public void setNumeroDepartamento(int num){
-		this._numeroDepartamento=num;
-	}
-	
 
-	
-	
+	/**
+	 * Añade un número al departamento 
+	 * @param Entero con el numero del departamento a añadir
+	 */
+	public void addNumeroDepartamento(int num){
+		_numerosDepartamento.add(num);
+	}
+
 }
