@@ -51,9 +51,13 @@ public class I08_1_Anadir_empleado {
 	public void mostrarVentana() {		
 		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 
-		final Image ico_chico = new Image(padre.getDisplay(), I01_Login.class.getResourceAsStream("ico_chico.gif"));
-		final Image ico_chica = new Image(padre.getDisplay(), I01_Login.class.getResourceAsStream("ico_chica.gif"));
+		final Image ico_chico = new Image(padre.getDisplay(), I08_1_Anadir_empleado.class.getResourceAsStream("ico_chico.gif"));
+		final Image ico_chica = new Image(padre.getDisplay(), I08_1_Anadir_empleado.class.getResourceAsStream("ico_chica.gif"));
 		
+		final Image ico_esp = new Image(padre.getDisplay(), I08_1_Anadir_empleado.class.getResourceAsStream("ico_esp.gif"));
+		final Image ico_usa = new Image(padre.getDisplay(), I08_1_Anadir_empleado.class.getResourceAsStream("ico_usa.gif"));
+		final Image ico_pol = new Image(padre.getDisplay(), I08_1_Anadir_empleado.class.getResourceAsStream("ico_pol.gif"));
+
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 2;
 		//layout.makeColumnsEqualWidth = true;
