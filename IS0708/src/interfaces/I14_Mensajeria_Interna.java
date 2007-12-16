@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import aplicacion.Mensajeria;
 import aplicacion.Vista;
 
 import java.util.Locale;
@@ -24,23 +25,25 @@ import java.util.ResourceBundle;
 public class I14_Mensajeria_Interna {
 	private Shell _padre = null;
 	private ResourceBundle _bundle;
-
+	private Vista _vista;
+	
 	private final static int NO_INICIALIZADO=0;
 	private final static int MENSAJERIA_INSTANTANEA=1;
 	private final static int PETICION_BAJA=2;
 	private final static int CAMBIO_HORARIO=3;
-
+	private Shell shell; 
 	
 	private int opcion_actual= NO_INICIALIZADO;
 	
-	public I14_Mensajeria_Interna(Shell padre	,ResourceBundle bundle) {
-		this._padre = padre;
-		this._bundle=bundle;
+	public I14_Mensajeria_Interna(Shell padre, ResourceBundle bundle, Vista vista) {
+		_padre = padre;
+		_bundle = bundle;
+		_vista = vista;
 		mostrarVentana();
 	}
 	
 	public void mostrarVentana() {
-		final Shell shell = new Shell (_padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
+		shell = new Shell (_padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 
 		final Image ico_mens_l = new Image(_padre.getDisplay(), I14_Mensajeria_Interna.class.getResourceAsStream("ico_mens1_v.gif"));
 		
@@ -51,26 +54,31 @@ public class I14_Mensajeria_Interna {
 		shell.setText(_bundle.getString("I14_tit_mensajeriaint"));
 		shell.setImage(ico_mens_l);
 		
-		/*    */
-
 		final Composite cGrupo = new Composite (shell, SWT.BORDER);
-		cGrupo.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 0, 0));
-		GridLayout lGrupo = new GridLayout();
+		cGrupo.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
+		GridLayout lGrupo = new GridLayout(2,false);
 		lGrupo.numColumns = 1;
 		cGrupo.setLayout(lGrupo);
 		
 		final Label lDestinatario	= new Label(cGrupo, SWT.LEFT);
 		lDestinatario.setText(_bundle.getString("destinatario"));
-		Combo cDestinatarios = new Combo(cGrupo, SWT.BORDER | SWT.READ_ONLY);
-		cDestinatarios.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 0, 0));
-		cDestinatarios.setItems(new String[] {"Ramon Alcarria Jare�o", "Fernando Gonzalez Angulo", "Carlos Eskudero Palmeiro","Tomas Villar S�nchez"});
-		cDestinatarios.select(0);
+		Text tDestinatarios = new Text(cGrupo, SWT.BORDER);
+		tDestinatarios.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
+		final Button bSelect = new Button (cGrupo, SWT.PUSH);
+		bSelect.setText(_bundle.getString("Seleccionar"));
+		bSelect.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
+		bSelect.addSelectionListener (new SelectionAdapter () {
+			public void widgetSelected (SelectionEvent e) {
+				new I13_Elegir_empleado(shell,_bundle,_vista);
+			}				
+		});
+
 		final Label lAsunto	= new Label(cGrupo, SWT.LEFT);
 		lAsunto.setText(_bundle.getString("asunto"));
 		final Text  tAsunto	= new Text (cGrupo, SWT.BORDER);
 		tAsunto.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 0, 0));
 
-		
 		final Composite cCuerpoMen = new Composite (shell, SWT.BORDER);
 		cCuerpoMen.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		GridLayout lCuerpoMen = new GridLayout();
@@ -80,10 +88,7 @@ public class I14_Mensajeria_Interna {
 		lMensaje.setText(_bundle.getString("Mensaje"));
 		final Text  tMensaje	= new Text (cCuerpoMen, SWT.BORDER|SWT.MULTI | SWT.WRAP| SWT.V_SCROLL);
 		tMensaje.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 0, 0));
-		
-		
-		
-		
+				
 		final Composite cAceptarCancelar = new Composite (shell, SWT.BORDER);
 		cAceptarCancelar.setLayoutData(new GridData(SWT.LEFT, SWT.DOWN, true, false, 1, 1));
 		GridLayout lAceptarCancelar = new GridLayout();
@@ -127,7 +132,8 @@ public class I14_Mensajeria_Interna {
 					}
 				}
 				else{
-					// TODO BD Guardar mensaje en la BD
+					Mensajeria m = new Mensajeria(_vista.getControlador(), _vista.getEmpleadoActual().getEmplId());
+					m.creaMensaje(0, tAsunto.getText(), tMensaje.getText());
 					shell.dispose();
 				}
 			}	

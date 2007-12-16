@@ -236,83 +236,79 @@ public class I02_Principal {
 
 		bPorMes.setSelection(true);
 	}
-
+	
 	/**
      * Crea un tab de mensajería
      * @param tabFolder el tabFolder donde colocarlo
      * @author Daniel Dionne
      */
-    private void crearTabMensajes(TabFolder tabFolder) {
-            TabItem tabItemMensajes = new TabItem(tabFolder, SWT.NONE);
-            tabItemMensajes.setText(bundle.getString("Mensajes"));
-            tabItemMensajes.setImage(ico_mens_l);
+	private void crearTabMensajes(TabFolder tabFolder) {
+		TabItem tabItemMensajes = new TabItem(tabFolder, SWT.NONE);
+		tabItemMensajes.setText(bundle.getString("Mensajes"));
+		tabItemMensajes.setImage(ico_mens_l);
+		
+		final Composite cMensajes = new Composite(tabFolder, SWT.NONE);
+		tabItemMensajes.setControl(cMensajes);
+			
+		cMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		cMensajes.setLayout(new GridLayout(4, true));
+		
+		Table tablaMensajes = new Table(cMensajes, SWT.MULTI | SWT.BORDER  | SWT.FULL_SELECTION);
+		tablaMensajes.setLinesVisible(true);
+		tablaMensajes.setHeaderVisible(true);
+				
+		String[] titles = { " ", bundle.getString("I02_mens_De"),
+		bundle.getString("Asunto"), bundle.getString("Mensaje"),
+		bundle.getString("Fecha") };
+		for (int i = 0; i < titles.length; i++) {
+		        TableColumn column = new TableColumn(tablaMensajes, SWT.NONE);
+		        column.setText(titles[i]);
+		}
 
-            final Composite cMensajes = new Composite(tabFolder, SWT.NONE);
-            tabItemMensajes.setControl(cMensajes);
-
-            cMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-            cMensajes.setLayout(new GridLayout(4, true));
-
-            Table tablaMensajes = new Table(cMensajes, SWT.MULTI | SWT.BORDER  |
-SWT.FULL_SELECTION);
-            tablaMensajes.setLinesVisible(true);
-            tablaMensajes.setHeaderVisible(true);
-
-
-            //TODO DE MOMENTO OBTENEMOS LOS 10 PRIMEROS MENSAJES
-
-            String[] titles = { " ", bundle.getString("I02_mens_De"),
-            bundle.getString("Asunto"), bundle.getString("Mensaje"),
-            bundle.getString("Fecha") };
-            for (int i = 0; i < titles.length; i++) {
-                    TableColumn column = new TableColumn(tablaMensajes, SWT.NONE);
-                    column.setText(titles[i]);
-            }
-
-            int num_men_hoja=10;// numero de mensajes x hoja
-            ArrayList<Mensaje> mensajesEntrantes = this.vista.getMensajesEntrantes(this.vista.getEmpleadoActual().getEmplId(),0, num_men_hoja);
-            Empleado remitente;
-            String nombre_remitente;
-            int i = 0;
-            while (i < mensajesEntrantes.size() && i< num_men_hoja) {
-                    TableItem tItem = new TableItem(tablaMensajes, SWT.NONE);
-                    tItem.setImage(ico_mens);
-                    remitente = vista.getEmpleado(mensajesEntrantes.get(i).getRemitente());
-                    nombre_remitente=(remitente.getNombre()+" "+remitente.getApellido1()+" "+remitente.getApellido2());
-                    tItem.setText(1, nombre_remitente);
-                    tItem.setText(2, mensajesEntrantes.get(i).getAsunto());
-                    tItem.setText(3, mensajesEntrantes.get(i).getTexto());
-                    tItem.setText(4, Util.dateAString(mensajesEntrantes.get(i).getFecha()));
-                    i++;
-            }
-            for (int j = 0; j < titles.length; j++) {
-                    tablaMensajes.getColumn(j).pack();
-            }
-            // table.setSize (table.computeSize (SWT.DEFAULT, 200));
-            tablaMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
-
-            final Button bMensNuevo = new Button(cMensajes, SWT.PUSH);
-            bMensNuevo.setText(bundle.getString("Nuevo"));
-            bMensNuevo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-            bMensNuevo.addSelectionListener (new SelectionAdapter () {
-                    public void widgetSelected (SelectionEvent e) {
-                            new I15_Mensaje_nuevo(shell,bundle,locale);
-                    }
-            });
-
-            final Button bMensResponder = new Button(cMensajes, SWT.PUSH);
-            bMensResponder.setText(bundle.getString("I02_but_Responder"));
-            bMensResponder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,   false, 1, 1));
-
-            final Button bMensEliminar = new Button(cMensajes, SWT.PUSH);
-            bMensEliminar.setText(bundle.getString("I02_but_Eliminar"));
-            bMensEliminar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-
-            final Button bMensMarcar = new Button(cMensajes, SWT.PUSH);
-            bMensMarcar.setText(bundle.getString("I02_but_Marcar"));
-            bMensMarcar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-
-    }
+		//TODO DE MOMENTO OBTENEMOS LOS 10 PRIMEROS MENSAJES
+		int num_men_hoja=10;// numero de mensajes x hoja
+		ArrayList<Mensaje> mensajesEntrantes = vista.getMensajesEntrantes(vista.getEmpleadoActual().getEmplId(),0, num_men_hoja);
+		Empleado remitente;
+		String nombre_remitente;
+		int i = 0;
+		while (i < mensajesEntrantes.size() && i< num_men_hoja) {
+			TableItem tItem = new TableItem(tablaMensajes, SWT.NONE);
+			tItem.setImage(ico_mens);
+			remitente = vista.getEmpleado(mensajesEntrantes.get(i).getRemitente());
+			nombre_remitente=(remitente.getNombreCompleto());
+			tItem.setText(1, nombre_remitente);
+			tItem.setText(2, mensajesEntrantes.get(i).getAsunto());
+			tItem.setText(3, mensajesEntrantes.get(i).getTexto());
+			tItem.setText(4, Util.dateAString(mensajesEntrantes.get(i).getFecha()));
+			i++;
+		}
+		for (int j = 0; j < titles.length; j++) {
+		        tablaMensajes.getColumn(j).pack();
+		}
+		// table.setSize (table.computeSize (SWT.DEFAULT, 200));
+		tablaMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
+		
+		final Button bMensNuevo = new Button(cMensajes, SWT.PUSH);
+		bMensNuevo.setText(bundle.getString("Nuevo"));
+		bMensNuevo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		bMensNuevo.addSelectionListener (new SelectionAdapter () {
+		        public void widgetSelected (SelectionEvent e) {
+		                new I15_Mensaje_nuevo(shell,bundle,locale,vista);
+		        }
+		});
+		
+		final Button bMensResponder = new Button(cMensajes, SWT.PUSH);
+		bMensResponder.setText(bundle.getString("I02_but_Responder"));
+		bMensResponder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,   false, 1, 1));
+		
+		final Button bMensEliminar = new Button(cMensajes, SWT.PUSH);
+		bMensEliminar.setText(bundle.getString("I02_but_Eliminar"));
+		bMensEliminar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		
+		final Button bMensMarcar = new Button(cMensajes, SWT.PUSH);
+		bMensMarcar.setText(bundle.getString("I02_but_Marcar"));
+		bMensMarcar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+	}
 
 	/**
 	 * Crea un tab con un listado de empleados 

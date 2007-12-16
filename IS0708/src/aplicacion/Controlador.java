@@ -7,6 +7,7 @@ import java.util.List;
 import java.sql.Date;
 import java.sql.Time;
 import org.eclipse.swt.graphics.Color;
+import java.util.GregorianCalendar;
 
 import algoritmo.*;
 
@@ -57,10 +58,13 @@ public class Controlador {
 	private Vista _vista;
 	private Database _db;
 	private Empleado _empleadoActual;
+	private GregorianCalendar calendario;
 
 	
 	public Controlador(Database baseDatos) {
 		this._db = baseDatos;
+		// Crea calendario con la hora actual;
+		calendario = new GregorianCalendar();
 	}
 
 	/**
@@ -140,7 +144,7 @@ public class Controlador {
 							 fechaAlta,color,idDepartamentos,idSubordinados,felicidad,idioma);
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error al obtener el Empleado de la base de datos");
+			System.out.println("Controlador: Error al obtener el Empleado " + idEmpl + " de la base de datos");
 		}
 
 		return emp;
@@ -440,7 +444,7 @@ public class Controlador {
 				r.beforeFirst();
 				
 				while (r.next()) {
-					Mensaje m = new Mensaje(r.getInt("idMensaje"), idEmpl, r.getDate("Fecha"), r.getString("Asunto"), r.getString("Texto"));					
+					Mensaje m = new Mensaje(r.getInt("Remitente"), idEmpl, r.getDate("Fecha"), r.getString("Asunto"), r.getString("Texto"));					
 					temp.add(m);
 				}
 			}
@@ -638,5 +642,14 @@ public class Controlador {
 	 */
 	public void setProgreso(String mensaje, int i) {
 		_vista.setProgreso(mensaje, i);
+	}
+	
+	/**
+	 * Devuelve la fecha y hora actuales.
+	 * @return la fecha de tipo sql.Date
+	 */
+	public Date getFechaActual(){
+		calendario = new GregorianCalendar();
+		return new Date(calendario.getTime().getTime());
 	}
 }
