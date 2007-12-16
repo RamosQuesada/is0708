@@ -54,7 +54,7 @@ public class I14_Escribir_mensaje {
 		cGrupo.setLayout(lGrupo);
 		Label lNombre = new Label(cGrupo, SWT.LEFT);
 		lNombre.setLayoutData(new GridData(SWT.LEFT,  SWT.CENTER, false, true, 1, 1));
-		lNombre.setText(_bundle.getString("Para"));
+		lNombre.setText(_bundle.getString("I14_lab_Para"));
 
 		tNombre = new I13_Elegir_empleado(cGrupo,_vista);
 		
