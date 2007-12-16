@@ -2,7 +2,6 @@ package aplicacion;
 
 import java.sql.Date;
 
-
 /**
  * 
  * @author Carlos Sanchez Garcia
