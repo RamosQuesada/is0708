@@ -100,12 +100,13 @@ public class Mensajeria {
 	}
 	
 	/**
-	 * Funcion que introduce crea un mensaje 
+	 * Funcion que crea un mensaje con remitente el usuario actual y la fecha actual.
 	 */
-	public void creaMensaje(int idmensaje, int remitente, Date fecha, String asunto, String texto){
-		this.controlador.insertMensaje(new Mensaje(idmensaje, remitente,  fecha,  asunto, texto));
+	public void creaMensaje(int destinatario, String asunto, String texto){
+		this.controlador.insertMensaje(new Mensaje(controlador.getEmpleadoActual().getEmplId(), destinatario, controlador.getFechaActual(),  asunto, texto));
 	}
 	
-	
-	
+	public void enviarMensaje(Mensaje mensaje) {
+		this.controlador.insertMensaje(mensaje);
+	}
 }

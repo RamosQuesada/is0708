@@ -44,24 +44,25 @@ public class I13_Elegir_empleado {
 	private ResourceBundle bundle;
 	private Vista vista;
 	private Image icoPq;
-	private String numero;
-	private String apeido;
-	private String departamiento;
-	int itemNumbers [];
-	//private ArrayList<Empleado> empleadoIN;
-	//private ArrayList<Empleado> empleadoOUT;
+	private Text tNombre,tApellido;
+	private List listFiltro;
+	private ArrayList<Empleado> empleadosIn, empleadosOut;
 	
 	public I13_Elegir_empleado(Shell padre, ResourceBundle bundle, Vista vista) {
 		this.bundle   = bundle;
-		//this.empleadoIN = empleados;
 		this.shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 		this.shell.setLocation(padre.getBounds().width/2 + padre.getBounds().x - shell.getSize().x/2, padre.getBounds().height/2 + padre.getBounds().y - shell.getSize().y/2);
+		this.vista = vista;
+		// Esta búsqueda debería coger sólo un departamento, porque el número de 
+		// empleados puede ser demasiado grande.
+		empleadosIn = vista.getEmpleados(null, null, null, null, null, null, null);
+		empleadosOut = new ArrayList<Empleado>();
 		mostrarVentana();
-}
+		filtrar();
+	}
 
 	public void mostrarVentana() {
-		
-		icoPq = new Image(shell.getDisplay(), Vista.class.getResourceAsStream("icoPq.gif"));
+		icoPq = new Image(shell.getDisplay(), I13_Elegir_empleado.class.getResourceAsStream("icoPq.gif"));
 		shell.setImage(icoPq);
 		shell.setText("Search");
 	//Establecemos el layout del shell
@@ -77,97 +78,45 @@ public class I13_Elegir_empleado {
 		grupoDer.setText("person list");
 		grupoDer.setLayoutData(new GridData(SWT.FILL,  SWT.FILL, true, true, 1, 1));
 		
-		GridLayout lGrupoIzq = new GridLayout();
-		lGrupoIzq.numColumns = 3;
-		lGrupoIzq.verticalSpacing=3;
-		grupoIzq.setLayout(lGrupoIzq);
-		GridLayout lGrupoDer = new GridLayout();
-		lGrupoDer.numColumns = 1;
-		lGrupoDer.verticalSpacing = 3;
-		grupoDer.setLayout(lGrupoDer);
+		grupoIzq.setLayout(new GridLayout(2, false));
+		grupoDer.setLayout(new GridLayout(1, false));
 		
 	//Establecemos el grupoIZQ
 	//NUMERO
-		final Label lLNumero = new Label(grupoIzq, SWT.NONE);
-		final Text   lTNumero = new Text(grupoIzq, SWT.NONE);
-		Button lBNumero = new Button(grupoIzq, SWT.NONE);
-		lLNumero.setLayoutData(new GridData(SWT.LEFT,  SWT.CENTER, true, true, 1, 1));
-		lTNumero.setLayoutData(new GridData(SWT.FILL,  SWT.CENTER, true, true, 1, 1));
-		lBNumero.setLayoutData(new GridData(SWT.RIGHT,  SWT.CENTER, true, true, 1, 1));
-		lTNumero.setFont(new Font(shell.getDisplay(), new FontData("Arial", 10, SWT.NORMAL)));
-		lTNumero.addModifyListener(new ModifyListener(){
+		final Label lNombre = new Label(grupoIzq, SWT.NONE);
+		tNombre = new Text(grupoIzq, SWT.NONE);
+		lNombre.setLayoutData(new GridData(SWT.LEFT,  SWT.CENTER, true, true, 1, 1));
+		tNombre.setLayoutData(new GridData(SWT.FILL,  SWT.CENTER, true, true, 1, 1));
+		lNombre.setText(bundle.getString("Nombre"));
+		tNombre.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
-				numero=lTNumero.getText();
-			}		
+				filtrar();
+			}
 		});
-		lLNumero.setText("Number");
-		lBNumero.setText("->");
 	//APELLIDO
-		final Label lLApellido = new Label(grupoIzq, SWT.NONE);
-		final Combo  lCApellido = new Combo(grupoIzq, SWT.NONE);	
-		Button lBApellido = new Button(grupoIzq, SWT.NONE);		
-		lLApellido.setLayoutData(new GridData(SWT.LEFT,  SWT.CENTER, true, true, 1, 1));
-		lCApellido.setLayoutData(new GridData(SWT.FILL,  SWT.CENTER, true, true, 1, 1));
-		lBApellido.setLayoutData(new GridData(SWT.FILL,  SWT.CENTER, true, true, 1, 1));
-		lCApellido.addModifyListener(new ModifyListener(){
-			public void modifyText(ModifyEvent e) {
-				apeido = lCApellido.getText();
-			}		
-		});
-		lLApellido.setText("Surname");
-		lBApellido.setText("->");
-		//String EmplList [] = new String[empleadoIN.size()];
-		//for(int i = 0; i<empleadoIN.size(); i++){
-		//	EmplList [i] = empleadoIN.get(i).getApellido1()+" "+empleadoIN.get(i).getApellido2()+" "+empleadoIN.get(i).getNombre();			
-		//}
-		//lCApellido.setItems(EmplList);		
-	//DEPT
-		final Label lLDept = new Label(grupoIzq, SWT.NONE);
-		final Combo lCDept = new Combo(grupoIzq, SWT.NONE);
-		Button lBDept = new Button(grupoIzq, SWT.NONE);
-		lLDept.setLayoutData(new GridData(SWT.LEFT,  SWT.CENTER, true, true, 1, 1));
-		lCDept.setLayoutData(new GridData(SWT.FILL,  SWT.CENTER, true, true, 1, 1));
-		lBDept.setLayoutData(new GridData(SWT.FILL,  SWT.CENTER, true, true, 1, 1));
-		lCDept.addModifyListener(new ModifyListener(){
-			public void modifyText(ModifyEvent e) {
-				departamiento = lCDept.getText();
-			}		
-		});
-		lLDept.setText("Departament");
-		lBDept.setText("->");	
-		String [] NumlList = {"bano","cocina"};
-		lCDept.setItems(NumlList);
-
+		final Label lApellido= new Label(grupoIzq, SWT.NONE);
+		tApellido = new Text(grupoIzq, SWT.NONE);
+		lApellido.setLayoutData(new GridData(SWT.LEFT,  SWT.CENTER, true, true, 1, 1));
+		tApellido.setLayoutData(new GridData(SWT.FILL,  SWT.CENTER, true, true, 1, 1));
+		lApellido.setText(bundle.getString("Apellido"));
 		
-	////Establecemos el grupoDER
-		final List  dLEmail = new List(grupoDer, SWT.MULTI | SWT.V_SCROLL);
-		dLEmail.setLayoutData(new GridData(SWT.FILL,  SWT.FILL, true, true, 1, 1));	
-		dLEmail.addSelectionListener(new SelectionListener(){
-			public void widgetDefaultSelected(SelectionEvent e) {
-				System.out.println(dLEmail.getSelectionIndex());
-			}
-			public void widgetSelected(SelectionEvent e) {
-				
-				String str [] = dLEmail.getSelection();
-				itemNumbers = dLEmail.getSelectionIndices();
-				
-			}
-			
-		});
+	//Establecemos el grupoDER
+		listFiltro = new List(grupoDer, SWT.MULTI | SWT.V_SCROLL);
+		listFiltro.setLayoutData(new GridData(SWT.FILL,  SWT.FILL, true, true, 1, 1));	
 		
 		//abajo		
 		Composite cButtons = new Composite(grupoDer,SWT.NONE);
 		cButtons.setLayoutData(new GridData(SWT.LEFT, SWT.DOWN, true, true, 1, 1));
 		cButtons.setLayout(new GridLayout(3,false));
 		
-		Button bAdd	    = new Button(cButtons, SWT.PUSH);
+		Button bFiltrar	    = new Button(cButtons, SWT.PUSH);
 		Button bRemove	= new Button(cButtons, SWT.PUSH);
 		Button bCancel	= new Button(cButtons, SWT.PUSH);
 
-		bAdd.setText("Add");
+		bFiltrar.setText("Filtrar");
 		bCancel.setText("Cancel");
 		bRemove.setText("Remove");
-		bAdd    .setLayoutData (new GridData(SWT.RIGHT,  SWT.DOWN, true, true, 1, 1));
+		bFiltrar    .setLayoutData (new GridData(SWT.RIGHT,  SWT.DOWN, true, true, 1, 1));
 		bRemove .setLayoutData (new GridData(SWT.RIGHT,  SWT.DOWN, true, true, 1, 1));
 		bCancel .setLayoutData (new GridData(SWT.RIGHT,  SWT.DOWN, true, true, 1, 1));
 	//Button Listeners
@@ -175,62 +124,30 @@ public class I13_Elegir_empleado {
 	// Un listener con lo que hace el bot�n bCancelar
 		SelectionAdapter sabCancelar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-					shell.dispose();	
-			}
-		};
-		SelectionAdapter sabAdd = new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-					dameEmpleadoOut();	
 					shell.dispose();
 			}
 		};
-		SelectionAdapter sabRemove = new SelectionAdapter() {
+		SelectionAdapter sabFiltrar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-					dLEmail.remove(itemNumbers);	
+				filtrar();
 			}
 		};
-		SelectionAdapter sabAddNum = new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				dLEmail.add(numero);
-				System.out.println(numero);
-			}
-		};
-		SelectionAdapter sabAddApe = new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				dLEmail.add(apeido);
-				System.out.println(apeido);
-			}
-		};
-		SelectionAdapter sabAddDep = new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				/*
-				for (int i=0; i<empleadoIN.size();i++){
-					for (int j=0; j<empleadoIN.get(i).getDepartamento().size();j++){
-						if ( empleadoIN.get(i).getDepartamento().get(j).getName()== departamiento ){
-							dLEmail.add(empleadoIN.get(i).getApellido1()+"_"+empleadoIN.get(i).getApellido2());
-						}
-					}
-				}*/
-				
-				dLEmail.add(departamiento);
-				System.out.println(departamiento);
-			}
-		};
-	//
-		lBApellido.addSelectionListener(sabAddApe);
-		lBNumero.addSelectionListener(sabAddNum);
-		lBDept.addSelectionListener(sabAddDep);
 		
 		bCancel.addSelectionListener(sabCancelar);
-		bAdd.addSelectionListener(sabAdd);
-		bRemove.addSelectionListener(sabRemove);
-		
-		
+		bFiltrar.addSelectionListener(sabFiltrar);
 		
 		shell.pack();
 		shell.open();
-	}
-	public ArrayList<Empleado> dameEmpleadoOut(){
-		return empleadoOUT;
+	}	
+	public void filtrar() {
+		empleadosOut.clear();
+		listFiltro.removeAll();
+		for (int i=0; i<empleadosIn.size(); i++) {
+			if (tNombre.getText().isEmpty() || empleadosIn.get(i).getNombre().toLowerCase().contains(tNombre.getText().toLowerCase()))
+				empleadosOut.add(empleadosIn.get(i));
+		}
+		for (int i=0; i<empleadosOut.size(); i++) {
+			listFiltro.add(empleadosOut.get(i).getNombreCompleto());
+		}
 	}
 }

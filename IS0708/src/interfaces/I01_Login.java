@@ -91,7 +91,7 @@ public class I01_Login extends Thread{
 		progreso = new Label(contenido,SWT.FILL);
 		progreso.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true, 8, 1));
 		progreso.setText(s);
-		// Un SelectionAdapter con lo que hace el bot�n bCancelar
+		// Un SelectionAdapter con lo que hace el botón bCancelar
 		SelectionAdapter sabCancelar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				botonPulsado=0;
@@ -99,7 +99,7 @@ public class I01_Login extends Thread{
 			}
 		};
 
-		// Un SelectionAdapter con lo que hace el bot�n bAceptar
+		// Un SelectionAdapter con lo que hace el botón bAceptar
 		SelectionAdapter sabAceptar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				if (tUsuario.getText().length()!=8) {

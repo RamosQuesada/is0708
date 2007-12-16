@@ -30,6 +30,7 @@ public class I15_Mensaje_nuevo {
 	
 	private ResourceBundle _bundle;
 	private Locale _locale;
+	private Vista _vista;
 
 	/**Constante para indicar que la opcion actual no esta inicializada aun */
 	private final static int NO_INICIALIZADO=0;
@@ -50,10 +51,11 @@ public class I15_Mensaje_nuevo {
 	/** Constructor
 	 * @param padre ventana que llama a la actual
 	 */
-	public I15_Mensaje_nuevo(Shell padre,ResourceBundle bundle, Locale locale) {
-		this._padre = padre;
-		this._bundle = bundle;
-		this._locale = locale;
+	public I15_Mensaje_nuevo(Shell padre,ResourceBundle bundle, Locale locale, Vista vista) {
+		_padre = padre;
+		_bundle = bundle;
+		_locale = locale;
+		_vista = vista;
 		mostrarVentana();
 	}
 	
@@ -170,7 +172,7 @@ public class I15_Mensaje_nuevo {
 					e.doit = messageBox.open () == SWT.CLOSE;
 				}
 				if(opcion_actual==MENSAJERIA_INTERNA){
-					I14_Mensajeria_Interna ventana = new I14_Mensajeria_Interna(_padre,_bundle);
+					I14_Mensajeria_Interna ventana = new I14_Mensajeria_Interna(_padre,_bundle, _vista);
 					shell.dispose();
 
 				}

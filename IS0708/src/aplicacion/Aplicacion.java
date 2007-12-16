@@ -14,7 +14,7 @@ public class Aplicacion {
 		
 		// Creación del controlador
 		Controlador controlador = new Controlador(db);
-
+		
 		// Crear vista
 		Vista vista = new Vista(controlador, db);
 		controlador.setVista(vista);
