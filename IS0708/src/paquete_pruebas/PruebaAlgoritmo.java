@@ -16,7 +16,7 @@ public class PruebaAlgoritmo {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		String idDepartamento = "007"; // Por ejemplo
+		String idDepartamento = "Braulio"; // Por ejemplo
 		TurnoMatic alg;
 		Cuadrante cuad;
 		Empleado emp1,emp2,emp3;
@@ -41,7 +41,8 @@ public class PruebaAlgoritmo {
 		disponibles.add(emp3);
 	
 		cuad = new Cuadrante(12,2007,idDepartamento);
-		System.out.println("Numero de dias del mes "+cuad.getNumDias());
+		System.out.println("Numero de dias del mes: "+cuad.getNumDias());
+		System.out.println("Nombre del departamento: "+cuad.getIdDepartamento());
 		
 		
 		
