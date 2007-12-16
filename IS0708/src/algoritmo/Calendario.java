@@ -9,7 +9,7 @@ import aplicacion.Util;
  */
 public class Calendario {
 	
-	private int idDepartamento;
+	private String idDepartamento;
 	private int mes;
 	private int anio;
 	private int numDias; //numero de dias del mes
@@ -30,7 +30,7 @@ public class Calendario {
 	 * @param mes
 	 * @param anio
 	 */
-	public Calendario(int mes,int anio, int idDepartamento){
+	public Calendario(int mes,int anio, String idDepartamento){
 		this.mes = mes;
 		this.anio = anio;
 		numDias = Util.dameDias(mes,anio); 
@@ -217,11 +217,11 @@ public class Calendario {
 		return (cal[dia][hora] != null);
 	}
 
-	public int getIdDepartamento() {
+	public String getIdDepartamento() {
 		return idDepartamento;
 	}
 
-	public void setIdDepartamento(int idDepartamento) {
+	public void setIdDepartamento(String idDepartamento) {
 		this.idDepartamento = idDepartamento;
 	}
 	

@@ -19,13 +19,13 @@ public class Estructura {
 	private ArrayList<Time> trozosHorario; // Lista con el inicio de cada turno y el fin del ultimo
 	                                       // tamanio: nTrozos+1;
 	private int numTrozos;
-	private int idDepartamento;
+	private String idDepartamento;
 	//Atributo de prueba turnos
 	ArrayList<Turno> turnos;
 	
 
 	
-	public Estructura(int mes,int anio,ArrayList<Empleado> personal,int idDepartamento){//constructora de la estructura
+	public Estructura(int mes,int anio,ArrayList<Empleado> personal,String idDepartamento){//constructora de la estructura
 		this.personal = personal;
 		this.idDepartamento=idDepartamento;
 		// Calcular el numero de trozos en que se divide el horario
@@ -54,7 +54,7 @@ public class Estructura {
 	 * @param personal
 	 * @deprecated borrar
 	 */
-	public Estructura(int mes,int anio,ArrayList<Empleado> personal, ArrayList<Turno> t,int idDepartamento){//constructora de la estructura
+	public Estructura(int mes,int anio,ArrayList<Empleado> personal, ArrayList<Turno> t,String idDepartamento){//constructora de la estructura
 		this.personal = personal;
 		// Calcular el numero de trozos en que se divide el horario
 		// Recuperar de la base de datos la lista de todos los turnos del departamento
@@ -149,11 +149,11 @@ public class Estructura {
 		this.cal = cal;
 	}
 
-	public int getIdDepartamento() {
+	public String getIdDepartamento() {
 		return idDepartamento;
 	}
 
-	public void setIdDepartamento(int idDepartamento) {
+	public void setIdDepartamento(String idDepartamento) {
 		this.idDepartamento = idDepartamento;
 	}
 

@@ -11,10 +11,10 @@ public class ListasEmpleados {
 	private ArrayList<Empleado> empleados;//empleados que trabajan
     private ArrayList<Empleado> disponibles;//empleados disponibles
     private ArrayList<Empleado> reserva;//empleados de reserva
-    private int idDepartamento;//identificador de departamento
+    private String idDepartamento;//identificador de departamento
     
 
-    public ListasEmpleados(int id){
+    public ListasEmpleados(String id){
     	empleados = new ArrayList<Empleado>();
     	disponibles = new ArrayList<Empleado>();
     	// Inicializar disponibles en cada turno
@@ -46,14 +46,11 @@ public class ListasEmpleados {
 		this.reserva = reserva;
 	}
 
-	public int getIdDepartamento() {
+	public String getIdDepartamento() {
 		return idDepartamento;
 	}
 
-	public void setIdDepartamento(int idDepartamento) {
+	public void setIdDepartamento(String idDepartamento) {
 		this.idDepartamento = idDepartamento;
 	}
-    
-    
-    
 }

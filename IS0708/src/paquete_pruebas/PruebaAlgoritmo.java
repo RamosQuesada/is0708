@@ -16,7 +16,7 @@ public class PruebaAlgoritmo {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		int idDepartamento = 007; // Por ejemplo
+		String idDepartamento = "007"; // Por ejemplo
 		TurnoMatic alg;
 		Cuadrante cuad;
 		Empleado emp1,emp2,emp3;
@@ -25,8 +25,8 @@ public class PruebaAlgoritmo {
 		
 		disponibles = new ArrayList<Empleado>();
 		//public turnoString idTurno, String descripcion,String horaEntrada, String horaSalida, String horaDescanso, int descanso
-		t1 = new Turno("1","M1","9:00:00","14:00:00","12:30:00",20);
-		t2 = new Turno("2","T1","9:00:00","17:00:00","14:30:00",25);
+		t1 = new Turno(1,"M1","9:00:00","14:00:00","12:30:00",20);
+		t2 = new Turno(2,"T1","9:00:00","17:00:00","14:30:00",25);
 		/*
 		 * Os comento esta parte, que da error porque se han cambiado las clases Turno y Empleado*/
 		
