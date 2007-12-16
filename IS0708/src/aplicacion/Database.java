@@ -643,6 +643,7 @@ public class Database extends Thread {
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
+			e.printStackTrace();
 			System.out.println("Error al insertar el mensaje");
 		}
 		return correcto;
