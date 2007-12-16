@@ -987,4 +987,18 @@ public class Database extends Thread {
 		}
 		return result;
 	}
+	
+	public int obtenIdMensaje(){
+		ResultSet result=null;
+		int maximo=-1;
+		try {
+			st = con.createStatement();
+			result = st.executeQuery("SELECT Max(IdMensaje)as Maximo from MENSAJE ;");
+			result.next();
+			maximo=result.getInt("Maximo");
+		} catch (SQLException e) {
+			System.out.println("Error al obtener el maximo id de los mensajes");
+		}
+		return maximo;
+	}
 }

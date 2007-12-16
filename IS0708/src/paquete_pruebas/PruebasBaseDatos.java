@@ -106,6 +106,8 @@ public class PruebasBaseDatos {
 		
 		//leer contrato
 		Contrato contrato=c.getContrato(1);*/
+		prueba.borraMensaje(55);
+		prueba.insertarMensaje(12121212,Date.valueOf("2007-12-11"), "asunto", "texto", false);
 
 			
 	}
