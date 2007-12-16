@@ -300,7 +300,7 @@ public class Controlador {
 			if (r.getRow() > 0) {
 				r.first();
 				Empleado e = getEmpleado(r.getInt("Jefe")); 
-				Departamento d = new Departamento(id, 1, e);
+				Departamento d = new Departamento(id, 0, e);
 				return d;
 			}
 		} catch(Exception e) {
