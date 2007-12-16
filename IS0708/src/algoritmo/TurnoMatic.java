@@ -17,7 +17,7 @@ public class TurnoMatic {
 	private Estructura estruc;
 	private int mes;
 	private int anio;
-	private int idDepartamento;
+	private String idDepartamento;
 	
 	
 	public TurnoMatic(){
@@ -26,7 +26,7 @@ public class TurnoMatic {
 	}
 	
 	//El array list turnos es de prueba.
-	public TurnoMatic(int m, int year,ArrayList<Turno> turnos,int idDepartamento){
+	public TurnoMatic(int m, int year,ArrayList<Turno> turnos,String idDepartamento){
 		
 		/* Llamada a la base de datos para que nos
 		 * dé todos los empleados del departamento.
@@ -248,13 +248,14 @@ public class TurnoMatic {
 		this.anio = anio;
 	}
 
-	public int getIdDepartamento() {
+	public String getIdDepartamento() {
 		return idDepartamento;
 	}
 
-	public void setIdDepartamento(int idDepartamento) {
+	public void setIdDepartamento(String idDepartamento) {
 		this.idDepartamento = idDepartamento;
 	}
+
 
 		
 }
