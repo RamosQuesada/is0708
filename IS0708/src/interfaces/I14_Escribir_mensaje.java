@@ -22,7 +22,7 @@ import aplicacion.Vista;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class I14_Mensajeria_Interna {
+public class I14_Escribir_mensaje {
 	private Shell _padre = null;
 	private ResourceBundle _bundle;
 	private Vista _vista;
@@ -35,7 +35,7 @@ public class I14_Mensajeria_Interna {
 	
 	private int opcion_actual= NO_INICIALIZADO;
 	
-	public I14_Mensajeria_Interna(Shell padre, ResourceBundle bundle, Vista vista) {
+	public I14_Escribir_mensaje(Shell padre, ResourceBundle bundle, Vista vista) {
 		_padre = padre;
 		_bundle = bundle;
 		_vista = vista;
@@ -45,7 +45,7 @@ public class I14_Mensajeria_Interna {
 	public void mostrarVentana() {
 		shell = new Shell (_padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 
-		final Image ico_mens_l = new Image(_padre.getDisplay(), I14_Mensajeria_Interna.class.getResourceAsStream("ico_mens1_v.gif"));
+		final Image ico_mens_l = new Image(_padre.getDisplay(), I14_Escribir_mensaje.class.getResourceAsStream("ico_mens1_v.gif"));
 		
 		//Establecemos el layout del shell
 		GridLayout lShell = new GridLayout();
@@ -59,21 +59,12 @@ public class I14_Mensajeria_Interna {
 		GridLayout lGrupo = new GridLayout(2,false);
 		lGrupo.numColumns = 1;
 		cGrupo.setLayout(lGrupo);
-		
-		final Label lDestinatario	= new Label(cGrupo, SWT.LEFT);
-		lDestinatario.setText(_bundle.getString("destinatario"));
-		Text tDestinatarios = new Text(cGrupo, SWT.BORDER);
-		tDestinatarios.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
-		final Button bSelect = new Button (cGrupo, SWT.PUSH);
-		bSelect.setText(_bundle.getString("Seleccionar"));
-		bSelect.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
-		bSelect.addSelectionListener (new SelectionAdapter () {
-			public void widgetSelected (SelectionEvent e) {
-				new I13_Elegir_empleado(shell,_bundle,_vista);
-			}				
-		});
+		Label lNombre = new Label(cGrupo, SWT.LEFT);
+		lNombre.setLayoutData(new GridData(SWT.LEFT,  SWT.CENTER, false, true, 1, 1));
+		lNombre.setText(_bundle.getString("Nombre"));
 
+		new I13_Elegir_empleado(cGrupo,_vista);
+		
 		final Label lAsunto	= new Label(cGrupo, SWT.LEFT);
 		lAsunto.setText(_bundle.getString("asunto"));
 		final Text  tAsunto	= new Text (cGrupo, SWT.BORDER);

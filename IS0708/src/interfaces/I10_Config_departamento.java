@@ -58,17 +58,7 @@ public class I10_Config_departamento {
 		shell.setLayout(new GridLayout(2,true));
 		
 		// Permite cerrar la ventana pulsando ESC
-		shell.addListener(SWT.Traverse, new Listener() {
-			public void handleEvent(Event event) {
-				switch (event.detail) {
-				case SWT.TRAVERSE_ESCAPE:
-					shell.close();
-					event.detail = SWT.TRAVERSE_NONE;
-					event.doit = false;
-					break;
-				}
-			}
-		});
+
 
 		//add Components into Window
 		addComponents();
