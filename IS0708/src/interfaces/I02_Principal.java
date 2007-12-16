@@ -273,7 +273,8 @@ SWT.FULL_SELECTION);
             ArrayList<Mensaje> mensajesEntrantes = this.vista.getMensajesEntrantes(this.vista.getEmpleadoActual().getEmplId(),0, num_men_hoja);
             Empleado remitente;
             String nombre_remitente;
-            for (int i = 0; i < num_men_hoja; i++) {
+            int i = 0;
+            while (i < mensajesEntrantes.size() && i< num_men_hoja) {
                     TableItem tItem = new TableItem(tablaMensajes, SWT.NONE);
                     tItem.setImage(ico_mens);
                     remitente = vista.getEmpleado(mensajesEntrantes.get(i).getRemitente());
@@ -282,9 +283,10 @@ SWT.FULL_SELECTION);
                     tItem.setText(2, mensajesEntrantes.get(i).getAsunto());
                     tItem.setText(3, mensajesEntrantes.get(i).getTexto());
                     tItem.setText(4, Util.dateAString(mensajesEntrantes.get(i).getFecha()));
+                    i++;
             }
-            for (int i = 0; i < titles.length; i++) {
-                    tablaMensajes.getColumn(i).pack();
+            for (int j = 0; j < titles.length; j++) {
+                    tablaMensajes.getColumn(j).pack();
             }
             // table.setSize (table.computeSize (SWT.DEFAULT, 200));
             tablaMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
