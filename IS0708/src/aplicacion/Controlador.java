@@ -477,8 +477,10 @@ public class Controlador {
 	 * @param mensaje	mensaje a insertar en la base de datos
 	 * @return <i>true</i> si el mensaje se ha insertado correctamente
 	 */
-	public boolean insertMensaje (Mensaje mensaje) {
-		return _db.insertarMensaje(mensaje.getRemitente(),mensaje.getFecha(),mensaje.getAsunto(),mensaje.getTexto(),false);
+	public boolean insertMensaje (Mensaje mensaje) {		
+		boolean correcto=_db.insertarMensaje(mensaje.getRemitente(),mensaje.getFecha(),mensaje.getAsunto(),mensaje.getTexto(),false);
+		int idMensaje=_db.obtenIdMensaje();
+		return correcto= correcto &&_db.insertarListaDestinatarios(mensaje.getDestinatario(), idMensaje);		
 	}
 	
 	/**
