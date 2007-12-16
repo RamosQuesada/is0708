@@ -381,7 +381,11 @@ public class Empleado implements Drawable {
 	 * @return el nombre completo del empleado
 	 */
 	public String getNombreCompleto() {
-		return getNombre() + getApellido1() + getApellido2();
+		String ap1 = getApellido1();
+		String ap2 = getApellido2();
+		if (ap1==null) ap1="";
+		if (ap2==null) ap2="";
+		return  getNombre() + " " + ap1 + " " + ap2;
 	}
 
 	/**

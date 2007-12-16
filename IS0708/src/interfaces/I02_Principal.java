@@ -171,7 +171,9 @@ public class I02_Principal {
 		e4.turno.franjaNueva(new Posicion(15,  0), new Posicion(19,  9));
 		e5.turno.franjaNueva(new Posicion(12,  0), new Posicion(16,  0));
 		e6.turno.franjaNueva(new Posicion(10,  5), new Posicion(14,  0));
-		e6.turno.franjaNueva(new Posicion(16, 10), new Posicion(19,  0));		
+		e6.turno.franjaNueva(new Posicion(16, 10), new Posicion(19,  0));
+		
+		
 		empleados.add(e1);
 		empleados.add(e2);
 		empleados.add(e3);
@@ -366,11 +368,12 @@ public class I02_Principal {
 			column.setText(titles2[i]);
 		}
 		// TODO BD Coger listado de empleados
-		for (int i = 0; i < 10; i++) {
+		ArrayList<Empleado> empleados = vista.getEmpleados(null, null, null, null, null, null, 2);
+		for (int i = 0; i < empleados.size(); i++) {
 			TableItem tItem = new TableItem(tablaEmpleados, SWT.NONE);
 			tItem.setImage(ico_chica);
-			tItem.setText(1, "56468546");
-			tItem.setText(2, "Mandarina González");
+			tItem.setText(1, String.valueOf(empleados.get(i).getEmplId()));
+			tItem.setText(2, empleados.get(i).getNombreCompleto());
 			tItem.setText(3, "Discos");
 			tItem.setText(4, "6:40h");
 			tItem.setText(5, "911234567");
@@ -479,7 +482,7 @@ public class I02_Principal {
 		bConfig.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				System.out.println("I02 :: Pulsado Configuración departamentos: "+cmbDepartamentos.getText());
-				new I10_Config_departamento(shell, bundle, bundle.getString("I02_but_Config_dep"),vista);
+				new I10_Config_departamento(shell, bundle, vista);
 			}
 		});
 		
@@ -490,7 +493,7 @@ public class I02_Principal {
 		bNew.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				System.out.println("I02 :: Pulsado Nuevo Departamento");
-				new I10_Config_departamento(shell, bundle, bundle.getString("I02_but_Nuevo_dep"),vista);
+				new I10_Config_departamento(shell, bundle, vista);
 			}
 		});
 	
