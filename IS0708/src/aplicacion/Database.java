@@ -173,6 +173,68 @@ public class Database extends Thread {
 		}
 		return r;
 	}
+	
+	public ResultSet obtenEmpleadoAlaCarta(Integer idEmpl, String idDpto,
+			Integer idContrato, String nombre, String apellido1,
+			String apellido2, Integer rango) {
+		ResultSet r = null;
+		String subconsulta;
+		boolean to2null=true;		
+		String consulta="SELECT * FROM USUARIO WHERE ";
+		int numero=0;
+		if (idEmpl!=null) {			
+			consulta+="NumVendedor= "+idEmpl;
+			to2null=false;
+			numero=1;
+		}
+		if (idContrato!=null) {
+			if (numero==0) consulta+="IdContrato= "+idContrato;
+			else consulta+=" and IdContrato= "+idContrato; 
+			to2null=false;
+			numero=1;
+		}
+		if (nombre!=null) {
+			if (numero==0) consulta+="Nombre= '"+nombre+"'";
+			else consulta+=" and Nombre= '"+nombre+"'"; 
+			to2null=false;
+			numero=1;
+		}
+		if (apellido1!=null) {
+			if (numero==0) consulta+="Apellido1= '"+apellido1+"'";
+			else consulta+=" and Apellido1= '"+apellido1+"'"; 
+			to2null=false;
+			numero=1;
+		}
+		if (apellido2!=null) {
+			if (numero==0) consulta+="Apellido2= '"+apellido2+"'";
+			else consulta+=" and Apellido2= '"+apellido2+"'"; 
+			to2null=false;
+			numero=1;
+		}
+		if (rango!=null) {
+			if (numero==0) consulta+="Rango= "+rango;
+			else consulta+=" and Rango= "+rango; 
+			to2null=false;
+			numero=1;			
+		}
+		if (idDpto!=null) {
+			subconsulta="SELECT NumVendedor FROM DepartamentoUsuario WHERE NombreDepartamento= '"+idDpto+"'";
+			to2null=false;
+			if (numero==0) consulta+="NumVendedor IN ("+subconsulta+")";
+			else consulta+=" and NumVendedor IN ("+subconsulta+")";
+		}
+		try {
+			st = con.createStatement();
+			if (to2null) {
+				r = st.executeQuery("SELECT * FROM USUARIO");
+			}
+			else r = st.executeQuery(consulta);
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error al realizar la consulta del empleado a la carta");
+		}		
+		return r;
+	}
 	/**
 	 * Método que inserta en la tabla usuario los valores correspondientes a un
 	 * nuevo usuario

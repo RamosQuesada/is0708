@@ -25,6 +25,7 @@ public class PruebasBaseDatos {
 		Database prueba = new Database();
 		prueba.abrirConexion();
 		Controlador c = new Controlador(prueba);
+		//c.getEmpleados(null, "dep", null, null, null, null, 1);
 		/*
 		ArrayList a = new ArrayList();
 		
@@ -42,6 +43,7 @@ public class PruebasBaseDatos {
 
 		prueba.insertarDistribucion(9, "Martes", "1e5p", 10, 7, 1);*/
 		//prueba.insertarMensaje(1,Date.valueOf("2007-12-11"), "prueba", "que gran prueba",false);
+		//prueba.marcaMensaje(true, 1);
 		/*prueba.insertarListaDestinatarios(1, 1);
 		// prueba.insertarUsuario(1235, "Pablo", "Gervas",
 		// "Gomez_Navarro","2007-12-11" , "m", "gervas@is.com", "ballenas",

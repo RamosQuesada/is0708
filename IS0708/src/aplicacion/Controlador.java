@@ -245,16 +245,22 @@ public class Controlador {
 	 *            el segundo apellido del empleado
 	 * @return una lista de empleados que coincida con los datos dados
 	 */
-	public ArrayList<Empleado> getEmpleados(Integer idEmpl, Integer idDpto,
+	public ArrayList<Empleado> getEmpleados(Integer idEmpl, String idDpto,
 			Integer idContrato, String nombre, String apellido1,
 			String apellido2, Integer rango) {
 		ArrayList<Empleado> listaCoincidencias=new ArrayList<Empleado>();
 		//TODO BD RELLENAR LISTACOINCIDENCIAS	Empleado e1 = new Empleado(1, "M. Jackson", new Color (shell.getDisplay(), 104, 228,  85));
-		
-		
-		
-		
-		//TODO ELIMINAR HASTA FIN-ELIMINAR, HECHA PARA PRUEBAS
+		ResultSet rs=_db.obtenEmpleadoAlaCarta(idEmpl, idDpto, idContrato, nombre, apellido1, apellido2, rango); 
+		try {
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				listaCoincidencias.add(this.getEmpleado(id));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error al obtener el empleado de la base de datos");
+		}		
+		/*//TODO ELIMINAR HASTA FIN-ELIMINAR, HECHA PARA PRUEBAS
 		Color color;
 		color		= new Color(null, 1,1,1);
 		Empleado e2 = new Empleado(2, "J. Mayer",   color);
@@ -267,7 +273,7 @@ public class Controlador {
 		listaCoincidencias.add(e4);
 		listaCoincidencias.add(e5);
 		listaCoincidencias.add(e6);
-		//TODO FIN-ELIMINAR 
+		//TODO FIN-ELIMINAR */
 		
 		
 		return listaCoincidencias;
