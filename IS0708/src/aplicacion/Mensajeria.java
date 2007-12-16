@@ -1,7 +1,7 @@
 package aplicacion;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Clase que implementa la mensajeria de un empleado, esto es el conjunto
