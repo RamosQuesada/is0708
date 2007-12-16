@@ -587,6 +587,25 @@ public class Database extends Thread {
 	}
 	
 	/**
+	 * 
+	 * @param marca marca del mensaje(true si marcar y false si desmarcar)
+	 * @param id	identificador del mensaje a marcar
+	 * @return		Indica si se ha podido marcar o no el mensaje	
+	 */
+	public boolean marcaMensaje(boolean marca,int id){
+		boolean correcto = false;
+	    try{
+	        st=con.createStatement();
+	        st.executeUpdate("UPDATE MENSAJE SET Marcado= "+marca+ " WHERE IdMensaje="+id);	        
+	        System.out.println("Mensaje Marcado");
+	        correcto=true;
+	    }catch(SQLException e) {
+	        System.out.println("Error al Marcar el mensaje");
+	    }
+	    return correcto;
+	}
+	
+	/**
 	 * Método que inserta en la tabla ListaDestinatarios
 	 * @param numVendedor
 	 *            representa el destinatario al que se ha enviado el mensaje

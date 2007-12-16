@@ -37,7 +37,9 @@ import algoritmo.*;
  * 	P	getMensajesEntrantes(...)	Carga un número determinado de mensajes entrantes
  *	P	getMensajesSalientes(...)	Carga un número determinado de mensajes salientes
  *	?	getMensajes(int)			Carga todos los mensajes (¿necesario?)
- *	P	insertMensaje(Mensaje)		Inserta un mensaje
+ *		insertMensaje(Mensaje)		Inserta un mensaje
+ *		eliminaMensaje				Elimina un mensaje
+ *		marcarMensaje							Marca un mensaje en la bd
  * 
  * - Métodos relacionados con contratos
  *	P	getContrato(int)			Carga un contrato dado su id
@@ -488,7 +490,7 @@ public class Controlador {
 	 * @return <i>true</i> si el mensaje se ha marcado correctamente
 	 */
 	public boolean marcarMensaje (Mensaje mensaje) {
-		return false;
+		return _db.marcaMensaje(true, mensaje.getIdmensaje());
 	}
 	
 	
