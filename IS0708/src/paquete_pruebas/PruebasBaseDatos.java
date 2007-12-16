@@ -1,5 +1,6 @@
 package paquete_pruebas;
 
+import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 
@@ -39,9 +40,9 @@ public class PruebasBaseDatos {
 		prueba.insertarTurno(1, "prueba", h, h, h, 10);
 		prueba.insertarTurno(4, "prueba", h, h, h, 14500);
 
-		prueba.insertarDistribucion(9, "Martes", "1e5p", 10, 7, 1);
-		prueba.insertarMensaje(1, new Time(0), "prueba", "que gran prueba");
-		prueba.insertarListaDestinatarios(1, 1);
+		prueba.insertarDistribucion(9, "Martes", "1e5p", 10, 7, 1);*/
+		//prueba.insertarMensaje(1,Date.valueOf("2007-12-11"), "prueba", "que gran prueba",false);
+		/*prueba.insertarListaDestinatarios(1, 1);
 		// prueba.insertarUsuario(1235, "Pablo", "Gervas",
 		// "Gomez_Navarro","2007-12-11" , "m", "gervas@is.com", "ballenas",
 		// "p","2007-12-11" , "2007-12-11", 0, 123, "empleado", 1, 1);

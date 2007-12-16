@@ -462,16 +462,16 @@ public class Controlador {
 
 	/**
 	 * Inserta un mensaje en la base de datos.
-	 * @param mensaje
+	 * @param mensaje	mensaje a insertar en la base de datos
 	 * @return <i>true</i> si el mensaje se ha insertado correctamente
 	 */
 	public boolean insertMensaje (Mensaje mensaje) {
-			return _db.insertarMensaje(mensaje.getRemitente(), (Time)mensaje.getFecha(), mensaje.getAsunto(), mensaje.getTexto());
-	    }
+		return _db.insertarMensaje(mensaje.getRemitente(),mensaje.getFecha(),mensaje.getAsunto(),mensaje.getTexto(),false);
+	}
 	
 	/**
 	 * Elimina un mensaje en la base de datos.
-	 * @param mensaje
+	 * @param mensaje a borrar en la base de datos
 	 * @return <i>true</i> si el mensaje se ha eliminado correctamente
 	 */
 	public boolean eliminaMensaje (Mensaje mensaje) {
@@ -479,9 +479,9 @@ public class Controlador {
 	}
 	
 	/**
-	 * Inserta un mensaje en la base de datos.
+	 * Marca un mensaje en la base de datos.
 	 * @param mensaje
-	 * @return <i>true</i> si el mensaje se ha insertado correctamente
+	 * @return <i>true</i> si el mensaje se ha marcado correctamente
 	 */
 	public boolean marcarMensaje (Mensaje mensaje) {
 		return false;

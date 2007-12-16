@@ -57,7 +57,7 @@ public class Mensajeria {
 	public ArrayList<Mensaje> dameMensajesEntrantes(int inicio,int num_mensajes){
 		//ArrayList<Mensaje> lista=controlador.getMensajes(id);
 		return(this.mensajesActuales=controlador.getMensajesEntrantes(id, inicio, num_mensajes));
-		
+	}	
 	/**
 	 * Función que devuelve un ArrayList mensajes salientes indicados
 	 * @return
