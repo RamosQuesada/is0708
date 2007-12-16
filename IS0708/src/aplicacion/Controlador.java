@@ -481,11 +481,8 @@ public class Controlador {
 	 * @return <i>true</i> si el mensaje se ha eliminado correctamente
 	 */
 	public boolean eliminaMensaje (Mensaje mensaje) {
-		_db.abrirConexion();
-
-		boolean b= _db.borraMensaje(mensaje.getIdmensaje());
-		_db.cerrarConexion();
-		return b;
+		return _db.borraMensaje(mensaje.getIdmensaje());
+		
 	}
 	
 	/**
