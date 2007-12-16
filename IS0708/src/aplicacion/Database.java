@@ -797,13 +797,13 @@ public class Database extends Thread {
 	 * @return ResultSet con las filas que coinciden con el departamento y el
 	 *         dia de la semana
 	 */
-	public ResultSet obtenDistribucion(int idDepartamento, int DiaSemana) {
+	public ResultSet obtenDistribucion(String nombre, int DiaSemana) {
 
 		try {
 			st = con.createStatement();
 			rs = st
-					.executeQuery("SELECT * FROM DISTRIBUCION WHERE idDepartamento ="
-							+ idDepartamento + " AND DiaSemana=" + DiaSemana);
+					.executeQuery("SELECT * FROM DISTRIBUCION WHERE NombreDept ="
+							+ nombre + " AND DiaSemana=" + DiaSemana);
 
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -822,12 +822,12 @@ public class Database extends Thread {
 	 * @return ResultSet con las filas que coinciden con el departamento y la
 	 *         fecha
 	 */
-	public ResultSet obtenFestivos(int idDepartamento, Date Fecha) {
+	public ResultSet obtenFestivos(String nombre, Date Fecha) {
 		try {
 			st = con.createStatement();
 			rs = st
-					.executeQuery("SELECT * FROM FESTIVOS WHERE idDepartamento ="
-							+ idDepartamento
+					.executeQuery("SELECT * FROM FESTIVOS WHERE NombreDept ="
+							+ nombre
 							+ " AND FechaInicio<='"
 							+ Fecha
 							+ "' AND FechaFin>='" + Fecha + "' ORDER BY Hora ASC");
