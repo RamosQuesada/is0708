@@ -292,20 +292,23 @@ public class Controlador {
 	 * Carga un departamento desde la base de datos, dado su nombre.
 	 * @param id	el nombre del departamento
 	 * @return		una instancia del departamento cargado
-	 * NO ACABADO
 	 */
-	/*public Departamento getDepartamento(String id) {
-		ResultSet r = _db.obtenDepartamento(id);
-		
+	public Departamento getDepartamento(String id) {
 		try {
-			r.next();
-			Departamento d = new Departamento(id, 1, r.getString("Jefe"));
+			ResultSet r = _db.obtenDepartamento(id);			
+			r.last();
+			if (r.getRow() > 0) {
+				r.first();
+				Empleado e = getEmpleado(r.getInt("Jefe")); 
+				Departamento d = new Departamento(id, 1, e);
+				return d;
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		
 		return null;
-	}*/
+	}
 		
 	/**
 	 * Guarda un departamento en la base de datos
