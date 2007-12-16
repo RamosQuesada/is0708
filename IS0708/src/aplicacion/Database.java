@@ -846,7 +846,7 @@ public class Database extends Thread {
 	 * @return Devuelve un ResultSet con los turnos de los empleados
 	 */
 
-	public ResultSet dameListaTurnosEmpleados() {
+	public ResultSet obtenListaTurnosEmpleados() {
 		ResultSet r = null;
 
 		try {
