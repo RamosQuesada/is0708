@@ -262,7 +262,6 @@ public class I02_Principal {
 		}
 		// TODO BD Cargar, por ejemplo, los 10 primeros mensajes
 		// ¿Aquí entra la mensajería?
-		//ArrayList<Mensaje>vista.getMensajesEntrantes(vista.getEmpleadoActual().getIdEmpl(), 0, 10);
 		
 		for (int i = 0; i < 10; i++) {
 			TableItem tItem = new TableItem(tablaMensajes, SWT.NONE);

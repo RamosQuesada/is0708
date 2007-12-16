@@ -426,7 +426,7 @@ public class Controlador {
 	 * @return la lista de mensajes
 	 */
 	public ArrayList<Mensaje> getMensajesEntrantes(int idEmpl, int a, int b){
-		ArrayList temp = new ArrayList();
+		ArrayList<Mensaje> temp = new ArrayList<Mensaje>();
 		
 		try {
 			ResultSet r = _db.obtenMensajes(idEmpl, a, b);
@@ -456,12 +456,6 @@ public class Controlador {
 	 * @return la lista de mensajes
 	 */
 	public ArrayList<Mensaje> getMensajesSalientes(int idEmpl, int a, int b){
-		return null;
-	}
-	
-	public ArrayList<Mensaje> getMensajes(int id) {
-		// TODO BD Funcion q devuelva todos los mensajes de este usuario en un ArrayList
-		// Dani: ¿Hace falta recuperar todos todos los mensajes a la vez?
 		return null;
 	}
 
