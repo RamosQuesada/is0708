@@ -547,16 +547,18 @@ public class Database extends Thread {
 	 *            campo que indica que contiene el mensaje de forma breve
 	 * @param texto
 	 *            contenido de los mensajes
+	 * @param marcado
+	 * 			  indica si el mensaje está marcado o no
 	 * @return true si se ha realizado correctamente o false en caso contrario
 	 */
 
-	public boolean insertarMensaje(int remitente, Time fecha, String asunto,
-			String texto) {
+	public boolean insertarMensaje(int remitente, Date fecha, String asunto,
+			String texto,boolean marcado) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
 			st.executeUpdate("INSERT INTO MENSAJE values ( 0 , " + remitente
-					+ ", '" + fecha + "', '" + asunto + "', '" + texto + "');");
+					+ ", '" + fecha + "', '" + asunto + "', '" + texto + "', " +marcado+");");
 			System.out.println("Mensaje insertado");
 			correcto = true;
 		} catch (SQLException e) {
