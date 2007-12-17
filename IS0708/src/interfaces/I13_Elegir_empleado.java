@@ -95,7 +95,7 @@ public class I13_Elegir_empleado extends Thread {
 				if (e.keyCode==13) {				
 					idEmpl = empleadosOut.get(listFiltro.getSelectionIndex()).getEmplId();
 					tNombre.setText(listFiltro.getItem(listFiltro.getSelectionIndex()));
-					System.out.println("i13; "+idEmpl);
+					listShell.setVisible(false);
 				}
 			}
 			public void keyReleased(KeyEvent e) {}
@@ -105,6 +105,7 @@ public class I13_Elegir_empleado extends Thread {
 			public void mouseDown(MouseEvent e) {
 				idEmpl = empleadosOut.get(listFiltro.getSelectionIndex()).getEmplId();
 				tNombre.setText(listFiltro.getItem(listFiltro.getSelectionIndex()));
+				listShell.setVisible(false);
 			}
 			public void mouseUp(MouseEvent e) {}
 			
