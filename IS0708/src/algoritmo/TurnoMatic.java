@@ -18,6 +18,7 @@ public class TurnoMatic {
 	private int mes;
 	private int anio;
 	private String idDepartamento;
+	private Controlador controlador;
 	
 	
 	public TurnoMatic(){
@@ -37,6 +38,28 @@ public class TurnoMatic {
 		this.mes = m;
 		this.estruc = new Estructura(mes,year,personal, turnos, idDepartamento);
 		this.cuadrante = new Cuadrante(mes,year, idDepartamento);
+		
+	}
+	 
+	/**
+	 * Constructora del algoritmo, se encarga de crear la estructura
+	 * el cuadrante y recibe el controlador del programa
+	 * @param m mes para el cual se realiza el cuadrante
+	 * @param year año al que pertenece el mes
+	 * @param cont controlador de la aplicacion
+	 */
+	public TurnoMatic(int m, int year, Controlador cont){
+		
+		/* Llamada a la base de datos para que nos
+		 * dé todos los empleados del departamento.
+		 */
+		ArrayList<Empleado> personal = new ArrayList<Empleado>();
+		this.idDepartamento=idDepartamento;
+		this.anio = year;
+		this.mes = m;
+		this.estruc = new Estructura(mes,year,personal, turnos, idDepartamento);
+		this.cuadrante = new Cuadrante(mes,year, idDepartamento);
+		this.controlador = cont;
 		
 	}
 
