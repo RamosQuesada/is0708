@@ -73,8 +73,7 @@ public class TurnoMatic {
 	public Cuadrante ejecutaAlgoritmo(){
 	
 		int id = Integer.parseInt(idDepartamento);
-		//Controlador controlador = 
-		//ArrayList<Empleado> listaE = Controlador.getEmpleadosDepartamento(id);
+		ArrayList<Empleado> listaE = controlador.getEmpleadosDepartamento(id);
 		
 		//Colocamos a los empleados correspondientes a cada día
 		
@@ -98,19 +97,19 @@ public class TurnoMatic {
 				reser = horario[i][j].getReserva();
 				
 				//Comprobamos la disponibilidad de cada empleado
-				/*for(int k=0; k<listaE.size(); k++){
+				for(int k=0; k<listaE.size(); k++){
 					e = listaE.get(k);
 					if(e.estaDisponible(i,inif,finf)){
 						dispo.add(e);						
 					}else{
 						reser.add(e);
 					}
-				}*/
+				}
 				horario[i][j].setDisponibles(dispo);
 				horario[i][j].setReserva(reser);
 				
 				//coloca sólo a los empleados fijos.
-				//colocaFijos(i,listaE,i,j);
+				colocaFijos(i,listaE,i,j);
 			}	
 		}		
 		return this.cuadrante;
