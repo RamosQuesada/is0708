@@ -1,6 +1,5 @@
 package interfaces;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
@@ -29,7 +28,6 @@ public class I15_Mensaje_nuevo {
 	private Shell _padre = null;
 	
 	private ResourceBundle _bundle;
-	private Locale _locale;
 	private Vista _vista;
 
 	/**Constante para indicar que la opcion actual no esta inicializada aun */
@@ -51,10 +49,9 @@ public class I15_Mensaje_nuevo {
 	/** Constructor
 	 * @param padre ventana que llama a la actual
 	 */
-	public I15_Mensaje_nuevo(Shell padre,ResourceBundle bundle, Locale locale, Vista vista) {
+	public I15_Mensaje_nuevo(Shell padre,ResourceBundle bundle, Vista vista) {
 		_padre = padre;
 		_bundle = bundle;
-		_locale = locale;
 		_vista = vista;
 		mostrarVentana();
 	}
@@ -173,7 +170,7 @@ public class I15_Mensaje_nuevo {
 					e.doit = messageBox.open () == SWT.CLOSE;
 				}
 				if(opcion_actual==MENSAJERIA_INTERNA){
-					I14_Escribir_mensaje ventana = new I14_Escribir_mensaje(_padre,_bundle, _vista);
+					I14_Escribir_mensaje ventana = new I14_Escribir_mensaje(_padre,_bundle, _vista, null);
 					shell.dispose();
 
 				}

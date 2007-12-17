@@ -482,7 +482,7 @@ public class Controlador {
 							contador++;
 							Mensaje m = new Mensaje(mensaje.getInt("Remitente"), idEmpl, mensaje.getDate("Fecha"),
 								mensaje.getString("Asunto"), mensaje.getString("Texto"));
-							if(contador>=1 && contador<(a+b))
+							if(contador>=0 && contador<(a+b))
 								misMensajes.add(m);
 						}
 					}

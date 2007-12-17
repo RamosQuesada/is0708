@@ -11,6 +11,7 @@ public class Mensaje {
 	
 	private int idmensaje;
 	private int remitente;
+	//TODO El destinatario hay que cambiarlo a un array de destinatarios
 	private int destinatario;
 	private Date fecha;
 	private String asunto;
