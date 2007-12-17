@@ -440,11 +440,11 @@ public class Controlador {
 	 * @param b cuántos mensajes coger
 	 * @return la lista de mensajes
 	 */
-	public ArrayList<Mensaje> getMensajesEntrantes(int idEmpl, int a, int b){
+	public ArrayList<Mensaje> getMensajesSalientes(int idEmpl, int a, int b){
 		ArrayList<Mensaje> temp = new ArrayList<Mensaje>();
 		
 		try {
-			ResultSet r = _db.obtenMensajes(idEmpl, a, b);
+			ResultSet r = _db.obtenMensajesSalientes(idEmpl, a, b);
 			r.last();
 			if (r.getRow()>0){
 				r.beforeFirst();
@@ -468,8 +468,31 @@ public class Controlador {
 	 * @param b cuántos mensajes coger
 	 * @return la lista de mensajes
 	 */
-	public ArrayList<Mensaje> getMensajesSalientes(int idEmpl, int a, int b){
-		return null;
+	public ArrayList<Mensaje> getMensajesEntrantes (int idEmpl, int a, int b){
+		ArrayList<Mensaje> misMensajes = new ArrayList<Mensaje>();		
+		try {
+			int contador=0;
+			ResultSet idMensajes= _db.obtenDestinatarios(idEmpl);
+			if(idMensajes!=null){
+				while(idMensajes.next()){
+					int idMensaje=idMensajes.getInt("IdMensaje");
+					if(idMensaje!=-1){
+						ResultSet mensaje= _db.obtenMensajesEntrantes(idMensaje, a, b);
+						while(mensaje.next()){
+							contador++;
+							Mensaje m = new Mensaje(mensaje.getInt("Remitente"), idEmpl, mensaje.getDate("Fecha"),
+								mensaje.getString("Asunto"), mensaje.getString("Texto"));
+							if(contador>=1 && contador<(a+b))
+								misMensajes.add(m);
+						}
+					}
+						
+				}
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return misMensajes;
 	}
 
 	/**
@@ -478,9 +501,13 @@ public class Controlador {
 	 * @return <i>true</i> si el mensaje se ha insertado correctamente
 	 */
 	public boolean insertMensaje (Mensaje mensaje) {		
-		boolean correcto=_db.insertarMensaje(mensaje.getRemitente(),mensaje.getFecha(),mensaje.getAsunto(),mensaje.getTexto(),false);
 		int idMensaje=_db.obtenIdMensaje();
-		return correcto= correcto &&_db.insertarListaDestinatarios(mensaje.getDestinatario(), idMensaje);		
+		boolean correcto=false;
+		if (idMensaje!=-1){
+			correcto=_db.insertarMensaje(mensaje.getRemitente(),mensaje.getFecha(),mensaje.getAsunto(),mensaje.getTexto(),false);
+			correcto= correcto &&_db.insertarListaDestinatarios(mensaje.getDestinatario(), idMensaje);
+		}	
+		return correcto;
 	}
 	
 	/**

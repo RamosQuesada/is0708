@@ -944,7 +944,7 @@ public class Database extends Thread {
 		return r;
 	}
 
-	public ResultSet obtenMensajes(int id, int inicio, int desp) {
+	public ResultSet obtenMensajesSalientes(int id, int inicio, int desp) {
 		ResultSet r = null;
 
 		try {
@@ -1000,5 +1000,29 @@ public class Database extends Thread {
 			System.out.println("Error al obtener el maximo id de los mensajes");
 		}
 		return maximo;
+	}
+	
+	public ResultSet obtenDestinatarios(int idUsuario){
+		ResultSet result=null;
+		try {
+			st = con.createStatement();
+			result = st.executeQuery("SELECT IdMensaje from DESTINATARIO WHERE NumVendedor = " + idUsuario + ";");			
+		} catch (SQLException e) {
+			System.out.println("Error obtenDestinatarios");
+		}
+		return result;
+		
+	}
+
+	public ResultSet obtenMensajesEntrantes(int remitente, int a, int b) {
+		ResultSet result = null;
+		try {
+			st = con.createStatement();
+			result = st.executeQuery("SELECT * FROM MENSAJE WHERE IdMensaje="+remitente+";");
+		}
+		catch (SQLException e) {
+			System.out.println("Error obtenMensajesEntrantes ");
+		}
+		return result;
 	}
 }
