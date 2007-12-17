@@ -48,7 +48,7 @@ public class TurnoMatic {
 	 * @param year año al que pertenece el mes
 	 * @param cont controlador de la aplicacion
 	 */
-	public TurnoMatic(int m, int year, Controlador cont){
+	public TurnoMatic(int m, int year, Controlador cont, String idDepartamento){
 		
 		/* Llamada a la base de datos para que nos
 		 * dé todos los empleados del departamento.
