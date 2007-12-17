@@ -12,7 +12,7 @@ import java.util.GregorianCalendar;
 import algoritmo.*;
 
 /**
- * Esta clase conecta el modelo (la base de datos) con la vista (los interfaces)
+ * Esta clase  conecta el modelo (la base de datos) con la vista (los interfaces)
  * Resumen de los métodos que hay: (si añadís alguno, por favor, añadidlo aquí también)
  * 
  * - Métodos relacionados con empleados: (P = pendiente)
