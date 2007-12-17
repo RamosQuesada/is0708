@@ -505,7 +505,8 @@ public class Controlador {
 		boolean correcto=false;
 		if (idMensaje!=-1){
 			correcto=_db.insertarMensaje(idMensaje,mensaje.getRemitente(),mensaje.getFecha(),mensaje.getAsunto(),mensaje.getTexto(),false);
-			correcto= correcto &&_db.insertarListaDestinatarios(mensaje.getDestinatario(), ++idMensaje);
+			if(correcto)
+				correcto= correcto &&_db.insertarListaDestinatarios(mensaje.getDestinatario(), ++idMensaje);
 		}	
 		return correcto;
 	}
