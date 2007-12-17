@@ -256,7 +256,10 @@ public class Vista extends Thread {
 	 * @return
 	 */
 	public ArrayList<Mensaje> getMensajesEntrantes(int idEmpl, int a, int b){
-		return controlador.getMensajesEntrantes(idEmpl, a, b);
+		//Esto no funciona, y no sé por qué
+		//setProgreso("Cargando mensajes", 50);
+		ArrayList<Mensaje> array = controlador.getMensajesEntrantes(idEmpl, a, b);
+		return array;
 	}
 
 	/**

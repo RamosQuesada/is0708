@@ -24,6 +24,14 @@ public class Turno {
 	private int tDescanso;//minutos de descanso
 	public ArrayList<FranjaDib> franjas;
 	
+	
+	/**
+	 * Constructor por defecto
+	 * @deprecated
+	 */
+	public Turno() {
+		franjas = new ArrayList<FranjaDib>();	
+	}
 	/**
 	 * 
 	 * @param idTurno  		 Identificador del turno
