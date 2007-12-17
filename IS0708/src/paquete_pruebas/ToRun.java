@@ -68,9 +68,7 @@ public class ToRun {
 		aList.add(13);
 		Empleado empleado;
 	try{
-		empleado = new Empleado(101,110,"kuba","chudzinski","-",new Color(display, 12,0,0),aplicacion.Util.stringADate("1985-06-14"),1,
-										"moki@onet.pl","123",1,1,123,aplicacion.Util.stringADate("2007-06-14"),
-									aplicacion.Util.stringADate("2005-06-14"),0,bList,aList);
+		empleado = new Empleado(101,"kuba",new Color(display, 12,0,0));
 	}catch(Exception e){ empleado=null ;};
 	
 	mainshell.open();

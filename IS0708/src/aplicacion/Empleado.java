@@ -810,10 +810,6 @@ public class Empleado implements Drawable {
 		} else {
 			if ((iniH.getTime() >= turno.getHoraDescanso().getTime()) && (iniH.getTime() < Util.calculaFinDescanso(turno.getHoraDescanso(),turno.getTDescanso()).getTime())){
 				puede = false;
-			//} else {
-			//	if ((finH.getTime() > turno.getHoraDescanso().getTime()) && (finH.getTime() < Util.calculaFinDescanso(turno.getHoraDescanso(),turno.getTDescanso()).getTime()))
-			//		puede = false;
-			//	}
 			}
 		}
 		return puede;

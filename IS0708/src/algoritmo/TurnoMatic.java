@@ -39,9 +39,7 @@ public class TurnoMatic {
 		this.cuadrante = new Cuadrante(mes,year, idDepartamento);
 		
 	}
-	
-	// Aqui vendría el algoritmo
-	
+
 	/**
 	 * Método que devuelve el cuadrante de ese mes
 	 * @param mes Mes para el cual se quiere realizar el cuadrante
@@ -49,8 +47,12 @@ public class TurnoMatic {
 	 * @return cuadrante Cuadrante resultante de aplicar el algoritmo
 	 * El arrayList disp es solo para pruebas.
 	 */
-	public Cuadrante ejecutaAlgoritmo(ArrayList<Empleado> disp){
+	public Cuadrante ejecutaAlgoritmo(){
 	
+		int id = Integer.parseInt(idDepartamento);
+		//Controlador controlador = 
+		//ArrayList<Empleado> listaE = Controlador.getEmpleadosDepartamento(id);
+		
 		//Colocamos a los empleados correspondientes a cada día
 		
 		ListasEmpleados[][] horario = estruc.getDias();
@@ -58,13 +60,9 @@ public class TurnoMatic {
 		ArrayList<Empleado> dispo;
 		Empleado e;
 		Calendario calendario;
-		HoraCalendario[][] cal;
-		ArrayList<Trabaja> cuad[];
-		
 		
 		calendario = estruc.getCalendario();
-		cal = calendario.getCal();
-		cuad = cuadrante.getCuad();
+
 		//Recorremos los dias del mes
 		for(int i=0; i<Util.dameDias(mes,anio); i++){
 			
@@ -77,19 +75,19 @@ public class TurnoMatic {
 				reser = horario[i][j].getReserva();
 				
 				//Comprobamos la disponibilidad de cada empleado
-				for(int k=0; k<disp.size(); k++){
-					e = disp.get(k);
+				/*for(int k=0; k<listaE.size(); k++){
+					e = listaE.get(k);
 					if(e.estaDisponible(i,inif,finf)){
 						dispo.add(e);						
 					}else{
 						reser.add(e);
 					}
-				}
+				}*/
 				horario[i][j].setDisponibles(dispo);
 				horario[i][j].setReserva(reser);
 				
 				//coloca sólo a los empleados fijos.
-				colocaFijos(i,disp,cal[i][j],cuad);
+				//colocaFijos(i,listaE,i,j);
 			}	
 		}		
 		return this.cuadrante;
@@ -100,8 +98,9 @@ public class TurnoMatic {
 	 * @param día Dia del mes
 	 * El arrayList disp es solo para pruebas
 	 */
-	private void colocaFijos(int dia, ArrayList<Empleado> disp, HoraCalendario hora,ArrayList<Trabaja> cu[]){
+	private void colocaFijos(int dia, ArrayList<Empleado> disp, int p, int q){
 		
+		ArrayList<Trabaja>[] cu = cuadrante.getCuad();
 		ArrayList<Empleado> disponibles;
 		ArrayList<Empleado> empleados;
 		ListasEmpleados[][] listas;
@@ -115,7 +114,8 @@ public class TurnoMatic {
 		numTrozos = estruc.getNumTrozos();
 		//prueba
 		//numTrozos = 4;
-		max = hora.getMax();
+		Calendario calendario = estruc.getCalendario();;
+		max = calendario.getMaxHora(p,q);
 		
 		//Para cada franja horaria
 		for(int i=0;i<numTrozos;i++){

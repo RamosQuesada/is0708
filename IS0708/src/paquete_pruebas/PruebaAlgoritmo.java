@@ -47,7 +47,8 @@ public class PruebaAlgoritmo {
 		
 		
 		alg = new TurnoMatic(6,2007,turnos,idDepartamento);  // 007 es un numero de depart, por ejemplo
-		alg.ejecutaAlgoritmo(disponibles);
+		//alg.ejecutaAlgoritmo(disponibles);
+		alg.ejecutaAlgoritmo();
 		alg.imprimeCuadrante();
 		//alg.imprimeEstructura();
 		Time pr1 = new Time(19,49,00);
