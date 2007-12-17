@@ -632,12 +632,12 @@ public class Database extends Thread {
 	 * @return true si se ha realizado correctamente o false en caso contrario
 	 */
 
-	public boolean insertarMensaje(int remitente, Date fecha, String asunto,
+	public boolean insertarMensaje(int idMensaje,int remitente, Date fecha, String asunto,
 			String texto,boolean marcado) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO MENSAJE values ( 0 , " + remitente
+			st.executeUpdate("INSERT INTO MENSAJE values ( "+idMensaje+" , " + remitente
 					+ ", '" + fecha + "', '" + asunto + "', '" + texto + "', " +marcado+");");
 			System.out.println("Mensaje insertado");
 			correcto = true;
