@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import aplicacion.Departamento;
+import aplicacion.Empleado;
 import aplicacion.Vista;
 public class I10_Config_departamento {
 	private Shell padre;
@@ -43,6 +44,7 @@ public class I10_Config_departamento {
 	private Button bCancel;
 
 	private ResourceBundle bundle;
+	private I13_Elegir_empleado tNombre;
 	
 	/** Constructor for new department */
 	public I10_Config_departamento(Shell padre, ResourceBundle bundle, Vista vista) {
@@ -104,19 +106,19 @@ public class I10_Config_departamento {
 		labBoss.setText(bundle.getString("I10_lab_jefe"));
 		labBoss.setLayoutData (new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));	
 		
-		textBoss = new Text (group, SWT.BORDER );
-		textBoss.setLayoutData (new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
-		
-		Button bSelect = new Button(group, SWT.NONE);
-		bSelect.setText(bundle.getString("I10_but_seleccionar"));
-		bSelect.setLayoutData(new GridData(SWT.LEFT,SWT.CENTER,true,true,1,1))	;	
-		SelectionAdapter bossSelectionListener = new SelectionAdapter(){
-			public void widgetSelected(SelectionEvent e) {
+		//textBoss = new Text (group, SWT.BORDER );
+		//textBoss.setLayoutData (new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
+		tNombre = new I13_Elegir_empleado(group,vista, bundle);
+		//Button bSelect = new Button(group, SWT.NONE);
+		//bSelect.setText(bundle.getString("I10_but_seleccionar"));
+		//bSelect.setLayoutData(new GridData(SWT.LEFT,SWT.CENTER,true,true,1,1))	;	
+		//SelectionAdapter bossSelectionListener = new SelectionAdapter(){
+		//	public void widgetSelected(SelectionEvent e) {
 				// TODO
-				 new I08_1_Anadir_empleado(shell, bundle, vista);
-			}
-		};
-		bSelect.addSelectionListener(bossSelectionListener);
+		//		 new I08_1_Anadir_empleado(shell, bundle, vista);
+		//	}
+		//};
+		//bSelect.addSelectionListener(bossSelectionListener);
 		butNewBoss = new Button(group, SWT.PUSH);
 		butNewBoss.setText(bundle.getString("I10_but_nuevo_jefe"));
 		butNewBoss.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
@@ -149,7 +151,8 @@ public class I10_Config_departamento {
 			public void widgetSelected (SelectionEvent e) {
 				if(integerCheck(tNumber.getText())==true){
 					// TODO Asignar jefe departamento
-					Departamento departamento = new Departamento(labName.getText(),Integer.parseInt(labNumber.getText()),null);
+					Empleado jefe = vista.getEmpleado(tNombre.getIdEmpl());
+					Departamento departamento = new Departamento(tName.getText(),Integer.parseInt(tNumber.getText()),jefe);
 					vista.insertDepartamento(departamento);
 					shell.dispose();
 				}else{
