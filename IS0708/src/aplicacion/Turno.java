@@ -25,14 +25,6 @@ public class Turno {
 	public ArrayList<FranjaDib> franjas;
 	
 	/**
-	 * Constructor por defecto
-	 *
-	 */
-	public Turno() {
-		franjas = new ArrayList<FranjaDib>();	
-	}
-	
-	/**
 	 * 
 	 * @param idTurno  		 Identificador del turno
 	 * @param descripcion    Nombre y/o datos del turno 
@@ -43,7 +35,6 @@ public class Turno {
 
 	 */
 	public Turno(int idTurno, String descripcion, Time horaEntrada, Time horaSalida, Time horaDescanso, int descanso) {
-		super();
 		this.idTurno = idTurno;
 		this.descripcion = descripcion;
 		this.horaEntrada = horaEntrada;
@@ -155,6 +146,17 @@ public class Turno {
 	public void setTDescanso(int descanso) {
 		tDescanso = descanso;
 	}
+	
+	
+/**
+ * 	Estos métodos sirven para representar un turno en un interfaz
+ */	
+//	this.idTurno = idTurno;
+//	this.descripcion = descripcion;
+//	this.horaEntrada = horaEntrada;
+//	this.horaSalida = horaSalida;
+//	this.horaDescanso = horaDescanso;
+
 	public void franjaNueva (Posicion pinicio, Posicion pfin) {
 		FranjaDib f = new FranjaDib(pinicio, pfin);
 		franjas.add(f);
@@ -167,7 +169,7 @@ public class Turno {
 		if (y > margenSup+(sep_vert_franjas+alto_franjas)*(posV+1) && y<=margenSup+(sep_vert_franjas+alto_franjas)*(posV+2)) b = true;
 		return b;
 	}
-	public void dibujarFranjas(Display display, GC gc, int posV, Color color, int margenIzq, int margenNombres, int margenSup, int sep_vert_franjas, int alto_franjas) {
+	public void dibujarTurnoCuadranteSemanalJefe(Display display, GC gc, int posV, Color color, int margenIzq, int margenNombres, int margenSup, int sep_vert_franjas, int alto_franjas) {
 		int subDivs = 0;
 		for (int i=0; i<franjas.size(); i++) {
 			franjas.get(i).dibujarFranja(display, gc, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1),color);

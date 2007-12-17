@@ -58,21 +58,15 @@ public class I08_1_Anadir_empleado {
 		final Image ico_usa = new Image(padre.getDisplay(), I08_1_Anadir_empleado.class.getResourceAsStream("ico_usa.gif"));
 		final Image ico_pol = new Image(padre.getDisplay(), I08_1_Anadir_empleado.class.getResourceAsStream("ico_pol.gif"));
 
-		GridLayout layout = new GridLayout();
-		layout.numColumns = 2;
-		//layout.makeColumnsEqualWidth = true;
+		GridLayout layout = new GridLayout(2,false);
 
 		final Group grupoIzq = new Group(shell, SWT.NONE);
 		final Group grupoDer = new Group(shell, SWT.NONE);
 		grupoIzq.setText(bundle.getString("I08_lab_DatosPersonales"));
 		grupoDer.setText(bundle.getString("I08_lab_DatosLaborales"));
 
-		GridLayout lGrupoIzq = new GridLayout();
-		lGrupoIzq.numColumns = 2;
-		grupoIzq.setLayout(lGrupoIzq);
-		GridLayout lGrupoDer = new GridLayout();
-		lGrupoDer.numColumns = 2;
-		grupoDer.setLayout(lGrupoDer);
+		grupoIzq.setLayout(new GridLayout(2,false));
+		grupoDer.setLayout(new GridLayout(2,false));
 		
 		final Label  lNVend			= new Label (grupoIzq, SWT.LEFT);
 		final Text   tNVend			= new Text  (grupoIzq, SWT.BORDER);
@@ -178,8 +172,8 @@ public class I08_1_Anadir_empleado {
 		cIdioma.select(0);
 		
 		shell.setImage(ico_chico);
-
 		shell.setImage(ico_chica);
+		
 		shell.setText(bundle.getString("I08_but_NuevoEmpleado"));
 		shell.setLayout(layout);
 		
