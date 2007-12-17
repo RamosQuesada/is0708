@@ -1495,7 +1495,7 @@ public class I02_Principal {
 			pbEstado.setVisible(true);
 			pbEstado.setSelection(i);
 		} else if (i == 100) {
-			lEstado.setText("");
+			lEstado.setText("Conectado");
 			pbEstado.setVisible(false);
 		}
 	}
