@@ -987,7 +987,10 @@ public class Database extends Thread {
 		}
 		return result;
 	}
-	
+	/**
+	 *obtiene el identificador del ultimo mensaje enviado 
+	 * @return
+	 */
 	public int obtenIdMensaje(){
 		ResultSet result=null;
 		int maximo=-1;
@@ -1001,7 +1004,11 @@ public class Database extends Thread {
 		}
 		return maximo;
 	}
-	
+	/**
+	 * lista de identificadores de mensajes que ha recibido un usuario 
+	 * @param idUsuario usuario que ha recibido los mensajes
+	 * @return ResultSet con los identificadores de los mensajes
+	 */
 	public ResultSet obtenDestinatarios(int idUsuario){
 		ResultSet result=null;
 		try {
@@ -1013,12 +1020,16 @@ public class Database extends Thread {
 		return result;
 		
 	}
-
-	public ResultSet obtenMensajesEntrantes(int remitente, int a, int b) {
+	/**
+	 * recupera un mensaje de la base de datos indicando el numero del mismo
+	 * @param mensaje indica el mensaje que se quiere recuperar por identificador de mensaje
+	 * @return ResulSet el mensaje indicado 
+	 */
+	public ResultSet obtenMensaje(int mensaje) {
 		ResultSet result = null;
 		try {
 			st = con.createStatement();
-			result = st.executeQuery("SELECT * FROM MENSAJE WHERE IdMensaje="+remitente+";");
+			result = st.executeQuery("SELECT * FROM MENSAJE WHERE IdMensaje="+mensaje+";");
 		}
 		catch (SQLException e) {
 			System.out.println("Error obtenMensajesEntrantes ");

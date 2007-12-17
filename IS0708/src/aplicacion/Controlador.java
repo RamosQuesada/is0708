@@ -477,7 +477,7 @@ public class Controlador {
 				while(idMensajes.next()){
 					int idMensaje=idMensajes.getInt("IdMensaje");
 					if(idMensaje!=-1){
-						ResultSet mensaje= _db.obtenMensajesEntrantes(idMensaje, a, b);
+						ResultSet mensaje= _db.obtenMensaje(idMensaje);
 						while(mensaje.next()){
 							contador++;
 							Mensaje m = new Mensaje(mensaje.getInt("Remitente"), idEmpl, mensaje.getDate("Fecha"),
@@ -505,7 +505,7 @@ public class Controlador {
 		boolean correcto=false;
 		if (idMensaje!=-1){
 			correcto=_db.insertarMensaje(mensaje.getRemitente(),mensaje.getFecha(),mensaje.getAsunto(),mensaje.getTexto(),false);
-			correcto= correcto &&_db.insertarListaDestinatarios(mensaje.getDestinatario(), idMensaje);
+			correcto= correcto &&_db.insertarListaDestinatarios(mensaje.getDestinatario(), ++idMensaje);
 		}	
 		return correcto;
 	}
