@@ -988,7 +988,7 @@ public class Database extends Thread {
 		return result;
 	}
 	/**
-	 *obtiene el identificador del ultimo mensaje enviado 
+	 *obtiene el identificador del ultimo mensaje en la base de datos 
 	 * @return
 	 */
 	public int obtenIdMensaje(){
