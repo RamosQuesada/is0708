@@ -11,7 +11,7 @@ import aplicacion.Posicion;
 
 /**
  * Esta clase representa un turno.
- * Se corresponde con la representaci�n del turno en la tabla de la base de datos
+ * Se corresponde con la representacion del turno en la tabla de la base de datos
  * @author Chema
  *
  */

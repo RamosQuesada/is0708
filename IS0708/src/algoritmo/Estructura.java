@@ -88,8 +88,7 @@ public class Estructura {
 	}
 	
 	private void inicializaTrozos(){
-		// ArrayList<Turno> turnos = Database.getTurnos(idDepartamento) // M�todo en proceso
-		//ArrayList<Turno> turnos = new ArrayList<Turno>();	Comentado para prueba	
+		// ArrayList<Turno> turnos = Database.getListaTurnosEmpleados(idDepartamento) // Metodo en proceso	
 		ArrayList<Time> horas = new ArrayList<Time>();
 		for (int i=0; i<turnos.size(); i++){
 			if (!horas.contains(turnos.get(i).getHoraEntrada()))
