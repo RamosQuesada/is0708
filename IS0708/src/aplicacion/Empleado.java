@@ -799,26 +799,93 @@ public class Empleado implements Drawable {
 		turno.dibujarTurnoCuadranteSemanalJefe(display, gc, posV, color, margenIzq, margenNombres, margenSup, sep_vert_franjas, alto_franjas);
 	}
 	
-	public boolean estaDisponible(int dia, Time iniH, Time finH){
+	public boolean estaDisponible(int dia, Time iniH, Time finH, Controlador cont){
+		
+		Contrato contrato;
+		String patron, turnoStr;
+		ArrayList<String> turnosStr;
+		ArrayList<Turno> turnos;
+		java.util.Date today;
+		int diaCiclo;
+		long difFechas;
+		Turno tur;
+		
 		boolean puede = true;
 		
+		//cálculo del dia en el que nos encontramos dentro del ciclo.
+		today = new java.util.Date();
+		difFechas = fContrato.getTime()-today.getTime();
+		diaCiclo = (int)difFechas/(24*60*60*1000);
+		
+		//Obtencion del contrato del empleado.
+		contrato = cont.getContrato(this.getContratoId());
+		
+		patron = contrato.getPatron();
+		turnosStr = obtenerTurnos(patron);
+		
+		//Obtencion del turno correspondiente a ese dia.
+		turnoStr = turnosStr.get(diaCiclo);
+		
 		//COMPROBAR SI TRABAJA UN DIA	
+		if(turnoStr == "d")
+			return false;
 		//COMPROBAR SI ESTA DE VACACIONES
+		
+		//Obtencion del turno a partir de la base de datos.
+		turnos = cont.getListaTurnosContrato(this.idEmpl);
+		//Obtencion del turno que le corresponde.
+		tur = turnos.get(0);
+		for(int i=0;i<turnos.size();i++){
+			if(turnos.get(i).getDescripcion().equals(turnoStr)){
+				tur = turnos.get(i);
+				break;
+			}
+		}
 
-		if ((turno.getHoraEntrada().getTime() > iniH.getTime()) || (turno.getHoraSalida().getTime() < finH.getTime())){
+		if ((tur.getHoraEntrada().getTime() > iniH.getTime()) || (tur.getHoraSalida().getTime() < finH.getTime())){
 			puede = false;
 		} else {
-			if ((iniH.getTime() >= turno.getHoraDescanso().getTime()) && (iniH.getTime() < Util.calculaFinDescanso(turno.getHoraDescanso(),turno.getTDescanso()).getTime())){
+			if ((iniH.getTime() >= tur.getHoraDescanso().getTime()) && (iniH.getTime() < Util.calculaFinDescanso(tur.getHoraDescanso(),tur.getTDescanso()).getTime())){
 				puede = false;
 			}
 		}
 		return puede;
 	}
+	
+	/**
+	 * Este método crea un ArrayList a partir del patrón de turnos del empleado
+	 * de tal forma que cada elemento del ArrayList es el turno que le corresponde
+	 * a cada uno de los días del ciclo.
+	 * @param p patron del contrato
+	 * @return lista con los turnos correspondientes a cado uno de los días.
+	 */
+	public ArrayList<String> obtenerTurnos(String p){
 		
-	
-	
-	public Color dameColor() {
-		return color;
+		ArrayList<String> turnos;
+		String numStr;
+		String turno;
+		int num, k;
+		
+		turnos = new ArrayList<String>();
+		num = 0;
+		k = 0;
+		
+		for(int i=0;i<p.length();i++){
+			if(i%2 == 0){
+				numStr = String.valueOf(p.charAt(i));
+				num = Integer.parseInt(numStr);
+			}
+			else{
+				turno = String.valueOf(p.charAt(i));
+				for(int j=0;j<num;j++){
+					turnos.add(k,turno);
+					k++;
+				}
+				
+			}
+			
+		}
+		return turnos;
 	}
 	
 	

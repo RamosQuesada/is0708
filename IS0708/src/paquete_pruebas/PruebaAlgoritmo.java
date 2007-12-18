@@ -1,6 +1,8 @@
 package paquete_pruebas;
 
 import algoritmo.*;
+import aplicacion.Controlador;
+import aplicacion.Database;
 import aplicacion.Util;
 import aplicacion.Empleado;
 import aplicacion.Turno; // Utilizamos la clase turno de nuestro "gran paquete"
@@ -16,7 +18,7 @@ public class PruebaAlgoritmo {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		String idDepartamento = "Braulio"; // Por ejemplo
+		String idDepartamento = "1"; // Por ejemplo
 		TurnoMatic alg;
 		Cuadrante cuad;
 		Empleado emp1,emp2,emp3;
@@ -45,6 +47,16 @@ public class PruebaAlgoritmo {
 		System.out.println("Nombre del departamento: "+cuad.getIdDepartamento());
 		
 		
+		// Creación del modelo
+		Database db = new Database();
+		
+		// Creación del controlador
+		Controlador controlador = new Controlador(db);
+		
+		alg = new TurnoMatic(6,2007,controlador,turnos,idDepartamento);
+		alg.ejecutaAlgoritmo();
+		
+		/*
 		
 		alg = new TurnoMatic(6,2007,turnos,idDepartamento);  // 007 es un numero de depart, por ejemplo
 		//alg.ejecutaAlgoritmo(disponibles);
