@@ -21,14 +21,17 @@ public class PruebaAlgoritmo2 {
 		int diaCiclo;
 		
 		
-		/*today = new java.util.Date(2007,12,18);
-		fContrato = new java.sql.Date(2007,12,8);
+		today = new java.util.Date();
+		java.sql.Date fechaActual = new java.sql.Date(today.getTime());
+		//YEAR: year - 1900
+		//MES: de 0 a 11 (enero 0, diciembre 11)
+		fContrato = new java.sql.Date(107,11,8);
 		if(fContrato == null)
 			fContrato = new Date(today.getTime());
 		difFechas = today.getTime()-fContrato.getTime();
 		diaCiclo = (int)difFechas/(24*60*60*1000);
-		System.out.println();
-		*/
+		System.out.println("diferencia: " + diaCiclo);
+		
 		
 		
 		Database prueba = new Database();
