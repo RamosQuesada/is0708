@@ -24,13 +24,13 @@ import org.eclipse.swt.graphics.*;
 
 import aplicacion.Empleado;
 import aplicacion.Posicion;
+import aplicacion.Turno;
 
 public class I09_1_1_Creacion_turnos {
 	private Shell padre = null;
 	private ResourceBundle bundle;
 	private aplicacion.Turno turno;
 	private int alto, ancho;
-	private Cuadrante cuadrante;
 	public I09_1_1_Creacion_turnos(Shell padre, ResourceBundle bundle) {
 		this.padre = padre;
 		this.bundle = bundle;
@@ -78,28 +78,20 @@ public class I09_1_1_Creacion_turnos {
 		tId			.setToolTipText(bundle.getString("I09_tip_IdTurno"));
 
 // Grupo 2 - Turno
-		grupo2.setLayout(new GridLayout(1,false));
+		GridLayout g = new GridLayout(1,false);
+		g.verticalSpacing=0;
+		GridData gd = new GridData(SWT.FILL,SWT.FILL,false,true,1,1);
+		gd.heightHint=30;
+		grupo2.setLayout(g);
+		grupo2.setLayoutData(gd);
+		
 
-		// TODO ESTO ES UN CACHO DE APA�O PARA QUE SALGA ALGO
-		// No deber�a crearse un empleado para hacer un turno
-		// Deber�a haber un m�todo en Cuadrante que muestre un turno
-		Empleado e1 = new Empleado(1, "M. Jackson", new Color (shell.getDisplay(), 104, 228,  85));
-		e1.turno.franjaNueva(new Posicion( 9,  6), new Posicion(14,  0));
-		e1.turno.franjaNueva(new Posicion(16,  0), new Posicion(18,  0));
-		ArrayList<Empleado> empleados = new ArrayList<Empleado>();
-		empleados.add(e1);
-		cuadrante = new Cuadrante(shell.getDisplay(), 4, 9, 23, 10, 10, 10, 10, 0, empleados);
-		final Canvas canvas = new Canvas(grupo2, SWT.NONE);
-		canvas.addPaintListener(new PaintListener() {
-			public void paintControl(PaintEvent event) {
-				cuadrante.dibujarCuadranteDia(event.gc, -1);
-			}
-		});
-		canvas.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
-		canvas.setSize(new Point(340,100));
-
-		final Button bAceptar		= new Button(shell, SWT.PUSH);
-		final Button bCancelar		= new Button(shell, SWT.PUSH);		
+		turno = new Turno(0,"nuevo turno","9:00:00","19:15:00","14:00:00",2);
+		turno.anadeGUI(grupo2, 9, 23, 3, true, new Color(grupo2.getDisplay(),80,180,80));
+		turno.anadeGUI(grupo2, 9, 23, 3, false, new Color(grupo2.getDisplay(),80,180,80));
+		
+		final Button bAceptar	= new Button(shell, SWT.PUSH);
+		final Button bCancelar	= new Button(shell, SWT.PUSH);		
 		
 		bAceptar	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		bCancelar	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
@@ -137,14 +129,6 @@ public class I09_1_1_Creacion_turnos {
 		bCancelar.addSelectionListener(sabCancelar);
 		bAceptar.addSelectionListener(sabAceptar);
 
-		canvas.addControlListener(new ControlListener() {
-			public void controlMoved(ControlEvent e) {}
-			public void controlResized(ControlEvent e) {
-				ancho = canvas.getClientArea().width;
-				alto = canvas.getClientArea().height;
-				cuadrante.setTamano(ancho, alto);
-			}
-		});			
 
 		// Bot�n por defecto bAceptar
 		shell.setDefaultButton(bAceptar);

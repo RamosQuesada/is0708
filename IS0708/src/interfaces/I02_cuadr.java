@@ -559,6 +559,5 @@ public class I02_cuadr {
 	public ImageData dameImageImprimible(){
 		return this.cuadranteImg.getImageData();
 	}
-		
-	
+			
 }
