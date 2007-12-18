@@ -11,6 +11,7 @@ import org.eclipse.swt.graphics.*;
 
 import aplicacion.Empleado;
 import aplicacion.Posicion;
+import aplicacion.Util;
 
 import java.util.ResourceBundle;
 import java.util.Locale;
@@ -37,7 +38,7 @@ public class I02_Principal {
 	private Cuadrante cuadranteActual;
 	private Label lEstado;
 	private ProgressBar pbEstado;
-
+	private Date fecha;
 	private ImageData Img;
 
 	public I02_Principal(Shell shell, Display display, ResourceBundle bundle,
@@ -953,8 +954,9 @@ public class I02_Principal {
 		cCuadrantesDer.setLayout(lCuadrantesDer);
 		// final Label lCuadr1=new Label (cCuadrantesDer, SWT.CENTER);
 		// lCuadr1.setText("Aquí se mostrarían los cuadrantes");
+		Empleado empleado=this.vista.getEmpleadoActual();
 		final I02_cuadrEmpl cuadrante = new I02_cuadrEmpl(cCuadrantesDer,
-				false, bundle);
+				false, bundle,empleado,fecha);
 		cuadrante.setSemanal();
 		// Creamos el calendario
 		final DateTime calendario = new DateTime(cBotones, SWT.CALENDAR);
@@ -970,6 +972,10 @@ public class I02_Principal {
 						.println("Fecha cambiada a " + String.valueOf(day)
 								+ " de " + meses[month] + " de "
 								+ String.valueOf(year));
+				System.out.println(Util.aFormatoDate(year,month,day));
+				fecha= Date.valueOf(Util.aFormatoDate(year,month,day));
+				
+				System.out.println(fecha.getYear()+fecha.getMonth()+fecha.getDate());
 			}
 		});
 		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false,

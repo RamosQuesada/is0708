@@ -202,6 +202,30 @@ public class Util {
 		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		return formatter.format(fecha);
 	}
+	
+	/**
+	 * Convierte en un formato para crear fechas
+	 * @param año 
+	 * @param mes 
+	 * @param mes
+	 * @return
+	 */
+	public static String aFormatoDate(int año,int mes,int dia){
+		System.out.println(año+" "+mes+" "+dia);
+		String year=Integer.toString(año);
+		String pmonth = Integer.toString(mes);
+		System.out.println("pmotnth"+pmonth);
+		String fmonth ="0";
+		String pday = Integer.toString(mes);
+		String fday ="0";
+		if (pmonth.length()==1){pmonth.concat("0");	}
+		else{fmonth=pmonth;	}
+		if (pday.length()==1){	pday.concat("0");	}
+		else{fday=pday;	}
+		
+		return((year+"-"+fmonth+"-"+fday));
+		
+	}
 	/**
 	 * Convierte un String con formato YYYY-MM-DD en una fecha de tipo Date.
 	 * @param s el String a convertir
