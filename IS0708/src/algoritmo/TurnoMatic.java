@@ -75,7 +75,7 @@ public class TurnoMatic {
 	
 		//int id = Integer.parseInt(idDepartamento);
 		int id = 1; //de prueba
-		ArrayList<Empleado> listaE = controlador.getEmpleadosDepartamento(id);
+		ArrayList<Empleado> listaE = controlador.getEmpleadosDepartamento(idDepartamento);
 		
 		//Colocamos a los empleados correspondientes a cada día
 		
