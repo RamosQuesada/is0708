@@ -17,7 +17,7 @@ public class PruebasBaseDatos {
 	/**
 	 * @param args
 	 */
-	
+	//jh
 	//CUIDADO!!!!!!!!!!!!
 	//NO inserteis en las tablas un string cuando en la base de datos del servidor 
 	//esta como date porque luego peta al insertar asi q por favor cambiad las pruebas
