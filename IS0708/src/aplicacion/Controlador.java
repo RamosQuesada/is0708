@@ -589,6 +589,8 @@ public class Controlador {
 /******************************************************************************************
  * Métodos relacionados con turnos 
  */
+	
+
 	/**
 	 * Inserta un contrato en la base de datos.
 	 * @param t	el turno a insertar
@@ -666,6 +668,20 @@ public class Controlador {
 		}		
 		return  turnos;
 	}
+	
+	/**
+	 * Devuelve una lista con los identificadores de los  turnos de un empleado 
+	 * de un mes dado
+	 */
+	public ArrayList<Integer> getListaTurnosEmpleado(int mes, int año, int idEmpleado){
+		ArrayList<Integer> turnos=new ArrayList<Integer>();
+		/*
+		 * rellenar , lo suyo seria devolver tantos turnos como dia tuviese el mes...
+		 * asi sabriamos como acceder a un dia determinado
+		 */
+		return turnos;
+	}
+	
 
 /******************************************************************************************
  * Metodos relacionados con Cuadrante
