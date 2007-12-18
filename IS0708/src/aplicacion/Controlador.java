@@ -414,7 +414,7 @@ public class Controlador {
 	 * @param idDept	identificador del departamento
 	 * @return			lista de los empleados de un departamento
 	 */
-	public ArrayList<Empleado> getEmpleadosDepartamento(int idDept){
+	public ArrayList<Empleado> getEmpleadosDepartamento(String idDept){
 		ArrayList<Empleado> emps=new ArrayList<Empleado>();
 		ResultSet rs=_db.obtenEmpleadosDepartamento(idDept);
 		try {
@@ -542,7 +542,7 @@ public class Controlador {
 	 * @return		una instancia del contrato cargado
 	 */
 	public Contrato getContrato(int id) {
-		_db.abrirConexion();
+		//_db.abrirConexion();
 		ResultSet result = _db.obtenContrato(id);		
 		int numeroContrato;
 		int turnoInicial;
@@ -563,7 +563,7 @@ public class Controlador {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		_db.cerrarConexion();
+		//_db.cerrarConexion();
 		return contrato;
 	}
 	
