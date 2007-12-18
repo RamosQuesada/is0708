@@ -210,20 +210,17 @@ public class Util {
 	 * @param mes
 	 * @return
 	 */
-	public static String aFormatoDate(int año,int mes,int dia){
+	public static String aFormatoDate(String año,String mes,String dia){
 		System.out.println(año+" "+mes+" "+dia);
-		String year=Integer.toString(año);
-		String pmonth = Integer.toString(mes);
-		System.out.println("pmotnth"+pmonth);
-		String fmonth ="0";
-		String pday = Integer.toString(mes);
-		String fday ="0";
-		if (pmonth.length()==1){pmonth.concat("0");	}
-		else{fmonth=pmonth;	}
-		if (pday.length()==1){	pday.concat("0");	}
-		else{fday=pday;	}
+		String year=año;
+		String month;
+		String day;
+		if (mes.length()==1){month=("0"+mes);}
+		else{month =mes;}
+		if (dia.length()==1){day=("0"+dia);}
+		else{day = dia;}
 		
-		return((year+"-"+fmonth+"-"+fday));
+		return((year+"-"+month+"-"+day));
 		
 	}
 	/**
