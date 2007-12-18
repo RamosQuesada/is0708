@@ -179,8 +179,12 @@ public class I02_cuadrEmpl {
 		lCuadranteTitulo.setFont(new Font(c.getDisplay(),fname,15,0));
 		// TODO Esto tendr� que cambiarse por la fecha elegida en el calendario
 		if(fecha!=null){
-		lCuadranteTitulo.setText(Util.dateAString(fecha));
+			lCuadranteTitulo.setText(Util.dateAString(fecha));
 		}
+		else{
+			lCuadranteTitulo.setText(Util.dateAString(new Date(System.currentTimeMillis())));
+		}
+		
 		lCuadranteTitulo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		
 		lGridCuadrante= new Label (c, SWT.LEFT);
@@ -264,6 +268,7 @@ public class I02_cuadrEmpl {
 	}
 	
 	public void actualizaFecha(Date fecha){
+		System.out.println("FECHA:"+Util.dateAString(fecha));
 		this.fecha=fecha;
 		lCuadranteTitulo.setText(Util.dateAString(fecha));
 		this.redibujar();
