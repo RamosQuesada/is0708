@@ -623,24 +623,49 @@ public class Controlador {
 		try {
 			ResultSet rs = _db.obtenListaTurnosEmpleados();
 			while(rs.next()){
-			int idTurn = rs.getInt("IdTurno");
-			String descr = rs.getString("Descripcion");
-			Time HoraE = rs.getTime("HoraEntrada");
-			Time HoraS = rs.getTime("HoraSalida");
-			Time HoraI = rs.getTime("HoraInicioDescanso");
-			Time duracion = rs.getTime("DuracionDescanso");
-			int descanso = aplicacion.Util.dameMinutos(duracion);
-			Turno t = new Turno(idTurn,descr,HoraE,HoraS,HoraI,descanso);
-			turnos.add(t);
+				int idTurn = rs.getInt("IdTurno");
+				String descr = rs.getString("Descripcion");
+				Time HoraE = rs.getTime("HoraEntrada");
+				Time HoraS = rs.getTime("HoraSalida");
+				Time HoraI = rs.getTime("HoraInicioDescanso");
+				Time duracion = rs.getTime("DuracionDescanso");
+				int descanso = aplicacion.Util.dameMinutos(duracion);
+				Turno t = new Turno(idTurn,descr,HoraE,HoraS,HoraI,descanso);
+				turnos.add(t);
 			}
 			
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println("Error al obtener Lista de Turnos en la base de datos");
-		}
-		
-	return  turnos;
-	}	
+		}		
+		return  turnos;
+	}
+	
+	public ArrayList<Turno> getListaTurnosContrato(int idEmpl){
+		ArrayList<Turno> turnos= new ArrayList<Turno>();
+		try {
+			ResultSet rs = _db.obtenListaTurnosContrato(idEmpl);
+			while(rs.next()){
+				int idTurn = rs.getInt("IdTurno");
+				ResultSet rs2 = _db.obtenTurno(idTurn);
+				while (rs2.next()){
+					String descr = rs2.getString("Descripcion");
+					Time HoraE = rs2.getTime("HoraEntrada");
+					Time HoraS = rs2.getTime("HoraSalida");
+					Time HoraI = rs2.getTime("HoraInicioDescanso");
+					Time duracion = rs2.getTime("DuracionDescanso");
+					int descanso = aplicacion.Util.dameMinutos(duracion);
+					Turno t = new Turno(idTurn,descr,HoraE,HoraS,HoraI,descanso);
+					turnos.add(t);
+				}
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error al obtener Lista de Turnos en la base de datos");
+		}		
+		return  turnos;
+	}
 
 /******************************************************************************************
  * Metodos relacionados con Cuadrante

@@ -175,6 +175,26 @@ public class Database extends Thread {
 	}
 	
 	/**
+	 * Listar los distintos turnos que tiene un determinado empleado. 
+	 * @param idEmpl	Identificador del empleado
+	 * @return			Todos los  identificadores de turnos que tiene un determinado empleado.
+	 */
+	public ResultSet obtenListaTurnosContrato(int idEmpl){
+		ResultSet r = null;
+		try {
+			st = con.createStatement();
+			r = st
+					.executeQuery("SELECT ListaTurnosPorContrato.IdTurno FROM USUARIO,ListaTurnosPorContrato WHERE NumVendedor = "
+							+ idEmpl
+							+ " and USUARIO.IdContrato=ListaTurnosPorContrato.IdContrato");
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.out.println("Error al realizar la consulta del empleado ");
+		}
+		return r;
+	}
+	
+	/**
 	 * Carga uno o varios empleados desde la base de datos, que coincidan con
 	 * los datos dados. Los parámetros pueden ser nulos.
 	 * 
@@ -1033,6 +1053,23 @@ public class Database extends Thread {
 		}
 		catch (SQLException e) {
 			System.out.println("Error obtenMensajesEntrantes ");
+		}
+		return result;
+	}
+	
+	/**
+	 * recupera un turno de la base de datos indicando el id del mismo
+	 * @param turno	identificador del turno
+	 * @return	el turno indicado
+	 */
+	public ResultSet obtenTurno(int turno) {
+		ResultSet result = null;
+		try {
+			st = con.createStatement();
+			result = st.executeQuery("SELECT * FROM TURNOS WHERE IdTurno="+turno+";");
+		}
+		catch (SQLException e) {
+			System.out.println("Error obtenTurno ");
 		}
 		return result;
 	}
