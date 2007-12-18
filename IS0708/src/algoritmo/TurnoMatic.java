@@ -74,7 +74,8 @@ public class TurnoMatic {
 	 */
 	public Cuadrante ejecutaAlgoritmo(){
 	
-		int id = Integer.parseInt(idDepartamento);
+		//int id = Integer.parseInt(idDepartamento);
+		int id = 1; //de prueba
 		ArrayList<Empleado> listaE = controlador.getEmpleadosDepartamento(id);
 		
 		//Colocamos a los empleados correspondientes a cada día

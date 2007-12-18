@@ -814,7 +814,7 @@ public class Empleado implements Drawable {
 		
 		//cálculo del dia en el que nos encontramos dentro del ciclo.
 		today = new java.util.Date();
-		difFechas = fContrato.getTime()-today.getTime();
+		difFechas = today.getTime()-fContrato.getTime();
 		diaCiclo = (int)difFechas/(24*60*60*1000);
 		
 		//Obtencion del contrato del empleado.
@@ -824,6 +824,7 @@ public class Empleado implements Drawable {
 		turnosStr = obtenerTurnos(patron);
 		
 		//Obtencion del turno correspondiente a ese dia.
+		diaCiclo = 2; //prueba.
 		turnoStr = turnosStr.get(diaCiclo);
 		
 		//COMPROBAR SI TRABAJA UN DIA	
