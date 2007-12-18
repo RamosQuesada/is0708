@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.widgets.*;
@@ -88,12 +86,11 @@ public class Empleado implements Drawable {
 /*****************************************************************************************
  * Métodos privados:
  */
-
 	/**
 	 * Actualiza la lista de departamentos cargándolos de la BD
 	 * @param c
 	 */
-	private void actualizarDepartamentos(Controlador c) {
+	private void actualizarDepartamentos(Controlador c) {		
 		// Actualizar la lista si hace falta
 		if (idDepartamentos.size() > departamentos.size())
 			departamentos.clear();
@@ -810,9 +807,9 @@ public class Empleado implements Drawable {
 	public void anadeGUI(Composite composite, int horaInicio, int horaFin, int subdivisiones, boolean primero){
 		// Composite de fuera, donde van todos los empleados
 		final Composite c = composite;
-		GridData gd = new GridData(SWT.FILL,SWT.FILL,true,false,2,5);
+		GridData gd = new GridData(SWT.FILL,SWT.FILL,true,true,2,5);
 		// Alto de cada fila
-		gd.heightHint=30;
+		gd.heightHint=50;
 		c.setLayoutData(gd);
 		GridLayout g = new GridLayout(2,false);
 		g.verticalSpacing = 0;
