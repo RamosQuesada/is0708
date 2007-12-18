@@ -972,10 +972,15 @@ public class I02_Principal {
 						.println("Fecha cambiada a " + String.valueOf(day)
 								+ " de " + meses[month] + " de "
 								+ String.valueOf(year));
-				System.out.println(Util.aFormatoDate(year,month,day));
-				fecha= Date.valueOf(Util.aFormatoDate(year,month,day));
-				
-				System.out.println(fecha.getYear()+fecha.getMonth()+fecha.getDate());
+				System.out.println(Util.aFormatoDate(
+						Integer.toString(year),
+						Integer.toString(month),
+						Integer.toString(day))
+						);
+				fecha= Date.valueOf(Util.aFormatoDate(Integer.toString(year),
+						Integer.toString(month),
+						Integer.toString(day))
+						);
 			}
 		});
 		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false,
