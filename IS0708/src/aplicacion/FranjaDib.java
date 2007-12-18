@@ -133,7 +133,7 @@ public class FranjaDib extends Franja {
 			fin    = margenIzq + margenNombres + tamHora*(pfin.dameHora()   -horaInicio) + tamSubdiv*pfin.dameCMin();
 	}
 
-	public Boolean contienePixel(int x) {
+	public Boolean contienePixel(int x, int y) {
 		return (x>=inicio && x<=fin);// && (y>10 && y<20);
 	}
 	/**
