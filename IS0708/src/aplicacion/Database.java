@@ -1065,7 +1065,7 @@ public class Database extends Thread {
 	public ResultSet obtenTurno(int turno) {
 		ResultSet result = null;
 		try {
-			st = con.createStatement();
+			st = con.createStatement();			
 			result = st.executeQuery("SELECT * FROM TURNOS WHERE IdTurno="+turno+";");
 		}
 		catch (SQLException e) {
