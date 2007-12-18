@@ -2,6 +2,7 @@ package interfaces;
 
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
@@ -12,6 +13,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
 import aplicacion.Empleado;
 import aplicacion.Posicion;
+import aplicacion.Util;
 
 public class I02CuadranteEmpleado {
 	//private final int anchoLados = 5; // El ancho de los lados de una franja, de donde se coge para estirarla y encogerla 
@@ -188,16 +190,17 @@ public class I02CuadranteEmpleado {
 			}
 		}
 		gc.setLineStyle(SWT.LINE_SOLID);
-		dibujarTurno(gc,0,10.5f,12.5f,"INFOR.");
-		dibujarTurno(gc,1,12,13,"FRUTE.");
-		dibujarTurno(gc,2,15,16,"PELUQ.");
-		dibujarTurno(gc,3,15,23,"FRUTE.");
-		dibujarTurno(gc,4,10,12,"CAFET.");
-		dibujarTurno(gc,4,15,16,"CAFET.");
-		dibujarTurno(gc,5,17,18,"VIAJE.");
-		dibujarTurno(gc,6,9,17, "VIAJE.");
-		dibujarTurno(gc,0,16,17,"VIAJE.");
-		dibujarTurno(gc,6,18,23,"VIAJE.");
+		dibujarTurnos(gc);
+	//	dibujarTurno(gc,0,10.5f,12.5f,"INFOR.");
+	//	dibujarTurno(gc,1,12,13,"FRUTE.");
+	//	dibujarTurno(gc,2,15,16,"PELUQ.");
+	//	dibujarTurno(gc,3,15,23,"FRUTE.");
+	//	dibujarTurno(gc,4,10,12,"CAFET.");
+	//	dibujarTurno(gc,4,15,16,"CAFET.");
+	//	dibujarTurno(gc,5,17,18,"VIAJE.");
+	//	dibujarTurno(gc,6,9,17, "VIAJE.");
+	//	dibujarTurno(gc,0,16,17,"VIAJE.");
+	//	dibujarTurno(gc,6,18,23,"VIAJE.");
 		//this.dibujarLineaHorizontal(gc, 15.0f);
 		int num_subdivisiones=(int)((this.subdivisiones)*(this.horaFin-this.horaInicio)+1);
 		for(int cont=0;cont<num_subdivisiones;cont++){
@@ -206,6 +209,37 @@ public class I02CuadranteEmpleado {
 			hora +=this.horaInicio;
 			this.dibujarLineaHorizontal(gc, hora);
 		}
+	}
+	
+	public void actualizarFecha(Date fecha){
+		this.fecha=fecha;
+	}
+
+	public void dibujarTurnos(GC gc){
+		//GregorianCalendar calendario=new GregorianCalendar();
+		Date fechaActual;
+		if(fecha==null){
+		fecha=new Date(System.currentTimeMillis());}
+		GregorianCalendar calendario = new GregorianCalendar();
+		//System.out.println(ahoraCal.getClass());
+		//calendario.setFirstDayOfWeek(calendario.MONDAY);
+		//calendario.set(fecha.getYear(),fecha.getMonth(),fecha.getDate());
+		//calendario.setGregorianChange(fecha);
+		System.out.println("pruebasel" +Util.dateAString(fecha));
+		
+
+		calendario.set(GregorianCalendar.DAY_OF_MONTH, fecha.getDate());
+		calendario.set(GregorianCalendar.MONTH, fecha.getMonth());
+		calendario.set(GregorianCalendar.YEAR, fecha.getYear());
+		System.out.println("pruebacal" +Util.dateAString(calendario.getTime()));
+		System.out.println(calendario.get(GregorianCalendar.DAY_OF_WEEK));
+		while(calendario.get(GregorianCalendar.DAY_OF_WEEK)!=6){
+			calendario.add(Calendar.DATE, -1);
+		}
+		System.out.println(Util.dateAString(calendario.getTime()));
+		
+			
+		//}
 	}
 	
 	/**
