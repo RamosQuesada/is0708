@@ -12,6 +12,7 @@
 // TODO Hacer que reduzca la resoluci�n del grid en funci�n del tama�o de la pantalla
 package interfaces;
 
+import java.sql.Date;
 import java.util.ResourceBundle;
 
 import org.eclipse.swt.*;
@@ -21,6 +22,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.events.*;
 
+import aplicacion.Empleado;
 import aplicacion.Franja;
 
 
@@ -55,7 +57,8 @@ public class I02_cuadrEmpl {
 	private int movimiento;
 	private final Label lGridCuadrante;
 	private final Combo cGridCuadrante;
-	
+	private Empleado empleado;
+	private Date fecha;
 	private MouseListener mouseListenerCuadrSemanal;
 	private MouseListener mouseListenerCuadrMensual;
 	private MouseMoveListener mouseMoveListenerCuadrSemanal;
@@ -161,7 +164,8 @@ public class I02_cuadrEmpl {
 	 * y el cuadrante.
 	 * @param c	Composite sobre el que dibujar el cuadrante
 	 */
-	public I02_cuadrEmpl(Composite c, Boolean diario,ResourceBundle bundle) {
+	public I02_cuadrEmpl(Composite c, Boolean diario,ResourceBundle bundle,Empleado empleado,
+			Date fecha) {
 		this.semanal = diario;
 		this._bundle = bundle;
 		final GridLayout l = new GridLayout(3,false);
@@ -210,7 +214,8 @@ public class I02_cuadrEmpl {
 		empleadoActivo = -1;
 		horaInicio = 9;
 		horaFin = 23;
-		cuadrante = new I02CuadranteEmpleado(display, 4, horaInicio, horaFin, margenIzq, margenDer, margenSup, margenInf, margenNombres,_bundle);
+		cuadrante = new I02CuadranteEmpleado(display, 4, horaInicio, horaFin, margenIzq, margenDer, margenSup, margenInf, margenNombres,_bundle,
+				empleado,fecha);
 		calcularTamano();
 		display = canvas.getDisplay();
 		canvas.addPaintListener(new PaintListener() {

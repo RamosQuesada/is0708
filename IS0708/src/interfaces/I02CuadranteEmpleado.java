@@ -1,5 +1,6 @@
 package interfaces;
 
+import java.sql.Date;
 import java.util.Calendar;
 import java.util.ResourceBundle;
 
@@ -29,6 +30,7 @@ public class I02CuadranteEmpleado {
 	public Empleado empleado;
 	private int tamano =8;
 	private ResourceBundle _bundle;
+	private Date fecha;
 	
 
 
@@ -55,9 +57,12 @@ public class I02CuadranteEmpleado {
 	 * 						los nombres.
 	 */
 	public I02CuadranteEmpleado(Display d, int subdivisiones, int horaInicio, int horaFin, int margenIzq, 
-			int margenDer, int margenSup, int margenInf, int margenNombres,ResourceBundle bundle) {
+			int margenDer, int margenSup, int margenInf, int margenNombres,ResourceBundle bundle,Empleado empleado,
+			Date fecha) {
 		display = d;
 		_bundle=bundle;
+		this.empleado=empleado;
+		this.fecha=fecha;
 		this.margenIzq  = margenIzq;
 		this.margenDer  = margenDer;
 		this.margenSup  = margenSup;
