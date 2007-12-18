@@ -472,7 +472,7 @@ public class Turno {
 					
 					while (!encontrado2	&& j < franjas.size()) {
 						f2 = franjas.get(j);
-						if ((f.pinicio.menorOIgualQue(f2.pfin) && f2.contienePixel(f.inicio - 10)) | (f.inicio < f2.inicio && f.fin > f2.fin)) {
+						if ((f.pinicio.menorOIgualQue(f2.pfin) && f2.contienePixel(f.inicio - 10, e.y)) | (f.inicio < f2.inicio && f.fin > f2.fin)) {
 							encontrado2 = true;
 							Posicion ancho2 = f2.pfin.diferencia(f2.pinicio);
 							f.pinicio = f2.pinicio;
@@ -482,7 +482,7 @@ public class Turno {
 							despl += (f2.fin - f2.inicio);
 							franjas.remove(j);
 							f.actualizarPixeles(margenIzq, 0, tamSep, tamSubsep, subdivisiones, horaApertura);
-						} else if ((f.pfin.mayorOIgualQue(f2.pinicio) && f2.contienePixel(f.fin + 10))	| (f.inicio < f2.inicio && f.fin > f2.fin)) {
+						} else if ((f.pfin.mayorOIgualQue(f2.pinicio) && f2.contienePixel(f.fin + 10, e.y))	| (f.inicio < f2.inicio && f.fin > f2.fin)) {
 							encontrado2 = true;
 							f.pfin = f2.pfin;
 							franjas.remove(j);
@@ -517,7 +517,7 @@ public class Turno {
 						Boolean encontrado2 = false;
 						while (!encontrado2 && j < franjas.size()) {
 							f2 = franjas.get(j);
-							if (f != f2 && ((f.pinicio.menorOIgualQue(f2.pfin) && f2.contienePixel(e.x - 10)) | (f.inicio <= f2.inicio && f.fin >= f2.fin))) {
+							if (f != f2 && ((f.pinicio.menorOIgualQue(f2.pfin) && f2.contienePixel(e.x - 10, e.y)) | (f.inicio <= f2.inicio && f.fin >= f2.fin))) {
 								encontrado2 = true;
 								f.pinicio = f2.pinicio;
 								franjas.remove(j);
@@ -552,7 +552,7 @@ public class Turno {
 						Boolean encontrado2 = false;
 						while (terminadoDeCrear	&& !encontrado2	&& j < franjas.size()) {
 							f2 = franjas.get(j);
-							if (f != f2	&& (f.pfin.mayorOIgualQue(f2.pinicio) && f2.contienePixel(e.x + 10)) | (f.inicio <= f2.inicio && f.fin >= f2.fin)) {
+							if (f != f2	&& (f.pfin.mayorOIgualQue(f2.pinicio) && f2.contienePixel(e.x + 10, e.y)) | (f.inicio <= f2.inicio && f.fin >= f2.fin)) {
 								encontrado2 = true;
 								f.pfin = f2.pfin;
 								franjas.remove(j);

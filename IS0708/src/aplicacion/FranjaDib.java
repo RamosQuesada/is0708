@@ -134,7 +134,7 @@ public class FranjaDib extends Franja {
 	}
 
 	public Boolean contienePixel(int x, int y) {
-		return (x>=inicio && x<=fin);// && (y>10 && y<20);
+		return (x>=inicio && x<=fin) && (y>10 && y<20);
 	}
 	/**
 	 * Comprueba si el píxel dado está contenido en el interior de la franja, sin tener en
