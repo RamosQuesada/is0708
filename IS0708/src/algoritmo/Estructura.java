@@ -28,8 +28,9 @@ public class Estructura {
 	public Estructura(int mes, int anio, Controlador cont, String idDepartamento){//constructora de la estructura
 		this.idDepartamento = idDepartamento;
 		this.controlador = cont;
-		int dep = Integer.parseInt(this.idDepartamento);
-		this.personal = cont.getEmpleadosDepartamento(dep);
+		//int dep = Integer.parseInt(this.idDepartamento);
+		//this.personal = cont.getEmpleadosDepartamento(dep);
+		this.personal = cont.getEmpleadosDepartamento(this.idDepartamento);
 		
 		// Calcular el numero de trozos en que se divide el horario
 		// Recuperar de la base de datos la lista de todos los turnos del departamento
