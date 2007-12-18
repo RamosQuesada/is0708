@@ -160,13 +160,12 @@ public class Database extends Thread {
 	 * @param idDept	identificador de departamento
 	 * @return			los empleados que pertenecen al id del departemento dado
 	 */
-	public ResultSet obtenEmpleadosDepartamento(int idDept){
+	public ResultSet obtenEmpleadosDepartamento(String nombre){
 		ResultSet r = null;
-		String subconsulta="SELECT NumVendedor FROM DepartamentoUsuario,NumerosDEPARTAMENTOs WHERE Numero ="+idDept+
-							" and NombreDepartamento=Nombre";
+		String consulta="SELECT NumVendedor FROM DepartamentoUsuario WHERE NombreDepartamento ='"+nombre+"'";
 		try {
 			st = con.createStatement();
-			r = st.executeQuery("SELECT * FROM USUARIO WHERE NumVendedor IN ("+subconsulta+") ORDER BY IdContrato");
+			r = st.executeQuery(consulta);
 		} catch (SQLException e) {
 			// TODO: handle exception
 			System.out.println("Error al realizar la consulta del empleado ");
