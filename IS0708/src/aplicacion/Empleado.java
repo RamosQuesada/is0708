@@ -848,13 +848,17 @@ public class Empleado implements Drawable {
 		//cálculo del dia en el que nos encontramos dentro del ciclo.
 		
 		today = new java.util.Date();
+		java.sql.Date fechaActual = new java.sql.Date(today.getTime());
 		if(fContrato == null)
-			fContrato = new Date(today.getTime());
-		difFechas = today.getTime()-fContrato.getTime();
+			fContrato = new Date(fechaActual.getTime());
+		difFechas = fechaActual.getTime()-fContrato.getTime();
 		diaCiclo = (int)difFechas/(24*60*60*1000);
 		
 		//Obtencion del contrato del empleado.
 		contrato = cont.getContrato(this.getContratoId());
+		
+		if(diaCiclo == contrato.getDuracionCiclo())
+				fContrato.setTime(fechaActual.getTime() + (24*60*60*1000));
 		
 		patron = contrato.getPatron();
 		turnosStr = obtenerTurnos(patron);
