@@ -103,9 +103,11 @@ public class I13_Elegir_empleado extends Thread {
 		listFiltro.addMouseListener(new MouseListener() {
 			public void mouseDoubleClick(MouseEvent e) {}
 			public void mouseDown(MouseEvent e) {
-				idEmpl = empleadosOut.get(listFiltro.getSelectionIndex()).getEmplId();
-				tNombre.setText(listFiltro.getItem(listFiltro.getSelectionIndex()));
-				listShell.setVisible(false);
+				if (listFiltro.getSelectionIndex()!=-1) {
+					idEmpl = empleadosOut.get(listFiltro.getSelectionIndex()).getEmplId();
+					tNombre.setText(listFiltro.getItem(listFiltro.getSelectionIndex()));
+					listShell.setVisible(false);
+				}
 			}
 			public void mouseUp(MouseEvent e) {}
 			

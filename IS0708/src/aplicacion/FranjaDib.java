@@ -8,11 +8,11 @@ import org.eclipse.swt.widgets.*;
  * Extiende la clase Franja, que representa un intervalo de tiempo determinado por dos Posiciones,
  * pinicio y pfin, con funciones para poder dibujar y manipular una Franja.
  *  
- * @param pinicio	Posición izquierda del intervalo
- * @param pfin		Posición derecha del invervalo
- * @param inicio	Posición izquierda del intervalo en píxeles
- * @param fin		Posición derecha del intervalo en píxeles
- * @param activa	Determina si la franja está activa, para representarla con más o menos información
+ * @param pinicio	Posiciï¿½n izquierda del intervalo
+ * @param pfin		Posiciï¿½n derecha del invervalo
+ * @param inicio	Posiciï¿½n izquierda del intervalo en pï¿½xeles
+ * @param fin		Posiciï¿½n derecha del intervalo en pï¿½xeles
+ * @param activa	Determina si la franja estï¿½ activa, para representarla con mï¿½s o menos informaciï¿½n
  * @author Daniel Dionne
  *
  */
@@ -22,8 +22,8 @@ public class FranjaDib extends Franja {
 		super(pinicio, pfin);
 	}
 	/**
-	 * Cambia el color del pincel (foreground) sin exceder los límites de Color.
-	 * Si se excede un límite, se pone a 0 o 255, respectivamente.
+	 * Cambia el color del pincel (foreground) sin exceder los lï¿½mites de Color.
+	 * Si se excede un lï¿½mite, se pone a 0 o 255, respectivamente.
 	 * @param gc	El GC del que cambiar el color
 	 * @param r		Valor del componente rojo
 	 * @param g		Valor del componente verde
@@ -31,7 +31,7 @@ public class FranjaDib extends Franja {
 	 * @see #cambiarRelleno(GC, int, int, int)
 	 */
 	private void cambiarPincel (Display display, GC gc, int r, int g, int b) {
-		// Controlar límites de colores
+		// Controlar lï¿½mites de colores
 		if (r<0) r=0;
 		if (g<0) g=0;
 		if (b<0) b=0;
@@ -41,8 +41,8 @@ public class FranjaDib extends Franja {
 		gc.setForeground(new Color(display,r, g, b));
 	}
 	/**
-	 * Cambia el color del fondo (background) sin exceder los límites de Color.
-	 * Si se excede un límite, se pone a 0 o 255, respectivamente.
+	 * Cambia el color del fondo (background) sin exceder los lï¿½mites de Color.
+	 * Si se excede un lï¿½mite, se pone a 0 o 255, respectivamente.
 	 * @param gc	El GC del que cambiar el color
 	 * @param r		Valor del componente rojo
 	 * @param g		Valor del componente verde
@@ -50,7 +50,7 @@ public class FranjaDib extends Franja {
 	 * @see #cambiarPincel(GC, int, int, int)
 	 */
 	private void cambiarRelleno(Display display, GC gc, int r, int g, int b) {
-		// Controlar límites de colores
+		// Controlar lï¿½mites de colores
 		if (r<0) r=0;
 		if (g<0) g=0;
 		if (b<0) b=0;
@@ -61,10 +61,10 @@ public class FranjaDib extends Franja {
 	}
 
 	/**
-	 * Dibuja una Franja. Si está activa, coloca sobre la misma una pestaña informativa
-	 * @param display Display sobre el que se está dibujando
+	 * Dibuja una Franja. Si estï¿½ activa, coloca sobre la misma una pestaï¿½a informativa
+	 * @param display Display sobre el que se estï¿½ dibujando
 	 * @param gc GC sobre el que se dibuja la Franja
-	 * @param despV Desplazamiento vertical en píxeles desde la parte superior
+	 * @param despV Desplazamiento vertical en pï¿½xeles desde la parte superior
 	 * @param color Color de la Franja
 	 */
 	public void dibujarFranja (Display display, GC gc, int despV, Color color) {
@@ -78,15 +78,15 @@ public class FranjaDib extends Franja {
 		cambiarPincel(display, gc, r-100,g-100,b-100);
 		gc.fillRoundRectangle(inicio,despV,fin-inicio,15,8,8);
 		gc.drawRoundRectangle(inicio,despV,fin-inicio,15,8,8);
-		// Si la franja está activa, mostrar una pestaña con información adicional
-		// TODO Si la franja está muy a la derecha y es pequeña, la pestaña se sale
+		// Si la franja estï¿½ activa, mostrar una pestaï¿½a con informaciï¿½n adicional
+		// TODO Si la franja estï¿½ muy a la derecha y es pequeï¿½a, la pestaï¿½a se sale
 
-		// Dibujar pestaña encima de la franja, si está activa
+		// Dibujar pestaï¿½a encima de la franja, si estï¿½ activa
 		if (activa) {
 			int subDivs = 0;
 			subDivs += (pfin.dameHora() - pinicio.dameHora())*12;
 			subDivs += (pfin.dameCMin() - pinicio.dameCMin());
-			// Modificar los colores teniendo siempre en cuenta los límites [0-255]
+			// Modificar los colores teniendo siempre en cuenta los lï¿½mites [0-255]
 			cambiarRelleno(display, gc, r-50,g-50,b-50);
 			gc.fillRoundRectangle(inicio+2,despV-13,135,20,10,10);
 			cambiarRelleno(display, gc, r,g,b);	
@@ -120,7 +120,7 @@ public class FranjaDib extends Franja {
 		}
 	}
 	public void actualizarPixeles (int margenIzq, int margenNombres, int tamHora, int tamSubdiv, int subdivisiones, int horaInicio) {
-		// Si coincide con una subdivisión representada, pagar el inicio a la subdivisión para que no quede feo
+		// Si coincide con una subdivisiï¿½n representada, pagar el inicio a la subdivisiï¿½n para que no quede feo
 		if (pinicio.dameCMin()!=0 && pinicio.dameCMin()%(12/subdivisiones)==0) {
 			inicio = margenIzq + margenNombres + tamHora*(pinicio.dameHora()-horaInicio) + (tamHora/subdivisiones)*(pinicio.dameCMin()/(12/subdivisiones));
 		}
@@ -134,13 +134,14 @@ public class FranjaDib extends Franja {
 	}
 
 	public Boolean contienePixel(int x) {
-		return x>=inicio && x<=fin;
+		return (x>=inicio && x<=fin);// && (y>10 && y<20);
 	}
 	/**
-	 * Comprueba si el píxel dado está contenido en el interior de la franja, sin tener en
+	 * Comprueba si el pÃ­xel dado estÃ¡ contenido en el interior de la franja, sin tener en
 	 * cuenta los bordes, es decir, en el intervalo abierto (inicio+d,fin-d),
-	 * donde 'd' es el ancho del borde de la franja, de donde se coge para estirarla y encogerla.
-	 * @param x	Píxel a comprobar
+	 * donde 'd' es el ancho del borde de la franja, de donde se coge para estirarla y 
+	 * encogerla.
+	 * @param x	PÃ­xel a comprobar
 	 * @see #contienePixel(int)
 	 * @see	#tocaLadoDerecho(int)
 	 * @see #tocaLadoIzquierdo(int)
@@ -152,10 +153,10 @@ public class FranjaDib extends Franja {
 		return mueve;
 	}
 	/**
-	 * Comprueba si el píxel dado está contenido en el lado izquierdo de la franja, es decir,
+	 * Comprueba si el pï¿½xel dado estï¿½ contenido en el lado izquierdo de la franja, es decir,
 	 * en el intervalo cerrado [inicio-d,inicio+d], donde 'd' es el ancho del borde de la franja,
 	 * de donde se coge para estirarla y encogerla.
-	 * @param x Píxel a comprobar
+	 * @param x Pï¿½xel a comprobar
 	 * @see #contienePixel(int)
 	 * @see #contienePixelInt(int)
 	 * @see	#tocaLadoDerecho(int)
@@ -167,7 +168,7 @@ public class FranjaDib extends Franja {
 		return cambiaInicio;
 	}
 	/**
-	 * Comprueba si el píxel dado está contenido en el lado izquierdo de la franja, es decir,
+	 * Comprueba si el pï¿½xel dado estï¿½ contenido en el lado izquierdo de la franja, es decir,
 	 * en el intervalo cerrado [inicio-d,inicio+d], donde 'd' es el ancho del borde de la franja,
 	 * de donde se coge para estirarla y encogerla. 
 	 * @param x

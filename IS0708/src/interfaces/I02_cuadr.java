@@ -96,16 +96,6 @@ public class I02_cuadr {
 
 	}
 
-	private void activarFranja(int franja, int mov) {
-		franjaActiva = cuadrante.empleados.get(empleadoActivo).turno.franjas.get(franja);
-		franjaActiva.activarFranja();
-		movimiento = mov;
-		// Movimientos:
-		// 0: Ninguno
-		// 1: Mover inicio
-		// 2: Desplazar
-		// 3: Mover final
-	}
 
 	private void desactivarFranja() {
 		if (franjaActiva!=null)
@@ -168,6 +158,16 @@ public class I02_cuadr {
 	 * y el cuadrante.
 	 * @param c	Composite sobre el que dibujar el cuadrante
 	 */
+	private void activarFranja(int franja, int mov) {
+		//franjaActiva = franjas.get(franja);
+		franjaActiva.activarFranja();
+		movimiento = mov;
+		// Movimientos:
+		// 0: Ninguno
+		// 1: Mover inicio
+		// 2: Desplazar
+		// 3: Mover final
+	}
 	public I02_cuadr(Composite c, Boolean diario, ArrayList<Empleado> empleados, Date fecha) {
 		this.diario = diario;
 		this.empleados = empleados;
