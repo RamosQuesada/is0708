@@ -125,9 +125,9 @@ public class I13_Elegir_empleado extends Thread {
 	public void filtrar() {
 		empleadosOut.clear();
 		listFiltro.removeAll();
-		if (!tNombre.getText().isEmpty()) {
+		if (tNombre.getText()!="") {
 			for (int i=0; i<empleadosIn.size(); i++) {
-				if (tNombre.getText().isEmpty() || empleadosIn.get(i).getNombreCompleto().toLowerCase().contains(tNombre.getText().toLowerCase()))
+				if (tNombre.getText()=="" || empleadosIn.get(i).getNombreCompleto().toLowerCase().contains(tNombre.getText().toLowerCase()))
 					empleadosOut.add(empleadosIn.get(i));
 			}
 			for (int i=0; i<empleadosOut.size(); i++) {
