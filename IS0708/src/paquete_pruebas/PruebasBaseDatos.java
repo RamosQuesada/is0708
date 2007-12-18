@@ -25,6 +25,7 @@ public class PruebasBaseDatos {
 		Database prueba = new Database();
 		prueba.abrirConexion();
 		Controlador c = new Controlador(prueba);
+//		c.getListaTurnosContrato(2);
 		//c.getEmpleados(null, "dep", null, null, null, null, 1);
 		/*
 		ArrayList a = new ArrayList();
