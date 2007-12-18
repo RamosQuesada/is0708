@@ -218,7 +218,7 @@ public class Vista extends Thread {
 	}
 	
 	public ArrayList<Empleado> getEmpleadosDepartamento(String idDept) {
-		return controlador.getEmpleadosDepartamento(0);
+		return controlador.getEmpleadosDepartamento(idDept);
 	}
 
 /*****************************************************************************************
