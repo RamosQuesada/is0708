@@ -82,7 +82,6 @@ public class TurnoMatic {
 		ListasEmpleados[][] horario = estruc.getDias();
 		ArrayList<Empleado> reser;
 		ArrayList<Empleado> dispo;
-		ArrayList<Turno> turno;
 		Empleado e;
 		Calendario calendario;
 		
@@ -120,61 +119,6 @@ public class TurnoMatic {
 		}		
 		return this.cuadrante;
 }
-	/**
-	 * @deprecated
-	 * Es solo para pruebas
-	 * @return
-	 */
-	public Cuadrante ejecutaAlgoritmoPrueba(ArrayList<Empleado> emp){
-		
-	//	int id = Integer.parseInt(idDepartamento);
-	//	ArrayList<Empleado> listaE = controlador.getEmpleadosDepartamento(id);
-		ArrayList<Empleado> listaE = emp;
-		
-		//Colocamos a los empleados correspondientes a cada día
-		
-		ListasEmpleados[][] horario = estruc.getDias();
-		ArrayList<Empleado> reser;
-		ArrayList<Empleado> dispo;
-		ArrayList<Turno> turno;
-		Empleado e;
-		Calendario calendario;
-		
-		calendario = estruc.getCalendario();
-
-		//Recorremos los dias del mes
-		for(int i=0; i<Util.dameDias(mes,anio); i++){
-			
-			//dividimos en el numero de franjas de cada dia
-			for(int j=0; j<estruc.getNumTrozos(); j++){
-			//for(int j=0; j<disp.size(); j++){
-				Time inif = estruc.getTrozosHorario().get(j); 
-				Time finf = estruc.getTrozosHorario().get(j+1);
-				dispo = horario[i][j].getEmpleados();
-				reser = horario[i][j].getReserva();
-				
-				//Comprobamos la disponibilidad de cada empleado
-				for(int k=0; k<listaE.size(); k++){
-					e = listaE.get(k);
-					
-				//	creacionListas(e,i,inif,finf);
-					if(e.estaDisponible(i,inif,finf,controlador)){
-						dispo.add(e);						
-					}else{
-						reser.add(e);
-					}
-				}
-				
-				horario[i][j].setDisponibles(dispo);
-				horario[i][j].setReserva(reser);
-				
-				//coloca sólo a los empleados fijos.
-				colocaFijos(i,dispo,i,j);
-			}	
-		}		
-		return this.cuadrante;
-}
-	
 	
 	
 	/**
@@ -234,33 +178,6 @@ public class TurnoMatic {
 			cuadrante.setCuad(cu);
 		}
 		this.estruc.setDias(listas);
-	}
-	
-	/**
-	 * Método que crea las listas de empleados disponibles
-	 * y de reserva de la estructura, a partir de los datos
-	 * del contrato del empleado
-	 * @param cont contrato de un determinado empleado
-	 */
-	public void creacionListas(Empleado e, int i, Time inif, Time finf){
-		
-		Contrato contrato;
-		ArrayList<Empleado> dispo;
-		ArrayList<Empleado> reser;
-		
-		//obtenemos los turnos del empleado de la base de datos
-		//llamada a base de datos
-		contrato = controlador.getContrato(e.getContratoId());
-		/*		
-		if(e.estaDisponible(i,inif,finf)){
-			dispo.add(e);						
-		}else{
-			reser.add(e);
-		}
-		
-		horario[i][j].setDisponibles(dispo);
-		horario[i][j].setReserva(reser);*/
-		
 	}
 	
 	/**
