@@ -26,6 +26,8 @@ public class PruebasBaseDatos {
 		prueba.abrirConexion();
 		Controlador c = new Controlador(prueba);
 //		c.getListaTurnosContrato(2);
+		int x=c.getTurnoEmpleadoDia(Date.valueOf("2007-12-21"),71449215);
+		System.out.println(x);
 		//c.getEmpleados(null, "dep", null, null, null, null, 1);
 		/*
 		ArrayList a = new ArrayList();
@@ -107,7 +109,7 @@ public class PruebasBaseDatos {
 		
 		//leer contrato
 		Contrato contrato=c.getContrato(1);*/
-		prueba.borraMensaje(2);
+		//prueba.borraMensaje(2);
 		//prueba.insertarMensaje(2,12121212,Date.valueOf("2007-12-11"), "asunto", "texto", false);
 
 			

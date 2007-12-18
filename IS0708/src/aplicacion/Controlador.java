@@ -670,16 +670,25 @@ public class Controlador {
 	}
 	
 	/**
-	 * Devuelve una lista con los identificadores de los  turnos de un empleado 
-	 * de un mes dado
+	 * Metodo que recoge el turno que le corresponde a un empleado en un dia concreto
+	 * @param dia			dia en el cual se quiere saber el turno del empleado
+	 * @param idEmpleado	identificador del empleado
+	 * @return	el turno del empleado en el dia concreto o 0 si no tiene turno ese dia
 	 */
-	public ArrayList<Integer> getListaTurnosEmpleado(int mes, int año, int idEmpleado){
-		ArrayList<Integer> turnos=new ArrayList<Integer>();
-		/*
-		 * rellenar , lo suyo seria devolver tantos turnos como dia tuviese el mes...
-		 * asi sabriamos como acceder a un dia determinado
-		 */
-		return turnos;
+	public int getTurnoEmpleadoDia(Date dia, int idEmpleado){
+		ResultSet rs=_db.obtenTurnoEmpleadoDia(dia,idEmpleado);
+		int turno=0;
+		try {
+			if(rs.next()) {
+				rs.first();			
+				turno=rs.getInt("IdTurno");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error al obtener el turno de un día en la base de datos");
+			e.printStackTrace();
+		}
+		return turno;
 	}
 	
 

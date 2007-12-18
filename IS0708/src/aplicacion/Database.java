@@ -106,7 +106,7 @@ public class Database extends Thread {
 							+ " and DEPARTAMENTO.Nombre=NombreDepartamento");
 		} catch (SQLException e) {
 			// TODO: handle exception
-			System.out.println("Error al realizar la consulta del empleado ");
+			System.out.println("Error al obtener el superior del empleado ");
 		}
 		return r;
 	}
@@ -128,7 +128,7 @@ public class Database extends Thread {
 							+ " and DEPARTAMENTO.Nombre=NombreDepartamento");
 		} catch (SQLException e) {
 			// TODO: handle exception
-			System.out.println("Error al realizar la consulta del empleado ");
+			System.out.println("Error al realizar la consulta de los subordinados ");
 		}
 		return r;
 	}
@@ -150,7 +150,7 @@ public class Database extends Thread {
 							+ nvend);
 		} catch (SQLException e) {
 			// TODO: handle exception
-			System.out.println("Error al realizar la consulta del empleado ");
+			System.out.println("Error al realizar la consulta de los ids departamentos");
 		}
 		return r;
 	}
@@ -168,7 +168,7 @@ public class Database extends Thread {
 			r = st.executeQuery(consulta);
 		} catch (SQLException e) {
 			// TODO: handle exception
-			System.out.println("Error al realizar la consulta del empleado ");
+			System.out.println("Error al obtener los empleados de un departamento ");
 		}
 		return r;
 	}
@@ -188,11 +188,30 @@ public class Database extends Thread {
 							+ " and USUARIO.IdContrato=ListaTurnosPorContrato.IdContrato");
 		} catch (SQLException e) {
 			// TODO: handle exception
-			System.out.println("Error al realizar la consulta del empleado ");
+			System.out.println("Error al obtener los turnos de un contrato ");
 		}
 		return r;
 	}
-	
+	/**
+	 * Metodo que recoge el turno que le corresponde a un empleado en un dia concreto
+	 * @param dia			dia en el cual se quiere saber el turno del empleado
+	 * @param idEmpleado	identificador del empleado
+	 * @return	ResultSet con el turno
+	 */
+	public ResultSet obtenTurnoEmpleadoDia(Date dia,int idEmpleado){
+		ResultSet r = null;
+		try {
+			st = con.createStatement();
+			r = st
+					.executeQuery("SELECT IdTurno FROM Trabaja WHERE NumVendedor = "
+							+ idEmpleado
+							+ " and Fecha ='"+dia+"'");
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.out.println("Error al obtener el turno de una fecha concreta ");
+		}
+		return r;
+	}
 	/**
 	 * Carga uno o varios empleados desde la base de datos, que coincidan con
 	 * los datos dados. Los parámetros pueden ser nulos.
