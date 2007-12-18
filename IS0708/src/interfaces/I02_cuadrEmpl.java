@@ -39,7 +39,6 @@ public class I02_cuadrEmpl {
 	 * bug: al hacer muchas franjas peque�itas, no se pegan bien (ver si sigue pasando)
 	 */
 	private Canvas canvas;
-	private I02CuadranteEmpleado cuadrante;
 	private int alto, ancho;
 	private Display display;
 	private ResourceBundle _bundle;
@@ -65,6 +64,7 @@ public class I02_cuadrEmpl {
 	private MouseListener mouseListenerCuadrMensual;
 	private MouseMoveListener mouseMoveListenerCuadrSemanal;
 	private MouseMoveListener mouseMoveListenerCuadrMensual;
+	private I02CuadranteEmpleado cuadrante;
 
 	private void calcularTamano() {
 		ancho = canvas.getClientArea().width;
@@ -271,6 +271,7 @@ public class I02_cuadrEmpl {
 		System.out.println("FECHA:"+Util.dateAString(fecha));
 		this.fecha=fecha;
 		lCuadranteTitulo.setText(Util.dateAString(fecha));
+		this.cuadrante.actualizarFecha(fecha);
 		this.redibujar();
 	}
 

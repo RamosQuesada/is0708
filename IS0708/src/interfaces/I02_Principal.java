@@ -978,7 +978,7 @@ public class I02_Principal {
 						Integer.toString(day))
 						);
 				fecha= Date.valueOf(Util.aFormatoDate(Integer.toString(year),
-						Integer.toString(month),
+						Integer.toString(month+1),
 						Integer.toString(day))
 						);
 				cuadrante.actualizaFecha(fecha);
