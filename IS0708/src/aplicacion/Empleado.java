@@ -846,7 +846,10 @@ public class Empleado implements Drawable {
 		boolean puede = true;
 		
 		//cálculo del dia en el que nos encontramos dentro del ciclo.
+		
 		today = new java.util.Date();
+		if(fContrato == null)
+			fContrato = new Date(today.getTime());
 		difFechas = today.getTime()-fContrato.getTime();
 		diaCiclo = (int)difFechas/(24*60*60*1000);
 		
@@ -867,6 +870,7 @@ public class Empleado implements Drawable {
 		
 		//Obtencion del turno a partir de la base de datos.
 		turnos = cont.getListaTurnosContrato(this.idEmpl);
+		//turnos = cont.getListaTurnosContrato(2);
 		//Obtencion del turno que le corresponde.
 		tur = turnos.get(0);
 		for(int i=0;i<turnos.size();i++){
