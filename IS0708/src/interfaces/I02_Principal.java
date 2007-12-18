@@ -134,8 +134,7 @@ public class I02_Principal {
 		final Composite cCuadrantes = new Composite(tabFolder, SWT.NONE);
 		tabItemCuadrantes.setControl(cCuadrantes);
 		// Configuración del composite
-		cCuadrantes.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true,
-				1, 1));
+		cCuadrantes.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
 		cCuadrantes.setLayout(new GridLayout(5, false));
 
 		// Componentes del composite
@@ -198,8 +197,7 @@ public class I02_Principal {
 
 		Label lCalendario = new Label(cCuadrantes, SWT.LEFT);
 		lCalendario.setText(bundle.getString("Calendario"));
-		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
-				false, 2, 1));
+		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,false, 2, 1));
 
 		final DateTime calendario = new DateTime(cCuadrantes, SWT.CALENDAR
 				| SWT.SHORT);
@@ -222,14 +220,19 @@ public class I02_Principal {
 						+ String.valueOf(calendario.getYear()));
 			}
 		});
-		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false,
-				2, 1));
+		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false,2, 1));
 		Date fecha = new Date(calendario.getYear(), calendario.getMonth(),
 				calendario.getDay());
-		final I02_cuadr cuadrante = new I02_cuadr(cCuadrante, false, empleados,
-				fecha);
-		Img = cuadrante.dameImageImprimible();
-
+//		final I02_cuadr cuadrante = new I02_cuadr(cCuadrante, false, empleados, fecha);
+//		 Falta añadir el combobox de los intervalos
+		e1.anadeGUI(cCuadrante,9,23,3, true);
+		e2.anadeGUI(cCuadrante,9,23,3, false);
+		e3.anadeGUI(cCuadrante,9,23,3, false);
+		e4.anadeGUI(cCuadrante,9,23,3, false);
+		e5.anadeGUI(cCuadrante,9,23,3, false);
+//		
+//		Img = cuadrante.dameImageImprimible();
+/*
 		final Button bPorMes = new Button(cCuadrantes, SWT.RADIO);
 		bPorMes.setText(bundle.getString("I02_but_Verpormes"));
 		bPorMes.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2,
@@ -255,6 +258,7 @@ public class I02_Principal {
 				2, 1));
 
 		bPorMes.setSelection(true);
+		*/
 	}
 
 	/**
