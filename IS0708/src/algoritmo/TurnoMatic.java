@@ -27,7 +27,7 @@ public class TurnoMatic {
 	}
 	
 	//El array list turnos es de prueba.
-	public TurnoMatic(int m, int year,ArrayList<Turno> turnos,String idDepartamento){
+	public TurnoMatic(int m, int year, ArrayList<Turno> turnos,String idDepartamento){
 		
 		/* Llamada a la base de datos para que nos
 		 * dé todos los empleados del departamento.
@@ -54,15 +54,14 @@ public class TurnoMatic {
 		/* Llamada a la base de datos para que nos
 		 * dé todos los empleados del departamento.
 		 */
-		ArrayList<Empleado> personal = new ArrayList<Empleado>();
-		this.idDepartamento=idDepartamento;
+		this.controlador = cont;
+		this.idDepartamento = idDepartamento;
 		this.anio = year;
 		this.mes = m;
+		//ArrayList<Empleado> personal = new ArrayList<Empleado>();		
 		//this.estruc = new Estructura(mes,year,personal, cont.getListaTurnosEmpleados(), idDepartamento);
-		this.estruc = new Estructura(mes,year,personal, cont.getListaTurnosEmpleados(), idDepartamento);
-		this.cuadrante = new Cuadrante(mes,year, idDepartamento);
-		this.controlador = cont;
-		
+		this.estruc = new Estructura(mes, year, cont, idDepartamento);
+		this.cuadrante = new Cuadrante(mes,year, idDepartamento);		
 	}
 
 	/**
@@ -84,9 +83,6 @@ public class TurnoMatic {
 		ArrayList<Empleado> reser;
 		ArrayList<Empleado> dispo;
 		Empleado e;
-		Calendario calendario;
-		
-		calendario = estruc.getCalendario();
 
 		//Recorremos los dias del mes
 		for(int i=0; i<Util.dameDias(mes,anio); i++){
