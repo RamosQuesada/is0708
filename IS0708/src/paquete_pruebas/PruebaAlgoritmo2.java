@@ -20,6 +20,7 @@ public class PruebaAlgoritmo2 {
 		Controlador c = new Controlador(prueba);
 		
 		alg = new TurnoMatic(12,2007,c,"is");
+		alg.ejecutaAlgoritmo();
 		System.out.println();
 
 	}
