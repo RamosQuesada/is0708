@@ -981,6 +981,7 @@ public class I02_Principal {
 						Integer.toString(month),
 						Integer.toString(day))
 						);
+				cuadrante.actualizaFecha(fecha);
 			}
 		});
 		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false,

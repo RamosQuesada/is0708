@@ -24,6 +24,7 @@ import org.eclipse.swt.events.*;
 
 import aplicacion.Empleado;
 import aplicacion.Franja;
+import aplicacion.Util;
 
 
 /**
@@ -59,6 +60,7 @@ public class I02_cuadrEmpl {
 	private final Combo cGridCuadrante;
 	private Empleado empleado;
 	private Date fecha;
+	private Label lCuadranteTitulo;
 	private MouseListener mouseListenerCuadrSemanal;
 	private MouseListener mouseListenerCuadrMensual;
 	private MouseMoveListener mouseMoveListenerCuadrSemanal;
@@ -168,14 +170,17 @@ public class I02_cuadrEmpl {
 			Date fecha) {
 		this.semanal = diario;
 		this._bundle = bundle;
+		this.fecha= fecha;
 		final GridLayout l = new GridLayout(3,false);
 		c.setLayout(l);
 		
-		final Label lCuadranteTitulo= new Label (c, SWT.LEFT);
+		lCuadranteTitulo= new Label (c, SWT.LEFT);
 		String fname = lCuadranteTitulo.getFont().getFontData()[0].getName();
 		lCuadranteTitulo.setFont(new Font(c.getDisplay(),fname,15,0));
 		// TODO Esto tendr� que cambiarse por la fecha elegida en el calendario
-		lCuadranteTitulo.setText("12 de noviembre de 2007");
+		if(fecha!=null){
+		lCuadranteTitulo.setText(Util.dateAString(fecha));
+		}
 		lCuadranteTitulo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		
 		lGridCuadrante= new Label (c, SWT.LEFT);
@@ -256,6 +261,12 @@ public class I02_cuadrEmpl {
 		else if (y > alto - margenInf)
 			b = false;
 		return b;
+	}
+	
+	public void actualizaFecha(Date fecha){
+		this.fecha=fecha;
+		lCuadranteTitulo.setText(Util.dateAString(fecha));
+		this.redibujar();
 	}
 
 }
