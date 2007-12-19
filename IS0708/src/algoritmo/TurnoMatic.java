@@ -82,7 +82,7 @@ public class TurnoMatic {
 			//for(int j=0; j<disp.size(); j++){
 				Time inif = estruc.getTrozosHorario().get(j); 
 				Time finf = estruc.getTrozosHorario().get(j+1);
-				dispo = horario[i][j].getEmpleados();
+				dispo = horario[i][j].getDisponibles();
 				reser = horario[i][j].getReserva();
 				empl = horario[i][j].getEmpleados();
 				
