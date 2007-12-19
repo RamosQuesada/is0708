@@ -243,6 +243,7 @@ public class I02CuadranteEmpleado {
 			calendario.add(Calendar.DATE, -1);
 			numDias++;
 		}
+		ArrayList<Turno> turnos= this.vista.getControlador().getListaTurnosEmpleados();
 		for(int cont=0;cont<7;cont++){
 			fecha= Date.valueOf(Util.aFormatoDate(Integer.toString(
 				calendario.get(GregorianCalendar.YEAR)),
@@ -255,7 +256,7 @@ public class I02CuadranteEmpleado {
 			System.out.println("FECHA REAL:"+fecha);
 			//System.out.println(Util.dateAString(fecha));
 			int turno = this.vista.getControlador().getTurnoEmpleadoDia(fecha, this.empleado.getEmplId());
-			ArrayList<Turno> turnos= this.vista.getControlador().getListaTurnosEmpleados();
+			
 			Time horaEntrada,horaSalida,horaDescanso;
 			int duracionDescanso;
 			Float horaEntradaFloat=0.0f;
