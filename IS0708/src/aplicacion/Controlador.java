@@ -580,9 +580,7 @@ public class Controlador {
 		String patron=c.getPatron();
 		int duracionCiclo=c.getDuracionCiclo();
 		double salario=c.getSalario();
-		_db.abrirConexion();
 		boolean exito=_db.insertarContrato(idContrato, turnoInicial, nombre, patron, duracionCiclo, salario);
-		_db.cerrarConexion();
 		return exito;
 	}
 
@@ -597,9 +595,7 @@ public class Controlador {
 	 * @return		<i>true</i> si se ha insertado el contrato correctamente
 	 */
 	public boolean insertTurno(Turno t) {
-		_db.abrirConexion();
 		boolean exito=_db.insertarTurno(t.getIdTurno(), t.getDescripcion(), t.getHoraEntrada(), t.getHoraSalida(), t.getHoraDescanso(), t.getTDescanso());
-		_db.cerrarConexion();
 		return exito;
 	}
 	/**
@@ -608,9 +604,7 @@ public class Controlador {
 	 * @return		<i>true</i> si se ha eliminado el contrato correctamente
 	 */
 	public boolean eliminaTurno(Turno t) {
-		_db.abrirConexion();
 		boolean exito=_db.borraTurno(t.getIdTurno());
-		_db.cerrarConexion();
 		return exito;
 	}
 	
@@ -700,7 +694,6 @@ public class Controlador {
 	 * @param cuadrante cuadrante que se quiere guardar
 	 */
 	public void insertCuadrante(Cuadrante cuadrante){
-		_db.abrirConexion();
 		for(int dia=0;dia<cuadrante.getNumDias();dia++){
 			ArrayList<Trabaja> cuad=cuadrante.getListaTrabajaDia(dia);
 			for(int i=0;i<cuad.size();i++){
@@ -710,7 +703,6 @@ public class Controlador {
 						trabaja.getFichFin());
 			}
 		}
-		_db.cerrarConexion();
 	}
 	
 	
