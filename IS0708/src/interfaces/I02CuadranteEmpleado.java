@@ -252,7 +252,8 @@ public class I02CuadranteEmpleado {
 					calendario.get(GregorianCalendar.DATE)+cont)
 				));
 
-			System.out.println(Util.dateAString(fecha));
+			System.out.println("FECHA REAL:"+fecha);
+			//System.out.println(Util.dateAString(fecha));
 			int turno = this.vista.getControlador().getTurnoEmpleadoDia(fecha, this.empleado.getEmplId());
 			ArrayList<Turno> turnos= this.vista.getControlador().getListaTurnosEmpleados();
 			Time horaEntrada,horaSalida,horaDescanso;
@@ -261,6 +262,7 @@ public class I02CuadranteEmpleado {
 			Float horaSalidaFloat=0.0f;
 			Float horaDescansoFloat = 0.0f;
 			Float finHoraDescansoFloat = 0.0f;
+			if(turno==0){System.out.println("vacio");}
 			if(turno!=0){
 				System.out.println("turno no vacio");
 				int actual=0;
