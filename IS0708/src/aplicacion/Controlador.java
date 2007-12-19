@@ -119,29 +119,31 @@ public class Controlador {
 		Empleado emp = null;
 		try {
 			ResultSet rs = _db.dameEmpleado(idEmpl);
-			rs.first();
-			String nombre = rs.getString("Nombre");
-			String apellido1 = rs.getString("Apellido1");
-			String apellido2 = rs.getString("Apellido2");
-			Date fechaNac = rs.getDate("FechaNacimiento");
-			int id = rs.getInt("NumVendedor");
-			String email = rs.getString("Email");
-			String password = rs.getString("Password");
-			int sexo = rs.getInt("Sexo");
-			int grupo=rs.getInt("IndicadorGrupo");
-			int rango=rs.getInt("Rango");
-			int idContrato=rs.getInt("IdContrato");
-			Date fechaContrato = rs.getDate("FechaContrato");
-			Date fechaAlta = rs.getDate("FechaEntrada");
-			Color color=null;
-			int idSuperior=this.getIdSuperior(idEmpl);
-			ArrayList<Integer> idSubordinados=this.getIdsSubordinados(idEmpl);
-			ArrayList<String> idDepartamentos=this.getIdsDepartamentos(idEmpl);
-			int felicidad=rs.getInt("Felicidad");
-			int idioma=rs.getInt("Idioma");
-			emp=new Empleado(idSuperior,id,nombre,apellido1,apellido2,fechaNac,sexo,
+			if (rs.next()) {
+				rs.first();			
+				String nombre = rs.getString("Nombre");
+				String apellido1 = rs.getString("Apellido1");
+				String apellido2 = rs.getString("Apellido2");
+				Date fechaNac = rs.getDate("FechaNacimiento");
+				int id = rs.getInt("NumVendedor");
+				String email = rs.getString("Email");
+				String password = rs.getString("Password");
+				int sexo = rs.getInt("Sexo");
+				int grupo=rs.getInt("IndicadorGrupo");
+				int rango=rs.getInt("Rango");
+				int idContrato=rs.getInt("IdContrato");
+				Date fechaContrato = rs.getDate("FechaContrato");
+				Date fechaAlta = rs.getDate("FechaEntrada");
+				Color color=null;
+				int idSuperior=this.getIdSuperior(idEmpl);
+				ArrayList<Integer> idSubordinados=this.getIdsSubordinados(idEmpl);
+				ArrayList<String> idDepartamentos=this.getIdsDepartamentos(idEmpl);
+				int felicidad=rs.getInt("Felicidad");
+				int idioma=rs.getInt("Idioma");
+				emp=new Empleado(idSuperior,id,nombre,apellido1,apellido2,fechaNac,sexo,
 							 email,password,grupo,rango,idContrato,fechaContrato,
 							 fechaAlta,color,idDepartamentos,idSubordinados,felicidad,idioma);
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println("Controlador: Error al obtener el Empleado " + idEmpl + " de la base de datos");
@@ -350,37 +352,37 @@ public class Controlador {
 		//se ha supuesto que fecha esta en formato string
 		try{
 			r=_db.obtenFestivos(nombre, Fecha);
-			r.last();
-			if (r.getRow()>0){
-				r.beforeFirst();
-				while (r.next()){					
-					vector[0]=(Integer)r.getInt("Hora");
-					vector[1]=(Integer)r.getInt("NumMin");
-					vector[2]=(Integer)r.getInt("NumMax");
-					vector[3]=(String)r.getString("Patron");
-					lista.add(vector);
-				}
-			}else{
-				
-				
-				Date d=Fecha;
-				int diaSemana=d.getDay();
-				
-				r=_db.obtenDistribucion(nombre, diaSemana);
-				r.last();
+			if (r.next()){
+				r.last();			
 				if (r.getRow()>0){
 					r.beforeFirst();
-					while (r.next()){
+					while (r.next()){					
 						vector[0]=(Integer)r.getInt("Hora");
 						vector[1]=(Integer)r.getInt("NumMin");
 						vector[2]=(Integer)r.getInt("NumMax");
 						vector[3]=(String)r.getString("Patron");
 						lista.add(vector);
 					}
-				}
+				}else{				
+					Date d=Fecha;
+					int diaSemana=d.getDay();
+				
+					r=_db.obtenDistribucion(nombre, diaSemana);
+					if (r.next()){ 
+						r.last();
+						if (r.getRow()>0){
+							r.beforeFirst();
+							while (r.next()){
+								vector[0]=(Integer)r.getInt("Hora");
+								vector[1]=(Integer)r.getInt("NumMin");
+								vector[2]=(Integer)r.getInt("NumMax");
+								vector[3]=(String)r.getString("Patron");
+								lista.add(vector);
+							}
+						}
+					}
+				}		
 			}
-		
-			
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -552,14 +554,16 @@ public class Controlador {
 		double salario;
 		Contrato contrato=null;
 		try {
-			result.next();
-			numeroContrato = result.getInt("IdContrato");
-			turnoInicial = result.getInt("TurnoInicial");
-			nombreContrato = result.getString("Nombre");
-			patron = result.getString("Patron");
-			duracionCiclo = result.getInt("DuracionCiclo");
-			salario = result.getDouble("Salario");
-			contrato=new Contrato(nombreContrato,numeroContrato , turnoInicial, duracionCiclo, patron, salario);			
+			if (result.next()){
+				result.next();
+				numeroContrato = result.getInt("IdContrato");
+				turnoInicial = result.getInt("TurnoInicial");
+				nombreContrato = result.getString("Nombre");
+				patron = result.getString("Patron");
+				duracionCiclo = result.getInt("DuracionCiclo");
+				salario = result.getDouble("Salario");
+				contrato=new Contrato(nombreContrato,numeroContrato , turnoInicial, duracionCiclo, patron, salario);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
