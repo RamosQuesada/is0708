@@ -362,7 +362,7 @@ public class I02CuadranteEmpleado {
 //				}
 //			}
 //			
-		for(int cont=0;cont<6;cont++){
+		for(int cont=0;cont<7;cont++){
 			dibujarTurno(gc,cont,this.horasInicio.get(cont),this.horaComienzoDescanso.get(cont),"INFOR.");
 			dibujarTurno(gc,cont,this.horaFinDescanso.get(cont),this.horasFin.get(cont),"INFOR.");
 		}
