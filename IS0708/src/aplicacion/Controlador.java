@@ -555,7 +555,7 @@ public class Controlador {
 		Contrato contrato=null;
 		try {
 			if (result.next()){
-				result.next();
+				result.first();
 				numeroContrato = result.getInt("IdContrato");
 				turnoInicial = result.getInt("TurnoInicial");
 				nombreContrato = result.getString("Nombre");
