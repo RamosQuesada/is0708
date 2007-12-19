@@ -1091,4 +1091,18 @@ public class Database extends Thread {
 		}
 		return result;
 	}
+
+	public ResultSet obtenTodosDepartamentos() {
+		ResultSet r = null;
+		try {
+			st = con.createStatement();
+			r = st.executeQuery("SELECT * FROM DEPARTAMENTO");
+		}
+		catch (SQLException e) {
+			// TODO: handle exception
+			System.out
+					.println("Error al realizar la consulta en departamento ");
+		}
+		return r;		
+	}
 }
