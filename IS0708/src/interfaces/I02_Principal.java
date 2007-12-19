@@ -956,7 +956,7 @@ public class I02_Principal {
 		// lCuadr1.setText("Aquí se mostrarían los cuadrantes");
 		Empleado empleado=this.vista.getEmpleadoActual();
 		final I02_cuadrEmpl cuadrante = new I02_cuadrEmpl(cCuadrantesDer,
-				false, bundle,empleado,fecha);
+				false, bundle,empleado,fecha,vista);
 		cuadrante.setSemanal();
 		// Creamos el calendario
 		final DateTime calendario = new DateTime(cBotones, SWT.CALENDAR);

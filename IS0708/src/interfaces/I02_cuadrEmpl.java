@@ -25,6 +25,7 @@ import org.eclipse.swt.events.*;
 import aplicacion.Empleado;
 import aplicacion.Franja;
 import aplicacion.Util;
+import aplicacion.Vista;
 
 
 /**
@@ -65,6 +66,7 @@ public class I02_cuadrEmpl {
 	private MouseMoveListener mouseMoveListenerCuadrSemanal;
 	private MouseMoveListener mouseMoveListenerCuadrMensual;
 	private I02CuadranteEmpleado cuadrante;
+	private Vista vista;
 
 	private void calcularTamano() {
 		ancho = canvas.getClientArea().width;
@@ -167,8 +169,9 @@ public class I02_cuadrEmpl {
 	 * @param c	Composite sobre el que dibujar el cuadrante
 	 */
 	public I02_cuadrEmpl(Composite c, Boolean diario,ResourceBundle bundle,Empleado empleado,
-			Date fecha) {
+			Date fecha,Vista vista) {
 		this.semanal = diario;
+		this.vista=vista;
 		this._bundle = bundle;
 		this.fecha= fecha;
 		final GridLayout l = new GridLayout(3,false);
@@ -224,7 +227,7 @@ public class I02_cuadrEmpl {
 		horaInicio = 9;
 		horaFin = 23;
 		cuadrante = new I02CuadranteEmpleado(display, 4, horaInicio, horaFin, margenIzq, margenDer, margenSup, margenInf, margenNombres,_bundle,
-				empleado,fecha);
+				empleado,fecha,vista);
 		calcularTamano();
 		display = canvas.getDisplay();
 		canvas.addPaintListener(new PaintListener() {
