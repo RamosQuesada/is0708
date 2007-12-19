@@ -415,7 +415,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 	    try{
 	        st=con.createStatement();
-	        st.executeUpdate( "DELETE FROM DEPARTAMENTO WHERE Nombre="+nombre);
+	        st.executeUpdate( "DELETE FROM DEPARTAMENTO WHERE Nombre='"+nombre+"'");
 	        System.out.println("Departamento Borrado");
 	        correcto=true;
 	    }catch(SQLException e) {
@@ -921,8 +921,8 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 			rs = st
-					.executeQuery("SELECT * FROM DISTRIBUCION WHERE NombreDept ="
-							+ nombre + " AND DiaSemana=" + DiaSemana);
+					.executeQuery("SELECT * FROM DISTRIBUCION WHERE NombreDept ='"
+							+ nombre + "' AND DiaSemana=" + DiaSemana);
 
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -945,9 +945,9 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 			rs = st
-					.executeQuery("SELECT * FROM FESTIVOS WHERE NombreDept ="
+					.executeQuery("SELECT * FROM FESTIVOS WHERE NombreDept ='"
 							+ nombre
-							+ " AND FechaInicio<='"
+							+ "' AND FechaInicio<='"
 							+ Fecha
 							+ "' AND FechaFin>='" + Fecha + "' ORDER BY Hora ASC");
 
