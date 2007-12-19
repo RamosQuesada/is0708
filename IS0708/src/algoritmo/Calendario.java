@@ -1,5 +1,6 @@
 package algoritmo;
 
+import aplicacion.Controlador;
 import aplicacion.Util;
 
 /**
@@ -14,6 +15,7 @@ public class Calendario {
 	private int anio;
 	private int numDias; //numero de dias del mes
 	private HoraCalendario cal[][]; //esta matriz contiene para cada dia y para cada hora un objeto de la clase Horacalendario
+	private Controlador cont;
 	
 	/**
 	 * Constructora por defecto
@@ -30,19 +32,22 @@ public class Calendario {
 	 * @param mes
 	 * @param anio
 	 */
-	public Calendario(int mes,int anio, String idDepartamento){
+	public Calendario(int mes,int anio, Controlador cont, String idDepartamento){
 		this.mes = mes;
+		this.cont = cont;
 		this.anio = anio;
 		numDias = Util.dameDias(mes,anio); 
 		this.idDepartamento = idDepartamento;
 		//el calendario tiene un numero de dias segun el mes y de 0 a 23 horas
-		cal = new HoraCalendario[numDias][24]; 
+		cal = new HoraCalendario[numDias][24];
+		
+		
 		//TODO borrar para ahorrar memoria cuando no se utilicen "funciones guarras" de calendario y cuadrante
 		for (int i=0;i<numDias;i++){
 			for (int j=0;j<24;j++){
-				cal[i][j]=new HoraCalendario(0,0,0,0);
+				//cal[i][j]=new HoraCalendario(0,0,0,0);
 				//PRUEBA
-				//cal[i][j]=new HoraCalendario(4,0,0,0);
+				cal[i][j]=new HoraCalendario(5,0,0,0);
 			}
 		}
 		
@@ -204,7 +209,7 @@ public class Calendario {
 	 * @return true si 1<=dia<=numDias y 0<=hora<24
 	 */
 	private boolean esCorrecto(int dia, int hora){
-		return (dia>=1 && dia<=numDias && hora>=0 && hora<24);
+		return (dia>=0 && dia<numDias && hora>=0 && hora<24);
 	}
 	
 	/**

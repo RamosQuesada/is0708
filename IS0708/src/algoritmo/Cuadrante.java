@@ -62,7 +62,7 @@ public class Cuadrante {
 	/**
 	 * 
 	 * @return
-	 * @deprecated "funcion guarra": se pierde la ocultacion
+	 * no nos gusta la ocultacion
 	 */
 	public ArrayList<Trabaja>[] getCuad() {
 		return cuad;
@@ -71,7 +71,7 @@ public class Cuadrante {
 	/**
 	 * 
 	 * @param cuad
-	 * @deprecated "funcion guarra": se pierde la ocultacion
+	 * no nos gusta la ocultacion
 	 */
 	public void setCuad(ArrayList<Trabaja>[] cuad) {
 		this.cuad = cuad;
