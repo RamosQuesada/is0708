@@ -67,6 +67,7 @@ public class I02_cuadrEmpl {
 	private MouseMoveListener mouseMoveListenerCuadrMensual;
 	private I02CuadranteEmpleado cuadrante;
 	private GC gc2;
+	private GC gc3;
 	private Vista vista;
 
 	private void calcularTamano() {
@@ -142,7 +143,7 @@ public class I02_cuadrEmpl {
 			if (semanal) cuadrante.dibujarCuadranteDia(gc2, empleadoActivo);
 			else cuadrante.dibujarCuadranteMes(gc2);
 			gc.drawImage(bufferImage, 0, 0);
-			bufferImage.dispose();
+			//bufferImage.dispose();
 		}
 	}
 	private void setSubdivisiones(int i) {
