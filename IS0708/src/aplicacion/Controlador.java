@@ -346,43 +346,42 @@ public class Controlador {
 	 */
 	public ArrayList<Object[]> getDistribucionDia (String nombre, Date Fecha){
 		ArrayList lista= new ArrayList();		
-		ResultSet r;
-		Object[] vector = new Object[4];
+		ResultSet r;		
 		
 		//se ha supuesto que fecha esta en formato string
 		try{
-			r=_db.obtenFestivos(nombre, Fecha);
-			if (r.next()){
-				r.last();			
-				if (r.getRow()>0){
-					r.beforeFirst();
-					while (r.next()){					
-						vector[0]=(Integer)r.getInt("Hora");
-						vector[1]=(Integer)r.getInt("NumMin");
-						vector[2]=(Integer)r.getInt("NumMax");
-						vector[3]=(String)r.getString("Patron");
-						lista.add(vector);
-					}
-				}else{				
-					Date d=Fecha;
-					int diaSemana=d.getDay();
-				
-					r=_db.obtenDistribucion(nombre, diaSemana);
-					if (r.next()){ 
-						r.last();
-						if (r.getRow()>0){
-							r.beforeFirst();
-							while (r.next()){
-								vector[0]=(Integer)r.getInt("Hora");
-								vector[1]=(Integer)r.getInt("NumMin");
-								vector[2]=(Integer)r.getInt("NumMax");
-								vector[3]=(String)r.getString("Patron");
-								lista.add(vector);
-							}
+			r=_db.obtenFestivos(nombre, Fecha);			
+			r.last();			
+			if (r.getRow()>0){
+				r.beforeFirst();
+				while (r.next()){	
+					Object[] vector = new Object[4];
+					vector[0]=(Integer)r.getInt("Hora");
+					vector[1]=(Integer)r.getInt("NumMin");
+					vector[2]=(Integer)r.getInt("NumMax");
+					vector[3]=(String)r.getString("Patron");
+					lista.add(vector);
+				}
+			}else{				
+				Date d=Fecha;
+				int diaSemana=d.getDay();
+			
+				r=_db.obtenDistribucion(nombre, diaSemana);
+				if (r.next()){ 
+					r.last();
+					if (r.getRow()>0){
+						r.beforeFirst();
+						while (r.next()){
+							Object[] vector = new Object[4];
+							vector[0]=(Integer)r.getInt("Hora");
+							vector[1]=(Integer)r.getInt("NumMin");
+							vector[2]=(Integer)r.getInt("NumMax");
+							vector[3]=(String)r.getString("Patron");
+							lista.add(vector);
 						}
 					}
-				}		
-			}
+				}
+			}					
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -396,16 +395,28 @@ public class Controlador {
 		for (i=0; i<cal.getNumDias(); i++) {
 			Date dia = Date.valueOf(cal.getAnio()+"-"+cal.getMes()+"-"+(i+1));
 			ArrayList<Object[]> temp = getDistribucionDia(nombre,dia);			
-			for (j=0; j<temp.size(); j++) {
-				Object[] t = new Object[4];
-				t = temp.get(j);
-				cal.actualizaHora(i, (Integer)t[0], (Integer)t[2], (Integer)t[1], Util.numExpertos((String)t[3]), Util.numPrincipiantes((String)t[3]));
+			j=0;
+			if (temp.size() > 0) {
+
+				for (j=0; j<temp.size(); j++) {
+					Object[] t = new Object[4];				
+					t = temp.get(j);
+					cal.actualizaHora(i, (Integer)t[0], (Integer)t[2], (Integer)t[1], Util.numExpertos((String)t[3]), Util.numPrincipiantes((String)t[3]));				
+				}
+				
+				Object[] t = new Object[4];				
+				t = temp.get(0);
+				
+				for (j=0; j<(Integer)t[0]; j++)
+					cal.actualizaHora(i, j, -1, -1, -1, -1);
+				
+				j=temp.size()+(Integer)t[0];
 			}
-			
 			while (j<24) {
 				cal.actualizaHora(i, j, -1, -1, -1, -1);
 				j++;
 			}
+			
 				
 		}
 		
