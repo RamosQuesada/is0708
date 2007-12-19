@@ -77,6 +77,7 @@ public class Empleado implements Drawable {
 	private ArrayList<Empleado> subordinados;
 	private ArrayList<String> idDepartamentos;
 	private ArrayList<Departamento> departamentos;
+	private Turno turnoActual;	//No lo borreis golfos. (19-Dic)
 	
 	// TODO Eliminar el turno, que irá en el Contrato
 	// ahora sólo sirve para hacer prubas de interfaz
@@ -247,6 +248,7 @@ public class Empleado implements Drawable {
 		departamentos	= new ArrayList<Departamento>();
 		this.felicidad=felicidad;
 		this.idioma=idioma;
+		this.turnoActual = null;
 		
 
 	}
@@ -597,6 +599,16 @@ public class Empleado implements Drawable {
 	public int getFelicidad() {
 		return felicidad;
 	}
+	
+	
+	public Turno getTurnoActual() {
+		return turnoActual;
+	}
+	
+	public void setTurnoActual(Turno t)
+	{
+		turnoActual = t;
+	}
 
 	/**
 	 * Asigna un valor de felicidad al empleado.
@@ -883,12 +895,12 @@ public class Empleado implements Drawable {
 		for(int i=0; i<turnos.size(); i++){
 			if(turnos.get(i).getIdTurno() == Integer.parseInt(turnoStr))
 			{
-				tur = turnos.get(i);
-				if ((tur.getHoraEntrada().getTime() > iniH.getTime()) || (tur.getHoraSalida().getTime() < finH.getTime())){
+				turnoActual = turnos.get(i);
+				if ((turnoActual.getHoraEntrada().getTime() > iniH.getTime()) || (turnoActual.getHoraSalida().getTime() < finH.getTime())){
 					return false;
 				} else 
 				{
-					if ((iniH.getTime() >= tur.getHoraDescanso().getTime()) && (iniH.getTime() < Util.calculaFinDescanso(tur.getHoraDescanso(),tur.getTDescanso()).getTime())){
+					if ((iniH.getTime() >= turnoActual.getHoraDescanso().getTime()) && (iniH.getTime() < Util.calculaFinDescanso(turnoActual.getHoraDescanso(),turnoActual.getTDescanso()).getTime())){
 						return false;
 					}
 				}
@@ -912,6 +924,7 @@ public class Empleado implements Drawable {
 		
 		String tiempo;
 		String tipo;
+		int k = 0;
 		
 		for (int i=0; i<p.length(); i++)
 		{
@@ -923,15 +936,15 @@ public class Empleado implements Drawable {
 				i++;
 			}
 			i++; 
-			while ((p.charAt(i) != '/')&&(i<p.length()))
+			while ((i<p.length())&&(p.charAt(i) != '/'))
 			{
 				tipo = tipo + p.charAt(i);
 				i++;
 			}
-			i++;
 			for(int t=0; t<Integer.parseInt(tiempo); t++)
 			{
-				turnos.add(t,tipo);
+				turnos.add(k,tipo);
+				k++;
 			}
 		}		
 		return turnos;

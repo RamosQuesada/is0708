@@ -1,7 +1,10 @@
 package algoritmo;
 
+import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
+
 import aplicacion.*;
 
 
@@ -25,22 +28,7 @@ public class TurnoMatic {
 		
 		
 	}
-	
-	//El array list turnos es de prueba.
-	public TurnoMatic(int m, int year, ArrayList<Turno> turnos,String idDepartamento){
-		
-		/* Llamada a la base de datos para que nos
-		 * dé todos los empleados del departamento.
-		 */
-		ArrayList<Empleado> personal = new ArrayList<Empleado>();
-		this.idDepartamento=idDepartamento;
-		this.anio = year;
-		this.mes = m;
-		this.estruc = new Estructura(mes,year,personal, turnos, idDepartamento);
-		this.cuadrante = new Cuadrante(mes,year, idDepartamento);
-		
-	}
-	 
+		 
 	/**
 	 * Constructora del algoritmo, se encarga de crear la estructura
 	 * el cuadrante y recibe el controlador del programa
@@ -61,7 +49,7 @@ public class TurnoMatic {
 		//ArrayList<Empleado> personal = new ArrayList<Empleado>();		
 		//this.estruc = new Estructura(mes,year,personal, cont.getListaTurnosEmpleados(), idDepartamento);
 		this.estruc = new Estructura(mes, year, cont, idDepartamento);
-		this.cuadrante = new Cuadrante(mes,year, idDepartamento);		
+		this.cuadrante = new Cuadrante(mes, year, idDepartamento);		
 	}
 
 	/**
@@ -82,6 +70,8 @@ public class TurnoMatic {
 		ListasEmpleados[][] horario = estruc.getDias();
 		ArrayList<Empleado> reser;
 		ArrayList<Empleado> dispo;
+		ArrayList<Empleado> empl;
+		
 		Empleado e;
 
 		//Recorremos los dias del mes
@@ -94,6 +84,7 @@ public class TurnoMatic {
 				Time finf = estruc.getTrozosHorario().get(j+1);
 				dispo = horario[i][j].getEmpleados();
 				reser = horario[i][j].getReserva();
+				empl = horario[i][j].getEmpleados();
 				
 				//Comprobamos la disponibilidad de cada empleado
 				for(int k=0; k<listaE.size(); k++){
@@ -101,7 +92,9 @@ public class TurnoMatic {
 					
 				//	creacionListas(e,i,inif,finf);
 					if(e.estaDisponible(i,inif,finf,controlador)){
-						dispo.add(e);						
+						dispo.add(e);		
+						empl.add(e);
+						
 					}else{
 						reser.add(e);
 					}
@@ -111,7 +104,7 @@ public class TurnoMatic {
 				horario[i][j].setReserva(reser);
 				
 				//coloca sólo a los empleados fijos.
-				colocaFijos(i,dispo,i,j);
+				//colocaFijos(i,dispo,i,j);
 			}	
 		}		
 		return this.cuadrante;
@@ -137,17 +130,19 @@ public class TurnoMatic {
 		
 		listas = estruc.getDias();
 		numTrozos = estruc.getNumTrozos();
-		//prueba
-		//numTrozos = 4;
-		Calendario calendario = estruc.getCalendario();;
-		max = calendario.getMaxHora(p,q);
+		Calendario calendario = estruc.getCalendario();
+		
+		//Para evitar el deprecado usar Calendar
+		//Calendar hora = new Calendar();
+		Time hora;
+		hora = estruc.getTrozosHorario().get(q);
+		int gHora = hora.getHours();
+		max = calendario.getMaxHora(dia,gHora);
 		
 		//Para cada franja horaria
 		for(int i=0;i<numTrozos;i++){
 			
-			//disponibles = listas[dia][i].getDisponibles();
-			//prueba
-			disponibles = disp;
+			disponibles = listas[dia][i].getDisponibles();
 			empleados = new ArrayList<Empleado>();
 
 			for(int j=0;j<disponibles.size();j++){
@@ -156,20 +151,20 @@ public class TurnoMatic {
 				 * empleado y si este es fijo habría que insertarlo 
 				 * en la estructura y en el cuadrante.
 				 */
-				emp = disp.get(j);
-				turno = emp.turno;
+				emp = disponibles.get(j);
+				turno = emp.getTurnoActual();
 				
 				//comprobamos si tiene turno fijo
 				
-				if(turno.getIdTurno() == 1 && empleados.size()<max){
+				//if(turno.getIdTurno() == 1){
 					
 					empleados.add(emp);
 					Time pr1 = new Time(19,49,00);
 					Time pr2 = new Time(19,49,00);
-					trab = new Trabaja(emp.getEmplId(),pr1,pr2,0);//tenemos que meterle el turno que le corresponda
+					trab = new Trabaja(emp.getEmplId(),pr1,pr2,turno.getIdTurno());//tenemos que meterle el turno que le corresponda
 					cu[i].add(trab);
 						
-				}				
+				//}				
 			}
 			listas[dia][i].setEmpleados(empleados);  
 			cuadrante.setCuad(cu);
@@ -217,8 +212,8 @@ public class TurnoMatic {
 			System.out.println("Dia: "+i);
 			for(int j=0;j<listas[i].length;j++){
 				emp=listas[i][j].getEmpleados();
-				disp=listas[i][j].getDisponibles();
-				reser=listas[i][j].getReserva();
+				//disp=listas[i][j].getDisponibles();
+				//reser=listas[i][j].getReserva();
 				System.out.println("Turno: "+j);
 				System.out.println("Lista de empleados: ");
 				for(int k=0;k<emp.size();k++){
@@ -226,7 +221,7 @@ public class TurnoMatic {
 					System.out.println(e.getEmplId());
 				}
 				
-				System.out.println("Lista de empleados disponibles: ");
+			/*	System.out.println("Lista de empleados disponibles: ");
 				for(int k=0;k<disp.size();k++){
 					e=disp.get(k);
 					System.out.println(e.getEmplId());
@@ -236,7 +231,7 @@ public class TurnoMatic {
 				for(int k=0;k<reser.size();k++){
 					e=reser.get(k);
 					System.out.println(e.getEmplId());
-				}
+				}*/
 			}
 		}
 	}

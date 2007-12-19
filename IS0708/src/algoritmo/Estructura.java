@@ -46,38 +46,8 @@ public class Estructura {
 			}
 		}
 		//rellenar lista empleados
-		cal = new Calendario(mes, anio, idDepartamento);		//creamos calendario
-	}
-	
-	/**
-	 * Esta constructora es de prueba, sirve para pasar un array de turnos
-	 * y poder hacer pruebas.
-	 * @param mes
-	 * @param anio
-	 * @param personal
-	 * @deprecated borrar
-	 */
-	public Estructura(int mes, int anio, ArrayList<Empleado> personal, ArrayList<Turno> t,String idDepartamento){//constructora de la estructura
-		this.personal = personal;
-		// Calcular el numero de trozos en que se divide el horario
-		// Recuperar de la base de datos la lista de todos los turnos del departamento
-		// y ver en cuantos trozos vas a partir cada dia
-		this.idDepartamento=idDepartamento;
-		//this.turnos = t;
-		inicializaTrozos(); 
-		
-		
-		int numDias = Util.dameDias(mes,anio);//calculamos el numero de dias
-		dias = new ListasEmpleados[numDias][numTrozos];
-		// Se podria no asignar listas a los dias que no se trabaja
-		for (int i=0; i<numDias; i++){
-			for (int j=0; j<numTrozos; j++){
-				dias[i][j] = new ListasEmpleados(idDepartamento);
-			}
-		}
-		personal = new ArrayList<Empleado>();
-		//rellenar lista empleados
-		cal = new Calendario(mes, anio, idDepartamento);//creamos calendario
+		cal = new Calendario(mes, anio, controlador, idDepartamento);//creamos calendario
+		//this.controlador.getDistribucionMes(this.idDepartamento,this.cal);
 	}
 	
 	public ListasEmpleados[][] getDias(){
