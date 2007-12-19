@@ -173,6 +173,8 @@ public class Controlador {
 		return depts;
 	}
 
+	//Probarlo e intentar optimizarlo cuando metamos estadisticas
+	//De momento pongo una posible implementacion
 	/**
 	 * Carga los nombres de los departamentos de un empleado, buscando recursivamente.
 	 * <br>Por ejemplo, para un gerente, devuelve los nombres de sus departamentos,
@@ -185,7 +187,28 @@ public class Controlador {
 	 */
 	public ArrayList<String> getIdsDepartamentosRec(Integer idEmpl) {
 		ArrayList<String> depts = new ArrayList<String>();
-		//TODO
+		if (idEmpl==null) {
+			ResultSet rs=_db.obtenTodosDepartamentos();
+			try {
+				while (rs.next()) {
+					depts.add(rs.getString("Nombre"));
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println("Error al obtener todos los Departamentos en la base de datos");
+			}			
+		}
+		else {
+			ArrayList<String> aux=this.getIdsDepartamentos(idEmpl);
+			for(int i=0;i<aux.size();i++) depts.add(aux.get(i));
+			ArrayList<Integer> aux2=this.getIdsSubordinados(idEmpl);
+			for (int j=0;j<aux2.size();j++){
+				aux.clear();
+				aux=this.getIdsDepartamentosRec(aux2.get(j));
+				for(int k=0;k<aux.size();k++) depts.add(aux.get(k));
+			}			
+		}
+		
 		return depts;
 	}
 
