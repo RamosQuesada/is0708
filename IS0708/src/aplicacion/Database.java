@@ -922,7 +922,7 @@ public class Database extends Thread {
 			st = con.createStatement();
 			rs = st
 					.executeQuery("SELECT * FROM DISTRIBUCION WHERE NombreDept ='"
-							+ nombre + "' AND DiaSemana=" + DiaSemana);
+							+ nombre + "' AND DiaSemana=" + DiaSemana + " ORDER BY Hora ASC");
 
 		} catch (SQLException e) {
 			// TODO: handle exception
