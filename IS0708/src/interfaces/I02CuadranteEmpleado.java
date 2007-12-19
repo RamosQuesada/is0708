@@ -1,6 +1,8 @@
 package interfaces;
 
 import java.sql.Date;
+import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
@@ -13,10 +15,13 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
 import aplicacion.Empleado;
 import aplicacion.Posicion;
+import aplicacion.Turno;
 import aplicacion.Util;
+import aplicacion.Vista;
 
 public class I02CuadranteEmpleado {
-	//private final int anchoLados = 5; // El ancho de los lados de una franja, de donde se coge para estirarla y encogerla 
+	//private final int anchoLados = 5; // El ancho de los lados de una franja, de donde se coge para estirarla y encogerla
+	private Vista vista;
 	private Display display;
 	private int ancho;
 	private int alto;
@@ -60,9 +65,10 @@ public class I02CuadranteEmpleado {
 	 */
 	public I02CuadranteEmpleado(Display d, int subdivisiones, int horaInicio, int horaFin, int margenIzq, 
 			int margenDer, int margenSup, int margenInf, int margenNombres,ResourceBundle bundle,Empleado empleado,
-			Date fecha) {
+			Date fecha,Vista vista) {
 		display = d;
 		_bundle=bundle;
+		this.vista=vista;
 		this.empleado=empleado;
 		this.fecha=fecha;
 		this.margenIzq  = margenIzq;
@@ -231,14 +237,50 @@ public class I02CuadranteEmpleado {
 		calendario.set(GregorianCalendar.DAY_OF_MONTH, fecha.getDate());
 		calendario.set(GregorianCalendar.MONTH, fecha.getMonth());
 		calendario.set(GregorianCalendar.YEAR, fecha.getYear());
-		System.out.println("pruebacal" +Util.dateAString(calendario.getTime()));
 		System.out.println(calendario.get(GregorianCalendar.DAY_OF_WEEK));
+		int numDias=0;
 		while(calendario.get(GregorianCalendar.DAY_OF_WEEK)!=6){
 			calendario.add(Calendar.DATE, -1);
+			numDias++;
 		}
-		System.out.println(Util.dateAString(calendario.getTime()));
-		
+		for(int cont=0;cont<7;cont++){
+			fecha= Date.valueOf(Util.aFormatoDate(Integer.toString(
+				calendario.get(GregorianCalendar.YEAR)),
+				Integer.toString(
+					calendario.get(GregorianCalendar.MONTH)+1),
+				Integer.toString(
+					calendario.get(GregorianCalendar.DATE)+cont)
+				));
+
+			System.out.println(Util.dateAString(fecha));
+			int turno = this.vista.getControlador().getTurnoEmpleadoDia(fecha, this.empleado.getEmplId());
+			ArrayList<Turno> turnos= this.vista.getControlador().getListaTurnosEmpleados();
+			Time horaEntrada,horaSalida,horaDescanso;
+			int duracionDescanso;
+			Float horaEntradaFloat=0.0f;
+			Float horaSalidaFloat=0.0f;
+			Float horaDescansoFloat = 0.0f;
+			Float finHoraDescansoFloat = 0.0f;
+			if(turno!=0){
+				System.out.println("turno no vacio");
+				int actual=0;
+				
+				while (turno!=turnos.get(actual).getIdTurno())actual++;
+				if(turnos.get(actual).getIdTurno()==turno){
+					horaEntrada=turnos.get(actual).getHoraEntrada();
+					horaSalida=turnos.get(actual).getHoraSalida();
+					horaDescanso=turnos.get(actual).getHoraDescanso();
+					duracionDescanso=turnos.get(actual).getTDescanso();
+					horaEntradaFloat=(float)(horaEntrada.getHours()+horaEntrada.getMinutes()/60.0f);
+					horaSalidaFloat=(float)(horaSalida.getHours()+horaSalida.getMinutes()/60.0f);
+					horaDescansoFloat=(float)(horaDescanso.getHours()+horaDescanso.getMinutes()/60.0f);
+					finHoraDescansoFloat = (float)(horaDescansoFloat + ((float)(duracionDescanso)/60));
+				}
+			}
 			
+			dibujarTurno(gc,cont,horaEntradaFloat,horaDescansoFloat,"INFOR.");
+			dibujarTurno(gc,cont,horaDescansoFloat,finHoraDescansoFloat,"INFOR.");
+		}
 		//}
 	}
 	

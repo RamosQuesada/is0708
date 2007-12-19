@@ -211,8 +211,13 @@ public class Util {
 	 * @return
 	 */
 	public static String aFormatoDate(String año,String mes,String dia){
-		System.out.println(año+" "+mes+" "+dia);
-		String year=año;
+		
+		String year;
+		System.out.println(Integer.parseInt(año));
+		if((Integer.parseInt(año))<1000){
+			year="20"+año.substring(1);
+		}
+		else{year=año;}
 		String month;
 		String day;
 		if (mes.length()==1){month=("0"+mes);}
