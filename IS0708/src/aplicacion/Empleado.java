@@ -827,7 +827,15 @@ public class Empleado implements Drawable {
 		t.anadeGUI(c, horaInicio, horaFin, subdivisiones, false, color);
 	}
 	
-
+	/**
+	 * 
+	 * @param dia Dia que queremos saber si puede trabajar nuestro empleado.
+	 * @param iniH Hora inicial desde la que debe estar disponible nuestro empleado para trabajar.
+	 * @param finH Hora final hasta la que debe estar disponible nuestro empleado para trabajar.
+	 * @param cont Controlador que nos da acceso a la base de datos.
+	 * @return <i>true</i> si el empleado puede trabajar en el periodo solicitado, <i>false</i> si
+	 * no puede hacerlo (libra, vacaciones, baja...).
+	 */
 	public boolean estaDisponible(int dia, Time iniH, Time finH, Controlador cont){
 		
 		Contrato contrato;
@@ -839,11 +847,7 @@ public class Empleado implements Drawable {
 		long difFechas;
 		Turno tur;
 		
-
-		boolean puede = true;
-		
 		//cálculo del dia en el que nos encontramos dentro del ciclo.
-		
 		today = new java.util.Date();
 		java.sql.Date fechaActual = new java.sql.Date(today.getTime());
 		if(fContrato == null)
@@ -861,34 +865,38 @@ public class Empleado implements Drawable {
 		turnosStr = obtenerTurnos(patron);
 		
 		//Obtencion del turno correspondiente a ese dia.
-		diaCiclo = 2; //prueba.
 		turnoStr = turnosStr.get(diaCiclo);
 		
 		//COMPROBAR SI TRABAJA UN DIA	
 		if(turnoStr == "d")
 			return false;
-		//COMPROBAR SI ESTA DE VACACIONES
+		
+		//COMPROBAR SI ESTA DE VACACIONES ETC
+		//...
 		
 		//Obtencion del turno a partir de la base de datos.
 		turnos = cont.getListaTurnosContrato(this.idEmpl);
 		//turnos = cont.getListaTurnosContrato(2);
 		//Obtencion del turno que le corresponde.
-		tur = turnos.get(0);
-		for(int i=0;i<turnos.size();i++){
-			if(turnos.get(i).getDescripcion().equals(turnoStr)){
+		boolean entrado = false;	
+		//Es condicion necesaria que entre.
+		for(int i=0; i<turnos.size(); i++){
+			if(turnos.get(i).getIdTurno() == Integer.parseInt(turnoStr))
+			{
 				tur = turnos.get(i);
+				if ((tur.getHoraEntrada().getTime() > iniH.getTime()) || (tur.getHoraSalida().getTime() < finH.getTime())){
+					return false;
+				} else 
+				{
+					if ((iniH.getTime() >= tur.getHoraDescanso().getTime()) && (iniH.getTime() < Util.calculaFinDescanso(tur.getHoraDescanso(),tur.getTDescanso()).getTime())){
+						return false;
+					}
+				}
+				entrado = true;
 				break;
 			}
 		}
-
-		if ((tur.getHoraEntrada().getTime() > iniH.getTime()) || (tur.getHoraSalida().getTime() < finH.getTime())){
-			puede = false;
-		} else {
-			if ((iniH.getTime() >= tur.getHoraDescanso().getTime()) && (iniH.getTime() < Util.calculaFinDescanso(tur.getHoraDescanso(),tur.getTDescanso()).getTime())){
-				puede = false;
-			}
-		}
-		return puede;
+		return entrado;
 	}
 	
 	/**
@@ -900,15 +908,40 @@ public class Empleado implements Drawable {
 	 */
 	public ArrayList<String> obtenerTurnos(String p){
 		
-		ArrayList<String> turnos;
+		ArrayList<String> turnos = new ArrayList<String>();
+		
+		String tiempo;
+		String tipo;
+		
+		for (int i=0; i<p.length(); i++)
+		{
+			tiempo = "";
+			tipo = "";
+			while (p.charAt(i) != '/')
+			{
+				tiempo = tiempo + p.charAt(i); 
+				i++;
+			}
+			i++; 
+			while ((p.charAt(i) != '/')&&(i<p.length()))
+			{
+				tipo = tipo + p.charAt(i);
+				i++;
+			}
+			i++;
+			for(int t=0; t<Integer.parseInt(tiempo); t++)
+			{
+				turnos.add(t,tipo);
+			}
+		}		
+		return turnos;
+		
+		/*
 		String numStr;
 		String turno;
 		int num, k;
-		
-		turnos = new ArrayList<String>();
 		num = 0;
-		k = 0;
-		
+		k = 0;	 
 		for(int i=0;i<p.length();i++){
 			if(i%2 == 0){
 				numStr = String.valueOf(p.charAt(i));
@@ -924,7 +957,7 @@ public class Empleado implements Drawable {
 			}
 			
 		}
-		return turnos;
+		*/
 	}
 	
 	
