@@ -66,6 +66,7 @@ public class I02_cuadrEmpl {
 	private MouseMoveListener mouseMoveListenerCuadrSemanal;
 	private MouseMoveListener mouseMoveListenerCuadrMensual;
 	private I02CuadranteEmpleado cuadrante;
+	private GC gc2;
 	private Vista vista;
 
 	private void calcularTamano() {
@@ -130,7 +131,7 @@ public class I02_cuadrEmpl {
 		// Doble buffering para evitar parpadeo
 		if (ancho != 0 && alto != 0) {
 			Image bufferImage = new Image(display, ancho, alto);
-			GC gc2 = new GC(bufferImage);
+			gc2 = new GC(bufferImage);
 			// TODO Probar la siguiente linea en el laboratorio
 			try {
 				gc2.setAntialias(SWT.ON);
@@ -274,7 +275,7 @@ public class I02_cuadrEmpl {
 		System.out.println("FECHA:"+Util.dateAString(fecha));
 		this.fecha=fecha;
 		lCuadranteTitulo.setText(Util.dateAString(fecha));
-		this.cuadrante.actualizarFecha(fecha);
+		this.cuadrante.actualizarFecha(fecha,gc2);
 		this.redibujar();
 	}
 
