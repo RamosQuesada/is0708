@@ -179,13 +179,13 @@ public class I02_cuadrEmpl {
 		
 		lCuadranteTitulo= new Label (c, SWT.LEFT);
 		String fname = lCuadranteTitulo.getFont().getFontData()[0].getName();
-		lCuadranteTitulo.setFont(new Font(c.getDisplay(),fname,15,0));
+		lCuadranteTitulo.setFont(new Font(c.getDisplay(),fname,10,0));
 		// TODO Esto tendr� que cambiarse por la fecha elegida en el calendario
 		if(fecha!=null){
-			lCuadranteTitulo.setText(Util.dateAString(fecha));
+			lCuadranteTitulo.setText("BIENVENIDO "+empleado.getNombre().toUpperCase()+"  :"+Util.dateAString(fecha));
 		}
 		else{
-			lCuadranteTitulo.setText(Util.dateAString(new Date(System.currentTimeMillis())));
+			lCuadranteTitulo.setText("BIENVENIDO "+empleado.getNombre().toUpperCase()+"  :"+Util.dateAString(new Date(System.currentTimeMillis())));
 		}
 		
 		lCuadranteTitulo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
