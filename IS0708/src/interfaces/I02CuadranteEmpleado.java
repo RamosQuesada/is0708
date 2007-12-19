@@ -282,7 +282,7 @@ public class I02CuadranteEmpleado {
 			}
 			
 			dibujarTurno(gc,cont,horaEntradaFloat,horaDescansoFloat,"INFOR.");
-			dibujarTurno(gc,cont,horaDescansoFloat,finHoraDescansoFloat,"INFOR.");
+			dibujarTurno(gc,cont,finHoraDescansoFloat,horaSalidaFloat,"INFOR.");
 		}
 		//}
 	}
