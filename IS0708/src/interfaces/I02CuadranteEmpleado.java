@@ -39,6 +39,14 @@ public class I02CuadranteEmpleado {
 	private ResourceBundle _bundle;
 	private Date fecha;
 	
+	private ArrayList<Integer> turnos;
+	private ArrayList<Float> horasInicio;
+	private ArrayList<Float> horasFin;
+	private ArrayList<Float> horaComienzoDescanso;
+	private ArrayList<Float> horaFinDescanso;
+	
+	private ArrayList<Turno> tiposTurno;
+	
 
 
 	/**
@@ -71,6 +79,10 @@ public class I02CuadranteEmpleado {
 		this.vista=vista;
 		this.empleado=empleado;
 		this.fecha=fecha;
+		this.horasFin= new ArrayList<Float>();
+		this.horasInicio = new ArrayList<Float>();
+		this.horaFinDescanso = new ArrayList<Float>();
+		this.horaComienzoDescanso =  new ArrayList<Float>();
 		this.margenIzq  = margenIzq;
 		this.margenDer  = margenDer;
 		this.margenSup  = margenSup;
@@ -217,12 +229,12 @@ public class I02CuadranteEmpleado {
 		}
 	}
 	
-	public void actualizarFecha(Date fecha){
+	public void actualizarFecha(Date fecha,GC gc){
 		this.fecha=fecha;
+		actualizarTurnos(gc);
 	}
 
-	public void dibujarTurnos(GC gc){
-		//GregorianCalendar calendario=new GregorianCalendar();
+	public void actualizarTurnos(GC gc){
 		Date fechaActual;
 		if(fecha==null){
 		fecha=new Date(System.currentTimeMillis());}
@@ -243,7 +255,7 @@ public class I02CuadranteEmpleado {
 			calendario.add(Calendar.DATE, -1);
 			numDias++;
 		}
-		ArrayList<Turno> turnos= this.vista.getControlador().getListaTurnosEmpleados();
+		tiposTurno= this.vista.getControlador().getListaTurnosEmpleados();
 		for(int cont=0;cont<7;cont++){
 			fecha= Date.valueOf(Util.aFormatoDate(Integer.toString(
 				calendario.get(GregorianCalendar.YEAR)),
@@ -268,23 +280,157 @@ public class I02CuadranteEmpleado {
 				System.out.println("turno no vacio");
 				int actual=0;
 				
-				while (turno!=turnos.get(actual).getIdTurno())actual++;
-				if(turnos.get(actual).getIdTurno()==turno){
-					horaEntrada=turnos.get(actual).getHoraEntrada();
-					horaSalida=turnos.get(actual).getHoraSalida();
-					horaDescanso=turnos.get(actual).getHoraDescanso();
-					duracionDescanso=turnos.get(actual).getTDescanso();
+				while (turno!=tiposTurno.get(actual).getIdTurno())actual++;
+				if(tiposTurno.get(actual).getIdTurno()==turno){
+					horaEntrada=tiposTurno.get(actual).getHoraEntrada();
+					horaSalida=tiposTurno.get(actual).getHoraSalida();
+					horaDescanso=tiposTurno.get(actual).getHoraDescanso();
+					duracionDescanso=tiposTurno.get(actual).getTDescanso();
+					
 					horaEntradaFloat=(float)(horaEntrada.getHours()+horaEntrada.getMinutes()/60.0f);
 					horaSalidaFloat=(float)(horaSalida.getHours()+horaSalida.getMinutes()/60.0f);
 					horaDescansoFloat=(float)(horaDescanso.getHours()+horaDescanso.getMinutes()/60.0f);
 					finHoraDescansoFloat = (float)(horaDescansoFloat + ((float)(duracionDescanso)/60));
+					this.horasInicio.add(cont,horaEntradaFloat);
+					this.horasFin.add(cont,horaSalidaFloat);
+					this.horaComienzoDescanso.add(cont,horaDescansoFloat);
+					this.horaFinDescanso.add(cont,finHoraDescansoFloat);
 				}
+			}
+			else{
+				this.horasInicio.add(cont,0.0f);
+				this.horasFin.add(cont,0.0f);
+				this.horaComienzoDescanso.add(cont,0.0f);
+				this.horaFinDescanso.add(cont,0.0f);
 			}
 			
 			dibujarTurno(gc,cont,horaEntradaFloat,horaDescansoFloat,"INFOR.");
 			dibujarTurno(gc,cont,finHoraDescansoFloat,horaSalidaFloat,"INFOR.");
 		}
-		//}
+		
+	}
+	
+	public void dibujaTurnosCargados(GC gc){
+//		GregorianCalendar calendario = new GregorianCalendar();
+//		System.out.println("pruebasel" +Util.dateAString(fecha));
+//		
+//
+//		calendario.set(GregorianCalendar.DAY_OF_MONTH, fecha.getDate());
+//		calendario.set(GregorianCalendar.MONTH, fecha.getMonth());
+//		calendario.set(GregorianCalendar.YEAR, fecha.getYear());
+//		System.out.println(calendario.get(GregorianCalendar.DAY_OF_WEEK));
+//		int numDias=0;
+//		while(calendario.get(GregorianCalendar.DAY_OF_WEEK)!=6){
+//			calendario.add(Calendar.DATE, -1);
+//			numDias++;
+//		}
+//		ArrayList<Turno> turnos= this.vista.getControlador().getListaTurnosEmpleados();
+//		for(int cont=0;cont<7;cont++){
+//			fecha= Date.valueOf(Util.aFormatoDate(Integer.toString(
+//				calendario.get(GregorianCalendar.YEAR)),
+//				Integer.toString(
+//					calendario.get(GregorianCalendar.MONTH)+1),
+//				Integer.toString(
+//					calendario.get(GregorianCalendar.DATE)+cont)
+//				));
+//
+//			System.out.println("FECHA REAL:"+fecha);
+//			//System.out.println(Util.dateAString(fecha));
+//			int turno = this.vista.getControlador().getTurnoEmpleadoDia(fecha, this.empleado.getEmplId());
+//			
+//			Time horaEntrada,horaSalida,horaDescanso;
+//			int duracionDescanso;
+//			Float horaEntradaFloat=0.0f;
+//			Float horaSalidaFloat=0.0f;
+//			Float horaDescansoFloat = 0.0f;
+//			Float finHoraDescansoFloat = 0.0f;
+//			if(turno==0){System.out.println("vacio");}
+//			if(turno!=0){
+//				System.out.println("turno no vacio");
+//				int actual=0;
+//				
+//				while (turno!=turnos.get(actual).getIdTurno())actual++;
+//				if(turnos.get(actual).getIdTurno()==turno){
+//					horaEntrada=turnos.get(actual).getHoraEntrada();
+//					horaSalida=turnos.get(actual).getHoraSalida();
+//					horaDescanso=turnos.get(actual).getHoraDescanso();
+//					duracionDescanso=turnos.get(actual).getTDescanso();
+//					horaEntradaFloat=(float)(horaEntrada.getHours()+horaEntrada.getMinutes()/60.0f);
+//					horaSalidaFloat=(float)(horaSalida.getHours()+horaSalida.getMinutes()/60.0f);
+//					horaDescansoFloat=(float)(horaDescanso.getHours()+horaDescanso.getMinutes()/60.0f);
+//					finHoraDescansoFloat = (float)(horaDescansoFloat + ((float)(duracionDescanso)/60));
+//				}
+//			}
+//			
+		for(int cont=0;cont<6;cont++){
+			dibujarTurno(gc,cont,this.horasInicio.get(cont),this.horaComienzoDescanso.get(cont),"INFOR.");
+			dibujarTurno(gc,cont,this.horaFinDescanso.get(cont),this.horasFin.get(cont),"INFOR.");
+		}
+	}
+	
+	public void dibujarTurnos(GC gc){
+		//GregorianCalendar calendario=new GregorianCalendar();
+		Date fechaActual;
+		if(fecha==null){ actualizarTurnos(gc);
+		fecha=new Date(System.currentTimeMillis());}
+		else{
+			dibujaTurnosCargados(gc);
+		}
+//		GregorianCalendar calendario = new GregorianCalendar();
+//		System.out.println("pruebasel" +Util.dateAString(fecha));
+//		
+//
+//		calendario.set(GregorianCalendar.DAY_OF_MONTH, fecha.getDate());
+//		calendario.set(GregorianCalendar.MONTH, fecha.getMonth());
+//		calendario.set(GregorianCalendar.YEAR, fecha.getYear());
+//		System.out.println(calendario.get(GregorianCalendar.DAY_OF_WEEK));
+//		int numDias=0;
+//		while(calendario.get(GregorianCalendar.DAY_OF_WEEK)!=6){
+//			calendario.add(Calendar.DATE, -1);
+//			numDias++;
+//		}
+//		ArrayList<Turno> turnos= this.vista.getControlador().getListaTurnosEmpleados();
+//		for(int cont=0;cont<7;cont++){
+//			fecha= Date.valueOf(Util.aFormatoDate(Integer.toString(
+//				calendario.get(GregorianCalendar.YEAR)),
+//				Integer.toString(
+//					calendario.get(GregorianCalendar.MONTH)+1),
+//				Integer.toString(
+//					calendario.get(GregorianCalendar.DATE)+cont)
+//				));
+//
+//			System.out.println("FECHA REAL:"+fecha);
+//			//System.out.println(Util.dateAString(fecha));
+//			int turno = this.vista.getControlador().getTurnoEmpleadoDia(fecha, this.empleado.getEmplId());
+//			
+//			Time horaEntrada,horaSalida,horaDescanso;
+//			int duracionDescanso;
+//			Float horaEntradaFloat=0.0f;
+//			Float horaSalidaFloat=0.0f;
+//			Float horaDescansoFloat = 0.0f;
+//			Float finHoraDescansoFloat = 0.0f;
+//			if(turno==0){System.out.println("vacio");}
+//			if(turno!=0){
+//				System.out.println("turno no vacio");
+//				int actual=0;
+//				
+//				while (turno!=turnos.get(actual).getIdTurno())actual++;
+//				if(turnos.get(actual).getIdTurno()==turno){
+//					horaEntrada=turnos.get(actual).getHoraEntrada();
+//					horaSalida=turnos.get(actual).getHoraSalida();
+//					horaDescanso=turnos.get(actual).getHoraDescanso();
+//					duracionDescanso=turnos.get(actual).getTDescanso();
+//					horaEntradaFloat=(float)(horaEntrada.getHours()+horaEntrada.getMinutes()/60.0f);
+//					horaSalidaFloat=(float)(horaSalida.getHours()+horaSalida.getMinutes()/60.0f);
+//					horaDescansoFloat=(float)(horaDescanso.getHours()+horaDescanso.getMinutes()/60.0f);
+//					finHoraDescansoFloat = (float)(horaDescansoFloat + ((float)(duracionDescanso)/60));
+//				}
+//			}
+//			
+//			dibujarTurno(gc,cont,horaEntradaFloat,horaDescansoFloat,"INFOR.");
+//			dibujarTurno(gc,cont,finHoraDescansoFloat,horaSalidaFloat,"INFOR.");
+//		}
+//		//}
 	}
 	
 	/**
