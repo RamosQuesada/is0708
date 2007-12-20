@@ -27,9 +27,7 @@ public class TurnoMatic {
 	private ArrayList<Empleado> listaE;
 	
 	
-	public TurnoMatic(){
-		
-		
+	public TurnoMatic(){		
 	}
 		 
 	/**
@@ -49,7 +47,7 @@ public class TurnoMatic {
 		this.idDepartamento = idDepartamento;
 		this.anio = year;
 		this.mes = m;
-	    listaE = controlador.getEmpleadosDepartamento(idDepartamento);		
+	    this.listaE = controlador.getEmpleadosDepartamento(idDepartamento);		
 		this.estruc = new Estructura(mes, year, cont, idDepartamento, listaE);
 		this.cuadrante = new Cuadrante(mes, year, idDepartamento);		
 	}

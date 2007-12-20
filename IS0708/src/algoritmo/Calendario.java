@@ -13,7 +13,7 @@ public class Calendario {
 	private String idDepartamento;
 	private int mes;
 	private int anio;
-	private int numDias; //numero de dias del mes
+	private int numDias; 			//numero de dias del mes
 	private HoraCalendario cal[][]; //esta matriz contiene para cada dia y para cada hora un objeto de la clase Horacalendario
 	private Controlador cont;
 	
