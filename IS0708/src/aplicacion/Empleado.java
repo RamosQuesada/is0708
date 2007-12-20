@@ -895,13 +895,13 @@ public class Empleado implements Drawable {
 		if(fContrato == null)
 			fContrato = new Date(fechaActual.getTime());
 		difFechas = (fechaActual.getTime()+(dia*24*60*60*1000))-fContrato.getTime();
-		diaCiclo = ((int)difFechas/(24*60*60*1000))-2;  //chapuza: arreglar
+		diaCiclo = ((int)difFechas/(24*60*60*1000));  //chapuza: arreglar
 		
 		//Obtencion del contrato del empleado.
 		contrato = cont.getContrato(this.getContratoId());
 		
 		if(diaCiclo == contrato.getDuracionCiclo()-1)
-				fContrato.setTime(fechaActual.getTime() + (24*60*60*1000));
+				fContrato.setTime(fechaActual.getTime() + (dia*24*60*60*1000));
 		
 		patron = contrato.getPatron();
 		turnosStr = obtenerTurnos(patron);
