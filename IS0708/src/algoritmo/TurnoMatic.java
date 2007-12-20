@@ -23,6 +23,9 @@ public class TurnoMatic {
 	private String idDepartamento;
 	private Controlador controlador;
 	
+	//Optimizacion Algoritmo (reduccion llamadas a BBDD)
+	private ArrayList<Empleado> listaE;
+	
 	
 	public TurnoMatic(){
 		
@@ -46,9 +49,8 @@ public class TurnoMatic {
 		this.idDepartamento = idDepartamento;
 		this.anio = year;
 		this.mes = m;
-		//ArrayList<Empleado> personal = new ArrayList<Empleado>();		
-		//this.estruc = new Estructura(mes,year,personal, cont.getListaTurnosEmpleados(), idDepartamento);
-		this.estruc = new Estructura(mes, year, cont, idDepartamento);
+	    listaE = controlador.getEmpleadosDepartamento(idDepartamento);		
+		this.estruc = new Estructura(mes, year, cont, idDepartamento, listaE);
 		this.cuadrante = new Cuadrante(mes, year, idDepartamento);		
 	}
 
@@ -59,14 +61,8 @@ public class TurnoMatic {
 	 * @return cuadrante Cuadrante resultante de aplicar el algoritmo
 	 * El arrayList disp es solo para pruebas.
 	 */
-	public Cuadrante ejecutaAlgoritmo(){
-	
-		//int id = Integer.parseInt(idDepartamento);
-		int id = 1; //de prueba
-		ArrayList<Empleado> listaE = controlador.getEmpleadosDepartamento(idDepartamento);
-		
+	public Cuadrante ejecutaAlgoritmo(){	
 		//Colocamos a los empleados correspondientes a cada día
-		
 		ListasEmpleados[][] horario = estruc.getDias();
 		ArrayList<Empleado> reser;
 		ArrayList<Empleado> dispo;
@@ -90,7 +86,7 @@ public class TurnoMatic {
 				for(int k=0; k<listaE.size(); k++){
 					e = listaE.get(k);
 					
-				//	creacionListas(e,i,inif,finf);
+					//creacionListas(e,i,inif,finf);
 					if(e.estaDisponible(i,inif,finf,controlador)){
 						dispo.add(e);		
 						empl.add(e);
@@ -191,7 +187,7 @@ public class TurnoMatic {
 			trabajadores=cuad[i];
 			for(int j=0;j<trabajadores.size();j++){
 				trab = trabajadores.get(j);
-				System.out.println("Empleado: "+trab.getIdEmpl());
+				System.out.println("Empleado: " + trab.getIdEmpl());
 				
 			}
 		}	
@@ -208,16 +204,16 @@ public class TurnoMatic {
 		listas = estruc.getDias();
 		
 		
-		for(int i=0;i<listas.length;i++){
-			System.out.println("Dia: "+i);
+		for(int i=0; i<listas.length; i++){
+			System.out.println("Dia: " + i);
 			for(int j=0;j<listas[i].length;j++){
-				emp=listas[i][j].getEmpleados();
+				emp = listas[i][j].getEmpleados();
 				//disp=listas[i][j].getDisponibles();
 				//reser=listas[i][j].getReserva();
-				System.out.println("Turno: "+j);
+				System.out.println("Turno: " + j);
 				System.out.println("Lista de empleados: ");
 				for(int k=0;k<emp.size();k++){
-					e=emp.get(k);
+					e = emp.get(k);
 					System.out.println(e.getEmplId());
 				}
 				

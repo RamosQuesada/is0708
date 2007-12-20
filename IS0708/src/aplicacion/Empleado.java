@@ -79,6 +79,9 @@ public class Empleado implements Drawable {
 	private ArrayList<Departamento> departamentos;
 	private Turno turnoActual;	//No lo borreis golfos. (19-Dic)
 	
+	//Optimizacion Algoritmo (reduccion llamadas a BBDD)
+	private ArrayList<Turno> turnoE;    
+	
 	// TODO Eliminar el turno, que irá en el Contrato
 	// ahora sólo sirve para hacer prubas de interfaz
 	/** @deprecated */
@@ -249,6 +252,7 @@ public class Empleado implements Drawable {
 		this.felicidad=felicidad;
 		this.idioma=idioma;
 		this.turnoActual = null;
+		this.turnoE = null;
 		
 
 	}
@@ -853,7 +857,6 @@ public class Empleado implements Drawable {
 		Contrato contrato;
 		String patron, turnoStr;
 		ArrayList<String> turnosStr;
-		ArrayList<Turno> turnos;
 		java.util.Date today;
 		int diaCiclo;
 		long difFechas;
@@ -887,15 +890,18 @@ public class Empleado implements Drawable {
 		//...
 		
 		//Obtencion del turno a partir de la base de datos.
-		turnos = cont.getListaTurnosContrato(this.idEmpl);
+		if (turnoE == null)
+		{
+			turnoE = cont.getListaTurnosContrato(this.idEmpl);
+		}
 		//turnos = cont.getListaTurnosContrato(2);
 		//Obtencion del turno que le corresponde.
 		boolean entrado = false;	
 		//Es condicion necesaria que entre.
-		for(int i=0; i<turnos.size(); i++){
-			if(turnos.get(i).getIdTurno() == Integer.parseInt(turnoStr))
+		for(int i=0; i<turnoE.size(); i++){
+			if(turnoE.get(i).getIdTurno() == Integer.parseInt(turnoStr))
 			{
-				turnoActual = turnos.get(i);
+				turnoActual = turnoE.get(i);
 				if ((turnoActual.getHoraEntrada().getTime() > iniH.getTime()) || (turnoActual.getHoraSalida().getTime() < finH.getTime())){
 					return false;
 				} else 

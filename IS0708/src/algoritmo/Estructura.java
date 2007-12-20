@@ -14,8 +14,8 @@ public class Estructura {
 	
 
 	private ListasEmpleados[][] dias;
-	private ArrayList<Empleado> personal;//aqui estaran todos los empleados
-	private Calendario cal;//calendario donde se almacena min/max perso,exp/inexp... 
+	private ArrayList<Empleado> personal;  // Aqui estaran todos los empleados
+	private Calendario cal;				   // Calendario donde se almacena min/max perso,exp/inexp... 
 	private ArrayList<Time> trozosHorario; // Lista con el inicio de cada turno y el fin del ultimo
 	                                       // tamanio: nTrozos+1;
 	private int numTrozos;
@@ -25,12 +25,10 @@ public class Estructura {
 	//ArrayList<Turno> turnos;
 	
 	
-	public Estructura(int mes, int anio, Controlador cont, String idDepartamento){//constructora de la estructura
+	public Estructura(int mes, int anio, Controlador cont, String idDepartamento, ArrayList<Empleado> listaE){
 		this.idDepartamento = idDepartamento;
 		this.controlador = cont;
-		//int dep = Integer.parseInt(this.idDepartamento);
-		//this.personal = cont.getEmpleadosDepartamento(dep);
-		this.personal = cont.getEmpleadosDepartamento(this.idDepartamento);
+		this.personal = listaE;
 		
 		// Calcular el numero de trozos en que se divide el horario
 		// Recuperar de la base de datos la lista de todos los turnos del departamento
@@ -47,7 +45,6 @@ public class Estructura {
 		}
 		//rellenar lista empleados
 		cal = new Calendario(mes, anio, controlador, idDepartamento);//creamos calendario
-		//this.controlador.getDistribucionMes(this.idDepartamento,this.cal);
 	}
 	
 	public ListasEmpleados[][] getDias(){
@@ -60,7 +57,7 @@ public class Estructura {
 	}
 	
 	private void inicializaTrozos(){
-		ArrayList<Turno> turnos = controlador.getListaTurnosEmpleados(); // Metodo en proceso	
+		ArrayList<Turno> turnos = controlador.getListaTurnosEmpleados(); 
 		ArrayList<Time> horas = new ArrayList<Time>();
 		for (int i=0; i<turnos.size(); i++){
 			if (!horas.contains(turnos.get(i).getHoraEntrada()))
