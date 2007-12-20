@@ -35,7 +35,7 @@ import aplicacion.Controlador;
  * 		Un jefe es un empleado que tiene a su cargo uno o más
  * 		departamentos. Además de lo que puede hacer un empleado,
  * 		puede cambiar los cuadrantes de sus departamentos y mirar
- * 		sus estad�sticas e índices de rendimiento.
+ * 		sus estad?sticas e índices de rendimiento.
  * <li> 3 - Gerente<br>
  * 		El gerente es un empleado que tiene a su cargo empleados
  * 		que son jefes. Puede tener también la función de jefe si
@@ -81,6 +81,7 @@ public class Empleado implements Drawable {
 	
 	//Optimizacion Algoritmo (reduccion llamadas a BBDD)
 	private ArrayList<Turno> turnoE;    
+	
 	
 	// TODO Eliminar el turno, que irá en el Contrato
 	// ahora sólo sirve para hacer prubas de interfaz
@@ -893,13 +894,13 @@ public class Empleado implements Drawable {
 		java.sql.Date fechaActual = new java.sql.Date(today.getTime());
 		if(fContrato == null)
 			fContrato = new Date(fechaActual.getTime());
-		difFechas = fechaActual.getTime()-fContrato.getTime();
-		diaCiclo = (int)difFechas/(24*60*60*1000);
+		difFechas = (fechaActual.getTime()+(dia*24*60*60*1000))-fContrato.getTime();
+		diaCiclo = ((int)difFechas/(24*60*60*1000))-2;  //chapuza: arreglar
 		
 		//Obtencion del contrato del empleado.
 		contrato = cont.getContrato(this.getContratoId());
 		
-		if(diaCiclo == contrato.getDuracionCiclo())
+		if(diaCiclo == contrato.getDuracionCiclo()-1)
 				fContrato.setTime(fechaActual.getTime() + (24*60*60*1000));
 		
 		patron = contrato.getPatron();
@@ -909,7 +910,7 @@ public class Empleado implements Drawable {
 		turnoStr = turnosStr.get(diaCiclo);
 		
 		//COMPROBAR SI TRABAJA UN DIA	
-		if(turnoStr == "d")
+		if(turnoStr.equals("d"))
 			return false;
 		
 		//COMPROBAR SI ESTA DE VACACIONES ETC
@@ -920,7 +921,7 @@ public class Empleado implements Drawable {
 		{
 			turnoE = cont.getListaTurnosContrato(this.idEmpl);
 		}
-		//turnos = cont.getListaTurnosContrato(2);
+		
 		//Obtencion del turno que le corresponde.
 		boolean entrado = false;	
 		//Es condicion necesaria que entre.
@@ -1026,6 +1027,4 @@ public class Empleado implements Drawable {
 		this.nombre = nombre;
 		turno = tur;
 	}
-
-
 }
