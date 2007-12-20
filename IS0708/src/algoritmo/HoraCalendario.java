@@ -47,7 +47,7 @@ public class HoraCalendario {
 		this.max = max;
 		this.min = min;
 		expertos = Util.numExpertos(patron);
-		principiantes=Util.numPrincipiantes(patron);	
+		principiantes = Util.numPrincipiantes(patron);	
 	}
 	
 	/**
