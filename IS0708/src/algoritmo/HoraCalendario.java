@@ -3,7 +3,7 @@ package algoritmo;
 import aplicacion.Util;
 
 /**
- * Esta clase contiene el max/min numero de personas,patron de expertos/principiantes e idTurno que se van a utilizar en la clase calendario
+ * Esta clase contiene el max/min numero de personas, patron de expertos/principiantes e idTurno que se van a utilizar en la clase calendario
  * @author DavidMartin & Miguel Angel Diaz
  */
 public class HoraCalendario {
