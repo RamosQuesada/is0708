@@ -879,7 +879,7 @@ public class Empleado implements Drawable {
 	 * @return <i>true</i> si el empleado puede trabajar en el periodo solicitado, <i>false</i> si
 	 * no puede hacerlo (libra, vacaciones, baja...).
 	 */
-	public boolean estaDisponible(int dia, Time iniH, Time finH, Controlador cont){
+	public boolean estaDisponible(int dia, Time iniH, Time finH, Controlador cont, int hora, int numTrozos){
 		
 		Contrato contrato;
 		String patron, turnoStr;
@@ -900,8 +900,8 @@ public class Empleado implements Drawable {
 		//Obtencion del contrato del empleado.
 		contrato = cont.getContrato(this.getContratoId());
 		
-		if(diaCiclo == contrato.getDuracionCiclo()-1)
-				fContrato.setTime(fechaActual.getTime() + (dia*24*60*60*1000));
+		if((diaCiclo == contrato.getDuracionCiclo()-1) && (hora == numTrozos-1))
+				fContrato.setTime(fechaActual.getTime() + ((dia+1)*24*60*60*1000));
 		
 		patron = contrato.getPatron();
 		turnosStr = obtenerTurnos(patron);

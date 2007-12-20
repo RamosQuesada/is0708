@@ -87,7 +87,7 @@ public class TurnoMatic {
 					e = listaE.get(k);
 					
 					//creacionListas(e,i,inif,finf);
-					if(e.estaDisponible(i,inif,finf,controlador)){
+					if(e.estaDisponible(i,inif,finf,controlador,j,estruc.getNumTrozos())){
 						dispo.add(e);		
 						empl.add(e);
 						
