@@ -80,7 +80,8 @@ public class Empleado implements Drawable {
 	private Turno turnoActual;	//No lo borreis golfos. (19-Dic)
 	
 	//Optimizacion Algoritmo (reduccion llamadas a BBDD)
-	private ArrayList<Turno> turnoE;    
+	private ArrayList<Turno> turnoE;
+	private ArrayList<String> turnosStr;
 	
 	
 	// TODO Eliminar el turno, que irá en el Contrato
@@ -254,6 +255,7 @@ public class Empleado implements Drawable {
 		this.idioma=idioma;
 		this.turnoActual = null;
 		this.turnoE = null;
+		this.turnosStr = null;
 		
 
 	}
@@ -883,7 +885,6 @@ public class Empleado implements Drawable {
 		
 		Contrato contrato;
 		String patron, turnoStr;
-		ArrayList<String> turnosStr;
 		java.util.Date today;
 		int diaCiclo;
 		long difFechas;
@@ -899,12 +900,14 @@ public class Empleado implements Drawable {
 		
 		//Obtencion del contrato del empleado.
 		contrato = cont.getContrato(this.getContratoId());
+		if (turnosStr == null)
+		{
+			patron = contrato.getPatron();
+			turnosStr = obtenerTurnos(patron);
+		}
 		
 		if((diaCiclo == contrato.getDuracionCiclo()-1) && (hora == numTrozos-1))
 				fContrato.setTime(fechaActual.getTime() + ((dia+1)*24*60*60*1000));
-		
-		patron = contrato.getPatron();
-		turnosStr = obtenerTurnos(patron);
 		
 		//Obtencion del turno correspondiente a ese dia.
 		turnoStr = turnosStr.get(diaCiclo);
@@ -981,50 +984,5 @@ public class Empleado implements Drawable {
 			}
 		}		
 		return turnos;
-		
-		/*
-		String numStr;
-		String turno;
-		int num, k;
-		num = 0;
-		k = 0;	 
-		for(int i=0;i<p.length();i++){
-			if(i%2 == 0){
-				numStr = String.valueOf(p.charAt(i));
-				num = Integer.parseInt(numStr);
-			}
-			else{
-				turno = String.valueOf(p.charAt(i));
-				for(int j=0;j<num;j++){
-					turnos.add(k,turno);
-					k++;
-				}
-				
-			}
-			
-		}
-		*/
-	}
-	
-	
-	/**
-	 * Constructor para hacer pruebas TODO
-	 * @deprecated eliminar cuando ya no sea necesario
-	 */
-	public Empleado(int idEmpl, String nombre, Color color){
-		this.idEmpl = idEmpl;
-		this.nombre = nombre;
-		this.color = color;
-		turno = new Turno();
-	}
-	
-	/**
-	 * Constructor para hacer pruebas, Algoritmo TODO
-	 * @deprecated eliminar cuando ya no sea necesario
-	 */
-	public Empleado(int idEmpl, String nombre, Turno tur){
-		this.idEmpl = idEmpl;
-		this.nombre = nombre;
-		turno = tur;
 	}
 }

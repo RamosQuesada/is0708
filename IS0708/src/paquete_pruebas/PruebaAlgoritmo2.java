@@ -14,21 +14,14 @@ public class PruebaAlgoritmo2 {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
-		TurnoMatic alg;
-		java.util.Date today;
-		java.sql.Date fContrato;
-		long difFechas;
-		int diaCiclo;
-				
+						
 		Database prueba = new Database();
 		prueba.abrirConexion();
 		Controlador c = new Controlador(prueba);
 		
-		alg = new TurnoMatic(12,2007,c,"DepPrueba");
+		TurnoMatic alg = new TurnoMatic(12,2007,c,"DepPrueba");
 		alg.ejecutaAlgoritmo();
 		alg.imprimeEstructura();
-		System.out.println("ole");
-
+		alg.imprimeCuadrante(); 
 	}
 }

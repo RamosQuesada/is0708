@@ -20,10 +20,7 @@ public class Estructura {
 	                                       // tamanio: nTrozos+1;
 	private int numTrozos;
 	private String idDepartamento;
-	private Controlador controlador;	
-	//Atributo de prueba turnos
-	//ArrayList<Turno> turnos;
-	
+	private Controlador controlador;		
 	
 	public Estructura(int mes, int anio, Controlador cont, String idDepartamento, ArrayList<Empleado> listaE){
 		this.idDepartamento = idDepartamento;
