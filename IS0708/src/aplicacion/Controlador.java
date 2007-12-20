@@ -419,28 +419,20 @@ public class Controlador {
 			Date dia = Date.valueOf(cal.getAnio()+"-"+cal.getMes()+"-"+(i+1));
 			ArrayList<Object[]> temp = getDistribucionDia(nombre,dia);			
 			j=0;
-			if (temp.size() > 0) {
-
-				for (j=0; j<temp.size(); j++) {
-					Object[] t = new Object[4];				
-					t = temp.get(j);
-					cal.actualizaHora(i, (Integer)t[0], (Integer)t[2], (Integer)t[1], Util.numExpertos((String)t[3]), Util.numPrincipiantes((String)t[3]));				
-				}
-				
-				Object[] t = new Object[4];				
-				t = temp.get(0);
-				
-				for (j=0; j<(Integer)t[0]; j++)
-					cal.actualizaHora(i, j, -1, -1, -1, -1);
-				
-				j=temp.size()+(Integer)t[0];
-			}
+			
 			while (j<24) {
 				cal.actualizaHora(i, j, -1, -1, -1, -1);
 				j++;
 			}
 			
-				
+			j=0;
+			if (temp.size() > 0) {
+				for (j=0; j<temp.size(); j++) {
+					Object[] t = new Object[4];				
+					t = temp.get(j);
+					cal.actualizaHora(i, (Integer)t[0], (Integer)t[2], (Integer)t[1], Util.numExpertos((String)t[3]), Util.numPrincipiantes((String)t[3]));				
+				}
+			}
 		}
 		
 	}
