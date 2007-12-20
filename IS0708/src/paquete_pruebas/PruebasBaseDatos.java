@@ -28,6 +28,11 @@ public class PruebasBaseDatos {
 //		c.getListaTurnosContrato(2);
 		int x=c.getTurnoEmpleadoDia(Date.valueOf("2007-12-21"),71449215);
 		System.out.println(x);
+		
+				
+		Calendario cal = new Calendario(12, 2007, "DepPrueba");
+		Controlador c1 = new Controlador(prueba);
+		c1.getDistribucionMes("DepPrueba", cal);
 		//c.getEmpleados(null, "dep", null, null, null, null, 1);
 		/*
 		ArrayList a = new ArrayList();
