@@ -27,6 +27,7 @@ public class PruebaAlgoritmo2 {
 		
 		alg = new TurnoMatic(12,2007,c,"DepPrueba");
 		alg.ejecutaAlgoritmo();
+		alg.imprimeEstructura();
 		System.out.println("ole");
 
 	}
