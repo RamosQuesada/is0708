@@ -202,6 +202,19 @@ public class Util {
 		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		return formatter.format(fecha);
 	}
+	/**
+	 * Convierte un fecha de tipo long en un String con el formato YYYY-MM-DD.
+	 * Si la fecha es null, devuelve 0000-00-00.
+	 * @param fecha la fecha a convertir
+	 * @return el String con el formato apropiado
+	 * @author Jakub
+	 */
+
+	public static String longAString(long fecha) {
+		Date date = new Date(fecha);
+		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		return formatter.format(date);
+	}
 	
 	/**
 	 * Convierte en un formato para crear fechas
