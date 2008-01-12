@@ -29,6 +29,9 @@ public class Contrato {
 	/*Salario correspondiente al contrato*/
 	private double _salario;
 	
+	/*Tipo de contrato*/
+	private int _tipoContrato;
+	
 /**
  * Constructor de un contrato
  * @param nombreContrato Nombre del contrato
@@ -39,13 +42,14 @@ public class Contrato {
  * @param salario Salario del contrato
  */
 	public Contrato(String nombreContrato,int numeroContrato,int turnoInicial,
-			int duracionCiclo,String patron,double salario){
+			int duracionCiclo,String patron,double salario, int tipoContrato){
 		this._nombreContrato=nombreContrato;
 		this._numeroContrato=numeroContrato;
 		this._turnoInicial=turnoInicial;
 		this._duracionCiclo=duracionCiclo;
 		this._patron=patron;
 		this._salario=salario;
+		this._tipoContrato=tipoContrato;
 	}
 	
 /**
@@ -103,6 +107,10 @@ public class Contrato {
 	
 	public void setSalario(double salario){
 		this._salario=salario;
+	}
+	
+	public int getTipoContrato(){
+		return this._tipoContrato;
 	}
 	
 }

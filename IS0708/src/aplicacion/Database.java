@@ -764,13 +764,13 @@ public class Database extends Thread {
 	 * @return true si se ha realizado correctamente o false en caso contrario
 	 */
 	public boolean insertarContrato(int idContrato, int turnoInicial,
-			String nombre, String patron, int duracionCiclo, double salario) {
+			String nombre, String patron, int duracionCiclo, double salario, int tipocontrato) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
 			st.executeUpdate("INSERT INTO CONTRATO values (" + idContrato
 					+ ", " + turnoInicial + ", '" + nombre + "', '" + patron
-					+ "', " + duracionCiclo + ", " + salario + ");");
+					+ "', " + duracionCiclo + ", " + salario + ", " + tipocontrato + ");");
 			System.out.println("Contrato insertado");
 			correcto = true;
 		} catch (SQLException e) {

@@ -578,6 +578,7 @@ public class Controlador {
 		String patron;
 		int duracionCiclo;
 		double salario;
+		int tipoContrato;
 		Contrato contrato=null;
 		try {
 			if (result.next()){
@@ -588,7 +589,8 @@ public class Controlador {
 				patron = result.getString("Patron");
 				duracionCiclo = result.getInt("DuracionCiclo");
 				salario = result.getDouble("Salario");
-				contrato=new Contrato(nombreContrato,numeroContrato , turnoInicial, duracionCiclo, patron, salario);
+				tipoContrato = result.getInt("Tipo");
+				contrato=new Contrato(nombreContrato,numeroContrato , turnoInicial, duracionCiclo, patron, salario, tipoContrato);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -610,7 +612,8 @@ public class Controlador {
 		String patron=c.getPatron();
 		int duracionCiclo=c.getDuracionCiclo();
 		double salario=c.getSalario();
-		boolean exito=_db.insertarContrato(idContrato, turnoInicial, nombre, patron, duracionCiclo, salario);
+		int tipocontrato = c.getTipoContrato();
+		boolean exito=_db.insertarContrato(idContrato, turnoInicial, nombre, patron, duracionCiclo, salario, tipocontrato);
 		return exito;
 	}
 
