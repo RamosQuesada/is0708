@@ -1,6 +1,7 @@
 package aplicacion;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
@@ -891,12 +892,29 @@ public class Empleado implements Drawable {
 		Turno tur;
 		
 		//cálculo del dia en el que nos encontramos dentro del ciclo.
-		today = new java.util.Date();
+		/*today = new java.util.Date();
 		java.sql.Date fechaActual = new java.sql.Date(today.getTime());
 		if(fContrato == null)
 			fContrato = new Date(fechaActual.getTime());
+		long day = dia*24*60*60*1000;
+		long hoy = fechaActual.getTime();
+		int hoyint = ((int)hoy/(24*60*60*1000)); 
+		long dias = hoy + day;
+		long contrat = fContrato.getTime();
 		difFechas = (fechaActual.getTime()+(dia*24*60*60*1000))-fContrato.getTime();
-		diaCiclo = ((int)difFechas/(24*60*60*1000));  //chapuza: arreglar
+		diaCiclo = ((int)difFechas/(24*60*60*1000));  //chapuza: arreglar */
+		
+		GregorianCalendar hoy = (GregorianCalendar) GregorianCalendar.getInstance();
+		
+		if(fContrato == null)
+			fContrato = new Date(hoy.getTimeInMillis());
+		
+		
+		GregorianCalendar contrat = new GregorianCalendar
+			(fContrato.getYear(),fContrato.getMonth(),fContrato.getDay());// <- Arreglar
+		difFechas = hoy.getTimeInMillis() - contrat.getTimeInMillis();
+		diaCiclo = ((int)difFechas/(24*60*60*1000));
+		
 		
 		//Obtencion del contrato del empleado.
 		contrato = cont.getContrato(this.getContratoId());
@@ -905,9 +923,12 @@ public class Empleado implements Drawable {
 			patron = contrato.getPatron();
 			turnosStr = obtenerTurnos(patron);
 		}
+		diaCiclo = diaCiclo%turnosStr.size();
 		
+		//if((diaCiclo == contrato.getDuracionCiclo()-1) && (hora == numTrozos-1))
+		//		fContrato.setTime(fechaActual.getTime() + ((dia+1)*24*60*60*1000));
 		if((diaCiclo == contrato.getDuracionCiclo()-1) && (hora == numTrozos-1))
-				fContrato.setTime(fechaActual.getTime() + ((dia+1)*24*60*60*1000));
+			fContrato.setTime(hoy.getTimeInMillis() + ((dia+1)*24*60*60*1000));
 		
 		//Obtencion del turno correspondiente a ese dia.
 		turnoStr = turnosStr.get(diaCiclo);
@@ -922,7 +943,7 @@ public class Empleado implements Drawable {
 		//Obtencion del turno a partir de la base de datos.
 		if (turnoE == null)
 		{
-			turnoE = cont.getListaTurnosContrato(this.idEmpl);
+			turnoE = cont.getListaTurnosContrato(this.idEmpl); //ponerlo al principio del alg.
 		}
 		
 		//Obtencion del turno que le corresponde.

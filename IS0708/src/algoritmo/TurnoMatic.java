@@ -62,9 +62,12 @@ public class TurnoMatic {
 	public Cuadrante ejecutaAlgoritmo(){	
 		//Colocamos a los empleados correspondientes a cada día
 		ListasEmpleados[][] horario = estruc.getDias();
+		ArrayList<Trabaja>[] cu = cuadrante.getCuad();
 		ArrayList<Empleado> reser;
 		ArrayList<Empleado> dispo;
 		ArrayList<Empleado> empl;
+		Turno turno;
+		Trabaja trab;
 		
 		Empleado e;
 
@@ -88,6 +91,11 @@ public class TurnoMatic {
 					if(e.estaDisponible(i,inif,finf,controlador,j,estruc.getNumTrozos())){
 						dispo.add(e);		
 						empl.add(e);
+						turno = e.getTurnoActual();
+						Time pr1 = new Time(19,49,00);
+						Time pr2 = new Time(19,49,00);
+						trab = new Trabaja(e.getEmplId(),pr1,pr2,turno.getIdTurno());
+						cu[i].add(trab);
 						
 					}else{
 						reser.add(e);
@@ -96,11 +104,14 @@ public class TurnoMatic {
 				
 				horario[i][j].setDisponibles(dispo);
 				horario[i][j].setReserva(reser);
+				horario[i][j].setEmpleados(empl);
 				
 				//coloca sólo a los empleados fijos.
 				//colocaFijos(i,dispo,i,j);
 			}	
-		}		
+		}	
+		cuadrante.setCuad(cu);
+		//controlador.insertCuadrante(cuadrante);
 		return this.cuadrante;
 }
 	
@@ -182,8 +193,10 @@ public class TurnoMatic {
 		cuad=cuadrante.getCuad();
 		
 		for(int i=0;i<cuad.length;i++){
+			System.out.println("Dia "+i);
 			trabajadores=cuad[i];
 			for(int j=0;j<trabajadores.size();j++){
+				System.out.println("Turno "+j);
 				trab = trabajadores.get(j);
 				System.out.println("Empleado: " + trab.getIdEmpl());
 				
