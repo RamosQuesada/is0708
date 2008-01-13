@@ -26,7 +26,7 @@ public class PruebasBaseDatos {
 		prueba.abrirConexion();
 		//Controlador c = new Controlador(prueba);
 		//c.getListaTurnosContrato(2);
-		prueba.insertarContrato(2, 2, "capullo", "patron", 2, 222, 1);
+		prueba.insertarContrato(4, 2, "cap", "patron", 2, 222, 1);
 		//int x=c.getTurnoEmpleadoDia(Date.valueOf("2007-12-21"),71449215);
 		//System.out.println(x);
 		
