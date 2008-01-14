@@ -109,11 +109,164 @@ public class TurnoMatic {
 				//coloca sólo a los empleados fijos.
 				//colocaFijos(i,dispo,i,j);
 			}	
+			
+			colocaNoFijos(dispo,reser,empl,i);//se colocan para cada dia i del mes
+			
 		}	
 		cuadrante.setCuad(cu);
 		//controlador.insertCuadrante(cuadrante);
 		return this.cuadrante;
-}
+	}
+	
+	/**
+	 * Método para colocar los empleados no fijos con el algoritmo vuelta-atrás
+	 * @param dispo Lista de empleados disponibles que vienen del método ejecutaAlgoritmo
+	 * @param reser Lista de empleados de reserva que vienen del método ejecutaAlgoritmo
+	 * @param empl Lista de empleados que vienen del método ejecutaAlgoritmo
+	 */
+	private void colocaNoFijos (ArrayList<Empleado> dispo, ArrayList<Empleado> reser, ArrayList<Empleado> empl, int dia){
+		Calendario cal=this.estruc.getCalendario();
+		int tipoc;
+		
+		/*separo de las 3 listas los empleados que ya estan colocados en el cuadrante,
+	      esto es, los que su tipo de contrato es 1 o 2 (fijo o rotatorio)*/
+		for (int k=0;k<dispo.size();k++){
+			tipoc=dispo.get(k).getContrato(controlador).getTipoContrato();
+			if (tipoc==1 || tipoc==2){
+				dispo.remove(k);
+				k--;
+			}
+		}
+		for (int k=0;k<reser.size();k++){
+			tipoc=reser.get(k).getContrato(controlador).getTipoContrato();
+			if (tipoc==1 || tipoc==2){
+				reser.remove(k);
+				k--;
+			}
+		}
+		for (int k=0;k<empl.size();k++){
+			tipoc=empl.get(k).getContrato(controlador).getTipoContrato();
+			if (tipoc==1 || tipoc==2){
+				empl.remove(k);
+				k--;
+			}
+		}
+		
+		//ordeno las 3 listas segun la felicidad de los empleados		
+
+		ArrayList<Empleado> e1=ordenarLista(dispo,1);
+		ArrayList<Empleado> e2=ordenarLista(reser,2);
+		ArrayList<Empleado> e3=ordenarLista(empl,1);
+		
+		//llamo al algoritmo vueltra atras
+		
+		boolean hecho=vueltaAtrasMarcaje(e1,e2,0,dia);
+				
+	}
+	
+	/**
+	 * Metodo para ordenar los ArrayList por orden de felicidad y convertirlas en array
+	 * @param lista es el ArrayList de empleados para ordenar y convertir en Array
+	 * @param criterio es el criterio de ordenacion: 1 = de menor a mayor, 2= de mayor a menor
+	 */
+	private ArrayList<Empleado> ordenarLista(ArrayList<Empleado> lista,int criterio){
+		Empleado[] e1=new Empleado[lista.size()];
+		e1=lista.toArray(e1);
+		Empleado aux;
+		
+		for (int k=0; k<e1.length;k++){
+			for(int i=0;i<e1.length-1;i++){
+				switch (criterio){
+				case 1:if (e1[i].getFelicidad()>e1[i+1].getFelicidad()) {
+					   		aux=e1[i+1];
+					   		e1[i+1]=e1[i];
+					   		e1[i]=aux;}
+						break;
+				case 2:if (e1[i].getFelicidad()<e1[i+1].getFelicidad()) {
+							aux=e1[i+1];
+							e1[i+1]=e1[i];
+							e1[i]=aux;}
+						break;
+				default:break;
+				}				
+			}
+		}
+		
+		ArrayList<Empleado> resultado=new ArrayList<Empleado>();
+		for (int k=0; k<e1.length;k++){
+			resultado.add(e1[k]);
+		}
+		return resultado;
+	}
+	
+	/**
+	 * Metodo recursivo para colocar los empleados segun las franjas horarias
+	 * @param dispo Lista de empleados disponibles
+	 * @param reser Lista de empleados de reserva
+	 * @param k parametro para la recursion
+	 * @param dia es el dia para el que estamos trabajando
+	 */
+	private boolean vueltaAtrasMarcaje (ArrayList<Empleado> dispo, ArrayList<Empleado> reser, int k, int dia){
+		ArrayList<franjaHoraria> fHoraria = new ArrayList<franjaHoraria>();
+		fHoraria =  buscarFranjasHorarias(k);
+		FranjaHoraria franjaHoraria;
+		boolean hecho=false;
+		while (fHoraria.size()!=0) {
+			franjaHoraria = fHoraria.get(1);
+			ponerEmpleado (dispo.get(k), franjaHoraria.getIni(),franjaHoraria.getFin());
+			k=k+1;      
+			if  (k==dispo.size()+1){
+				if  (comprobarFranjasCompletas()){
+					hecho=true;
+				/*	guardarCuadrante (cuadrante);
+					guardarDatosEmpleados (cuadrante);
+					mostrarCuadrante(cuadrante);*/ //esto se hace solo, no hace falta llamar a nada (creo)
+				}
+			}
+			else{
+				if (k<dispo.size()){
+					hecho=vueltaAtrasMarcaje(dispo, reser,k,dia);
+				}
+			}
+			k=k-1;
+			quitarEmpleado(dispo.get(k),dia);   
+			fHoraria.remove(1);
+		}
+		return hecho;
+	}
+	
+	/**
+	 * Metodo para eliminar un empleado de una cuadrante de un cuadrante de un dia
+	 * @param e el empleado a eliminar del cuadrante
+	 * @param dia el cuadrante de tal dia
+	 */
+	private void quitarEmpleado (Empleado e, int dia){
+		ArrayList<Trabaja> cuadDia;
+		boolean enc=false;
+		int k=0;
+		cuadDia=cuadrante.getListaTrabajaDia(dia);
+		
+		while ((!enc) && (k<cuadDia.size())){
+			if (cuadDia.get(k).getIdEmpl()==e.getEmplId()) {
+				cuadDia.remove(k);
+				enc=true;
+			}
+		}				
+	}
+	
+	/**
+	 * Metodo para poner un empleado en un cuadrante de un dia
+	 * @param e el empleado a colocar
+	 * @param ini el inicio de su turno de trabajo
+	 * @param fin el fin de su turno de trabajo
+	 * @param dia el dia de su turno d trabajo
+	 * 
+	 */
+	private void ponerEmpleado (Empleado e, Time ini, Time fin, int dia){
+		Trabaja trabaja = new Trabaja(e.getEmplId(),ini,fin,e.getTurnoActual().getIdTurno());
+		ArrayList<Trabaja> cuadDia=cuadrante.getListaTrabajaDia(dia);
+		cuadDia.add(trabaja);
+	}
 	
 	
 	/**
