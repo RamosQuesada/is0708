@@ -62,6 +62,7 @@ public class TurnoMatic {
 	public Cuadrante ejecutaAlgoritmo(){	
 		//Colocamos a los empleados correspondientes a cada día
 		ListasEmpleados[][] horario = estruc.getDias();
+		ListasEmpleados[] horarioDia =new ListasEmpleados[Util.dameDias(mes, anio)];
 		ArrayList<Trabaja>[] cu = cuadrante.getCuad();
 		ArrayList<Empleado> reser;
 		ArrayList<Empleado> dispo;
@@ -74,6 +75,7 @@ public class TurnoMatic {
 		//Recorremos los dias del mes
 		for(int i=0; i<Util.dameDias(mes,anio); i++){
 			
+			horarioDia[i]=new ListasEmpleados("aux");
 			//dividimos en el numero de franjas de cada dia
 			for(int j=0; j<estruc.getNumTrozos(); j++){
 			//for(int j=0; j<disp.size(); j++){
@@ -108,15 +110,18 @@ public class TurnoMatic {
 				
 				//coloca sólo a los empleados fijos.
 				//colocaFijos(i,dispo,i,j);
+				
 			}	
 			
-			colocaNoFijos(dispo,reser,empl,i);//se colocan para cada dia i del mes
-			
-		}	
+			colocaNoFijos(dispoDia,reserDia,emplDia,i,cu );//se colocan para cada dia i del mes
+		}		
+
 		cuadrante.setCuad(cu);
 		//controlador.insertCuadrante(cuadrante);
 		return this.cuadrante;
 	}
+	
+
 	
 	/**
 	 * Método para colocar los empleados no fijos con el algoritmo vuelta-atrás
@@ -124,7 +129,7 @@ public class TurnoMatic {
 	 * @param reser Lista de empleados de reserva que vienen del método ejecutaAlgoritmo
 	 * @param empl Lista de empleados que vienen del método ejecutaAlgoritmo
 	 */
-	private void colocaNoFijos (ArrayList<Empleado> dispo, ArrayList<Empleado> reser, ArrayList<Empleado> empl, int dia){
+	private void colocaNoFijos (ArrayList<Empleado> dispo, ArrayList<Empleado> reser, ArrayList<Empleado> empl, int dia, ArrayList<Trabaja>[] cuadrante){
 		Calendario cal=this.estruc.getCalendario();
 		int tipoc;
 		
@@ -160,7 +165,7 @@ public class TurnoMatic {
 		
 		//llamo al algoritmo vueltra atras
 		
-		boolean hecho=vueltaAtrasMarcaje(e1,e2,0,dia);
+		boolean hecho=vueltaAtrasMarcaje(e1,e2,0,dia,cuadrante);
 				
 	}
 	
@@ -206,14 +211,14 @@ public class TurnoMatic {
 	 * @param k parametro para la recursion
 	 * @param dia es el dia para el que estamos trabajando
 	 */
-	private boolean vueltaAtrasMarcaje (ArrayList<Empleado> dispo, ArrayList<Empleado> reser, int k, int dia){
-		ArrayList<franjaHoraria> fHoraria = new ArrayList<franjaHoraria>();
+	private boolean vueltaAtrasMarcaje (ArrayList<Empleado> dispo, ArrayList<Empleado> reser, int k, int dia, ArrayList<Trabaja>[] cuadrante){
+		ArrayList<franjaHoraria> fHoraria = new 	ArrayList<franjaHoraria>();
 		fHoraria =  buscarFranjasHorarias(k);
 		FranjaHoraria franjaHoraria;
 		boolean hecho=false;
 		while (fHoraria.size()!=0) {
 			franjaHoraria = fHoraria.get(1);
-			ponerEmpleado (dispo.get(k), franjaHoraria.getIni(),franjaHoraria.getFin());
+			ponerEmpleado (dispo.get(k), franjaHoraria.getIni(),franjaHoraria.getFin(), cuadrante[dia]);
 			k=k+1;      
 			if  (k==dispo.size()+1){
 				if  (comprobarFranjasCompletas()){
@@ -225,11 +230,11 @@ public class TurnoMatic {
 			}
 			else{
 				if (k<dispo.size()){
-					hecho=vueltaAtrasMarcaje(dispo, reser,k,dia);
+					hecho=vueltaAtrasMarcaje(dispo, reser,k,dia,cuadrante);
 				}
 			}
 			k=k-1;
-			quitarEmpleado(dispo.get(k),dia);   
+			quitarEmpleado(dispo.get(k),cuadrante[dia]);   
 			fHoraria.remove(1);
 		}
 		return hecho;
@@ -240,11 +245,9 @@ public class TurnoMatic {
 	 * @param e el empleado a eliminar del cuadrante
 	 * @param dia el cuadrante de tal dia
 	 */
-	private void quitarEmpleado (Empleado e, int dia){
-		ArrayList<Trabaja> cuadDia;
+	private void quitarEmpleado (Empleado e, ArrayList<Trabaja> cuadDia){
 		boolean enc=false;
 		int k=0;
-		cuadDia=cuadrante.getListaTrabajaDia(dia);
 		
 		while ((!enc) && (k<cuadDia.size())){
 			if (cuadDia.get(k).getIdEmpl()==e.getEmplId()) {
@@ -262,11 +265,13 @@ public class TurnoMatic {
 	 * @param dia el dia de su turno d trabajo
 	 * 
 	 */
-	private void ponerEmpleado (Empleado e, Time ini, Time fin, int dia){
+	private void ponerEmpleado (Empleado e, Time ini, Time fin, ArrayList<Trabaja> cuadDia){
 		Trabaja trabaja = new Trabaja(e.getEmplId(),ini,fin,e.getTurnoActual().getIdTurno());
-		ArrayList<Trabaja> cuadDia=cuadrante.getListaTrabajaDia(dia);
 		cuadDia.add(trabaja);
 	}
+	
+	
+
 	
 	
 	/**
