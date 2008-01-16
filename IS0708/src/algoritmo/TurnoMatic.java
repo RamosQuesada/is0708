@@ -234,9 +234,9 @@ public class TurnoMatic {
 	 * @param dia es el dia para el que estamos trabajando
 	 */
 	private boolean vueltaAtrasMarcaje (ArrayList<Empleado> dispo, ArrayList<Empleado> reser, int k, int dia, ArrayList<Trabaja>[] cuadrante){
-		/*fHoraria es un ArrayList con todas las franjas horarias en las que puede trabajar el empleado situado en la 
-		 posición k de disponibles según los turnos*/ 
-		ArrayList<Turno> fHoraria = controlador.getListaTurnosEmpleados ();
+		/*fHoraria es un ArrayList con todos los turnos en los que puede trabajar el empleado situado en la 
+		 posición k de disponibles*/ 
+		ArrayList<Turno> fHoraria = controlador.getListaTurnosContrato (k);
 		Turno franjaHoraria;
 		boolean hecho=false;
 		while (fHoraria.size()!=0) {
@@ -244,7 +244,7 @@ public class TurnoMatic {
 			ponerEmpleado (dispo.get(k), franjaHoraria.getHoraEntrada(), franjaHoraria.getHoraSalida(), cuadrante[dia]);
 			k=k+1;      
 			if  (k==dispo.size()+1){
-				if  (comprobarFranjasCompletas()){
+				if  (comprobarFranjasCompletas(cuadrante, dia, fHoraria)){
 					hecho=true;
 				/*	guardarCuadrante (cuadrante);
 					guardarDatosEmpleados (cuadrante);
@@ -262,12 +262,49 @@ public class TurnoMatic {
 		}
 		return hecho;
 	}
+
 	
-	/*
-	 * 
+	/**
+	 * metodo para comprobar que todas las franjas horarias de un dia cumplen los requisito de personal
+	 * @param cuadDia es el cuadrante
+	 * @param dia es el dia en el que queremos hacer la comprobacion
+	 * @param fHoraria es la lista de franjas que se divide un dia
+	 * @return
 	 */
-	private franjaHoraria buscarFranjasHorarias(ArrayList<Empleado> dispo, int k){
+	
+	private boolean comprobarFranjasCompletas(ArrayList<Trabaja>[] cuadDia,int dia, ArrayList<Turno> fHoraria){
+		boolean valido=true;
 		
+		//bucle que recorre todas las franjas horarias de este dia
+		for (int i=0;(i<fHoraria.size())&&(valido);i++){
+			Turno turno=fHoraria.get(i);
+			int horaIni=turno.getHoraEntrada().getHours();
+			int horaFin=turno.getHoraSalida().getHours()+1;
+			
+			//bucle que recorre todas las horas de una franja
+			for (int j=horaIni;j<=horaFin;j++){
+				if (estruc.getCal().getMinHora(dia,j)>contarEmpleadosHora(cuadDia[dia],j)){
+					valido=false;
+				}
+			}
+		}
+		
+		return valido;
+	}
+	/**
+	 * metodo para contar el numero de empleados que trabajan a una hora concreta
+	 * @param lista la lista de trabajadores de un dia
+	 * @param hora la hora a comprobar
+	 * @return
+	 */
+	private int contarEmpleadosHora(ArrayList<Trabaja> lista, int hora){
+		int contador=0;
+		for(int i=0;i<lista.size();i++){
+			if ((lista.get(i).getFichIni().getHours()<=hora)&&(lista.get(i).getFichFin().getHours()>=hora)){
+				contador++;
+			}
+		}
+		return contador;
 	}
 	
 	/**
