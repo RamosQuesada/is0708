@@ -113,7 +113,31 @@ public class TurnoMatic {
 				
 			}	
 			
-			colocaNoFijos(dispoDia,reserDia,emplDia,i,cu );//se colocan para cada dia i del mes
+			ArrayList<Empleado> reserDia = new ArrayList<Empleado>();
+			ArrayList<Empleado> dispoDia = new ArrayList<Empleado>();
+			ArrayList<Empleado> emplDia = new ArrayList<Empleado>();
+			Empleado aux;
+			
+			for(int j=0; j<estruc.getNumTrozos(); j++){
+				int n=0;
+				while (n<horario[i][j].getDisponibles().size()) {
+					aux = horario[i][j].getDisponibles().get(n);
+					dispoDia.add(aux);
+					n++;
+				}
+				while (n<horario[i][j].getReserva().size()) {
+					aux = horario[i][j].getReserva().get(n);
+					reserDia.add(aux);
+					n++;
+				}
+				while (n<horario[i][j].getEmpleados().size()) {
+					aux = horario[i][j].getEmpleados().get(n);
+					emplDia.add(aux);
+					n++;
+				}
+			}
+			
+			colocaNoFijos(dispoDia, reserDia, emplDia, i, cu);//se colocan para cada dia i del mes
 		}		
 
 		cuadrante.setCuad(cu);
@@ -212,13 +236,15 @@ public class TurnoMatic {
 	 * @param dia es el dia para el que estamos trabajando
 	 */
 	private boolean vueltaAtrasMarcaje (ArrayList<Empleado> dispo, ArrayList<Empleado> reser, int k, int dia, ArrayList<Trabaja>[] cuadrante){
-		ArrayList<franjaHoraria> fHoraria = new 	ArrayList<franjaHoraria>();
-		fHoraria =  buscarFranjasHorarias(k);
+		/*fHoraria es un ArrayList con todas las franjas horarias en las que puede trabajar el empleado situado en la 
+		 posición k de disponibles según los turnos*/ 
+		ArrayList<franjaHoraria> fHoraria = new ArrayList<franjaHoraria>();
+		fHoraria =  buscarFranjasHorarias(dispo, k);
 		FranjaHoraria franjaHoraria;
 		boolean hecho=false;
 		while (fHoraria.size()!=0) {
 			franjaHoraria = fHoraria.get(1);
-			ponerEmpleado (dispo.get(k), franjaHoraria.getIni(),franjaHoraria.getFin(), cuadrante[dia]);
+			ponerEmpleado (dispo.get(k), franjaHoraria.getIni(), franjaHoraria.getFin(), cuadrante[dia]);
 			k=k+1;      
 			if  (k==dispo.size()+1){
 				if  (comprobarFranjasCompletas()){
@@ -238,6 +264,13 @@ public class TurnoMatic {
 			fHoraria.remove(1);
 		}
 		return hecho;
+	}
+	
+	/*
+	 * 
+	 */
+	private franjaHoraria buscarFranjasHorarias(ArrayList<Empleado> dispo, int k){
+		
 	}
 	
 	/**
@@ -269,10 +302,6 @@ public class TurnoMatic {
 		Trabaja trabaja = new Trabaja(e.getEmplId(),ini,fin,e.getTurnoActual().getIdTurno());
 		cuadDia.add(trabaja);
 	}
-	
-	
-
-	
 	
 	/**
 	 * Método que se encarga de colocar a los empleados fijos
