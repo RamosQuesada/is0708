@@ -145,8 +145,6 @@ public class TurnoMatic {
 		return this.cuadrante;
 	}
 	
-
-	
 	/**
 	 * Método para colocar los empleados no fijos con el algoritmo vuelta-atrás
 	 * @param dispo Lista de empleados disponibles que vienen del método ejecutaAlgoritmo
@@ -238,9 +236,8 @@ public class TurnoMatic {
 	private boolean vueltaAtrasMarcaje (ArrayList<Empleado> dispo, ArrayList<Empleado> reser, int k, int dia, ArrayList<Trabaja>[] cuadrante){
 		/*fHoraria es un ArrayList con todas las franjas horarias en las que puede trabajar el empleado situado en la 
 		 posición k de disponibles según los turnos*/ 
-		ArrayList<franjaHoraria> fHoraria = new ArrayList<franjaHoraria>();
-		fHoraria =  buscarFranjasHorarias(dispo, k);
-		FranjaHoraria franjaHoraria;
+		ArrayList<Turno> fHoraria = controlador.getListaTurnosEmpleados ();
+		Turno franjaHoraria;
 		boolean hecho=false;
 		while (fHoraria.size()!=0) {
 			franjaHoraria = fHoraria.get(1);
