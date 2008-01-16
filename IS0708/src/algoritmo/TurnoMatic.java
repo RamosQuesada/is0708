@@ -241,7 +241,7 @@ public class TurnoMatic {
 		boolean hecho=false;
 		while (fHoraria.size()!=0) {
 			franjaHoraria = fHoraria.get(1);
-			ponerEmpleado (dispo.get(k), franjaHoraria.getIni(), franjaHoraria.getFin(), cuadrante[dia]);
+			ponerEmpleado (dispo.get(k), franjaHoraria.getHoraEntrada(), franjaHoraria.getHoraSalida(), cuadrante[dia]);
 			k=k+1;      
 			if  (k==dispo.size()+1){
 				if  (comprobarFranjasCompletas()){
