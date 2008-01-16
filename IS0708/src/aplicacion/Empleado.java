@@ -892,7 +892,7 @@ public class Empleado implements Drawable {
 		Turno tur;
 		
 		//cálculo del dia en el que nos encontramos dentro del ciclo.
-		/*today = new java.util.Date();
+		today = new java.util.Date();
 		java.sql.Date fechaActual = new java.sql.Date(today.getTime());
 		if(fContrato == null)
 			fContrato = new Date(fechaActual.getTime());
@@ -901,10 +901,11 @@ public class Empleado implements Drawable {
 		int hoyint = ((int)hoy/(24*60*60*1000)); 
 		long dias = hoy + day;
 		long contrat = fContrato.getTime();
+		long dif = hoy - contrat;
 		difFechas = (fechaActual.getTime()+(dia*24*60*60*1000))-fContrato.getTime();
-		diaCiclo = ((int)difFechas/(24*60*60*1000));  //chapuza: arreglar */
-		
-		GregorianCalendar hoy = (GregorianCalendar) GregorianCalendar.getInstance();
+		diaCiclo = (int) (difFechas/(24*60*60*1000));  //chapuza: arreglar 
+	
+		/*GregorianCalendar hoy = (GregorianCalendar) GregorianCalendar.getInstance();
 		
 		if(fContrato == null)
 			fContrato = new Date(hoy.getTimeInMillis());
@@ -913,7 +914,7 @@ public class Empleado implements Drawable {
 		GregorianCalendar contrat = new GregorianCalendar
 			(fContrato.getYear(),fContrato.getMonth(),fContrato.getDay());// <- Arreglar
 		difFechas = hoy.getTimeInMillis() - contrat.getTimeInMillis();
-		diaCiclo = ((int)difFechas/(24*60*60*1000));
+		diaCiclo = ((int)difFechas/(24*60*60*1000));*/
 		
 		
 		//Obtencion del contrato del empleado.
@@ -925,10 +926,10 @@ public class Empleado implements Drawable {
 		}
 		diaCiclo = diaCiclo%turnosStr.size();
 		
-		//if((diaCiclo == contrato.getDuracionCiclo()-1) && (hora == numTrozos-1))
-		//		fContrato.setTime(fechaActual.getTime() + ((dia+1)*24*60*60*1000));
 		if((diaCiclo == contrato.getDuracionCiclo()-1) && (hora == numTrozos-1))
-			fContrato.setTime(hoy.getTimeInMillis() + ((dia+1)*24*60*60*1000));
+				fContrato.setTime(fechaActual.getTime() + ((dia+1)*24*60*60*1000));
+	/*	if((diaCiclo == contrato.getDuracionCiclo()-1) && (hora == numTrozos-1))
+			fContrato.setTime(hoy.getTimeInMillis() + ((dia+1)*24*60*60*1000));*/
 		
 		//Obtencion del turno correspondiente a ese dia.
 		turnoStr = turnosStr.get(diaCiclo);
