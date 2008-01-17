@@ -48,6 +48,7 @@ public class GeneraDatos {
 		int NumMax;
 		int NumMin;
 		int idDepartamento;
+		
 		////////////////////////////////////////////////
 		//atributos Turno
 		////////////////////////////////////////////////
@@ -56,6 +57,7 @@ public class GeneraDatos {
 		Time HoraSalida;
 		Time HoraInicioDescanso;
 		int Duracion;
+		
 		////////////////////////////////////////////////
 		//atributos contrato
 		////////////////////////////////////////////////
@@ -104,7 +106,6 @@ public class GeneraDatos {
 	        	bd.insertarDistribucion(hora,diaSemana,patron,NumMax,NumMin,idDepartamento);//aqui insertamos las distribuciones	
 	    	}
 		//rellenar los turnos
-		//int idTurno;
 		
 		for (int i = 0; i < valor ; i++) {
 			
