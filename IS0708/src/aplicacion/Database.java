@@ -1106,4 +1106,18 @@ public class Database extends Thread {
 		}
 		return r;		
 	}
+	
+	public ResultSet obtenIdTurnoEmpleado(int nvend) {
+		ResultSet r = null;
+		try {
+			st = con.createStatement();
+			r = st.executeQuery("SELECT IdTurno FROM USUARIO WHERE NumVendedor="+nvend+";");
+		}
+		catch (SQLException e) {
+			// TODO: handle exception
+			System.out
+					.println("Error al realizar la consulta en departamento ");
+		}
+		return r;		
+	}
 }

@@ -697,6 +697,58 @@ public class Controlador {
 	}
 	
 	/**
+	 * 
+	 * 
+	 * @param dpto	el nombre del Dpto.
+	 * @return Devuelve lista de los turnos de los empleados del dpto. dpto en un ArrayList
+	 */
+	public ArrayList<Turno> getListaTurnosEmpleadosDpto(String dpto) {
+		ArrayList<Turno> turnos= new ArrayList<Turno>();
+		try {
+			ArrayList<Empleado> e=new ArrayList<Empleado>();
+			e=getEmpleadosDepartamento(dpto);
+			//obtener Turnos a partir de los IdTurno's
+			
+		ArrayList<Integer> idTurnos = new ArrayList<Integer>();
+		
+		for(int i=0; i<e.size();i++){
+			int nvend = e.get(i).getEmplId();
+			ResultSet rs1 = _db.obtenIdTurnoEmpleado(nvend);
+			while (rs1.next()){
+			//No Repeticiones de Turnos
+			int id = rs1.getInt("IdTurno");
+			if(!idTurnos.contains(id)){
+			idTurnos.add(id);
+			}
+			}
+			
+		
+		}
+			
+		for(int j=0; j<idTurnos.size();j++){
+			ResultSet rs2 = _db.obtenTurno(idTurnos.get(j));
+			while(rs2.next()){
+			int idTurno=rs2.getInt("IdTurno");
+			String descr=rs2.getString("Descripcion");
+			Time hEntrada = rs2.getTime("HoraEntrada");
+			Time hSalida = rs2.getTime("HoraSalida");
+			Time hInicioDescanso = rs2.getTime("HoraInicioDescanso");
+			Time duracion = rs2.getTime("DuracionDescanso");
+			int descanso = aplicacion.Util.dameMinutos(duracion);
+			Turno t = new Turno(idTurno,descr,hEntrada,hSalida,hInicioDescanso,descanso);
+			turnos.add(t);
+			}
+		}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error al obtener Lista de Turnos del Departamento dado en la base de datos");
+		}		
+		return  turnos;
+	}
+	
+	
+	/**
 	 * Metodo que recoge el turno que le corresponde a un empleado en un dia concreto
 	 * @param dia			dia en el cual se quiere saber el turno del empleado
 	 * @param idEmpleado	identificador del empleado
