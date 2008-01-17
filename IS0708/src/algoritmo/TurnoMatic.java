@@ -90,8 +90,8 @@ public class TurnoMatic {
 					e = listaE.get(k);
 					
 					//creacionListas(e,i,inif,finf);
-					if(e.estaDisponible(i,inif,finf,controlador,j,estruc.getNumTrozos())){
-						dispo.add(e);		
+					if((e.getRango()==1) && (e.estaDisponible(i,inif,finf,controlador,j,estruc.getNumTrozos()))){
+						//dispo.add(e);		
 						empl.add(e);
 						turno = e.getTurnoActual();
 						Time pr1 = new Time(19,49,00);
@@ -100,11 +100,12 @@ public class TurnoMatic {
 						cu[i].add(trab);
 						
 					}else{
-						reser.add(e);
+						if (e.getRango()==1)
+							reser.add(e);
 					}
 				}
 				
-				horario[i][j].setDisponibles(dispo);
+				//horario[i][j].setDisponibles(dispo);
 				horario[i][j].setReserva(reser);
 				horario[i][j].setEmpleados(empl);
 				
@@ -120,21 +121,29 @@ public class TurnoMatic {
 			
 			for(int j=0; j<estruc.getNumTrozos(); j++){
 				int n=0;
-				while (n<horario[i][j].getDisponibles().size()) {
+				/*while (n<horario[i][j].getDisponibles().size()) {
 					aux = horario[i][j].getDisponibles().get(n);
 					dispoDia.add(aux);
 					n++;
-				}
+				}*/
 				while (n<horario[i][j].getReserva().size()) {
 					aux = horario[i][j].getReserva().get(n);
 					reserDia.add(aux);
 					n++;
 				}
+				n=0;
 				while (n<horario[i][j].getEmpleados().size()) {
 					aux = horario[i][j].getEmpleados().get(n);
 					emplDia.add(aux);
 					n++;
 				}
+			}
+			
+			//dispoDia tiene a los empleados que no son fijos ni rotatorios (empleados con contrato distinto de 1 y de 2 y rango=1)
+			for (int j=0;j<listaE.size();j++) {
+				e=listaE.get(j);
+				if (e.getContratoId()!=1 && e.getContratoId()!=2 && e.getRango()==1)
+					dispoDia.add(e);
 			}
 			
 			colocaNoFijos(dispoDia, reserDia, emplDia, i, cu);//se colocan para cada dia i del mes
@@ -157,33 +166,33 @@ public class TurnoMatic {
 		
 		/*separo de las 3 listas los empleados que ya estan colocados en el cuadrante,
 	      esto es, los que su tipo de contrato es 1 o 2 (fijo o rotatorio)*/
-		for (int k=0;k<dispo.size();k++){
+		/*for (int k=0;k<dispo.size();k++){
 			tipoc=dispo.get(k).getContrato(controlador).getTipoContrato();
 			if (tipoc==1 || tipoc==2){
 				dispo.remove(k);
 				k--;
 			}
-		}
-		for (int k=0;k<reser.size();k++){
+		}*/
+		/*for (int k=0;k<reser.size();k++){
 			tipoc=reser.get(k).getContrato(controlador).getTipoContrato();
 			if (tipoc==1 || tipoc==2){
 				reser.remove(k);
 				k--;
 			}
-		}
-		for (int k=0;k<empl.size();k++){
+		}*/
+		/*for (int k=0;k<empl.size();k++){
 			tipoc=empl.get(k).getContrato(controlador).getTipoContrato();
 			if (tipoc==1 || tipoc==2){
 				empl.remove(k);
 				k--;
 			}
-		}
+		}*/
 		
 		//ordeno las 3 listas segun la felicidad de los empleados		
 
 		ArrayList<Empleado> e1=ordenarLista(dispo,1);
 		ArrayList<Empleado> e2=ordenarLista(reser,2);
-		ArrayList<Empleado> e3=ordenarLista(empl,1);
+		//ArrayList<Empleado> e3=ordenarLista(empl,1);
 		
 		//llamo al algoritmo vueltra atras
 		
@@ -236,7 +245,7 @@ public class TurnoMatic {
 	private boolean vueltaAtrasMarcaje (ArrayList<Empleado> dispo, ArrayList<Empleado> reser, int k, int dia, ArrayList<Trabaja>[] cuadrante){
 		/*fHoraria es un ArrayList con todos los turnos en los que puede trabajar el empleado situado en la 
 		 posición k de disponibles*/ 
-		ArrayList<Turno> fHoraria = controlador.getListaTurnosContrato (k);
+		ArrayList<Turno> fHoraria = controlador.getListaTurnosContrato ((dispo.get(k).getEmplId()));
 		Turno franjaHoraria;
 		boolean hecho=false;
 		while (fHoraria.size()!=0) {
@@ -274,7 +283,6 @@ public class TurnoMatic {
 	
 	private boolean comprobarFranjasCompletas(ArrayList<Trabaja>[] cuadDia,int dia, ArrayList<Turno> fHoraria){
 		boolean valido=true;
-		
 		//bucle que recorre todas las franjas horarias de este dia
 		for (int i=0;(i<fHoraria.size())&&(valido);i++){
 			Turno turno=fHoraria.get(i);
@@ -288,7 +296,6 @@ public class TurnoMatic {
 				}
 			}
 		}
-		
 		return valido;
 	}
 	/**
@@ -315,7 +322,6 @@ public class TurnoMatic {
 	private void quitarEmpleado (Empleado e, ArrayList<Trabaja> cuadDia){
 		boolean enc=false;
 		int k=0;
-		
 		while ((!enc) && (k<cuadDia.size())){
 			if (cuadDia.get(k).getIdEmpl()==e.getEmplId()) {
 				cuadDia.remove(k);
