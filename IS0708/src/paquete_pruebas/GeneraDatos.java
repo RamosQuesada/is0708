@@ -72,6 +72,8 @@ public class GeneraDatos {
 		double salario;
 		int tipocontrato;
 		////////////////////////////////////////////////
+		
+		//comenzamos 
 		Database bd = new Database();
 		bd.run();
 		Random rnd=new Random(10);
@@ -90,7 +92,7 @@ public class GeneraDatos {
 		//creamos un nuevo departamento
 		//bd.insertarDepartamento("prueba",12345678);//se supone que el jefe será el que acabamos de crear
 		
-		
+		//he comentado lo anterior porque no se si solo tenemos que generar un departamento o mas de un departamento
 		//creamos la distribucion
 
 		for (int i = 0; i < valor ; i++) {
@@ -108,6 +110,7 @@ public class GeneraDatos {
 	        	System.out.println(idDepartamento);
 	        	//bd.insertarDistribucion(hora,diaSemana,patron,NumMax,NumMin,idDepartamento);//aqui insertamos las distribuciones	
 	    	}
+		
 		//rellenar los turnos
 		
 		for (int i = 0; i < valor ; i++) {
@@ -120,6 +123,7 @@ public class GeneraDatos {
 			Duracion=(int)(rnd.nextInt(31));//media hora,mas no jejjej
 			//bd.insertarTurno(idTurno, Descripcion, HoraEntrada, HoraSalida, HoraInicioDescanso, Duracion);
 		}
+		
 		//rellenar turnosPorContrato
 		for (int i = 0; i < valor ; i++) {
 			idTurno=(int)(rnd.nextInt(3));//¿¿??
@@ -140,7 +144,6 @@ public class GeneraDatos {
 		}
 		
 		//rellenamos los usuarios
-		
 		for (int i = 0; i < valor ; i++) {
 			id=(int)(rnd.nextInt(39999999));//se supone que tiene que tener 8 cifras creo
 			nombre=nombres.get((int)(rnd.nextInt(nombres.size()+1)));
