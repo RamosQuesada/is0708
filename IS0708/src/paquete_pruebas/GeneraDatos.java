@@ -22,12 +22,15 @@ public class GeneraDatos {
 		//atributos de usuario
 		////////////////////////////////////////////////
 		int id;
+		ArrayList<String> nombres=new ArrayList<String>();//aqui almacenamos tantos nombres como indique la variable valor
+		ArrayList<String> apellidos=new ArrayList<String>();//aqui almacenamos tantos apellidos como indique la variable valor
 		String nombre;
 		String apellido1;
 		String apellido2;
 		int sexo;
 		String email;
-		String password; 
+		ArrayList<String> passwords=new ArrayList<String>();//aqui almacenamos tantas passwords como indique la variable valor
+		String password;
 		int indicadorGrupo; 
 		Date fechaNac=new Date(1970-01-01);
 		Date fechaContrato=new Date(1975-01-01);
@@ -61,7 +64,7 @@ public class GeneraDatos {
 		////////////////////////////////////////////////
 		//atributos contrato
 		////////////////////////////////////////////////
-		//int idContrato;
+		//int idContrato; 
 		int turnoInicial;
 		//String nombre;
 		//String patron;
@@ -103,7 +106,7 @@ public class GeneraDatos {
 	        	System.out.println(NumMin);
 	        	System.out.println(NumMax);
 	        	System.out.println(idDepartamento);
-	        	bd.insertarDistribucion(hora,diaSemana,patron,NumMax,NumMin,idDepartamento);//aqui insertamos las distribuciones	
+	        	//bd.insertarDistribucion(hora,diaSemana,patron,NumMax,NumMin,idDepartamento);//aqui insertamos las distribuciones	
 	    	}
 		//rellenar los turnos
 		
@@ -115,36 +118,37 @@ public class GeneraDatos {
 			HoraSalida=new Time((int)(rnd.nextInt(25)),(int)(rnd.nextInt(61)),(int)(rnd.nextInt(61)));//hay que hacer un rango
 			HoraInicioDescanso=new Time((int)(rnd.nextInt(25)),(int)(rnd.nextInt(61)),(int)(rnd.nextInt(61)));
 			Duracion=(int)(rnd.nextInt(31));//media hora,mas no jejjej
+			//bd.insertarTurno(idTurno, Descripcion, HoraEntrada, HoraSalida, HoraInicioDescanso, Duracion);
 		}
 		//rellenar turnosPorContrato
 		for (int i = 0; i < valor ; i++) {
 			idTurno=(int)(rnd.nextInt(3));//¿¿??
 			idContrato=idTurno=(int)(rnd.nextInt(3));//hay que mirar cuantos tipos de contrato existen
-			bd.insertarTurnoPorContrato(idTurno, idContrato);
+			//bd.insertarTurnoPorContrato(idTurno, idContrato);
 		}
 		
 		//rellenar contrato
 		for (int i = 0; i < valor ; i++) {
 			idContrato=idTurno=(int)(rnd.nextInt(3));//hay que mirar cuantos tipos de contrato existen
 			turnoInicial=(int)(rnd.nextInt(5));//hay que mirar tipo de turnos
-			nombre="";
-			patron="";//hay que obtener el patron 
+			nombre="";//creamos otro arraylist para los nombres de los contratos??
+			patron=(int)(rnd.nextInt(4))+"e"+ (int)(rnd.nextInt(4))+"p";//hay que obtener el patron 
 			duracionCiclo=(int)(rnd.nextInt(3));
 			salario=(double)(rnd.nextInt(1500));
 			tipocontrato=(int)(rnd.nextInt(3));//hay que mirar tipos de contratos
-			bd.insertarContrato(idContrato, turnoInicial, nombre, patron, duracionCiclo, salario, tipocontrato);
+			//bd.insertarContrato(idContrato, turnoInicial, nombre, patron, duracionCiclo, salario, tipocontrato);
 		}
 		
 		//rellenamos los usuarios
 		
 		for (int i = 0; i < valor ; i++) {
-			id=(int)(rnd.nextInt(8));
-			nombre="";
-			apellido1="";
-			apellido2="";
+			id=(int)(rnd.nextInt(39999999));//se supone que tiene que tener 8 cifras creo
+			nombre=nombres.get((int)(rnd.nextInt(nombres.size()+1)));
+			apellido1=apellidos.get((int)(rnd.nextInt(apellidos.size()+1)));
+			apellido2=apellidos.get((int)(rnd.nextInt(apellidos.size()+1)));
 			sexo=(int)(rnd.nextInt(2));
-			email="";
-			password="";
+			email=nombre+"@turnomatic.com";
+			password=passwords.get((int)(rnd.nextInt(passwords.size()+1)));
 			indicadorGrupo=(int)(rnd.nextInt(3));//¿¿que es??
 			horasExtras=(int)(rnd.nextInt(3));
 			felicidad=(int)(rnd.nextInt(3));//cuando sepamos los niveles de felicidad asi lo acotamos
@@ -152,7 +156,7 @@ public class GeneraDatos {
 			rango=(int)(rnd.nextInt(3));//¿¿??
 			idContrato=(int)(rnd.nextInt(3));//hay que saber cuantos contratos hay
 			idTurno=(int)(rnd.nextInt(4));//hay que calcular todos los tipos de turno que existe
-			bd.insertarUsuario(id, nombre, apellido1, apellido2, fechaNac, sexo, email, password, indicadorGrupo, fechaContrato, fechaEntrada, horasExtras, felicidad, idioma, rango, idContrato, idTurno);
+			//bd.insertarUsuario(id, nombre, apellido1, apellido2, fechaNac, sexo, email, password, indicadorGrupo, fechaContrato, fechaEntrada, horasExtras, felicidad, idioma, rango, idContrato, idTurno);
     	}
 
 		bd.cerrarConexion();
