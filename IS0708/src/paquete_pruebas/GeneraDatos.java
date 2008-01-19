@@ -3,6 +3,7 @@ package paquete_pruebas;
 import java.sql.Date;
 import java.sql.Time;
 
+import aplicacion.Controlador;
 import aplicacion.Database;
 import aplicacion.Empleado;
 import aplicacion.Turno;
@@ -75,8 +76,10 @@ public class GeneraDatos {
 		
 		//comenzamos 
 		Database bd = new Database();
+		Controlador c=new Controlador(bd);
 		bd.run();
 		Random rnd=new Random(10);
+		int contratos_hechos=0;//contador del numero de contratos
 		int valor=10; //Esta variable nos valdra para saber cuantos datos tenemos que generar
 		
 		//insercion de nombres, apellidos y passwords en ArrayList manualmente
@@ -157,6 +160,7 @@ public class GeneraDatos {
 		//bd.insertarDepartamento("prueba",12345678);//se supone que el jefe será el que acabamos de crear
 		
 		//he comentado lo anterior porque no se si solo tenemos que generar un departamento o mas de un departamento
+
 		//creamos la distribucion
 
 		for (int i = 0; i < valor ; i++) {
@@ -165,7 +169,7 @@ public class GeneraDatos {
 	        	patron=(int)(rnd.nextInt(4))+"e"+ (int)(rnd.nextInt(4))+"p";//supongo que lo que aqui salga dara igual,da lo mismo mismo que haya mas expertos que inexpertos y viceversa
 	        	NumMin=(int)(rnd.nextInt(4));
 	        	NumMax=(int)(rnd.nextInt(4))+NumMin;//para que sea coherente,no puedo ser mayor el min que el max
-	        	idDepartamento=0;//que ponemos aqui??
+	        	idDepartamento=0;//ponemos de prueba este departamento
 	        	System.out.println(hora);
 	        	System.out.println(diaSemana);
 	        	System.out.println(patron);
@@ -178,9 +182,13 @@ public class GeneraDatos {
 		//rellenar los turnos
 		
 		for (int i = 0; i < valor ; i++) {
-			
-			idTurno=(int)(rnd.nextInt(3));//¿¿como lo hacemos??
-			Descripcion="";//¿¿??
+			if(c.getListaTurnosEmpleadosDpto("prueba").isEmpty()){//si esta vacio
+				idTurno=0;
+			}else{
+				idTurno=c.getListaTurnosEmpleadosDpto("prueba").get((int)(rnd.nextInt(c.getListaTurnosEmpleadosDpto("prueba").size()+1))).getIdTurno();
+				
+			}
+			Descripcion="genearcion de datos aleatorios";//¿¿??
 			HoraEntrada=new Time((int)(rnd.nextInt(25)),(int)(rnd.nextInt(61)),(int)(rnd.nextInt(61)));//es asi¿¿
 			HoraSalida=new Time((int)(rnd.nextInt(25)),(int)(rnd.nextInt(61)),(int)(rnd.nextInt(61)));//hay que hacer un rango
 			HoraInicioDescanso=new Time((int)(rnd.nextInt(25)),(int)(rnd.nextInt(61)),(int)(rnd.nextInt(61)));
@@ -190,20 +198,25 @@ public class GeneraDatos {
 		
 		//rellenar turnosPorContrato
 		for (int i = 0; i < valor ; i++) {
-			idTurno=(int)(rnd.nextInt(3));//¿¿??
-			idContrato=idTurno=(int)(rnd.nextInt(3));//hay que mirar cuantos tipos de contrato existen
+			if(c.getListaContratosDpto("prueba").isEmpty()){
+				idContrato=0;
+			}else{
+				idContrato=c.getListaContratosDpto("prueba").get((int)(rnd.nextInt(c.getListaContratosDpto("prueba").size()+1))).getTipoContrato();
+			}
+			idTurno=
 			//bd.insertarTurnoPorContrato(idTurno, idContrato);
 		}
 		
 		//rellenar contrato
 		for (int i = 0; i < valor ; i++) {
-			idContrato=idTurno=(int)(rnd.nextInt(3));//hay que mirar cuantos tipos de contrato existen
-			turnoInicial=(int)(rnd.nextInt(5));//hay que mirar tipo de turnos
-			nombre="";//creamos otro arraylist para los nombres de los contratos??
+			idContrato=contratos_hechos;//contador de contratos
+			contratos_hechos++;
+			turnoInicial=c.getTurnosDeUnContrato(idContrato).get((int)(rnd.nextInt(c.getTurnosDeUnContrato(idContrato).size()+1))).getIdTurno();
+			nombre="aleatorio"+1;//creamos otro arraylist para los nombres de los contratos??
 			patron=(int)(rnd.nextInt(4))+"e"+ (int)(rnd.nextInt(4))+"p";//hay que obtener el patron 
 			duracionCiclo=(int)(rnd.nextInt(3));
-			salario=(double)(rnd.nextInt(1500));
-			tipocontrato=(int)(rnd.nextInt(3));//hay que mirar tipos de contratos
+			salario=(int)(rnd.nextInt(1500));
+			tipocontrato=(int)(rnd.nextInt(5))+1;//acotamos entre 1 y 5
 			//bd.insertarContrato(idContrato, turnoInicial, nombre, patron, duracionCiclo, salario, tipocontrato);
 		}
 		
