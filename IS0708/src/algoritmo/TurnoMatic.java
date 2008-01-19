@@ -209,7 +209,8 @@ public class TurnoMatic {
 	 * @param lista es el ArrayList de empleados que trabajan el dia para el que se genera el cuadrante 
 	 * @param dia es el dia para el que se esta generando el cuadrante
 	 */
-	private boolean comprobaciones (ArrayList<Trabaja>[]cuadrante, ArrayList<Empleado> lista, int dia) {
+	private boolean comprobaciones (ArrayList<Trabaja>[]cuadrante, ArrayList<Empleado> dispoDia, int dia) {
+		Empleado empleado;
 		/*compruebaNumEmpleados sera false si para alguna franja horaria se necesita un minimo de 
 		empleados superior al numero de empleados de que disponemos.*/  
 		boolean compruebaNumEmpleados=true;
@@ -218,25 +219,36 @@ public class TurnoMatic {
 		cuenta que ya han sido incluidos los fijos y rotatorios en el cuadrante.*/
 		int[] empleadosFranja=new int[24]; 
 		
+		/*comprueba si el numero de empleados fijos y rotatorios (ya incluidos en el cuadrante) 
+		es suficiente para cubrir las necesidades de los minimos*/ 
 		for (int i=0;i<24;i++) {
 			//min fijado para cada hora
 			empleadosFranja[i]=estruc.getCalendario().getMinHora(dia, i);
 			//comprueba si el numero de empleados del departamento es mayor que el minimo de cada franja.
 			if (empleadosFranja[i]<listaE.size()) compruebaNumEmpleados=false;
 			//al minimo necesario se restan los empleados fijos y rotatorios ya incluidos en el cuadrante
-			for(int j=0;j<this.cuadrante.getListaTrabajaDia(dia).size();j++) {
-				if (this.cuadrante.getListaTrabajaDia(dia).get(j).getFichFin().getHours()>i && 
-						this.cuadrante.getListaTrabajaDia(dia).get(j).getFichIni().getHours()<=i) 
-					empleadosFranja[i]--;
-			}
+			empleadosFranja[i]=empleadosFranja[i]-contarEmpleadosHora(cuadrante[dia],i);
 		}
 		
 		int i=0;
+		
 		while (compruebaNumEmpleados && i<24) {
 			if (empleadosFranja[i]>0) compruebaNumEmpleados=false;
 			i++;
 		}
-			
+		
+		/*comprueba si con el conjunto de los empleados, tanto fijos y rotatorios como de dias sueltos, 
+		se cubren todas las franjas horarias y hay posibilidad de cubrir los minimos pedidos*/
+		for (int j=0;j<24;j++) {
+			//min fijado para cada hora
+			empleadosFranja[j]=estruc.getCalendario().getMinHora(dia, j);
+			//se restan los que ya estan incluidos en el cuadrante
+			empleadosFranja[j]=empleadosFranja[j]-contarEmpleadosHora(cuadrante[dia],j);
+			//se resta cada empleado en cada una de las horas en las que hay posibilidad de que trabaje en cualquiera de sus turnos
+			for (int k=0;k<dispoDia.size();k++) {
+				empleado=dispoDia.get(k);	
+			}		
+		}
 		return compruebaNumEmpleados;
 	}
 	
@@ -344,7 +356,7 @@ public class TurnoMatic {
 	private int contarEmpleadosHora(ArrayList<Trabaja> lista, int hora){
 		int contador=0;
 		for(int i=0;i<lista.size();i++){
-			if ((lista.get(i).getFichIni().getHours()<=hora)&&(lista.get(i).getFichFin().getHours()>=hora)){
+			if ((lista.get(i).getFichIni().getHours()<=hora)&&(lista.get(i).getFichFin().getHours()>hora)){
 				contador++;
 			}
 		}
