@@ -220,12 +220,12 @@ public class GeneraDatos {
 			patron=(int)(rnd.nextInt(4))+"e"+ (int)(rnd.nextInt(4))+"p";//hay que obtener el patron 
 			duracionCiclo=(int)(rnd.nextInt(3));
 			salario=(int)(rnd.nextInt(1500));
-			tipocontrato=(int)(rnd.nextInt(5))+1;//acotamos entre 1 y 5
+			tipocontrato=(int)(rnd.nextInt(5))+1;//acotamos entre 1 y 5 segun me han comentado
 			System.out.println("CONTRATOS");
         	System.out.println("//////////////////////////");
         	System.out.println("idContrato: "+idContrato);
         	System.out.println("turnoInicial: "+turnoInicial);
-        	System.out.println("nombre: +"nombre);
+        	System.out.println("nombre: "+nombre);
         	System.out.println("patron: "+patron);
         	System.out.println("Duracion ciclo: "+duracionCiclo);
         	System.out.println("salario: "+salario);
