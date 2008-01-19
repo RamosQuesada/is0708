@@ -214,9 +214,6 @@ public class TurnoMatic {
 		empleados superior al numero de empleados de que disponemos.*/  
 		boolean compruebaNumEmpleados=true;
 		
-		//numEmpleados en el numero de empleados disponibles.
-		int numEmpleados;
-		
 		/*empleadosFranja permite conocer el numero de empleados necesarios en cada hora teniendo en 
 		cuenta que ya han sido incluidos los fijos y rotatorios en el cuadrante.*/
 		int[] empleadosFranja=new int[24]; 
