@@ -982,7 +982,13 @@ public class Database extends Thread {
 		}
 		return r;
 	}
-
+	/**
+	 * Método que devuelve los mensajes salientes de un empleado ordenados por fecha
+	 * @param id		identificador de usuario
+	 * @param inicio	fecha de inicio
+	 * @param desp		intervalo de fechas que se quiere consultar
+	 * @return			ResulSet con los mensajes salientes solicitados
+	 */
 	public ResultSet obtenMensajesSalientes(int id, int inicio, int desp) {
 		ResultSet r = null;
 
@@ -999,7 +1005,11 @@ public class Database extends Thread {
 		}
 		return r;
 	}
-	
+	/**
+	 * 
+	 * @param nombre	identificador del departamento
+	 * @return 			la fila correspondiente al departamento solicitado
+	 */
 	public ResultSet obtenDepartamento(String nombre) {
 		ResultSet r = null;
 
@@ -1015,7 +1025,11 @@ public class Database extends Thread {
 		}
 		return r;
 	}
-	
+	/**
+	 * 
+	 * @param idContrato	identificador del contrato
+	 * @return				la fila corrspondiente al contrato solicitado
+	 */
 	public ResultSet obtenContrato(int idContrato){
 		ResultSet result=null;
 		try {
@@ -1092,7 +1106,10 @@ public class Database extends Thread {
 		}
 		return result;
 	}
-
+	/**
+	 * 
+	 * @return	devuelve todas las filas de la tabla DEPARTAMENTO
+	 */
 	public ResultSet obtenTodosDepartamentos() {
 		ResultSet r = null;
 		try {
@@ -1107,6 +1124,11 @@ public class Database extends Thread {
 		return r;		
 	}
 	
+	/**
+	 * 
+	 * @param nvend		Identificador del empleado
+	 * @return			devuelve la fila correspondiente al turno actual del empleado
+	 */
 	public ResultSet obtenIdTurnoEmpleado(int nvend) {
 		ResultSet r = null;
 		try {
@@ -1119,5 +1141,24 @@ public class Database extends Thread {
 					.println("Error al realizar la consulta en departamento ");
 		}
 		return r;		
+	}
+	
+	/**
+	 * 
+	 * @param idContrato	identificador del contrato
+	 * @return				ResultSet con los turnos que pertenecen al contrato dado		
+	 */
+	public ResultSet obtenTurnosDeUnContrato(int idContrato){
+		ResultSet r=null;
+		try {
+			st = con.createStatement();
+			r = st.executeQuery("SELECT IdTurno FROM ListaTurnosPorContrato WHERE IdContrato="+idContrato+";");
+		}
+		catch (SQLException e) {
+			// TODO: handle exception
+			System.out
+					.println("Error al realizar la consulta en departamento ");
+		}
+		return r;
 	}
 }
