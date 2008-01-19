@@ -51,7 +51,7 @@ public class GeneraDatos {
 		String patron;
 		int NumMax;
 		int NumMin;
-		int idDepartamento;
+		String idDepartamento;
 		
 		////////////////////////////////////////////////
 		//atributos Turno
@@ -80,6 +80,7 @@ public class GeneraDatos {
 		bd.run();
 		Random rnd=new Random(10);
 		int contratos_hechos=0;//contador del numero de contratos
+		int turnos_hechos=0;
 		int valor=10; //Esta variable nos valdra para saber cuantos datos tenemos que generar
 		
 		//insercion de nombres, apellidos y passwords en ArrayList manualmente
@@ -169,13 +170,18 @@ public class GeneraDatos {
 	        	patron=(int)(rnd.nextInt(4))+"e"+ (int)(rnd.nextInt(4))+"p";//supongo que lo que aqui salga dara igual,da lo mismo mismo que haya mas expertos que inexpertos y viceversa
 	        	NumMin=(int)(rnd.nextInt(4));
 	        	NumMax=(int)(rnd.nextInt(4))+NumMin;//para que sea coherente,no puedo ser mayor el min que el max
-	        	idDepartamento=0;//ponemos de prueba este departamento
-	        	System.out.println(hora);
-	        	System.out.println(diaSemana);
-	        	System.out.println(patron);
-	        	System.out.println(NumMin);
-	        	System.out.println(NumMax);
-	        	System.out.println(idDepartamento);
+	        	idDepartamento="prueba";//ponemos de prueba este departamento
+	        	System.out.println("DISTRIBUCION");
+	        	System.out.println("//////////////////////////");
+	        	System.out.println("hora: "+hora);
+	        	System.out.println("Dia semana "+diaSemana);
+	        	System.out.println("Patron: "+patron);
+	        	System.out.println("NumMin: "+NumMin);
+	        	System.out.println("Nummax: "+NumMax);
+	        	System.out.println("Id deparatmento: "+idDepartamento);
+	        	System.out.println("//////////////////////////");
+	        	System.out.println();
+	        	
 	        	//bd.insertarDistribucion(hora,diaSemana,patron,NumMax,NumMin,idDepartamento);//aqui insertamos las distribuciones	
 	    	}
 		
@@ -185,26 +191,24 @@ public class GeneraDatos {
 			if(c.getListaTurnosEmpleadosDpto("prueba").isEmpty()){//si esta vacio
 				idTurno=0;
 			}else{
-				idTurno=c.getListaTurnosEmpleadosDpto("prueba").get((int)(rnd.nextInt(c.getListaTurnosEmpleadosDpto("prueba").size()+1))).getIdTurno();
-				
+				idTurno=turnos_hechos;
 			}
-			Descripcion="genearcion de datos aleatorios";//¿¿??
+			turnos_hechos++;
+			Descripcion="genearcion de datos aleatorios";
 			HoraEntrada=new Time((int)(rnd.nextInt(25)),(int)(rnd.nextInt(61)),(int)(rnd.nextInt(61)));//es asi¿¿
 			HoraSalida=new Time((int)(rnd.nextInt(25)),(int)(rnd.nextInt(61)),(int)(rnd.nextInt(61)));//hay que hacer un rango
 			HoraInicioDescanso=new Time((int)(rnd.nextInt(25)),(int)(rnd.nextInt(61)),(int)(rnd.nextInt(61)));
 			Duracion=(int)(rnd.nextInt(31));//media hora,mas no jejjej
+			System.out.println("TURNOS");
+        	System.out.println("//////////////////////////");
+        	System.out.println("Descripcion: "+Descripcion);
+        	System.out.println("Hora entrada: "+HoraEntrada);
+        	System.out.println("HoraSalida: "+HoraInicioDescanso);
+        	System.out.println("Hora inicio descanso: "+HoraInicioDescanso);
+        	System.out.println("Duracion: "+Duracion);
+        	System.out.println("//////////////////////////");
+        	System.out.println();
 			//bd.insertarTurno(idTurno, Descripcion, HoraEntrada, HoraSalida, HoraInicioDescanso, Duracion);
-		}
-		
-		//rellenar turnosPorContrato
-		for (int i = 0; i < valor ; i++) {
-			if(c.getListaContratosDpto("prueba").isEmpty()){
-				idContrato=0;
-			}else{
-				idContrato=c.getListaContratosDpto("prueba").get((int)(rnd.nextInt(c.getListaContratosDpto("prueba").size()+1))).getTipoContrato();
-			}
-			idTurno=
-			//bd.insertarTurnoPorContrato(idTurno, idContrato);
 		}
 		
 		//rellenar contrato
@@ -217,7 +221,41 @@ public class GeneraDatos {
 			duracionCiclo=(int)(rnd.nextInt(3));
 			salario=(int)(rnd.nextInt(1500));
 			tipocontrato=(int)(rnd.nextInt(5))+1;//acotamos entre 1 y 5
+			System.out.println("CONTRATOS");
+        	System.out.println("//////////////////////////");
+        	System.out.println("idContrato: "+idContrato);
+        	System.out.println("turnoInicial: "+turnoInicial);
+        	System.out.println("nombre: +"nombre);
+        	System.out.println("patron: "+patron);
+        	System.out.println("Duracion ciclo: "+duracionCiclo);
+        	System.out.println("salario: "+salario);
+        	System.out.println("Tipo de Contrato: "+tipocontrato);
+        	System.out.println("//////////////////////////");
+        	System.out.println();
+        	
 			//bd.insertarContrato(idContrato, turnoInicial, nombre, patron, duracionCiclo, salario, tipocontrato);
+		}
+		//rellenar turnosPorContrato
+		for (int i = 0; i < valor ; i++) {
+			if(c.getListaContratosDpto("prueba").isEmpty()){
+				idContrato=0;
+			}else{
+				idContrato=c.getListaContratosDpto("prueba").get((int)(rnd.nextInt(c.getListaContratosDpto("prueba").size()+1))).getTipoContrato();
+			}
+			if(c.getListaTurnosEmpleadosDpto("prueba").isEmpty()){
+				idTurno=0;
+				
+			}else{
+				idTurno=c.getListaTurnosEmpleadosDpto("prueba").get((int)(rnd.nextInt(c.getListaTurnosEmpleadosDpto("prueba").size()+1))).getIdTurno();	
+				
+			}
+			System.out.println("TURNOS POR CONTRATO");
+        	System.out.println("//////////////////////////");
+        	System.out.println("idContrato: "+idContrato);
+        	System.out.println("idTurno: "+idTurno);
+          	System.out.println("//////////////////////////");
+        	System.out.println();
+			//bd.insertarTurnoPorContrato(idTurno, idContrato);
 		}
 		
 		//rellenamos los usuarios
@@ -234,8 +272,27 @@ public class GeneraDatos {
 			felicidad=(int)(rnd.nextInt(3));//cuando sepamos los niveles de felicidad asi lo acotamos
 			idioma=(int)(rnd.nextInt(3));
 			rango=(int)(rnd.nextInt(3));//¿¿??
-			idContrato=(int)(rnd.nextInt(3));//hay que saber cuantos contratos hay
-			idTurno=(int)(rnd.nextInt(4));//hay que calcular todos los tipos de turno que existe
+			idContrato=c.getListaContratosDpto("prueba").get((int)(rnd.nextInt(c.getListaContratosDpto("prueba").size()+1))).getTipoContrato();
+			idTurno=c.getListaTurnosEmpleadosDpto("prueba").get((int)(rnd.nextInt(c.getListaTurnosEmpleadosDpto("prueba").size()+1))).getIdTurno();
+			System.out.println("USUARIOS");
+        	System.out.println("//////////////////////////");
+        	System.out.println("id: "+id);
+        	System.out.println("nombre: "+nombre);
+        	System.out.println("apellido1: "+apellido1);
+        	System.out.println("apellido2: "+apellido2);
+        	System.out.println("sexo: "+sexo);
+        	System.out.println("email: "+email);
+        	System.out.println("password: "+password);
+        	System.out.println("indicadorGrupo: "+indicadorGrupo);
+        	System.out.println("horasExtras: "+horasExtras);
+        	System.out.println("Felicidad: "+felicidad);
+        	System.out.println("idioma: "+idioma);
+        	System.out.println("rango: "+rango);
+        	System.out.println("idContrato: "+idContrato);
+        	System.out.println("idTurno: "+idTurno);
+        	System.out.println("//////////////////////////");
+        	System.out.println();
+        	
 			//bd.insertarUsuario(id, nombre, apellido1, apellido2, fechaNac, sexo, email, password, indicadorGrupo, fechaContrato, fechaEntrada, horasExtras, felicidad, idioma, rango, idContrato, idTurno);
     	}
 
