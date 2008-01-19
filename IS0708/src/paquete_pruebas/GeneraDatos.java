@@ -81,7 +81,7 @@ public class GeneraDatos {
 		Random rnd=new Random(10);
 		int contratos_hechos=0;//contador del numero de contratos
 		int turnos_hechos=0;
-		int valor=10; //Esta variable nos valdra para saber cuantos datos tenemos que generar
+		int valor=1; //Esta variable nos valdra para saber cuantos datos tenemos que generar
 		
 		//insercion de nombres, apellidos y passwords en ArrayList manualmente
 		///////////////////////////////////////////////////////////
@@ -151,7 +151,7 @@ public class GeneraDatos {
 		//Turno turno=new Turno(0,"M1","9:00:00","14:00:00","12:30:00",20);//turno por defecto para el jefe
 		
 		//crear contrato jefe departamento
-		//Contrato contrato=new Contrato("jefe",0,1,7,"5/1/2/d",1200,0); no hace falta
+		//Contrato contrato=new Contrato("jefe",0,1,7,"5/1/2/d",1200,0); //no hace falta
 		
 		//crear el jefe de departamento
 		//bd.insertarUsuario(12345678,"jefe","","",fechaNac,0,"Juanfran@ajandemore.es","boss",0,fechaContrato,fechaEntrada,0,0,0,0,0,0);
@@ -208,14 +208,14 @@ public class GeneraDatos {
         	System.out.println("Duracion: "+Duracion);
         	System.out.println("//////////////////////////");
         	System.out.println();
-        	//bd.insertarTurno(idTurno, Descripcion, HoraEntrada, HoraSalida, HoraInicioDescanso, Duracion);
+        //	bd.insertarTurno(idTurno, Descripcion, HoraEntrada, HoraSalida, HoraInicioDescanso, Duracion);
 		}
 		
 		//rellenar contrato
 		for (int i = 0; i < valor ; i++) {
 			idContrato=contratos_hechos;//contador de contratos
 			contratos_hechos++;
-			turnoInicial=c.getListaTurnosEmpleados().get(0).getIdTurno();
+			turnoInicial=c.getListaTurnosEmpleados().get(c.getListaTurnosEmpleados().size()).getIdTurno();
 			nombre="aleatorio"+1;//creamos otro arraylist para los nombres de los contratos??
 			patron=(int)(rnd.nextInt(4))+"e"+ (int)(rnd.nextInt(4))+"p";//hay que obtener el patron 
 			duracionCiclo=(int)(rnd.nextInt(3));
