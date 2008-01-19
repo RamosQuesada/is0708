@@ -227,7 +227,7 @@ public class TurnoMatic {
 			//al minimo necesario se restan los empleados fijos y rotatorios ya incluidos en el cuadrante
 			for(int j=0;j<this.cuadrante.getListaTrabajaDia(dia).size();j++) {
 				if (this.cuadrante.getListaTrabajaDia(dia).get(j).getFichFin().getHours()>i && 
-						this.cuadrante.getListaTrabajaDia(dia).get(j).getFichIni().getHours()<i) 
+						this.cuadrante.getListaTrabajaDia(dia).get(j).getFichIni().getHours()<=i) 
 					empleadosFranja[i]--;
 			}
 		}
