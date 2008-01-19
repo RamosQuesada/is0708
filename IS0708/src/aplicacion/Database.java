@@ -537,7 +537,7 @@ public class Database extends Thread {
 	 * @return Informa sobre si se ha podido realizar la inserci�n o no
 	 */
 	public boolean insertarDistribucion(int Hora, int DiaSemana,
-			String Patron, int NumMax, int NumMin, int IdDepartamento) {
+			String Patron, int NumMax, int NumMin, String IdDepartamento) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
@@ -585,7 +585,7 @@ public class Database extends Thread {
 	 */
 	public boolean insertarFestivo(int Hora, Date FechaInicio,
 			Date FechaFin, String Patron, int NumMax, int NumMin,
-			int IdDepartamento) {
+			String IdDepartamento) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
