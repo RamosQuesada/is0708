@@ -346,6 +346,27 @@ public class Controlador {
 		
 		return null;
 	}
+	/**
+	 * 
+	 * @return devuelve un arraylist con los departamentos de la base de datos
+	 * 		   con sus características basicas
+	 */
+	public ArrayList<Departamento> getTodosDepartamentos(){
+		ArrayList <Departamento> departamentos=new ArrayList <Departamento> ();
+		ResultSet rs=_db.obtenTodosDepartamentos();
+		try {
+			while (rs.next()) {
+				String id=rs.getString("Nombre"); 
+				departamentos.add(this.getDepartamento(id));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error al obtener todos los Departamentos en la base de datos");
+		}
+		
+		return departamentos;
+		
+	}
 		
 	/**
 	 * Guarda un departamento en la base de datos
@@ -368,7 +389,7 @@ public class Controlador {
 	 * vector[2]= numero maximo de empleados para esa hora
 	 */
 	public ArrayList<Object[]> getDistribucionDia (String nombre, Date Fecha){
-		ArrayList lista= new ArrayList();		
+		ArrayList <Object[]> lista= new ArrayList <Object[]>();		
 		ResultSet r;		
 		
 		//se ha supuesto que fecha esta en formato string
@@ -412,7 +433,11 @@ public class Controlador {
 		}
 		return lista;
 	}
-
+	/**
+	 * 
+	 * @param nombre
+	 * @param cal
+	 */
 	public void getDistribucionMes(String nombre, Calendario cal) {
 		int i=0,j=0;
 		for (i=0; i<cal.getNumDias(); i++) {
@@ -454,6 +479,30 @@ public class Controlador {
 			System.out.println("Error al obtener Lista de Departamentos en la base de datos");
 		}		
 		return emps;
+	}
+	/**
+	 * Método para obtener los contratos de un departamento
+	 * @param dpto	nombre del departaento
+	 * @return		ArrayList de los contratos que existen en en ese departamento
+	 */
+	public ArrayList<Contrato> getListaContratosDpto(String dpto) {
+		ArrayList<Contrato> contratos= new ArrayList<Contrato>();
+		try {
+			ArrayList<Empleado> e=new ArrayList<Empleado>();
+			e=getEmpleadosDepartamento(dpto);
+			//obtener Turnos a partir de los IdTurno's
+		
+			for(int i=0; i<e.size();i++){
+				int idContrato = e.get(i).getContratoId();
+				contratos.add(this.getContrato(idContrato));			
+				
+			}		
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error al obtener Lista de Contratos del Departamento dado en la base de datos");
+		}		
+		return  contratos;
 	}
 
 /******************************************************************************************
@@ -669,7 +718,38 @@ public class Controlador {
 		}		
 		return  turnos;
 	}
-	
+	/**
+	 * 
+	 * @param idContrato	identificador de contrato
+	 * @return				ArrayList de turnos pertenecientes al contrato dado
+	 */
+	public ArrayList<Turno> getTurnosDeUnContrato(int idContrato) {
+        ArrayList<Turno> turnos= new ArrayList<Turno>();
+		try {
+			ResultSet rs = _db.obtenTurnosDeUnContrato(idContrato);
+			while(rs.next()){
+				int idTurn = rs.getInt("IdTurno");
+				String descr = rs.getString("Descripcion");
+				Time HoraE = rs.getTime("HoraEntrada");
+				Time HoraS = rs.getTime("HoraSalida");
+				Time HoraI = rs.getTime("HoraInicioDescanso");
+				Time duracion = rs.getTime("DuracionDescanso");
+				int descanso = aplicacion.Util.dameMinutos(duracion);
+				Turno t = new Turno(idTurn,descr,HoraE,HoraS,HoraI,descanso);
+				turnos.add(t);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error al obtener Lista de Turnos en la base de datos");
+		}		
+		return  turnos;
+	}
+	/**
+	 * 
+	 * @param idEmpl	identificador del empleado
+	 * @return			devuelve todos los turnos que tiene un empleado según su contrato
+	 */
 	public ArrayList<Turno> getListaTurnosContrato(int idEmpl){
 		ArrayList<Turno> turnos= new ArrayList<Turno>();
 		try {
@@ -715,14 +795,12 @@ public class Controlador {
 			int nvend = e.get(i).getEmplId();
 			ResultSet rs1 = _db.obtenIdTurnoEmpleado(nvend);
 			while (rs1.next()){
-			//No Repeticiones de Turnos
-			int id = rs1.getInt("IdTurno");
-			if(!idTurnos.contains(id)){
-			idTurnos.add(id);
-			}
-			}
-			
-		
+				//No Repeticiones de Turnos
+				int id = rs1.getInt("IdTurno");
+				if(!idTurnos.contains(id)){
+					idTurnos.add(id);
+				}
+			}		
 		}
 			
 		for(int j=0; j<idTurnos.size();j++){
@@ -769,6 +847,7 @@ public class Controlador {
 		}
 		return turno;
 	}
+	
 	
 
 /******************************************************************************************
