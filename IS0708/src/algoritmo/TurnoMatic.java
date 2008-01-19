@@ -204,15 +204,15 @@ public class TurnoMatic {
 	}
 	
 	/**
-	 * Metodo para comprobar, sin ejecutar ningún algoritmo si es posible generar un cuadrante con los empleados de que se dispone
-	 * @param cuadrante el cuadrante con los fijos y rotatorios ya metidos
+	 * Metodo para comprobar, sin ejecutar ningún algoritmo, si es posible generar un cuadrante con los empleados de que se dispone
+	 * @param cuadrante el cuadrante con los fijos y rotatorios ya incluidos.
 	 * @param lista es el ArrayList de empleados que trabajan el dia para el que se genera el cuadrante 
 	 * @param dia es el dia para el que se esta generando el cuadrante
 	 */
 	private boolean comprobaciones (ArrayList<Trabaja>[]cuadrante, ArrayList<Empleado> lista, int dia) {
 		/*compruebaNumEmpleados sera false si para alguna franja horaria se necesita un minimo de 
 		empleados superior al numero de empleados de que disponemos.*/  
-		boolean compruebaNumEmpleados=false;
+		boolean compruebaNumEmpleados=true;
 		
 		//numEmpleados en el numero de empleados disponibles.
 		int numEmpleados;
@@ -233,8 +233,8 @@ public class TurnoMatic {
 		}
 		
 		int i=0;
-		while (!compruebaNumEmpleados && i<24) {
-			if (empleadosFranja[i]==0 || empleadosFranja[i]<0) compruebaNumEmpleados=true;
+		while (compruebaNumEmpleados && i<24) {
+			if (empleadosFranja[i]>0) compruebaNumEmpleados=false;
 			i++;
 		}
 			
