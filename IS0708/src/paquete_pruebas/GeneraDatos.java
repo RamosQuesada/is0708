@@ -163,7 +163,7 @@ public class GeneraDatos {
 		//he comentado lo anterior porque no se si solo tenemos que generar un departamento o mas de un departamento
 
 		//creamos la distribucion
-
+		
 		for (int i = 0; i < valor ; i++) {
 	        	hora = (int)(rnd.nextInt(25));//con esto generamos numeros entre 0 y 24, siempre se pone limite +1
 	        	diaSemana=(int)(rnd.nextInt(8));//generamos numeros entre 0 y 7
@@ -208,14 +208,14 @@ public class GeneraDatos {
         	System.out.println("Duracion: "+Duracion);
         	System.out.println("//////////////////////////");
         	System.out.println();
-			//bd.insertarTurno(idTurno, Descripcion, HoraEntrada, HoraSalida, HoraInicioDescanso, Duracion);
+        	//bd.insertarTurno(idTurno, Descripcion, HoraEntrada, HoraSalida, HoraInicioDescanso, Duracion);
 		}
 		
 		//rellenar contrato
 		for (int i = 0; i < valor ; i++) {
 			idContrato=contratos_hechos;//contador de contratos
 			contratos_hechos++;
-			turnoInicial=c.getTurnosDeUnContrato(idContrato).get((int)(rnd.nextInt(c.getTurnosDeUnContrato(idContrato).size()+1))).getIdTurno();
+			turnoInicial=c.getListaTurnosEmpleados().get(0).getIdTurno();
 			nombre="aleatorio"+1;//creamos otro arraylist para los nombres de los contratos??
 			patron=(int)(rnd.nextInt(4))+"e"+ (int)(rnd.nextInt(4))+"p";//hay que obtener el patron 
 			duracionCiclo=(int)(rnd.nextInt(3));
@@ -266,7 +266,7 @@ public class GeneraDatos {
 			apellido2=apellidos.get((int)(rnd.nextInt(apellidos.size()+1)));
 			sexo=(int)(rnd.nextInt(2));
 			email=nombre+"@turnomatic.com";
-			password=passwords.get((int)(rnd.nextInt(passwords.size()+1)));
+			password=passwords.get((int)(rnd.nextInt(passwords.size())));
 			indicadorGrupo=(int)(rnd.nextInt(3));//¿¿que es??
 			horasExtras=(int)(rnd.nextInt(3));
 			felicidad=(int)(rnd.nextInt(3));//cuando sepamos los niveles de felicidad asi lo acotamos
