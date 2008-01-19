@@ -224,6 +224,8 @@ public class TurnoMatic {
 		for (int i=0;i<24;i++) {
 			//min fijado para cada hora
 			empleadosFranja[i]=estruc.getCalendario().getMinHora(dia, i);
+			//comprueba si el numero de empleados del departamento es mayor que el minimo de cada franja.
+			if (empleadosFranja[i]<listaE.size()) compruebaNumEmpleados=false;
 			//al minimo necesario se restan los empleados fijos y rotatorios ya incluidos en el cuadrante
 			for(int j=0;j<this.cuadrante.getListaTrabajaDia(dia).size();j++) {
 				if (this.cuadrante.getListaTrabajaDia(dia).get(j).getFichFin().getHours()>i && 
