@@ -10,7 +10,7 @@ import aplicacion.*;
 
 /**
  * Esta contiene los algoritmos que vamos a utilizar para el calculo automatico de un cuadrante
- * @author Alberto Maqueda & Javier Doria & Carlos Gil 
+ * @author grupoAlgoritmo 
  *
  */
 public class TurnoMatic {
@@ -25,7 +25,6 @@ public class TurnoMatic {
 	
 	//Optimizacion Algoritmo (reduccion llamadas a BBDD)
 	private ArrayList<Empleado> listaE;
-	
 	
 	public TurnoMatic(){		
 	}
@@ -188,16 +187,58 @@ public class TurnoMatic {
 			}
 		}*/
 		
-		//ordeno las 3 listas segun la felicidad de los empleados		
-
+		//ordeno las 2 listas segun la felicidad de los empleados		
 		ArrayList<Empleado> e1=ordenarLista(dispo,1);
 		ArrayList<Empleado> e2=ordenarLista(reser,2);
 		//ArrayList<Empleado> e3=ordenarLista(empl,1);
 		
-		//llamo al algoritmo vueltra atras
 		
-		boolean hecho=vueltaAtrasMarcaje(e1,e2,0,dia,cuadrante);
+		/*hacemos unas comprobaciones básicas que permiten saber si, antes de ejecutar 
+		  el algoritmo de vuelta atrás, hay posibilidad de que se pueda generar un cuadrante.
+		  Si con estas primeras comprobaciones parece posible la generación, se ejecuta el algoritmo*/
+		boolean hecho;
+		
+		if (comprobaciones(cuadrante, e1, dia))
+			hecho=vueltaAtrasMarcaje(e1,e2,0,dia,cuadrante);
 				
+	}
+	
+	/**
+	 * Metodo para comprobar, sin ejecutar ningún algoritmo si es posible generar un cuadrante con los empleados de que se dispone
+	 * @param cuadrante el cuadrante con los fijos y rotatorios ya metidos
+	 * @param lista es el ArrayList de empleados que trabajan el dia para el que se genera el cuadrante 
+	 * @param dia es el dia para el que se esta generando el cuadrante
+	 */
+	private boolean comprobaciones (ArrayList<Trabaja>[]cuadrante, ArrayList<Empleado> lista, int dia) {
+		/*compruebaNumEmpleados sera false si para alguna franja horaria se necesita un minimo de 
+		empleados superior al numero de empleados de que disponemos.*/  
+		boolean compruebaNumEmpleados=false;
+		
+		//numEmpleados en el numero de empleados disponibles.
+		int numEmpleados;
+		
+		/*empleadosFranja permite conocer el numero de empleados necesarios en cada hora teniendo en 
+		cuenta que ya han sido incluidos los fijos y rotatorios en el cuadrante.*/
+		int[] empleadosFranja=new int[24]; 
+		
+		for (int i=0;i<24;i++) {
+			//min fijado para cada hora
+			empleadosFranja[i]=estruc.getCalendario().getMinHora(dia, i);
+			//al minimo necesario se restan los empleados fijos y rotatorios ya incluidos en el cuadrante
+			for(int j=0;j<this.cuadrante.getListaTrabajaDia(dia).size();j++) {
+				if (this.cuadrante.getListaTrabajaDia(dia).get(j).getFichFin().getHours()>i && 
+						this.cuadrante.getListaTrabajaDia(dia).get(j).getFichIni().getHours()<i) 
+					empleadosFranja[i]--;
+			}
+		}
+		
+		int i=0;
+		while (!compruebaNumEmpleados && i<24) {
+			if (empleadosFranja[i]==0 || empleadosFranja[i]<0) compruebaNumEmpleados=true;
+			i++;
+		}
+			
+		return compruebaNumEmpleados;
 	}
 	
 	/**
@@ -245,7 +286,7 @@ public class TurnoMatic {
 	private boolean vueltaAtrasMarcaje (ArrayList<Empleado> dispo, ArrayList<Empleado> reser, int k, int dia, ArrayList<Trabaja>[] cuadrante){
 		/*fHoraria es un ArrayList con todos los turnos en los que puede trabajar el empleado situado en la 
 		 posición k de disponibles*/ 
-		ArrayList<Turno> fHoraria = controlador.getListaTurnosContrato ((dispo.get(k).getEmplId()));
+		ArrayList<Turno> fHoraria = controlador.getListaTurnosContrato (dispo.get(k).getEmplId());
 		Turno franjaHoraria;
 		boolean hecho=false;
 		while (fHoraria.size()!=0) {
@@ -278,9 +319,7 @@ public class TurnoMatic {
 	 * @param cuadDia es el cuadrante
 	 * @param dia es el dia en el que queremos hacer la comprobacion
 	 * @param fHoraria es la lista de franjas que se divide un dia
-	 * @return
 	 */
-	
 	private boolean comprobarFranjasCompletas(ArrayList<Trabaja>[] cuadDia,int dia, ArrayList<Turno> fHoraria){
 		boolean valido=true;
 		//bucle que recorre todas las franjas horarias de este dia
@@ -302,7 +341,6 @@ public class TurnoMatic {
 	 * metodo para contar el numero de empleados que trabajan a una hora concreta
 	 * @param lista la lista de trabajadores de un dia
 	 * @param hora la hora a comprobar
-	 * @return
 	 */
 	private int contarEmpleadosHora(ArrayList<Trabaja> lista, int hora){
 		int contador=0;
@@ -336,7 +374,6 @@ public class TurnoMatic {
 	 * @param ini el inicio de su turno de trabajo
 	 * @param fin el fin de su turno de trabajo
 	 * @param dia el dia de su turno d trabajo
-	 * 
 	 */
 	private void ponerEmpleado (Empleado e, Time ini, Time fin, ArrayList<Trabaja> cuadDia){
 		Trabaja trabaja = new Trabaja(e.getEmplId(),ini,fin,e.getTurnoActual().getIdTurno());
@@ -406,7 +443,7 @@ public class TurnoMatic {
 	
 	/**
 	 * Método de prueba que imprime el cuadrante
-	  */
+	 */
 	public void imprimeCuadrante(){
 	 
 		System.out.println("Mes: "+cuadrante.getMes());
@@ -509,8 +546,6 @@ public class TurnoMatic {
 	public void setIdDepartamento(String idDepartamento) {
 		this.idDepartamento = idDepartamento;
 	}
-
-
-		
+	
 }
 
