@@ -79,6 +79,70 @@ public class GeneraDatos {
 		Random rnd=new Random(10);
 		int valor=10; //Esta variable nos valdra para saber cuantos datos tenemos que generar
 		
+		//insercion de nombres, apellidos y passwords en ArrayList manualmente
+		///////////////////////////////////////////////////////////
+		nombres.add("Carlos");
+		nombres.add("Roberto");
+		nombres.add("Jesus");
+		nombres.add("Sergio");
+		nombres.add("Miguel");
+		nombres.add("Antonio");
+		nombres.add("Javier");
+		nombres.add("Alvaro");
+		nombres.add("David");
+		nombres.add("Manuel");
+		nombres.add("Cristina");
+		nombres.add("Laura");
+		nombres.add("Rosa");
+		nombres.add("Lucia");
+		nombres.add("Raquel");
+		nombres.add("Maria");
+		nombres.add("Sandra");
+		nombres.add("Diana");
+		nombres.add("Veronica");
+		nombres.add("Carolina");
+		apellidos.add("Martinez");
+		apellidos.add("Gonzalez");
+		apellidos.add("Lopez");
+		apellidos.add("Alonso");
+		apellidos.add("Ramos");
+		apellidos.add("Gutierrez");
+		apellidos.add("Redondo");
+		apellidos.add("Garcia");
+		apellidos.add("Perez");
+		apellidos.add("Fernandez");
+		apellidos.add("Moreno");
+		apellidos.add("Jimenez");
+		apellidos.add("Sanchez");
+		apellidos.add("Rey");
+		apellidos.add("Olivares");
+		apellidos.add("De la Fuente");
+		apellidos.add("Espada");
+		apellidos.add("Arevalo");
+		apellidos.add("Salamanca");
+		apellidos.add("Carretero");
+		passwords.add("w5y790");
+		passwords.add("nu62t5");
+		passwords.add("kf0em9");
+		passwords.add("ns0mce");
+		passwords.add("y0dnc7");
+		passwords.add("h8fn84");
+		passwords.add("bdk30c");
+		passwords.add("mc09s3");
+		passwords.add("lcm3lm");
+		passwords.add("ks9al9");
+		passwords.add("ncp3m3");
+		passwords.add("ip2n32");
+		passwords.add("b3k3o3");
+		passwords.add("sk30cn");
+		passwords.add("psdn3f");
+		passwords.add("sb239c");
+		passwords.add("cmc3el");
+		passwords.add("mdflv9");
+		passwords.add("xn3j3k");
+		passwords.add("ld0mf3");
+		
+		
 		//crear turno jefe departamento
 		//Turno turno=new Turno(0,"M1","9:00:00","14:00:00","12:30:00",20);//turno por defecto para el jefe
 		
