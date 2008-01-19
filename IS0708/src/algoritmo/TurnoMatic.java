@@ -160,8 +160,8 @@ public class TurnoMatic {
 	 * @param empl Lista de empleados que vienen del método ejecutaAlgoritmo
 	 */
 	private void colocaNoFijos (ArrayList<Empleado> dispo, ArrayList<Empleado> reser, ArrayList<Empleado> empl, int dia, ArrayList<Trabaja>[] cuadrante){
-		Calendario cal=this.estruc.getCalendario();
-		int tipoc;
+		//Calendario cal=this.estruc.getCalendario();
+		//int tipoc;
 		
 		/*separo de las 3 listas los empleados que ya estan colocados en el cuadrante,
 	      esto es, los que su tipo de contrato es 1 o 2 (fijo o rotatorio)*/
@@ -219,6 +219,14 @@ public class TurnoMatic {
 		cuenta que ya han sido incluidos los fijos y rotatorios en el cuadrante.*/
 		int[] empleadosFranja=new int[24]; 
 		
+		//empleadoHoras guarda el numero de posibilidades que hay de que un empleado trabaje a cada una de las horas
+		int[] empleadoHoras=new int[24]; 
+		ArrayList<Turno> turnosEmpleado;
+		Turno turnoEmpl;
+		
+		for (int j=0;j<24;j++)
+			empleadoHoras[j]=0;
+		
 		/*comprueba si el numero de empleados fijos y rotatorios (ya incluidos en el cuadrante) 
 		es suficiente para cubrir las necesidades de los minimos*/ 
 		for (int i=0;i<24;i++) {
@@ -228,6 +236,20 @@ public class TurnoMatic {
 			if (empleadosFranja[i]<listaE.size()) compruebaNumEmpleados=false;
 			//al minimo necesario se restan los empleados fijos y rotatorios ya incluidos en el cuadrante
 			empleadosFranja[i]=empleadosFranja[i]-contarEmpleadosHora(cuadrante[dia],i);
+			//se resta cada empleado en cada una de las horas en las que hay posibilidad de que trabaje en cualquiera de sus turnos
+			for (int k=0;k<dispoDia.size();k++) {
+				empleado=dispoDia.get(k);	
+				turnosEmpleado=controlador.getListaTurnosContrato(empleado.getEmplId());
+				for (int l=0;l<turnosEmpleado.size();l++) {
+					turnoEmpl=turnosEmpleado.get(l);
+					if (turnoEmpl.getHoraEntrada().getHours()<=i && turnoEmpl.getHoraSalida().getHours()>i)
+						empleadoHoras[i]++;
+				}
+				/*si en algun turno el empleado puede trabajar a la hora j, se resta de empleadosFranja[j] 
+				indicando que al menos él puede trabajar a esa hora*/
+				if (empleadoHoras[i]>0)
+					empleadosFranja[i]--;
+			}
 		}
 		
 		int i=0;
@@ -236,19 +258,7 @@ public class TurnoMatic {
 			if (empleadosFranja[i]>0) compruebaNumEmpleados=false;
 			i++;
 		}
-		
-		/*comprueba si con el conjunto de los empleados, tanto fijos y rotatorios como de dias sueltos, 
-		se cubren todas las franjas horarias y hay posibilidad de cubrir los minimos pedidos*/
-		for (int j=0;j<24;j++) {
-			//min fijado para cada hora
-			empleadosFranja[j]=estruc.getCalendario().getMinHora(dia, j);
-			//se restan los que ya estan incluidos en el cuadrante
-			empleadosFranja[j]=empleadosFranja[j]-contarEmpleadosHora(cuadrante[dia],j);
-			//se resta cada empleado en cada una de las horas en las que hay posibilidad de que trabaje en cualquiera de sus turnos
-			for (int k=0;k<dispoDia.size();k++) {
-				empleado=dispoDia.get(k);	
-			}		
-		}
+
 		return compruebaNumEmpleados;
 	}
 	
@@ -257,7 +267,7 @@ public class TurnoMatic {
 	 * @param lista es el ArrayList de empleados para ordenar y convertir en Array
 	 * @param criterio es el criterio de ordenacion: 1 = de menor a mayor, 2= de mayor a menor
 	 */
-	private ArrayList<Empleado> ordenarLista(ArrayList<Empleado> lista,int criterio){
+	private ArrayList<Empleado> ordenarLista(ArrayList<Empleado> lista,int criterio) {
 		Empleado[] e1=new Empleado[lista.size()];
 		e1=lista.toArray(e1);
 		Empleado aux;
@@ -288,7 +298,10 @@ public class TurnoMatic {
 	}
 	
 	/**
-	 * Metodo recursivo para colocar los empleados segun las franjas horarias
+	 * Metodo basado en el algoritmo de vuelta atrás con marcaje en el que, una vez colocadas la lista de empleados 
+	 * disponibles en el orden deseado, se prueba si colocando a los empleados en los turnos que prefieren se puede 
+	 * generar un cuadrante que cumpla los requisitos pedidos en cuanto al mínimo y máximo de empleados por hora en 
+	 * el departamento
 	 * @param dispo Lista de empleados disponibles
 	 * @param reser Lista de empleados de reserva
 	 * @param k parametro para la recursion
