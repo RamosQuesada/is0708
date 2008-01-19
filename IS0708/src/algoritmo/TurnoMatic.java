@@ -233,22 +233,25 @@ public class TurnoMatic {
 			//min fijado para cada hora
 			empleadosFranja[i]=estruc.getCalendario().getMinHora(dia, i);
 			//comprueba si el numero de empleados del departamento es mayor que el minimo de cada franja.
-			if (empleadosFranja[i]<listaE.size()) compruebaNumEmpleados=false;
-			//al minimo necesario se restan los empleados fijos y rotatorios ya incluidos en el cuadrante
-			empleadosFranja[i]=empleadosFranja[i]-contarEmpleadosHora(cuadrante[dia],i);
-			//se resta cada empleado en cada una de las horas en las que hay posibilidad de que trabaje en cualquiera de sus turnos
-			for (int k=0;k<dispoDia.size();k++) {
-				empleado=dispoDia.get(k);	
-				turnosEmpleado=controlador.getListaTurnosContrato(empleado.getEmplId());
-				for (int l=0;l<turnosEmpleado.size();l++) {
-					turnoEmpl=turnosEmpleado.get(l);
-					if (turnoEmpl.getHoraEntrada().getHours()<=i && turnoEmpl.getHoraSalida().getHours()>i)
-						empleadoHoras[i]++;
+			if (empleadosFranja[i]<listaE.size()) 
+				compruebaNumEmpleados=false;
+			else {
+				//al minimo necesario se restan los empleados fijos y rotatorios ya incluidos en el cuadrante
+				empleadosFranja[i]=empleadosFranja[i]-contarEmpleadosHora(cuadrante[dia],i);
+				//se resta cada empleado en cada una de las horas en las que hay posibilidad de que trabaje en cualquiera de sus turnos
+				for (int k=0;k<dispoDia.size();k++) {
+					empleado=dispoDia.get(k);	
+					turnosEmpleado=controlador.getListaTurnosContrato(empleado.getEmplId());
+					for (int l=0;l<turnosEmpleado.size();l++) {
+						turnoEmpl=turnosEmpleado.get(l);
+						if (turnoEmpl.getHoraEntrada().getHours()<=i && turnoEmpl.getHoraSalida().getHours()>i)
+							empleadoHoras[i]++;
+					}
+					/*si en algun turno el empleado puede trabajar a la hora j, se resta de empleadosFranja[j] 
+					indicando que al menos él puede trabajar a esa hora*/
+					if (empleadoHoras[i]>0)
+						empleadosFranja[i]--;
 				}
-				/*si en algun turno el empleado puede trabajar a la hora j, se resta de empleadosFranja[j] 
-				indicando que al menos él puede trabajar a esa hora*/
-				if (empleadoHoras[i]>0)
-					empleadosFranja[i]--;
 			}
 		}
 		
