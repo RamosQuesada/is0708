@@ -232,7 +232,7 @@ public class GeneraDatos {
 			idContrato=contratos_hechos;//contador de contratos
 			contratos_hechos++;
 			turnoInicial=c.getListaTurnosEmpleados().get(c.getListaTurnosEmpleados().size()).getIdTurno();
-			nombre="aleatorio"+1;//creamos otro arraylist para los nombres de los contratos??
+			nombre="aleatorio"+i;//creamos otro arraylist para los nombres de los contratos??
 			patron=(int)(rnd.nextInt(4))+"e"+ (int)(rnd.nextInt(4))+"p";//hay que obtener el patron 
 			duracionCiclo=(int)(rnd.nextInt(3));
 			salario=(int)(rnd.nextInt(1500));
@@ -256,13 +256,13 @@ public class GeneraDatos {
 			if(c.getListaContratosDpto("prueba").isEmpty()){
 				idContrato=0;
 			}else{
-				idContrato=c.getListaContratosDpto("prueba").get((int)(rnd.nextInt(c.getListaContratosDpto("prueba").size()+1))).getTipoContrato();
+				idContrato=c.getListaContratosDpto("prueba").get((int)(rnd.nextInt(c.getListaContratosDpto("prueba").size()))).getTipoContrato();
 			}
 			if(c.getListaTurnosEmpleadosDpto("prueba").isEmpty()){
 				idTurno=0;
 				
 			}else{
-				idTurno=c.getListaTurnosEmpleadosDpto("prueba").get((int)(rnd.nextInt(c.getListaTurnosEmpleadosDpto("prueba").size()+1))).getIdTurno();	
+				idTurno=c.getListaTurnosEmpleadosDpto("prueba").get((int)(rnd.nextInt(c.getListaTurnosEmpleadosDpto("prueba").size()))).getIdTurno();	
 				
 			}
 			System.out.println("TURNOS POR CONTRATO");
@@ -278,8 +278,8 @@ public class GeneraDatos {
 		for (int i = 0; i < valor ; i++) {
 			id=(int)(rnd.nextInt(39999999));//se supone que tiene que tener 8 cifras creo
 			nombre=nombres.get((int)(rnd.nextInt(nombres.size()+1)));
-			apellido1=apellidos.get((int)(rnd.nextInt(apellidos.size()+1)));
-			apellido2=apellidos.get((int)(rnd.nextInt(apellidos.size()+1)));
+			apellido1=apellidos.get((int)(rnd.nextInt(apellidos.size())));
+			apellido2=apellidos.get((int)(rnd.nextInt(apellidos.size())));
 			sexo=(int)(rnd.nextInt(2));
 			email=nombre+"@turnomatic.com";
 			password=passwords.get((int)(rnd.nextInt(passwords.size())));
@@ -288,8 +288,8 @@ public class GeneraDatos {
 			felicidad=(int)(rnd.nextInt(3));//cuando sepamos los niveles de felicidad asi lo acotamos
 			idioma=(int)(rnd.nextInt(3));
 			rango=(int)(rnd.nextInt(3));//¿¿??
-			idContrato=c.getListaContratosDpto("prueba").get((int)(rnd.nextInt(c.getListaContratosDpto("prueba").size()+1))).getTipoContrato();
-			idTurno=c.getListaTurnosEmpleadosDpto("prueba").get((int)(rnd.nextInt(c.getListaTurnosEmpleadosDpto("prueba").size()+1))).getIdTurno();
+			idContrato=c.getListaContratosDpto("prueba").get((int)(rnd.nextInt(c.getListaContratosDpto("prueba").size()))).getTipoContrato();
+			idTurno=c.getListaTurnosEmpleadosDpto("prueba").get(c.getListaTurnosEmpleadosDpto("prueba").size()).getIdTurno();
 			System.out.println("USUARIOS");
         	System.out.println("//////////////////////////");
         	System.out.println("id: "+id);
