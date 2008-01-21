@@ -187,6 +187,7 @@ public class GeneraDatos {
 		
 		//rellenar los turnos
 		
+		int ha,hb,hc;
 		for (int i = 0; i < valor ; i++) {
 			if(c.getListaTurnosEmpleadosDpto("prueba").isEmpty()){//si esta vacio
 				idTurno=0;
@@ -196,8 +197,23 @@ public class GeneraDatos {
 			turnos_hechos++;
 			Descripcion="genearcion de datos aleatorios";
 			HoraEntrada=new Time((int)(rnd.nextInt(25)),(int)(rnd.nextInt(61)),(int)(rnd.nextInt(61)));//es asi¿¿
+			ha=HoraEntrada.getHours();
 			HoraSalida=new Time((int)(rnd.nextInt(25)),(int)(rnd.nextInt(61)),(int)(rnd.nextInt(61)));//hay que hacer un rango
+			hb=HoraSalida.getHours();
+			if (ha>hb) {
+				while (ha>hb) {
+					HoraSalida=new Time((int)(rnd.nextInt(25)),(int)(rnd.nextInt(61)),(int)(rnd.nextInt(61)));//hay que hacer un rango
+					hb=HoraSalida.getHours();
+				}
+			}
 			HoraInicioDescanso=new Time((int)(rnd.nextInt(25)),(int)(rnd.nextInt(61)),(int)(rnd.nextInt(61)));
+			hc=HoraInicioDescanso.getHours();
+			if ((hc<ha)||(hc>hb)) {
+				while ((hc<ha)||(hc>hb)) {
+					HoraInicioDescanso=new Time((int)(rnd.nextInt(25)),(int)(rnd.nextInt(61)),(int)(rnd.nextInt(61)));
+					hc=HoraInicioDescanso.getHours();
+				}
+			}
 			Duracion=(int)(rnd.nextInt(31));//media hora,mas no jejjej
 			System.out.println("TURNOS");
         	System.out.println("//////////////////////////");
