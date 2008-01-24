@@ -294,7 +294,7 @@ public class TurnoMatic {
 			ponerEmpleado (dispo.get(k), franjaHoraria.getHoraEntrada(), franjaHoraria.getHoraSalida(), cuadAux[dia]);
 			k=k+1;      
 			if  (k==dispo.size()+1)
-				if  (comprobarFranjasCompletas(cuadrante, dia, fHoraria))
+				if  (comprobarFranjasCompletas(cuadAux, dia, fHoraria))
 					hecho=true;
 			else
 				if (k<dispo.size())
@@ -312,7 +312,7 @@ public class TurnoMatic {
 	 * @param dia es el dia en el que queremos hacer la comprobacion
 	 * @param fHoraria es la lista de franjas que se divide un dia
 	 */
-	private boolean comprobarFranjasCompletas(ArrayList<Trabaja>[] cuadDia,int dia, ArrayList<Turno> fHoraria){
+	private boolean comprobarFranjasCompletas(ArrayList<Trabaja>[] cuadAux,int dia, ArrayList<Turno> fHoraria){
 		boolean valido=true;
 		//bucle que recorre todas las franjas horarias de este dia
 		for (int i=0;(i<fHoraria.size())&&(valido);i++){
@@ -322,7 +322,7 @@ public class TurnoMatic {
 			
 			//bucle que recorre todas las horas de una franja
 			for (int j=horaIni;j<=horaFin;j++){
-				if (estruc.getCal().getMinHora(dia,j)>contarEmpleadosHora(cuadDia[dia],j)){
+				if (estruc.getCal().getMinHora(dia,j)>contarEmpleadosHora(cuadAux[dia],j)){
 					valido=false;
 				}
 			}
