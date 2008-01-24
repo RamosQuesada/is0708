@@ -672,7 +672,7 @@ public class Controlador {
 		int idMensaje=_db.obtenIdMensaje();
 		boolean correcto=false;
 		if (idMensaje!=-1){
-			correcto=_db.insertarMensaje(idMensaje+1,mensaje.getRemitente(),mensaje.getFecha(),mensaje.getAsunto(),mensaje.getTexto(),false);
+			correcto=_db.insertarMensaje(mensaje.getRemitente(),mensaje.getFecha(),mensaje.getAsunto(),mensaje.getTexto(),false);
 			if(correcto)
 				correcto= correcto &&_db.insertarListaDestinatarios(mensaje.getDestinatario(), idMensaje+1);		
 		}	
@@ -753,7 +753,7 @@ public class Controlador {
 		int duracionCiclo=c.getDuracionCiclo();
 		double salario=c.getSalario();
 		int tipocontrato = c.getTipoContrato();
-		boolean exito=_db.insertarContrato(idContrato, turnoInicial, nombre, patron, duracionCiclo, salario, tipocontrato);
+		boolean exito=_db.insertarContrato(turnoInicial, nombre, patron, duracionCiclo, salario, tipocontrato);
 		exito=exito&&_db.insertarTurnoPorContrato(turnoInicial, idContrato);
 		return exito;
 	}
@@ -787,7 +787,7 @@ public class Controlador {
 	 * @return		<i>true</i> si se ha insertado el contrato correctamente
 	 */
 	public boolean insertTurno(Turno t) {
-		boolean exito=_db.insertarTurno(t.getIdTurno(), t.getDescripcion(), t.getHoraEntrada(), t.getHoraSalida(), t.getHoraDescanso(), t.getTDescanso());
+		boolean exito=_db.insertarTurno(t.getDescripcion(), t.getHoraEntrada(), t.getHoraSalida(), t.getHoraDescanso(), t.getTDescanso());
 		return exito;
 	}
 	/**
