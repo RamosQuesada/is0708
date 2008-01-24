@@ -287,6 +287,7 @@ public class TurnoMatic {
 		/*fHoraria es un ArrayList con todos los turnos en los que puede trabajar el empleado situado en la 
 		 posición k de disponibles*/ 
 		ArrayList<Turno> fHoraria = controlador.getListaTurnosContrato (dispo.get(k).getEmplId());
+		ArrayList<Turno> fHorariasDpto = controlador.getListaTurnosEmpleadosDpto(this.getIdDepartamento());
 		Turno franjaHoraria;
 		boolean hecho=false;
 		while (fHoraria.size()!=0) {
@@ -294,7 +295,7 @@ public class TurnoMatic {
 			ponerEmpleado (dispo.get(k), franjaHoraria.getHoraEntrada(), franjaHoraria.getHoraSalida(), cuadAux[dia]);
 			k=k+1;      
 			if  (k==dispo.size()+1)
-				if  (comprobarFranjasCompletas(cuadAux, dia, fHoraria))
+				if  (comprobarFranjasCompletas(cuadAux, dia, fHorariasDpto))
 					hecho=true;
 			else
 				if (k<dispo.size())
