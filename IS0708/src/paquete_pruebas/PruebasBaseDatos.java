@@ -28,7 +28,7 @@ public class PruebasBaseDatos {
 		//Controlador c = new Controlador(prueba);
 		//c.getListaTurnosContrato(2);
 		
-		//PRUEBA DE TIEMPOS DE ACCESO
+		//PRUEBA DE TIEMPOS DE ACCESO - SPECamilo2008
 		Long x,y,z;
 		java.util.Date t = new java.util.Date();
 		
@@ -39,7 +39,6 @@ public class PruebasBaseDatos {
 		
 		t = new java.util.Date();
 		y = t.getTime();
-
 		
 		prueba.obtenContrato(2);
 		
