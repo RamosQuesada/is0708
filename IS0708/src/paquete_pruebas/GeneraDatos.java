@@ -289,6 +289,8 @@ public class GeneraDatos {
 			idioma=(int)(rnd.nextInt(3));
 			rango=(int)(rnd.nextInt(3));//¿¿??
 			idContrato=c.getIdsContratos().get((int)(rnd.nextInt(c.getIdsContratos().size())));
+			System.out.println("idContrato: "+idContrato);
+			System.out.println("asdewqadrawdf "+c.getTurnosDeUnContrato(idContrato).size());
 			idTurno=c.getTurnosDeUnContrato(idContrato).get((int)(rnd.nextInt(c.getTurnosDeUnContrato(idContrato).size()))).getIdTurno();
         	System.out.println("//////////////////////////");
         	System.out.println("id: "+id);
