@@ -155,7 +155,7 @@ public class GeneraDatos {
 		contrato=new Contrato("jefe",0,1,7,"5T2D",1200,0); //no hace falta
 	
 		//crear el jefe de departamento
-		bd.insertarUsuario(12345678,"jefe","","",fechaNac,0,"Juanfran@ajandemore.es","boss",0,fechaContrato,fechaEntrada,0,0,0,0,contrato.getNumeroContrato(),turno.getIdTurno());
+		c.insertUsuario(12345678,"jefe","","",fechaNac,0,"Juanfran@ajandemore.es","boss",0,fechaContrato,fechaEntrada,0,0,0,0,contrato.getNumeroContrato(),turno.getIdTurno());
 		
 		
 		//creamos un nuevo departamento
