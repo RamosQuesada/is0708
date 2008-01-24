@@ -895,4 +895,48 @@ public class Controlador {
 		calendario = new GregorianCalendar();
 		return new Date(calendario.getTime().getTime());
 	}
+	/**
+	 * M�todo que inserta en la base de datos los valores correspondientes
+	 * a una nueva distribuci�n
+	 * 
+	 * @param Hora
+	 *            Franja horaria dividida en unidades de una hora (por ej. De
+	 *            9:00 � 10:00) representado por la hora de inicio (ej. 9)
+	 * 
+	 * @param DiaSemana
+	 *            Dia (Lunes, Martes,...,Domingo) en el que se aplica la
+	 *            distribuci�n
+	 * 
+	 * @param Patr�n
+	 *            Nos dice c�mo se distribuyen los grupos (expertos y novatos)
+	 * 
+	 * @param NumMax
+	 *            Nos acota el n�mero m�ximo de trabajadores requeridos dicho
+	 *            d�a en una cierta franja horaria
+	 * 
+	 * @param NumMin
+	 *            Nos acota el n�mero m�nimo de trabajadores requeridos dicho
+	 *            d�a en una cierta franja horaria
+	 * 
+	 * @param IdDepartamento
+	 *            identificador del dpto.
+	 * 
+	 * @return Informa sobre si se ha podido realizar la inserci�n o no
+	 */
+	public boolean insertDistribucion(int Hora, int DiaSemana,
+			String Patron, int NumMax, int NumMin, String IdDepartamento) {
+		return _db.insertarDistribucion(Hora, DiaSemana, Patron, NumMax, NumMin, IdDepartamento);
+	}
+	
+	/**
+	 * Método que asocia un turno con un contrato y lo inserta en la base de datos
+	 * @param idTurno
+	 *            identificador del turno correpondiente al contrato
+	 * @param idContrato
+	 *            identificador del contrato
+	 * @return true si se ha realizado correctamente o false en caso contrario
+	 */
+	public boolean insertTurnoPorContrato(int idTurno, int idContrato) {
+		return _db.insertarTurnoPorContrato(idTurno, idContrato);
+	}
 }
