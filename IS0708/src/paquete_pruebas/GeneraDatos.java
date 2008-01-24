@@ -152,7 +152,7 @@ public class GeneraDatos {
 		turno=new Turno(0,"M1","9:00:00","14:00:00","12:30:00",20);//turno por defecto para el jefe
 		
 		//crear contrato jefe departamento
-		contrato=new Contrato("jefe",0,1,7,"5/1/2/d",1200,0); //no hace falta
+		contrato=new Contrato("jefe",0,1,7,"5T2D",1200,0); //no hace falta
 	
 		//crear el jefe de departamento
 		bd.insertarUsuario(12345678,"jefe","","",fechaNac,0,"Juanfran@ajandemore.es","boss",0,fechaContrato,fechaEntrada,0,0,0,0,0,0);
