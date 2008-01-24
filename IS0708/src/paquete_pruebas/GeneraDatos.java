@@ -164,6 +164,10 @@ public class GeneraDatos {
 		//he comentado lo anterior porque no se si solo tenemos que generar un departamento o mas de un departamento
 
 		//creamos la distribucion
+		for (int i=1; i<=7; i++)
+			for (int j=9; j<23; j++)
+				c.insertDistribucion(j, i, "1e1p", 5, 3, "prueba");
+				
 		
 		for (int i = 0; i < valor ; i++) {
 	        	hora = (int)(rnd.nextInt(25));//con esto generamos numeros entre 0 y 24, siempre se pone limite +1
