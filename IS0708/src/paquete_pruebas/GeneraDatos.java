@@ -169,7 +169,7 @@ public class GeneraDatos {
 				c.insertDistribucion(j, i, "1e1p", 5, 3, "prueba");
 				
 		
-		for (int i = 0; i < valor ; i++) {
+		/*for (int i = 0; i < valor ; i++) {
 	        	hora = (int)(rnd.nextInt(25));//con esto generamos numeros entre 0 y 24, siempre se pone limite +1
 	        	diaSemana=(int)(rnd.nextInt(8));//generamos numeros entre 0 y 7
 	        	patron=(int)(rnd.nextInt(4))+"e"+ (int)(rnd.nextInt(4))+"p";//supongo que lo que aqui salga dara igual,da lo mismo mismo que haya mas expertos que inexpertos y viceversa
@@ -188,7 +188,7 @@ public class GeneraDatos {
 	        	System.out.println();
 	        	
 	        	c.insertDistribucion(hora, diaSemana, patron, NumMax, NumMin,"prueba");//aqui insertamos las distribuciones	
-	    	}
+	    	}*/
 		
 		//rellenar los turnos
 		
