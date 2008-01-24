@@ -80,7 +80,7 @@ public class GeneraDatos {
 		Controlador c=new Controlador(bd);
 		bd.run();
 		Random rnd=new Random(10);
-		int valor=5; //Esta variable nos valdra para saber cuantos datos tenemos que generar
+		int valor=3; //Esta variable nos valdra para saber cuantos datos tenemos que generar
 		
 		//insercion de nombres, apellidos y passwords en ArrayList manualmente
 		///////////////////////////////////////////////////////////
@@ -285,7 +285,7 @@ public class GeneraDatos {
 			idioma=(int)(rnd.nextInt(3));
 			rango=(int)(rnd.nextInt(3));//¿¿??
 			idContrato=c.getIdsContratos().get((int)(rnd.nextInt(c.getIdsContratos().size())));
-			idTurno=c.getIdsTurnos().get((int)(rnd.nextInt(c.getIdsTurnos().size())));
+			idTurno=c.getTurnosDeUnContrato(idContrato).get((int)(rnd.nextInt(c.getTurnosDeUnContrato(idContrato).size()))).getIdTurno();
         	System.out.println("//////////////////////////");
         	System.out.println("id: "+id);
         	System.out.println("nombre: "+nombre);
