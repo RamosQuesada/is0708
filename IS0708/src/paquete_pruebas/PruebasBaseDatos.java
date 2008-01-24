@@ -3,6 +3,7 @@ package paquete_pruebas;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.*;
 
 import algoritmo.Calendario;
 import algoritmo.Cuadrante;
@@ -11,6 +12,7 @@ import aplicacion.Contrato;
 import aplicacion.Controlador;
 import aplicacion.Database;
 import aplicacion.Turno;
+
 
 public class PruebasBaseDatos {
 
@@ -22,10 +24,33 @@ public class PruebasBaseDatos {
 	//NO inserteis en las tablas un string cuando en la base de datos del servidor 
 	//esta como date porque luego peta al insertar asi q por favor cambiad las pruebas
 	public static void main(String[] args) {
-		Database prueba = new Database();
-		prueba.abrirConexion();
+		
 		//Controlador c = new Controlador(prueba);
 		//c.getListaTurnosContrato(2);
+		
+		//PRUEBA DE TIEMPOS DE ACCESO
+		Long x,y,z;
+		java.util.Date t = new java.util.Date();
+		
+		x = t.getTime();
+		
+		Database prueba = new Database();
+		prueba.abrirConexion();
+		
+		t = new java.util.Date();
+		y = t.getTime();
+
+		
+		prueba.obtenContrato(2);
+		
+		t = new java.util.Date();
+		z = t.getTime();
+		
+		System.out.println("Tiempo en abrir conexion: "+(y-x)+" Milisegundos");
+		System.out.println("Tiempo en hacer la consulta: "+(z-y)+" Milisegundos");
+		System.out.println("Tiempo en conectar+consulta (total): "+(z-x)+" Milisegundos");
+		//FIN DE PRUEBAS DE TIEMPO
+		
 		prueba.insertarContrato(5, 2, "cap", "patron", 2, 222, 1);
 		//int x=c.getTurnoEmpleadoDia(Date.valueOf("2007-12-21"),71449215);
 		//System.out.println(x);
