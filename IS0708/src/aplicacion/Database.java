@@ -1126,6 +1126,42 @@ public class Database extends Thread {
 	
 	/**
 	 * 
+	 * @return	devuelve todas las filas de la tabla TURNOS
+	 */
+	public ResultSet obtenTodosTurnos() {
+		ResultSet r = null;
+		try {
+			st = con.createStatement();
+			r = st.executeQuery("SELECT * FROM TURNOS");
+		}
+		catch (SQLException e) {
+			// TODO: handle exception
+			System.out
+					.println("Error al realizar la consulta en TURNOS ");
+		}
+		return r;		
+	}
+	
+	/**
+	 * 
+	 * @return	devuelve todas las filas de la tabla CONTRATO
+	 */
+	public ResultSet obtenTodosContratos() {
+		ResultSet r = null;
+		try {
+			st = con.createStatement();
+			r = st.executeQuery("SELECT * FROM CONTRATO");
+		}
+		catch (SQLException e) {
+			// TODO: handle exception
+			System.out
+					.println("Error al realizar la consulta en CONTRATO ");
+		}
+		return r;		
+	}
+	
+	/**
+	 * 
 	 * @param nvend		Identificador del empleado
 	 * @return			devuelve la fila correspondiente al turno actual del empleado
 	 */

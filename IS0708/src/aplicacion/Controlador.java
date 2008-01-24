@@ -320,6 +320,65 @@ public class Controlador {
 				empleado.getEmail(), empleado.getPassword(), grupo,
 				Date.valueOf("0000-00-00"), Date.valueOf("0000-00-00"), 0,0,empleado.getIdioma(),1,0,0);
 	}
+	
+	//este metodo lo usa el programa que rellena automaticamente las tablas de la base de datos
+	/**
+	 * Método que inserta en la base de datos los valores correspondientes a un
+	 * nuevo usuario (este metodo lo usa el programa que rellena automaticamente
+	 * las tablas de la base de datos)
+	 * 
+	 * @param id
+	 *            Es el identificador único de cada empleado, que se corresponde
+	 *            con la clave primaria en la tabla.
+	 * @param nombre
+	 *            Nombre del empleado
+	 * @param apellido1
+	 *            Primer apellido
+	 * @param apellido2
+	 *            Segundo apellido
+	 * @param fechaNac
+	 *            Fecha de nacimiento
+	 * @param sexo
+	 *            Sexo del empleado
+	 * @param email
+	 *            Representa el correo electr�nico del empleado
+	 * @param password
+	 *            Se corresponde con la contraseña para autenticarse en el
+	 *            sistema
+	 * @param indicadorGrupo
+	 *            Clasifica al usuario seg�n su antig�edad en la empresa
+	 * @param fechaContrato
+	 *            Fecha del primer dia en la que el usuario trabaja con el tipo
+	 *            de contrato actual
+	 * @param fechaEntrada
+	 *            Fecha de alta en la empresa
+	 * @param horasExtras
+	 *            Lleva en cuenta el numero de horas extras. Debe ser un entero
+	 *            para saber cuando debe horas o le deben horas
+	 * @param felicidad
+	 *            Grado de satisfaccion de un usuario con su horario
+	 * @param idioma
+	 *            Idioma de la aplicacion para el usuario
+	 * @param idDept
+	 *            Hace referencia a la secci�n dentro del departamento en
+	 *            cuesti�n
+	 * @param rango
+	 *            Posici�n del empleado en la empresa
+	 * @param idContrato
+	 *            Hace referencia al tipo de contrato
+	 * @param idTurno
+	 *            Turno preferido por el empleado
+	 * @return Informa sobre si se ha podido realizar la inserci�n o no
+	 */
+	public boolean insertUsuario(int id, String nombre, String apellido1,
+			String apellido2, Date fechaNac, int sexo, String email,
+			String password, int indicadorGrupo, Date fechaContrato,
+			Date fechaEntrada, int horasExtras, int felicidad, int idioma,
+			int rango, int idContrato, int idTurno) {
+		return _db.insertarUsuario(id, nombre, apellido1, apellido2, fechaNac, sexo,
+				email, password, indicadorGrupo, fechaContrato, fechaEntrada, horasExtras,
+				felicidad, idioma, rango, idContrato, idTurno);
+	}
 
 /******************************************************************************************
  * Métodos relacionados con departamentos
@@ -377,6 +436,23 @@ public class Controlador {
 	public boolean insertDepartamento(Departamento departamento) {
 		return _db.insertarDepartamento(departamento.getNombreDepartamento(), departamento.getJefeDepartamento().getEmplId())
 				&&_db.insertarDepartamentoUsuario(departamento.getJefeDepartamento().getEmplId(),departamento.getNombreDepartamento());		
+	}
+	
+//	este metodo lo usa el programa que rellena automaticamente las tablas de la base de datos
+	/**
+	 * Metodo que inserta en la base de datos los valores correspondientes
+	 * a un nuevo departamento(este metodo lo usa el programa que rellena 
+	 * automaticamente las tablas de la base de datos)
+	 * 
+	 * @param nombre
+	 *            Nombre representativo de las actividades llevadas a cabo
+	 *            dentro del departamento
+	 * @param jefe
+	 *            Persona que dirige le departamento
+	 * @return Informa sobre si se ha podido realizar la inserci�n o no
+	 */
+	public boolean insertDepartamentoPruebas(String nombre, int jefe) {
+		return _db.insertarDepartamento(nombre, jefe);
 	}
 	
 	/**
@@ -504,6 +580,20 @@ public class Controlador {
 			System.out.println("Error al obtener Lista de Contratos del Departamento dado en la base de datos");
 		}		
 		return  contratos;
+	}
+	
+	/**
+	 * Metodo que asocia empleados a un departamento y los inserta en la 
+	 * base de datos
+	 * 
+	 * @param nvend
+	 *            Es el identificador único de cada empleado
+	 * @param nombre
+	 *            Nombre del departamento al que pertenece el empleado
+	 * @return Informa sobre si se ha podido realizar la inserci�n o no
+	 */
+	public boolean insertDepartamentoUsuario(int nvend, String nombre) {
+		return _db.insertarDepartamentoUsuario(nvend, nombre);
 	}
 
 /******************************************************************************************
@@ -664,8 +754,27 @@ public class Controlador {
 		double salario=c.getSalario();
 		int tipocontrato = c.getTipoContrato();
 		boolean exito=_db.insertarContrato(idContrato, turnoInicial, nombre, patron, duracionCiclo, salario, tipocontrato);
+		exito=exito&&_db.insertarTurnoPorContrato(turnoInicial, idContrato);
 		return exito;
 	}
+	/**
+	 * 
+	 * @return devuelve un ArrayList con todos los identificadores de los contratos existentes
+	 */
+	public ArrayList<Integer> getIdsContratos() {
+		ArrayList<Integer> ids=new ArrayList<Integer>();
+		ResultSet rs=_db.obtenTodosContratos();
+		try {
+			while (rs.next()) {
+				int idContrato = rs.getInt("IdContrato");
+				ids.add(idContrato);
+			}
+		} catch (Exception e) {
+			System.out.println("Error al obtener los ids de los contratos en la base de datos");
+		}		
+		return ids;
+	}
+	
 
 /******************************************************************************************
  * Métodos relacionados con turnos 
@@ -852,7 +961,35 @@ public class Controlador {
 		return turno;
 	}
 	
+	/**
+	 * Método que asocia un turno con un contrato y lo inserta en la base de datos
+	 * @param idTurno
+	 *            identificador del turno correpondiente al contrato
+	 * @param idContrato
+	 *            identificador del contrato
+	 * @return true si se ha realizado correctamente o false en caso contrario
+	 */
+	public boolean insertTurnoPorContrato(int idTurno, int idContrato) {
+		return _db.insertarTurnoPorContrato(idTurno, idContrato);
+	}
 	
+	/**
+	 * 
+	 * @return devuelve un ArrayList con todos los identificadores de los turnos existentes
+	 */
+	public ArrayList<Integer> getIdsTurnos() {
+		ArrayList<Integer> ids=new ArrayList<Integer>();
+		ResultSet rs=_db.obtenTodosTurnos();
+		try {
+			while (rs.next()) {
+				int idTurno = rs.getInt("IdTurno");
+				ids.add(idTurno);
+			}
+		} catch (Exception e) {
+			System.out.println("Error al obtener los ids de los turnos en la base de datos");
+		}		
+		return ids;
+	}
 
 /******************************************************************************************
  * Metodos relacionados con Cuadrante
@@ -928,15 +1065,4 @@ public class Controlador {
 		return _db.insertarDistribucion(Hora, DiaSemana, Patron, NumMax, NumMin, IdDepartamento);
 	}
 	
-	/**
-	 * Método que asocia un turno con un contrato y lo inserta en la base de datos
-	 * @param idTurno
-	 *            identificador del turno correpondiente al contrato
-	 * @param idContrato
-	 *            identificador del contrato
-	 * @return true si se ha realizado correctamente o false en caso contrario
-	 */
-	public boolean insertTurnoPorContrato(int idTurno, int idContrato) {
-		return _db.insertarTurnoPorContrato(idTurno, idContrato);
-	}
 }
