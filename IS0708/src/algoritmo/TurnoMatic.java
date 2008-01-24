@@ -338,9 +338,11 @@ public class TurnoMatic {
 			int horaFin=timeFin.getHours()+1;
 			//bucle que recorre todas las horas de una franja
 			for (int j=horaIni;j<=horaFin;j++){
-				if (estruc.getCalendario().getMinHora(dia,j)>contarEmpleadosHora(cuadAux[dia],j)){
-					valido=false;
-				}
+				for (int min=0;min<60;min++){
+					if (estruc.getCalendario().getMinHora(dia,j)>contarEmpleadosHora(cuadAux[dia],j)){
+						valido=false;
+					}	
+				}				
 			}
 		}
 		return valido;
@@ -351,12 +353,23 @@ public class TurnoMatic {
 	 * @param lista la lista de trabajadores de un dia
 	 * @param hora la hora a comprobar
 	 */
-	private int contarEmpleadosHora(ArrayList<Trabaja> lista, int hora){
+	private int contarEmpleadosHora(ArrayList<Trabaja> lista, Date dia, int hora, int minuto){
 		int contador=0;
 		for(int i=0;i<lista.size();i++){
-			if ((lista.get(i).getFichIni().getHours()<=hora)&&(lista.get(i).getFichFin().getHours()>hora)){
+					
+			int horaIni=lista.get(i).getFichIni().getHours();
+			int minIni=lista.get(i).getFichIni().getMinutes();
+			int horaFin=lista.get(i).getFichFin().getHours();
+			int minFin=lista.get(i).getFichFin().getMinutes();
+			
+			//el metodo controlador.getTurnoEmpleadoDia DEBERIA devolver un TURNO en lugar de un INT
+			int horaDescanso=(controlador.getTurnoEmpleadoDia(dia, lista.get(i).getIdEmpl())).getHoraDescanso().getHours();
+			
+			//comprobar si en ese minuto esta currando y no esta descansando
+			if ((horaIni<=hora)&&(horaFin>hora)){
 				contador++;
 			}
+			else {if 
 		}
 		return contador;
 	}
