@@ -155,11 +155,11 @@ public class GeneraDatos {
 		contrato=new Contrato("jefe",0,1,7,"5T2D",1200,0); //no hace falta
 	
 		//crear el jefe de departamento
-		bd.insertarUsuario(12345678,"jefe","","",fechaNac,0,"Juanfran@ajandemore.es","boss",0,fechaContrato,fechaEntrada,0,0,0,0,0,0);
+		bd.insertarUsuario(12345678,"jefe","","",fechaNac,0,"Juanfran@ajandemore.es","boss",0,fechaContrato,fechaEntrada,0,0,0,0,contrato.getNumeroContrato(),turno.getIdTurno());
 		
 		
 		//creamos un nuevo departamento
-		bd.insertarDepartamento("prueba",12345678);//se supone que el jefe será el que acabamos de crear
+		c.insertDepartamentoPruebas("prueba",12345678);//se supone que el jefe será el que acabamos de crear
 		
 		//he comentado lo anterior porque no se si solo tenemos que generar un departamento o mas de un departamento
 
@@ -191,7 +191,7 @@ public class GeneraDatos {
 		int ha,hb,hc;
 		for (int i = 0; i < valor ; i++) {
 			idTurno=0;
-			Descripcion="genearcionr de datos aleatorios";
+			Descripcion="genearcion de datos aleatorios";
 			HoraEntrada=new Time((int)(rnd.nextInt(24)),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(60)));//es asi¿¿
 			//ha=HoraEntrada.getHours();
 			HoraSalida=new Time((int)(rnd.nextInt((24+HoraEntrada.getHours())%24)),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(61)));//hay que hacer un rango
@@ -227,7 +227,7 @@ public class GeneraDatos {
 		//rellenar contrato
 		for (int i = 0; i < valor ; i++) {
 			idContrato=0;
-			turnoInicial=c.getListaTurnosEmpleados().get((int)(rnd.nextInt(c.getListaTurnosEmpleados().size()))).getIdTurno();
+			turnoInicial=c.getIdsTurnos().get((int)(rnd.nextInt(c.getIdsTurnos().size())));
 			nombre="aleatorio"+i;//creamos otro arraylist para los nombres de los contratos??
 			int aux=(int)(rnd.nextInt(4));
 			int aux1=(int)(rnd.nextInt(4));
@@ -253,8 +253,8 @@ public class GeneraDatos {
 		//rellenar turnosPorContrato
 		for (int i = 0; i < valor ; i++) {
 			
-			idContrato=c.getListaContratosDpto("prueba").get((int)(rnd.nextInt(c.getListaContratosDpto("prueba").size()))).getNumeroContrato();
-			idTurno=c.getListaTurnosEmpleados().get((int)(rnd.nextInt(c.getListaTurnosEmpleados().size()))).getIdTurno();
+			idContrato=c.getIdsContratos().get((int)(rnd.nextInt(c.getIdsContratos().size())));//selecciono contrato al azar
+			idTurno=c.getIdsTurnos().get((int)(rnd.nextInt(c.getIdsTurnos().size())));//selecciono turno al azar
 				
 			System.out.println("TURNOS POR CONTRATO");
         	System.out.println("//////////////////////////");
@@ -267,7 +267,7 @@ public class GeneraDatos {
 		//insertar usuarios en departamento
 		for (int i = 0; i < valor ; i++) {
 			ids.add((int)(rnd.nextInt(39999999)));//añado los id de los usuarios al arraylist
-			bd.insertarDepartamentoUsuario(ids.get(i),"prueba");
+			c.insertDepartamentoUsuario(ids.get(i),"prueba");
 			System.out.println("Id de usuarios: "+ids.get(i));
 		}
 		//rellenamos los usuarios
@@ -284,8 +284,8 @@ public class GeneraDatos {
 			felicidad=(int)(rnd.nextInt(3));//cuando sepamos los niveles de felicidad asi lo acotamos
 			idioma=(int)(rnd.nextInt(3));
 			rango=(int)(rnd.nextInt(3));//¿¿??
-			idContrato=c.getListaContratosDpto("prueba").get((int)(rnd.nextInt(c.getListaContratosDpto("prueba").size()))).getNumeroContrato();
-			idTurno=c.getTurnosDeUnContrato(idContrato).get((int)(rnd.nextInt(c.getTurnosDeUnContrato(idContrato).size()))).getIdTurno();
+			idContrato=c.getIdsContratos().get((int)(rnd.nextInt(c.getIdsContratos().size())));
+			idTurno=c.getIdsTurnos().get((int)(rnd.nextInt(c.getIdsTurnos().size())));
         	System.out.println("//////////////////////////");
         	System.out.println("id: "+id);
         	System.out.println("nombre: "+nombre);
@@ -303,9 +303,7 @@ public class GeneraDatos {
         	System.out.println("idTurno: "+idTurno);
         	System.out.println("//////////////////////////");
         	System.out.println();
-        	
-        	//empleado=new Empleado(null,);
-			c.insertEmpleado(null);
+			c.insertUsuario(id, nombre, apellido1, apellido2, fechaNac, sexo, email, password, indicadorGrupo, fechaContrato, fechaEntrada, horasExtras, felicidad, idioma, rango, idContrato, idTurno);
     	}
 
 		bd.cerrarConexion();
