@@ -81,7 +81,7 @@ public class GeneraDatos {
 		Random rnd=new Random(10);
 		int contratos_hechos=0;//contador del numero de contratos
 		int turnos_hechos=0;
-		int valor=1; //Esta variable nos valdra para saber cuantos datos tenemos que generar
+		int valor=5; //Esta variable nos valdra para saber cuantos datos tenemos que generar
 		
 		//insercion de nombres, apellidos y passwords en ArrayList manualmente
 		///////////////////////////////////////////////////////////
@@ -195,25 +195,28 @@ public class GeneraDatos {
 				idTurno=turnos_hechos;
 			}
 			turnos_hechos++;
-			Descripcion="genearcion de datos aleatorios";
-			HoraEntrada=new Time((int)(rnd.nextInt(25)),(int)(rnd.nextInt(61)),(int)(rnd.nextInt(61)));//es asi¿¿
-			ha=HoraEntrada.getHours();
-			HoraSalida=new Time((int)(rnd.nextInt(25)),(int)(rnd.nextInt(61)),(int)(rnd.nextInt(61)));//hay que hacer un rango
-			hb=HoraSalida.getHours();
-			if (ha>hb) {
-				while (ha>hb) {
-					HoraSalida=new Time((int)(rnd.nextInt(25)),(int)(rnd.nextInt(61)),(int)(rnd.nextInt(61)));//hay que hacer un rango
-					hb=HoraSalida.getHours();
-				}
-			}
-			HoraInicioDescanso=new Time((int)(rnd.nextInt(25)),(int)(rnd.nextInt(61)),(int)(rnd.nextInt(61)));
-			hc=HoraInicioDescanso.getHours();
+			Descripcion="genearcionr de datos aleatorios";
+			//HoraEntrada=new Time((int)(rnd.nextInt(25)),(int)(rnd.nextInt(11)),(int)(rnd.nextInt(61)));//es asi¿¿
+			HoraEntrada=new Time(10000);
+			//ha=HoraEntrada.getHours();
+			HoraSalida=new Time(20000);
+			//HoraSalida=new Time((int)(rnd.nextInt((25+HoraEntrada.getHours())%25)),(int)(rnd.nextInt(61)),(int)(rnd.nextInt(61)));//hay que hacer un rango
+			//hb=HoraSalida.getHours();
+			//if (ha>hb) {
+				//while (ha>hb) {
+					//HoraSalida=new Time((int)(rnd.nextInt(25)),(int)(rnd.nextInt(61)),(int)(rnd.nextInt(61)));//hay que hacer un rango
+					//hb=HoraSalida.getHours();
+				//}
+			//}
+			HoraInicioDescanso=new Time(15000);
+			//HoraInicioDescanso=new Time((int)(rnd.nextInt(25)),(int)(rnd.nextInt(61)),(int)(rnd.nextInt(61)));
+			/*hc=HoraInicioDescanso.getHours();
 			if ((hc<ha)||(hc>hb)) {
 				while ((hc<ha)||(hc>hb)) {
 					HoraInicioDescanso=new Time((int)(rnd.nextInt(25)),(int)(rnd.nextInt(61)),(int)(rnd.nextInt(61)));
 					hc=HoraInicioDescanso.getHours();
 				}
-			}
+			}*/
 			Duracion=(int)(rnd.nextInt(31));//media hora,mas no jejjej
 			System.out.println("TURNOS");
         	System.out.println("//////////////////////////");
