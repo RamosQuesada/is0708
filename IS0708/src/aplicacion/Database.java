@@ -604,8 +604,6 @@ public class Database extends Thread {
 	/**
 	 * Metodo que inserta un turno en la BD
 	 * 
-	 * @param idTurno
-	 *            Pendiente de revision
 	 * @param Descripcion
 	 *            Una breve descripcion del turno
 	 * @param HoraEntrada
@@ -619,13 +617,14 @@ public class Database extends Thread {
 	 *            revision
 	 * @return	Informa sobre si se ha podido realizar la inserci�n o no
 	 */
-	public boolean insertarTurno(int idTurno, String Descripcion,
+//	como es autoincrementable he quitado el id
+	public boolean insertarTurno(String Descripcion,
 			Time HoraEntrada, Time HoraSalida, Time HoraInicioDescanso,
 			int Duracion) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO TURNOS values ('" + idTurno + "', '"
+			st.executeUpdate("INSERT INTO TURNOS values ('" + 0 + "', '"
 					+ Descripcion + "', '" + HoraEntrada + "', '" + HoraSalida
 					+ "', '" + HoraInicioDescanso + "', '" + Duracion + "')");
 			System.out.println("Turno insertado");
@@ -669,13 +668,13 @@ public class Database extends Thread {
 	 * 			  indica si el mensaje está marcado o no
 	 * @return true si se ha realizado correctamente o false en caso contrario
 	 */
-
-	public boolean insertarMensaje(int idMensaje,int remitente, Date fecha, String asunto,
+//	como es autoincrementable he quitado el id
+	public boolean insertarMensaje(int remitente, Date fecha, String asunto,
 			String texto,boolean marcado) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO MENSAJE values ( "+idMensaje+" , " + remitente
+			st.executeUpdate("INSERT INTO MENSAJE values ( "+0+" , " + remitente
 					+ ", '" + fecha + "', '" + asunto + "', '" + texto + "', " +marcado+");");
 			System.out.println("Mensaje insertado");
 			correcto = true;
@@ -746,7 +745,7 @@ public class Database extends Thread {
 		}
 		return correcto;
 	}
-
+	//como es autoincrementable he quitado el id
 	/**
 	 * Método que inserta un contrato en la base de datos
 	 * @param idContrato
@@ -763,12 +762,12 @@ public class Database extends Thread {
 	 *            paga del empleado
 	 * @return true si se ha realizado correctamente o false en caso contrario
 	 */
-	public boolean insertarContrato(int idContrato, int turnoInicial,
+	public boolean insertarContrato(int turnoInicial,
 			String nombre, String patron, int duracionCiclo, double salario, int tipocontrato) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO CONTRATO values (" + idContrato
+			st.executeUpdate("INSERT INTO CONTRATO values (" + 0
 					+ ", " + turnoInicial + ", '" + nombre + "', '" + patron
 					+ "', " + duracionCiclo + ", " + salario + ", " + tipocontrato + ");");
 			System.out.println("Contrato insertado");
