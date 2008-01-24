@@ -375,7 +375,8 @@ public class Controlador {
 	 * @return <i>true</i> si el departamento ha sido insertado
 	 */
 	public boolean insertDepartamento(Departamento departamento) {
-		return _db.insertarDepartamento(departamento.getNombreDepartamento(), departamento.getJefeDepartamento().getEmplId());		
+		return _db.insertarDepartamento(departamento.getNombreDepartamento(), departamento.getJefeDepartamento().getEmplId())
+				&&_db.insertarDepartamentoUsuario(departamento.getJefeDepartamento().getEmplId(),departamento.getNombreDepartamento());		
 	}
 	
 	/**
@@ -729,14 +730,17 @@ public class Controlador {
 			ResultSet rs = _db.obtenTurnosDeUnContrato(idContrato);
 			while(rs.next()){
 				int idTurn = rs.getInt("IdTurno");
-				String descr = rs.getString("Descripcion");
-				Time HoraE = rs.getTime("HoraEntrada");
-				Time HoraS = rs.getTime("HoraSalida");
-				Time HoraI = rs.getTime("HoraInicioDescanso");
-				Time duracion = rs.getTime("DuracionDescanso");
-				int descanso = aplicacion.Util.dameMinutos(duracion);
-				Turno t = new Turno(idTurn,descr,HoraE,HoraS,HoraI,descanso);
-				turnos.add(t);
+				ResultSet rs2 = _db.obtenTurno(idTurn);
+				while (rs2.next()){
+					String descr = rs2.getString("Descripcion");
+					Time HoraE = rs2.getTime("HoraEntrada");
+					Time HoraS = rs2.getTime("HoraSalida");
+					Time HoraI = rs2.getTime("HoraInicioDescanso");
+					Time duracion = rs2.getTime("DuracionDescanso");
+					int descanso = aplicacion.Util.dameMinutos(duracion);
+					Turno t = new Turno(idTurn,descr,HoraE,HoraS,HoraI,descanso);
+					turnos.add(t);
+				}
 			}
 			
 		} catch (Exception e) {
