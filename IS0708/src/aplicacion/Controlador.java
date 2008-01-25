@@ -990,7 +990,12 @@ public class Controlador {
 			System.out.println("Error al obtener el turno de un día en la base de datos");
 			e.printStackTrace();
 		}
+		if(turnos.size()!=0)
 		return turnos.get(0);
+		else{
+			System.out.print("El usuario " + idEmpleado+ " no tiene turnos asignados");
+			return null;
+		}
 	}
 	/**
 	 * Método que asocia un turno con un contrato y lo inserta en la base de datos
