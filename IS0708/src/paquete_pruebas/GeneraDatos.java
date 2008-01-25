@@ -80,7 +80,7 @@ public class GeneraDatos {
 		Controlador c=new Controlador(bd);
 		bd.run();
 		Random rnd=new Random(10);
-		int valor=3; //Esta variable nos valdra para saber cuantos datos tenemos que generar
+		int valor=1; //Esta variable nos valdra para saber cuantos datos tenemos que generar
 		
 		//insercion de nombres, apellidos y passwords en ArrayList manualmente
 		///////////////////////////////////////////////////////////
@@ -196,9 +196,9 @@ public class GeneraDatos {
 		for (int i = 0; i < valor ; i++) {
 			idTurno=0;
 			Descripcion="genearcion de datos aleatorios";
-			HoraEntrada=new Time((int)(rnd.nextInt(24)),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(60)));//es asi¿¿
+			HoraEntrada=new Time((int)((rnd.nextInt(9)+8)),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(60)));//es asi¿¿
 			//ha=HoraEntrada.getHours();
-			HoraSalida=new Time((int)(rnd.nextInt((24+HoraEntrada.getHours())%24)),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(61)));//hay que hacer un rango
+			HoraSalida=new Time((int)(rnd.nextInt(8)+HoraEntrada.getHours()),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(61)));//hay que hacer un rango
 			//hb=HoraSalida.getHours();
 			//if (ha>hb) {
 				//while (ha>hb) {
@@ -206,7 +206,7 @@ public class GeneraDatos {
 					//hb=HoraSalida.getHours();
 				//}
 			//}
-			HoraInicioDescanso=new Time((int)(rnd.nextInt((24+HoraEntrada.getHours()-HoraSalida.getHours())%24)),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(60)));
+			HoraInicioDescanso=new Time((int)(rnd.nextInt(4)+HoraEntrada.getHours()),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(60)));
 			/*hc=HoraInicioDescanso.getHours();
 			if ((hc<ha)||(hc>hb)) {
 				while ((hc<ha)||(hc>hb)) {
