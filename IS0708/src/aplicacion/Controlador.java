@@ -1065,10 +1065,20 @@ public class Controlador {
 		return _db.insertarDistribucion(Hora, DiaSemana, Patron, NumMax, NumMin, IdDepartamento);
 	}
 	
+	/**
+	 * 	 * Vacia los contenidos de la tabla especificada
+	 * @param nombre	El nombre de la tabla en formato String
+	 * @return	Devuelve un bool. True si ha ido todo bien, false en caso de error.
+	 */	 
 	public boolean vaciarTabla(String nombre) {
 		return _db.vaciarTabla(nombre);
 	}
 	
+	/**
+	 * Vacia los contenidos de todas las tablas
+	 * @param 
+	 * @return	Devuelve un bool. True si ha ido todo bien, false en caso de error.
+	 */
 	public boolean vaciarTodasTablas() {
 		boolean b=true;
 		b = b &&_db.vaciarTabla("CONTRATO");
