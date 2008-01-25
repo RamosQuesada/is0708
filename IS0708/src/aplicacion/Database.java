@@ -770,6 +770,7 @@ public class Database extends Thread {
 			st.executeUpdate("INSERT INTO CONTRATO values (" + 0
 					+ ", " + turnoInicial + ", '" + nombre + "', '" + patron
 					+ "', " + duracionCiclo + ", " + salario + ", " + tipocontrato + ");");
+			
 			System.out.println("Contrato insertado");
 			correcto = true;
 		} catch (SQLException e) {
@@ -845,9 +846,10 @@ public class Database extends Thread {
 			st.executeUpdate("INSERT INTO ListaTurnosPorContrato values ("
 					+ idTurno + ", " + idContrato + ");");
 			System.out.println("turnoPorContrato insertado");
-			correcto = true;
+			correcto = true; 
 		} catch (SQLException e) {
 			correcto = false;
+			e.printStackTrace();
 			System.out.println("Error al insertar enListaTurnosPorContrato");
 		}
 		return correcto;
