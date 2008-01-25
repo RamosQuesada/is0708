@@ -79,8 +79,9 @@ public class GeneraDatos {
 		Database bd = new Database();
 		Controlador c=new Controlador(bd);
 		bd.run();
+		c.vaciarTodasTablas();//borramos las tablas
 		Random rnd=new Random(10);
-		int valor=1; //Esta variable nos valdra para saber cuantos datos tenemos que generar
+		int valor=10; //Esta variable nos valdra para saber cuantos datos tenemos que generar
 		
 		//insercion de nombres, apellidos y passwords en ArrayList manualmente
 		///////////////////////////////////////////////////////////
@@ -222,7 +223,7 @@ public class GeneraDatos {
         	System.out.println("Hora entrada: "+HoraEntrada);
         	System.out.println("HoraSalida: "+HoraInicioDescanso);
         	System.out.println("Hora inicio descanso: "+HoraInicioDescanso);
-        	System.out.println("Duracion: "+Duracion);
+        	System.out.println("Duracion del descansito: "+Duracion);
         	System.out.println("//////////////////////////");
         	System.out.println();
         	c.insertTurno(turno);
@@ -290,7 +291,7 @@ public class GeneraDatos {
 			rango=(int)(rnd.nextInt(3));//¿¿??
 			idContrato=c.getIdsContratos().get((int)(rnd.nextInt(c.getIdsContratos().size())));
 			System.out.println("idContrato: "+idContrato);
-			System.out.println("asdewqadrawdf "+c.getTurnosDeUnContrato(idContrato).size());
+			System.out.println("Longitud el arrayList: "+c.getTurnosDeUnContrato(idContrato).size());
 			idTurno=c.getTurnosDeUnContrato(idContrato).get((int)(rnd.nextInt(c.getTurnosDeUnContrato(idContrato).size()))).getIdTurno();
         	System.out.println("//////////////////////////");
         	System.out.println("id: "+id);
