@@ -1065,4 +1065,29 @@ public class Controlador {
 		return _db.insertarDistribucion(Hora, DiaSemana, Patron, NumMax, NumMin, IdDepartamento);
 	}
 	
+	public boolean vaciarTabla(String nombre) {
+		return _db.vaciarTabla(nombre);
+	}
+	
+	public boolean vaciarTodasTablas() {
+		boolean b=true;
+		b = b &&_db.vaciarTabla("CONTRATO");
+		b = b &&_db.vaciarTabla("DEPARTAMENTO");
+		b = b &&_db.vaciarTabla("DepartamentoUsuario");
+		b = b &&_db.vaciarTabla("DESTINATARIO");
+		b = b &&_db.vaciarTabla("DISTRIBUCION");
+		b = b &&_db.vaciarTabla("FESTIVOS");
+		b = b &&_db.vaciarTabla("INCIDENCIAS");
+		b = b &&_db.vaciarTabla("ListaTurnosPorContrato");
+		b = b &&_db.vaciarTabla("MENSAJE");
+		b = b &&_db.vaciarTabla("NumerosDEPARTAMENTOs");
+		b = b &&_db.vaciarTabla("PERMISOS");
+		b = b &&_db.vaciarTabla("TieneIncidencia");
+		b = b &&_db.vaciarTabla("Trabaja");
+		b = b &&_db.vaciarTabla("TURNOS");
+		b = b &&_db.vaciarTabla("USUARIO");
+		b = b &&_db.vaciarTabla("VENTAS");
+		
+		return b;
+	}
 }
