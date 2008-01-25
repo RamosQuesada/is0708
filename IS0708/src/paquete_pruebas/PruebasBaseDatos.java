@@ -26,9 +26,29 @@ public class PruebasBaseDatos {
 	public static void main(String[] args) {
 		
 		
+		Time t1= new Time(0);
+		Database db = new Database();
+		db.abrirConexion();
+		db.insertarTrabaja(12345678, 1, "1970-3-12", t1, t1);
+		Controlador c = new Controlador(db);
+		//java.sql.Date d = new java.sql.Date(0);
+		Turno t = c.getObjetoTurnoEmpleadoDia(Date.valueOf("1970-03-12"), 12345678);
+		System.out.print(t.getIdTurno()+ "  ");
+		System.out.print(t.getDescripcion()+ "  ");
+		System.out.print(t.getHoraEntrada()+ "  ");
+		System.out.print(t.getHoraSalida()+ "  ");
+		System.out.print(t.getHoraDescanso()+ "  ");
+		System.out.print(t.getTDescanso()+ "  ");
+
+		db.cerrarConexion();
+		
+		
+		
+		
 		//c.getListaTurnosContrato(2);
 		
 		//PRUEBA DE TIEMPOS DE ACCESO - SPECamilo2008
+		/*
 		Long x,y,z,z1;
 		java.util.Date t = new java.util.Date();
 		
@@ -65,6 +85,11 @@ public class PruebasBaseDatos {
 		//FIN DE PRUEBAS DE TIEMPO
 		
 		c.vaciarTabla("CONTRATO");
+		
+		*/
+		
+		
+		
 		
 		//prueba.insertarContrato(5, 2, "cap", "patron", 2, 222, 1);
 		//int x=c.getTurnoEmpleadoDia(Date.valueOf("2007-12-21"),71449215);
