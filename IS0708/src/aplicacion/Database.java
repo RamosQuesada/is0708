@@ -1196,4 +1196,24 @@ public class Database extends Thread {
 		}
 		return r;
 	}
+	
+	/**
+	 * Vacia los contenidos de la tabla especificada
+	 * @param nombre	El nombre de la tabla en formato String
+	 * @return	Devuelve un bool. True si ha ido todo bien, false en caso de error.
+	 */
+	public boolean vaciarTabla(String nombre) {
+		ResultSet r=null;
+		try {
+			st = con.createStatement();
+			r = st.executeQuery("TRUNCATE TABLE "+nombre);
+		}
+		catch (SQLException e) {
+			// TODO: handle exception
+			System.out
+					.println("Error al vaciar la tabla");
+			return false;
+		}
+		return true;
+	}
 }
