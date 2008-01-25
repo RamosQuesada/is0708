@@ -961,6 +961,37 @@ public class Controlador {
 		return turno;
 	}
 	
+	
+	
+	/**
+	 * Metodo que recoge el Objeto turno que le corresponde a un empleado en un dia concreto
+	 * @param dia			dia en el cual se quiere saber el turno del empleado
+	 * @param idEmpleado	identificador del empleado
+	 * @return	el Objeto turno del empleado en el dia concreto o 0 si no tiene turno ese dia
+	 */
+	public Turno getObjetoTurnoEmpleadoDia(Date dia, int idEmpleado){
+		ArrayList<Turno> turnos= new ArrayList<Turno>();
+		int turno=getTurnoEmpleadoDia(dia,idEmpleado);
+		ResultSet rs = _db.obtenTurno(turno);
+		try {
+			if(rs.next()) {
+				int idTurno=rs.getInt("IdTurno");
+				String descr=rs.getString("Descripcion");
+				Time hEntrada = rs.getTime("HoraEntrada");
+				Time hSalida = rs.getTime("HoraSalida");
+				Time hInicioDescanso = rs.getTime("HoraInicioDescanso");
+				Time duracion = rs.getTime("DuracionDescanso");
+				int descanso = aplicacion.Util.dameMinutos(duracion);
+				Turno t = new Turno(idTurno,descr,hEntrada,hSalida,hInicioDescanso,descanso);
+				turnos.add(t);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error al obtener el turno de un día en la base de datos");
+			e.printStackTrace();
+		}
+		return turnos.get(0);
+	}
 	/**
 	 * Método que asocia un turno con un contrato y lo inserta en la base de datos
 	 * @param idTurno
