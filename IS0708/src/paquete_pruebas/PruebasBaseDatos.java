@@ -25,11 +25,11 @@ public class PruebasBaseDatos {
 	//esta como date porque luego peta al insertar asi q por favor cambiad las pruebas
 	public static void main(String[] args) {
 		
-		//Controlador c = new Controlador(prueba);
+		
 		//c.getListaTurnosContrato(2);
 		
 		//PRUEBA DE TIEMPOS DE ACCESO - SPECamilo2008
-		Long x,y,z;
+		Long x,y,z,z1;
 		java.util.Date t = new java.util.Date();
 		
 		x = t.getTime();
@@ -44,13 +44,29 @@ public class PruebasBaseDatos {
 		
 		t = new java.util.Date();
 		z = t.getTime();
+
+		java.sql.Date d = new java.sql.Date(0);
+		prueba.insertarUsuario(12321, "Probon", "Ape", "llido", d, 1, "bla@bla.com", "123", 1, d, d, 0, 0, 0, 0, 1, 1);
+		
+		t = new java.util.Date();
+		z1 = t.getTime();
+		//prueba.insertarUsuario(id, nombre, apellido1, apellido2, fechaNac, sexo, email, password, indicadorGrupo, fechaContrato, fechaEntrada, horasExtras, felicidad, idioma, rango, idContrato, idTurno)
 		
 		System.out.println("Tiempo en abrir conexion: "+(y-x)+" Milisegundos");
 		System.out.println("Tiempo en hacer la consulta: "+(z-y)+" Milisegundos");
-		System.out.println("Tiempo en conectar+consulta (total): "+(z-x)+" Milisegundos");
+		System.out.println("Tiempo en escribir dato: "+(z1-z)+" Milisegundos");
+		System.out.println("Tiempo en conectar+consultas (total): "+(z1-x)+" Milisegundos");
+		
+		t = new java.util.Date();
+		x = t.getTime();
+		Controlador c = new Controlador(prueba);
+		c.getListaTurnosEmpleados();
+		
 		//FIN DE PRUEBAS DE TIEMPO
 		
-		prueba.insertarContrato(5, 2, "cap", "patron", 2, 222, 1);
+		c.vaciarTabla("CONTRATO");
+		
+		//prueba.insertarContrato(5, 2, "cap", "patron", 2, 222, 1);
 		//int x=c.getTurnoEmpleadoDia(Date.valueOf("2007-12-21"),71449215);
 		//System.out.println(x);
 		
