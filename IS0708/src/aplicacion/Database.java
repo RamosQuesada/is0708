@@ -760,25 +760,27 @@ public class Database extends Thread {
 	 *            periodo de tiempo que le corresponde al patron
 	 * @param salario
 	 *            paga del empleado
-	 * @return true si se ha realizado correctamente o false en caso contrario
+	 * @return Devuelve el idContrato del nuevo contrato o -1 en caso de error
 	 */
-	public boolean insertarContrato(int turnoInicial,
+	public int insertarContrato(int turnoInicial,
 			String nombre, String patron, int duracionCiclo, double salario, int tipocontrato) {
-		boolean correcto = false;
+		int i=0;
+		ResultSet r = null;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO CONTRATO values (" + 0
-					+ ", " + turnoInicial + ", '" + nombre + "', '" + patron
+			st.executeUpdate("INSERT INTO CONTRATO (TurnoInicial,Nombre,Patron,DuracionCiclo,Salario,Tipo) values ("+turnoInicial + ", '" + nombre + "', '" + patron
 					+ "', " + duracionCiclo + ", " + salario + ", " + tipocontrato + ");");
 			
 			System.out.println("Contrato insertado");
-			correcto = true;
+			r = st.getGeneratedKeys();
+			r.next();
+			i = r.getInt(1);
 		} catch (SQLException e) {
-			correcto = false;
+			i=-1;
 			e.printStackTrace();
 			System.out.println("Error al insertar el contrato");
 		}
-		return correcto;
+		return i;
 	}
 	
 	/**

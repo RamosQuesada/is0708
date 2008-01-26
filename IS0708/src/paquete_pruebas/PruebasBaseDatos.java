@@ -84,7 +84,8 @@ public class PruebasBaseDatos {
 		
 		//FIN DE PRUEBAS DE TIEMPO
 		
-		c.vaciarTabla("CONTRATO");
+		//c.vaciarTabla("CONTRATO");
+		c.getTurnosDeUnContrato(6);
 		
 		*/
 		

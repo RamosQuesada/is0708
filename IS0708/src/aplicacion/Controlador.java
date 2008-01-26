@@ -745,17 +745,17 @@ public class Controlador {
 	 * @param c		el contrato a insertar
 	 * @return		<i>true</i> si se ha insertado el contrato correctamente
 	 */	
-	public boolean insertContrato(Contrato c) {
-		int idContrato=c.getNumeroContrato();
+	public int insertContrato(Contrato c) {
+		//int idContrato=c.getNumeroContrato();
 		int turnoInicial=c.getTurnoInicial();
 		String nombre=c.getNombreContrato();
 		String patron=c.getPatron();
 		int duracionCiclo=c.getDuracionCiclo();
 		double salario=c.getSalario();
 		int tipocontrato = c.getTipoContrato();
-		boolean exito=_db.insertarContrato(turnoInicial, nombre, patron, duracionCiclo, salario, tipocontrato);
-		exito=exito&&_db.insertarTurnoPorContrato(turnoInicial, idContrato);
-		return exito;
+		int idContrato = _db.insertarContrato(turnoInicial, nombre, patron, duracionCiclo, salario, tipocontrato);
+		boolean exito=_db.insertarTurnoPorContrato(turnoInicial, idContrato);
+		return idContrato;
 	}
 	/**
 	 * 
