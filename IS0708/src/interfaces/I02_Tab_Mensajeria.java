@@ -57,7 +57,7 @@ public class I02_Tab_Mensajeria extends Thread{
 		setName("I02 - Load messages");
 		boolean run = true;
 		while (run) {
-			if (tablaMensajes.isDisposed()) run = false;
+			if (tablaMensajes.isDisposed() || vista.getEmpleadoActual().getEmplId()==0) run = false;
 			else {
 				// Carga mensajes
 				mensajesEntrantes = vista.getMensajesEntrantes(vista.getEmpleadoActual().getEmplId(), 0, num_men_hoja);
@@ -70,8 +70,7 @@ public class I02_Tab_Mensajeria extends Thread{
 					public void run() {
 						// Actualizar tabla
 						// TODO DE MOMENTO OBTENEMOS LOS 10 PRIMEROS MENSAJES,
-						// Falta un botón para ver los más antiguos
-						//System.out.print(mensajesEntrantes.get(1).getAsunto());
+						// Falta un botón para ver los más antiguo
 						int i = 0;
 						tablaMensajes.removeAll();
 						while (i < mensajesEntrantes.size() && i < num_men_hoja) {

@@ -77,7 +77,8 @@ public class I01_Login extends Thread{
 		lPassword.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 3, 1));
 		lPassword.setText(bundle.getString("Contrasena"));
 		//TODO quitar esto
-		tPassword.setText("admin");
+		tUsuario.setText("12345678");
+		tPassword.setText("boss");
 		
 		tPassword.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 5, 1));
 

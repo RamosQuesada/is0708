@@ -96,11 +96,11 @@ public class I02CuadranteEmpleado {
 		this.subdivisiones = subdivisiones;
 		
 		// TODO Borrar esto cuando se importen los empleados
-		Empleado e1 = new Empleado(2, "M. Jackson", new Color (display, 104, 228,  85));
+/*		Empleado e1 = new Empleado(2, "M. Jackson", new Color (display, 104, 228,  85));
 		e1.turno.franjaNueva(new Posicion( 9,  6), new Posicion(14,  0));
 		e1.turno.franjaNueva(new Posicion(16,  0), new Posicion(18,  0));
 		empleado = e1;
-
+*/
 	}
 	/**
 	 * Dibuja el cuadrante, resaltando el empleado activo.
@@ -479,7 +479,6 @@ public class I02CuadranteEmpleado {
 		float tamanox= sep/12;
 		float tamanoy= tamanoFila/3;
 		
-
 		if (tamanox<tamanoy){
 			System.out.println("1");
 			System.out.println(tamanoy-tamanox);

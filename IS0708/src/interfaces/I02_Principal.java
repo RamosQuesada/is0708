@@ -66,7 +66,8 @@ public class I02_Principal {
 		MenuItem itemAbrir = new MenuItem(submenu, SWT.PUSH);
 		itemAbrir.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				System.out.println("Pulsado abrir");
+				//TODO
+				//System.out.println("Pulsado abrir");
 			}
 		});
 		// Texto del item de menú
@@ -165,7 +166,7 @@ public class I02_Principal {
 		// TODO quitar de aquí la lista de empleados
 		final ArrayList<Empleado> empleados;
 		empleados = new ArrayList<Empleado>();
-
+/*
 		// TODO Quitar esta lista provisional de empleados para hacer pruebas:
 		Empleado e1 = new Empleado(1, "M. Jackson", new Color(shell
 				.getDisplay(), 104, 228, 85));
@@ -195,7 +196,7 @@ public class I02_Principal {
 		empleados.add(e4);
 		empleados.add(e5);
 		empleados.add(e6);
-
+*/
 		Label lCalendario = new Label(cCuadrantes, SWT.LEFT);
 		lCalendario.setText(bundle.getString("Calendario"));
 		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,false, 2, 1));
@@ -215,10 +216,12 @@ public class I02_Principal {
 						bundle.getString("diciembre") };
 				// TODO BD Cargar el cuadrante con la fecha correspondiente en
 				// la variable cuadranteActual
+				/*
 				System.out.println("Fecha cambiada a "
 						+ String.valueOf(calendario.getDay()) + " de "
 						+ meses[calendario.getMonth()] + " de "
 						+ String.valueOf(calendario.getYear()));
+				*/
 			}
 		});
 		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false,2, 1));
@@ -226,11 +229,12 @@ public class I02_Principal {
 				calendario.getDay());
 //		final I02_cuadr cuadrante = new I02_cuadr(cCuadrante, false, empleados, fecha);
 //		 Falta añadir el combobox de los intervalos
-		e1.anadeGUI(cCuadrante,9,23,3, true);
+/*		e1.anadeGUI(cCuadrante,9,23,3, true);
 		e2.anadeGUI(cCuadrante,9,23,3, false);
 		e3.anadeGUI(cCuadrante,9,23,3, false);
 		e4.anadeGUI(cCuadrante,9,23,3, false);
 		e5.anadeGUI(cCuadrante,9,23,3, false);
+*/		
 //		
 //		Img = cuadrante.dameImageImprimible();
 /*
@@ -497,7 +501,7 @@ public class I02_Principal {
 		bNew.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		bNew.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				System.out.println("I02 :: Pulsado Nuevo Departamento");
+//				System.out.println("I02 :: Pulsado Nuevo Departamento");
 				new I10_Config_departamento(shell, bundle, vista);
 			}
 		});
@@ -972,11 +976,13 @@ public class I02_Principal {
 						.println("Fecha cambiada a " + String.valueOf(day)
 								+ " de " + meses[month] + " de "
 								+ String.valueOf(year));
+				/*
 				System.out.println(Util.aFormatoDate(
 						Integer.toString(year),
 						Integer.toString(month),
 						Integer.toString(day))
 						);
+						*/
 				fecha= Date.valueOf(Util.aFormatoDate(Integer.toString(year),
 						Integer.toString(month+1),
 						Integer.toString(day))
