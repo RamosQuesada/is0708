@@ -784,7 +784,7 @@ public class Controlador {
 	 * @param t	el turno a insertar
 	 * @return	el id del turno si se ha insertado el turno correctamente o -1 en caso contrario
 	 */
-	public int insertTurno(Turno t) {
+	public int insertTurno(Turno t) {		
 		int idTurno =_db.insertarTurno(t.getDescripcion(), t.getHoraEntrada(), t.getHoraSalida(), t.getHoraDescanso(), t.getTDescanso());
 		return idTurno;
 	}
