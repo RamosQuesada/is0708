@@ -282,7 +282,7 @@ public class GeneraDatos {
 			apellido1=apellidos.get((int)(rnd.nextInt(apellidos.size())));
 			apellido2=apellidos.get((int)(rnd.nextInt(apellidos.size())));
 			sexo=(int)(rnd.nextInt(2));
-			email=nombre+apellido1+"@turnomatic.com";
+			email=id+"@turnomatic.es";
 			password=passwords.get((int)(rnd.nextInt(passwords.size())));
 			indicadorGrupo=(int)(rnd.nextInt(3));//¿¿que es??
 			horasExtras=(int)(rnd.nextInt(3));
