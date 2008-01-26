@@ -896,14 +896,18 @@ public class Empleado implements Drawable {
 		java.sql.Date fechaActual = new java.sql.Date(today.getTime());
 		if(fContrato == null)
 			fContrato = new Date(fechaActual.getTime());
-		long day = dia*24*60*60*1000;
+		
+		/*long day = dia*24*60*60*1000;
 		long hoy = fechaActual.getTime();
 		int hoyint = ((int)hoy/(24*60*60*1000)); 
 		long dias = hoy + day;
 		long contrat = fContrato.getTime();
-		long dif = hoy - contrat;
-		difFechas = (fechaActual.getTime()+(dia*24*60*60*1000))-fContrato.getTime();
-		diaCiclo = (int) (difFechas/(24*60*60*1000));  //chapuza: arreglar 
+		long dif = hoy - contrat;*/
+		
+		//ya va!!!!!!!!!!!
+		long milsDia = 24*60*60*1000;
+		difFechas = (fechaActual.getTime()+(dia*milsDia))-fContrato.getTime();
+		diaCiclo = (int) (difFechas/(24*60*60*1000));  
 	
 		/*GregorianCalendar hoy = (GregorianCalendar) GregorianCalendar.getInstance();
 		
