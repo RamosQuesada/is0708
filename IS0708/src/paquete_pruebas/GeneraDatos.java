@@ -231,7 +231,7 @@ public class GeneraDatos {
 		
 		//rellenar contrato
 		for (int i = 0; i < valor ; i++) {
-			idContrato=0;
+			//idContrato=0;
 			turnoInicial=c.getIdsTurnos().get((int)(rnd.nextInt(c.getIdsTurnos().size())));
 			nombre="aleatorio"+i;//creamos otro arraylist para los nombres de los contratos??
 			int aux=(int)(rnd.nextInt(4));
@@ -253,7 +253,7 @@ public class GeneraDatos {
         	System.out.println("//////////////////////////");
         	System.out.println();
         	
-			c.insertContrato(contrato);
+			idContrato = c.insertContrato(contrato);
 		}
 		//rellenar turnosPorContrato
 		for (int i = 0; i < valor ; i++) {
