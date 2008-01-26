@@ -28,16 +28,17 @@ public class I14_Escribir_mensaje {
 	private Shell shell;
 	private I13_Elegir_empleado tNombre;
 	
-	public I14_Escribir_mensaje(Shell padre, ResourceBundle bundle, Vista vista, Mensaje mensaje) {
+	public I14_Escribir_mensaje(Shell padre, ResourceBundle bundle, Vista vista, Mensaje mensaje, int idEmpl, String destinatario) {
 		_padre = padre;
 		_bundle = bundle;
 		_vista = vista;
-		mostrarVentana(mensaje);
+		mostrarVentana(mensaje, idEmpl, destinatario);
 		
 	}
 
-	
-	public void mostrarVentana(Mensaje mensaje) {
+	public void mostrarVentana(Mensaje mens, int idEmpleado, String destinatario) {
+		final Mensaje mensaje = mens;
+		final int idEmpl = idEmpleado;
 		shell = new Shell (_padre, SWT.CLOSE | SWT.RESIZE | SWT.APPLICATION_MODAL);
 		final Image ico_mens_l = new Image(_padre.getDisplay(), I14_Escribir_mensaje.class.getResourceAsStream("ico_mens1_v.gif"));
 		
@@ -61,11 +62,17 @@ public class I14_Escribir_mensaje {
 		final Label lAsunto	= new Label(cDatosMensaje, SWT.LEFT);
 		final Text tAsunto;
 		if (mensaje==null) {
-			lNombre.setText(_bundle.getString("I14_lab_Para"));
-			tNombre = new I13_Elegir_empleado(cDatosMensaje,_vista, _bundle);
+			if (idEmpl==0) {
+				lNombre.setText(_bundle.getString("I14_lab_Para"));
+				tNombre = new I13_Elegir_empleado(cDatosMensaje,_vista, _bundle);
+			}
+			else {
+				lNombre.setText(_bundle.getString("I14_lab_Para")+ ": " + destinatario);
+			}
 			lAsunto.setText(_bundle.getString("Asunto"));
 			lAsunto.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 			tAsunto	= new Text (cDatosMensaje, SWT.BORDER);
+			tAsunto.setTextLimit(100);
 			tAsunto.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		}
 		else {
@@ -140,7 +147,7 @@ public class I14_Escribir_mensaje {
 							shell.dispose();
 						}
 					}
-					else if (tNombre.getIdEmpl()==0) {
+					else if (idEmpl==0 && tNombre.getIdEmpl()==0) {
 						MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
 						messageBox.setText (_bundle.getString("Error"));
 						messageBox.setMessage (_bundle.getString("I14_err_sinDestinatario"));
@@ -148,7 +155,20 @@ public class I14_Escribir_mensaje {
 					}
 					else {
 						Mensajeria m = new Mensajeria(_vista.getControlador(), _vista.getEmpleadoActual().getEmplId());
-						m.creaMensaje(tNombre.getIdEmpl(), tAsunto.getText(), tMensaje.getText());
+						int destino = idEmpl;
+						if (idEmpl==0) destino = tNombre.getIdEmpl();
+						if (m.creaMensaje(destino, tAsunto.getText(), tMensaje.getText())>-1) {
+							MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
+							messageBox.setText (_bundle.getString("Enviado"));
+							messageBox.setMessage (_bundle.getString("I14_lab_Enviado"));
+							messageBox.open ();
+						}
+						else {
+							MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
+							messageBox.setText (_bundle.getString("Error"));
+							messageBox.setMessage (_bundle.getString("I14_lab_NoEnviado"));
+							messageBox.open ();
+						}
 						shell.dispose();
 					}
 				}	
@@ -160,7 +180,7 @@ public class I14_Escribir_mensaje {
 			bResponder.addSelectionListener (new SelectionAdapter () {
 				public void widgetSelected (SelectionEvent e) {
 					shell.dispose();
-					new I14_Escribir_mensaje(_padre,_bundle,_vista,null);
+					new I14_Escribir_mensaje(_padre,_bundle,_vista,null,mensaje.getRemitente(),_vista.getEmpleado(mensaje.getRemitente()).getNombreCompleto());
 				}
 			});
 			

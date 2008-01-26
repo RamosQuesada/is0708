@@ -117,7 +117,7 @@ public class I02_Tab_Mensajeria extends Thread{
 				// Si se ha pinchado en algún email (y no fuera)
 				if (tablaMensajes.getSelectionIndex()!=-1) {
 					Mensaje m = mensajesEntrantes.get(tablaMensajes.getSelectionIndex());
-					new I14_Escribir_mensaje(tabFolder.getShell(),bundle,vista,m);
+					new I14_Escribir_mensaje(tabFolder.getShell(),bundle,vista,m,0,"");
 				}
 			}
 			public void mouseUp(MouseEvent e) {};

@@ -35,8 +35,10 @@ public class I13_Elegir_empleado extends Thread {
 		empleadosIn = vista.getEmpleados(null, null, null, null, null, null, null);
 		padre.getDisplay().asyncExec(new Runnable () {
 			public void run() {
-				tNombre.setText("");
-				tNombre.setEditable(true);
+				if (!padre.isDisposed()) {
+					tNombre.setText("");
+					tNombre.setEditable(true);
+				}
 			}
 		});
 
@@ -148,5 +150,9 @@ public class I13_Elegir_empleado extends Thread {
 	
 	public int getIdEmpl() {
 		return idEmpl;
+	}
+	
+	public String getNombreEmpl() {
+		return tNombre.getText();
 	}
 }

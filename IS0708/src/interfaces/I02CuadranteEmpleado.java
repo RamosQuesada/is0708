@@ -399,7 +399,7 @@ public class I02CuadranteEmpleado {
 	 * @see #cambiarRelleno(GC, int, int, int)
 	 */
 	private void cambiarPincel (GC gc, int r, int g, int b) {
-		// Controlar l�mites de colores
+		// Controlar límites de colores
 		if (r<0) r=0;
 		if (g<0) g=0;
 		if (b<0) b=0;
@@ -418,7 +418,7 @@ public class I02CuadranteEmpleado {
 	 * @see #cambiarPincel(GC, int, int, int)
 	 */
 	private void cambiarRelleno(GC gc, int r, int g, int b) {
-		// Controlar l�mites de colores
+		// Controlar límites de colores
 		if (r<0) r=0;
 		if (g<0) g=0;
 		if (b<0) b=0;
@@ -459,49 +459,50 @@ public class I02CuadranteEmpleado {
 	 * @param Departamento	Nombre del departamento en el que va a trabajar
 	 */
 	public void dibujarTurno(GC gc,int dia,float horaComienzo,float horaFinal,String Departamento){
-		int x_comienzo=convertirDia(dia);
-		int y_comienzo=convertirHora(horaComienzo);
-		int x_fin=convertirDia(dia+1);
-		int y_fin=convertirHora(horaFinal);
-		int m = margenIzq + margenNombres;
-		m = margenIzq;
-		int h = horaFin - horaInicio;
-		h=7;
-		this.cambiarPincel(gc, 150, 255, 150);
-		this.cambiarRelleno(gc, 100, 200, 100);
-		int x_comienzo_c = (x_comienzo*8+x_fin*2)/10;
-		int x_comienzo_t = ((x_comienzo_c+x_fin)/2);
-		int longitud = (int)((x_fin-x_comienzo_c));
-		gc.fillGradientRectangle(x_comienzo_c,y_comienzo,longitud,y_fin-y_comienzo,true);
-		this.cambiarPincel(gc, 0, 0, 0);
-		gc.drawRoundRectangle(x_comienzo_c,y_comienzo,longitud,y_fin-y_comienzo,8,8);
-		int sep=(ancho - m - margenDer)/h;
-		float tamanox= sep/12;
-		float tamanoy= tamanoFila/3;
-		
-		if (tamanox<tamanoy){
-			System.out.println("1");
-			System.out.println(tamanoy-tamanox);
-			tamano = (int)(tamanox);
+		if (gc!=null) {
+			int x_comienzo=convertirDia(dia);
+			int y_comienzo=convertirHora(horaComienzo);
+			int x_fin=convertirDia(dia+1);
+			int y_fin=convertirHora(horaFinal);
+			int m = margenIzq + margenNombres;
+			m = margenIzq;
+			int h = horaFin - horaInicio;
+			h=7;
+			this.cambiarPincel(gc, 150, 255, 150);
+			this.cambiarRelleno(gc, 100, 200, 100);
+			int x_comienzo_c = (x_comienzo*8+x_fin*2)/10;
+			int x_comienzo_t = ((x_comienzo_c+x_fin)/2);
+			int longitud = (int)((x_fin-x_comienzo_c));
+			gc.fillGradientRectangle(x_comienzo_c,y_comienzo,longitud,y_fin-y_comienzo,true);
+			this.cambiarPincel(gc, 0, 0, 0);
+			gc.drawRoundRectangle(x_comienzo_c,y_comienzo,longitud,y_fin-y_comienzo,8,8);
+			int sep=(ancho - m - margenDer)/h;
+			float tamanox= sep/12;
+			float tamanoy= tamanoFila/3;
+			
+			if (tamanox<tamanoy){
+				System.out.println("1");
+				System.out.println(tamanoy-tamanox);
+				tamano = (int)(tamanox);
+				}
+			else{
+				System.out.println("2");
+				System.out.println(tamanox-tamanoy);
+				tamano= (int)tamanoy;
 			}
-		else{
-			System.out.println("2");
-			System.out.println(tamanox-tamanoy);
-			tamano= (int)tamanoy;
+			
+			Font fuente=gc.getFont();
+			gc.setFont(new Font(display,"Verdana",tamano,SWT.BOLD));
+			gc.drawText(String.valueOf((int)horaComienzo),x_comienzo, (y_comienzo), true);
+			String text = Departamento;
+	        Point textSize = gc.textExtent(text);
+	        gc.drawText(Departamento,x_comienzo_t-textSize.x/2, (y_comienzo*2+y_fin)/3, true);
+			String text2 = (String.valueOf((int)horaFinal));
+	        Point textSize2 = gc.textExtent(text2);
+			gc.drawText((String.valueOf((int)horaFinal)),x_comienzo , y_fin-textSize2.y, true);
+			gc.getFont().dispose();
+			gc.setFont(fuente);
 		}
-		
-		Font fuente=gc.getFont();
-		gc.setFont(new Font(display,"Verdana",tamano,SWT.BOLD));
-		gc.drawText(String.valueOf((int)horaComienzo),x_comienzo, (y_comienzo), true);
-		String text = Departamento;
-        Point textSize = gc.textExtent(text);
-        gc.drawText(Departamento,x_comienzo_t-textSize.x/2, (y_comienzo*2+y_fin)/3, true);
-		String text2 = (String.valueOf((int)horaFinal));
-        Point textSize2 = gc.textExtent(text2);
-		gc.drawText((String.valueOf((int)horaFinal)),x_comienzo , y_fin-textSize2.y, true);
-		gc.getFont().dispose();
-		gc.setFont(fuente);
-
 	}
 	
 	public int convertirDia(int dia) {
