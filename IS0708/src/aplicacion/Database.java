@@ -615,25 +615,30 @@ public class Database extends Thread {
 	 * @param Duracion
 	 *            La duracion del descanso en formato int - Pendiente de
 	 *            revision
-	 * @return	Informa sobre si se ha podido realizar la inserci�n o no
+	 * @return	Informa sobre si se ha podido realizar la inserci�n(devuelve el id asignado al 
+	 * 			turno debido al autoincremento) o no(devuelve -1)
 	 */
 //	como es autoincrementable he quitado el id
-	public boolean insertarTurno(String Descripcion,
+	public int insertarTurno(String Descripcion,
 			Time HoraEntrada, Time HoraSalida, Time HoraInicioDescanso,
 			int Duracion) {
-		boolean correcto = false;
+		int i=0;
+		ResultSet r=null;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO TURNOS values ('" + 0 + "', '"
-					+ Descripcion + "', '" + HoraEntrada + "', '" + HoraSalida
+			st.executeUpdate("INSERT INTO TURNOS values ('" + Descripcion 
+					+ "', '" + HoraEntrada + "', '" + HoraSalida
 					+ "', '" + HoraInicioDescanso + "', '" + Duracion + "')");
 			System.out.println("Turno insertado");
-			correcto = true;
+			r = st.getGeneratedKeys();
+			r.next();
+			i = r.getInt(1);
 		} catch (SQLException e) {
-			correcto = false;
+			i=-1;
+			e.printStackTrace();
 			System.out.println("Error al insertar el Turno");
 		}
-		return correcto;
+		return i;
 	}
 	
 	/**
@@ -666,24 +671,28 @@ public class Database extends Thread {
 	 *            contenido de los mensajes
 	 * @param marcado
 	 * 			  indica si el mensaje está marcado o no
-	 * @return true si se ha realizado correctamente o false en caso contrario
+	 * @return	Informa sobre si se ha podido realizar la insercion(devuelve el id asignado al 
+	 * 			menasaje debido al autoincremento) o no(devuelve -1)
 	 */
-//	como es autoincrementable he quitado el id
-	public boolean insertarMensaje(int remitente, Date fecha, String asunto,
-			String texto,boolean marcado) {
-		boolean correcto = false;
+//	como es autoincrementable se ha quitado el id
+	public int insertarMensaje(int remitente, Date fecha, String asunto,
+		String texto,boolean marcado) {
+		int i=0;
+		ResultSet r=null;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO MENSAJE values ( "+0+" , " + remitente
+			st.executeUpdate("INSERT INTO MENSAJE values ( "+ remitente
 					+ ", '" + fecha + "', '" + asunto + "', '" + texto + "', " +marcado+");");
 			System.out.println("Mensaje insertado");
-			correcto = true;
+			r = st.getGeneratedKeys();
+			r.next();
+			i = r.getInt(1);
 		} catch (SQLException e) {
-			correcto = false;
+			i=-1;
 			e.printStackTrace();
 			System.out.println("Error al insertar el mensaje");
 		}
-		return correcto;
+		return i;
 	}
 
 	/**
@@ -763,7 +772,7 @@ public class Database extends Thread {
 	 * @return Devuelve el idContrato del nuevo contrato o -1 en caso de error
 	 */
 	public int insertarContrato(int turnoInicial,
-			String nombre, String patron, int duracionCiclo, double salario, int tipocontrato) {
+		String nombre, String patron, int duracionCiclo, double salario, int tipocontrato) {
 		int i=0;
 		ResultSet r = null;
 		try {
