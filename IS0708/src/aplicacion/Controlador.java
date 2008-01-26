@@ -666,17 +666,14 @@ public class Controlador {
 	/**
 	 * Inserta un mensaje en la base de datos.
 	 * @param mensaje	mensaje a insertar en la base de datos
-	 * @return <i>true</i> si el mensaje se ha insertado correctamente
+	 * @return el id del nuevo mensaje si el mensaje se ha insertado correctamente
+	 * 		   o -1 en caso contrario	
 	 */
-	public boolean insertMensaje (Mensaje mensaje) {		
-		int idMensaje=_db.obtenIdMensaje();
-		boolean correcto=false;
-		if (idMensaje!=-1){
-			correcto=_db.insertarMensaje(mensaje.getRemitente(),mensaje.getFecha(),mensaje.getAsunto(),mensaje.getTexto(),false);
-			if(correcto)
-				correcto= correcto &&_db.insertarListaDestinatarios(mensaje.getDestinatario(), idMensaje+1);		
-		}	
-		return correcto;
+	public int insertMensaje (Mensaje mensaje) {		
+		int idMensaje= _db.insertarMensaje(mensaje.getRemitente(),mensaje.getFecha(),mensaje.getAsunto(),mensaje.getTexto(),false);
+		if (idMensaje!=-1)
+			_db.insertarListaDestinatarios(mensaje.getDestinatario(), idMensaje+1);			
+		return idMensaje;
 	}
 	
 	/**
@@ -743,7 +740,8 @@ public class Controlador {
 	/**
 	 * Inserta un contrato en la base de datos.
 	 * @param c		el contrato a insertar
-	 * @return		<i>true</i> si se ha insertado el contrato correctamente
+	 * @return	el id del nuevo contrato si se ha insertado el contrato correctamente
+	 * 			o -1 en caso contrario
 	 */	
 	public int insertContrato(Contrato c) {
 		//int idContrato=c.getNumeroContrato();
@@ -754,7 +752,7 @@ public class Controlador {
 		double salario=c.getSalario();
 		int tipocontrato = c.getTipoContrato();
 		int idContrato = _db.insertarContrato(turnoInicial, nombre, patron, duracionCiclo, salario, tipocontrato);
-		boolean exito=_db.insertarTurnoPorContrato(turnoInicial, idContrato);
+		_db.insertarTurnoPorContrato(turnoInicial, idContrato);
 		return idContrato;
 	}
 	/**
@@ -784,11 +782,11 @@ public class Controlador {
 	/**
 	 * Inserta un contrato en la base de datos.
 	 * @param t	el turno a insertar
-	 * @return		<i>true</i> si se ha insertado el contrato correctamente
+	 * @return	el id del turno si se ha insertado el turno correctamente o -1 en caso contrario
 	 */
-	public boolean insertTurno(Turno t) {
-		boolean exito=_db.insertarTurno(t.getDescripcion(), t.getHoraEntrada(), t.getHoraSalida(), t.getHoraDescanso(), t.getTDescanso());
-		return exito;
+	public int insertTurno(Turno t) {
+		int idTurno =_db.insertarTurno(t.getDescripcion(), t.getHoraEntrada(), t.getHoraSalida(), t.getHoraDescanso(), t.getTDescanso());
+		return idTurno;
 	}
 	/**
 	 * Elimina un turno en la base de datos.
