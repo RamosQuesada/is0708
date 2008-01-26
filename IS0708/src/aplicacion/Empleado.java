@@ -312,6 +312,15 @@ public class Empleado implements Drawable {
 	}
 	
 	/**
+	 * devuelve la fecha de alta del contrato del empleado
+	 * @return fecha de alta
+	 * @deprecated
+	 */
+	public Date getFcontrato(){
+		return fContrato;
+	}
+	
+	/**
 	 * Intenta asignar un número de vendedor a un empleado, que debe ser un número de 8
 	 * cifras mayor que 0. Si no es correcto, no se produce ningún cambio.
 	 * @param	idEmpl el número de vendedor a asignar al empleado.
