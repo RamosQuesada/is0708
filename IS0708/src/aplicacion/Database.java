@@ -625,10 +625,13 @@ public class Database extends Thread {
 		int i=0;
 		ResultSet r=null;
 		try {
+			Time tdesc = new Time(0);
+			tdesc.setMinutes(Duracion);
+			tdesc.setHours(0);
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO TURNOS values ('" + Descripcion 
+			st.executeUpdate("INSERT INTO TURNOS (Descripcion, HoraEntrada, HoraSalida, HoraInicioDescanso, DuracionDescanso) VALUES ('" + Descripcion 
 					+ "', '" + HoraEntrada + "', '" + HoraSalida
-					+ "', '" + HoraInicioDescanso + "', '" + Duracion + "')");
+					+ "', '" + HoraInicioDescanso + "', '" + tdesc + "')");
 			System.out.println("Turno insertado");
 			r = st.getGeneratedKeys();
 			r.next();
@@ -681,7 +684,7 @@ public class Database extends Thread {
 		ResultSet r=null;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO MENSAJE values ( "+ remitente
+			st.executeUpdate("INSERT INTO MENSAJE (Remitente, Fecha, Asunto, Texto, Marcado) values ( "+ remitente
 					+ ", '" + fecha + "', '" + asunto + "', '" + texto + "', " +marcado+");");
 			System.out.println("Mensaje insertado");
 			r = st.getGeneratedKeys();
