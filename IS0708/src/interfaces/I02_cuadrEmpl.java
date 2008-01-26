@@ -138,7 +138,7 @@ public class I02_cuadrEmpl {
 				gc2.setAntialias(SWT.ON);
 			}
 			catch (SWTException ex){
-				System.out.println(ex.code);
+				System.err.println(ex.code);
 			}
 			if (semanal) cuadrante.dibujarCuadranteDia(gc2, empleadoActivo);
 			else cuadrante.dibujarCuadranteMes(gc2);
@@ -273,7 +273,7 @@ public class I02_cuadrEmpl {
 	}
 	
 	public void actualizaFecha(Date fecha){
-		System.out.println("FECHA:"+Util.dateAString(fecha));
+		//System.out.println("FECHA:"+Util.dateAString(fecha));
 		this.fecha=fecha;
 		lCuadranteTitulo.setText(Util.dateAString(fecha));
 		this.cuadrante.actualizarFecha(fecha,gc2);

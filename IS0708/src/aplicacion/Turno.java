@@ -301,7 +301,7 @@ public class Turno {
 					gc2.setAntialias(SWT.ON);
 				}
 				catch (SWTException ex){
-					System.out.println(ex.code);
+					System.err.println(ex.code);
 				}
 				gc2.setForeground(new Color(display, 40,80,40));
 				

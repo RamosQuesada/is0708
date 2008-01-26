@@ -146,7 +146,7 @@ public class Controlador {
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Controlador: Error al obtener el Empleado " + idEmpl + " de la base de datos");
+			System.err.println("Controlador: Error al obtener el Empleado " + idEmpl + " de la base de datos");
 		}
 
 		return emp;
@@ -168,7 +168,7 @@ public class Controlador {
 				depts.add(idDept);
 			}
 		} catch (Exception e) {
-			System.out.println("Error al obtener Lista de Departamentos en la base de datos");
+			System.err.println("Error al obtener Lista de Departamentos en la base de datos");
 		}		
 		return depts;
 	}
@@ -195,7 +195,7 @@ public class Controlador {
 				}
 			} catch (Exception e) {
 				// TODO: handle exception
-				System.out.println("Error al obtener todos los Departamentos en la base de datos");
+				System.err.println("Error al obtener todos los Departamentos en la base de datos");
 			}			
 		}
 		else {
@@ -227,7 +227,7 @@ public class Controlador {
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error al obtener Lista de Subordinados en la base de datos");
+			System.err.println("Error al obtener Lista de Subordinados en la base de datos");
 		}		
 		return subs;
 	}
@@ -247,7 +247,7 @@ public class Controlador {
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error al obtener el superior de la base de datos");
+			System.err.println("Error al obtener el superior de la base de datos");
 		}
 		return idSup;
 	}
@@ -283,7 +283,7 @@ public class Controlador {
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error al obtener el empleado de la base de datos");
+			System.err.println("Error al obtener el empleado de la base de datos");
 		}		
 		/*//TODO ELIMINAR HASTA FIN-ELIMINAR, HECHA PARA PRUEBAS
 		Color color;
@@ -420,7 +420,7 @@ public class Controlador {
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error al obtener todos los Departamentos en la base de datos");
+			System.err.println("Error al obtener todos los Departamentos en la base de datos");
 		}
 		
 		return departamentos;
@@ -506,7 +506,7 @@ public class Controlador {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
-			System.out.println("Error al realizar la consulta de los festivos ");
+			System.err.println("Error al realizar la consulta de los festivos ");
 		}
 		return lista;
 	}
@@ -553,7 +553,7 @@ public class Controlador {
 				emps.add(this.getEmpleado(id));
 			}
 		} catch (Exception e) {
-			System.out.println("Error al obtener Lista de Departamentos en la base de datos");
+			System.err.println("Error al obtener Lista de Departamentos en la base de datos");
 		}		
 		return emps;
 	}
@@ -577,7 +577,7 @@ public class Controlador {
 			
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error al obtener Lista de Contratos del Departamento dado en la base de datos");
+			System.err.println("Error al obtener Lista de Contratos del Departamento dado en la base de datos");
 		}		
 		return  contratos;
 	}
@@ -768,7 +768,7 @@ public class Controlador {
 				ids.add(idContrato);
 			}
 		} catch (Exception e) {
-			System.out.println("Error al obtener los ids de los contratos en la base de datos");
+			System.err.println("Error al obtener los ids de los contratos en la base de datos");
 		}		
 		return ids;
 	}
@@ -822,7 +822,7 @@ public class Controlador {
 			
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error al obtener Lista de Turnos en la base de datos");
+			System.err.println("Error al obtener Lista de Turnos en la base de datos");
 		}		
 		return  turnos;
 	}
@@ -852,7 +852,7 @@ public class Controlador {
 			
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error al obtener Lista de Turnos en la base de datos");
+			System.err.println("Error al obtener Lista de Turnos en la base de datos");
 		}		
 		return  turnos;
 	}
@@ -882,7 +882,7 @@ public class Controlador {
 			
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error al obtener Lista de Turnos en la base de datos");
+			System.err.println("Error al obtener Lista de Turnos en la base de datos");
 		}		
 		return  turnos;
 	}
@@ -931,7 +931,7 @@ public class Controlador {
 			
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error al obtener Lista de Turnos del Departamento dado en la base de datos");
+			System.err.println("Error al obtener Lista de Turnos del Departamento dado en la base de datos");
 		}		
 		return  turnos;
 	}
@@ -953,7 +953,7 @@ public class Controlador {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println("Error al obtener el turno de un día en la base de datos");
+			System.err.println("Error al obtener el turno de un día en la base de datos");
 			e.printStackTrace();
 		}
 		return turno;
@@ -985,7 +985,7 @@ public class Controlador {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println("Error al obtener el turno de un día en la base de datos");
+			System.err.println("Error al obtener el turno de un día en la base de datos");
 			e.printStackTrace();
 		}
 		if(turnos.size()!=0)
@@ -1020,7 +1020,7 @@ public class Controlador {
 				ids.add(idTurno);
 			}
 		} catch (Exception e) {
-			System.out.println("Error al obtener los ids de los turnos en la base de datos");
+			System.err.println("Error al obtener los ids de los turnos en la base de datos");
 		}		
 		return ids;
 	}

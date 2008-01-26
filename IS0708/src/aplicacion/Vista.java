@@ -94,7 +94,7 @@ public class Vista extends Thread {
 				// Si llega aquí, ya hay conexión con la base de datos
 				// Login de administrador
 				if (login.getNumeroVendedor()==0 && login.getPassword().compareTo("admin")==0) {
-						System.out.println("Administrador identificado");
+						System.out.println("aplicacion.Vista.java\t::Administrador identificado");
 						controlador.setEmpleadoActual(new Empleado(0,0,"Administrador","","",null,0,"","admin",0,0,0,null,null,null,null,null,0,0));
 						identificado = true;
 				}

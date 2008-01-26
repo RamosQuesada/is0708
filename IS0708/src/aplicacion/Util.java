@@ -56,7 +56,7 @@ public class Util {
 				n = Integer.valueOf(nvend);
 			}
 			catch (NumberFormatException e) {
-				System.out.println("aplicacion.Util: Número de vendedor incorrecto.");
+				System.err.println("aplicacion.Util: Número de vendedor incorrecto.");
 			}
 		}
 		return n;
@@ -92,7 +92,7 @@ public class Util {
 			int r = randomizador.nextInt(chars.length);
 			clavechar[cont]=chars[r];
 		}
-		System.out.println(clavechar);
+		//System.out.println(clavechar);
 		clave=String.copyValueOf(clavechar);
 		return clave;
 	}		
@@ -226,7 +226,7 @@ public class Util {
 	public static String aFormatoDate(String año,String mes,String dia){
 		
 		String year;
-		System.out.println(Integer.parseInt(año));
+		//System.out.println(Integer.parseInt(año));
 		if((Integer.parseInt(año))<1000){
 			year="20"+año.substring(1);
 		}

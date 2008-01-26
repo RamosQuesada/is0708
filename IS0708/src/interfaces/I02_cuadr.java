@@ -27,15 +27,15 @@ import aplicacion.Posicion;
 import aplicacion.FranjaDib;
 
 /**
- * Dada una instancia de Canvas, que se le pasa como par�metro al constructor,
+ * Dada una instancia de Canvas, que se le pasa como parámetro al constructor,
  * crea un cuadrante sobre la misma.
  * @author Daniel
  *
  */
 public class I02_cuadr {
 	/* TODO
-	 * Las barras de tama�o cero se quedan
-	 * bug: al hacer muchas franjas peque�itas, no se pegan bien (ver si sigue pasando)
+	 * Las barras de tamaño cero se quedan
+	 * bug: al hacer muchas franjas pequeñitas, no se pegan bien (ver si sigue pasando)
 	 */
 	private Canvas canvas;
 	private Cuadrante cuadrante;
@@ -48,7 +48,7 @@ public class I02_cuadr {
 	// La variable terminadoDeCrear sirve para que una franja nueva no desaparezca al crearla
 	private Boolean diario; // 1: muestra cuadrante diario, 0: muestra cuadrante mensual
 	private int empleadoActivo;
-	private int horaInicio, horaFin; // Definen de qu� hora a qu� hora es el
+	private int horaInicio, horaFin; // Definen de qué hora a qué hora es el
 								// cuadrante
 
 	private Image cuadranteImg;
@@ -122,7 +122,7 @@ public class I02_cuadr {
 				gc2.setAntialias(SWT.ON);
 			}
 			catch (SWTException ex){
-				System.out.println(ex.code);
+				System.err.println(ex.code);
 			}
 			if (diario) cuadrante.dibujarCuadranteDia(gc2, empleadoActivo);
 			else cuadrante.dibujarCuadranteMes(gc2);
