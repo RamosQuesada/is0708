@@ -358,7 +358,7 @@ public class I02_Principal {
 			TableColumn column = new TableColumn(tablaEmpleados, SWT.NONE);
 			column.setText(titles2[i]);
 		}
-		// TODO BD Coger listado de empleados
+		
 		ArrayList<Empleado> empleados = vista.getEmpleados(null, null, null,
 				null, null, null, 2);
 		for (int i = 0; i < empleados.size(); i++) {
