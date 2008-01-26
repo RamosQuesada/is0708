@@ -81,7 +81,7 @@ public class GeneraDatos {
 		bd.run();
 		c.vaciarTodasTablas();//borramos las tablas
 		Random rnd=new Random(10);
-		int valor=10; //Esta variable nos valdra para saber cuantos datos tenemos que generar
+		int valor=15; //Esta variable nos valdra para saber cuantos datos tenemos que generar
 		
 		//insercion de nombres, apellidos y passwords en ArrayList manualmente
 		///////////////////////////////////////////////////////////
@@ -231,7 +231,7 @@ public class GeneraDatos {
 		
 		//rellenar contrato
 		for (int i = 0; i < valor ; i++) {
-			//idContrato=0;
+			
 			turnoInicial=c.getIdsTurnos().get((int)(rnd.nextInt(c.getIdsTurnos().size())));
 			nombre="aleatorio"+i;//creamos otro arraylist para los nombres de los contratos??
 			int aux=(int)(rnd.nextInt(4));
@@ -240,10 +240,10 @@ public class GeneraDatos {
 			duracionCiclo=aux+aux1;
 			salario=(int)(rnd.nextInt(1500));
 			tipoContrato=(int)(rnd.nextInt(4))+1;//acotamos entre 1 y 4 segun me han comentado
-			contrato=new Contrato(nombre,idContrato,turnoInicial,duracionCiclo,patron,salario,tipoContrato);
+			contrato=new Contrato(nombre,0,turnoInicial,duracionCiclo,patron,salario,tipoContrato);
 			System.out.println("CONTRATOS");
         	System.out.println("//////////////////////////");
-        	System.out.println("idContrato: "+idContrato);
+        	System.out.println("idContrato: "+0);
         	System.out.println("turnoInicial: "+turnoInicial);
         	System.out.println("nombre: "+nombre);
         	System.out.println("patron: "+patron);
@@ -282,7 +282,7 @@ public class GeneraDatos {
 			apellido1=apellidos.get((int)(rnd.nextInt(apellidos.size())));
 			apellido2=apellidos.get((int)(rnd.nextInt(apellidos.size())));
 			sexo=(int)(rnd.nextInt(2));
-			email=nombre+"@turnomatic.com";
+			email=nombre+apellido1+"@turnomatic.com";
 			password=passwords.get((int)(rnd.nextInt(passwords.size())));
 			indicadorGrupo=(int)(rnd.nextInt(3));//¿¿que es??
 			horasExtras=(int)(rnd.nextInt(3));
