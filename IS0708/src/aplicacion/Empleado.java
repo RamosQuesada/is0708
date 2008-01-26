@@ -907,19 +907,7 @@ public class Empleado implements Drawable {
 		//ya va!!!!!!!!!!!
 		long milsDia = 24*60*60*1000;
 		difFechas = (fechaActual.getTime()+(dia*milsDia))-fContrato.getTime();
-		diaCiclo = (int) (difFechas/(24*60*60*1000));  
-	
-		/*GregorianCalendar hoy = (GregorianCalendar) GregorianCalendar.getInstance();
-		
-		if(fContrato == null)
-			fContrato = new Date(hoy.getTimeInMillis());
-		
-		
-		GregorianCalendar contrat = new GregorianCalendar
-			(fContrato.getYear(),fContrato.getMonth(),fContrato.getDay());// <- Arreglar
-		difFechas = hoy.getTimeInMillis() - contrat.getTimeInMillis();
-		diaCiclo = ((int)difFechas/(24*60*60*1000));*/
-		
+		diaCiclo = (int) (difFechas/(milsDia));  		
 		
 		//Obtencion del contrato del empleado.
 		contrato = cont.getContrato(this.getContratoId());
@@ -931,7 +919,8 @@ public class Empleado implements Drawable {
 		diaCiclo = diaCiclo%turnosStr.size();
 		
 		if((diaCiclo == contrato.getDuracionCiclo()-1) && (hora == numTrozos-1))
-				fContrato.setTime(fechaActual.getTime() + ((dia+1)*24*60*60*1000));
+				fContrato.setTime(fechaActual.getTime() + ((dia+1)*milsDia));
+		
 	/*	if((diaCiclo == contrato.getDuracionCiclo()-1) && (hora == numTrozos-1))
 			fContrato.setTime(hoy.getTimeInMillis() + ((dia+1)*24*60*60*1000));*/
 		
