@@ -167,8 +167,8 @@ public class TurnoMatic {
 			hecho=vueltaAtrasMarcaje(e1,e2,0,dia,cuadAux);
 		
 		//no ha habido solucion con los disponibles, avisamos al usuario del problema surgido
-		if (!hecho) 
-			avisarUsuario (cuadAux, e2, dia);
+		//if (!hecho) 
+			//avisarUsuario (cuadAux, e2, dia);
 	}
 	
 	/**
@@ -178,9 +178,9 @@ public class TurnoMatic {
 	 * @param reserDia es el ArrayList de los empleados que no trabajan el día para el que se genera el cuadrante
 	 * @param dia es el dia para el que se esta generando el cuadrante.
 	 */
-	private void avisarUsuario (ArrayList<Trabaja>[] cuadAux, ArrayList<Empleado> reserDia, int dia){
+	/*private void avisarUsuario (ArrayList<Trabaja>[] cuadAux, ArrayList<Empleado> reserDia, int dia){
 		
-	}
+	}*/
 	
 	/**
 	 * Metodo para comprobar, sin ejecutar ningún algoritmo, si es posible generar un cuadrante con los empleados de que se dispone
