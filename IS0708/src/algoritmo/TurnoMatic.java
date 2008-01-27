@@ -333,6 +333,8 @@ public class TurnoMatic {
 		while (fHoraria.size()!=0) {
 			franjaHoraria = fHoraria.get(1);
 			ponerEmpleado (dispo.get(k), franjaHoraria.getHoraEntrada(), franjaHoraria.getHoraSalida(), cuadAux[dia]);
+			//si el turno en el que se incluye al empleado en el cuadrante es el que él prefiere, aumenta su felicidad
+			//if (franjaHoraria.getHoraEntrada()==dispo.get(k)) dispo.get(k).setFelicidad(dispo.get(k).getFelicidad()+1);
 			k=k+1;      
 			if  (k==dispo.size()+1)
 				if  (comprobarFranjasCompletas(cuadAux, dia, fHorariasDpto))
@@ -342,6 +344,7 @@ public class TurnoMatic {
 					hecho=vueltaAtrasMarcaje(dispo, reser,k,dia,cuadAux);
 			k=k-1;
 			quitarEmpleado(dispo.get(k),cuadAux[dia]);   
+			//dispo.get(k).setFelicidad(dispo.get(k).getFelicidad()-1);
 			fHoraria.remove(1);
 		}
 		return hecho;
