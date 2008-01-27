@@ -207,7 +207,7 @@ public class GeneraDatos {
 					//hb=HoraSalida.getHours();
 				//}
 			//}
-			HoraInicioDescanso=new Time((int)((HoraEntrada.getHours()-HoraEntrada.getHours())/2),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(60)));
+			HoraInicioDescanso=new Time((int)((HoraSalida.getHours()-HoraEntrada.getHours())/2),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(60)));
 			/*hc=HoraInicioDescanso.getHours();
 			if ((hc<ha)||(hc>hb)) {
 				while ((hc<ha)||(hc>hb)) {
