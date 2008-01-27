@@ -682,7 +682,7 @@ public class Controlador {
 	public int insertMensaje (Mensaje mensaje) {		
 		int idMensaje= _db.insertarMensaje(mensaje.getRemitente(),mensaje.getFecha(),mensaje.getAsunto(),mensaje.getTexto(),false);
 		if (idMensaje!=-1)
-			_db.insertarListaDestinatarios(mensaje.getDestinatario(), idMensaje+1);			
+			_db.insertarListaDestinatarios(mensaje.getDestinatario(), idMensaje);			
 		return idMensaje;
 	}
 	
