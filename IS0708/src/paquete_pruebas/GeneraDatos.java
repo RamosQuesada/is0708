@@ -207,7 +207,7 @@ public class GeneraDatos {
 					//hb=HoraSalida.getHours();
 				//}
 			//}
-			HoraInicioDescanso=new Time((int)((HoraSalida.getHours()-HoraEntrada.getHours())/2),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(60)));
+			HoraInicioDescanso=new Time((int)(((HoraSalida.getHours()-HoraEntrada.getHours())/2)+HoraEntrada.getHours()),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(60)));
 			/*hc=HoraInicioDescanso.getHours();
 			if ((hc<ha)||(hc>hb)) {
 				while ((hc<ha)||(hc>hb)) {
@@ -221,7 +221,7 @@ public class GeneraDatos {
         	System.out.println("//////////////////////////");
         	System.out.println("Descripcion: "+Descripcion);
         	System.out.println("Hora entrada: "+HoraEntrada);
-        	System.out.println("HoraSalida: "+HoraInicioDescanso);
+        	System.out.println("HoraSalida: "+HoraSalida);
         	System.out.println("Hora inicio descanso: "+HoraInicioDescanso);
         	System.out.println("Duracion del descansito: "+Duracion);
         	System.out.println("//////////////////////////");
