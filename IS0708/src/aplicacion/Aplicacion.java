@@ -22,7 +22,6 @@ public class Aplicacion {
 		
 		// Crear vista
 		Vista vista = new Vista(controlador, db);
-		controlador.setVista(vista);
 		
 	}
 }
