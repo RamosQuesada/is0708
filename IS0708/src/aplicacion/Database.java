@@ -1096,9 +1096,22 @@ public class Database extends Thread {
 			result = st.executeQuery("SELECT * FROM MENSAJE WHERE IdMensaje="+mensaje+";");
 		}
 		catch (SQLException e) {
-			System.err.println("Error obtenMensajesEntrantes ");
+			System.err.println("Error obtenMensaje ");
 		}
 		return result;
+	}
+	
+	public ResultSet obtenMensajesEntrantes(int vendedor, int inicio, int desp) {		
+		ResultSet result = null;
+		try {
+			st = con.createStatement();
+			result = st.executeQuery("SELECT * FROM DESTINATARIO JOIN MENSAJE WHERE DESTINATARIO.NumVendedor="+vendedor+" AND DESTINATARIO.IdMensaje=MENSAJE.IdMensaje LIMIT "+inicio+","+(inicio+desp)+";");
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("Error obtenMensajesEntrantes ");
+		}
+		return result;		
 	}
 	
 	/**
