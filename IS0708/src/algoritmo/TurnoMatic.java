@@ -192,7 +192,7 @@ public class TurnoMatic {
 	}
 	
 	/**
-	 * Metodo para comprobar, sin ejecutar ningún algoritmo, si es posible generar un cuadrante con los empleados de que se dispone
+	 * Metodo para comprobar, sin ejecutar ningún algoritmo, si es posible generar un cuadrante con los empleados de que se dispone.
 	 * @param cuadrante el cuadrante con los fijos y rotatorios ya incluidos.
 	 * @param lista es el ArrayList de empleados que trabajan el dia para el que se genera el cuadrante 
 	 * @param dia es el dia para el que se esta generando el cuadrante
@@ -203,9 +203,21 @@ public class TurnoMatic {
 		empleados superior al numero de empleados de que disponemos.*/  
 		boolean compruebaNumEmpleados=true;
 		
-		/*empleadosFranja permite conocer el numero de empleados necesarios en cada hora teniendo en 
+		//tam es el numero de horas en las que el departamento esta abierto
+		int tam=0;
+		int num=0;
+		for (int i=0;i<24;i++){
+			num=estruc.getCalendario().getMinHora(dia, i);
+			if (num>0)
+				tam++;
+		}
+		/*ahora tam es el numero de posiciones de los arrays que utilizaremos en esta funcion.
+		  tam equivale al numero de horas en las que el departamento esta abierto contabilizadas de 5 en 5min.*/
+		tam=tam*12;
+		
+		/*empleadosFranja permite conocer el numero de empleados necesarios cada 5min teniendo en 
 		cuenta que ya han sido incluidos los fijos y rotatorios en el cuadrante.*/
-		int[] empleadosFranja=new int[24]; 
+		int[] empleadosFranja=new int[tam]; 
 		
 		//empleadoHoras guarda el numero de posibilidades que hay de que un empleado trabaje a cada una de las horas
 		int[] empleadoHoras=new int[24]; 
@@ -254,7 +266,7 @@ public class TurnoMatic {
 	}
 	
 	/**
-	 * Metodo para ordenar los ArrayList por orden de felicidad y convertirlas en array
+	 * Metodo para ordenar los ArrayList por orden de felicidad y convertirlas en array.
 	 * @param lista es el ArrayList de empleados para ordenar y convertir en Array
 	 * @param criterio es el criterio de ordenacion: 1 = de menor a mayor, 2= de mayor a menor
 	 */
@@ -323,7 +335,7 @@ public class TurnoMatic {
 	}
 
 	/**
-	 * metodo para comprobar que todas las franjas horarias de un dia cumplen los requisito de personal
+	 * Metodo para comprobar que todas las franjas horarias de un dia cumplen los requisito de personal
 	 * @param cuadDia es el cuadrante
 	 * @param dia es el dia en el que queremos hacer la comprobacion
 	 * @param fHoraria es la lista de franjas que se divide un dia
@@ -349,7 +361,7 @@ public class TurnoMatic {
 	}
 	
 	/**
-	 * metodo para contar el numero de empleados que trabajan a una hora concreta
+	 * Metodo para contar el numero de empleados que trabajan a una hora concreta
 	 * @param lista la lista de trabajadores de un dia
 	 * @param hora la hora a comprobar
 	 */
