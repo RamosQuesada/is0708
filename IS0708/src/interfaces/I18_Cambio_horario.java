@@ -222,7 +222,7 @@ public class I18_Cambio_horario {
 
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("peticion mensajeria interna in");
+		//		System.out.println("peticion mensajeria interna in");
 				_opcion_actual=I18_Cambio_horario.TODOSDIAS;
 				coTodosDias.setEnabled(true);
 				for(int cont=0;cont<nombreDias.size();cont++){
