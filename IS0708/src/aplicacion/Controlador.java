@@ -695,27 +695,20 @@ public class Controlador {
 	public ArrayList<Mensaje> getMensajesEntrantes(int idEmpl, int a, int b) {
 		ArrayList<Mensaje> misMensajes = new ArrayList<Mensaje>();
 		try {
-			int contador = 0;
-			ResultSet idMensajes = _db.obtenDestinatarios(idEmpl);
-			if (idMensajes != null) {
-				while (idMensajes.next()) {
-					int idMensaje = idMensajes.getInt("IdMensaje");
-					if (idMensaje != -1) {
-						ResultSet mensaje = _db.obtenMensaje(idMensaje);
-						while (mensaje.next()) {
-							contador++;
-							Mensaje m = new Mensaje(
-									mensaje.getInt("Remitente"), idEmpl,
-									mensaje.getDate("Fecha"), mensaje
-											.getString("Asunto"), mensaje
-											.getString("Texto"));
-							if (contador >= 0 && contador < (a + b))
-								misMensajes.add(m);
-						}
-					}
-
+			
+			ResultSet mensajes = _db.obtenMensajesEntrantes(idEmpl, a, b);
+						
+			if (mensajes!=null) {
+				while (mensajes.next()) {
+					Mensaje m = new Mensaje(
+							mensajes.getInt("Remitente"), idEmpl,
+							mensajes.getDate("Fecha"), mensajes
+									.getString("Asunto"), mensajes
+									.getString("Texto"));				
+						misMensajes.add(m);
 				}
 			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
