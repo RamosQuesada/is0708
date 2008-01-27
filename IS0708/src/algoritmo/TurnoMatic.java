@@ -171,7 +171,7 @@ public class TurnoMatic {
 			avisarUsuario (cuadAux, e2, dia);
 	}
 	
-	/*
+	/**
 	 * Metodo para avisar al usuario de que no se ha podido generar un cuadrante con los fijos, rotatorios y disponibles.
 	 * El usuario deberá elegir entre modificar el horario manualmente, llamar a alguien de reserva, o contratar a alguien.
 	 * @param cuadAux el cuadrante con los fijos, rotatorios y disponibles ya incluidos.
@@ -200,8 +200,7 @@ public class TurnoMatic {
 			minHorasDia[i] = estruc.getCalendario().getMinHora(dia, i);
 		
 		//tam es el numero de horas en las que el departamento esta abierto
-		int tam=0;
-		int num=0;
+		int tam=0, num=0;
 		for (int i=0;i<24;i++){
 			num=estruc.getCalendario().getMinHora(dia, i);
 			if (num>0) tam++;
@@ -374,7 +373,7 @@ public class TurnoMatic {
 		return valido;
 	}
 	
-	/*
+	/**
 	 * Metodo para contar el numero de empleados que trabajan en 5min concretos indicados por el minuto de inicio 
 	 * @param lista Lista de trabajadores de un dia
 	 * @param min Minuto de inicio a comprobar
