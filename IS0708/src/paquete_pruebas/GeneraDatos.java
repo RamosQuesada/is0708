@@ -198,23 +198,8 @@ public class GeneraDatos {
 			idTurno=0;
 			Descripcion="genearcion de datos aleatorios";
 			HoraEntrada=new Time((int)((rnd.nextInt(9)+8)),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(60)));//es asi¿¿
-			//ha=HoraEntrada.getHours();
 			HoraSalida=new Time((int)(rnd.nextInt(4)+HoraEntrada.getHours()+4),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(60)));//hay que hacer un rango
-			//hb=HoraSalida.getHours();
-			//if (ha>hb) {
-				//while (ha>hb) {
-					//HoraSalida=new Time((int)(rnd.nextInt(25)),(int)(rnd.nextInt(61)),(int)(rnd.nextInt(61)));//hay que hacer un rango
-					//hb=HoraSalida.getHours();
-				//}
-			//}
 			HoraInicioDescanso=new Time((int)(((HoraSalida.getHours()-HoraEntrada.getHours())/2)+HoraEntrada.getHours()),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(60)));
-			/*hc=HoraInicioDescanso.getHours();
-			if ((hc<ha)||(hc>hb)) {
-				while ((hc<ha)||(hc>hb)) {
-					HoraInicioDescanso=new Time((int)(rnd.nextInt(25)),(int)(rnd.nextInt(61)),(int)(rnd.nextInt(61)));
-					hc=HoraInicioDescanso.getHours();
-				}
-			}*/
 			Duracion=(int)(rnd.nextInt(31));//media hora,mas no jejjej
 			turno=new Turno(idTurno,Descripcion,HoraEntrada,HoraSalida,HoraInicioDescanso,Duracion);
 			System.out.println("TURNOS");
@@ -305,6 +290,9 @@ public class GeneraDatos {
         	System.out.println("email: "+email);
         	System.out.println("password: "+password);
         	System.out.println("indicadorGrupo: "+indicadorGrupo);
+        	System.out.println("Fecha Nacimiento: "+fechaNac);
+        	System.out.println("Fecha Contrato: "+fechaContrato);
+        	System.out.println("Fecha Entrada: "+fechaEntrada);
         	System.out.println("horasExtras: "+horasExtras);
         	System.out.println("Felicidad: "+felicidad);
         	System.out.println("idioma: "+idioma);
