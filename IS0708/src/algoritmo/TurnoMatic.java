@@ -249,9 +249,9 @@ public class TurnoMatic {
 		int[] empleadosFranja=new int[div]; 
 		
 		//empleadoHoras guarda el numero de posibilidades que hay de que un empleado trabaje a cada de las divisiones de 5min
-		int[] empleadoHoras=new int[div]; 
+		int[] empleadoMin=new int[div]; 
 		for (int i=0;i<div;i++)
-			empleadoHoras[i]=0;
+			empleadoMin[i]=0;
 		
 		ArrayList<Turno> turnosEmpleado;
 		Turno turnoEmpl;
@@ -273,11 +273,11 @@ public class TurnoMatic {
 					for (int l=0;l<turnosEmpleado.size();l++) {
 						turnoEmpl=turnosEmpleado.get(l);
 						if (turnoEmpl.getHoraEntrada().getHours()<=i/12 && turnoEmpl.getHoraSalida().getHours()>i/12)
-							empleadoHoras[i]++;
+							empleadoMin[i]++;
 					}
 					/*si en algun turno el empleado puede trabajar a la hora j, se resta de empleadosFranja[j] 
 					indicando que al menos él puede trabajar a esa hora*/
-					if (empleadoHoras[i]>0)
+					if (empleadoMin[i]>0)
 						empleadosFranja[i]--;
 				}
 			}
@@ -285,7 +285,7 @@ public class TurnoMatic {
 		
 		int i=0;
 		
-		while (compruebaNumEmpleados && i<24) {
+		while (compruebaNumEmpleados && i<div) {
 			if (empleadosFranja[i]>0) compruebaNumEmpleados=false;
 			i++;
 		}
