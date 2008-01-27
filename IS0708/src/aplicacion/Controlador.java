@@ -58,15 +58,24 @@ public class Controlador {
 	private Vista _vista;
 	private Database _db;
 	private Empleado _empleadoActual;
-	private GregorianCalendar calendario;
-
+	private GregorianCalendar _calendario;
+	final boolean _modoDebug;
 	
-	public Controlador(Database baseDatos) {
-		this._db = baseDatos;
+	public Controlador(Database baseDatos, boolean modoDebug) {
+		_modoDebug = modoDebug;
+		_db = baseDatos;
 		// Crea calendario con la hora actual;
-		calendario = new GregorianCalendar();
+		_calendario = new GregorianCalendar();
 	}
 
+	/**
+	 * Devuelve si la aplicación se ha iniciado en modo debug.
+	 * @return <i>true</i> si la aplicación se ha iniciado en modo de corrección de errores
+	 */
+	public boolean getModoDebug() {
+		return _modoDebug;
+	}
+	
 	/**
 	 * Asigna el empleado que ha iniciado sesión.
 	 * 
@@ -98,9 +107,10 @@ public class Controlador {
 		this._vista = vista;
 	}
 
-	public Controlador(Vista vista, Database baseDatos) {
-		this._vista = vista;
-		this._db = baseDatos;
+	public Controlador(Vista vista, Database baseDatos, boolean modoDebug) {
+		_vista = vista;
+		_db = baseDatos;
+		_modoDebug = modoDebug;
 	}
 
 /******************************************************************************************
@@ -1063,8 +1073,8 @@ public class Controlador {
 	 * @return la fecha de tipo sql.Date
 	 */
 	public Date getFechaActual(){
-		calendario = new GregorianCalendar();
-		return new Date(calendario.getTime().getTime());
+		_calendario = new GregorianCalendar();
+		return new Date(_calendario.getTime().getTime());
 	}
 	/**
 	 * M�todo que inserta en la base de datos los valores correspondientes

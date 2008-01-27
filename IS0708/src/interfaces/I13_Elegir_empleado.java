@@ -32,7 +32,7 @@ public class I13_Elegir_empleado extends Thread {
 	public void run() {
 		// Esta búsqueda debería coger sólo un departamento, porque el número de 
 		// empleados puede ser demasiado grande.
-		empleadosIn = vista.getEmpleados(null, null, null, null, null, null, null);
+		empleadosIn = vista.getEmpleados(null, vista.getEmpleadoActual().getDepartamentoId(), null, null, null, null, null);
 		padre.getDisplay().asyncExec(new Runnable () {
 			public void run() {
 				if (!padre.isDisposed()) {

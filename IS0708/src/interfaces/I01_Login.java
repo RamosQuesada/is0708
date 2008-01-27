@@ -127,7 +127,8 @@ public class I01_Login extends Thread{
 								dialog.getDisplay().sleep();
 							}
 						}
-						dialog.setCursor(new Cursor(dialog.getDisplay(), SWT.CURSOR_ARROW));
+						if (!dialog.isDisposed())
+							dialog.setCursor(new Cursor(dialog.getDisplay(), SWT.CURSOR_ARROW));
 						dialog.dispose();
 					} catch (NumberFormatException exception) {
 						MessageBox messageBox = new MessageBox (dialog, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
