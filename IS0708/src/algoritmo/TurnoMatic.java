@@ -236,8 +236,13 @@ public class TurnoMatic {
 		  div equivale al numero de horas en las que el departamento esta abierto contabilizadas de 5 en 5min.*/
 		int div=tam*12;
 		
+		/*minMinutos es el array donde se guarca el minimo de cada division de 5min en las que el departamento esta abierto,
+		  es igual que minHora repetida cada posicion 12 veces (12 es el numero de divisiones de 1hora en 5min)*/
 		int[] minMinutos=new int[div];
-		
+		for (int i=0;i<tam;i++)
+			for (int k=0;k<12;k++) {
+				minMinutos[i*12+k]=minHoras[i];
+			}
 		
 		/*empleadosFranja permite conocer el numero de empleados necesarios cada 5min teniendo en 
 		cuenta que ya han sido incluidos los fijos y rotatorios en el cuadrante.*/
@@ -252,22 +257,22 @@ public class TurnoMatic {
 		Turno turnoEmpl;
 		/*comprueba si el numero de empleados fijos y rotatorios (ya incluidos en el cuadrante) 
 		es suficiente para cubrir las necesidades de los minimos*/ 
-		for (int i=0;i<24;i++) {
-			//min fijado para cada hora
-			empleadosFranja[i]=estruc.getCalendario().getMinHora(dia, i);
+		for (int i=0;i<div;i++) {
+			//min fijado para cada 5min
+			empleadosFranja[i]=minMinutos[i];
 			//comprueba si el numero de empleados del departamento es mayor que el minimo de cada franja.
 			if (empleadosFranja[i]<listaE.size()) 
 				compruebaNumEmpleados=false;
 			else {
-				//al minimo necesario se restan los empleados fijos y rotatorios ya incluidos en el cuadrante
-				empleadosFranja[i]=empleadosFranja[i]-contarEmpleadosHora(cuadAux[dia],i);
+				//al minimo necesario para cada 5min se restan los empleados fijos y rotatorios ya incluidos en el cuadrante
+				empleadosFranja[i]=empleadosFranja[i]-contarEmpleadosMin(cuadAux[dia],i/12,minHorasDia,dia);
 				//se resta cada empleado en cada una de las horas en las que hay posibilidad de que trabaje en cualquiera de sus turnos
 				for (int k=0;k<dispoDia.size();k++) {
 					empleado=dispoDia.get(k);	
 					turnosEmpleado=controlador.getListaTurnosContrato(empleado.getEmplId());
 					for (int l=0;l<turnosEmpleado.size();l++) {
 						turnoEmpl=turnosEmpleado.get(l);
-						if (turnoEmpl.getHoraEntrada().getHours()<=i && turnoEmpl.getHoraSalida().getHours()>i)
+						if (turnoEmpl.getHoraEntrada().getHours()<=i/12 && turnoEmpl.getHoraSalida().getHours()>i/12)
 							empleadoHoras[i]++;
 					}
 					/*si en algun turno el empleado puede trabajar a la hora j, se resta de empleadosFranja[j] 
@@ -383,6 +388,24 @@ public class TurnoMatic {
 		return valido;
 	}
 	
+	/*
+	 * Metodo para contar el numero de empleados que trabajan en 5min concretos indicados por el minuto de inicio 
+	 * @param lista la lista de trabajadores de un dia
+	 * @param min el minuto de inicio a comprobar
+	 */
+	private int contarEmpleadosMin (ArrayList<Trabaja> lista, int min, int[] minHorasDia,int dia) {
+		int h=min/12; //h nos permite utilizar el array minHoras, es la hora "en punto" a la que pertenece el minuto que buscamos
+		int m=min-h*12; //m es el minuto dentro de la hora h que buscamos
+		int hora=0;
+		int aux=0,aux2=0;
+		boolean enc=false;
+		while (aux<24 && !enc) {
+			if (minHorasDia[aux]>0) hora=aux+h;
+			aux++;
+		}
+		return contarEmpleadosHora(lista,dia,hora,m);
+	}
+	
 	/**
 	 * Metodo para contar el numero de empleados que trabajan a una hora concreta
 	 * @param lista la lista de trabajadores de un dia
@@ -391,7 +414,6 @@ public class TurnoMatic {
 	private int contarEmpleadosHora(ArrayList<Trabaja> lista, Date dia, int hora, int minuto){
 		int contador=0;
 		for(int i=0;i<lista.size();i++){
-					
 			int horaIni=lista.get(i).getFichIni().getHours();
 			int minIni=lista.get(i).getFichIni().getMinutes();
 			int horaFin=lista.get(i).getFichFin().getHours();
