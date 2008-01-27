@@ -38,7 +38,6 @@ public class TurnoMatic {
 	 * El arrayList turnos es de prueba
 	 */
 	public TurnoMatic(int m, int year, Controlador cont, String idDepartamento){
-		
 		/* Llamada a la base de datos para que nos
 		 * dé todos los empleados del departamento.
 		 */
@@ -139,10 +138,10 @@ public class TurnoMatic {
 				if (e.getContratoId()!=1 && e.getContratoId()!=2 && e.getRango()==1)
 					dispoDia.add(e);
 			}
-			
+	
 			colocaNoFijos(dispoDia, reserDia, emplDia, i, cu);//se colocan para cada dia i del mes
-		}		
-
+		}
+		
 		cuadrante.setCuad(cu);
 		//controlador.insertCuadrante(cuadrante);
 		return this.cuadrante;
@@ -155,23 +154,15 @@ public class TurnoMatic {
 	 * @param empl Lista de empleados que vienen del método ejecutaAlgoritmo
 	 */
 	private void colocaNoFijos (ArrayList<Empleado> dispo, ArrayList<Empleado> reser, ArrayList<Empleado> empl, int dia, ArrayList<Trabaja>[] cuadAux){
-		
 		//ordeno las 2 listas segun la felicidad de los empleados		
 		ArrayList<Empleado> e1=ordenarLista(dispo,1);
 		ArrayList<Empleado> e2=ordenarLista(reser,2);
 		
+		boolean hecho=false;
+		
 		/*hacemos unas comprobaciones básicas que permiten saber si, antes de ejecutar 
 		  el algoritmo de vuelta atrás, hay posibilidad de que se pueda generar un cuadrante.
 		  Si con estas primeras comprobaciones parece posible la generación, se ejecuta el algoritmo*/
-		boolean hecho=false;
-		
-		//metido indica si ya se ha incluido a un empleado de la lista de reserva en el cuadrante
-		boolean metido=false;
-		Empleado empAux;
-		ArrayList<Turno> turnosEmp;
-		
-		/*comprobaciones iniciales sin haber ejecutado el vuelta atrás para saber 
-		si hay posibilidad de encontrar solucion para el cuadrante*/
 		if (comprobaciones(cuadAux, e1, dia))
 			hecho=vueltaAtrasMarcaje(e1,e2,0,dia,cuadAux);
 		
@@ -213,8 +204,7 @@ public class TurnoMatic {
 		int num=0;
 		for (int i=0;i<24;i++){
 			num=estruc.getCalendario().getMinHora(dia, i);
-			if (num>0)
-				tam++;
+			if (num>0) tam++;
 		}
 		
 		/*minHoras es el array donde se guarda el minimo de cada hora en las que el departamento esta abierto,
@@ -240,9 +230,8 @@ public class TurnoMatic {
 		  es igual que minHora repetida cada posicion 12 veces (12 es el numero de divisiones de 1hora en 5min)*/
 		int[] minMinutos=new int[div];
 		for (int i=0;i<tam;i++)
-			for (int k=0;k<12;k++) {
+			for (int k=0;k<12;k++)
 				minMinutos[i*12+k]=minHoras[i];
-			}
 		
 		/*empleadosFranja permite conocer el numero de empleados necesarios cada 5min teniendo en 
 		cuenta que ya han sido incluidos los fijos y rotatorios en el cuadrante.*/
@@ -282,14 +271,11 @@ public class TurnoMatic {
 				}
 			}
 		}
-		
 		int i=0;
-		
 		while (compruebaNumEmpleados && i<div) {
 			if (empleadosFranja[i]>0) compruebaNumEmpleados=false;
 			i++;
 		}
-
 		return compruebaNumEmpleados;
 	}
 	
@@ -465,7 +451,6 @@ public class TurnoMatic {
 	 * El arrayList disp es solo para pruebas
 	 */
 	private void colocaFijos(int dia, ArrayList<Empleado> disp, int p, int q){
-		
 		ArrayList<Trabaja>[] cu = cuadrante.getCuad();
 		ArrayList<Empleado> disponibles;
 		ArrayList<Empleado> empleados;
@@ -505,13 +490,11 @@ public class TurnoMatic {
 				//comprobamos si tiene turno fijo
 				
 				//if(turno.getIdTurno() == 1){
-					
 					empleados.add(emp);
 					Time pr1 = new Time(19,49,00);
 					Time pr2 = new Time(19,49,00);
 					trab = new Trabaja(emp.getEmplId(),pr1,pr2,turno.getIdTurno());//tenemos que meterle el turno que le corresponda
 					cu[i].add(trab);
-						
 				//}				
 			}
 			listas[dia][i].setEmpleados(empleados);  
@@ -524,7 +507,6 @@ public class TurnoMatic {
 	 * Método de prueba que imprime el cuadrante
 	 */
 	public void imprimeCuadrante(){
-	 
 		System.out.println("Mes: "+cuadrante.getMes());
 		System.out.println("Año: "+cuadrante.getAnio());
 		System.out.println("Número de días: "+cuadrante.getNumDias());
@@ -542,13 +524,11 @@ public class TurnoMatic {
 				System.out.println("Turno "+j);
 				trab = trabajadores.get(j);
 				System.out.println("Empleado: " + trab.getIdEmpl());
-				
 			}
 		}	
 	}
 	
 	public void imprimeEstructura(){
-		
 		ArrayList<Empleado> emp;
 		ArrayList<Empleado> disp;
 		ArrayList<Empleado> reser;
@@ -556,7 +536,6 @@ public class TurnoMatic {
 		Empleado e;
 		
 		listas = estruc.getDias();
-		
 		
 		for(int i=0; i<listas.length; i++){
 			System.out.println("Dia: " + i);
@@ -570,7 +549,6 @@ public class TurnoMatic {
 					e = emp.get(k);
 					System.out.println(e.getEmplId());
 				}
-				
 			/*	System.out.println("Lista de empleados disponibles: ");
 				for(int k=0;k<disp.size();k++){
 					e=disp.get(k);
