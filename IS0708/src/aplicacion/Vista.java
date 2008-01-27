@@ -5,7 +5,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
@@ -105,6 +105,10 @@ public class Vista extends Thread {
 						if (emp.getPassword().compareTo(login.getPassword())==0) {
 							controlador.setEmpleadoActual(emp);
 							identificado = true;
+							// Configurar idioma al del empleado
+							l.cambiarLocale(controlador.getEmpleadoActual().getIdioma());
+							bundle = l.getBundle();
+							locale = l.getCurrentLocale();
 						}
 						else {
 							// Si el password no coincide
@@ -132,11 +136,6 @@ public class Vista extends Thread {
 			}
 		}
 	
-		if (identificado) {
-			l.cambiarLocale(controlador.getEmpleadoActual().getIdioma());
-			bundle = l.getBundle();
-			locale = l.getCurrentLocale();
-		}
 		// Si todavía no he cerrado el display, ya he hecho login correctamente
 		if (!shell.isDisposed()) {
 			i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);	
@@ -166,6 +165,38 @@ public class Vista extends Thread {
 	public Controlador getControlador() {
 		return controlador;
 	}
+	
+	/**
+	 * Muestra el cursor de reloj de arena
+	 */
+	public void setCursorEspera() {
+		shell.setCursor(new Cursor(display,SWT.CURSOR_WAIT));
+	}
+	
+	/**
+	 * Muestra el cursor normal
+	 */
+	public void setCursorFlecha() {
+		shell.setCursor(new Cursor(display,SWT.CURSOR_ARROW));
+	}
+	
+	/**
+	 * Devuelve si la aplicación se ha iniciado en modo debug
+	 * @return <i>true</i> si la aplicación se ha iniciado en modo de corrección de errores
+	 */
+	public boolean getModoDebug() {
+		return controlador.getModoDebug();
+	}
+	
+	/**
+	 * Muestra un mensaje de debug por consola.
+	 * @param nombreClase el nombre de la clase que emite el mensaje
+	 * @param mensaje el mensaje a mostrar
+	 */
+	public void infoDebug(String nombreClase, String mensaje) {
+		if (controlador.getModoDebug()) System.out.println("Debug :: [" + nombreClase + "]\n    " + mensaje);
+	}
+	
 	
 /*****************************************************************************************
  * Métodos relacionados con empleados

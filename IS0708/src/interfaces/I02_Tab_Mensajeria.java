@@ -33,6 +33,7 @@ public class I02_Tab_Mensajeria extends Thread{
 	private final ResourceBundle bundle;
 	private TabFolder tabFolder;
 	private ArrayList<Mensaje> mensajesEntrantes;
+	private ArrayList<String> remitentes; 
 	private Table tablaMensajes;
 	private final Image ico_mens, ico_mens_l;
 	// Los caracteres a previsualizar de un mensaje
@@ -41,6 +42,10 @@ public class I02_Tab_Mensajeria extends Thread{
 	final int prevAsuntoMens = 20;
 	// El número de mensajes a mostrar por hoja
 	final int num_men_hoja = 10;
+	// El primer mensaje a mostrar (aumenta al pinchar en "ver más")
+	private int primerMensaje = 0;
+	// Este argumento sirve para que el hilo se ejecute indefinidamente o solo una vez
+	// (para las llamadas puntuales de actualizar, siguientes y anteriores
 
 	public I02_Tab_Mensajeria (TabFolder tabFolder, Vista vista, ResourceBundle bundle) {
 		this.vista = vista;
@@ -53,50 +58,71 @@ public class I02_Tab_Mensajeria extends Thread{
 		crearTab();
 	}
 	
+	/**
+	 * Implementa un hilo que coge los mensajes del servidor.
+	 */
 	public void run() {
 		setName("I02 - Load messages");
 		boolean run = true;
 		while (run) {
 			if (tablaMensajes.isDisposed() || vista.getEmpleadoActual().getEmplId()==0) run = false;
 			else {
-				// Carga mensajes
-				mensajesEntrantes = vista.getMensajesEntrantes(vista.getEmpleadoActual().getEmplId(), 0, num_men_hoja);
-				// Carga remitentes
-				final ArrayList<String> remitentes = new ArrayList<String>();
-				for (int i = 0; i < mensajesEntrantes.size(); i++) {
-					remitentes.add(vista.getEmpleado(mensajesEntrantes.get(i).getRemitente()).getNombreCompleto());				
+				if (!tabFolder.isDisposed()) {
+					// Cargar mensajes
+					cargarMensajes();
+					// Actualizar tabla
+					tabFolder.getDisplay().asyncExec(new Runnable () {
+						public void run() {
+							mostrarMensajes();
+						} 
+					});
 				}
-				tabFolder.getDisplay().asyncExec(new Runnable () {
-					public void run() {
-						// Actualizar tabla
-						// TODO DE MOMENTO OBTENEMOS LOS 10 PRIMEROS MENSAJES,
-						// Falta un botón para ver los más antiguo
-						int i = 0;
-						tablaMensajes.removeAll();
-						while (i < mensajesEntrantes.size() && i < num_men_hoja) {
-							TableItem tItem = new TableItem(tablaMensajes, SWT.NONE);
-							//tItem.setImage(ico_mens);
-							tItem.setText(1, remitentes.get(i));
-							tItem.setText(2, Util.recortarTexto(mensajesEntrantes.get(i)
-									.getAsunto(), prevAsuntoMens));
-							tItem.setText(3, Util.recortarTexto(mensajesEntrantes.get(i)
-									.getTexto(), prevTextoMens));
-							tItem.setText(4, Util.dateAString(mensajesEntrantes.get(i)
-									.getFecha()));
-							i++;
-						}
-					} 
-				});
-				
 				try {
-					// TODO Espera 10 segundos (lo deberíamos subir)
-					sleep(10000);	
+					// TODO Espera 30 segundos (¿cómo lo dejamos?)
+					sleep(30000);					
 				} catch (Exception e) {}
 			}
 		}
 	}
+	
+	/**
+	 * Muestra los mensajes cargados en el interfaz.
+	 */
+	private void mostrarMensajes() {
+		tablaMensajes.removeAll();
+		int i = 0;
+		while (i < mensajesEntrantes.size() && i < num_men_hoja) {
+			TableItem tItem = new TableItem(tablaMensajes, SWT.NONE);
+			tItem.setImage(ico_mens);
+			tItem.setText(1, remitentes.get(i));
+			tItem.setText(2, Util.recortarTexto(mensajesEntrantes.get(i).getAsunto(), prevAsuntoMens));
+			tItem.setText(3, Util.recortarTexto(mensajesEntrantes.get(i).getTexto(), prevTextoMens));
+			tItem.setText(4, Util.dateAString(mensajesEntrantes.get(i).getFecha()));
+			i++;
+		}
+		tablaMensajes.setEnabled(true);
+	}
+	
+	/**
+	 * Carga los mensajes de la base de datos
+	 */
+	private void cargarMensajes() {
+		// Carga mensajes
+		
+		vista.infoDebug("I02_Tab_Mensajeria", "Cargando mensajes desde hilo I02 - Load messages");
+		mensajesEntrantes = vista.getMensajesEntrantes(vista.getEmpleadoActual().getEmplId(), primerMensaje, num_men_hoja);
+		// Carga remitentes
+		vista.infoDebug("I02_Tab_Mensajeria", "Cargando remitentes de los mensajes desde hilo I02 - Load messages");
+		remitentes = new ArrayList<String>();
+		// Añadir nombre remitentes a lista remitentes
+		for (int i = 0; i < mensajesEntrantes.size(); i++) {
+			remitentes.add(vista.getEmpleado(mensajesEntrantes.get(i).getRemitente()).getNombreCompleto());				
+		}
+		vista.infoDebug("I02_Tab_Mensajeria", "Acabado");
+	}
+	
 	public synchronized void crearTab() {
-
+		// Crear tab
 		TabItem tabItemMensajes = new TabItem(tabFolder, SWT.NONE);
 		tabItemMensajes.setText(bundle.getString("Mensajes"));
 		tabItemMensajes.setImage(ico_mens_l);
@@ -105,12 +131,13 @@ public class I02_Tab_Mensajeria extends Thread{
 		tabItemMensajes.setControl(cMensajes);
 		
 		cMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		cMensajes.setLayout(new GridLayout(4, true));
+		cMensajes.setLayout(new GridLayout(6, true));
 		
-		tablaMensajes = new Table(cMensajes,
-		SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
+		tablaMensajes = new Table(cMensajes,SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
 		tablaMensajes.setLinesVisible(true);
 		tablaMensajes.setHeaderVisible(true);
+
+		// Iniciar hilo de cargar mensajes
 		start();
 		tablaMensajes.addMouseListener(new MouseListener() {
 			public void mouseDoubleClick(MouseEvent e) {
@@ -123,6 +150,7 @@ public class I02_Tab_Mensajeria extends Thread{
 			public void mouseUp(MouseEvent e) {};
 			public void mouseDown(MouseEvent e) {};
 		});
+		
 		String[] titles = { " ", bundle.getString("I02_mens_De"),
 		bundle.getString("Asunto"), bundle.getString("Mensaje"),
 		bundle.getString("Fecha") };
@@ -132,8 +160,7 @@ public class I02_Tab_Mensajeria extends Thread{
 		}
 		
 		// table.setSize (table.computeSize (SWT.DEFAULT, 200));
-		tablaMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-		true, 4, 1));
+		tablaMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true, 6, 1));
 		tablaMensajes.addControlListener(new ControlListener() {
 			public void controlResized(ControlEvent e) {
 				// Configurar tamaño de las columnas 5 10 10 65 10
@@ -146,6 +173,8 @@ public class I02_Tab_Mensajeria extends Thread{
 			}
 			public void controlMoved(ControlEvent e) {};
 		});
+		
+		// Añadir botones
 		final Button bMensNuevo = new Button(cMensajes, SWT.PUSH);
 		bMensNuevo.setText(bundle.getString("Nuevo"));
 		bMensNuevo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
@@ -170,6 +199,43 @@ public class I02_Tab_Mensajeria extends Thread{
 		bMensMarcar.setText(bundle.getString("I02_but_Marcar"));
 		bMensMarcar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
 		1, 1));
+
+		final Button bMensAnteriores = new Button(cMensajes, SWT.PUSH);
+		bMensAnteriores.setText(bundle.getString("I02_but_Anteriores"));
+		bMensAnteriores.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
+		1, 1));
+
+		bMensAnteriores.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				desplazarVentanaMensajes(-num_men_hoja);
+			}
+		});
+
+		final Button bMensSiguientes = new Button(cMensajes, SWT.PUSH);
+		bMensSiguientes.setText(bundle.getString("I02_but_Siguientes"));
+		bMensSiguientes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
+		1, 1));
+
+		bMensSiguientes.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				desplazarVentanaMensajes(num_men_hoja);
+			}
+		});
 		
 	}
+	
+	/**
+	 * Desplaza la ventana (ámbito) de mensajes que estamos viendo
+	 * @param desp
+	 */
+	private void desplazarVentanaMensajes(int desp) {
+		tablaMensajes.setEnabled(false);
+		primerMensaje+=desp;
+		if (primerMensaje<0) primerMensaje=0;
+		vista.setCursorEspera();
+		cargarMensajes();
+		mostrarMensajes();
+		vista.setCursorFlecha();
+	}
+
 }

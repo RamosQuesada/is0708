@@ -26,6 +26,8 @@ import org.eclipse.swt.widgets.ColorDialog;
 import aplicacion.Util;
 import aplicacion.Vista;
 import aplicacion.Empleado;
+
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.sql.Date;
 
@@ -300,7 +302,9 @@ public class I08_1_Anadir_empleado {
 				}
 				// Si todo está bien, inserta el empleado
 				else {
-					Empleado emp = new Empleado(vista.getEmpleadoActual().getEmplId(), n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, 0, fechaContrato, fechaAlta, null, null, null, 0, cIdioma.getSelectionIndex());
+					ArrayList<String> departamentos = new ArrayList<String>();
+					departamentos.add(vista.getEmpleadoActual().getDepartamentoId());
+					Empleado emp = new Empleado(vista.getEmpleadoActual().getEmplId(), n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, 0, fechaContrato, fechaAlta, null, departamentos, null, 0, cIdioma.getSelectionIndex());
 					vista.insertEmpleado(emp);
 					shell.dispose();
 				}
