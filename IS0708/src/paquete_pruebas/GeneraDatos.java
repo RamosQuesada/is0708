@@ -34,9 +34,9 @@ public class GeneraDatos {
 		ArrayList<String> passwords=new ArrayList<String>();//aqui almacenamos tantas passwords como indique la variable valor
 		String password;
 		int indicadorGrupo; 
-		Date fechaNac=new Date(1970-01-01);
+		Date fechaNac=new Date(1975-01-01);
 		Date fechaContrato=new Date(1975-01-01);
-		Date fechaEntrada=new Date(1970-02-01);
+		Date fechaEntrada=new Date(1975-01-01);
 		int horasExtras;
 		int felicidad;
 		int idioma;
@@ -285,6 +285,9 @@ public class GeneraDatos {
 			email=id+"@turnomatic.es";
 			password=passwords.get((int)(rnd.nextInt(passwords.size())));
 			indicadorGrupo=(int)(rnd.nextInt(3));//¿¿que es??
+			fechaNac=new Date((int)(rnd.nextInt(2008))-(int)(rnd.nextInt(13))-(int)(rnd.nextInt(31)));//año,mes,dia lo suyo para los dias seria llamar a la funcion que hicimos que te decia el numero de dias de un mes dado
+			fechaContrato=new Date((int)(rnd.nextInt(1500))-(int)(rnd.nextInt(1500))-(int)(rnd.nextInt(1500)));
+			fechaEntrada=new Date((int)(rnd.nextInt(1500))-(int)(rnd.nextInt(1500))-(int)(rnd.nextInt(1500)));
 			horasExtras=(int)(rnd.nextInt(3));
 			felicidad=(int)(rnd.nextInt(3));//cuando sepamos los niveles de felicidad asi lo acotamos
 			idioma=(int)(rnd.nextInt(3));
