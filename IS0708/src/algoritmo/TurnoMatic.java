@@ -230,23 +230,26 @@ public class TurnoMatic {
 				}
 				j++;
 			}
-		}			
-		/*ahora tam es el numero de posiciones de los arrays que utilizaremos en esta funcion.
-		  tam equivale al numero de horas en las que el departamento esta abierto contabilizadas de 5 en 5min.*/
-		tam=tam*12;
+		}	
+		
+		/*div es el numero de posiciones de los arrays que utilizaremos en esta funcion.
+		  div equivale al numero de horas en las que el departamento esta abierto contabilizadas de 5 en 5min.*/
+		int div=tam*12;
+		
+		int[] minMinutos=new int[div];
+		
 		
 		/*empleadosFranja permite conocer el numero de empleados necesarios cada 5min teniendo en 
 		cuenta que ya han sido incluidos los fijos y rotatorios en el cuadrante.*/
-		int[] empleadosFranja=new int[tam]; 
+		int[] empleadosFranja=new int[div]; 
 		
 		//empleadoHoras guarda el numero de posibilidades que hay de que un empleado trabaje a cada de las divisiones de 5min
-		int[] empleadoHoras=new int[tam]; 
+		int[] empleadoHoras=new int[div]; 
+		for (int i=0;i<div;i++)
+			empleadoHoras[i]=0;
+		
 		ArrayList<Turno> turnosEmpleado;
 		Turno turnoEmpl;
-		
-		for (int j=0;j<tam;j++)
-			empleadoHoras[j]=0;
-		
 		/*comprueba si el numero de empleados fijos y rotatorios (ya incluidos en el cuadrante) 
 		es suficiente para cubrir las necesidades de los minimos*/ 
 		for (int i=0;i<24;i++) {
