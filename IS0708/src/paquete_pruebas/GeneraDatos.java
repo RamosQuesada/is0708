@@ -77,7 +77,7 @@ public class GeneraDatos {
 		
 		//comenzamos 
 		Database bd = new Database();
-		Controlador c=new Controlador(bd);
+		Controlador c=new Controlador(bd,false);
 		bd.run();
 		c.vaciarTodasTablas();//borramos las tablas
 		Random rnd=new Random(10);
@@ -199,7 +199,7 @@ public class GeneraDatos {
 			Descripcion="genearcion de datos aleatorios";
 			HoraEntrada=new Time((int)((rnd.nextInt(9)+8)),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(60)));//es asi¿¿
 			//ha=HoraEntrada.getHours();
-			HoraSalida=new Time((int)(rnd.nextInt(8)+HoraEntrada.getHours()),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(61)));//hay que hacer un rango
+			HoraSalida=new Time((int)(rnd.nextInt(4)+HoraEntrada.getHours()+4),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(61)));//hay que hacer un rango
 			//hb=HoraSalida.getHours();
 			//if (ha>hb) {
 				//while (ha>hb) {
@@ -207,7 +207,7 @@ public class GeneraDatos {
 					//hb=HoraSalida.getHours();
 				//}
 			//}
-			HoraInicioDescanso=new Time((int)(rnd.nextInt(4)+HoraEntrada.getHours()),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(60)));
+			HoraInicioDescanso=new Time((int)((HoraEntrada.getHours()-HoraEntrada.getHours())/2),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(60)));
 			/*hc=HoraInicioDescanso.getHours();
 			if ((hc<ha)||(hc>hb)) {
 				while ((hc<ha)||(hc>hb)) {
