@@ -10,8 +10,9 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
 
 import aplicacion.Empleado;
-import aplicacion.Posicion;
 import aplicacion.Util;
+
+import paquete_pruebas.GeneraDatos;
 
 import java.util.ResourceBundle;
 import java.util.Locale;
@@ -600,12 +601,9 @@ public class I02_Principal {
 		tabItemAdminInicio.setControl(cInicio);
 
 		Image _fondo_turnomatic;
-		_fondo_turnomatic = new Image(display, I02_Principal.class
-				.getResourceAsStream("admin_fondo.jpg"));
+		_fondo_turnomatic = new Image(display, I02_Principal.class.getResourceAsStream("admin_fondo.jpg"));
 
-		cInicio
-				.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,
-						1));
+		cInicio.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,1));
 		// Le añadimos un layout
 		GridLayout lInicio = new GridLayout();
 		lInicio.numColumns = 2;
@@ -613,13 +611,22 @@ public class I02_Principal {
 
 		final Label bienvenido = new Label(cInicio, SWT.None);
 		bienvenido.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, true,
-				1, 1));
+				2, 1));
 		bienvenido.setText("BIENVENIDO A TURNOMATIC");
 
-		// ImageData imagedata = _fondo_turnomatic.getImageData().scaledTo(320,
-		// 240);
-		// _fondo_turnomatic = new Image(display, imagedata);
+		final Label lReset= new Label(cInicio, SWT.None);
+		lReset.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, true, false,1, 1));
+		lReset.setText("Pincha este botón para reiniciar la base de datos");
 
+		final Button resetBD = new Button(cInicio, SWT.PUSH);
+		resetBD.setLayoutData(new GridData(SWT.CENTER, SWT.BOTTOM, true, false,1, 1));
+		resetBD.setText("RESET BD");
+		resetBD.addSelectionListener(new SelectionListener(){
+			public void widgetDefaultSelected(SelectionEvent arg0) {}
+			public void widgetSelected(SelectionEvent arg0) {
+				GeneraDatos.reset();
+			}
+		});
 		cInicio.setBackgroundImage(_fondo_turnomatic);
 	}
 

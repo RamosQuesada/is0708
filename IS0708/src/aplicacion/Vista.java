@@ -67,6 +67,7 @@ public class Vista extends Thread {
 	public Vista (Controlador controlador, Database db) {			
 		this.controlador = controlador;
 		this.db = db;
+		controlador.setVista(this);
 
 		// Creación del display y el shell
 		display = new Display ();
@@ -241,6 +242,11 @@ public class Vista extends Thread {
 	public boolean insertEmpleado(Empleado empleado) {
 		setProgreso("Insertando empleado", 50);
 		boolean b = controlador.insertEmpleado(empleado);
+		int i = 0;
+		while (i<empleado.getDepartamentosId().size() && b) {
+			b = controlador.insertDepartamentoUsuario(empleado.getEmplId(), empleado.getDepartamentoId(i));
+			i++;
+		}
 		if (b)
 			setProgreso("Empleado insertado",100);
 		else 

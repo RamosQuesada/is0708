@@ -166,7 +166,11 @@ public class I08_1_Anadir_empleado {
 		cContrato.setItems (new String [] {"6:40", "Dias sueltos"});
 		cExperiencia.setItems (new String [] {	bundle.getString("Principiante"),
 												bundle.getString("Experto")});
-		cDepto.setItems (new String [] {"Cocina", "Baño"});
+		
+		ArrayList<String> departamentos = vista.getEmpleadoActual().getDepartamentosId();
+		for (int i=0; i<departamentos.size(); i++) {
+			cDepto.add(departamentos.get(i));
+		}
 		cSexo.select(0);
 		cContrato.select(0);
 		cExperiencia.select(0);
@@ -302,9 +306,7 @@ public class I08_1_Anadir_empleado {
 				}
 				// Si todo está bien, inserta el empleado
 				else {
-					ArrayList<String> departamentos = new ArrayList<String>();
-					departamentos.add(vista.getEmpleadoActual().getDepartamentoId());
-					Empleado emp = new Empleado(vista.getEmpleadoActual().getEmplId(), n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, 0, fechaContrato, fechaAlta, null, departamentos, null, 0, cIdioma.getSelectionIndex());
+					Empleado emp = new Empleado(vista.getEmpleadoActual().getEmplId(), n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, 0, fechaContrato, fechaAlta, null, cDepto.getText(), null, 0, cIdioma.getSelectionIndex());
 					vista.insertEmpleado(emp);
 					shell.dispose();
 				}

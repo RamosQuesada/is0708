@@ -15,10 +15,14 @@ import java.util.Random;
 
 public class GeneraDatos {
 
+	// Os he quitado el main y he puesto un botón en la aplicación que resetea la base de datos.
+	// También he añadido el departamento al jefe.
+	// Dani
+	
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void reset() {
 		////////////////////////////////////////////////
 		//atributos de usuario
 		////////////////////////////////////////////////
@@ -157,7 +161,7 @@ public class GeneraDatos {
 	
 		//crear el jefe de departamento
 		c.insertUsuario(12345678,"jefe","","",fechaNac,0,"Juanfran@ajandemore.es","boss",0,fechaContrato,fechaEntrada,0,0,0,0,contrato.getNumeroContrato(),turno.getIdTurno());
-		
+		c.insertDepartamentoUsuario(12345678, "prueba");
 		
 		//creamos un nuevo departamento
 		c.insertDepartamentoPruebas("prueba",12345678);//se supone que el jefe será el que acabamos de crear

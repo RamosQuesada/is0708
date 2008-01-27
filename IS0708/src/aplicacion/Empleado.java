@@ -221,7 +221,7 @@ public class Empleado implements Drawable {
 	 * @param fContrato		fecha en que el empleado empieza a aparecer en los cuadrantes de este departamento
 	 * @param fAlta			fecha en que el empleado empieza a trabajar en la empresa
 	 * @param idSubordinados
-	 * @param idDepartamentos
+	 * @param idDepartamento
 	 * @param felicidad		Grado de satisfaccion de un usuario con su horario
 	 * @param idioma 		Idioma de la aplicacion para el usuario
 	 * 
@@ -229,7 +229,7 @@ public class Empleado implements Drawable {
 	public Empleado (Integer idSuperior, int idEmpl, String nombre, String apellido1,
 			String apellido2, Date fechaNac, int sexo, String email, String password,
 			int grupo, int rango, int contrato, Date fContrato, Date fAlta, Color color,
-			ArrayList<String> idDepartamentos, ArrayList<Integer> idSubordinados,int felicidad, int idioma) {
+			String idDepartamento, ArrayList<Integer> idSubordinados,int felicidad, int idioma) {
 		if (idSuperior==null) this.idSuperior=0;
 		else setIdSuperior(idSuperior);
 		setEmplId(idEmpl);
@@ -247,7 +247,8 @@ public class Empleado implements Drawable {
 		this.fContrato	= fContrato;
 		this.fAlta		= fAlta;
 		this.idSubordinados = idSubordinados;
-		this.idDepartamentos = idDepartamentos;
+		idDepartamentos = new ArrayList<String>();
+		idDepartamentos.add(idDepartamento);
 		superior = null;
 		//felicidad = 0;//se recupera de la bd muxas veces luego es la felicidad que tenga
 		subordinados	= new ArrayList<Empleado>();
@@ -658,6 +659,14 @@ public class Empleado implements Drawable {
 	}
 
 	/**
+	 * Asigna un arrayList de IDs de departamentos a un empleado.
+	 * @param departamentos
+	 */
+	public void setIDDepartamentos(ArrayList<String> departamentos) {
+		this.idDepartamentos = departamentos;
+	}
+	
+	/**
 	 * Devuelve los departamentos a los que pertenece el empleado.
 	 * @return la lista de departamentos del usuario
 	 */
@@ -687,13 +696,22 @@ public class Empleado implements Drawable {
 	}
 	
 	/**
+	 * Devuelve el identificador de su departamento número i
+	 * @param i el departamento a coger, 0 es el principal
+	 * @return el identificador del departamento
+	 */
+	public String getDepartamentoId(int i) {
+		return idDepartamentos.get(i);
+	}
+	
+	/**
 	 * Devuelve el identificador de su departamento principal
-	 * @return el identificador
+	 * @return el identificador del departamento
 	 */
 	public String getDepartamentoId() {
 		return idDepartamentos.get(0);
 	}
-	
+
 	/**
 	 * Añade/asigna un departamento a un usuario y actualiza su rango.
 	 * @param c el controlador de la aplicación
