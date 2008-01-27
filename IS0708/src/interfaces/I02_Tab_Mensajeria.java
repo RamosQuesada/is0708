@@ -9,12 +9,13 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -22,8 +23,6 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.TabFolder;
 import java.util.ResourceBundle;
 
-
-import aplicacion.Empleado;
 import aplicacion.Mensaje;
 import aplicacion.Util;
 import aplicacion.Vista;
@@ -35,6 +34,7 @@ public class I02_Tab_Mensajeria extends Thread{
 	private ArrayList<Mensaje> mensajesEntrantes;
 	private ArrayList<String> remitentes; 
 	private Table tablaMensajes;
+	private Label lMensajes;
 	private final Image ico_mens, ico_mens_l;
 	// Los caracteres a previsualizar de un mensaje
 	final int prevTextoMens = 50; 
@@ -47,6 +47,8 @@ public class I02_Tab_Mensajeria extends Thread{
 	// Este argumento sirve para que el hilo se ejecute indefinidamente o solo una vez
 	// (para las llamadas puntuales de actualizar, siguientes y anteriores
 
+	private Button bMensAnteriores,bMensSiguientes,bActualizar;
+	
 	public I02_Tab_Mensajeria (TabFolder tabFolder, Vista vista, ResourceBundle bundle) {
 		this.vista = vista;
 		this.bundle = bundle;
@@ -61,7 +63,7 @@ public class I02_Tab_Mensajeria extends Thread{
 	/**
 	 * Implementa un hilo que coge los mensajes del servidor.
 	 */
-	public void run() {
+	public synchronized void run() {
 		setName("I02 - Load messages");
 		boolean run = true;
 		while (run) {
@@ -78,8 +80,8 @@ public class I02_Tab_Mensajeria extends Thread{
 					});
 				}
 				try {
-					// TODO Espera 30 segundos (¿cómo lo dejamos?)
-					sleep(30000);					
+					// TODO Espera 10 segundos (¿cómo lo dejamos?)
+					wait(10000);
 				} catch (Exception e) {}
 			}
 		}
@@ -100,7 +102,13 @@ public class I02_Tab_Mensajeria extends Thread{
 			tItem.setText(4, Util.dateAString(mensajesEntrantes.get(i).getFecha()));
 			i++;
 		}
+		lMensajes.setText(bundle.getString("I02_lab_MostrandoMensajes1") + " " + String.valueOf(primerMensaje+1) + " " + 
+				bundle.getString("I02_lab_MostrandoMensajes2") + " " + String.valueOf(primerMensaje+num_men_hoja));
 		tablaMensajes.setEnabled(true);
+		tablaMensajes.setCursor(new Cursor(tablaMensajes.getDisplay(), SWT.CURSOR_ARROW));
+		bMensSiguientes.setEnabled(true);
+		bMensAnteriores.setEnabled(true);
+		bActualizar.setEnabled(true);
 	}
 	
 	/**
@@ -108,7 +116,6 @@ public class I02_Tab_Mensajeria extends Thread{
 	 */
 	private void cargarMensajes() {
 		// Carga mensajes
-		
 		vista.infoDebug("I02_Tab_Mensajeria", "Cargando mensajes desde hilo I02 - Load messages");
 		mensajesEntrantes = vista.getMensajesEntrantes(vista.getEmpleadoActual().getEmplId(), primerMensaje, num_men_hoja);
 		// Carga remitentes
@@ -131,9 +138,14 @@ public class I02_Tab_Mensajeria extends Thread{
 		tabItemMensajes.setControl(cMensajes);
 		
 		cMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		cMensajes.setLayout(new GridLayout(6, true));
+		cMensajes.setLayout(new GridLayout(7, true));
+		
+		lMensajes = new Label(cMensajes,SWT.NONE);
+		lMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,false, 7, 1));
+		lMensajes.setText(bundle.getString("I02_lab_CargandoMensajes"));
 		
 		tablaMensajes = new Table(cMensajes,SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
+		tablaMensajes.setEnabled(false);
 		tablaMensajes.setLinesVisible(true);
 		tablaMensajes.setHeaderVisible(true);
 
@@ -160,7 +172,7 @@ public class I02_Tab_Mensajeria extends Thread{
 		}
 		
 		// table.setSize (table.computeSize (SWT.DEFAULT, 200));
-		tablaMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true, 6, 1));
+		tablaMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true, 7, 1));
 		tablaMensajes.addControlListener(new ControlListener() {
 			public void controlResized(ControlEvent e) {
 				// Configurar tamaño de las columnas 5 10 10 65 10
@@ -200,7 +212,7 @@ public class I02_Tab_Mensajeria extends Thread{
 		bMensMarcar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
 		1, 1));
 
-		final Button bMensAnteriores = new Button(cMensajes, SWT.PUSH);
+		bMensAnteriores = new Button(cMensajes, SWT.PUSH);
 		bMensAnteriores.setText(bundle.getString("I02_but_Anteriores"));
 		bMensAnteriores.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
 		1, 1));
@@ -211,7 +223,7 @@ public class I02_Tab_Mensajeria extends Thread{
 			}
 		});
 
-		final Button bMensSiguientes = new Button(cMensajes, SWT.PUSH);
+		bMensSiguientes = new Button(cMensajes, SWT.PUSH);
 		bMensSiguientes.setText(bundle.getString("I02_but_Siguientes"));
 		bMensSiguientes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
 		1, 1));
@@ -221,21 +233,34 @@ public class I02_Tab_Mensajeria extends Thread{
 				desplazarVentanaMensajes(num_men_hoja);
 			}
 		});
-		
+
+		bActualizar = new Button(cMensajes, SWT.PUSH);
+		bActualizar.setText(bundle.getString("Actualizar"));
+		bActualizar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
+		1, 1));
+
+		bActualizar.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				desplazarVentanaMensajes(0);
+			}
+		});
 	}
 	
 	/**
 	 * Desplaza la ventana (ámbito) de mensajes que estamos viendo
 	 * @param desp
 	 */
-	private void desplazarVentanaMensajes(int desp) {
+	private synchronized void desplazarVentanaMensajes(int desp) {
+		lMensajes.setText(bundle.getString("I02_lab_CargandoMensajes"));
+		tablaMensajes.removeAll();
 		tablaMensajes.setEnabled(false);
 		primerMensaje+=desp;
+		bMensSiguientes.setEnabled(false);
+		bMensAnteriores.setEnabled(false);
+		bActualizar.setEnabled(false);
 		if (primerMensaje<0) primerMensaje=0;
-		vista.setCursorEspera();
-		cargarMensajes();
-		mostrarMensajes();
-		vista.setCursorFlecha();
+		tablaMensajes.setCursor(new Cursor(tablaMensajes.getDisplay(), SWT.CURSOR_WAIT));
+		notify();
 	}
 
 }
