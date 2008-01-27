@@ -32,9 +32,9 @@ public class TurnoMatic {
 	/**
 	 * Constructora del algoritmo, se encarga de crear la estructura
 	 * el cuadrante y recibe el controlador del programa
-	 * @param m mes para el cual se realiza el cuadrante
-	 * @param year año al que pertenece el mes
-	 * @param cont controlador de la aplicacion
+	 * @param m Mes para el cual se realiza el cuadrante
+	 * @param year Año al que pertenece el mes
+	 * @param cont Controlador de la aplicacion
 	 * El arrayList turnos es de prueba
 	 */
 	public TurnoMatic(int m, int year, Controlador cont, String idDepartamento){
@@ -54,9 +54,9 @@ public class TurnoMatic {
 	/**
 	 * Método que devuelve el cuadrante de ese mes
 	 * @param mes Mes para el cual se quiere realizar el cuadrante
-	 * @param anio Año al que pertenece el mes.
+	 * @param anio Año al que pertenece el mes
 	 * @return cuadrante Cuadrante resultante de aplicar el algoritmo
-	 * El arrayList disp es solo para pruebas.
+	 * El arrayList disp es solo para pruebas
 	 */
 	public Cuadrante ejecutaAlgoritmo(){	
 		//Colocamos a los empleados correspondientes a cada día
@@ -149,7 +149,7 @@ public class TurnoMatic {
 	}
 	
 	/**
-	 * Método para colocar los empleados no fijos con el algoritmo vuelta-atrás
+	 * Método para colocar los empleados no fijos con el algoritmo vuelta atrás
 	 * @param dispo Lista de empleados disponibles que vienen del método ejecutaAlgoritmo
 	 * @param reser Lista de empleados de reserva que vienen del método ejecutaAlgoritmo
 	 * @param empl Lista de empleados que vienen del método ejecutaAlgoritmo
@@ -175,27 +175,27 @@ public class TurnoMatic {
 		if (comprobaciones(cuadAux, e1, dia))
 			hecho=vueltaAtrasMarcaje(e1,e2,0,dia,cuadAux);
 		
-		//no ha habido solucion con los disponibles, es necesario meter algun empleado en reserva 
-		if (!hecho) {
-			//haciendola
-			//ArrayList<Time> listaFranjasIncompletas=franjasIncompletas(cuadAux);
-			for (int i=0;i<reser.size()&&!metido;i++) {
-				empAux=reser.get(i);
-				turnosEmp=controlador.getListaTurnosContrato(empAux.getEmplId());
-				int j=0;
-				while (turnosEmp.size()>0) {			
-					
-				}
-			}
-				
-		}
+		//no ha habido solucion con los disponibles, avisamos al usuario del problema surgido
+		if (!hecho) 
+			avisarUsuario (cuadAux, e2, dia);
+	}
+	
+	/*
+	 * Metodo para avisar al usuario de que no se ha podido generar un cuadrante con los fijos, rotatorios y disponibles.
+	 * El usuario deberá elegir entre modificar el horario manualmente, llamar a alguien de reserva, o contratar a alguien.
+	 * @param cuadAux el cuadrante con los fijos, rotatorios y disponibles ya incluidos.
+	 * @param reserDia es el ArrayList de los empleados que no trabajan el día para el que se genera el cuadrante
+	 * @param dia es el dia para el que se esta generando el cuadrante.
+	 */
+	private void avisarUsuario (ArrayList<Trabaja>[] cuadAux, ArrayList<Empleado> reserDia, int dia){
+		
 	}
 	
 	/**
-	 * Metodo para comprobar, sin ejecutar ningún algoritmo, si es posible generar un cuadrante con los empleados de que se dispone.
-	 * @param cuadrante el cuadrante con los fijos y rotatorios ya incluidos.
-	 * @param lista es el ArrayList de empleados que trabajan el dia para el que se genera el cuadrante 
-	 * @param dia es el dia para el que se esta generando el cuadrante
+	 * Metodo para comprobar, sin ejecutar ningún algoritmo, si es posible generar un cuadrante con los empleados de que se dispone
+	 * @param cuadAux Cuadrante con los fijos y rotatorios ya incluidos
+	 * @param dispoDia ArrayList de empleados que trabajan el dia para el que se genera el cuadrante 
+	 * @param dia Dia para el que se esta generando el cuadrante
 	 */
 	private boolean comprobaciones (ArrayList<Trabaja>[]cuadAux, ArrayList<Empleado> dispoDia, int dia) {
 		Empleado empleado;
@@ -294,9 +294,9 @@ public class TurnoMatic {
 	}
 	
 	/**
-	 * Metodo para ordenar los ArrayList por orden de felicidad y convertirlas en array.
-	 * @param lista es el ArrayList de empleados para ordenar y convertir en Array
-	 * @param criterio es el criterio de ordenacion: 1 = de menor a mayor, 2= de mayor a menor
+	 * Metodo para ordenar los ArrayList por orden de felicidad y convertirlas en array
+	 * @param lista ArrayList de empleados para ordenar y convertir en Array
+	 * @param criterio Criterio de ordenacion: 1 = de menor a mayor, 2= de mayor a menor
 	 */
 	private ArrayList<Empleado> ordenarLista(ArrayList<Empleado> lista,int criterio) {
 		Empleado[] e1=new Empleado[lista.size()];
@@ -335,8 +335,8 @@ public class TurnoMatic {
 	 * el departamento
 	 * @param dispo Lista de empleados disponibles
 	 * @param reser Lista de empleados de reserva
-	 * @param k parametro para la recursion
-	 * @param dia es el dia para el que estamos trabajando
+	 * @param k Parametro para la recursion
+	 * @param dia Dia para el que estamos generando el cuadrante
 	 */
 	private boolean vueltaAtrasMarcaje (ArrayList<Empleado> dispo, ArrayList<Empleado> reser, int k, int dia, ArrayList<Trabaja>[] cuadAux){
 		/*fHoraria es un ArrayList con todos los turnos en los que puede trabajar el empleado situado en la 
@@ -364,9 +364,9 @@ public class TurnoMatic {
 
 	/**
 	 * Metodo para comprobar que todas las franjas horarias de un dia cumplen los requisito de personal
-	 * @param cuadDia es el cuadrante
-	 * @param dia es el dia en el que queremos hacer la comprobacion
-	 * @param fHoraria es la lista de franjas que se divide un dia
+	 * @param cuadDia Cuadrante
+	 * @param dia Dia en el que queremos hacer la comprobacion
+	 * @param fHoraria Lista de franjas en que se divide un dia
 	 */
 	private boolean comprobarFranjasCompletas(ArrayList<Trabaja>[] cuadAux,int dia, ArrayList<Time> fHoraria){
 		boolean valido=true;
@@ -390,8 +390,8 @@ public class TurnoMatic {
 	
 	/*
 	 * Metodo para contar el numero de empleados que trabajan en 5min concretos indicados por el minuto de inicio 
-	 * @param lista la lista de trabajadores de un dia
-	 * @param min el minuto de inicio a comprobar
+	 * @param lista Lista de trabajadores de un dia
+	 * @param min Minuto de inicio a comprobar
 	 */
 	private int contarEmpleadosMin (ArrayList<Trabaja> lista, int min, int[] minHorasDia,int dia) {
 		int h=min/12; //h nos permite utilizar el array minHoras, es la hora "en punto" a la que pertenece el minuto que buscamos
@@ -408,8 +408,8 @@ public class TurnoMatic {
 	
 	/**
 	 * Metodo para contar el numero de empleados que trabajan a una hora concreta
-	 * @param lista la lista de trabajadores de un dia
-	 * @param hora la hora a comprobar
+	 * @param lista Lista de trabajadores de un dia
+	 * @param hora Hora a comprobar
 	 */
 	private int contarEmpleadosHora(ArrayList<Trabaja> lista, Date dia, int hora, int minuto){
 		int contador=0;
@@ -433,8 +433,8 @@ public class TurnoMatic {
 	
 	/**
 	 * Metodo para eliminar un empleado de una cuadrante de un cuadrante de un dia
-	 * @param e el empleado a eliminar del cuadrante
-	 * @param dia el cuadrante de tal dia
+	 * @param e Empleado a eliminar del cuadrante
+	 * @param dia Dia para el que estamos generando el cuadrante
 	 */
 	private void quitarEmpleado (Empleado e, ArrayList<Trabaja> cuadDia){
 		boolean enc=false;
@@ -449,10 +449,10 @@ public class TurnoMatic {
 	
 	/**
 	 * Metodo para poner un empleado en un cuadrante de un dia
-	 * @param e el empleado a colocar
-	 * @param ini el inicio de su turno de trabajo
-	 * @param fin el fin de su turno de trabajo
-	 * @param dia el dia de su turno d trabajo
+	 * @param e Cmpleado a colocar
+	 * @param ini Inicio de su turno de trabajo
+	 * @param fin Fin de su turno de trabajo
+	 * @param dia Dia de su turno d trabajo
 	 */
 	private void ponerEmpleado (Empleado e, Time ini, Time fin, ArrayList<Trabaja> cuadDia){
 		Trabaja trabaja = new Trabaja(e.getEmplId(),ini,fin,e.getTurnoActual().getIdTurno());
