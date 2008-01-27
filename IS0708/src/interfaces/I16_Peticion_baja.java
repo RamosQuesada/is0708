@@ -134,8 +134,8 @@ public class I16_Peticion_baja {
 		bAceptar.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 		bAceptar.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				System.out.println("Fecha inicio"+iFechaInicio);
-				System.out.println("Fecha fin"+iFechaFin);
+		//		System.out.println("Fecha inicio"+iFechaInicio);
+		//		System.out.println("Fecha fin"+iFechaFin);
 				if(iFechaFin.before(iFechaInicio)){
 					MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
 					messageBox.setText (_bundle.getString("Mensaje"));

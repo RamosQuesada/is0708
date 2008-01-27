@@ -273,7 +273,7 @@ public class I02_cuadrEmpl {
 	}
 	
 	public void actualizaFecha(Date fecha){
-		//System.out.println("FECHA:"+Util.dateAString(fecha));
+		
 		this.fecha=fecha;
 		lCuadranteTitulo.setText(Util.dateAString(fecha));
 		this.cuadrante.actualizarFecha(fecha,gc2);

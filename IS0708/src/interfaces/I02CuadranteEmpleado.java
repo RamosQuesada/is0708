@@ -248,13 +248,13 @@ public class I02CuadranteEmpleado {
 		//calendario.setFirstDayOfWeek(calendario.MONDAY);
 		//calendario.set(fecha.getYear(),fecha.getMonth(),fecha.getDate());
 		//calendario.setGregorianChange(fecha);
-		System.out.println("pruebasel" +Util.dateAString(fecha));
+	//	System.out.println("pruebasel" +Util.dateAString(fecha));
 		
 
 		calendario.set(GregorianCalendar.DAY_OF_MONTH, fecha.getDate());
 		calendario.set(GregorianCalendar.MONTH, fecha.getMonth());
 		calendario.set(GregorianCalendar.YEAR, fecha.getYear());
-		System.out.println(calendario.get(GregorianCalendar.DAY_OF_WEEK));
+//		System.out.println(calendario.get(GregorianCalendar.DAY_OF_WEEK));
 		int numDias=0;
 		while(calendario.get(GregorianCalendar.DAY_OF_WEEK)!=6){
 			calendario.add(Calendar.DATE, -1);
@@ -270,7 +270,7 @@ public class I02CuadranteEmpleado {
 					calendario.get(GregorianCalendar.DATE)+cont)
 				));
 
-			System.out.println("FECHA REAL:"+fecha);
+		//	System.out.println("FECHA REAL:"+fecha);
 			//System.out.println(Util.dateAString(fecha));
 			int turno = this.vista.getControlador().getTurnoEmpleadoDia(fecha, this.empleado.getEmplId());
 			
@@ -280,9 +280,9 @@ public class I02CuadranteEmpleado {
 			Float horaSalidaFloat=0.0f;
 			Float horaDescansoFloat = 0.0f;
 			Float finHoraDescansoFloat = 0.0f;
-			if(turno==0){System.out.println("vacio");}
+		//	if(turno==0){System.out.println("vacio");}
 			if(turno!=0){
-				System.out.println("turno no vacio");
+			//	System.out.println("turno no vacio");
 				int actual=0;
 				
 				while (turno!=tiposTurno.get(actual).getIdTurno())actual++;
@@ -481,13 +481,13 @@ public class I02CuadranteEmpleado {
 			float tamanoy= tamanoFila/3;
 			
 			if (tamanox<tamanoy){
-				System.out.println("1");
-				System.out.println(tamanoy-tamanox);
+	//			System.out.println("1");
+	//			System.out.println(tamanoy-tamanox);
 				tamano = (int)(tamanox);
 				}
 			else{
-				System.out.println("2");
-				System.out.println(tamanox-tamanoy);
+	//			System.out.println("2");
+	//			System.out.println(tamanox-tamanoy);
 				tamano= (int)tamanoy;
 			}
 			
