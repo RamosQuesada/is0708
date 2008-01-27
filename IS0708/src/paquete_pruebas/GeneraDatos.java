@@ -199,7 +199,7 @@ public class GeneraDatos {
 			Descripcion="genearcion de datos aleatorios";
 			HoraEntrada=new Time((int)((rnd.nextInt(9)+8)),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(60)));//es asi¿¿
 			//ha=HoraEntrada.getHours();
-			HoraSalida=new Time((int)(rnd.nextInt(4)+HoraEntrada.getHours()+4),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(61)));//hay que hacer un rango
+			HoraSalida=new Time((int)(rnd.nextInt(4)+HoraEntrada.getHours()+4),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(60)));//hay que hacer un rango
 			//hb=HoraSalida.getHours();
 			//if (ha>hb) {
 				//while (ha>hb) {
