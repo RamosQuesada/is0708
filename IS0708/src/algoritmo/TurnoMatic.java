@@ -203,6 +203,11 @@ public class TurnoMatic {
 		empleados superior al numero de empleados de que disponemos.*/  
 		boolean compruebaNumEmpleados=true;
 		
+		//minHorasDia es el array de los minimos para cada hora del departamento
+		int[] minHorasDia = new int[24];
+		for (int i=0;i<24;i++)
+			minHorasDia[i] = estruc.getCalendario().getMinHora(dia, i);
+		
 		//tam es el numero de horas en las que el departamento esta abierto
 		int tam=0;
 		int num=0;
@@ -211,6 +216,21 @@ public class TurnoMatic {
 			if (num>0)
 				tam++;
 		}
+		
+		/*minHoras es el array donde se guarda el minimo de cada hora en las que el departamento esta abierto,
+		  es igual que minHorasDia suprimiendo las horas para las que min=0*/
+		int[] minHoras=new int[tam];
+		int j=0;
+		for (int i=0;i<tam;i++){
+			boolean enc=false;
+			while (j<24 && !enc) {
+				if (minHorasDia[j]>0) {
+					minHoras[i]=minHorasDia[j];
+					enc=true;
+				}
+				j++;
+			}
+		}			
 		/*ahora tam es el numero de posiciones de los arrays que utilizaremos en esta funcion.
 		  tam equivale al numero de horas en las que el departamento esta abierto contabilizadas de 5 en 5min.*/
 		tam=tam*12;
@@ -219,12 +239,12 @@ public class TurnoMatic {
 		cuenta que ya han sido incluidos los fijos y rotatorios en el cuadrante.*/
 		int[] empleadosFranja=new int[tam]; 
 		
-		//empleadoHoras guarda el numero de posibilidades que hay de que un empleado trabaje a cada una de las horas
-		int[] empleadoHoras=new int[24]; 
+		//empleadoHoras guarda el numero de posibilidades que hay de que un empleado trabaje a cada de las divisiones de 5min
+		int[] empleadoHoras=new int[tam]; 
 		ArrayList<Turno> turnosEmpleado;
 		Turno turnoEmpl;
 		
-		for (int j=0;j<24;j++)
+		for (int j=0;j<tam;j++)
 			empleadoHoras[j]=0;
 		
 		/*comprueba si el numero de empleados fijos y rotatorios (ya incluidos en el cuadrante) 
