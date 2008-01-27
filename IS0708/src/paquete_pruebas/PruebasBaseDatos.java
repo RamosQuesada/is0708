@@ -2,7 +2,6 @@ package paquete_pruebas;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.ArrayList;
 import java.util.*;
 
 import algoritmo.Calendario;
@@ -11,6 +10,7 @@ import algoritmo.Trabaja;
 import aplicacion.Contrato;
 import aplicacion.Controlador;
 import aplicacion.Database;
+import aplicacion.Mensaje;
 import aplicacion.Turno;
 
 
@@ -29,8 +29,12 @@ public class PruebasBaseDatos {
 		Time t1= new Time(0);
 		Database db = new Database();
 		db.abrirConexion();
-		db.insertarTrabaja(12345678, 1, "1970-3-12", t1, t1);
-		Controlador c = new Controlador(db);
+		Controlador c = new Controlador(db, true);
+		
+		ArrayList<Mensaje> misMensajes = c.getMensajesEntrantes(12345678, 0, 30);
+		
+		//db.insertarTrabaja(12345678, 1, "1970-3-12", t1, t1);
+		
 		//java.sql.Date d = new java.sql.Date(0);
 		Turno t = c.getObjetoTurnoEmpleadoDia(Date.valueOf("1970-03-12"), 12345678);
 		System.out.print(t.getIdTurno()+ "  ");
