@@ -374,10 +374,11 @@ public class TurnoMatic {
 			Time timeFin=fHoraria.get(i+1);
 			int horaIni=timeIni.getHours();
 			int horaFin=timeFin.getHours()+1;
+			Date fecha=new Date(anio, mes, dia);
 			//bucle que recorre todas las horas de una franja
 			for (int j=horaIni;j<=horaFin;j++){
 				for (int min=0;min<60;min++){
-					if (estruc.getCalendario().getMinHora(dia,j)>contarEmpleadosHora(cuadAux[dia],j)){
+					if (estruc.getCalendario().getMinHora(dia,j)>contarEmpleadosHora(cuadAux[dia],fecha,j,min)){
 						valido=false;
 					}	
 				}				
@@ -401,7 +402,8 @@ public class TurnoMatic {
 			if (minHorasDia[aux]>0) hora=aux+h;
 			aux++;
 		}
-		return contarEmpleadosHora(lista,dia,hora,m);
+		Date fecha=new Date(anio, mes, dia);
+		return contarEmpleadosHora(lista,fecha,hora,m);
 	}
 	
 	/**
@@ -411,20 +413,24 @@ public class TurnoMatic {
 	 */
 	private int contarEmpleadosHora(ArrayList<Trabaja> lista, Date dia, int hora, int minuto){
 		int contador=0;
+		int momento=hora*60+minuto;
+		
 		for(int i=0;i<lista.size();i++){
-			int horaIni=lista.get(i).getFichIni().getHours();
-			int minIni=lista.get(i).getFichIni().getMinutes();
-			int horaFin=lista.get(i).getFichFin().getHours();
-			int minFin=lista.get(i).getFichFin().getMinutes();
+			
+			
+			int minIni=lista.get(i).getFichIni().getMinutes()+(lista.get(i).getFichIni().getHours()*60);
+			int minFin=lista.get(i).getFichFin().getMinutes()+(lista.get(i).getFichFin().getHours()*60);
 			
 			//el metodo controlador.getTurnoEmpleadoDia DEBERIA devolver un TURNO en lugar de un INT
-			int horaDescanso=(controlador.getTurnoEmpleadoDia(dia, lista.get(i).getIdEmpl())).getHoraDescanso().getHours();
+			Turno t=controlador.getObjetoTurnoEmpleadoDia(dia, lista.get(i).getIdEmpl());
+			int minIniDescanso=(t.getHoraDescanso().getHours()*60)+t.getHoraDescanso().getMinutes();
+			int minFinDescanso=minIniDescanso+t.getTDescanso();
+			
 			
 			//comprobar si en ese minuto esta currando y no esta descansando
-			if ((horaIni<=hora)&&(horaFin>hora)){
+			if (((minIni<=momento)&&(minFin>momento))&&((minIniDescanso>momento)||(minFinDescanso<momento))){
 				contador++;
 			}
-			else {if 
 		}
 		return contador;
 	}
