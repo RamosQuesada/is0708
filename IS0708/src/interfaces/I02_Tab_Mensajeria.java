@@ -10,6 +10,8 @@ import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -73,11 +75,13 @@ public class I02_Tab_Mensajeria extends Thread{
 					// Cargar mensajes
 					cargarMensajes();
 					// Actualizar tabla
-					tabFolder.getDisplay().asyncExec(new Runnable () {
-						public void run() {
+					if (!tabFolder.isDisposed()) {
+						tabFolder.getDisplay().asyncExec(new Runnable () {
+							public void run() {
 							mostrarMensajes();
 						} 
-					});
+						});
+					}
 				}
 				try {
 					// TODO Espera 10 segundos (¿cómo lo dejamos?)
@@ -93,10 +97,27 @@ public class I02_Tab_Mensajeria extends Thread{
 	private void mostrarMensajes() {
 		tablaMensajes.removeAll();
 		int i = 0;
+		// Crear una fuente cursiva y otra negrita
+		FontData[] fd = tablaMensajes.getFont().getFontData();
+		fd[0].setStyle(SWT.ITALIC);
+		Font fCursiva = new Font(tablaMensajes.getDisplay(),fd);
+		fd[0].setStyle(SWT.BOLD);
+		Font fNegrita = new Font(tablaMensajes.getDisplay(),fd);
+		
 		while (i < mensajesEntrantes.size() && i < num_men_hoja) {
 			TableItem tItem = new TableItem(tablaMensajes, SWT.NONE);
-			tItem.setImage(ico_mens);
+			System.out.println("mensaje marcado: " + mensajesEntrantes.get(i).isMarcado());
+			if (mensajesEntrantes.get(i).isMarcado())
+				tItem.setFont(fNegrita);
+//TODO mostrar mensajes leídos o no leídos
+//			if (mensajesEntrantes.get(i).isLeído()) {
+//				tItem.setFont(fCursiva);
+//				tItem.setImage(ico_mens_l);
+//			}	
+//			else 
+//				tItem.setImage(ico_mens);
 			tItem.setText(1, remitentes.get(i));
+			
 			tItem.setText(2, Util.recortarTexto(mensajesEntrantes.get(i).getAsunto(), prevAsuntoMens));
 			tItem.setText(3, Util.recortarTexto(mensajesEntrantes.get(i).getTexto(), prevTextoMens));
 			tItem.setText(4, Util.dateAString(mensajesEntrantes.get(i).getFecha()));
@@ -212,6 +233,15 @@ public class I02_Tab_Mensajeria extends Thread{
 		bMensMarcar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
 		1, 1));
 
+		bMensMarcar.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				if (tablaMensajes.getSelectionIndex()>=0) {
+					vista.marcarMensaje(mensajesEntrantes.get(tablaMensajes.getSelectionIndex()));
+					desplazarVentanaMensajes(0);
+				}
+			}
+		});
+		
 		bMensAnteriores = new Button(cMensajes, SWT.PUSH);
 		bMensAnteriores.setText(bundle.getString("I02_but_Anteriores"));
 		bMensAnteriores.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,

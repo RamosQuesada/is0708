@@ -53,15 +53,17 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 					// Cargar mensajes
 					cargarEmpleados();
 					// Actualizar tabla
-					tablaEmpleados.getDisplay().asyncExec(new Runnable () {
-						public void run() {
-							mostrarEmpleados();
-						} 
-					});
+					if (!tablaEmpleados.isDisposed()) {
+						tablaEmpleados.getDisplay().asyncExec(new Runnable () {
+							public void run() {
+								mostrarEmpleados();
+							}
+						});
+					}
 				}
 				try {
-					// TODO Espera 30 segundos (¿cómo lo dejamos?)
-					sleep(30000);					
+					// TODO Espera 1 minuto (¿cómo lo dejamos?)
+					sleep(60000);					
 				} catch (Exception e) {}
 			}
 		}

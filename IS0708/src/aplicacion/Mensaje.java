@@ -9,13 +9,14 @@ import java.sql.Date;
  */
 public class Mensaje {
 	
-	private int idmensaje;
+	private int idMensaje;
 	private int remitente;
 	//TODO El destinatario hay que cambiarlo a un array de destinatarios
 	private int destinatario;
 	private Date fecha;
 	private String asunto;
 	private String texto;
+	private boolean marcado;
 	
 	/**
 	 * Constructor de la clase con campos
@@ -25,12 +26,14 @@ public class Mensaje {
 	 * @param asunto
 	 * @param texto
 	 */
-	public Mensaje(int remitente, int destinatario, Date fecha, String asunto, String texto) {
+	public Mensaje(int idMensaje, int remitente, int destinatario, Date fecha, String asunto, String texto, boolean marcado) {
+		this.idMensaje = idMensaje;
 		this.destinatario = destinatario;
 		this.remitente = remitente;
 		this.fecha = fecha;
 		this.asunto = asunto;
 		this.texto = texto;
+		this.marcado = marcado;
 	}
 	
 	public int getDestinatario() {
@@ -60,11 +63,11 @@ public class Mensaje {
 	}
 	
 	public int getIdmensaje() {
-		return idmensaje;
+		return idMensaje;
 	}
 	
 	public void setIdmensaje(int idmensaje) {
-		this.idmensaje = idmensaje;
+		this.idMensaje = idmensaje;
 	}
 	
 	public int getRemitente() {
@@ -82,5 +85,14 @@ public class Mensaje {
 	public void setTexto(String texto) {
 		this.texto = texto;
 	}
+
+	public boolean isMarcado() {
+		return marcado;
+	}
+
+	public void setMarcado(boolean marcado) {
+		this.marcado = marcado;
+	}
+	
 	
 }

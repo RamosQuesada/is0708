@@ -109,6 +109,8 @@ public class I14_Escribir_mensaje {
 			bAceptar.setText(_bundle.getString("Enviar"));
 		else
 			bAceptar.setText(_bundle.getString("Cerrar"));
+		bAceptar.setFocus();
+		
 		bAceptar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		if (mensaje==null) {
 			final Button bCancelar = new Button(cAceptarCancelar, SWT.PUSH);
