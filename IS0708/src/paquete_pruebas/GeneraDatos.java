@@ -9,6 +9,7 @@ import aplicacion.Empleado;
 import aplicacion.Turno;
 import aplicacion.Contrato;
 import aplicacion.Departamento;
+import aplicacion.Util;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -164,16 +165,16 @@ public class GeneraDatos {
 		c.insertDepartamentoUsuario(12345678, "prueba");
 		
 		//creamos un nuevo departamento
-		c.insertDepartamentoPruebas("prueba",12345678);//se supone que el jefe será el que acabamos de crear
+	    c.insertDepartamentoPruebas("prueba",12345678);//se supone que el jefe será el que acabamos de crear
 		
 		//he comentado lo anterior porque no se si solo tenemos que generar un departamento o mas de un departamento
 
 		//creamos la distribucion
-		for (int i=1; i<=7; i++)
-			for (int j=9; j<23; j++)
+		for (int i=1; i<=7; i++) {
+			for (int j=9; j<23; j++) {
 				c.insertDistribucion(j, i, "1e1p", 5, 3, "prueba");
-				
-		
+			}	
+		}
 		/*for (int i = 0; i < valor ; i++) {
 	        	hora = (int)(rnd.nextInt(25));//con esto generamos numeros entre 0 y 24, siempre se pone limite +1
 	        	diaSemana=(int)(rnd.nextInt(8));//generamos numeros entre 0 y 7
@@ -197,7 +198,7 @@ public class GeneraDatos {
 		
 		//rellenar los turnos
 		
-		int ha,hb,hc;
+		int ha,hb,hc,hd,he,hf,hg,hh;
 		for (int i = 0; i < valor ; i++) {
 			idTurno=0;
 			Descripcion="genearcion de datos aleatorios";
@@ -274,9 +275,16 @@ public class GeneraDatos {
 			email=id+"@turnomatic.es";
 			password=passwords.get((int)(rnd.nextInt(passwords.size())));
 			indicadorGrupo=(int)(rnd.nextInt(3));//¿¿que es??
-			fechaNac=new Date((int)(rnd.nextInt(2008))-(int)(rnd.nextInt(13))-(int)(rnd.nextInt(31)));//año,mes,dia lo suyo para los dias seria llamar a la funcion que hicimos que te decia el numero de dias de un mes dado
-			fechaContrato=new Date((int)(rnd.nextInt(1500))-(int)(rnd.nextInt(1500))-(int)(rnd.nextInt(1500)));
-			fechaEntrada=new Date((int)(rnd.nextInt(1500))-(int)(rnd.nextInt(1500))-(int)(rnd.nextInt(1500)));
+			hh=(int)rnd.nextInt(50);
+			ha=1992-hh;
+			hb=2008-((int)rnd.nextInt(2008-ha));
+			hc=2008-((int)rnd.nextInt(2008-hb));
+			hd=(int) rnd.nextInt(13);
+			he=(int) rnd.nextInt(13);
+			hf=(int) rnd.nextInt(13);
+			fechaNac=new Date(ha-1900,hd,Util.dameDias(hd, ha));//año,mes,dia lo suyo para los dias seria llamar a la funcion que hicimos que te decia el numero de dias de un mes dado
+			fechaContrato=new Date(hb-1900,he,Util.dameDias(he,hb));
+			fechaEntrada=new Date(hc-1900,hf,Util.dameDias(hf,hc));
 			horasExtras=(int)(rnd.nextInt(3));
 			felicidad=(int)(rnd.nextInt(3));//cuando sepamos los niveles de felicidad asi lo acotamos
 			idioma=(int)(rnd.nextInt(3));
