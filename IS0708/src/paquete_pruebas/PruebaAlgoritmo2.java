@@ -17,7 +17,7 @@ public class PruebaAlgoritmo2 {
 						
 		Database prueba = new Database();
 		prueba.abrirConexion();
-		Controlador c = new Controlador(prueba);
+		Controlador c = new Controlador(prueba, true);
 		
 		TurnoMatic alg = new TurnoMatic(12,2007,c,"prueba");
 		alg.ejecutaAlgoritmo();
