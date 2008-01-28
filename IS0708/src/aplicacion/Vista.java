@@ -311,6 +311,14 @@ public class Vista extends Thread {
 		return controlador.getMensajesSalientes(idEmpl, a, b);
 	}
 
+	/**
+	 * Marca un mensaje
+	 * @param mensaje el mensaje a marcar
+	 * @return
+	 */
+	public boolean marcarMensaje(Mensaje mensaje) {
+		return controlador.marcarMensaje(mensaje);
+	}
 /*****************************************************************************************
  * Otros métodos
  */

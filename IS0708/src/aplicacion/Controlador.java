@@ -668,9 +668,9 @@ public class Controlador {
 				r.beforeFirst();
 
 				while (r.next()) {
-					Mensaje m = new Mensaje(r.getInt("Remitente"), idEmpl, r
-							.getDate("Fecha"), r.getString("Asunto"), r
-							.getString("Texto"));
+					Mensaje m = new Mensaje(r.getInt("IdMensaje"), r.getInt("Remitente"), idEmpl,
+							r.getDate("Fecha"), r.getString("Asunto"),
+							r.getString("Texto"), r.getBoolean("Marcado"));
 					temp.add(m);
 				}
 			}
@@ -701,10 +701,12 @@ public class Controlador {
 			if (mensajes!=null) {
 				while (mensajes.next()) {
 					Mensaje m = new Mensaje(
+							mensajes.getInt("IdMensaje"),
 							mensajes.getInt("Remitente"), idEmpl,
-							mensajes.getDate("Fecha"), mensajes
-									.getString("Asunto"), mensajes
-									.getString("Texto"));				
+							mensajes.getDate("Fecha"),
+							mensajes.getString("Asunto"),
+							mensajes.getString("Texto"),
+							mensajes.getBoolean("Marcado"));				
 						misMensajes.add(m);
 				}
 			}
