@@ -85,13 +85,14 @@ public class GeneraDatos {
 		Controlador c=new Controlador(bd,false);
 		bd.run();
 		//c.vaciarTodasTablas();//borramos las tablas
-		c.vaciarTabla("TURNOS");//VACIAMOS SOLO LAS TABLAS QUE RELLENAMOS
+		c.vaciarTabla("TURNOS");//VACIAMOS SOLO LAS TABLAS QUE RELLENAMOS Y LAS QUE VAN "LIGADAS"
 		c.vaciarTabla("CONTRATO");
 		c.vaciarTabla("ListaTurnosPorContrato");
 		c.vaciarTabla("USUARIO");
 		c.vaciarTabla("MENSAJE");
+		c.vaciarTabla("VENTAS");
 		Random rnd=new Random(10);
-		int valor=15; //Esta variable nos valdra para saber cuantos datos tenemos que generar
+		//int valor=15; //Esta variable nos valdra para saber cuantos datos tenemos que generar
 		int numero_de_contratos=15;
 		int numero_de_turnos=15;
 		int numero_de_turnos_contrato=15;
@@ -266,10 +267,10 @@ public class GeneraDatos {
         	System.out.println();
         	c.insertTurnoPorContrato(idTurno, idContrato);
         	//despues de esta llamada la base de datos tiene que actualizar patron,duracion ciclo,
-        	Contrato ct=c.getContrato(idContrato);
-        	int dias_trabaja1=(int)(rnd.nextInt(7))+1;//acotamos entre 1 y 7
-        	String pat=ct.getPatron()+"/"+dias_trabaja1+":"+idTurno;//debemos añadir al opcion de meter mas un turno o que descansa
-        	int dur_ciclo=ct.getDuracionCiclo()+dias_trabaja1;//Actulizamos la duracion del ciclo
+        	//Contrato ct=c.getContrato(idContrato);
+        	//int dias_trabaja1=(int)(rnd.nextInt(7))+1;//acotamos entre 1 y 7
+        	//String pat=ct.getPatron()+"/"+dias_trabaja1+":"+idTurno;//debemos añadir al opcion de meter mas un turno o que descansa
+        	//int dur_ciclo=ct.getDuracionCiclo()+dias_trabaja1;//Actulizamos la duracion del ciclo
         	//llamar a la base de datos con un metodo que se le meta (patron,duracion ciclo,idContrato)
 		}
 		//insertar usuarios en departamento
