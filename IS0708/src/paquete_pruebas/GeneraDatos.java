@@ -84,10 +84,17 @@ public class GeneraDatos {
 		Database bd = new Database();
 		Controlador c=new Controlador(bd,false);
 		bd.run();
-		c.vaciarTodasTablas();//borramos las tablas
+		//c.vaciarTodasTablas();//borramos las tablas
+		c.vaciarTabla("TURNOS");//VACIAMOS SOLO LAS TABLAS QUE RELLENAMOS
+		c.vaciarTabla("CONTRATO");
+		c.vaciarTabla("ListaTurnosPorContrato");
+		c.vaciarTabla("USUARIO");
 		Random rnd=new Random(10);
 		int valor=15; //Esta variable nos valdra para saber cuantos datos tenemos que generar
-		
+		int numero_de_contratos=15;
+		int numero_de_turnos=15;
+		int numero_de_turnos_contrato=15;
+		int numero_usuarios=15;
 		//insercion de nombres, apellidos y passwords en ArrayList manualmente
 		///////////////////////////////////////////////////////////
 		nombres.add("Carlos");
@@ -199,7 +206,7 @@ public class GeneraDatos {
 		//rellenar los turnos
 		
 		int ha,hb,hc,hd,he,hf,hg,hh;
-		for (int i = 0; i < valor ; i++) {
+		for (int i = 0; i < numero_de_turnos ; i++) {
 			idTurno=0;
 			Descripcion="genearcion de datos aleatorios";
 			HoraEntrada=new Time((int)((rnd.nextInt(9)+8)),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(60)));//es asi¿¿
@@ -220,14 +227,13 @@ public class GeneraDatos {
 		}
 		
 		//rellenar contrato
-		for (int i = 0; i < valor ; i++) {
+		for (int i = 0; i < numero_de_contratos ; i++) {
 			
 			turnoInicial=c.getIdsTurnos().get((int)(rnd.nextInt(c.getIdsTurnos().size())));
 			nombre="aleatorio"+i;//creamos otro arraylist para los nombres de los contratos??
-			int aux=(int)(rnd.nextInt(4));
-			int aux1=(int)(rnd.nextInt(4));
-			patron=aux+"T"+ aux1+"D"; 
-			duracionCiclo=aux+aux1;
+			int aux=(int)(rnd.nextInt(8));
+			patron=aux+"/"+turnoInicial; //  aux/turnoInicial
+			duracionCiclo=aux;
 			salario=(int)(rnd.nextInt(1500));
 			tipoContrato=(int)(rnd.nextInt(4))+1;//acotamos entre 1 y 4 segun me han comentado
 			contrato=new Contrato(nombre,0,turnoInicial,duracionCiclo,patron,salario,tipoContrato);
@@ -246,7 +252,7 @@ public class GeneraDatos {
 			idContrato = c.insertContrato(contrato);
 		}
 		//rellenar turnosPorContrato
-		for (int i = 0; i < valor ; i++) {
+		for (int i = 0; i < numero_de_turnos_contrato ; i++) {
 			
 			idContrato=c.getIdsContratos().get((int)(rnd.nextInt(c.getIdsContratos().size())));//selecciono contrato al azar
 			idTurno=c.getIdsTurnos().get((int)(rnd.nextInt(c.getIdsTurnos().size())));//selecciono turno al azar
@@ -266,7 +272,7 @@ public class GeneraDatos {
 			System.out.println("Id de usuarios: "+ids.get(i));
 		}
 		//rellenamos los usuarios
-		for (int i = 0; i < valor ; i++) {
+		for (int i = 0; i < numero_usuarios ; i++) {
 			id=ids.get(i);//se supone que tiene que tener 8 cifras creo
 			nombre=nombres.get((int)(rnd.nextInt(nombres.size())));
 			apellido1=apellidos.get((int)(rnd.nextInt(apellidos.size())));
