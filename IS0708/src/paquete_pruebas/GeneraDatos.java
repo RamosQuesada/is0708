@@ -168,7 +168,7 @@ public class GeneraDatos {
 		contrato=new Contrato("jefe",0,1,7,"5T2D",1200,0); //no hace falta
 	
 		//crear el jefe de departamento
-		c.insertUsuario(12345678,"jefe","","",fechaNac,0,"Juanfran@ajandemore.es","boss",0,fechaContrato,fechaEntrada,0,0,0,0,contrato.getNumeroContrato(),turno.getIdTurno());
+		c.insertUsuario(12345678,"jefe","","",fechaNac,0,"Juanfran@ajandemore.es","boss",0,fechaContrato,fechaEntrada,0,0,0,2,contrato.getNumeroContrato(),turno.getIdTurno());
 		c.insertDepartamentoUsuario(12345678, "prueba");
 		
 		//creamos un nuevo departamento
@@ -207,7 +207,7 @@ public class GeneraDatos {
 		
 		int ha,hb,hc,hd,he,hf,hg,hh;
 		for (int i = 0; i < numero_de_turnos ; i++) {
-			idTurno=0;
+			idTurno=0;//la base de datos genera automaticamente la id del turno
 			Descripcion="genearcion de datos aleatorios";
 			HoraEntrada=new Time((int)((rnd.nextInt(9)+8)),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(60)));//es asi¿¿
 			HoraSalida=new Time((int)(rnd.nextInt(4)+HoraEntrada.getHours()+4),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(60)));//hay que hacer un rango
@@ -231,9 +231,9 @@ public class GeneraDatos {
 			
 			turnoInicial=c.getIdsTurnos().get((int)(rnd.nextInt(c.getIdsTurnos().size())));
 			nombre="aleatorio"+i;//creamos otro arraylist para los nombres de los contratos??
-			int aux=(int)(rnd.nextInt(8));
-			patron=aux+"/"+turnoInicial; //  aux/turnoInicial
-			duracionCiclo=aux;
+			int dias_trabaja=(int)(rnd.nextInt(7))+1;//acotamos entre 1 y 7
+			patron=dias_trabaja+":"+turnoInicial; //  dias_trabaja/turnoInicial, falta añadir que descanse aleatoriamente
+			duracionCiclo=dias_trabaja;
 			salario=(int)(rnd.nextInt(1500));
 			tipoContrato=(int)(rnd.nextInt(4))+1;//acotamos entre 1 y 4 segun me han comentado
 			contrato=new Contrato(nombre,0,turnoInicial,duracionCiclo,patron,salario,tipoContrato);
@@ -264,9 +264,15 @@ public class GeneraDatos {
           	System.out.println("//////////////////////////");
         	System.out.println();
         	c.insertTurnoPorContrato(idTurno, idContrato);
+        	//despues de esta llamada la base de datos tiene que actualizar patron,duracion ciclo,
+        	Contrato ct=c.getContrato(idContrato);
+        	int dias_trabaja1=(int)(rnd.nextInt(7))+1;//acotamos entre 1 y 7
+        	String pat=ct.getPatron()+"/"+dias_trabaja1+":"+idTurno;//debemos añadir al opcion de meter mas un turno o que descansa
+        	int dur_ciclo=ct.getDuracionCiclo()+dias_trabaja1;//Actulizamos la duracion del ciclo
+        	//llamar a la base de datos con un metodo que se le meta (patron,duracion ciclo,idContrato)
 		}
 		//insertar usuarios en departamento
-		for (int i = 0; i < valor ; i++) {
+		for (int i = 0; i < numero_usuarios ; i++) {
 			ids.add((int)(rnd.nextInt(39999999)));//añado los id de los usuarios al arraylist
 			c.insertDepartamentoUsuario(ids.get(i),"prueba");
 			System.out.println("Id de usuarios: "+ids.get(i));
@@ -294,7 +300,7 @@ public class GeneraDatos {
 			horasExtras=(int)(rnd.nextInt(3));
 			felicidad=(int)(rnd.nextInt(3));//cuando sepamos los niveles de felicidad asi lo acotamos
 			idioma=(int)(rnd.nextInt(3));
-			rango=(int)(rnd.nextInt(3));//¿¿??VIENE EN CLASE EMPLEADO
+			rango=1;//rango de empleado
 			idContrato=c.getIdsContratos().get((int)(rnd.nextInt(c.getIdsContratos().size())));
 			System.out.println("idContrato: "+idContrato);
 			System.out.println("Longitud el arrayList: "+c.getTurnosDeUnContrato(idContrato).size());
