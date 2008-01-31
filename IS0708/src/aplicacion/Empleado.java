@@ -1008,7 +1008,7 @@ public class Empleado implements Drawable {
 		{
 			tiempo = "";
 			tipo = "";
-			while (p.charAt(i) != '/')
+			while (p.charAt(i) != ':')
 			{
 				tiempo = tiempo + p.charAt(i); 
 				i++;
