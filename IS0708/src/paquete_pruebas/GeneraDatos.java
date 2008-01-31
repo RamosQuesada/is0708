@@ -89,6 +89,7 @@ public class GeneraDatos {
 		c.vaciarTabla("CONTRATO");
 		c.vaciarTabla("ListaTurnosPorContrato");
 		c.vaciarTabla("USUARIO");
+		c.vaciarTabla("MENSAJE");
 		Random rnd=new Random(10);
 		int valor=15; //Esta variable nos valdra para saber cuantos datos tenemos que generar
 		int numero_de_contratos=15;
