@@ -84,13 +84,15 @@ public class GeneraDatos {
 		Database bd = new Database();
 		Controlador c=new Controlador(bd,false);
 		bd.run();
-		//c.vaciarTodasTablas();//borramos las tablas
-		c.vaciarTabla("TURNOS");//VACIAMOS SOLO LAS TABLAS QUE RELLENAMOS Y LAS QUE VAN "LIGADAS"
+		c.vaciarTodasTablas();//borramos las tablas
+		/*c.vaciarTabla("TURNOS");//VACIAMOS SOLO LAS TABLAS QUE RELLENAMOS Y LAS QUE VAN "LIGADAS"
 		c.vaciarTabla("CONTRATO");
+		c.vaciarTabla("DISTRIBUCION");
+		c.vaciarTabla("DEPARTAMENTO");
 		c.vaciarTabla("ListaTurnosPorContrato");
 		c.vaciarTabla("USUARIO");
 		c.vaciarTabla("MENSAJE");
-		c.vaciarTabla("VENTAS");
+		c.vaciarTabla("VENTAS");*/
 		Random rnd=new Random(10);
 		//int valor=15; //Esta variable nos valdra para saber cuantos datos tenemos que generar
 		int numero_de_contratos=15;
@@ -179,6 +181,7 @@ public class GeneraDatos {
 		//he comentado lo anterior porque no se si solo tenemos que generar un departamento o mas de un departamento
 
 		//creamos la distribucion
+	    System.out.println("INSERTAMOS DISTRIBUCION")
 		for (int i=1; i<=7; i++) {
 			for (int j=9; j<23; j++) {
 				c.insertDistribucion(j, i, "1e1p", 5, 3, "prueba");
