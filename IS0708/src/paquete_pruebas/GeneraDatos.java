@@ -294,7 +294,7 @@ public class GeneraDatos {
 			horasExtras=(int)(rnd.nextInt(3));
 			felicidad=(int)(rnd.nextInt(3));//cuando sepamos los niveles de felicidad asi lo acotamos
 			idioma=(int)(rnd.nextInt(3));
-			rango=(int)(rnd.nextInt(3));//¿¿??
+			rango=(int)(rnd.nextInt(3));//¿¿??VIENE EN CLASE EMPLEADO
 			idContrato=c.getIdsContratos().get((int)(rnd.nextInt(c.getIdsContratos().size())));
 			System.out.println("idContrato: "+idContrato);
 			System.out.println("Longitud el arrayList: "+c.getTurnosDeUnContrato(idContrato).size());
