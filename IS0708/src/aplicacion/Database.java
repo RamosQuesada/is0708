@@ -1236,6 +1236,17 @@ public class Database extends Thread {
 		return true;
 	}
 	
+	/**
+	 * Modifica un contrato en la BD. Se le pasan todos los parametros aunque no cambien
+	 * @param IdContrato
+	 * @param TurnoInicial
+	 * @param Nombre
+	 * @param Patron
+	 * @param DuracionCiclo
+	 * @param Salario
+	 * @param Tipo
+	 * @return
+	 */
 	public boolean cambiarContrato(int IdContrato, int TurnoInicial, String Nombre, String Patron, int DuracionCiclo, double Salario, int Tipo) {
 		ResultSet r=null;
 		try {
