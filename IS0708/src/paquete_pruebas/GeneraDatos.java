@@ -294,9 +294,10 @@ public class GeneraDatos {
 			indicadorGrupo=(int)(rnd.nextInt(3));//¿¿que es??
 			hh=(int)rnd.nextInt(50);
 			ha=1992-hh;
-			System.out.println(2008-ha+"ªªªªªªªªªªªªªªªªªª");
 			hb=2008-((int)rnd.nextInt(2008-ha));
-			System.out.println(2008-hb+"ªªªªªªªªªªªªªªªªªª");
+			if (hb==2008) {
+				hb--;
+			}
 			hc=2008-((int)rnd.nextInt(2008-hb));
 			hd=(int) rnd.nextInt(13);
 			he=(int) rnd.nextInt(13);
