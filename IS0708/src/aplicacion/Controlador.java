@@ -842,6 +842,12 @@ public class Controlador {
 		return ids;
 	}
 
+	/**
+	 * Modifica un contrato en la BD a partir de un objeto contrato.
+	 * Deberia llamarse cada vez que se cambien cosas en un objeto de tipo contrato
+	 * @param c
+	 * @return
+	 */
 	public boolean setContrato(Contrato c) {		
 		try {
 			boolean b = _db.cambiarContrato(c.getNumeroContrato(), c.getTurnoInicial(), c.getNombreContrato(), c.getPatron(), c.getDuracionCiclo(), c.getSalario(), c.getTipoContrato());
