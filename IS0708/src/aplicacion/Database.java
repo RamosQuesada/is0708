@@ -1235,4 +1235,18 @@ public class Database extends Thread {
 		}
 		return true;
 	}
+	
+	public boolean cambiarContrato(int IdContrato, int TurnoInicial, String Nombre, String Patron, int DuracionCiclo, double Salario, int Tipo) {
+		ResultSet r=null;
+		try {
+			st = con.createStatement();
+			r = st.executeQuery("UPDATE CONTRATO SET TurnoInicial="+TurnoInicial+", Nombre="+Nombre+", Patron="+Patron+", DuracionCiclo="+DuracionCiclo+", Sarario="+Salario+", Tipo="+Tipo+"WHERE IdContrato="+IdContrato+";");
+		}
+		catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println("Error modificar contrato en la BD");
+			return false;
+		}
+		return true;
+	}
 }

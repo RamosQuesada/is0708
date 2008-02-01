@@ -31,7 +31,8 @@ public class PruebasBaseDatos {
 		db.abrirConexion();
 		Controlador c = new Controlador(db, true);
 		
-		ArrayList<Mensaje> misMensajes = c.getMensajesEntrantes(12345678, 0, 30);
+		boolean b = db.cambiarContrato(15, 12, "aleatorio14", "1:12", 1, 4000.50, 1);
+		//ArrayList<Mensaje> misMensajes = c.getMensajesEntrantes(12345678, 0, 30);
 		
 		//db.insertarTrabaja(12345678, 1, "1970-3-12", t1, t1);
 		

@@ -842,6 +842,15 @@ public class Controlador {
 		return ids;
 	}
 
+	public boolean setContrato(Contrato c) {		
+		try {
+			boolean b = _db.cambiarContrato(c.getNumeroContrato(), c.getTurnoInicial(), c.getNombreContrato(), c.getPatron(), c.getDuracionCiclo(), c.getSalario(), c.getTipoContrato());
+		} catch (Exception e) {
+			System.out.println("Error moificando Contrato");
+		}
+		return true;
+	}
+	
 	/***************************************************************************
 	 * Métodos relacionados con turnos
 	 */
