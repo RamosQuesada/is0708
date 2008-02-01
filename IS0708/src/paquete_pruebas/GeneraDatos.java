@@ -172,7 +172,7 @@ public class GeneraDatos {
 		contrato=new Contrato("jefe",0,1,7,"5T2D",1200,0); //no hace falta
 	
 		//crear el jefe de departamento
-		c.insertUsuario(12345678,"jefe","","",fechaNac,0,"Juanfran@ajandemore.es","boss",0,fechaContrato,fechaEntrada,0,0,0,0,contrato.getNumeroContrato(),turno.getIdTurno());//hay que cambiar el rango a 2, 
+		c.insertUsuario(12345678,"jefe","","",fechaNac,0,"Juanfran@ajandemore.es","boss",0,fechaContrato,fechaEntrada,0,0,0,2,contrato.getNumeroContrato(),turno.getIdTurno());//hay que cambiar el rango a 2, 
 		c.insertDepartamentoUsuario(12345678, "prueba");
 		
 		//creamos un nuevo departamento
@@ -270,10 +270,13 @@ public class GeneraDatos {
         	System.out.println();
         	c.insertTurnoPorContrato(idTurno, idContrato);
         	//despues de esta llamada la base de datos tiene que actualizar patron,duracion ciclo,
-        	//Contrato ct=c.getContrato(idContrato);
-        	//int dias_trabaja1=(int)(rnd.nextInt(7))+1;//acotamos entre 1 y 7
-        	//String pat=ct.getPatron()+"/"+dias_trabaja1+":"+idTurno;//debemos añadir al opcion de meter mas un turno o que descansa
-        	//int dur_ciclo=ct.getDuracionCiclo()+dias_trabaja1;//Actulizamos la duracion del ciclo
+        	Contrato ct=c.getContrato(idContrato);
+        	int dias_trabaja1=(int)(rnd.nextInt(7))+1;//acotamos entre 1 y 7
+        	String pat=ct.getPatron()+"/"+dias_trabaja1+":"+idTurno;//debemos añadir al opcion de meter mas un turno o que descansa
+        	int dur_ciclo=ct.getDuracionCiclo()+dias_trabaja1;//Actulizamos la duracion del ciclo
+        	ct.setPatron(pat);
+        	ct.setDuracionCiclo(dur_ciclo);
+        	c.setContrato(ct);
         	//llamar a la base de datos con un metodo que se le meta (patron,duracion ciclo,idContrato)
 		}
 		//insertar usuarios en departamento
