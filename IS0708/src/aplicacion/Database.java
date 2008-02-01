@@ -1245,7 +1245,7 @@ public class Database extends Thread {
 	 * @param DuracionCiclo
 	 * @param Salario
 	 * @param Tipo
-	 * @return
+	 * @return Devuelve un bool que dice si todo ha ido bien.
 	 */
 	public boolean cambiarContrato(int IdContrato, int TurnoInicial, String Nombre, String Patron, int DuracionCiclo, double Salario, int Tipo) {
 		ResultSet r=null;
