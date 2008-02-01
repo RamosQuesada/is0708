@@ -277,7 +277,6 @@ public class GeneraDatos {
         	System.out.println("nuevo patron: "+pat+" duracion: "+dur_ciclo);
         	ct.setPatron(pat);
         	ct.setDuracionCiclo(dur_ciclo);
-        	ct.setNumeroContrato(idContrato);
         	c.setContrato(ct);
         	//llamar a la base de datos con un metodo que se le meta (patron,duracion ciclo,idContrato)
 		}
