@@ -1248,13 +1248,14 @@ public class Database extends Thread {
 	 * @return Devuelve un bool que dice si todo ha ido bien.
 	 */
 	public boolean cambiarContrato(int IdContrato, int TurnoInicial, String Nombre, String Patron, int DuracionCiclo, double Salario, int Tipo) {
-		ResultSet r=null;
+		int r=0;
 		try {
-			st = con.createStatement();
-			r = st.executeQuery("UPDATE CONTRATO SET TurnoInicial="+TurnoInicial+", Nombre="+Nombre+", Patron="+Patron+", DuracionCiclo="+DuracionCiclo+", Sarario="+Salario+", Tipo="+Tipo+"WHERE IdContrato="+IdContrato+";");
+			st = con.createStatement();			
+			r = st.executeUpdate("UPDATE CONTRATO SET TurnoInicial="+TurnoInicial+", Nombre='"+Nombre+"', Patron='"+Patron+"', DuracionCiclo="+DuracionCiclo+", Salario="+Salario+", Tipo="+Tipo+" WHERE IdContrato="+IdContrato+";");
 		}
 		catch (SQLException e) {
 			// TODO: handle exception
+			e.printStackTrace();
 			System.err.println("Error modificar contrato en la BD");
 			return false;
 		}
