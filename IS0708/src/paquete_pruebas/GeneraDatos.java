@@ -274,8 +274,10 @@ public class GeneraDatos {
         	int dias_trabaja1=(int)(rnd.nextInt(7))+1;//acotamos entre 1 y 7
         	String pat=ct.getPatron()+"/"+dias_trabaja1+":"+idTurno;//debemos añadir al opcion de meter mas un turno o que descansa
         	int dur_ciclo=ct.getDuracionCiclo()+dias_trabaja1;//Actulizamos la duracion del ciclo
+        	System.out.println("nuevo patron: "+pat+" duracion: "+dur_ciclo);
         	ct.setPatron(pat);
         	ct.setDuracionCiclo(dur_ciclo);
+        	ct.setNumeroContrato(idContrato);
         	c.setContrato(ct);
         	//llamar a la base de datos con un metodo que se le meta (patron,duracion ciclo,idContrato)
 		}
