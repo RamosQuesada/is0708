@@ -52,6 +52,7 @@ public class I02_Principal {
 		crearVentana(vista.getEmpleadoActual().getRango());
 	}
 
+	
 	private void crearBarraMenu() {
 		// Una barra de menús
 		Menu barra = new Menu(shell, SWT.BAR);
@@ -168,19 +169,7 @@ public class I02_Principal {
 		final ArrayList<Empleado> empleados;
 		empleados = new ArrayList<Empleado>();
 /*
-		// TODO Quitar esta lista provisional de empleados para hacer pruebas:
-		Empleado e1 = new Empleado(1, "M. Jackson", new Color(shell
-				.getDisplay(), 104, 228, 85));
-		Empleado e2 = new Empleado(2, "J. Mayer", new Color(shell.getDisplay(),
-				130, 130, 225));
-		Empleado e3 = new Empleado(3, "B. Jovi", new Color(shell.getDisplay(),
-				240, 190, 150));
-		Empleado e4 = new Empleado(4, "H. Day", new Color(shell.getDisplay(),
-				150, 150, 150));
-		Empleado e5 = new Empleado(5, "N. Furtado", new Color(shell
-				.getDisplay(), 200, 80, 180));
-		Empleado e6 = new Empleado(6, "L. Kravitz", new Color(shell
-				.getDisplay(), 200, 80, 100));
+		empleados.
 		e1.turno.franjaNueva(new Posicion(9, 6), new Posicion(14, 0));
 		e1.turno.franjaNueva(new Posicion(16, 0), new Posicion(18, 0));
 		e2.turno.franjaNueva(new Posicion(15, 0), new Posicion(22, 0));

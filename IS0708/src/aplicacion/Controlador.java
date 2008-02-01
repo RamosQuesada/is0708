@@ -142,10 +142,12 @@ public class Controlador {
 						.getIdsDepartamentos(idEmpl);
 				int felicidad = rs.getInt("Felicidad");
 				int idioma = rs.getInt("Idioma");
+				//TODO cargarlo de la BD
+				int turnoFavorito = -1;
 				emp = new Empleado(idSuperior, id, nombre, apellido1,
 						apellido2, fechaNac, sexo, email, password, grupo,
 						rango, idContrato, fechaContrato, fechaAlta, color,
-						null, idSubordinados, felicidad, idioma);
+						null, idSubordinados, felicidad, idioma, turnoFavorito);
 				emp.setIDDepartamentos(idDepartamentos);
 			}
 		} catch (Exception e) {

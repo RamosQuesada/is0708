@@ -1,7 +1,6 @@
 package aplicacion;
 
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
@@ -46,10 +45,6 @@ import aplicacion.Controlador;
  * @author Daniel Dionne
  *
  */
-/**
- * @author Daniel Dionne
- *
- */
 public class Empleado implements Drawable {	
 	
 	// Para algunas variables, se guarda un entero al identificador de la clase 
@@ -79,8 +74,9 @@ public class Empleado implements Drawable {
 	private ArrayList<String> idDepartamentos;
 	private ArrayList<Departamento> departamentos;
 	private Turno turnoActual;	//No lo borreis golfos. (19-Dic)
+	private int turnoFavorito;
 	
-	//Optimizacion Algoritmo (reduccion llamadas a BBDD)
+	//Optimizacion Algoritmo (reducción llamadas a BBDD)
 	private ArrayList<Turno> turnoE;
 	private ArrayList<String> turnosStr;
 	
@@ -224,19 +220,19 @@ public class Empleado implements Drawable {
 	 * @param idDepartamento
 	 * @param felicidad		Grado de satisfaccion de un usuario con su horario
 	 * @param idioma 		Idioma de la aplicacion para el usuario
-	 * 
+	 * @param turnoFavorito	id del turno favorito del empleado (-1 si no se quiere asignar ninguno)
 	 */
 	public Empleado (Integer idSuperior, int idEmpl, String nombre, String apellido1,
 			String apellido2, Date fechaNac, int sexo, String email, String password,
 			int grupo, int rango, int contrato, Date fContrato, Date fAlta, Color color,
-			String idDepartamento, ArrayList<Integer> idSubordinados,int felicidad, int idioma) {
+			String idDepartamento, ArrayList<Integer> idSubordinados,int felicidad, int idioma, int turnoFavorito) {
 		if (idSuperior==null) this.idSuperior=0;
 		else setIdSuperior(idSuperior);
 		setEmplId(idEmpl);
 		this.nombre		= nombre;
 		this.apellido1	= apellido1;
 		this.apellido2	= apellido2;
-		this.color = color;
+		this.color		= color;
 		this.fechaNac	= fechaNac;
 		this.sexo		= sexo;
 		this.email		= email;
@@ -248,18 +244,16 @@ public class Empleado implements Drawable {
 		this.fAlta		= fAlta;
 		this.idSubordinados = idSubordinados;
 		idDepartamentos = new ArrayList<String>();
-		idDepartamentos.add(idDepartamento);
-		superior = null;
-		//felicidad = 0;//se recupera de la bd muxas veces luego es la felicidad que tenga
+		if (idDepartamento!=null) idDepartamentos.add(idDepartamento);
+		superior 		= null;
 		subordinados	= new ArrayList<Empleado>();
 		departamentos	= new ArrayList<Departamento>();
-		this.felicidad=felicidad;
-		this.idioma=idioma;
+		this.felicidad	= felicidad;
+		this.idioma		= idioma;
 		this.turnoActual = null;
-		this.turnoE = null;
-		this.turnosStr = null;
-		
-
+		this.turnoE		= null;
+		this.turnosStr	= null;
+		this.turnoFavorito = turnoFavorito;
 	}
 
 	/**
@@ -278,7 +272,7 @@ public class Empleado implements Drawable {
 	 */
 	public boolean setIdSuperior(int id) {
 		boolean b = false;
-		if (id>1 && id<99999999) {
+		if (id>1 && id<=99999999) {
 			idSuperior = id;
 			b = true;
 		}
@@ -775,6 +769,30 @@ public class Empleado implements Drawable {
 			if (empleado.getRango()==2) rango=3;
 		}
 		return !esta;
+	}
+	
+	
+	/**
+	 * Devuelve el turno favorito del empleado.
+	 * @return el id del turno favorito, -1 si no tiene turno favorito
+	 */
+	public int getTurnoFavorito() {
+		return turnoFavorito;
+	}
+
+	/**
+	 * Asigna un turno favorito.
+	 * @param turnoFavorito el id del turno a asignar como favorito
+	 */
+	public void setTurnoFavorito(int turnoFavorito) {
+		this.turnoFavorito = turnoFavorito;
+	}
+	
+	/**
+	 * Quita el turno favorito de un empleado.
+	 */
+	public void removeTurnoFavorito() {
+		this.turnoFavorito = -1;
 	}
 
 	/**
