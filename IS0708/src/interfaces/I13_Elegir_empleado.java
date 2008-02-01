@@ -23,32 +23,17 @@ public class I13_Elegir_empleado extends Thread {
 	private Composite padre;
 	private Text tNombre;
 	private List listFiltro;
-	private ArrayList<Empleado> empleadosIn, empleadosOut;
+	private ArrayList<Empleado> empleadosOut;
 	private Shell listShell;
 	private int idEmpl = 0;
 	private Vista vista;
 	private ResourceBundle bundle;
 	
-	public void run() {
-		// Esta búsqueda debería coger sólo un departamento, porque el número de 
-		// empleados puede ser demasiado grande.
-		empleadosIn = vista.getEmpleados(null, vista.getEmpleadoActual().getDepartamentoId(), null, null, null, null, null);
-		padre.getDisplay().asyncExec(new Runnable () {
-			public void run() {
-				if (!padre.isDisposed()) {
-					tNombre.setText("");
-					tNombre.setEditable(true);
-				}
-			}
-		});
-
-	}
 	
 	public I13_Elegir_empleado (Composite padre, Vista vista, ResourceBundle bundle) {
 		this.padre = padre;
 		this.vista = vista;
 		this.bundle = bundle;
-		start();
 		empleadosOut = new ArrayList<Empleado>();
 		listShell = new Shell (padre.getShell(), SWT.NONE);
 		mostrarVentana();
@@ -60,8 +45,6 @@ public class I13_Elegir_empleado extends Thread {
 
 		tNombre = new Text(padre, SWT.BORDER);
 		tNombre.setLayoutData(new GridData(SWT.FILL,  SWT.CENTER, true, true, 1, 1));
-		tNombre.setText(bundle.getString("I14_lab_CargandoNombres"));
-		tNombre.setEditable(false);
 		tNombre.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				filtrar();
@@ -130,9 +113,9 @@ public class I13_Elegir_empleado extends Thread {
 		empleadosOut.clear();
 		listFiltro.removeAll();
 		if (tNombre.getText()!="") {
-			for (int i=0; i<empleadosIn.size(); i++) {
-				if (tNombre.getText()=="" || empleadosIn.get(i).getNombreCompleto().toLowerCase().contains(tNombre.getText().toLowerCase()))
-					empleadosOut.add(empleadosIn.get(i));
+			for (int i=0; i<vista.getEmpleados().size(); i++) {
+				if (tNombre.getText()=="" || vista.getEmpleados().get(i).getNombreCompleto().toLowerCase().contains(tNombre.getText().toLowerCase()))
+					empleadosOut.add(vista.getEmpleados().get(i));
 			}
 			for (int i=0; i<empleadosOut.size(); i++) {
 				listFiltro.add(empleadosOut.get(i).getNombreCompleto());

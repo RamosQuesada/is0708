@@ -258,7 +258,7 @@ public class I02_cuadr {
 					Boolean encontrado2 = false;
 					while (!encontrado2	&& j < cuadrante.empleados.get(empleadoActivo).turno.franjas.size()) {
 						f2 = cuadrante.empleados.get(empleadoActivo).turno.franjas.get(j);
-						if ((f.pinicio.menorOIgualQue(f2.pfin) && f2.contienePixel(f.inicio - 10)) | (f.inicio < f2.inicio && f.fin > f2.fin)) {
+						if ((f.pinicio.menorOIgualQue(f2.pfin) && f2.contienePixel(f.inicio - 10,0)) | (f.inicio < f2.inicio && f.fin > f2.fin)) {
 							encontrado2 = true;
 							Posicion ancho2 = f2.pfin.diferencia(f2.pinicio);
 							f.pinicio = f2.pinicio;
@@ -268,7 +268,7 @@ public class I02_cuadr {
 							despl += (f2.fin - f2.inicio);
 							cuadrante.empleados.get(empleadoActivo).turno.franjas.remove(j);
 							f.actualizarPixeles(margenIzq, margenNombres, cuadrante.tamHora, cuadrante.tamSubdiv, cuadrante.subdivisiones, horaInicio);
-						} else if ((f.pfin.mayorOIgualQue(f2.pinicio) && f2.contienePixel(f.fin + 10))	| (f.inicio < f2.inicio && f.fin > f2.fin)) {
+						} else if ((f.pfin.mayorOIgualQue(f2.pinicio) && f2.contienePixel(f.fin + 10,0))	| (f.inicio < f2.inicio && f.fin > f2.fin)) {
 							encontrado2 = true;
 							f.pfin = f2.pfin;
 							cuadrante.empleados.get(empleadoActivo).turno.franjas.remove(j);
@@ -301,7 +301,7 @@ public class I02_cuadr {
 						Boolean encontrado2 = false;
 						while (!encontrado2 && j < cuadrante.empleados.get(empleadoActivo).turno.franjas.size()) {
 							f2 = cuadrante.empleados.get(empleadoActivo).turno.franjas.get(j);
-							if (f != f2 && ((f.pinicio.menorOIgualQue(f2.pfin) && f2.contienePixel(e.x - 10)) | (f.inicio <= f2.inicio && f.fin >= f2.fin))) {
+							if (f != f2 && ((f.pinicio.menorOIgualQue(f2.pfin) && f2.contienePixel(e.x - 10,0)) | (f.inicio <= f2.inicio && f.fin >= f2.fin))) {
 								encontrado2 = true;
 								f.pinicio = f2.pinicio;
 								cuadrante.empleados.get(empleadoActivo).turno.franjas.remove(j);
@@ -336,7 +336,7 @@ public class I02_cuadr {
 						Boolean encontrado2 = false;
 						while (terminadoDeCrear	&& !encontrado2	&& j < cuadrante.empleados.get(empleadoActivo).turno.franjas.size()) {
 							f2 = cuadrante.empleados.get(empleadoActivo).turno.franjas.get(j);
-							if (f != f2	&& (f.pfin.mayorOIgualQue(f2.pinicio) && f2.contienePixel(e.x + 10)) | (f.inicio <= f2.inicio && f.fin >= f2.fin)) {
+							if (f != f2	&& (f.pfin.mayorOIgualQue(f2.pinicio) && f2.contienePixel(e.x + 10,0)) | (f.inicio <= f2.inicio && f.fin >= f2.fin)) {
 								encontrado2 = true;
 								f.pfin = f2.pfin;
 								cuadrante.empleados.get(empleadoActivo).turno.franjas.remove(j);

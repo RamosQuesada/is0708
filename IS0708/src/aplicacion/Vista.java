@@ -13,7 +13,7 @@ import org.eclipse.swt.widgets.Shell;
 import idiomas.LanguageChanger;
 import interfaces.*;
 
-public class Vista extends Thread {
+public class Vista {
 	private Controlador controlador;
 	private Database db;
 	private Shell shell;
@@ -22,36 +22,57 @@ public class Vista extends Thread {
 	private Locale locale;
 	private I01_Login login; 
 	private I02_Principal i02;
+	private boolean alive = true;
+	private ArrayList<Empleado> empleados = new ArrayList<Empleado>();
+	private ArrayList<Mensaje> mensajesEntrantes = new ArrayList<Mensaje>();
+	private int num_men_hoja = 10;
 	
-	public void run() {
-		setName("Conexion base de datos");
-		// Conectar con la base de datos
-		db.abrirConexion();
-		if (!login.isDisposed())
-			if (!db.conexionAbierta()) {
-				shell.getDisplay().asyncExec(new Runnable () {
-					public void run() {
-						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
-						messageBox.setText (bundle.getString("Error"));
-						messageBox.setMessage (bundle.getString("I01_err_Conexion"));
-					}
-				});
-			}
+	public class Conector implements Runnable {
+		public void run() {
+			// Conectar con la base de datos
+			db.abrirConexion();
+			if (!login.isDisposed())
+				if (!db.conexionAbierta()) {
+					shell.getDisplay().asyncExec(new Runnable () {
+						public void run() {
+							MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
+							messageBox.setText (bundle.getString("Error"));
+							messageBox.setMessage (bundle.getString("I01_err_Conexion"));
+						}
+					});
+				}
+				else {
+					shell.getDisplay().asyncExec(new Runnable () {
+						public void run() {
+							// TODO Por alguna razón oculta de los threads, aun habiendo comprobado
+							// antes si el dialog sigue presente, si no lo compruebo de nuevo
+							// a veces da error.
+							if (!login.isDisposed()) 
+								login.setProgreso("Conectado.");
+						}
+					});
+				}
 			else {
-				shell.getDisplay().asyncExec(new Runnable () {
-					public void run() {
-						// TODO Por alguna razón oculta de los threads, aun habiendo comprobado
-						// antes si el dialog sigue presente, si no lo compruebo de nuevo
-						// a veces da error.
-						if (!login.isDisposed()) 
-							login.setProgreso("Conectado.");
-					}
-				});
+				// En este caso se ha cerrado la aplicación antes de que termine de conectar.			
+				if (db.conexionAbierta())
+					db.cerrarConexion();
 			}
-		else {
-			// En este caso se ha cerrado la aplicación antes de que termine de conectar.			
-			if (db.conexionAbierta())
-				db.cerrarConexion();
+		}
+	}
+	
+	public class Loader implements Runnable {
+		public void stop() { alive = false; }
+		public synchronized void run() {
+			while (alive) {
+				// Cargar empleados
+				loadEmpleados();
+				// Cargar mensajes
+				loadMensajes();
+				try {
+					// TODO Espera 1/2 minuto (¿cómo lo dejamos?)
+					wait(20000);
+				} catch (Exception e) {}
+			}
 		}
 	}
 
@@ -72,16 +93,18 @@ public class Vista extends Thread {
 		// Creación del display y el shell
 		display = new Display ();
 		shell = new Shell(display);
-		
+
 		// Creación del gestor de idiomas
 		LanguageChanger l = new LanguageChanger();
-		
+
 		bundle = l.getBundle();
 		locale = l.getCurrentLocale();
-		
+
 		// Login y conexión a la base de datos
 		login = new I01_Login(shell, bundle, db);
-		start();
+		Thread conector = new Thread(new Conector());
+		Thread loader = new Thread(new Loader());
+		conector.start();
 		boolean identificado = false;
 		while (!identificado) {
 			if (db.conexionAbierta()) login.mostrarVentana("Conectado.");
@@ -95,12 +118,13 @@ public class Vista extends Thread {
 				// Si llega aquí, ya hay conexión con la base de datos
 				// Login de administrador
 				if (login.getNumeroVendedor()==0 && login.getPassword().compareTo("admin")==0) {
-						System.out.println("aplicacion.Vista.java\t::Administrador identificado");
-						controlador.setEmpleadoActual(new Empleado(0,0,"Administrador","","",null,0,"","admin",0,0,0,null,null,null,null,null,0,0));
-						identificado = true;
+					System.out.println("aplicacion.Vista.java\t::Administrador identificado");
+					controlador.setEmpleadoActual(new Empleado(0,0,"Administrador","","",null,0,"","admin",0,0,0,null,null,null,null,null,0,0,0));
+					identificado = true;
 				}
 				else {
 					Empleado emp = getEmpleado(login.getNumeroVendedor());
+					loader.start();
 					if (emp!=null) {
 						// Comprobar la clave
 						if (emp.getPassword().compareTo(login.getPassword())==0) {
@@ -136,7 +160,7 @@ public class Vista extends Thread {
 					db.cerrarConexion();
 			}
 		}
-	
+
 		// Si todavía no he cerrado el display, ya he hecho login correctamente
 		if (!shell.isDisposed()) {
 			i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);	
@@ -146,11 +170,13 @@ public class Vista extends Thread {
 					shell.getDisplay().sleep();
 				}
 			}
+			alive = false;
+			loader.interrupt();
 			if (!db.conexionAbierta())
 				db.cerrarConexion();
 		}
 	}
-	
+
 	/**
 	 * Muestra el parámetro en la barra de abajo de la ventana principal.
 	 * @param estado el String a mostrar
@@ -158,7 +184,7 @@ public class Vista extends Thread {
 	public void setTextoEstado(String estado) {
 		i02.setTextoEstado(estado);
 	}
-	
+
 	/**
 	 * Devuelve el controlador de la aplicación
 	 * @return el controlador de la aplicación
@@ -166,21 +192,21 @@ public class Vista extends Thread {
 	public Controlador getControlador() {
 		return controlador;
 	}
-	
+
 	/**
 	 * Muestra el cursor de reloj de arena
 	 */
 	public void setCursorEspera() {
 		shell.setCursor(new Cursor(display,SWT.CURSOR_WAIT));
 	}
-	
+
 	/**
 	 * Muestra el cursor normal
 	 */
 	public void setCursorFlecha() {
 		shell.setCursor(new Cursor(display,SWT.CURSOR_ARROW));
 	}
-	
+
 	/**
 	 * Devuelve si la aplicación se ha iniciado en modo debug
 	 * @return <i>true</i> si la aplicación se ha iniciado en modo de corrección de errores
@@ -188,7 +214,7 @@ public class Vista extends Thread {
 	public boolean getModoDebug() {
 		return controlador.getModoDebug();
 	}
-	
+
 	/**
 	 * Muestra un mensaje de debug por consola.
 	 * @param nombreClase el nombre de la clase que emite el mensaje
@@ -197,12 +223,12 @@ public class Vista extends Thread {
 	public void infoDebug(String nombreClase, String mensaje) {
 		if (controlador.getModoDebug()) System.out.println("Debug :: [" + nombreClase + "]\n    " + mensaje);
 	}
-	
-	
-/*****************************************************************************************
- * Métodos relacionados con empleados
- */
-	
+
+
+	/*****************************************************************************************
+	 * Métodos relacionados con empleados
+	 */
+
 	/**
 	 * Devuelve el empleado que ha iniciado la sesión.
 	 * @return el empleado que ha iniciado la sesión
@@ -217,6 +243,46 @@ public class Vista extends Thread {
 	 */
 	public Empleado getEmpleado(int idEmpl) {
 		return controlador.getEmpleado(idEmpl);
+	}
+
+	/**
+	 * Carga la lista de empleados que trabaja en el mismo departamento que el actual
+	 */
+	public void loadEmpleados() {
+		infoDebug("Vista", "Cargando empleados");
+		empleados = getEmpleados(null, getEmpleadoActual().getDepartamentoId(), null,null, null, null, null);
+		infoDebug("Vista", "Acabado de cargar empleados");
+	}
+
+	/**
+	 * Carga los mensajes de la base de datos
+	 */
+	public void loadMensajes() {
+		// Carga mensajes
+		infoDebug("Vista", "Cargando mensajes");
+		mensajesEntrantes = getMensajesEntrantes(getEmpleadoActual().getEmplId(), 0, num_men_hoja);
+		infoDebug("Vista", "Acabado");
+	}
+
+	/**
+	 * Devuelve la lista de empleados que trabaja en el mismo departamento que el actual.
+	 * La carga si esta no se ha cargado todavía.
+	 * @return la lista de empleados
+	 */
+	public ArrayList<Empleado> getEmpleados() {
+		return empleados;
+	}
+
+	/**
+	 * Devuelve la lista de mensajes que ha recibido el empleado actual.
+	 * La carga si esta no se ha cargado todavía.
+	 * @return la lista de empleados
+	 */
+	public ArrayList<Mensaje> getMensajesEntrantes() {
+		if (mensajesEntrantes==null) {
+			loadMensajes();
+		}
+		return mensajesEntrantes;
 	}
 
 	/**
@@ -253,15 +319,15 @@ public class Vista extends Thread {
 			setProgreso("No se pudo insertar el empleado", 100);
 		return b;
 	}
-	
+
 	public ArrayList<Empleado> getEmpleadosDepartamento(String idDept) {
 		return controlador.getEmpleadosDepartamento(idDept);
 	}
 
-/*****************************************************************************************
- * Métodos relacionados con departamentos
- */
-	
+	/*****************************************************************************************
+	 * Métodos relacionados con departamentos
+	 */
+
 	/**
 	 * Obtiene un departamento, dado su nombre.
 	 * @param id el identificador del departamento
@@ -270,7 +336,7 @@ public class Vista extends Thread {
 	public Departamento getDepartamento(String id){
 		return controlador.getDepartamento(id);
 	}
-	
+
 	/**
 	 * Guarda un departamento.
 	 * @param departamento el departamento a guardar
@@ -280,10 +346,10 @@ public class Vista extends Thread {
 		return controlador.insertDepartamento(departamento);
 	}
 
-/*****************************************************************************************
- * Métodos relacionados con mensajes
- */
-	
+	/*****************************************************************************************
+	 * Métodos relacionados con mensajes
+	 */
+
 	/**
 	 * Obtiene una lista de <i>b</i> mensajes entrantes por orden cronológico, del más
 	 * nuevo al más antiguo, empezando desde el mensaje <i>a</i>.
@@ -319,9 +385,9 @@ public class Vista extends Thread {
 	public boolean marcarMensaje(Mensaje mensaje) {
 		return controlador.marcarMensaje(mensaje);
 	}
-/*****************************************************************************************
- * Otros métodos
- */
+	/*****************************************************************************************
+	 * Otros métodos
+	 */
 	/**
 	 * Ajusta la barra de progreso de la ventana principal al valor del 
 	 * parámetro, y la hace desaparecer si ha terminado.

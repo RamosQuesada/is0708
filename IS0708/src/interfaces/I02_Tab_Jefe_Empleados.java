@@ -1,6 +1,5 @@
 package interfaces;
 
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
@@ -9,18 +8,13 @@ import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
@@ -28,7 +22,6 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
-import aplicacion.Empleado;
 import aplicacion.Vista;
 
 public class I02_Tab_Jefe_Empleados extends Thread{
@@ -39,19 +32,15 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 	final Table tablaEmpleados;
 	final Image ico_chico, ico_chica, ico_mens;
 	
-	private ArrayList<Empleado> empleados;
 	/**
 	 * Implementa un hilo que coge los empleados del departamento del servidor.
 	 */
 	public void run() {
-		setName("I02 - Load employees");
 		boolean run = true;
 		while (run) {
 			if (tablaEmpleados.isDisposed() || _vista.getEmpleadoActual().getEmplId()==0) run = false;
 			else {
 				if (!tablaEmpleados.isDisposed()) {
-					// Cargar mensajes
-					cargarEmpleados();
 					// Actualizar tabla
 					if (!tablaEmpleados.isDisposed()) {
 						tablaEmpleados.getDisplay().asyncExec(new Runnable () {
@@ -62,31 +51,24 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 					}
 				}
 				try {
-					// TODO Espera 1 minuto (¿cómo lo dejamos?)
-					sleep(60000);					
+					// TODO Espera 10 segundos (¿cómo lo dejamos?)
+					sleep(10);					
 				} catch (Exception e) {}
 			}
 		}
 	}
 	
-	private void cargarEmpleados() {
-		_vista.infoDebug("I02_Tab_Jefe_Empleados", "Cargando empleados desde hilo I02 - Load Employees");
-		empleados = _vista.getEmpleados(null, _vista.getEmpleadoActual().getDepartamentoId(), null,
-					null, null, null, 2);
-		_vista.infoDebug("I02_Tab_Jefe_Empleados", "Acabado");
-	}
-	
 	private void mostrarEmpleados() {
 		tablaEmpleados.removeAll();
-		for (int i = 0; i < empleados.size(); i++) {
+		for (int i = 0; i < _vista.getEmpleados().size(); i++) {
 			TableItem tItem = new TableItem(tablaEmpleados, SWT.NONE);
-			if (empleados.get(i).getSexo()==0)
+			if (_vista.getEmpleados().get(i).getSexo()==0)
 				tItem.setImage(ico_chica);
 			else 
 				tItem.setImage(ico_chico);
-			tItem.setText(1, String.valueOf(empleados.get(i).getEmplId()));
-			tItem.setText(2, empleados.get(i).getNombreCompleto());
-			tItem.setText(3, empleados.get(i).getDepartamentoId());
+			tItem.setText(1, String.valueOf(_vista.getEmpleados().get(i).getEmplId()));
+			tItem.setText(2, _vista.getEmpleados().get(i).getNombreCompleto());
+			tItem.setText(3, _vista.getEmpleados().get(i).getDepartamentoId());
 			tItem.setText(4, "6:40h");
 			tItem.setText(5, "911234567");
 			tItem.setImage(6, ico_mens);
