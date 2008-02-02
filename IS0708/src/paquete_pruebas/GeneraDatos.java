@@ -183,9 +183,13 @@ public class GeneraDatos {
 		//creamos la distribucion
 	    System.out.println("INSERTAMOS DISTRIBUCION");
 		for (int i=1; i<=7; i++) {
+			for (int j=0; j<9; j++)
+				c.insertDistribucion(j, i, "1e1p", 0, 0, "prueba");
 			for (int j=9; j<23; j++) {
 				c.insertDistribucion(j, i, "1e1p", 5, 3, "prueba");
-			}	
+			}
+			for (int j=23; j<24; j++)
+				c.insertDistribucion(j, i, "1e1p", 0, 0, "prueba");
 		}
 		/*for (int i = 0; i < valor ; i++) {
 	        	hora = (int)(rnd.nextInt(25));//con esto generamos numeros entre 0 y 24, siempre se pone limite +1
