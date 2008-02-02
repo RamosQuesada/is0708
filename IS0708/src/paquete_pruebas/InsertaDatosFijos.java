@@ -131,9 +131,9 @@ public class InsertaDatosFijos {
 		
 		// Contratos
 		String patron7h = "6:" + t7hM.getIdTurno() + "," + t7hT.getIdTurno() + "/1:d";
-		Contrato c7hM = new Contrato("7 hotas mañana", 0, t7hM.getIdTurno(), 7, patron7h, 800, new Random().nextInt(4)+1);
+		Contrato c7hM = new Contrato("7 horas mañana", 0, t7hM.getIdTurno(), 7, patron7h, 800, new Random().nextInt(4)+1);
 		c7hM.setNumeroContrato(c.insertContrato(c7hM));
-		Contrato c7hT = new Contrato("7 hotas tarde", 0, t7hT.getIdTurno(), 7, patron7h, 800, new Random().nextInt(4)+1);
+		Contrato c7hT = new Contrato("7 horas tarde", 0, t7hT.getIdTurno(), 7, patron7h, 800, new Random().nextInt(4)+1);
 		c7hT.setNumeroContrato(c.insertContrato(c7hT));
 		
 		String patron4h = "7:" + t4hM.getIdTurno() + "," + t4hT.getIdTurno();
