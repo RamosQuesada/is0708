@@ -116,23 +116,39 @@ public class TurnoMatic {
 			}	
 			
 			ArrayList<Empleado> reserDia = new ArrayList<Empleado>();
+			ArrayList<Empleado> trabajanDia = new ArrayList<Empleado>();
 			ArrayList<Empleado> dispoDia = new ArrayList<Empleado>();
 			ArrayList<Empleado> emplDia = new ArrayList<Empleado>();
 			Empleado aux;
 			
 			for(int j=0; j<estruc.getNumTrozos(); j++){
-				int n=0;
+				/*int n=0;
 				while (n<horario[i][j].getReserva().size()) {
 					aux = horario[i][j].getReserva().get(n);
-					reserDia.add(aux);
+						reserDia.add(aux);
 					n++;
-				}
-				n=0;
+				}*/
+				
+				int n=0;
+				while (n<horario[i][j].getEmpleados().size()) {
+					aux = horario[i][j].getEmpleados().get(n);
+						if(!trabajanDia.contains(aux))
+							trabajanDia.add(aux);
+					n++;
+				}		
+				
+				/*n=0;
 				while (n<horario[i][j].getEmpleados().size()) {
 					aux = horario[i][j].getEmpleados().get(n);
 					emplDia.add(aux);
 					n++;
-				}
+				}*/
+			}
+			
+			for (int k=0;k<listaE.size();k++){
+				aux  = listaE.get(k);
+				if(!trabajanDia.contains(aux) && !reserDia.contains(aux))
+					reserDia.add(aux);					
 			}
 			
 			//dispoDia tiene a los empleados que no son fijos ni rotatorios (empleados con contrato distinto de 1 y de 2 y rango=1)
