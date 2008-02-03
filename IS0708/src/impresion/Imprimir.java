@@ -61,7 +61,7 @@ public class Imprimir {
 	}
 	
 	public void imprimirImage(ImageData imageData){	
-		printDialog.setText("PrintDialog");
+		try{printDialog.setText("PrintDialog");
 		printDialog.setScope(PrinterData.ALL_PAGES);
 		//printDialog.setPrintToFile(true);
 		
@@ -83,7 +83,10 @@ public class Imprimir {
 	    printer.endPage();
 	    gc.dispose();
 	    printer.endJob();
-	    printer.dispose();
+	    printer.dispose();}
+		catch (Exception e){
+			System.out.println("excepcion al cerrar porque hay argumentos nulos");
+		}
 	}
 
 	public void imprimirComposite(Composite composite){	
