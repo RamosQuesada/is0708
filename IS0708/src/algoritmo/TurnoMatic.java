@@ -88,7 +88,10 @@ public class TurnoMatic {
 					e = listaE.get(k);
 					
 					//creacionListas(e,i,inif,finf);
-					if((e.getRango()==1) && (e.estaDisponible(i,inif,finf,controlador,j,estruc.getNumTrozos()))){
+				/*	if((e.getContratoId()!=1 && e.getContratoId()!=2 && e.getRango()==1) &&
+							(e.estaDisponible(i,inif,finf,controlador,j,estruc.getNumTrozos()))){*/
+					if((e.getRango()==1) &&
+							(e.estaDisponible(i,inif,finf,controlador,j,estruc.getNumTrozos()))){
 						//dispo.add(e);		
 						empl.add(e);
 						turno = e.getTurnoActual();
@@ -139,7 +142,7 @@ public class TurnoMatic {
 					dispoDia.add(e);
 			}
 	
-			colocaNoFijos(dispoDia, reserDia, emplDia, i, cu);//se colocan para cada dia i del mes
+			colocaNoFijos(dispoDia, reserDia, emplDia, i, cu);//se colocan para cada dia i del mes 
 		}
 		
 		cuadrante.setCuad(cu);
