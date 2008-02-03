@@ -942,13 +942,6 @@ public class Empleado implements Drawable {
 		if(fContrato == null)
 			fContrato = new Date(fechaActual.getTime());
 		
-		/*long day = dia*24*60*60*1000;
-		long hoy = fechaActual.getTime();
-		int hoyint = ((int)hoy/(24*60*60*1000)); 
-		long dias = hoy + day;
-		long contrat = fContrato.getTime();
-		long dif = hoy - contrat;*/
-		
 		//ya va!!!!!!!!!!!
 		long milsDia = 24*60*60*1000;
 		difFechas = (fechaActual.getTime()+(dia*milsDia))-fContrato.getTime();
@@ -963,11 +956,8 @@ public class Empleado implements Drawable {
 		}
 		diaCiclo = diaCiclo%turnosStr.size();
 		
-		if((diaCiclo == contrato.getDuracionCiclo()-1) && (hora == numTrozos-1))
-				fContrato.setTime(fechaActual.getTime() + ((dia+1)*milsDia));
-		
 	/*	if((diaCiclo == contrato.getDuracionCiclo()-1) && (hora == numTrozos-1))
-			fContrato.setTime(hoy.getTimeInMillis() + ((dia+1)*24*60*60*1000));*/
+				fContrato.setTime(fechaActual.getTime() + ((dia+1)*milsDia));*/
 		
 		//Obtencion del turno correspondiente a ese dia.
 		turnoStr = turnosStr.get(diaCiclo);
