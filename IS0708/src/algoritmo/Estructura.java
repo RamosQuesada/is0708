@@ -54,7 +54,8 @@ public class Estructura {
 	}
 	
 	private void inicializaTrozos(){
-		ArrayList<Turno> turnos = controlador.getListaTurnosEmpleados(); 
+		//ArrayList<Turno> turnos = controlador.getListaTurnosEmpleados(); 
+		ArrayList<Turno> turnos = controlador.getListaTurnosEmpleadosDpto(this.idDepartamento);
 		ArrayList<Time> horas = new ArrayList<Time>();
 		for (int i=0; i<turnos.size(); i++){
 			if (!horas.contains(turnos.get(i).getHoraEntrada()))
