@@ -26,6 +26,8 @@ public class Vista {
 	private ArrayList<Empleado> empleados = new ArrayList<Empleado>();
 	private ArrayList<Mensaje> mensajesEntrantes = new ArrayList<Mensaje>();
 	private int num_men_hoja = 10;
+	private LanguageChanger l;
+	private Thread conector, loader;
 	
 	public class Conector implements Runnable {
 		public void run() {
@@ -61,7 +63,6 @@ public class Vista {
 	}
 	
 	public class Loader implements Runnable {
-		public void stop() { alive = false; }
 		public synchronized void run() {
 			while (alive) {
 				// Cargar empleados
@@ -85,25 +86,27 @@ public class Vista {
 	 * @param controlador el controlador de la aplicación
 	 * @param db la base de datos de la aplicación
 	 */
-	public Vista (Controlador controlador, Database db) {			
+	public Vista (Display d, Controlador controlador, Database db) {			
 		this.controlador = controlador;
 		this.db = db;
 		controlador.setVista(this);
 
 		// Creación del display y el shell
-		display = new Display ();
+		display = d;
 		shell = new Shell(display);
 
 		// Creación del gestor de idiomas
-		LanguageChanger l = new LanguageChanger();
+		l = new LanguageChanger();
 
 		bundle = l.getBundle();
 		locale = l.getCurrentLocale();
-
+	}
+	
+	public void start() {
 		// Login y conexión a la base de datos
 		login = new I01_Login(shell, bundle, db);
-		Thread conector = new Thread(new Conector());
-		Thread loader = new Thread(new Loader());
+		conector = new Thread(new Conector());
+		loader = new Thread(new Loader());
 		conector.start();
 		boolean identificado = false;
 		while (!identificado) {
@@ -170,11 +173,26 @@ public class Vista {
 					shell.getDisplay().sleep();
 				}
 			}
+			i02.dispose();
 			alive = false;
 			loader.interrupt();
 			if (!db.conexionAbierta())
 				db.cerrarConexion();
 		}
+	}
+	
+	public void stop() {
+		alive = false;
+		shell.dispose();
+		loader.interrupt();
+		display.dispose();
+	}
+	/**
+	 * Devuelve el display de la aplicación.
+	 * @return el display de la aplicación
+	 */
+	public Display getDisplay() {
+		return display;
 	}
 
 	/**

@@ -1,5 +1,8 @@
 package aplicacion;
 
+import org.eclipse.swt.widgets.Display;
+import interfaces.I19_Excepcion;
+
 /**
  * Esta es la clase principal de la aplicación. Desde aquí se crean el modelo,
  * la vista y el controlador.
@@ -14,14 +17,26 @@ public class Aplicacion {
 				System.out.println("Modo debug");
 				modoDebug = true;
 			}
-		// Creación del modelo
+		// Iniciar SWT
+		Display display = new Display();
+		
+		// Crear el modelo
 		Database db = new Database();
 		
-		// Creación del controlador
+		// Crear el controlador
 		Controlador controlador = new Controlador(db,modoDebug);
-		
-		// Crear vista
-		Vista vista = new Vista(controlador, db);
-		
+
+		// Crear la vista
+		Vista v = new Vista(display, controlador, db);
+
+		// Iniciar aplicación
+		try {
+			v.start();
+		}
+		catch (Exception e) {
+			new I19_Excepcion(display, e);
+			v.stop();
+			// TODO terminar toda la aplicación
+		}
 	}
 }
