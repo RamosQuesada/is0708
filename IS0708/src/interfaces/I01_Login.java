@@ -43,7 +43,7 @@ public class I01_Login extends Thread{
 	 */
 	public synchronized void mostrarVentana(String s) {
 		Image fondo = new Image(padre.getDisplay(), I01_Login.class.getResourceAsStream("intro.png"));
-		dialog = new Shell (padre, SWT.NONE | SWT.APPLICATION_MODAL);
+		dialog = new Shell (padre.getDisplay(), SWT.NONE | SWT.APPLICATION_MODAL);
 		
 		// Esto hace que los labels no tengan fondo
 		dialog.setBackgroundMode(SWT.INHERIT_DEFAULT);

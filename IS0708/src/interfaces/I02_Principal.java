@@ -41,6 +41,7 @@ public class I02_Principal {
 	private ProgressBar pbEstado;
 	private Date fecha;
 	private ImageData Img;
+	private Tray tray;
 
 	public I02_Principal(Shell shell, Display display, ResourceBundle bundle,
 			Locale locale, Vista vista) {
@@ -1285,7 +1286,7 @@ public class I02_Principal {
 
 		crearBarraMenu();
 
-		final Tray tray = display.getSystemTray();
+		tray = display.getSystemTray();
 		final TrayItem trayItem = new TrayItem(tray, SWT.NONE);
 		shell.setImage(icoPq);
 		if (tray != null) {
@@ -1338,6 +1339,18 @@ public class I02_Principal {
 				e.doit = messageBox.open() == SWT.YES;
 			}
 		});
+	}
+	
+	public void dispose() {
+		icoGr.dispose();
+		icoPq.dispose();
+		ico_imprimir.dispose();
+		ico_mens.dispose();
+		ico_cuadrante.dispose();
+		ico_chico.dispose();
+		ico_chica.dispose();
+		ico_chicos.dispose();
+		tray.getItem(0).dispose();
 	}
 
 	/**
