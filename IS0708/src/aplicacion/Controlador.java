@@ -997,6 +997,9 @@ public class Controlador {
 	 */
 	public ArrayList<Turno> getListaTurnosEmpleadosDpto(String dpto) {
 		ArrayList<Turno> turnos = new ArrayList<Turno>();
+		ArrayList<Turno> turnosAux = new ArrayList<Turno>();
+		ArrayList<String> nombres = new ArrayList<String>();
+		Turno tur;
 		try {
 			ArrayList<Empleado> e = new ArrayList<Empleado>();
 			e = getEmpleadosDepartamento(dpto);
@@ -1004,7 +1007,15 @@ public class Controlador {
 
 			for (int i = 0; i < e.size(); i++) {
 				int nvend = e.get(i).getEmplId();
-				turnos=this.getListaTurnosContrato(nvend);
+				//turnos=this.getListaTurnosContrato(nvend);
+				turnosAux=this.getListaTurnosContrato(nvend);
+				for(int j=0;j<turnosAux.size();j++){
+					tur = turnosAux.get(j); 
+					if(!nombres.contains(tur.getDescripcion())){
+						turnos.add(tur);
+						nombres.add(tur.getDescripcion());
+					}
+				}
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
