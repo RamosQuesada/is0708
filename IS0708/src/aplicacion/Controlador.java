@@ -143,7 +143,7 @@ public class Controlador {
 				int felicidad = rs.getInt("Felicidad");
 				int idioma = rs.getInt("Idioma");
 				//TODO cargarlo de la BD
-				int turnoFavorito = -1;
+				int turnoFavorito = rs.getInt("IdTurno");
 				emp = new Empleado(idSuperior, id, nombre, apellido1,
 						apellido2, fechaNac, sexo, email, password, grupo,
 						rango, idContrato, fechaContrato, fechaAlta, color,
@@ -341,7 +341,7 @@ public class Controlador {
 						.getFechaNac(), sexo, empleado.getEmail(), empleado
 						.getPassword(), grupo, Date.valueOf("0000-00-00"), Date
 						.valueOf("0000-00-00"), 0, 0, empleado.getIdioma(), 1,
-				0, 0);
+				empleado.getContratoId(), empleado.getTurnoFavorito());
 	}
 
 	// este metodo lo usa el programa que rellena automaticamente las tablas de
@@ -889,14 +889,15 @@ public class Controlador {
 
 	/**
 	 * 
+	 * Método que devuelve TODOS los turnos de la base de datos los cuales son los
+	 * que pueden tener los empleados
 	 * 
-	 * 
-	 * @return Devuelve lista de los turnos de los empleados en un ArrayList
+	 * @return Devuelve lista de los turnos de TODOS los empleados en un ArrayList
 	 */
 	public ArrayList<Turno> getListaTurnosEmpleados() {
 		ArrayList<Turno> turnos = new ArrayList<Turno>();
 		try {
-			ResultSet rs = _db.obtenListaTurnosEmpleados();
+			ResultSet rs = _db.obtenTodosTurnos();
 			while (rs.next()) {
 				int idTurn = rs.getInt("IdTurno");
 				String descr = rs.getString("Descripcion");
@@ -999,38 +1000,12 @@ public class Controlador {
 		try {
 			ArrayList<Empleado> e = new ArrayList<Empleado>();
 			e = getEmpleadosDepartamento(dpto);
-			// obtener Turnos a partir de los IdTurno's
-
-			ArrayList<Integer> idTurnos = new ArrayList<Integer>();
+			
 
 			for (int i = 0; i < e.size(); i++) {
 				int nvend = e.get(i).getEmplId();
-				ResultSet rs1 = _db.obtenIdTurnoEmpleado(nvend);
-				while (rs1.next()) {
-					// No Repeticiones de Turnos
-					int id = rs1.getInt("IdTurno");
-					if (!idTurnos.contains(id)) {
-						idTurnos.add(id);
-					}
-				}
+				turnos=this.getListaTurnosContrato(nvend);
 			}
-
-			for (int j = 0; j < idTurnos.size(); j++) {
-				ResultSet rs2 = _db.obtenTurno(idTurnos.get(j));
-				while (rs2.next()) {
-					int idTurno = rs2.getInt("IdTurno");
-					String descr = rs2.getString("Descripcion");
-					Time hEntrada = rs2.getTime("HoraEntrada");
-					Time hSalida = rs2.getTime("HoraSalida");
-					Time hInicioDescanso = rs2.getTime("HoraInicioDescanso");
-					Time duracion = rs2.getTime("DuracionDescanso");
-					int descanso = aplicacion.Util.dameMinutos(duracion);
-					Turno t = new Turno(idTurno, descr, hEntrada, hSalida,
-							hInicioDescanso, descanso);
-					turnos.add(t);
-				}
-			}
-
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.err

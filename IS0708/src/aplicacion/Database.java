@@ -975,27 +975,6 @@ public class Database extends Thread {
 	}
 
 	/**
-	 * 
-	 * 
-	 * @return Devuelve un ResultSet con los turnos de los empleados
-	 */
-
-	public ResultSet obtenListaTurnosEmpleados() {
-		ResultSet r = null;
-
-		try {
-			st = con.createStatement();
-			r = st.executeQuery("SELECT * FROM TURNOS ");
-
-		}
-
-		catch (SQLException e) {
-			// TODO: handle exception
-			System.err.println("Error al realizar la consulta Lista de Turnos ");
-		}
-		return r;
-	}
-	/**
 	 * Método que devuelve los mensajes salientes de un empleado ordenados por fecha
 	 * @param id		identificador de usuario
 	 * @param inicio	fecha de inicio
@@ -1186,7 +1165,7 @@ public class Database extends Thread {
 	 * @param nvend		Identificador del empleado
 	 * @return			devuelve la fila correspondiente al turno actual del empleado
 	 */
-	public ResultSet obtenIdTurnoEmpleado(int nvend) {
+	public ResultSet obtenTurnoFavorito(int nvend) {
 		ResultSet r = null;
 		try {
 			st = con.createStatement();
@@ -1194,7 +1173,7 @@ public class Database extends Thread {
 		}
 		catch (SQLException e) {
 			// TODO: handle exception
-			System.err.println("Error al realizar la consulta en departamento ");
+			System.err.println("Error al realizar la consulta del turno favorito del usuario ");
 		}
 		return r;		
 	}
