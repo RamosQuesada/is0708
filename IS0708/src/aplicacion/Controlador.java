@@ -611,6 +611,8 @@ public class Controlador {
 	 */
 	public ArrayList<Contrato> getListaContratosDpto(String dpto) {
 		ArrayList<Contrato> contratos = new ArrayList<Contrato>();
+		ArrayList arrayIdContratos = new ArrayList();
+		Contrato contrato;
 		try {
 			ArrayList<Empleado> e = new ArrayList<Empleado>();
 			e = getEmpleadosDepartamento(dpto);
@@ -618,8 +620,11 @@ public class Controlador {
 
 			for (int i = 0; i < e.size(); i++) {
 				int idContrato = e.get(i).getContratoId();
-				contratos.add(this.getContrato(idContrato));
-
+				//contratos.add(this.getContrato(idContrato));
+				contrato = this.getContrato(idContrato);
+				arrayIdContratos.add(idContrato);
+				if(!arrayIdContratos.contains(contrato))
+					contratos.add(contrato);		
 			}
 
 		} catch (Exception e) {
