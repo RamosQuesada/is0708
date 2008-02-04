@@ -62,6 +62,7 @@ public class TurnoMatic {
 		ListasEmpleados[][] horario = estruc.getDias();
 		ListasEmpleados[] horarioDia =new ListasEmpleados[Util.dameDias(mes, anio)];
 		ArrayList<Trabaja>[] cu = cuadrante.getCuad();
+		ArrayList<Contrato> contratosDep = this.controlador.getListaContratosDpto(this.idDepartamento);
 		ArrayList<Empleado> reser;
 		ArrayList<Empleado> dispo;
 		ArrayList<Empleado> empl;
@@ -91,7 +92,7 @@ public class TurnoMatic {
 				/*	if((e.getContratoId()!=1 && e.getContratoId()!=2 && e.getRango()==1) &&
 							(e.estaDisponible(i,inif,finf,controlador,j,estruc.getNumTrozos()))){*/
 					if((e.getRango()==1) &&
-							(e.estaDisponible(i,inif,finf,controlador,j,estruc.getNumTrozos()))){
+							(e.estaDisponible(i,inif,finf,controlador,contratosDep,j,estruc.getNumTrozos()))){
 						//dispo.add(e);		
 						empl.add(e);
 						turno = e.getTurnoActual();
@@ -152,13 +153,13 @@ public class TurnoMatic {
 			}
 			
 			//dispoDia tiene a los empleados que no son fijos ni rotatorios (empleados con contrato distinto de 1 y de 2 y rango=1)
-			for (int j=0;j<listaE.size();j++) {
+		/*	for (int j=0;j<listaE.size();j++) {
 				e=listaE.get(j);
 				if (e.getContratoId()!=1 && e.getContratoId()!=2 && e.getRango()==1)
 					dispoDia.add(e);
 			}
 	
-			colocaNoFijos(dispoDia, reserDia, emplDia, i, cu);//se colocan para cada dia i del mes 
+			colocaNoFijos(dispoDia, reserDia, emplDia, i, cu);//se colocan para cada dia i del mes */
 		}
 		
 		cuadrante.setCuad(cu);
