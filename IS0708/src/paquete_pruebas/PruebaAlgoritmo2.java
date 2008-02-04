@@ -19,7 +19,7 @@ public class PruebaAlgoritmo2 {
 		prueba.abrirConexion();
 		Controlador c = new Controlador(prueba, true);
 		
-		TurnoMatic alg = new TurnoMatic(12,2007,c,"prueba");
+		TurnoMatic alg = new TurnoMatic(12,2007,c,"pruebaAlg");
 		alg.ejecutaAlgoritmo();
 		alg.imprimeEstructura();
 		alg.imprimeCuadrante(); 
