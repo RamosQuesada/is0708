@@ -927,15 +927,16 @@ public class Empleado implements Drawable {
 	 * @return <i>true</i> si el empleado puede trabajar en el periodo solicitado, <i>false</i> si
 	 * no puede hacerlo (libra, vacaciones, baja...).
 	 */
-	public boolean estaDisponible(int dia, Time iniH, Time finH, Controlador cont, int hora, int numTrozos){
+	public boolean estaDisponible(int dia, Time iniH, Time finH, Controlador cont, ArrayList<Contrato> listaContratos, int hora, int numTrozos){
 		
 		Contrato contrato;
 		String patron;
 		ArrayList<String> turnoStr;
 		java.util.Date today;
-		int diaCiclo;
+		int diaCiclo,n;
 		long difFechas;
 		Turno tur;
+		boolean encontrado;
 		
 		//cálculo del dia en el que nos encontramos dentro del ciclo.
 		today = new java.util.Date();
@@ -949,8 +950,18 @@ public class Empleado implements Drawable {
 		diaCiclo = (int) (difFechas/(milsDia));  		
 		
 		//Obtencion del contrato del empleado.
-		contrato = cont.getContrato(this.getContratoId());
-		if (turnosStr == null)
+		//contrato = cont.getContrato(this.getContratoId());
+		encontrado = false;
+		n = 0;
+		contrato = null;
+		while(!encontrado && n<listaContratos.size()){
+			contrato = listaContratos.get(n);
+			if(this.idContrato == contrato.getNumeroContrato())
+				encontrado = true;			
+			n++;
+		}
+		
+		if (turnosStr == null && contrato!=null) //tratar el error en caso de que no exista el contrato.
 		{
 			patron = contrato.getPatron();
 			turnosStr = obtenerTurnos(patron);
