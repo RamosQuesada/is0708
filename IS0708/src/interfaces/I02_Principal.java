@@ -1345,7 +1345,7 @@ public class I02_Principal {
 		icoGr.dispose();
 		icoPq.dispose();
 		ico_imprimir.dispose();
-		ico_mens.dispose();
+		//ico_mens.dispose();
 		ico_cuadrante.dispose();
 		ico_chico.dispose();
 		ico_chica.dispose();
