@@ -78,7 +78,7 @@ public class Empleado implements Drawable {
 	
 	//Optimizacion Algoritmo (reducción llamadas a BBDD)
 	private ArrayList<Turno> turnoE;
-	private ArrayList<String> turnosStr;
+	private ArrayList<ArrayList<String>> turnosStr;
 	
 	
 	// TODO Eliminar el turno, que irá en el Contrato
@@ -930,7 +930,8 @@ public class Empleado implements Drawable {
 	public boolean estaDisponible(int dia, Time iniH, Time finH, Controlador cont, int hora, int numTrozos){
 		
 		Contrato contrato;
-		String patron, turnoStr;
+		String patron;
+		ArrayList<String> turnoStr;
 		java.util.Date today;
 		int diaCiclo;
 		long difFechas;
@@ -963,7 +964,7 @@ public class Empleado implements Drawable {
 		turnoStr = turnosStr.get(diaCiclo);
 		
 		//COMPROBAR SI TRABAJA UN DIA	
-		if(turnoStr.equals("d"))
+		if(turnoStr.get(0).equals("d"))
 			return false;
 		
 		//COMPROBAR SI ESTA DE VACACIONES ETC
@@ -978,20 +979,24 @@ public class Empleado implements Drawable {
 		//Obtencion del turno que le corresponde.
 		boolean entrado = false;	
 		//Es condicion necesaria que entre.
-		for(int i=0; i<turnoE.size(); i++){
-			if(turnoE.get(i).getIdTurno() == Integer.parseInt(turnoStr))
+		for(int i=0; i<turnoE.size(); i++)
+		{
+			for(int j=0; j<turnoStr.size(); j++)
 			{
-				turnoActual = turnoE.get(i);
-				if ((turnoActual.getHoraEntrada().getTime() > iniH.getTime()) || (turnoActual.getHoraSalida().getTime() < finH.getTime())){
-					return false;
-				} else 
+				if(turnoE.get(i).getIdTurno() == Integer.parseInt(turnoStr.get(j)))
 				{
-					if ((iniH.getTime() >= turnoActual.getHoraDescanso().getTime()) && (iniH.getTime() < Util.calculaFinDescanso(turnoActual.getHoraDescanso(),turnoActual.getTDescanso()).getTime())){
+					turnoActual = turnoE.get(i);
+					if ((turnoActual.getHoraEntrada().getTime() > iniH.getTime()) || (turnoActual.getHoraSalida().getTime() < finH.getTime())){
 						return false;
+					} else 
+					{
+						if ((iniH.getTime() >= turnoActual.getHoraDescanso().getTime()) && (iniH.getTime() < Util.calculaFinDescanso(turnoActual.getHoraDescanso(),turnoActual.getTDescanso()).getTime())){
+							return false;
+						}
 					}
+					entrado = true;
+					break;
 				}
-				entrado = true;
-				break;
 			}
 		}
 		return entrado;
@@ -999,14 +1004,14 @@ public class Empleado implements Drawable {
 	
 	/**
 	 * Este método crea un ArrayList a partir del patrón de turnos del empleado
-	 * de tal forma que cada elemento del ArrayList es el turno que le corresponde
-	 * a cada uno de los días del ciclo.
+	 * de tal forma que cada elemento del ArrayList es cada uno de los turnos
+	 * que le corresponde a cada uno de los días del ciclo.
 	 * @param p patron del contrato
 	 * @return lista con los turnos correspondientes a cado uno de los días.
 	 */
-	public ArrayList<String> obtenerTurnos(String p){
+	public ArrayList<ArrayList<String>> obtenerTurnos(String p){
 		
-		ArrayList<String> turnos = new ArrayList<String>();
+		ArrayList<ArrayList<String>> turnos = new ArrayList<ArrayList<String>>();
 		
 		String tiempo;
 		String tipo;
@@ -1029,10 +1034,30 @@ public class Empleado implements Drawable {
 			}
 			for(int t=0; t<Integer.parseInt(tiempo); t++)
 			{
-				turnos.add(k,tipo);
+				turnos.add(k,obtenerTurnosAux(tipo));
 				k++;
 			}
 		}		
 		return turnos;
 	}
+	
+	public ArrayList<String> obtenerTurnosAux(String p){
+		
+		ArrayList<String> turnos = new ArrayList<String>();
+		String t;
+		
+		for (int i=0; i<p.length(); i++)
+		{
+			t = "";
+			while ((i<p.length()) && (p.charAt(i) != ',')
+					)
+			{
+				t = t + p.charAt(i); 
+				i++;
+			}
+			turnos.add(t);
+		}
+		return turnos;
+	}
+	
 }
