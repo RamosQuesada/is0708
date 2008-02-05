@@ -163,7 +163,7 @@ public class TurnoMatic {
 		}
 		
 		cuadrante.setCuad(cu);
-		//controlador.insertCuadrante(cuadrante);
+		controlador.insertCuadrante(cuadrante);
 		return this.cuadrante;
 	}
 	
