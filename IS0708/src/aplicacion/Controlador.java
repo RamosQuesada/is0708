@@ -622,9 +622,10 @@ public class Controlador {
 				int idContrato = e.get(i).getContratoId();
 				//contratos.add(this.getContrato(idContrato));
 				contrato = this.getContrato(idContrato);
-				arrayIdContratos.add(idContrato);
-				if(!arrayIdContratos.contains(contrato))
+				if(!arrayIdContratos.contains(contrato.getNumeroContrato())){
 					contratos.add(contrato);		
+					arrayIdContratos.add(idContrato);
+				}
 			}
 
 		} catch (Exception e) {
