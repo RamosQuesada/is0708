@@ -31,7 +31,7 @@ public class Mensajeria {
 	/**
 	 * Numero de mensajes a visionar
 	 */
-	private int tamaño;
+	private int tamano;
 	
 	/**
 	 * Identificador del empleado
@@ -47,7 +47,7 @@ public class Mensajeria {
 		this.controlador=controlador;
 		this.id=id;
 		inicio=-1;
-		tamaño=-1;
+		tamano=-1;
 	}
 	
 	/**
@@ -85,7 +85,7 @@ public class Mensajeria {
 	public void eliminarMensajeEntrante(int numRelativo){
 		Mensaje mensajeAEliminar = this.mensajesActuales.get(numRelativo);
 		this.controlador.eliminaMensaje(mensajeAEliminar);
-		dameMensajesEntrantes(inicio,tamaño);
+		dameMensajesEntrantes(inicio,tamano);
 	}
 	
 	
@@ -96,7 +96,7 @@ public class Mensajeria {
 	public void eliminarMensajeSaliente(int numRelativo){
 		Mensaje mensajeAEliminar = this.mensajesActuales.get(numRelativo);
 		this.controlador.eliminaMensaje(mensajeAEliminar);
-		dameMensajesSalientes(inicio,tamaño);
+		dameMensajesSalientes(inicio,tamano);
 	}
 	
 	/**
