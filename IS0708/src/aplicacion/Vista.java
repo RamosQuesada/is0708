@@ -29,6 +29,11 @@ public class Vista {
 	private LanguageChanger l;
 	private Thread conector, loader;
 	
+	/**
+	 * Este hilo conecta con la base de datos. 
+	 * @author Daniel Dionne
+	 *
+	 */
 	public class Conector implements Runnable {
 		public void run() {
 			// Conectar con la base de datos
@@ -62,6 +67,10 @@ public class Vista {
 		}
 	}
 	
+	/**
+	 * Este hilo carga empleados y mensajes de la base de datos
+	 * @author Daniel Dionne
+	 */
 	public class Loader implements Runnable {
 		public synchronized void run() {
 			while (alive) {
