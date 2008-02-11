@@ -43,14 +43,15 @@ public class I02_cuadrEmpl {
 	private int alto, ancho;
 	private Display display;
 	private ResourceBundle _bundle;
-	private int despl; // Este es para cuando movemos una barra, para saber de d�nde la
+	//private int despl; // Este es para cuando movemos una barra, para saber de d�nde la
 				// he cogido
-	private Boolean creando, terminadoDeCrear;
+	//private Boolean creando, terminadoDeCrear;
 	// La variable terminadoDeCrear sirve para que una franja nueva no desaparezca al crearla
 	private Boolean semanal; // 1: muestra cuadrante diario, 0: muestra cuadrante mensual
 	private int empleadoActivo;
 	private int horaInicio, horaFin; // Definen de qu� hora a qu� hora es el
 								// cuadrante
+	private Empleado empleado;
 
 	private int margenIzq, margenDer, margenSup, margenInf; // M�rgenes del cuadrante
 	private int margenNombres; // Un margen para pintar los nombres a la izquierda
@@ -58,16 +59,16 @@ public class I02_cuadrEmpl {
 	private int movimiento;
 	private final Label lGridCuadrante;
 	private final Combo cGridCuadrante;
-	private Empleado empleado;
+//	private Empleado empleado;
 	private Date fecha;
 	private Label lCuadranteTitulo;
-	private MouseListener mouseListenerCuadrSemanal;
-	private MouseListener mouseListenerCuadrMensual;
-	private MouseMoveListener mouseMoveListenerCuadrSemanal;
-	private MouseMoveListener mouseMoveListenerCuadrMensual;
+//	private MouseListener mouseListenerCuadrSemanal;
+//	private MouseListener mouseListenerCuadrMensual;
+//	private MouseMoveListener mouseMoveListenerCuadrSemanal;
+//	private MouseMoveListener mouseMoveListenerCuadrMensual;
 	private I02CuadranteEmpleado cuadrante;
 	private GC gc2;
-	private GC gc3;
+//	private GC gc3;
 	private Vista vista;
 
 	private void calcularTamano() {
@@ -86,47 +87,47 @@ public class I02_cuadrEmpl {
 		canvas.redraw();
 	}
 
-	private void cursor(int i) {
-		switch (i) {
-		case 1:
-			canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_HAND));
-			break;
-		case 2:
-			canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_SIZEE));
-			break;
-		default:
-			canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_ARROW));
-			break;
-		}
+//	private void cursor(int i) {
+//		switch (i) {
+//		case 1:
+//			canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_HAND));
+//			break;
+//		case 2:
+//			canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_SIZEE));
+//			break;
+//		default:
+//			canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_ARROW));
+//			break;
+//		}
+//
+//	}
 
-	}
-
-	private void activarFranja(int franja, int mov) {
-		franjaActiva = cuadrante.empleado.turno.franjas
-				.get(franja);
-		franjaActiva.activarFranja();
-		movimiento = mov;
-		// Movimientos:
-		// 0: Ninguno
-		// 1: Mover inicio
-		// 2: Desplazar
-		// 3: Mover final
-	}
-
-	private void desactivarFranja() {
-		if (franjaActiva!=null)
-			franjaActiva.desactivarFranja();
-		franjaActiva = null;
-		movimiento = 0;
-	}
-
-	private int dameMovimiento() {
-		return movimiento;
-	}
-
-	private Franja dameFranjaActiva() {
-		return franjaActiva;
-	}
+//	private void activarFranja(int franja, int mov) {
+//		franjaActiva = cuadrante.empleado.turno.franjas
+//				.get(franja);
+//		franjaActiva.activarFranja();
+//		movimiento = mov;
+//		// Movimientos:
+//		// 0: Ninguno
+//		// 1: Mover inicio
+//		// 2: Desplazar
+//		// 3: Mover final
+//	}
+//
+//	private void desactivarFranja() {
+//		if (franjaActiva!=null)
+//			franjaActiva.desactivarFranja();
+//		franjaActiva = null;
+//		movimiento = 0;
+//	}
+//
+//	private int dameMovimiento() {
+//		return movimiento;
+//	}
+//
+//	private Franja dameFranjaActiva() {
+//		return franjaActiva;
+//	}
 
 	private void dibujarCuadrante(GC gc) {
 		// Doble buffering para evitar parpadeo
@@ -154,15 +155,15 @@ public class I02_cuadrEmpl {
 		semanal = true;
 		lGridCuadrante.setVisible(true);
 		cGridCuadrante.setVisible(true);
-		canvas.removeMouseListener(mouseListenerCuadrMensual);
-		canvas.removeMouseMoveListener(mouseMoveListenerCuadrMensual);
+	//	canvas.removeMouseListener(mouseListenerCuadrMensual);
+	//	canvas.removeMouseMoveListener(mouseMoveListenerCuadrMensual);
 		redibujar();}
 	public void setMensual() {
 		semanal = false;
 		lGridCuadrante.setVisible(false);
 		cGridCuadrante.setVisible(false);
-		canvas.addMouseListener(mouseListenerCuadrMensual);
-		canvas.addMouseMoveListener(mouseMoveListenerCuadrMensual);
+	//	canvas.addMouseListener(mouseListenerCuadrMensual);
+	//	canvas.addMouseMoveListener(mouseMoveListenerCuadrMensual);
 		redibujar();
 	}
 	/**
@@ -176,8 +177,10 @@ public class I02_cuadrEmpl {
 		this.vista=vista;
 		this._bundle = bundle;
 		this.fecha= fecha;
+		this.empleado=empleado;
 		final GridLayout l = new GridLayout(3,false);
 		c.setLayout(l);
+		
 		
 		lCuadranteTitulo= new Label (c, SWT.LEFT);
 		String fname = lCuadranteTitulo.getFont().getFontData()[0].getName();
@@ -215,8 +218,8 @@ public class I02_cuadrEmpl {
 
 		this.canvas = new Canvas(c, SWT.FILL | SWT.NO_BACKGROUND);
 		canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
-		creando = false;
-		terminadoDeCrear = true;
+	//	creando = false;
+	//	terminadoDeCrear = true;
 
 		franjaActiva = null;
 		movimiento = 0;
@@ -246,16 +249,16 @@ public class I02_cuadrEmpl {
 				
 		
 	
-		mouseListenerCuadrMensual = new MouseListener() {
-			public void mouseDown(MouseEvent e){};
-			public void mouseUp(MouseEvent e){};
-			public void mouseDoubleClick(MouseEvent e){};
-		};
-		mouseMoveListenerCuadrMensual = new MouseMoveListener() {
-			public void mouseMove(MouseEvent e) {
-				
-			}
-		};
+//		mouseListenerCuadrMensual = new MouseListener() {
+//			public void mouseDown(MouseEvent e){};
+//			public void mouseUp(MouseEvent e){};
+//			public void mouseDoubleClick(MouseEvent e){};
+//		};
+//		mouseMoveListenerCuadrMensual = new MouseMoveListener() {
+//			public void mouseMove(MouseEvent e) {
+//				
+//			}
+//		};
 		if (diario) setSemanal(); else setMensual();
 	}
 
@@ -275,7 +278,9 @@ public class I02_cuadrEmpl {
 	public void actualizaFecha(Date fecha){
 		
 		this.fecha=fecha;
-		lCuadranteTitulo.setText(Util.dateAString(fecha));
+		//"BIENVENIDO "+empleado.getNombre().toUpperCase()+"  :"+Util.dateAString(new Date(System.currentTimeMillis()))
+
+		lCuadranteTitulo.setText("BIENVENIDO "+empleado.getNombre().toUpperCase()+Util.dateAString(fecha));
 		this.cuadrante.actualizarFecha(fecha,gc2);
 		this.redibujar();
 	}
