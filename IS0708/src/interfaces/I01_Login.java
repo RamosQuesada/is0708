@@ -14,7 +14,7 @@ import aplicacion.Database;
  * Interfaz de usuario I-01 :: Identificaci�n
  * @author Daniel Dionne
  */
-public class I01_Login extends Thread{
+public class I01_Login {
 	private Shell padre = null;
 	private ResourceBundle bundle;
 	private int numeroVendedor;
@@ -33,7 +33,6 @@ public class I01_Login extends Thread{
 		numeroVendedor = 0;
 		password = "";
 		botonPulsado = -1;
-		this.start();
 	}
 		
 	/**	
