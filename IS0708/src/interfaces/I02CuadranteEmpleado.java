@@ -19,10 +19,10 @@ import aplicacion.Turno;
 import aplicacion.Util;
 import aplicacion.Vista;
 
-public class I02CuadranteEmpleado extends Thread{
+public class I02CuadranteEmpleado {
 	//private final int anchoLados = 5; // El ancho de los lados de una franja, de donde se coge para estirarla y encogerla
 	public Vista vista;
-	public boolean redibujar=false;
+	public boolean redibujar;
 	private Display display;
 	private int ancho;
 	private int alto;
@@ -227,10 +227,11 @@ public class I02CuadranteEmpleado extends Thread{
 		actualizarTurnos(gc);
 	}
 
-	public synchronized void actualizarTurnos(GC gc){
-		thread = new I02_threadEmpl(this,superior,gc);
-		redibujar=false;
+	public void actualizarTurnos(GC gc){
+		thread = new I02_threadEmpl(this);
+		//redibujar=false;
 		thread.start();
+		
 //		while(!redibujar){try {
 //			sleep(100);
 //		} catch (InterruptedException e) {
@@ -249,6 +250,7 @@ public class I02CuadranteEmpleado extends Thread{
 				dibujarTurno(gc,cont,this.horaFinDescanso.get(cont),this.horasFin.get(cont),"INFOR.");
 			}
 		}
+		this.superior.redibujar=true;
 		
 		
 		

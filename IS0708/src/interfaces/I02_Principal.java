@@ -810,6 +810,7 @@ public class I02_Principal {
 		final I02_cuadrEmpl cuadrante = new I02_cuadrEmpl(cCuadrantesDer,
 				false, bundle,empleado,fecha,vista);
 		cuadrante.setSemanal();
+		
 	
 		// Creamos el calendario
 		final DateTime calendario = new DateTime(cBotones, SWT.CALENDAR);
