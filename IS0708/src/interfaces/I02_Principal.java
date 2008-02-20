@@ -154,6 +154,7 @@ public class I02_Principal {
 				false, 1, 1));
 		cDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
 		cDepartamentos.select(0);
+		
 
 		// Un canvas para albergar el gráfico de los cuadrantes
 		// NO_BACKGROUND + doble buffer para evitar parpadeo
@@ -809,6 +810,7 @@ public class I02_Principal {
 		final I02_cuadrEmpl cuadrante = new I02_cuadrEmpl(cCuadrantesDer,
 				false, bundle,empleado,fecha,vista);
 		cuadrante.setSemanal();
+	
 		// Creamos el calendario
 		final DateTime calendario = new DateTime(cBotones, SWT.CALENDAR);
 		calendario.addSelectionListener(new SelectionAdapter() {

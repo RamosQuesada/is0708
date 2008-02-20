@@ -19,9 +19,10 @@ import aplicacion.Turno;
 import aplicacion.Util;
 import aplicacion.Vista;
 
-public class I02CuadranteEmpleado {
+public class I02CuadranteEmpleado extends Thread{
 	//private final int anchoLados = 5; // El ancho de los lados de una franja, de donde se coge para estirarla y encogerla
-	private Vista vista;
+	public Vista vista;
+	public boolean redibujar=false;
 	private Display display;
 	private int ancho;
 	private int alto;
@@ -37,15 +38,16 @@ public class I02CuadranteEmpleado {
 	public Empleado empleado;
 	private int tamano =8;
 	private ResourceBundle _bundle;
-	private Date fecha;
+	public Date fecha;
 	
-	private ArrayList<Integer> turnos;
-	private ArrayList<Float> horasInicio;
-	private ArrayList<Float> horasFin;
-	private ArrayList<Float> horaComienzoDescanso;
-	private ArrayList<Float> horaFinDescanso;
-	
-	private ArrayList<Turno> tiposTurno;
+	public ArrayList<Integer> turnos;
+	public ArrayList<Float> horasInicio;
+	public ArrayList<Float> horasFin;
+	public ArrayList<Float> horaComienzoDescanso;
+	public ArrayList<Float> horaFinDescanso;
+	public ArrayList<Turno> tiposTurno;
+	private I02_threadEmpl thread;
+	private I02_cuadrEmpl superior;
 	private GC gc;
 	
 
@@ -74,10 +76,11 @@ public class I02CuadranteEmpleado {
 	 */
 	public I02CuadranteEmpleado(Display d, int subdivisiones, int horaInicio, int horaFin, int margenIzq, 
 			int margenDer, int margenSup, int margenInf, int margenNombres,ResourceBundle bundle,Empleado empleado,
-			Date fecha,Vista vista) {
+			Date fecha,Vista vista,I02_cuadrEmpl sup) {
 		display = d;
 		_bundle=bundle;
 		this.vista=vista;
+		this.superior=sup;
 		this.empleado=empleado;
 		this.fecha=fecha;
 		this.horasFin= new ArrayList<Float>();
@@ -210,17 +213,6 @@ public class I02CuadranteEmpleado {
 		}
 		gc.setLineStyle(SWT.LINE_SOLID);
 		dibujarTurnos(gc);
-	//	dibujarTurno(gc,0,10.5f,12.5f,"INFOR.");
-	//	dibujarTurno(gc,1,12,13,"FRUTE.");
-	//	dibujarTurno(gc,2,15,16,"PELUQ.");
-	//	dibujarTurno(gc,3,15,23,"FRUTE.");
-	//	dibujarTurno(gc,4,10,12,"CAFET.");
-	//	dibujarTurno(gc,4,15,16,"CAFET.");
-	//	dibujarTurno(gc,5,17,18,"VIAJE.");
-	//	dibujarTurno(gc,6,9,17, "VIAJE.");
-	//	dibujarTurno(gc,0,16,17,"VIAJE.");
-	//	dibujarTurno(gc,6,18,23,"VIAJE.");
-		//this.dibujarLineaHorizontal(gc, 15.0f);
 		int num_subdivisiones=(int)((this.subdivisiones)*(this.horaFin-this.horaInicio)+1);
 		for(int cont=0;cont<num_subdivisiones;cont++){
 			float fraccion = 1.0f/this.subdivisiones;
@@ -235,94 +227,31 @@ public class I02CuadranteEmpleado {
 		actualizarTurnos(gc);
 	}
 
-	public void actualizarTurnos(GC gc){
-		Date fechaActual;
-		this.horasFin= new ArrayList<Float>();
-		this.horasInicio = new ArrayList<Float>();
-		this.horaFinDescanso = new ArrayList<Float>();
-		this.horaComienzoDescanso =  new ArrayList<Float>();
-		if(fecha==null){
-		fecha=new Date(System.currentTimeMillis());}
-		GregorianCalendar calendario = new GregorianCalendar();
-		//System.out.println(ahoraCal.getClass());
-		//calendario.setFirstDayOfWeek(calendario.MONDAY);
-		//calendario.set(fecha.getYear(),fecha.getMonth(),fecha.getDate());
-		//calendario.setGregorianChange(fecha);
-	//	System.out.println("pruebasel" +Util.dateAString(fecha));
-		
-
-		calendario.set(GregorianCalendar.DAY_OF_MONTH, fecha.getDate());
-		calendario.set(GregorianCalendar.MONTH, fecha.getMonth());
-		calendario.set(GregorianCalendar.YEAR, fecha.getYear());
-//		System.out.println(calendario.get(GregorianCalendar.DAY_OF_WEEK));
-		int numDias=0;
-		while(calendario.get(GregorianCalendar.DAY_OF_WEEK)!=6){
-			calendario.add(Calendar.DATE, -1);
-			numDias++;
-		}
-		tiposTurno= this.vista.getControlador().getListaTurnosEmpleados();
-		for(int cont=0;cont<7;cont++){
-			fecha= Date.valueOf(Util.aFormatoDate(Integer.toString(
-				calendario.get(GregorianCalendar.YEAR)),
-				Integer.toString(
-					calendario.get(GregorianCalendar.MONTH)+1),
-				Integer.toString(
-					calendario.get(GregorianCalendar.DATE)+cont)
-				));
-
-		//	System.out.println("FECHA REAL:"+fecha);
-			//System.out.println(Util.dateAString(fecha));
-			int turno = this.vista.getControlador().getTurnoEmpleadoDia(fecha, this.empleado.getEmplId());
-			
-			Time horaEntrada,horaSalida,horaDescanso;
-			int duracionDescanso;
-			Float horaEntradaFloat=0.0f;
-			Float horaSalidaFloat=0.0f;
-			Float horaDescansoFloat = 0.0f;
-			Float finHoraDescansoFloat = 0.0f;
-		//	if(turno==0){System.out.println("vacio");}
-			if(turno!=0){
-			//	System.out.println("turno no vacio");
-				int actual=0;
-				
-				while (turno!=tiposTurno.get(actual).getIdTurno())actual++;
-				if(tiposTurno.get(actual).getIdTurno()==turno){
-					horaEntrada=tiposTurno.get(actual).getHoraEntrada();
-					horaSalida=tiposTurno.get(actual).getHoraSalida();
-					horaDescanso=tiposTurno.get(actual).getHoraDescanso();
-					duracionDescanso=tiposTurno.get(actual).getTDescanso();
-					
-					horaEntradaFloat=(float)(horaEntrada.getHours()+horaEntrada.getMinutes()/60.0f);
-					horaSalidaFloat=(float)(horaSalida.getHours()+horaSalida.getMinutes()/60.0f);
-					horaDescansoFloat=(float)(horaDescanso.getHours()+horaDescanso.getMinutes()/60.0f);
-					finHoraDescansoFloat = (float)(horaDescansoFloat + ((float)(duracionDescanso)/60));
-					this.horasInicio.add(cont,horaEntradaFloat);
-					this.horasFin.add(cont,horaSalidaFloat);
-					this.horaComienzoDescanso.add(cont,horaDescansoFloat);
-					this.horaFinDescanso.add(cont,finHoraDescansoFloat);
-				}
-			}
-			else{
-				this.horasInicio.add(cont,0.0f);
-				this.horasFin.add(cont,0.0f);
-				this.horaComienzoDescanso.add(cont,0.0f);
-				this.horaFinDescanso.add(cont,0.0f);
-			}
-			
-			//GC gc2 = new GC(bufferImage);
-			dibujarTurno(gc,cont,horasInicio.get(cont),horaComienzoDescanso.get(cont),"INFOR.");
-		
-		dibujarTurno(gc,cont,horaFinDescanso.get(cont),horasFin.get(cont),"INFOR.");
-		
-		}
-		
+	public synchronized void actualizarTurnos(GC gc){
+		thread = new I02_threadEmpl(this,superior,gc);
+		redibujar=false;
+		thread.start();
+//		while(!redibujar){try {
+//			sleep(100);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}}
+//		dibujaTurnosCargados(gc);
 	}
+	
+	
 	
 	public void dibujaTurnosCargados(GC gc){			
 		for(int cont=0;cont<7;cont++){
-			dibujarTurno(gc,cont,this.horasInicio.get(cont),this.horaComienzoDescanso.get(cont),"INFOR.");
-			dibujarTurno(gc,cont,this.horaFinDescanso.get(cont),this.horasFin.get(cont),"INFOR.");
+			if(horasInicio.size()>cont){
+				dibujarTurno(gc,cont,this.horasInicio.get(cont),this.horaComienzoDescanso.get(cont),"INFOR.");
+				dibujarTurno(gc,cont,this.horaFinDescanso.get(cont),this.horasFin.get(cont),"INFOR.");
+			}
 		}
+		
+		
+		
 	}
 	
 	public void dibujarTurnos(GC gc){

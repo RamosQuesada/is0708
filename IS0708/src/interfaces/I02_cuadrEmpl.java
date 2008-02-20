@@ -34,12 +34,13 @@ import aplicacion.Vista;
  * @author Daniel
  *
  */
-public class I02_cuadrEmpl {
+public class I02_cuadrEmpl extends Thread{
 	/* TODO
 	 * Las barras de tama�o cero se quedan
 	 * bug: al hacer muchas franjas peque�itas, no se pegan bien (ver si sigue pasando)
 	 */
 	private Canvas canvas;
+	public boolean redibujar;
 	private int alto, ancho;
 	private Display display;
 	private ResourceBundle _bundle;
@@ -71,65 +72,34 @@ public class I02_cuadrEmpl {
 //	private GC gc3;
 	private Vista vista;
 
+	public synchronized void run(){
+		while(true){
+			try {
+				wait(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			this.canvas = new Canvas(canvas, SWT.FILL | SWT.NO_BACKGROUND);
+			canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
+			this.redibujar();
+		}
+	}
 	private void calcularTamano() {
 		ancho = canvas.getClientArea().width;
 		alto = canvas.getClientArea().height;
 		cuadrante.setTamano(ancho, alto);
 	}
 
-	private void redibujar() {
-		// Redibuja s�lo las franjas que corresponden, para evitar calculos
-		// innecesarios
-		// TODO �Merece la pena? Hay que ver si hay alguna diferencia en el rendimiento.
-		// c.redraw(0, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1),
-		// ancho, 18, false);
-		//c.redraw(0, 0, ancho, alto, false);
+
+
+	public void redibujar() {
 		canvas.redraw();
 	}
 
-//	private void cursor(int i) {
-//		switch (i) {
-//		case 1:
-//			canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_HAND));
-//			break;
-//		case 2:
-//			canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_SIZEE));
-//			break;
-//		default:
-//			canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_ARROW));
-//			break;
-//		}
-//
-//	}
 
-//	private void activarFranja(int franja, int mov) {
-//		franjaActiva = cuadrante.empleado.turno.franjas
-//				.get(franja);
-//		franjaActiva.activarFranja();
-//		movimiento = mov;
-//		// Movimientos:
-//		// 0: Ninguno
-//		// 1: Mover inicio
-//		// 2: Desplazar
-//		// 3: Mover final
-//	}
-//
-//	private void desactivarFranja() {
-//		if (franjaActiva!=null)
-//			franjaActiva.desactivarFranja();
-//		franjaActiva = null;
-//		movimiento = 0;
-//	}
-//
-//	private int dameMovimiento() {
-//		return movimiento;
-//	}
-//
-//	private Franja dameFranjaActiva() {
-//		return franjaActiva;
-//	}
 
-	private void dibujarCuadrante(GC gc) {
+	public void dibujarCuadrante(GC gc) {
 		// Doble buffering para evitar parpadeo
 		if (ancho != 0 && alto != 0) {
 			Image bufferImage = new Image(display, ancho, alto);
@@ -144,7 +114,7 @@ public class I02_cuadrEmpl {
 			if (semanal) cuadrante.dibujarCuadranteDia(gc2, empleadoActivo);
 			else cuadrante.dibujarCuadranteMes(gc2);
 			gc.drawImage(bufferImage, 0, 0);
-			//bufferImage.dispose();
+			
 		}
 	}
 	private void setSubdivisiones(int i) {
@@ -231,10 +201,11 @@ public class I02_cuadrEmpl {
 		empleadoActivo = -1;
 		horaInicio = 9;
 		horaFin = 23;
-		cuadrante = new I02CuadranteEmpleado(display, 4, horaInicio, horaFin, margenIzq, margenDer, margenSup, margenInf, margenNombres,_bundle,
-				empleado,fecha,vista);
-		calcularTamano();
 		display = canvas.getDisplay();
+		cuadrante = new I02CuadranteEmpleado(display, 4, horaInicio, horaFin, margenIzq, margenDer, margenSup, margenInf, margenNombres,_bundle,
+				empleado,fecha,vista,this);
+		calcularTamano();
+		
 		canvas.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent event) {
 				dibujarCuadrante(event.gc);
@@ -260,7 +231,11 @@ public class I02_cuadrEmpl {
 //			}
 //		};
 		if (diario) setSemanal(); else setMensual();
+		
+
+
 	}
+
 
 	public Boolean enAreaDibujo(int x, int y) {
 		Boolean b = true;
