@@ -13,20 +13,17 @@ import aplicacion.Util;
 public class I02_threadEmpl extends Thread{
 	
 	private I02CuadranteEmpleado cuadrante;
-	private I02_cuadrEmpl cuadranteSup;
-	private GC gc;
 	private static boolean corriendo=false;
-	public I02_threadEmpl(I02CuadranteEmpleado cuadrante,I02_cuadrEmpl cuadrSup,GC gc){
+	public I02_threadEmpl(I02CuadranteEmpleado cuadrante){
 		this.cuadrante=cuadrante;
-		this.cuadranteSup=cuadrSup;
-		this.gc=gc;
 	}
 	
 	public synchronized void run(){
 		System.out.println("thread");
-		
+		System.out.println("nace");
 		while(corriendo){try {
-			sleep(100);
+			wait(100);
+			System.out.println("vive");
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -108,7 +105,8 @@ public class I02_threadEmpl extends Thread{
 		}
 			
 			this.cuadrante.redibujar=true;
-		corriendo=false;
+			corriendo=false;
+			System.out.println("muere");
 	}
 
 }

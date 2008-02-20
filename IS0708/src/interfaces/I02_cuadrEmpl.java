@@ -72,19 +72,7 @@ public class I02_cuadrEmpl extends Thread{
 //	private GC gc3;
 	private Vista vista;
 
-//	public synchronized void run(){
-//		while(true){
-//			try {
-//				wait(100);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			this.canvas = new Canvas(canvas, SWT.FILL | SWT.NO_BACKGROUND);
-//			canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
-//			this.redibujar();
-//		}
-//	}
+
 	private void calcularTamano() {
 		ancho = canvas.getClientArea().width;
 		alto = canvas.getClientArea().height;
@@ -206,10 +194,11 @@ public class I02_cuadrEmpl extends Thread{
 				empleado,fecha,vista,this);
 		calcularTamano();
 		
+		
+		
 		canvas.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent event) {
 				dibujarCuadrante(event.gc);
-				redibujar();
 			}
 		});
 		canvas.addControlListener(new ControlListener() {
@@ -218,6 +207,7 @@ public class I02_cuadrEmpl extends Thread{
 				calcularTamano();
 			}
 		});			
+		
 				
 		
 	
@@ -232,7 +222,6 @@ public class I02_cuadrEmpl extends Thread{
 //			}
 //		};
 		if (diario) setSemanal(); else setMensual();
-		
 
 
 	}

@@ -79,6 +79,8 @@ public class Vista {
 				// Cargar mensajes
 				loadMensajes();
 				
+				
+				
 				try {
 					// TODO Espera 1/2 minuto (¿cómo lo dejamos?)
 					wait(20000);
