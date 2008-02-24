@@ -55,19 +55,37 @@ public class I30_Info_BD {
 	public void mostrarVentana() {
 		final Shell shell = new Shell(_padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 		final Image icono = new Image(null, I30_Info_BD.class.getResourceAsStream("icoPq.gif"));
-		// Establecemos el layout del shell
-		//shell.setSize(150, 150);
+		// Establecemos el layout del shell		
 		GridLayout lShell = new GridLayout();
 		lShell.numColumns = 2;
-		shell.setLayout(lShell);
+		shell.setLayout(lShell);	
 		shell.setText("Configuracion de la BD");
 		shell.setImage(icono);
 		final Label IP_label = new Label(shell, SWT.LEFT);
-		final Text IP_text = new Text(shell, SWT.LEFT);
+		final Text IP_text = new Text(shell, SWT.LEFT | SWT.BORDER);
+		GridData data = new GridData();
+		data.widthHint = 100;
+		IP_label.setLayoutData(data);
+		data = new GridData();
+		data.widthHint = 100;
+		IP_text.setLayoutData(data);
 		final Label username_label = new Label(shell, SWT.LEFT);
-		final Text username_text = new Text(shell, SWT.LEFT);
+		final Text username_text = new Text(shell, SWT.LEFT | SWT.BORDER);
+		data = new GridData();
+		data.widthHint = 100;
+		username_label.setLayoutData(data);
+		data = new GridData();
+		data.widthHint = 100;
+		username_text.setLayoutData(data);
 		final Label password_label = new Label(shell, SWT.LEFT);		
-		final Text password_text = new Text(shell, SWT.LEFT);
+		final Text password_text = new Text(shell, SWT.LEFT | SWT.BORDER);
+		data = new GridData();
+		data.widthHint = 100;
+		password_label.setLayoutData(data);
+		data = new GridData();
+		data.widthHint = 100;
+		password_text.setLayoutData(data);
+		
 		//IP_label.setText("ServerIP");
 		//username_label.setText("ServerUsername");
 		//password_label.setText("ServerPassword");
@@ -111,7 +129,7 @@ public class I30_Info_BD {
 				String username=username_text.getText();
 				String password=password_text.getText();
 				if ((ip=="")||(username=="")||(password=="")) {
-					final Shell shell2 = new Shell(shell, SWT.CLOSE | SWT.APPLICATION_MODAL);
+					/*final Shell shell2 = new Shell(shell, SWT.CLOSE | SWT.APPLICATION_MODAL);
 					GridLayout lShell2 = new GridLayout();
 					lShell2.numColumns = 1;
 					shell2.setLayout(lShell2);
@@ -136,7 +154,11 @@ public class I30_Info_BD {
 						if (!shell2.getDisplay().readAndDispatch()) {
 							shell2.getDisplay().sleep();
 						}
-					}					
+					}*/
+					MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_ERROR | SWT.OK);
+					messageBox.setText ("Error");
+					messageBox.setMessage (_bundle.getString("I30_err_empty"));
+					messageBox.open();
 				}
 				else {	
 					FileOutputStream os;
@@ -179,7 +201,7 @@ public class I30_Info_BD {
 					.getBounds().height
 					/ 2 + _padre.getBounds().y - shell.getSize().y / 2);
 		else
-			shell.setLocation(250, 250);
+			shell.setLocation(400, 400);
 		
 		shell.open();
 		shell.setVisible(true);
