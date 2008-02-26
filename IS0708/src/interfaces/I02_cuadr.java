@@ -168,7 +168,7 @@ public class I02_cuadr {
 		// 2: Desplazar
 		// 3: Mover final
 	}
-	public I02_cuadr(Composite c, Boolean diario, ArrayList<Empleado> empleados, Date fecha) {
+	public I02_cuadr(Composite c, Boolean diario, ArrayList<Empleado> empleados, Cuadrante cuadrante) {
 		this.diario = diario;
 		this.empleados = empleados;
 		final GridLayout l = new GridLayout(3,false);
@@ -177,8 +177,8 @@ public class I02_cuadr {
 		final Label lCuadranteTitulo= new Label (c, SWT.LEFT);
 		String fname = lCuadranteTitulo.getFont().getFontData()[0].getName();
 		lCuadranteTitulo.setFont(new Font(c.getDisplay(),fname,15,0));
-		String sFecha = fecha.getDate() + " de " + fecha.getMonth() + " de " + fecha.getYear(); 
-		lCuadranteTitulo.setText(sFecha);
+		//String sFecha = fecha.getDate() + " de " + fecha.getMonth() + " de " + fecha.getYear(); 
+		//lCuadranteTitulo.setText(sFecha);
 		lCuadranteTitulo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		
 		lGridCuadrante= new Label (c, SWT.LEFT);

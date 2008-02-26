@@ -1,5 +1,6 @@
 package aplicacion;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -23,16 +24,19 @@ public class Vista {
 	private I01_Login login; 
 	private I02_Principal i02;
 	private boolean alive = true;
-	private ArrayList<Empleado> empleados = new ArrayList<Empleado>();
-	private ArrayList<Mensaje> mensajesEntrantes = new ArrayList<Mensaje>();
 	private int num_men_hoja = 10;
 	private LanguageChanger l;
 	private Thread conector, loader;
+
+	/** Caché local: Lista de empleados que trabajan en el mismo departamento que el usuario actual*/
+	private ArrayList<Empleado> empleados = new ArrayList<Empleado>();
 	
+	/** Caché local: Lista de mensajes entrantes del usuario actual*/
+	private ArrayList<Mensaje> mensajesEntrantes = new ArrayList<Mensaje>();
+
 	/**
 	 * Este hilo conecta con la base de datos. 
 	 * @author Daniel Dionne
-	 *
 	 */
 	public class Conector implements Runnable {
 		public void run() {
@@ -94,11 +98,11 @@ public class Vista {
 	 * <li>Crea el display y el shell
 	 * <li>Crea el gestor de idiomas
 	 * <li>Conecta con la base de datos
-	 * <li>Identifica al usuario
+	 * <li>Identifica al usuario</ul>
 	 * @param controlador el controlador de la aplicación
 	 * @param db la base de datos de la aplicación
 	 */
-	public Vista (Display d, Controlador controlador, Database db) {			
+	public Vista (Display d, Controlador controlador, Database db) {
 		this.controlador = controlador;
 		this.db = db;
 		controlador.setVista(this);
@@ -199,6 +203,7 @@ public class Vista {
 		loader.interrupt();
 		display.dispose();
 	}
+	
 	/**
 	 * Devuelve el display de la aplicación.
 	 * @return el display de la aplicación
@@ -425,5 +430,13 @@ public class Vista {
 	 */
 	public void setProgreso(String s, int i){
 		i02.setProgreso(s,i);
+	}
+
+	/**
+	 * Devuelve la fecha actual
+	 * @return la fecha actual
+	 */
+	public Date getFechaActual() {
+		return controlador.getFechaActual();
 	}
 }

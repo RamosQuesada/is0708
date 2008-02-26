@@ -34,12 +34,11 @@ public class I02_Principal {
 	private Display display;
 	private ResourceBundle bundle;
 	private Locale locale;
-	private Image icoGr, icoPq, ico_imprimir, ico_mens,
+	private Image icoGr, icoPq, ico_imprimir,
 			ico_cuadrante, ico_chico, ico_chica, ico_chicos;
-	private Cuadrante cuadranteActual;
 	private Label lEstado;
 	private ProgressBar pbEstado;
-	private Date fecha;
+	private Date fechaSeleccionada;
 	private ImageData Img;
 	private Tray tray;
 
@@ -131,7 +130,7 @@ public class I02_Principal {
 		// con la fecha del calendario (definido más abajo)
 		// en la variable cuadranteActual
 
-		// Crear el tabItem
+		// Crear el item del tabFolder
 		TabItem tabItemCuadrantes = new TabItem(tabFolder, SWT.NONE);
 		tabItemCuadrantes.setText(bundle.getString("Cuadrantes"));
 		tabItemCuadrantes.setImage(ico_cuadrante);
@@ -145,13 +144,10 @@ public class I02_Principal {
 		// Componentes del composite
 		Label lDepartamentos = new Label(cCuadrantes, SWT.NONE);
 		lDepartamentos.setText(bundle.getString("I02_lab_Dpto"));
-		lDepartamentos.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
-				false, 1, 1));
+		lDepartamentos.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 
-		Combo cDepartamentos = new Combo(cCuadrantes, SWT.BORDER
-				| SWT.READ_ONLY);
-		cDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
-				false, 1, 1));
+		Combo cDepartamentos = new Combo(cCuadrantes, SWT.BORDER | SWT.READ_ONLY);
+		cDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		cDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
 		cDepartamentos.select(0);
 		
@@ -159,42 +155,22 @@ public class I02_Principal {
 		// Un canvas para albergar el gráfico de los cuadrantes
 		// NO_BACKGROUND + doble buffer para evitar parpadeo
 		Composite cCuadrante = new Composite(cCuadrantes, SWT.BORDER);
-		cCuadrante.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
-				3, 5));
+		cCuadrante.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 5));
 
-		// final I02_cuadr cuadrante = new I02_cuadr(cCuadrante, false,
-		// vista.getEmpleado(null,
-		// vista.getEmpleadoActual().getIdDepartamento(), null, null, null,
-		// null));
+		I_Cuadrante ic = new I_Cuadrante(2,2008,"mi_dep");
+		ic.setConfig(3, 9, 22);
+		ic.setEmpleados(vista.getEmpleados());
+		ic.setTamano(200, 200);
+		
+//		final I02_cuadr cuadrante = new I02_cuadr(cCuadrante, false,
+//				vista.getEmpleados(), fechaSeleccionada);
 
-		// TODO quitar de aquí la lista de empleados
-		final ArrayList<Empleado> empleados;
-		empleados = new ArrayList<Empleado>();
-/*
-		empleados.
-		e1.turno.franjaNueva(new Posicion(9, 6), new Posicion(14, 0));
-		e1.turno.franjaNueva(new Posicion(16, 0), new Posicion(18, 0));
-		e2.turno.franjaNueva(new Posicion(15, 0), new Posicion(22, 0));
-		e3.turno.franjaNueva(new Posicion(12, 3), new Posicion(16, 0));
-		e3.turno.franjaNueva(new Posicion(18, 0), new Posicion(22, 3));
-		e4.turno.franjaNueva(new Posicion(15, 0), new Posicion(19, 9));
-		e5.turno.franjaNueva(new Posicion(12, 0), new Posicion(16, 0));
-		e6.turno.franjaNueva(new Posicion(10, 5), new Posicion(14, 0));
-		e6.turno.franjaNueva(new Posicion(16, 10), new Posicion(19, 0));
-
-		empleados.add(e1);
-		empleados.add(e2);
-		empleados.add(e3);
-		empleados.add(e4);
-		empleados.add(e5);
-		empleados.add(e6);
-*/
+	
 		Label lCalendario = new Label(cCuadrantes, SWT.LEFT);
 		lCalendario.setText(bundle.getString("Calendario"));
 		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,false, 2, 1));
 
-		final DateTime calendario = new DateTime(cCuadrantes, SWT.CALENDAR
-				| SWT.SHORT);
+		final DateTime calendario = new DateTime(cCuadrantes, SWT.CALENDAR | SWT.SHORT);
 		calendario.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				String[] meses = { bundle.getString("enero"),
@@ -217,9 +193,9 @@ public class I02_Principal {
 			}
 		});
 		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false,2, 1));
-		Date fecha = new Date(calendario.getYear(), calendario.getMonth(),
+		fechaSeleccionada = new Date(calendario.getYear(), calendario.getMonth(),
 				calendario.getDay());
-//		final I02_cuadr cuadrante = new I02_cuadr(cCuadrante, false, empleados, fecha);
+		
 //		 Falta añadir el combobox de los intervalos
 /*		e1.anadeGUI(cCuadrante,9,23,3, true);
 		e2.anadeGUI(cCuadrante,9,23,3, false);
@@ -808,7 +784,7 @@ public class I02_Principal {
 		// lCuadr1.setText("Aquí se mostrarían los cuadrantes");
 		Empleado empleado=this.vista.getEmpleadoActual();
 		final I02_cuadrEmpl cuadrante = new I02_cuadrEmpl(cCuadrantesDer,
-				false, bundle,empleado,fecha,vista);
+				false, bundle,empleado,fechaSeleccionada,vista);
 		cuadrante.setSemanal();
 		
 	
@@ -833,11 +809,11 @@ public class I02_Principal {
 						Integer.toString(day))
 						);
 						*/
-				fecha= Date.valueOf(Util.aFormatoDate(Integer.toString(year),
+				fechaSeleccionada= Date.valueOf(Util.aFormatoDate(Integer.toString(year),
 						Integer.toString(month+1),
 						Integer.toString(day))
 						);
-				cuadrante.actualizaFecha(fecha);
+				cuadrante.actualizaFecha(fechaSeleccionada);
 			}
 		});
 		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false,

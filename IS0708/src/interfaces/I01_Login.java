@@ -1,6 +1,8 @@
 package interfaces;
 
 import org.eclipse.swt.*;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -41,7 +43,7 @@ public class I01_Login {
 	 * @author Daniel Dionne
 	 */
 	public synchronized void mostrarVentana(String s) {
-		Image fondo = new Image(padre.getDisplay(), I01_Login.class.getResourceAsStream("intro.png"));
+		final Image fondo = new Image(padre.getDisplay(), I01_Login.class.getResourceAsStream("intro.png"));
 		dialog = new Shell (padre.getDisplay(), SWT.NONE | SWT.APPLICATION_MODAL);
 		
 		// Esto hace que los labels no tengan fondo
@@ -75,9 +77,19 @@ public class I01_Login {
 		tUsuario.setTextLimit(8);
 		lPassword.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true, 3, 1));
 		lPassword.setText(bundle.getString("Contrasena"));
-		//TODO quitar esto
-		tUsuario.setText("12345678");
-		tPassword.setText("boss");
+
+		// Al seleccionar tUsuario, se selecciona todo el texto automáticamente
+		tUsuario.addFocusListener(new FocusListener(){
+			public void focusGained(FocusEvent arg0) {tUsuario.selectAll();}
+			public void focusLost(FocusEvent arg0) {}
+		});
+		
+		// Al seleccionar tPassword, se selecciona todo el texto automáticamente
+		tPassword.addFocusListener(new FocusListener(){
+			public void focusGained(FocusEvent arg0) {tPassword.selectAll();}
+			public void focusLost(FocusEvent arg0) {}
+		});
+		
 		
 		tPassword.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 5, 1));
 
@@ -94,6 +106,7 @@ public class I01_Login {
 		SelectionAdapter sabCancelar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				botonPulsado=0;
+				fondo.dispose();
 				dialog.dispose();
 			}
 		};
@@ -129,6 +142,7 @@ public class I01_Login {
 						if (!dialog.isDisposed())
 							dialog.setCursor(new Cursor(dialog.getDisplay(), SWT.CURSOR_ARROW));
 						dialog.dispose();
+						fondo.dispose();
 					} catch (NumberFormatException exception) {
 						MessageBox messageBox = new MessageBox (dialog, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
 						messageBox.setText (bundle.getString("Error"));
@@ -145,10 +159,10 @@ public class I01_Login {
 		bCancelar.addSelectionListener(sabCancelar);
 		bAceptar.addSelectionListener(sabAceptar);
 
-		// Bot�n por defecto bAceptar
+		// Botón por defecto bAceptar
 		dialog.setDefaultButton(bAceptar);
 
-		// Ajustar el tama�o de la ventana al contenido
+		// Ajustar el tamaño de la ventana
 		dialog.setBackgroundImage(fondo);
 		dialog.setSize(500,400);
 
@@ -158,7 +172,7 @@ public class I01_Login {
 	}
 
 	/**
-	 * Devuelve el n�mero de vendedor introducido por el usuario.
+	 * Devuelve el número de vendedor introducido por el usuario.
 	 * @return un entero con el n�mero de vendedor
 	 * @author Daniel Dionne
 	 */
@@ -176,8 +190,8 @@ public class I01_Login {
 	}
 	
 	/**
-	 * Devuelve el bot�n que se ha pulsado
-	 * @return	<li>-1 - Ning�n bot�n
+	 * Devuelve el botón que se ha pulsado
+	 * @return	<li>-1 - Ningún botón
 	 * 			<li> 0 - Cancelar
 	 * 			<li> 1 - Aceptar
 	 * @author Daniel Dionne
