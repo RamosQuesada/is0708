@@ -157,10 +157,15 @@ public class I02_Principal {
 		Composite cCuadrante = new Composite(cCuadrantes, SWT.BORDER);
 		cCuadrante.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 5));
 
+		algoritmo.Trabaja t = new algoritmo.Trabaja();
+		t.setIdEmpl(10000100);
+
 		I_Cuadrante ic = new I_Cuadrante(2,2008,"mi_dep");
+		ic.setTrabajaDia(1, t);
 		ic.setConfig(3, 9, 22);
 		ic.setEmpleados(vista.getEmpleados());
 		ic.setTamano(200, 200);
+		ic.setComposite(cCuadrante);
 		
 //		final I02_cuadr cuadrante = new I02_cuadr(cCuadrante, false,
 //				vista.getEmpleados(), fechaSeleccionada);
