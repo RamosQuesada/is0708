@@ -79,12 +79,7 @@ public class Empleado implements Drawable {
 	//Optimizacion Algoritmo (reducción llamadas a BBDD)
 	private ArrayList<Turno> turnoE;
 	private ArrayList<ArrayList<String>> turnosStr;
-	
-	
-	// TODO Eliminar el turno, que irá en el Contrato
-	// ahora sólo sirve para hacer prubas de interfaz
-	/** @deprecated */
-	public Turno turno;
+
 	
 /*****************************************************************************************
  * Métodos privados:
@@ -892,7 +887,7 @@ public class Empleado implements Drawable {
 			gc.drawText(nombre, margenIzq, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1), true);
 			gc.drawText(String.valueOf(subDivs/12)+":"+String.valueOf(Util.aString(subDivs%12*60/12)), margenNombres-10, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1), true);
 		}
-		turno.dibujarTurnoCuadranteSemanalJefe(display, gc, posV, color, margenIzq, margenNombres, margenSup, sep_vert_franjas, alto_franjas);
+		//turno.dibujarTurnoCuadranteSemanalJefe(display, gc, posV, color, margenIzq, margenNombres, margenSup, sep_vert_franjas, alto_franjas);
 	}
 
 	public void anadeGUI(Composite composite, int horaInicio, int horaFin, int subdivisiones, boolean primero){

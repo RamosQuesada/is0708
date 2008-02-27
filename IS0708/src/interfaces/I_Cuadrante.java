@@ -32,6 +32,8 @@ import org.eclipse.swt.widgets.Listener;
 import aplicacion.Empleado;
 import aplicacion.FranjaDib;
 import aplicacion.Posicion;
+import aplicacion.Turno;
+import aplicacion.Vista;
 
 /**
  * Esta clase extiende la clase cuadrante para que se pueda:
@@ -47,45 +49,50 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private int margenNombres; // Un margen para pintar los nombres a la izquierda
 	public int alto_franjas = 15;
 	public int sep_vert_franjas = 10;
-	private int horaInicio, horaFin; // Definen de qué hora a qué hora es el cuadrante
+	private int horaApertura, horaFin; // Definen de qué hora a qué hora es el cuadrante
 	public int tamHora, tamSubdiv;
 	public int subdivisiones; // Cuántas subdivisiones hacer por hora (0 = sin subdivisiones)
-	public ArrayList<Empleado> empleados;
+	private Vista vista;
 
 	/* TODO
 	 * Las barras de tamaño cero se quedan
 	 * bug: al hacer muchas franjas pequeñitas, no se pegan bien (ver si sigue pasando)
 	 */
-	private Canvas canvas;
-	//private Cuadrante cuadrante;
-	private int despl; // Este es para cuando movemos una barra, para saber de d�nde la
-				// he cogido
-	private Boolean creando, terminadoDeCrear;
+//	private Canvas canvas;
+	private Composite c;
 	// La variable terminadoDeCrear sirve para que una franja nueva no desaparezca al crearla
 	private Boolean diario = true; // 1: muestra cuadrante diario, 0: muestra cuadrante mensual
 	private int empleadoActivo;
 
-	private Image cuadranteImg;
 	private Point imgSize = new Point(800,800);
-	private FranjaDib franjaActiva;
-	private int movimiento;
 	private  Label lGridCuadrante;
 	private Combo cGridCuadrante;
 	
+	private int dia = 1;
+	
+	
+	private Image cuadranteImg;
+	private FranjaDib franjaActiva;
+	private int movimiento;	
+	private int despl; // Este es para cuando movemos una barra, para saber de d�nde la
+	// he cogido
+	private Boolean creando, terminadoDeCrear;
+
 	private MouseListener mouseListenerCuadrSemanal;
 	private MouseListener mouseListenerCuadrMensual;
 	private MouseMoveListener mouseMoveListenerCuadrSemanal;
 	private MouseMoveListener mouseMoveListenerCuadrMensual;
 	
-	public I_Cuadrante(int mes, int anio, String idDepartamento) {
+	public I_Cuadrante(Vista vista, int mes, int anio, String idDepartamento) {
 		super(mes, anio, idDepartamento);
+		this.vista = vista;
 	}
 	
 	public void setComposite(Composite c) {
-		this.canvas = new Canvas(c, SWT.FILL | SWT.NO_BACKGROUND);
-		canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
-		creando = false;
-		terminadoDeCrear = true;
+		// Preparar el canvas
+		this.c = c;
+//		this.canvas = new Canvas(c, SWT.FILL | SWT.NO_BACKGROUND);
+//		canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		
 		final GridLayout l = new GridLayout(3,false);
 		c.setLayout(l);
@@ -117,7 +124,10 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				}
 			}
 		});
-		
+
+		// Inicializar algunas variables
+		creando = false;
+		terminadoDeCrear = true;
 		franjaActiva = null;
 		movimiento = 0;
 		margenIzq = 15;
@@ -126,36 +136,26 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		margenInf = 10;
 		margenNombres = 90;
 		empleadoActivo = -1;
-		horaInicio = 9;
+		horaApertura = 9;
 		horaFin = 23;
-		//cuadrante = new Cuadrante(display, 4, horaInicio, horaFin, margenIzq, margenDer, margenSup, margenInf, margenNombres, empleados);
+		
 		calcularTamano();
-		display = canvas.getDisplay();
-		canvas.addPaintListener(new PaintListener() {
-			public void paintControl(PaintEvent event) {
-				dibujarCuadrante(event.gc);
-			}
-		});
-		canvas.addControlListener(new ControlListener() {
-			public void controlMoved(ControlEvent e) {}
-			public void controlResized(ControlEvent e) {
-				calcularTamano();
-			}
-		});
-	}
-	private void setSubdivisiones(int i) {
-		subdivisiones = i;
-		//redibujar();
-	}
-	
-	private void calcularTamano() {
-		ancho = canvas.getClientArea().width;
-		alto = canvas.getClientArea().height;
+//		display = canvas.getDisplay();
+//		canvas.addPaintListener(new PaintListener() {
+//			public void paintControl(PaintEvent event) {
+//				dibujarCuadrante(event.gc);
+//			}
+//		});
+//		canvas.addControlListener(new ControlListener() {
+//			public void controlMoved(ControlEvent e) {}
+//			public void controlResized(ControlEvent e) {
+//				calcularTamano();
+//			}
+//		});
 	}
 	
 	private void dibujarCuadrante(GC gc) {
 		// Doble buffering para evitar parpadeo
-		
 		if (ancho != 0 && alto != 0) {
 			Image bufferImage = new Image(display, ancho, alto);
 			GC gc2 = new GC(bufferImage);
@@ -172,7 +172,21 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			bufferImage.dispose();
 		}
 	}
-
+	
+	private void setSubdivisiones(int i) {
+		subdivisiones = i;
+		//redibujar();
+	}
+	
+	public void setDia(int i) {
+		dia = i;
+	}
+	
+	private void calcularTamano() {
+		ancho = c.getClientArea().width;
+		alto = c.getClientArea().height;
+	}
+	
 	private void redibujar() {
 		// Redibuja sólo las franjas que corresponden, para evitar calculos
 		// innecesarios
@@ -180,7 +194,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		// c.redraw(0, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1),
 		// ancho, 18, false);
 		// c.redraw(0, 0, ancho, alto, false);
-		canvas.redraw();
+		//canvas.redraw();
 	}
 
 
@@ -476,7 +490,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	 * 						<li>2	(cada 30 min),
 	 * 						<li>1	(sin subdivisiones)
 	 * 						</ul>
-	 * @param horaInicio	Hora de inicio del cuadrante
+	 * @param horaApertura	Hora de inicio del cuadrante
 	 * @param horaFin		Hora de fin del cuadrante. Las horas pasadas de las 24 se muestran
 	 * 						como la madrugada del d�a siguiente.
 	 * @param margenIzq		Margen izquierdo en p�xeles
@@ -497,15 +511,12 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	}
 	
 	public void setConfig(int subdivisiones, int horaInicio, int horaFin) {
-		this.horaInicio = horaInicio;
+		this.horaApertura = horaInicio;
 		this.horaFin = horaFin;
 		this.subdivisiones = subdivisiones;	
 	}
 	
-	public void setEmpleados(ArrayList<Empleado> empleados) {
-		this.empleados = empleados;
-	}
-	
+
 	/**
 	 * Dibuja el cuadrante, resaltando el empleado activo.
 	 * @param gc				El GC del display sobre el que se dibujará el cuadrante.
@@ -519,31 +530,45 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	}
 	
 	public void dibujarTurnos(GC gc) {
-		for (int i=0; i<empleados.size(); i++) {
-			empleados.get(i).dibujarTurno(display, gc, i, empleados.get(i).dameColor(),margenIzq, margenNombres,margenSup,sep_vert_franjas,alto_franjas);
+		if (vista.getEmpleados().size()==0) {
+			gc.drawText("Cargando...", 5, 5);
+		}
+		else {
+			int idTurno;
+			Turno turno = new Turno(1,"pi","14:00:00","19:00:00","16:00:00",1);
+			
+			for (int i=0; i<cuad[dia].size(); i++) {
+				idTurno = cuad[dia].get(i).getIdTurno();
+				//turno = vista.getTurno(idTurno);
+				turno.anadeGUI(c,horaApertura,horaFin,subdivisiones,false,new Color(display,200,200,200));//vista.getEmpleados().get(i).dameColor());
+			}
+			
+			//for (int i=0; i<vista.getEmpleados().size(); i++) {
+			//	vista.getEmpleados().get(i).dibujarTurno(display, gc, i, vista.getEmpleados().get(i).dameColor(),margenIzq, margenNombres,margenSup,sep_vert_franjas,alto_franjas);
+			//}
 		}
 	}
 	
 	public void dibujarCuadranteMes(GC gc){
 		Calendar c = Calendar.getInstance();
-		// Esto coge el d�a 1 de este mes
+		// Esto coge el día 1 de este mes
 		c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),1);
-		// Y esto en qu� d�a de la semana cae
+		// Y esto en qué día de la semana cae
 		int primerDia = c.get(Calendar.DAY_OF_WEEK);
 		c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),1);
-		c.roll(Calendar.DAY_OF_MONTH,false); // Pasa al �ltimo d�a del este mes
+		c.roll(Calendar.DAY_OF_MONTH,false); // Pasa al último día del este mes
 		int ultimoDia = c.get(Calendar.DAY_OF_MONTH);
 		int anchoMes = ancho - margenIzq - margenDer - margenNombres;
 		int anchoDia = anchoMes/ultimoDia;
 		int altoFila = 20;
-		// Dibujar n�meros de los d�as
+		// Dibujar números de los días
 		if (anchoDia>14)
 			for (int j=0; j < ultimoDia; j++) {
 				gc.drawText(String.valueOf(j+1), margenIzq + margenNombres + j*anchoDia + anchoDia/2, margenSup);
 			}
 
-		for (int i=0; i < empleados.size(); i++) {
-			gc.drawText(empleados.get(i).getNombre(), margenIzq, margenSup + 20 + i*altoFila);
+		for (int i=0; i < vista.getEmpleados().size(); i++) {
+			gc.drawText(vista.getEmpleados().get(i).getNombre(), margenIzq, margenSup + 20 + i*altoFila);
 			for (int j=0; j < ultimoDia; j++) {
 				gc.drawRectangle(margenIzq + margenNombres + j*anchoDia, margenSup + 20 + i*altoFila, anchoDia, altoFila);
 			}
@@ -563,14 +588,14 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private void dibujarHoras(GC gc) {
 		gc.setForeground(new Color(display, 40,80,40));
 		int m = margenIzq + margenNombres;
-		int h = horaFin - horaInicio;
+		int h = horaFin - horaApertura;
 		int sep = (ancho - m - margenDer)/h;
 		int subsep = sep/subdivisiones;
 		for (int i=0; i<=h; i++) {
 			gc.setLineStyle(SWT.LINE_SOLID);
 			gc.setForeground(new Color(display,40,80,40));
-			if (sep>14 && sep<=20) gc.drawText(String.valueOf((horaInicio+i)%24),     m+i*sep-5, margenSup, true);
-			else if (sep>20)     gc.drawText(String.valueOf((horaInicio+i)%24)+'h', m+i*sep-5, margenSup, true);
+			if (sep>14 && sep<=20) gc.drawText(String.valueOf((horaApertura+i)%24),     m+i*sep-5, margenSup, true);
+			else if (sep>20)     gc.drawText(String.valueOf((horaApertura+i)%24)+'h', m+i*sep-5, margenSup, true);
 			gc.drawLine(m+i*sep, 20+margenSup, m+i*sep, alto-margenInf);
 			gc.setForeground(new Color(display, 120,170,120));
 			gc.setLineStyle(SWT.LINE_DOT);
@@ -591,13 +616,13 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	// TODO Lanzar excepción si emp > empleados.size
 	private void dibujarSeleccion (GC gc, int emp) {
 		if (emp!=-1) {
-			gc.setForeground(new Color(display, 255-(255-empleados.get(emp).dameColor().getRed())/5, 255-(255-empleados.get(emp).dameColor().getGreen())/5, 255-(255-empleados.get(emp).dameColor().getBlue())/5));
+			gc.setForeground(new Color(display, 255-(255-vista.getEmpleados().get(emp).dameColor().getRed())/5, 255-(255-vista.getEmpleados().get(emp).dameColor().getGreen())/5, 255-(255-vista.getEmpleados().get(emp).dameColor().getBlue())/5));
 			gc.fillRectangle(margenNombres+margenIzq,margenSup+(sep_vert_franjas+alto_franjas)*(emp+1)-5,ancho-margenNombres-margenIzq-margenDer,alto_franjas+11);
 		}
 	}
 	/**
-	 * Pega el valor x al m�s cercano dentro de la rejilla. El tama�o de la rejilla est� determinado
-	 * por el n�mero de subdivisiones.
+	 * Pega el valor x al más cercano dentro de la rejilla. El tamaño de la rejilla está determinado
+	 * por el número de subdivisiones.
 	 * @param x		El valor a ajustar
 	 * @return		El valor ajustado a la rejilla
 	 */
@@ -606,31 +631,31 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		Posicion p;
 		if (((y%tamHora)/(tamHora/subdivisiones))>=subdivisiones)
 			// Para evitar resultados del tipo 14:60
-			p = new Posicion(1+y/tamHora+horaInicio,0);
+			p = new Posicion(1+y/tamHora+horaApertura,0);
 		else
 			// En otro caso, hay que tener en cuenta c�mo se dibuja el cuadrante para evitar
 			// desfases entre las lineas horarias y las franjas.
-			p = new Posicion(y/tamHora+horaInicio,((y%tamHora)/(tamHora/subdivisiones))*12/subdivisiones);
+			p = new Posicion(y/tamHora+horaApertura,((y%tamHora)/(tamHora/subdivisiones))*12/subdivisiones);
 		return p;
 	}
 	/**
-	 * Actualiza el tama�o del cuadrante, el tama�o de las horas y las subdivisiones, y para cada
-	 * franja, actualiza sus p�xeles inicial y final en funci�n de sus valores pinicio y pfin.
-	 * @param ancho	El ancho nuevo, en p�xeles
-	 * @param alto	El alto nuevo, en p�xeles
+	 * Actualiza el tamaño del cuadrante, el tamaño de las horas y las subdivisiones, y para cada
+	 * franja, actualiza sus píxeles inicial y final en función de sus valores pinicio y pfin.
+	 * @param ancho	El ancho nuevo, en píxeles
+	 * @param alto	El alto nuevo, en píxeles
 	 */
 	public void setTamano(int ancho, int alto) {
 		this.alto = alto;
 		this.ancho = ancho;
-		tamHora = (ancho - margenIzq-margenDer-margenNombres)/(horaFin-horaInicio);
+		tamHora = (ancho - margenIzq-margenDer-margenNombres)/(horaFin-horaApertura);
 		tamSubdiv = tamHora/12;
-		for (int i=0; i < empleados.size(); i++) {
-			Empleado e = empleados.get(i);
-			for (int j=0; j < e.turno.franjas.size(); j++) {
-				FranjaDib f = e.turno.franjas.get(j);
-				f.actualizarPixeles(margenIzq, margenNombres, tamHora, tamSubdiv, subdivisiones, horaInicio);
-			}
-		}
+//		for (int i=0; i < vista.getEmpleados().size(); i++) {
+//			Empleado e = vista.getEmpleados().get(i);
+//			for (int j=0; j < e.turno.franjas.size(); j++) {
+//				FranjaDib f = e.turno.franjas.get(j);
+//				f.actualizarPixeles(margenIzq, margenNombres, tamHora, tamSubdiv, subdivisiones, horaInicio);
+//			}
+//		}
 	}
 
 /*
