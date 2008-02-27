@@ -1,7 +1,6 @@
 package paquete_pruebas;
 
 import java.sql.Date;
-import java.util.Random;
 
 import aplicacion.Contrato;
 import aplicacion.Controlador;
@@ -11,13 +10,9 @@ import aplicacion.Turno;
 /**
  * Inserta datos fijos para pruebas
  * @author Miguel Angel Diaz
- *
  */
 public class InsertaDatosFijos {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		
 		// Comenzamos 
@@ -39,22 +34,22 @@ public class InsertaDatosFijos {
 		c.vaciarTabla("MENSAJE");
 		c.vaciarTabla("VENTAS");*/
 				
-		//crear turno jefe departamento
+		// Crear turno jefe departamento
 		Turno turnoJefe = new Turno(0, "turnoJefeFijo", "9:00:00", "19:00:00", "13:00:00", 180);
 		turnoJefe.setIdTurno(c.insertTurno(turnoJefe));
 		
-		//crear contrato jefe departamento
+		// Crear contrato jefe departamento
 		String patronContratoJefe = "6:" + turnoJefe.getIdTurno() + "/1:d";
 		Contrato contratoJefe = new Contrato("contratoJefeFijo", 0, 1 ,7, patronContratoJefe, 1200, 0);
 		contratoJefe.setNumeroContrato(c.insertContrato(contratoJefe));
 	
-		//crear el jefe de departamento
+		// Crear el jefe de departamento
 		c.insertUsuario(10000100, "JefeFijo", "ape1", "ape2", nacimiento, 0, "email@email.es", "10000100", 2, 
 				inicio, inicio, 0, 0, 0, 2, contratoJefe.getNumeroContrato(),
 				turnoJefe.getIdTurno()); //hay que cambiar el rango a 2
 		c.insertDepartamentoUsuario(10000100, depart);
 		
-		//creamos un nuevo departamento
+		// Creamos un nuevo departamento
 	    c.insertDepartamentoPruebas(depart,10000100);
 		
 		// Horas en las que esta cerrado
@@ -130,22 +125,25 @@ public class InsertaDatosFijos {
 		tSabT.setIdTurno(c.insertTurno(tSabT));
 		
 		// Contratos
-		String patron7h = "6:" + t7hM.getIdTurno() + "," + t7hT.getIdTurno() + "/1:d";
-		Contrato c7hM = new Contrato("7 horas mañana", 0, t7hM.getIdTurno(), 7, patron7h, 800, new Random().nextInt(4)+1);
+		String patron7hM = "6:" + t7hM.getIdTurno() + "/1:d/" +
+		                   "6:" + t7hT.getIdTurno() + "/1:d";
+		Contrato c7hM = new Contrato("7 horas mañana", 0, t7hM.getIdTurno(), 14, patron7hM, 800, 1);
 		c7hM.setNumeroContrato(c.insertContrato(c7hM));
-		Contrato c7hT = new Contrato("7 horas tarde", 0, t7hT.getIdTurno(), 7, patron7h, 800, new Random().nextInt(4)+1);
+		String patron7hT = "6:" + t7hT.getIdTurno() + "/1:d/" +
+         				   "6:" + t7hM.getIdTurno() + "/1:d";
+		Contrato c7hT = new Contrato("7 horas tarde", 0, t7hT.getIdTurno(), 14, patron7hT, 800, 1);
 		c7hT.setNumeroContrato(c.insertContrato(c7hT));
 		
 		String patron4h = "7:" + t4hM.getIdTurno() + "," + t4hT.getIdTurno();
-		Contrato c4hM = new Contrato("4 horas mañana", 0, t4hM.getIdTurno(), 7, patron4h, 600, new Random().nextInt(4)+1);
+		Contrato c4hM = new Contrato("4 horas mañana", 0, t4hM.getIdTurno(), 7, patron4h, 600, 4);
 		c4hM.setNumeroContrato(c.insertContrato(c4hM));
-		Contrato c4hT = new Contrato("4 horas tarde", 0, t4hT.getIdTurno(), 7, patron4h, 600, new Random().nextInt(4)+1);
+		Contrato c4hT = new Contrato("4 horas tarde", 0, t4hT.getIdTurno(), 7, patron4h, 600, 4);
 		c4hT.setNumeroContrato(c.insertContrato(c4hT));
 		
 		String patronSab = "5:d/2:" + tSabM.getIdTurno() + "," + tSabT.getIdTurno();	
-		Contrato cSabM = new Contrato("Sabadero mañana", 0, tSabM.getIdTurno(), 7, patronSab, 600, new Random().nextInt(4)+1);
+		Contrato cSabM = new Contrato("Sabadero mañana", 0, tSabM.getIdTurno(), 7, patronSab, 600, 4);
 		cSabM.setNumeroContrato(c.insertContrato(cSabM));
-		Contrato cSabT = new Contrato("Sabadero tarde", 0, tSabT.getIdTurno(), 7, patronSab, 600, new Random().nextInt(4)+1);
+		Contrato cSabT = new Contrato("Sabadero tarde", 0, tSabT.getIdTurno(), 7, patronSab, 600, 4);
 		cSabT.setNumeroContrato(c.insertContrato(cSabT));
 		
 		// turnosPorContrato - solo hace falta insertar los que sean distintos del inicial del contrato
