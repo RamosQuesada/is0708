@@ -357,14 +357,24 @@ public class TurnoMatic {
 		/*fHoraria es un ArrayList con todos los turnos en los que puede trabajar el empleado situado en la 
 		 posición k de disponibles*/ 
 		ArrayList<Turno> fHoraria = controlador.getListaTurnosContrato (dispo.get(k).getEmplId());
+		// turno favorito del empleado
+		int tFavorito = dispo.get(k).getTurnoFavorito();
+		int i=0;
+		boolean enc=false;
+		while (i<fHoraria.size() && !enc) {
+			if (fHoraria.get(i).getIdTurno()==tFavorito) enc=true;
+			i++;
+		}
+		fHoraria.add(0, fHoraria.get(i)); //inserta el turno favorito en la primera posicion de la lista
+		fHoraria.remove(i+1); //elimina el turno favorito de la posicion inicial en la que estaba (i+1 porque ha quedado desplazado)
 		ArrayList<Time> fHorariasDpto = estruc.getTrozosHorario();
 		Turno franjaHoraria;
 		boolean hecho=false;
 		while (fHoraria.size()!=0) {
-			franjaHoraria = fHoraria.get(1);
+			franjaHoraria = fHoraria.get(0);
 			ponerEmpleado (dispo.get(k), franjaHoraria.getHoraEntrada(), franjaHoraria.getHoraSalida(), cuadAux[dia]);
 			//si el turno en el que se incluye al empleado en el cuadrante es el que él prefiere, aumenta su felicidad
-			if (franjaHoraria.getIdTurno()==dispo.get(k).getTurnoFavorito()) 
+			if (franjaHoraria.getIdTurno()==tFavorito) 
 				dispo.get(k).setFelicidad(dispo.get(k).getFelicidad()+1);
 			k=k+1;      
 			if  (k==dispo.size()+1)
@@ -377,9 +387,9 @@ public class TurnoMatic {
 			quitarEmpleado(dispo.get(k),cuadAux[dia]);
 			/*si al recolocar a un empleado en un turno diferente, el turno del que se le quita es el que él prefiere, 
 			su felicidad queda igual que estaba antes de ejecutar el algoritmo*/
-			if (franjaHoraria.getIdTurno()==dispo.get(k).getTurnoFavorito())
+			if (franjaHoraria.getIdTurno()==tFavorito)
 				dispo.get(k).setFelicidad(dispo.get(k).getFelicidad()-1);
-			fHoraria.remove(1);
+			fHoraria.remove(0);
 		}
 		return hecho;
 	}
