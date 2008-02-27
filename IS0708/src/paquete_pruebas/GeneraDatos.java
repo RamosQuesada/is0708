@@ -164,7 +164,7 @@ public class GeneraDatos {
 		
 		Turno turno;
 		Contrato contrato;
-		Empleado empleado;
+		String depart="Pruebas_Aleatorias";
 		//crear turno jefe departamento
 		turno=new Turno(0,"M1","9:00:00","14:00:00","12:30:00",20);//turno por defecto para el jefe
 		
@@ -173,24 +173,70 @@ public class GeneraDatos {
 	
 		//crear el jefe de departamento
 		c.insertUsuario(12345678,"jefe","","",fechaNac,0,"Juanfran@ajandemore.es","boss",0,fechaContrato,fechaEntrada,0,0,0,2,contrato.getNumeroContrato(),turno.getIdTurno());//hay que cambiar el rango a 2, 
-		c.insertDepartamentoUsuario(12345678, "prueba");
+		c.insertDepartamentoUsuario(12345678, depart);
 		
 		//creamos un nuevo departamento
-	    c.insertDepartamentoPruebas("prueba",12345678);//se supone que el jefe será el que acabamos de crear
+	    c.insertDepartamentoPruebas(depart,12345678);//se supone que el jefe será el que acabamos de crear
 		
 		//he comentado lo anterior porque no se si solo tenemos que generar un departamento o mas de un departamento
 
 		//creamos la distribucion
 	    System.out.println("INSERTAMOS DISTRIBUCION");
-		for (int i=1; i<=7; i++) {
-			for (int j=0; j<9; j++)
-				c.insertDistribucion(j, i, "1e1p", 0, 0, "prueba");
-			for (int j=9; j<23; j++) {
-				c.insertDistribucion(j, i, "1e1p", 5, 3, "prueba");
-			}
-			for (int j=23; j<24; j++)
-				c.insertDistribucion(j, i, "1e1p", 0, 0, "prueba");
+	 // Horas en las que esta cerrado
+	    for (int i=1; i<=7; i++) {
+	    	for (int j=0; j<9; j++) 
+				c.insertDistribucion(j, i, "1e1p", 0, 0, depart);
+	    	for (int j=22; j<24; j++) 
+				c.insertDistribucion(j, i, "1e1p", 0, 0, depart);
+	    }
+	    
+	    // De lunes a viernes
+		for (int i=1; i<=5; i++) {
+			// Cada hora abierta
+			c.insertDistribucion( 9, i, "1e1p", 6, 2, depart);
+			c.insertDistribucion(10, i, "1e1p", 6, 4, depart);
+			c.insertDistribucion(11, i, "1e1p", 6, 4, depart);
+			c.insertDistribucion(12, i, "1e1p", 6, 4, depart);
+			c.insertDistribucion(13, i, "1e1p", 4, 2, depart);
+			c.insertDistribucion(14, i, "1e1p", 4, 2, depart);
+			c.insertDistribucion(15, i, "1e1p", 7, 5, depart);
+			c.insertDistribucion(16, i, "1e1p", 4, 2, depart);
+			c.insertDistribucion(17, i, "1e1p", 4, 2, depart);
+			c.insertDistribucion(18, i, "1e1p", 6, 2, depart);
+			c.insertDistribucion(19, i, "1e1p", 6, 4, depart);
+			c.insertDistribucion(20, i, "1e1p", 6, 4, depart);
+			c.insertDistribucion(21, i, "1e1p", 6, 4, depart);
 		}
+		
+		// Sabado
+		c.insertDistribucion( 9, 6, "1e1p",  6, 2, depart);
+		c.insertDistribucion(10, 6, "1e1p",  9, 7, depart);
+		c.insertDistribucion(11, 6, "1e1p",  9, 7, depart);
+		c.insertDistribucion(12, 6, "1e1p",  9, 7, depart);
+		c.insertDistribucion(13, 6, "1e1p",  7, 5, depart);
+		c.insertDistribucion(14, 6, "1e1p",  7, 5, depart);
+		c.insertDistribucion(15, 6, "1e1p", 10, 8, depart);
+		c.insertDistribucion(16, 6, "1e1p",  7, 5, depart);
+		c.insertDistribucion(17, 6, "1e1p",  7, 5, depart);
+		c.insertDistribucion(18, 6, "1e1p",  9, 4, depart);
+		c.insertDistribucion(19, 6, "1e1p",  9, 7, depart);
+		c.insertDistribucion(20, 6, "1e1p",  9, 7, depart);
+		c.insertDistribucion(21, 6, "1e1p",  9, 7, depart);
+		
+		// Domingo
+		c.insertDistribucion( 9, 7, "1e1p", 3, 1, depart);
+		c.insertDistribucion(10, 7, "1e1p", 6, 4, depart);
+		c.insertDistribucion(11, 7, "1e1p", 6, 4, depart);
+		c.insertDistribucion(12, 7, "1e1p", 6, 4, depart);
+		c.insertDistribucion(13, 7, "1e1p", 4, 2, depart);
+		c.insertDistribucion(14, 7, "1e1p", 4, 2, depart);
+		c.insertDistribucion(15, 7, "1e1p", 4, 2, depart);
+		c.insertDistribucion(16, 7, "1e1p", 4, 2, depart);
+		c.insertDistribucion(17, 7, "1e1p", 4, 2, depart);
+		c.insertDistribucion(18, 7, "1e1p", 6, 4, depart);
+		c.insertDistribucion(19, 7, "1e1p", 6, 4, depart);
+		c.insertDistribucion(20, 7, "1e1p", 6, 4, depart);
+		c.insertDistribucion(21, 7, "1e1p", 6, 4, depart);
 		/*for (int i = 0; i < valor ; i++) {
 	        	hora = (int)(rnd.nextInt(25));//con esto generamos numeros entre 0 y 24, siempre se pone limite +1
 	        	diaSemana=(int)(rnd.nextInt(8));//generamos numeros entre 0 y 7
@@ -277,12 +323,11 @@ public class GeneraDatos {
         	Contrato ct=c.getContrato(idContrato);
         	int dias_trabaja1=(int)(rnd.nextInt(7))+1;//acotamos entre 1 y 7
         	String pat=ct.getPatron()+"/"+dias_trabaja1+":"+idTurno;//debemos añadir al opcion de meter mas un turno o que descansa
-        	int dur_ciclo=ct.getDuracionCiclo()+dias_trabaja1;//Actulizamos la duracion del ciclo
+        	int dur_ciclo=ct.getDuracionCiclo()+dias_trabaja1;//Actualizamos la duracion del ciclo
         	System.out.println("nuevo patron: "+pat+" duracion: "+dur_ciclo);
         	ct.setPatron(pat);
         	ct.setDuracionCiclo(dur_ciclo);
         	c.setContrato(ct);
-        	//llamar a la base de datos con un metodo que se le meta (patron,duracion ciclo,idContrato)
 		}
 		//insertar usuarios en departamento
 		for (int i = 0; i < numero_usuarios ; i++) {
