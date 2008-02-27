@@ -13,7 +13,7 @@ public class Cuadrante {
 	private int mes;
 	private int anio;
 	private int numDias;			//Numero de dias del mes
-	ArrayList<Trabaja> cuad[];		//Esta matriz seria la salida del algoritmo,un vector donde en cada posicion hay una lista de los empleados que trabajan
+	protected ArrayList<Trabaja> cuad[];		//Esta matriz seria la salida del algoritmo,un vector donde en cada posicion hay una lista de los empleados que trabajan
 	private String idDepartamento;	//Identificador del departamento;
 	
 	public Cuadrante(int mes,int anio,String idDepartamento){//creacion de un cuadrante vacio

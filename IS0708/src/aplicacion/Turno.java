@@ -37,13 +37,6 @@ public class Turno {
 	
 	
 	/**
-	 * Constructor por defecto
-	 * @deprecated
-	 */
-	public Turno() {
-		franjas = new ArrayList<FranjaDib>();	
-	}
-	/**
 	 * 
 	 * @param idTurno  		 Identificador del turno
 	 * @param descripcion    Nombre y/o datos del turno 
@@ -170,11 +163,6 @@ public class Turno {
 /**
  * 	Estos métodos sirven para representar un turno en un interfaz
  */	
-//	this.idTurno = idTurno;
-//	this.descripcion = descripcion;
-//	this.horaEntrada = horaEntrada;
-//	this.horaSalida = horaSalida;
-//	this.horaDescanso = horaDescanso;
 
 	public void franjaNueva (Posicion pinicio, Posicion pfin) {
 		FranjaDib f = new FranjaDib(pinicio, pfin);
@@ -591,4 +579,5 @@ public class Turno {
 			}
 		});
 	}
+	
 }
