@@ -879,17 +879,7 @@ public class Empleado implements Drawable {
 	}
 	
 	
-	public void dibujarTurno(Display display, GC gc, int posV, Color color, int margenIzq, int margenNombres, int margenSup, int sep_vert_franjas, int alto_franjas) {
-		// Un entero para sumar el tiempo que trabaja un empleado y mostrarlo a la izquierda
-		int subDivs = 0;
-		gc.setBackground(new Color(display, 0,0,0));
-		if (margenNombres > 0) {
-			gc.drawText(nombre, margenIzq, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1), true);
-			gc.drawText(String.valueOf(subDivs/12)+":"+String.valueOf(Util.aString(subDivs%12*60/12)), margenNombres-10, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1), true);
-		}
-		//turno.dibujarTurnoCuadranteSemanalJefe(display, gc, posV, color, margenIzq, margenNombres, margenSup, sep_vert_franjas, alto_franjas);
-	}
-
+	
 	public void anadeGUI(Composite composite, int horaInicio, int horaFin, int subdivisiones, boolean primero){
 		// Composite de fuera, donde van todos los empleados
 		final Composite c = composite;

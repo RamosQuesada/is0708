@@ -34,6 +34,7 @@ import aplicacion.FranjaDib;
 import aplicacion.Posicion;
 import aplicacion.Turno;
 import aplicacion.Vista;
+//De d�nde coger javadoc: http://javashoplm.sun.com/ECom/docs/Welcome.jsp?StoreId=22&PartDetailId=jdk-6u3-oth-JPR&SiteId=JSC&TransactionId=noreg
 
 /**
  * Esta clase extiende la clase cuadrante para que se pueda:
@@ -53,13 +54,13 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	public int tamHora, tamSubdiv;
 	public int subdivisiones; // Cuántas subdivisiones hacer por hora (0 = sin subdivisiones)
 	private Vista vista;
+	private Canvas canvas;
 
 	/* TODO
 	 * Las barras de tamaño cero se quedan
 	 * bug: al hacer muchas franjas pequeñitas, no se pegan bien (ver si sigue pasando)
 	 */
-//	private Canvas canvas;
-	private Composite c;
+//	private Composite c;
 	// La variable terminadoDeCrear sirve para que una franja nueva no desaparezca al crearla
 	private Boolean diario = true; // 1: muestra cuadrante diario, 0: muestra cuadrante mensual
 	private int empleadoActivo;
@@ -88,27 +89,33 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		this.vista = vista;
 	}
 	
-	public void setComposite(Composite c) {
-		// Preparar el canvas
-		this.c = c;
-//		this.canvas = new Canvas(c, SWT.FILL | SWT.NO_BACKGROUND);
-//		canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
+	public void setComposite(Composite cCuadrante) {
 		
-		final GridLayout l = new GridLayout(3,false);
-		c.setLayout(l);
+		cCuadrante.setLayout(new GridLayout(3,false));
+
+		// Preparar el canvas
+		canvas = new Canvas(cCuadrante, SWT.FILL | SWT.NO_BACKGROUND);
+		canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
+		
 		cuadranteImg = new Image(display, imgSize.x, imgSize.y);
-		final Label lCuadranteTitulo= new Label (c, SWT.LEFT);
+
+//		// En este composite va el cuadrante en sí
+//		c = new Composite(cCuadrante,SWT.NONE);
+//		c.setLayout(new GridLayout(1,false));
+//		c.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
+
+		final Label lCuadranteTitulo= new Label (cCuadrante, SWT.LEFT);
 		String fname = lCuadranteTitulo.getFont().getFontData()[0].getName();
-		lCuadranteTitulo.setFont(new Font(c.getDisplay(),fname,15,0));
-		//String sFecha = fecha.getDate() + " de " + fecha.getMonth() + " de " + fecha.getYear(); 
-		//lCuadranteTitulo.setText(sFecha);
+		lCuadranteTitulo.setFont(new Font(cCuadrante.getDisplay(),fname,15,0));
+		String sFecha = "aquí va la fecha";// fecha.getDate() + " de " + fecha.getMonth() + " de " + fecha.getYear(); 
+		lCuadranteTitulo.setText(sFecha);
 		lCuadranteTitulo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		
-		lGridCuadrante= new Label (c, SWT.LEFT);
+		lGridCuadrante= new Label (cCuadrante, SWT.LEFT);
 		lGridCuadrante.setText("Mostrar intervalos de");
 		lGridCuadrante.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
 		
-		cGridCuadrante = new Combo(c, SWT.BORDER | SWT.READ_ONLY);
+		cGridCuadrante = new Combo(cCuadrante, SWT.BORDER | SWT.READ_ONLY);
 		cGridCuadrante.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		cGridCuadrante.setItems(new String[] {"5 min", "10 min", "15 min", "30 min", "1 hora"});
 		cGridCuadrante.select(2);
@@ -125,6 +132,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			}
 		});
 
+		
 		// Inicializar algunas variables
 		creando = false;
 		terminadoDeCrear = true;
@@ -140,18 +148,18 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		horaFin = 23;
 		
 		calcularTamano();
-//		display = canvas.getDisplay();
-//		canvas.addPaintListener(new PaintListener() {
-//			public void paintControl(PaintEvent event) {
-//				dibujarCuadrante(event.gc);
-//			}
-//		});
-//		canvas.addControlListener(new ControlListener() {
-//			public void controlMoved(ControlEvent e) {}
-//			public void controlResized(ControlEvent e) {
-//				calcularTamano();
-//			}
-//		});
+		display = canvas.getDisplay();
+		canvas.addPaintListener(new PaintListener() {
+			public void paintControl(PaintEvent event) {
+				dibujarCuadrante(event.gc);
+			}
+		});
+		canvas.addControlListener(new ControlListener() {
+			public void controlMoved(ControlEvent e) {}
+			public void controlResized(ControlEvent e) {
+				calcularTamano();
+			}
+		});
 	}
 	
 	private void dibujarCuadrante(GC gc) {
@@ -183,8 +191,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	}
 	
 	private void calcularTamano() {
-		ancho = c.getClientArea().width;
-		alto = c.getClientArea().height;
+		ancho = canvas.getClientArea().width;
+		alto = canvas.getClientArea().height;
+		setTamano(ancho, alto);
 	}
 	
 	private void redibujar() {
@@ -194,7 +203,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		// c.redraw(0, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1),
 		// ancho, 18, false);
 		// c.redraw(0, 0, ancho, alto, false);
-		//canvas.redraw();
+		canvas.redraw();
 	}
 
 
@@ -530,22 +539,27 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	}
 	
 	public void dibujarTurnos(GC gc) {
-		if (vista.getEmpleados().size()==0) {
+		if (!vista.isCacheCargada()) {
 			gc.drawText("Cargando...", 5, 5);
 		}
 		else {
-			int idTurno;
-			Turno turno = new Turno(1,"pi","14:00:00","19:00:00","16:00:00",1);
+			int idTurno=1;
 			
-			for (int i=0; i<cuad[dia].size(); i++) {
-				idTurno = cuad[dia].get(i).getIdTurno();
-				//turno = vista.getTurno(idTurno);
-				turno.anadeGUI(c,horaApertura,horaFin,subdivisiones,false,new Color(display,200,200,200));//vista.getEmpleados().get(i).dameColor());
+			Turno turno;
+//			for (int i = 0; i < cuad[dia].size(); i++) {
+			for (int i = 0; i < 2; i++) {
+				//idTurno = cuad[dia].get(i).getIdTurno();
+				
+				turno = vista.getTurno(idTurno);
+//				turno.dibujar(display, gc, i, vista.getEmpleados().get(i).dameColor(),margenIzq, margenNombres,margenSup,sep_vert_franjas,alto_franjas);
+				turno.actualizarFranjas(margenIzq, margenNombres, tamHora, tamSubdiv, subdivisiones, horaApertura);
+				turno.dibujar(display, gc, i, new Color(display,150,120,240),margenIzq, margenNombres,margenSup,sep_vert_franjas,alto_franjas);
+				idTurno++;
 			}
 			
-			//for (int i=0; i<vista.getEmpleados().size(); i++) {
-			//	vista.getEmpleados().get(i).dibujarTurno(display, gc, i, vista.getEmpleados().get(i).dameColor(),margenIzq, margenNombres,margenSup,sep_vert_franjas,alto_franjas);
-			//}
+//			for (int i=0; i<vista.getEmpleados().size(); i++) {
+//				vista.getEmpleados().get(i).dibujarTurno(display, gc, i, vista.getEmpleados().get(i).dameColor(),margenIzq, margenNombres,margenSup,sep_vert_franjas,alto_franjas);
+//			}
 		}
 	}
 	

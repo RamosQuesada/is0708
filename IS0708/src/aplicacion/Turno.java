@@ -53,7 +53,7 @@ public class Turno {
 		this.horaSalida = horaSalida;
 		this.horaDescanso = horaDescanso;
 		tDescanso = descanso;
-		
+		setFranjas();
 	}
 	
 	/**
@@ -76,6 +76,14 @@ public class Turno {
 		this.horaEntrada=Time.valueOf(horaEntrada);
 		this.horaSalida=Time.valueOf(horaSalida);
 		this.horaDescanso=Time.valueOf(horaDescanso);
+		setFranjas();
+	}
+	
+	private void setFranjas() {
+		franjas = new ArrayList<FranjaDib>();
+		franjas.add(new FranjaDib(new Posicion(horaEntrada.getHours(),horaEntrada.getMinutes()),new Posicion(horaDescanso.getHours(),horaDescanso.getMinutes())));
+		franjas.add(new FranjaDib(new Posicion(horaDescanso.getHours()+tDescanso,horaDescanso.getMinutes()),new Posicion(horaSalida.getHours(),horaSalida.getMinutes())));
+
 	}
 	/**
 	 * Prueba, algoritmo
@@ -176,6 +184,12 @@ public class Turno {
 		if (y > margenSup+(sep_vert_franjas+alto_franjas)*(posV+1) && y<=margenSup+(sep_vert_franjas+alto_franjas)*(posV+2)) b = true;
 		return b;
 	}
+	
+	public void actualizarFranjas(int margenIzq, int margenNombres, int tamSep, int tamSubsep, int subdivisiones, int horaApertura) {
+		for (int i=0; i<franjas.size(); i++) {
+			franjas.get(i).actualizarPixeles(margenIzq, margenNombres, tamSep, tamSubsep, subdivisiones, horaApertura);
+		}
+	}
 	public void dibujarTurnoCuadranteSemanalJefe(Display display, GC gc, int posV, Color color, int margenIzq, int margenNombres, int margenSup, int sep_vert_franjas, int alto_franjas) {
 		int subDivs = 0;
 		for (int i=0; i<franjas.size(); i++) {
@@ -269,9 +283,6 @@ public class Turno {
 		final int h = horaCierre - horaApertura;
 		creando = false;
 		movimiento = 0;
-		franjas = new ArrayList<FranjaDib>();
-		franjas.add(new FranjaDib(new Posicion(horaEntrada.getHours(),horaEntrada.getMinutes()),new Posicion(horaDescanso.getHours(),horaDescanso.getMinutes())));
-		franjas.add(new FranjaDib(new Posicion(horaDescanso.getHours()+tDescanso,horaDescanso.getMinutes()),new Posicion(horaSalida.getHours(),horaSalida.getMinutes())));
 		
 		if (primero) margenSup = 20;
 		else margenSup = 0;
@@ -579,5 +590,15 @@ public class Turno {
 			}
 		});
 	}
-	
+	public void dibujar(Display display, GC gc, int posV, Color color, int margenIzq, int margenNombres, int margenSup, int sep_vert_franjas, int alto_franjas) {
+		// Un entero para sumar el tiempo que trabaja un empleado y mostrarlo a la izquierda
+		int subDivs = 0;
+		gc.setBackground(new Color(display, 0,0,0));
+		if (margenNombres > 0) {
+			//gc.drawText(nombre, margenIzq, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1), true);
+			gc.drawText(String.valueOf(subDivs/12)+":"+String.valueOf(Util.aString(subDivs%12*60/12)), margenNombres-10, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1), true);
+		}
+		dibujarTurnoCuadranteSemanalJefe(display, gc, posV, color, margenIzq, margenNombres, margenSup, sep_vert_franjas, alto_franjas);
+	}
+
 }

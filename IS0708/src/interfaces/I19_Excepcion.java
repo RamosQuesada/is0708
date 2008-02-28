@@ -33,7 +33,7 @@ public class I19_Excepcion {
 		tMensaje.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		Random rnd = new Random(5);
 		String e = "Ha ocurrido una excepción";
-		int r = rnd.nextInt(7);
+		int r = rnd.nextInt(8);
 		System.out.println(r);
 		switch (r) {
 		case 0:
@@ -57,7 +57,10 @@ public class I19_Excepcion {
 		case 6:
 			e+= ". A depurar tocan.";
 			break;
-		
+		case 7:
+			e+= ". TOMA TOMA Y TOMAAAAAAA.";
+			break;
+
 		}
 		e += "\n\n" + excepcion.toString() + "\n";
 		for (int i=0; i < excepcion.getStackTrace().length; i++) {
