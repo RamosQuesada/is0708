@@ -176,7 +176,8 @@ public class Vista {
 					identificado = true;
 				} else {
 					Empleado emp = getEmpleado(login.getNumeroVendedor());
-					loader.start();
+					if (!loader.isAlive())
+						loader.start();
 					if (emp != null) {
 						// Comprobar la clave
 						if (emp.getPassword().compareTo(login.getPassword()) == 0) {
