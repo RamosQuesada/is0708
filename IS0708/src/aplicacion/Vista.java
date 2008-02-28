@@ -35,16 +35,16 @@ public class Vista {
 	 * Caché local: Lista de empleados que trabajan en el mismo departamento que
 	 * el usuario actual
 	 */
-	private Hashtable<Integer, Empleado> empleados = new Hashtable<Integer, Empleado>();
+	private ArrayList<Empleado> empleados = new ArrayList<Empleado>();
 
 	/** Caché local: Lista de mensajes entrantes del usuario actual */
 	private ArrayList<Mensaje> mensajesEntrantes = new ArrayList<Mensaje>();
 
 	/** Caché local: Lista de contratos disponibles para este departamento */
-	private Hashtable<Integer, Contrato> contratos = new Hashtable<Integer, Contrato>();
+	private ArrayList<Contrato> contratos = new ArrayList<Contrato>();
 
 	/** Caché local: Lista de turnos en los contratos de este departamento */
-	private Hashtable<Integer, Turno> turno = new Hashtable<Integer, Turno>();
+	private ArrayList<Turno> turnos = new ArrayList<Turno>();
 
 	/**
 	 * Este hilo conecta con la base de datos.
@@ -100,7 +100,8 @@ public class Vista {
 				loadEmpleados();
 				loadMensajes();
 				// loadContratos();
-				// loadTurnos();
+				loadTurnos();
+				// loadCuadranteMesActual();
 				cacheCargada = true;
 				try {
 					// TODO Espera 1/2 minuto (¿cómo lo dejamos?)
@@ -339,9 +340,31 @@ public class Vista {
 	 * @return una instancia nueva del empleado
 	 */
 	public Empleado getEmpleado(int idEmpl) {
-		if (empleados.containsKey(idEmpl))
-			return empleados.get(idEmpl);
+		// Buscar en cache
+		int i = 0;
+		while (i<empleados.size()) {
+			if (empleados.get(i).getEmplId()==idEmpl) {
+				return empleados.get(i);
+			}
+			i++;
+		}
+		// Si no, buscar en BD
 		return controlador.getEmpleado(idEmpl);
+	}
+	
+	public Turno getTurno (int idTurno) {
+		// Buscar en cache
+		int i = 0;
+		while (i<turnos.size()) {
+			if (turnos.get(i).getIdTurno()==idTurno) {
+				return turnos.get(i);
+			}
+			i++;
+		}
+		// Si no, buscar en BD
+		//return controlador.getTurno(idTurno);
+		return null;
+
 	}
 
 	/**
@@ -350,12 +373,9 @@ public class Vista {
 	 */
 	public void loadEmpleados() {
 		infoDebug("Vista", "Cargando empleados");
-		ArrayList<Empleado> empleadosAux = getEmpleados(null,
+		empleados = getEmpleados(null,
 				getEmpleadoActual().getDepartamentoId(), null, null, null,
 				null, null);
-		for (int i = 0; i < empleadosAux.size(); i++) {
-			empleados.put(empleadosAux.get(i).getEmplId(), empleadosAux.get(i));
-		}
 		infoDebug("Vista", "Acabado de cargar empleados");
 	}
 
@@ -369,6 +389,13 @@ public class Vista {
 				.getEmplId(), 0, num_men_hoja);
 		infoDebug("Vista", "Acabado");
 	}
+	
+	public void loadTurnos() {
+		// De momento, carga una lista ficticia de dos turnos
+		turnos.clear();
+		turnos.add(new Turno(1,"pi","14:00:00","19:00:00","17:00:00",1));
+		turnos.add(new Turno(2,"pi","12:15:00","22:15:00","16:00:00",2));
+	}
 
 	/**
 	 * Devuelve la lista de empleados que trabaja en el mismo departamento que
@@ -376,7 +403,7 @@ public class Vista {
 	 * 
 	 * @return la lista de empleados
 	 */
-	public Hashtable<Integer, Empleado> getEmpleados() {
+	public ArrayList<Empleado> getEmpleados() {
 		return empleados;
 	}
 
