@@ -2,6 +2,7 @@ package aplicacion;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -21,21 +22,33 @@ public class Vista {
 	private Display display;
 	private ResourceBundle bundle;
 	private Locale locale;
-	private I01_Login login; 
+
+	private I01_Login login;
 	private I02_Principal i02;
 	private boolean alive = true;
-	private int num_men_hoja = 10;
 	private LanguageChanger l;
 	private Thread conector, loader;
-
-	/** Caché local: Lista de empleados que trabajan en el mismo departamento que el usuario actual*/
-	private ArrayList<Empleado> empleados = new ArrayList<Empleado>();
-	
-	/** Caché local: Lista de mensajes entrantes del usuario actual*/
-	private ArrayList<Mensaje> mensajesEntrantes = new ArrayList<Mensaje>();
+	private boolean cacheCargada = false;
+	private int num_men_hoja = 10;
 
 	/**
-	 * Este hilo conecta con la base de datos. 
+	 * Caché local: Lista de empleados que trabajan en el mismo departamento que
+	 * el usuario actual
+	 */
+	private Hashtable<Integer, Empleado> empleados = new Hashtable<Integer, Empleado>();
+
+	/** Caché local: Lista de mensajes entrantes del usuario actual */
+	private ArrayList<Mensaje> mensajesEntrantes = new ArrayList<Mensaje>();
+
+	/** Caché local: Lista de contratos disponibles para este departamento */
+	private Hashtable<Integer, Contrato> contratos = new Hashtable<Integer, Contrato>();
+
+	/** Caché local: Lista de turnos en los contratos de este departamento */
+	private Hashtable<Integer, Turno> turno = new Hashtable<Integer, Turno>();
+
+	/**
+	 * Este hilo conecta con la base de datos.
+	 * 
 	 * @author Daniel Dionne
 	 */
 	public class Conector implements Runnable {
@@ -44,65 +57,78 @@ public class Vista {
 			db.abrirConexion();
 			if (!login.isDisposed())
 				if (!db.conexionAbierta()) {
-					shell.getDisplay().asyncExec(new Runnable () {
+					shell.getDisplay().asyncExec(new Runnable() {
 						public void run() {
-							MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
-							messageBox.setText (bundle.getString("Error"));
-							messageBox.setMessage (bundle.getString("I01_err_Conexion"));
+							MessageBox messageBox = new MessageBox(shell,
+									SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
+							messageBox.setText(bundle.getString("Error"));
+							messageBox.setMessage(bundle
+									.getString("I01_err_Conexion"));
 						}
 					});
-				}
-				else {
-					shell.getDisplay().asyncExec(new Runnable () {
+				} else {
+					shell.getDisplay().asyncExec(new Runnable() {
 						public void run() {
-							// TODO Por alguna razón oculta de los threads, aun habiendo comprobado
-							// antes si el dialog sigue presente, si no lo compruebo de nuevo
+							// TODO Por alguna razón oculta de los threads, aun
+							// habiendo comprobado
+							// antes si el dialog sigue presente, si no lo
+							// compruebo de nuevo
 							// a veces da error.
-							if (!login.isDisposed()) 
+							if (!login.isDisposed())
 								login.setProgreso("Conectado.");
 						}
 					});
 				}
 			else {
-				// En este caso se ha cerrado la aplicación antes de que termine de conectar.			
+				// En este caso se ha cerrado la aplicación antes de que termine
+				// de conectar.
 				if (db.conexionAbierta())
 					db.cerrarConexion();
 			}
 		}
 	}
-	
+
 	/**
-	 * Este hilo carga empleados y mensajes de la base de datos
+	 * Este hilo carga la caché
+	 * 
 	 * @author Daniel Dionne
 	 */
 	public class Loader implements Runnable {
 		public synchronized void run() {
 			while (alive) {
-				// Cargar empleados
+				// loadDepartamentos();
 				loadEmpleados();
-				// Cargar mensajes
 				loadMensajes();
-				
-				
-				
+				// loadContratos();
+				// loadTurnos();
+				cacheCargada = true;
 				try {
 					// TODO Espera 1/2 minuto (¿cómo lo dejamos?)
 					wait(20000);
-				} catch (Exception e) {}
+				} catch (Exception e) {
+				}
 			}
 		}
 	}
 
 	/**
-	 * Constructor de la vista:<ul>
+	 * Constructor de la vista:
+	 * <ul>
 	 * <li>Crea el display y el shell
 	 * <li>Crea el gestor de idiomas
 	 * <li>Conecta con la base de datos
-	 * <li>Identifica al usuario</ul>
-	 * @param controlador el controlador de la aplicación
-	 * @param db la base de datos de la aplicación
+	 * <li>Identifica al usuario
+	 * </ul>
+	 * 
+	 * @param controlador
+	 *            el controlador de la aplicación
+	 * @param db
+	 *            la base de datos de la aplicación
+	 * 
+	 * @author Daniel Dionne
 	 */
-	public Vista (Display d, Controlador controlador, Database db) {
+	public Vista(Display d, Controlador controlador, Database db) {
+		// Inicializar variables
 		this.controlador = controlador;
 		this.db = db;
 		controlador.setVista(this);
@@ -113,11 +139,13 @@ public class Vista {
 
 		// Creación del gestor de idiomas
 		l = new LanguageChanger();
-
 		bundle = l.getBundle();
 		locale = l.getCurrentLocale();
 	}
-	
+
+	/**
+	 * Este método realiza el login
+	 */
 	public void start() {
 		// Login y conexión a la base de datos
 		login = new I01_Login(shell, bundle, db);
@@ -126,53 +154,61 @@ public class Vista {
 		conector.start();
 		boolean identificado = false;
 		while (!identificado) {
-			if (db.conexionAbierta()) login.mostrarVentana("Conectado.");
-			else login.mostrarVentana("Conectando...");
+			if (db.conexionAbierta())
+				login.mostrarVentana("Conectado.");
+			else
+				login.mostrarVentana("Conectando...");
 			while (!login.isDisposed()) {
 				if (!shell.getDisplay().readAndDispatch()) {
 					shell.getDisplay().sleep();
 				}
 			}
-			if (login.getBotonPulsado()==1) {
+			if (login.getBotonPulsado() == 1) {
 				// Si llega aquí, ya hay conexión con la base de datos
 				// Login de administrador
-				if (login.getNumeroVendedor()==0 && login.getPassword().compareTo("admin")==0) {
-					System.out.println("aplicacion.Vista.java\t::Administrador identificado");
-					controlador.setEmpleadoActual(new Empleado(0,0,"Administrador","","",null,0,"","admin",0,0,0,null,null,null,null,null,0,0,0));
+				if (login.getNumeroVendedor() == 0
+						&& login.getPassword().compareTo("admin") == 0) {
+					System.out
+							.println("aplicacion.Vista.java\t::Administrador identificado");
+					controlador.setEmpleadoActual(new Empleado(0, 0,
+							"Administrador", "", "", null, 0, "", "admin", 0,
+							0, 0, null, null, null, null, null, 0, 0, 0));
 					identificado = true;
-				}
-				else {
+				} else {
 					Empleado emp = getEmpleado(login.getNumeroVendedor());
 					loader.start();
-					if (emp!=null) {
+					if (emp != null) {
 						// Comprobar la clave
-						if (emp.getPassword().compareTo(login.getPassword())==0) {
+						if (emp.getPassword().compareTo(login.getPassword()) == 0) {
 							controlador.setEmpleadoActual(emp);
 							identificado = true;
 							// Configurar idioma al del empleado
-							l.cambiarLocale(controlador.getEmpleadoActual().getIdioma());
+							l.cambiarLocale(controlador.getEmpleadoActual()
+									.getIdioma());
 							bundle = l.getBundle();
 							locale = l.getCurrentLocale();
-						}
-						else {
+						} else {
 							// Si el password no coincide
-							MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_ERROR | SWT.OK);
-							messageBox.setText (bundle.getString("Error"));
-							messageBox.setMessage (bundle.getString("I01_err_Login2"));
-							messageBox.open();							
+							MessageBox messageBox = new MessageBox(shell,
+									SWT.APPLICATION_MODAL | SWT.ICON_ERROR
+											| SWT.OK);
+							messageBox.setText(bundle.getString("Error"));
+							messageBox.setMessage(bundle
+									.getString("I01_err_Login2"));
+							messageBox.open();
 						}
-					}
-					else {
+					} else {
 						// Si el usuario no existe en la base de datos
-						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_ERROR | SWT.OK);
-						messageBox.setText (bundle.getString("Error"));
-						messageBox.setMessage (bundle.getString("I01_err_Login1"));
+						MessageBox messageBox = new MessageBox(shell,
+								SWT.APPLICATION_MODAL | SWT.ICON_ERROR | SWT.OK);
+						messageBox.setText(bundle.getString("Error"));
+						messageBox.setMessage(bundle
+								.getString("I01_err_Login1"));
 						messageBox.open();
 					}
 				}
-			}
-			else {
-				//Salir de la aplicación
+			} else {
+				// Salir de la aplicación
 				shell.getDisplay().dispose();
 				identificado = true; // Para que salga del bucle
 				if (db.conexionAbierta())
@@ -182,7 +218,8 @@ public class Vista {
 
 		// Si todavía no he cerrado el display, ya he hecho login correctamente
 		if (!shell.isDisposed()) {
-			i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);	
+			i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale,
+					this);
 			// Este bucle mantiene la ventana abierta
 			while (!shell.isDisposed()) {
 				if (!shell.getDisplay().readAndDispatch()) {
@@ -196,16 +233,17 @@ public class Vista {
 				db.cerrarConexion();
 		}
 	}
-	
+
 	public void stop() {
 		alive = false;
 		shell.dispose();
 		loader.interrupt();
 		display.dispose();
 	}
-	
+
 	/**
 	 * Devuelve el display de la aplicación.
+	 * 
 	 * @return el display de la aplicación
 	 */
 	public Display getDisplay() {
@@ -213,8 +251,19 @@ public class Vista {
 	}
 
 	/**
+	 * Devuelve si la caché ha terminado de cargarse.
+	 * 
+	 * @return <i>true</i> si la caché ha terminado de cargarse
+	 */
+	public boolean isCacheCargada() {
+		return cacheCargada;
+	}
+
+	/**
 	 * Muestra el parámetro en la barra de abajo de la ventana principal.
-	 * @param estado el String a mostrar
+	 * 
+	 * @param estado
+	 *            el String a mostrar
 	 */
 	public void setTextoEstado(String estado) {
 		i02.setTextoEstado(estado);
@@ -222,6 +271,7 @@ public class Vista {
 
 	/**
 	 * Devuelve el controlador de la aplicación
+	 * 
 	 * @return el controlador de la aplicación
 	 */
 	public Controlador getControlador() {
@@ -232,19 +282,21 @@ public class Vista {
 	 * Muestra el cursor de reloj de arena
 	 */
 	public void setCursorEspera() {
-		shell.setCursor(new Cursor(display,SWT.CURSOR_WAIT));
+		shell.setCursor(new Cursor(display, SWT.CURSOR_WAIT));
 	}
 
 	/**
 	 * Muestra el cursor normal
 	 */
 	public void setCursorFlecha() {
-		shell.setCursor(new Cursor(display,SWT.CURSOR_ARROW));
+		shell.setCursor(new Cursor(display, SWT.CURSOR_ARROW));
 	}
 
 	/**
-	 * Devuelve si la aplicación se ha iniciado en modo debug
-	 * @return <i>true</i> si la aplicación se ha iniciado en modo de corrección de errores
+	 * Devuelve true si la aplicación se ha iniciado en modo debug
+	 * 
+	 * @return <i>true</i> si la aplicación se ha iniciado en modo de
+	 *         corrección de errores
 	 */
 	public boolean getModoDebug() {
 		return controlador.getModoDebug();
@@ -252,40 +304,57 @@ public class Vista {
 
 	/**
 	 * Muestra un mensaje de debug por consola.
-	 * @param nombreClase el nombre de la clase que emite el mensaje
-	 * @param mensaje el mensaje a mostrar
+	 * 
+	 * @param nombreClase
+	 *            el nombre de la clase que emite el mensaje
+	 * @param mensaje
+	 *            el mensaje a mostrar
 	 */
 	public void infoDebug(String nombreClase, String mensaje) {
-		if (controlador.getModoDebug()) System.out.println("Debug :: [" + nombreClase + "]\n    " + mensaje);
+		if (controlador.getModoDebug())
+			System.out
+					.println("Debug :: [" + nombreClase + "]\n    " + mensaje);
 	}
 
-
-	/*****************************************************************************************
+	/***************************************************************************
 	 * Métodos relacionados con empleados
 	 */
 
 	/**
 	 * Devuelve el empleado que ha iniciado la sesión.
+	 * 
 	 * @return el empleado que ha iniciado la sesión
 	 */
 	public Empleado getEmpleadoActual() {
 		return controlador.getEmpleadoActual();
 	}
+
 	/**
-	 * Obtiene un empleado, dado su número de vendedor o identificador.
-	 * @param idEmpl el identificador del empleado o número de vendedor
+	 * Obtiene un empleado, dado su número de vendedor o identificador. Primero
+	 * mira en la caché, y si no está, lo coge de la base de datos.
+	 * 
+	 * @param idEmpl
+	 *            el identificador del empleado o número de vendedor
 	 * @return una instancia nueva del empleado
 	 */
 	public Empleado getEmpleado(int idEmpl) {
+		if (empleados.containsKey(idEmpl))
+			return empleados.get(idEmpl);
 		return controlador.getEmpleado(idEmpl);
 	}
 
 	/**
-	 * Carga la lista de empleados que trabaja en el mismo departamento que el actual
+	 * Carga la lista de empleados que trabaja en el mismo departamento que el
+	 * actual
 	 */
 	public void loadEmpleados() {
 		infoDebug("Vista", "Cargando empleados");
-		empleados = getEmpleados(null, getEmpleadoActual().getDepartamentoId(), null,null, null, null, null);
+		ArrayList<Empleado> empleadosAux = getEmpleados(null,
+				getEmpleadoActual().getDepartamentoId(), null, null, null,
+				null, null);
+		for (int i = 0; i < empleadosAux.size(); i++) {
+			empleados.put(empleadosAux.get(i).getEmplId(), empleadosAux.get(i));
+		}
 		infoDebug("Vista", "Acabado de cargar empleados");
 	}
 
@@ -295,62 +364,78 @@ public class Vista {
 	public void loadMensajes() {
 		// Carga mensajes
 		infoDebug("Vista", "Cargando mensajes");
-		mensajesEntrantes = getMensajesEntrantes(getEmpleadoActual().getEmplId(), 0, num_men_hoja);
+		mensajesEntrantes = getMensajesEntrantes(getEmpleadoActual()
+				.getEmplId(), 0, num_men_hoja);
 		infoDebug("Vista", "Acabado");
 	}
 
 	/**
-	 * Devuelve la lista de empleados que trabaja en el mismo departamento que el actual.
-	 * La carga si esta no se ha cargado todavía.
+	 * Devuelve la lista de empleados que trabaja en el mismo departamento que
+	 * el actual. La carga si esta no se ha cargado todavía.
+	 * 
 	 * @return la lista de empleados
 	 */
-	public ArrayList<Empleado> getEmpleados() {
+	public Hashtable<Integer, Empleado> getEmpleados() {
 		return empleados;
 	}
 
 	/**
-	 * Devuelve la lista de mensajes que ha recibido el empleado actual.
-	 * La carga si esta no se ha cargado todavía.
+	 * Devuelve la lista de mensajes que ha recibido el empleado actual. La
+	 * carga si esta no se ha cargado todavía.
+	 * 
 	 * @return la lista de empleados
 	 */
 	public ArrayList<Mensaje> getMensajesEntrantes() {
-		if (mensajesEntrantes==null) {
+		if (mensajesEntrantes == null) {
 			loadMensajes();
 		}
 		return mensajesEntrantes;
 	}
 
 	/**
-	 * Obtiene uno o varios empleados, que coincidan con los datos
-	 * dados del mismo. Los parámetros pueden ser nulos.
-	 * @param idEmpl		el identificador del empleado
-	 * @param idDpto		el identificador del departamento al que pertenece
-	 * @param idContrato	el identificador del contrato que tiene
-	 * @param nombre		el nombre del empleado
-	 * @param apellido1		el primer apellido del empleado
-	 * @param apellido2		el segundo apellido del empleado
+	 * Obtiene uno o varios empleados, que coincidan con los datos dados del
+	 * mismo. Los parámetros pueden ser nulos.
+	 * 
+	 * @param idEmpl
+	 *            el identificador del empleado
+	 * @param idDpto
+	 *            el identificador del departamento al que pertenece
+	 * @param idContrato
+	 *            el identificador del contrato que tiene
+	 * @param nombre
+	 *            el nombre del empleado
+	 * @param apellido1
+	 *            el primer apellido del empleado
+	 * @param apellido2
+	 *            el segundo apellido del empleado
 	 * @return una lista de empleados que coincida con los datos dados
 	 */
-	public ArrayList<Empleado> getEmpleados(Integer idEmpl, String idDpto, Integer idContrato, String nombre, String apellido1, String apellido2, Integer rango) {
-		return controlador.getEmpleados(idEmpl, idDpto, idContrato, nombre, apellido1, apellido2,rango);
+	public ArrayList<Empleado> getEmpleados(Integer idEmpl, String idDpto,
+			Integer idContrato, String nombre, String apellido1,
+			String apellido2, Integer rango) {
+		return controlador.getEmpleados(idEmpl, idDpto, idContrato, nombre,
+				apellido1, apellido2, rango);
 	}
 
 	/**
 	 * Guarda un empleado.
-	 * @param empleado el empleado a guardar
+	 * 
+	 * @param empleado
+	 *            el empleado a guardar
 	 * @return <i>true</i> si el empleado ha sido guardado
 	 */
 	public boolean insertEmpleado(Empleado empleado) {
 		setProgreso("Insertando empleado", 50);
 		boolean b = controlador.insertEmpleado(empleado);
 		int i = 0;
-		while (i<empleado.getDepartamentosId().size() && b) {
-			b = controlador.insertDepartamentoUsuario(empleado.getEmplId(), empleado.getDepartamentoId(i));
+		while (i < empleado.getDepartamentosId().size() && b) {
+			b = controlador.insertDepartamentoUsuario(empleado.getEmplId(),
+					empleado.getDepartamentoId(i));
 			i++;
 		}
 		if (b)
-			setProgreso("Empleado insertado",100);
-		else 
+			setProgreso("Empleado insertado", 100);
+		else
 			setProgreso("No se pudo insertar el empleado", 100);
 		return b;
 	}
@@ -359,81 +444,100 @@ public class Vista {
 		return controlador.getEmpleadosDepartamento(idDept);
 	}
 
-	/*****************************************************************************************
+	/***************************************************************************
 	 * Métodos relacionados con departamentos
 	 */
 
 	/**
 	 * Obtiene un departamento, dado su nombre.
-	 * @param id el identificador del departamento
+	 * 
+	 * @param id
+	 *            el identificador del departamento
 	 * @return una instancia del departamento
 	 */
-	public Departamento getDepartamento(String id){
+	public Departamento getDepartamento(String id) {
 		return controlador.getDepartamento(id);
 	}
 
 	/**
 	 * Guarda un departamento.
-	 * @param departamento el departamento a guardar
+	 * 
+	 * @param departamento
+	 *            el departamento a guardar
 	 * @return <i>true</i> si el departamento ha sido guardado
 	 */
-	public boolean insertDepartamento(Departamento departamento){
+	public boolean insertDepartamento(Departamento departamento) {
 		return controlador.insertDepartamento(departamento);
 	}
 
-	/*****************************************************************************************
+	/***************************************************************************
 	 * Métodos relacionados con mensajes
 	 */
 
 	/**
-	 * Obtiene una lista de <i>b</i> mensajes entrantes por orden cronológico, del más
-	 * nuevo al más antiguo, empezando desde el mensaje <i>a</i>.
-	 * @param idEmpl el empleado destinatario de los mensajes
-	 * @param a mensaje por el que empezar, siendo 1 el más reciente
-	 * @param b cuántos mensajes coger
+	 * Obtiene una lista de <i>b</i> mensajes entrantes por orden cronológico,
+	 * del más nuevo al más antiguo, empezando desde el mensaje <i>a</i>.
+	 * 
+	 * @param idEmpl
+	 *            el empleado destinatario de los mensajes
+	 * @param a
+	 *            mensaje por el que empezar, siendo 1 el más reciente
+	 * @param b
+	 *            cuántos mensajes coger
 	 * @return
 	 */
-	public ArrayList<Mensaje> getMensajesEntrantes(int idEmpl, int a, int b){
-		//Esto no funciona, y no sé por qué
-		//setProgreso("Cargando mensajes", 50);
-		ArrayList<Mensaje> array = controlador.getMensajesEntrantes(idEmpl, a, b);
+	public ArrayList<Mensaje> getMensajesEntrantes(int idEmpl, int a, int b) {
+		// Esto no funciona, y no sé por qué
+		// setProgreso("Cargando mensajes", 50);
+		ArrayList<Mensaje> array = controlador.getMensajesEntrantes(idEmpl, a,
+				b);
 		return array;
 	}
 
 	/**
-	 * Obtiene una lista de <i>b</i> mensajes salientes por orden cronológico, del más
-	 * nuevo al más antiguo, empezando desde el mensaje <i>a</i>.
-	 * @param idEmpl el empleado remitente de los mensajes
-	 * @param a mensaje por el que empezar, siendo 1 el más reciente
-	 * @param b cuántos mensajes coger
+	 * Obtiene una lista de <i>b</i> mensajes salientes por orden cronológico,
+	 * del más nuevo al más antiguo, empezando desde el mensaje <i>a</i>.
+	 * 
+	 * @param idEmpl
+	 *            el empleado remitente de los mensajes
+	 * @param a
+	 *            mensaje por el que empezar, siendo 1 el más reciente
+	 * @param b
+	 *            cuántos mensajes coger
 	 * @return
 	 */
-	public ArrayList<Mensaje> getMensajesSalientes(int idEmpl, int a, int b){
+	public ArrayList<Mensaje> getMensajesSalientes(int idEmpl, int a, int b) {
 		return controlador.getMensajesSalientes(idEmpl, a, b);
 	}
 
 	/**
 	 * Marca un mensaje
-	 * @param mensaje el mensaje a marcar
+	 * 
+	 * @param mensaje
+	 *            el mensaje a marcar
 	 * @return
 	 */
 	public boolean marcarMensaje(Mensaje mensaje) {
 		return controlador.marcarMensaje(mensaje);
 	}
-	/*****************************************************************************************
+
+	/***************************************************************************
 	 * Otros métodos
 	 */
 	/**
-	 * Ajusta la barra de progreso de la ventana principal al valor del 
+	 * Ajusta la barra de progreso de la ventana principal al valor del
 	 * parámetro, y la hace desaparecer si ha terminado.
-	 * @param i Un valor de 0 a 99, ó 100 para que desaparezca.
+	 * 
+	 * @param i
+	 *            Un valor de 0 a 99, ó 100 para que desaparezca.
 	 */
-	public void setProgreso(String s, int i){
-		i02.setProgreso(s,i);
+	public void setProgreso(String s, int i) {
+		i02.setProgreso(s, i);
 	}
 
 	/**
 	 * Devuelve la fecha actual
+	 * 
 	 * @return la fecha actual
 	 */
 	public Date getFechaActual() {
