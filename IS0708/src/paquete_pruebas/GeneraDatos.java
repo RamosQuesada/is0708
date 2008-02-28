@@ -14,6 +14,7 @@ import aplicacion.Util;
 import java.util.ArrayList;
 import java.util.Random;
 
+
 public class GeneraDatos {
 
 	// Os he quitado el main y he puesto un botón en la aplicación que resetea la base de datos.
@@ -81,6 +82,7 @@ public class GeneraDatos {
 		////////////////////////////////////////////////
 		
 		//comenzamos 
+		Util util=new Util();
 		Database bd = new Database();
 		Controlador c=new Controlador(bd,false);
 		bd.run();
@@ -290,7 +292,11 @@ public class GeneraDatos {
 			patron=dias_trabaja+":"+turnoInicial; //  dias_trabaja/turnoInicial, falta añadir que descanse aleatoriamente
 			duracionCiclo=dias_trabaja;
 			salario=(int)(rnd.nextInt(1500));
-			tipoContrato=(int)(rnd.nextInt(4))+1;//acotamos entre 1 y 4 segun me han comentado
+			if(dias_trabaja>5){//si trabaja fines de semana
+				tipoContrato=2;
+			}else{
+				tipoContrato=1;
+			}
 			contrato=new Contrato(nombre,0,turnoInicial,duracionCiclo,patron,salario,tipoContrato);
 			System.out.println("CONTRATOS");
         	System.out.println("//////////////////////////");
@@ -308,10 +314,9 @@ public class GeneraDatos {
 		}
 		//rellenar turnosPorContrato
 		for (int i = 0; i < numero_de_turnos_contrato ; i++) {
-			
 			idContrato=c.getIdsContratos().get((int)(rnd.nextInt(c.getIdsContratos().size())));//selecciono contrato al azar
 			idTurno=c.getIdsTurnos().get((int)(rnd.nextInt(c.getIdsTurnos().size())));//selecciono turno al azar
-				
+			String pat="";	
 			System.out.println("TURNOS POR CONTRATO");
         	System.out.println("//////////////////////////");
         	System.out.println("idContrato: "+idContrato);
@@ -321,14 +326,28 @@ public class GeneraDatos {
         	c.insertTurnoPorContrato(idTurno, idContrato);
         	//despues de esta llamada la base de datos tiene que actualizar patron,duracion ciclo,
         	Contrato ct=c.getContrato(idContrato);
+        	int dur_ciclo=ct.getDuracionCiclo();//cogemos la duración del ciclo
         	int dias_trabaja1=(int)(rnd.nextInt(7))+1;//acotamos entre 1 y 7
-        	String pat=ct.getPatron()+"/"+dias_trabaja1+":"+idTurno;//debemos añadir al opcion de meter mas un turno o que descansa
-        	int dur_ciclo=ct.getDuracionCiclo()+dias_trabaja1;//Actualizamos la duracion del ciclo
-        	System.out.println("nuevo patron: "+pat+" duracion: "+dur_ciclo);
+        	dur_ciclo+=dias_trabaja1;
+        	pat=ct.getPatron()+"/"+dias_trabaja1+":"+idTurno;
+        	if(i%3==0){//de vez en cuando metemos descansos
+        		pat=ct.getPatron()+"/"+2+":"+"d";
+        	}
+        	//como hemos añadido un nuevo turno a un contrato, el tipo será 3 o 4, analizamos
+        	if(ct.getTipoContrato()!=4){//
+        		if(util.trabaja_findes(pat)){//si trabaja fines de semana
+        			ct.set_tipoContrato(4);
+        		}else{
+        			ct.set_tipoContrato(3);
+        		}
+        		
+        	}
         	ct.setPatron(pat);
         	ct.setDuracionCiclo(dur_ciclo);
         	c.setContrato(ct);
 		}
+		//añadimos dias de descanso a los contratos
+		for (int i = 0; i < numero_de_turnos_contrato ; i++) {}
 		//insertar usuarios en departamento
 		for (int i = 0; i < numero_usuarios ; i++) {
 			ids.add((int)(rnd.nextInt(39999999)));//añado los id de los usuarios al arraylist

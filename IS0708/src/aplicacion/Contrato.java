@@ -112,5 +112,9 @@ public class Contrato {
 	public int getTipoContrato(){
 		return this._tipoContrato;
 	}
+
+	public void set_tipoContrato(int contrato) {
+		_tipoContrato = contrato;
+	}
 	
 }
