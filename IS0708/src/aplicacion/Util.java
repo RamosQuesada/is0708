@@ -312,4 +312,10 @@ public class Util {
 		}		
 		return s;
 	}
+	public boolean trabaja_findes(String p){//Esta funcion analiza un patron para saber si un empleado trabaja los findes
+		boolean cierto=false;
+		
+		return cierto;
+		
+	}
 }
