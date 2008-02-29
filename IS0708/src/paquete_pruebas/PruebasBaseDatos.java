@@ -31,20 +31,29 @@ public class PruebasBaseDatos {
 		db.abrirConexion();
 		Controlador c = new Controlador(db, true);
 		
-		boolean b = db.cambiarContrato(15, 12, "aleatorio14", "1:12", 1, 4000.50, 1);
+		//boolean b = db.cambiarContrato(15, 12, "aleatorio14", "1:12", 1, 4000.50, 1);
 		//ArrayList<Mensaje> misMensajes = c.getMensajesEntrantes(12345678, 0, 30);
 		
 		//db.insertarTrabaja(12345678, 1, "1970-3-12", t1, t1);
 		
 		//java.sql.Date d = new java.sql.Date(0);
-		Turno t = c.getObjetoTurnoEmpleadoDia(Date.valueOf("1970-03-12"), 12345678);
+		/*Turno t = c.getObjetoTurnoEmpleadoDia(Date.valueOf("1970-03-12"), 12345678);
 		System.out.print(t.getIdTurno()+ "  ");
 		System.out.print(t.getDescripcion()+ "  ");
 		System.out.print(t.getHoraEntrada()+ "  ");
 		System.out.print(t.getHoraSalida()+ "  ");
 		System.out.print(t.getHoraDescanso()+ "  ");
-		System.out.print(t.getTDescanso()+ "  ");
+		System.out.print(t.getTDescanso()+ "  ");*/
 
+		ArrayList<Trabaja> cuadrante = c.getCuadrante(12, 2007, "DatosFijos");
+		for (int i=0; i<cuadrante.size(); i++) {
+			Trabaja n = cuadrante.get(i);
+			System.out.println("NumVendedor: "+n.getIdEmpl());
+			System.out.println("Turno: "+n.getIdTurno());
+			System.out.println("Inicio: "+n.getFichIni());
+			System.out.println("Fin: "+n.getFichFin());
+		}
+		
 		db.cerrarConexion();
 		
 		

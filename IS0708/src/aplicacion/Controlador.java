@@ -1157,6 +1157,57 @@ public class Controlador {
 			}
 		}
 	}
+	
+	/**
+	 * Metodo que lee un cuadrante de la BD para un mes determinado
+	 * @param mes
+	 * @param anio
+	 * @param idDepartamento
+	 * @return Devuelve un ArrayList de objetos Trabaja
+	 */
+	public ArrayList<Trabaja> getCuadrante(int mes,int anio,String idDepartamento) {
+		ResultSet empl=null;
+		ResultSet cuad=null;
+		ArrayList<Trabaja> datos = new ArrayList();
+		try {
+			empl = _db.obtenEmpleadosDepartamento(idDepartamento);
+			
+			empl.last();
+			int num = empl.getRow();
+			int[] empleados = new int[num];
+			empl.beforeFirst();
+			
+			for (int i=0; i<num; i++) {
+				empl.next();
+				empleados[i] = empl.getInt("NumVendedor");
+			}
+			
+			cuad = _db.obtenCuadrante(mes, anio);
+			
+			while (cuad.next()) {
+				boolean esta=false;
+				int vend = cuad.getInt("NumVendedor");
+				
+				for (int i=0; i<num; i++)
+					if (vend==empleados[i]) {
+						esta = true;
+						break;
+					}
+				
+				if (esta) {
+					Trabaja nuevo = new Trabaja(vend, cuad.getTime("HoraEntrada"), cuad.getTime("HoraSalida"), cuad.getInt("IdTurno"));
+					datos.add(nuevo);
+					esta=false;
+				}
+			}
+			
+			return datos;		
+		} catch (Exception e){
+			System.out.println("Error en getCuadrante");
+			return null;
+		}
+		//return null;
+	}
 
 	/***************************************************************************
 	 * Otros métodos
