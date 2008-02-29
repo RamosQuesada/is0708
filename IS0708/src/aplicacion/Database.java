@@ -1240,4 +1240,27 @@ public class Database extends Thread {
 		}
 		return true;
 	}
+	
+	/**
+	 * Metodo que lee los datos de un mes determinado de la tabla Trabaja
+	 * sin importar el departamento ni el vendedor
+	 * @param mes
+	 * @param anio
+	 * @return Devuelve un ResultSet con los datos leidos de la BD
+	 */
+	public ResultSet obtenCuadrante(int mes,int anio) {
+		ResultSet r=null;		
+		
+		try {			
+			String inicio = anio+"-"+mes+"-"+"1";
+			String fin = anio+"-"+mes+"-"+"31";
+			st = con.createStatement();
+			r = st.executeQuery("SELECT * FROM Trabaja WHERE Fecha>='"+inicio+"' AND Fecha<='"+fin+"';");			
+		}
+		catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println("Error al realizar la consulta en departamento ");
+		}
+		return r;
+	}
 }
