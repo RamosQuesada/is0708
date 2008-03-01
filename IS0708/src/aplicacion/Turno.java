@@ -169,8 +169,9 @@ public class Turno {
 	/** Horas y minutos que el empleado está trabajando en este turno */
 	private int horas1,minutos1,horas2,minutos2;
 	/** Estos indican si el cursor está encima de una de las dos franjas */
-	boolean activa1 = false;
-	boolean activa2 = false;
+	private boolean activa1 = false;
+	private boolean activa2 = false;
+	private int anchoLados = 4;
 
 	public void calculaTiempoTrabajado() {
 		int franja1, franja2;
@@ -271,7 +272,7 @@ public class Turno {
 			gc.fillRectangle(inicio2+1,despV+1,Math.min(fin2-inicio2-1,136),12);
 			String s1 = "";
 			if (minutos2 != 0) s1=' '+ String.valueOf(minutos2) +'m';
-			String s  = Util.aString(horaDescanso.getHours()+tDescanso/60) + ":" + Util.aString(horaDescanso.getMinutes()+tDescanso%60) + " - " + Util.aString(horaSalida.getHours()) + ":" + Util.aString(horaSalida.getMinutes()) + " (" + String.valueOf(horas2)+'h'+s1+')';
+			String s = Util.aString(horaDescanso.getHours()+tDescanso/60) + ":" + Util.aString(horaDescanso.getMinutes()+tDescanso%60) + " - " + Util.aString(horaSalida.getHours()) + ":" + Util.aString(horaSalida.getMinutes()) + " (" + String.valueOf(horas2)+'h'+s1+')';
 			gc.drawText(s, inicio2+5, despV-14, true);
 		}
 
@@ -308,7 +309,7 @@ public class Turno {
 	 * @see #cambiarRelleno(GC, int, int, int)
 	 */
 	private void cambiarPincel (Display display, GC gc, int r, int g, int b) {
-		// Controlar l�mites de colores
+		// Controlar límites de colores
 		if (r<0) r=0;
 		if (g<0) g=0;
 		if (b<0) b=0;
@@ -316,5 +317,46 @@ public class Turno {
 		if (g>255) g=255;
 		if (b>255) b=255;		
 		gc.setForeground(new Color(display,r, g, b));
+	}
+	
+	public void desactivarFranjas() {
+		activa1 = false;
+		activa2 = false;
+	}
+	
+	/**
+	 * Comprueba si el píxel dado está contenido en el interior de la alguna franja
+	 * del turno, sin tener en cuenta los bordes, es decir, en el intervalo abierto
+	 * (inicio+d,fin-d), donde 'd' es el ancho del borde de la franja, de donde se
+	 * coge para estirarla y encogerla.
+	 * @param x	Píxel a comprobar
+	 * @see #contienePixel(int)
+	 * @see	#tocaLadoDerecho(int)
+	 * @see #tocaLadoIzquierdo(int)
+	 * @return Si inicio+d < x < fin-d.
+	 */
+	public Boolean contienePixelInt(int x, int margenIzq, int margenNombres, int horaInicio, int tamHora ) {
+		Boolean b = false;
+		int inicio1 = margenIzq + margenNombres + (horaEntrada.getHours()-horaInicio) * tamHora + (tamHora*horaEntrada.getMinutes())/60;
+		int fin1    = margenIzq + margenNombres + (horaDescanso.getHours()-horaInicio) * tamHora + (tamHora*horaDescanso.getMinutes())/60;
+		int inicio2 = margenIzq + margenNombres + (horaDescanso.getHours()-horaInicio+tDescanso/60) * tamHora  + (tamHora*(horaDescanso.getMinutes()+(tDescanso%60)))/60;
+		int fin2    = margenIzq + margenNombres + (horaSalida.getHours()-horaInicio) * tamHora + (tamHora*horaSalida.getMinutes())/60;
+		
+		if (x>inicio1+anchoLados && x<fin1-anchoLados) {
+			activa1 = true; b = true;
+		}
+		else if (x>inicio2+anchoLados && x<fin2-anchoLados) {
+			activa2 = true; b = true;
+		}
+		return b;
+	}
+	
+
+	public void activarFranja1() {
+		activa1 = true;
+	}
+	
+	public void activarFranja2() {
+		activa2 = true;
 	}
 }

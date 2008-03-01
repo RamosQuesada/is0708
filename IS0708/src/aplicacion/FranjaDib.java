@@ -73,22 +73,7 @@ public class FranjaDib extends Franja {
 	public Boolean contienePixel(int x, int y) {
 		return (x>=inicio && x<=fin) && (y>10 && y<20);
 	}
-	/**
-	 * Comprueba si el píxel dado está contenido en el interior de la franja, sin tener en
-	 * cuenta los bordes, es decir, en el intervalo abierto (inicio+d,fin-d),
-	 * donde 'd' es el ancho del borde de la franja, de donde se coge para estirarla y 
-	 * encogerla.
-	 * @param x	Píxel a comprobar
-	 * @see #contienePixel(int)
-	 * @see	#tocaLadoDerecho(int)
-	 * @see #tocaLadoIzquierdo(int)
-	 * @return Si inicio+d < x < fin-d.
-	 */
-	public Boolean contienePixelInt(int x) {
-		Boolean mueve = false;
-		if (x>inicio+anchoLados && x<fin-anchoLados) mueve = true;
-		return mueve;
-	}
+	
 	/**
 	 * Comprueba si el p�xel dado est� contenido en el lado izquierdo de la franja, es decir,
 	 * en el intervalo cerrado [inicio-d,inicio+d], donde 'd' es el ancho del borde de la franja,

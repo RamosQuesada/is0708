@@ -164,6 +164,7 @@ public class I02_Principal {
 		t.setIdEmpl(10000100);
 		t.setIdTurno(1);
 
+		
 		I_Cuadrante ic = new I_Cuadrante(vista, 2, 2008, "mi_dep");
 		//ic.setCuad(vista.getCuadrante(12, 2007, "DatosFijos"));
 		ic.setTrabajaDia(1, t);
