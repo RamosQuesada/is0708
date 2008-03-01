@@ -38,20 +38,7 @@ public class I02_cuadr {
 
 	
 
-	private void cursor(int i) {
-		switch (i) {
-		case 1:
-			canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_HAND));
-			break;
-		case 2:
-			canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_SIZEE));
-			break;
-		default:
-			canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_ARROW));
-			break;
-		}
 
-	}
 
 
 	private void desactivarFranja() {

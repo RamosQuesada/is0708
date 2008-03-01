@@ -12,6 +12,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
+import algoritmo.Trabaja;
+
 import idiomas.LanguageChanger;
 import interfaces.*;
 
@@ -391,10 +393,12 @@ public class Vista {
 	}
 	
 	public void loadTurnos() {
-		// De momento, carga una lista ficticia de dos turnos
+		// De momento, carga una lista ficticia de cuatro turnos
 		turnos.clear();
-		turnos.add(new Turno(1,"pi","14:00:00","19:00:00","17:00:00",1));
-		turnos.add(new Turno(2,"pi","12:15:00","22:15:00","16:00:00",2));
+		turnos.add(new Turno(1,"pa","14:00:00","19:00:00","17:00:00",60));
+		turnos.add(new Turno(2,"pe","12:15:00","22:15:00","16:00:00",120));
+		turnos.add(new Turno(3,"pi","12:10:00","20:10:00","16:10:00",35));
+		turnos.add(new Turno(4,"po","15:05:00","17:05:00","00:00:00",0));
 	}
 
 	/**
@@ -549,9 +553,21 @@ public class Vista {
 		return controlador.marcarMensaje(mensaje);
 	}
 
+
+	/***************************************************************************
+	 * Métodos relacionados con cuadrantes
+	 */
+
+	public ArrayList<Trabaja> getCuadrante(int mes, int anio, String idDepartamento) {
+		return controlador.getCuadrante(mes, anio, idDepartamento);
+	}
+		
+	
+	
 	/***************************************************************************
 	 * Otros métodos
 	 */
+	
 	/**
 	 * Ajusta la barra de progreso de la ventana principal al valor del
 	 * parámetro, y la hace desaparecer si ha terminado.
@@ -570,5 +586,13 @@ public class Vista {
 	 */
 	public Date getFechaActual() {
 		return controlador.getFechaActual();
+	}
+	
+	/**
+	 * Devuelve el paquete de idioma
+	 * @return el paquete de idioma actual
+	 */
+	public ResourceBundle getBundle() {
+		return bundle;
 	}
 }

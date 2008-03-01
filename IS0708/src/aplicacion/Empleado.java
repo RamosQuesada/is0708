@@ -878,31 +878,6 @@ public class Empleado implements Drawable {
 		return image.getImageData();
 	}
 	
-	
-	
-	public void anadeGUI(Composite composite, int horaInicio, int horaFin, int subdivisiones, boolean primero){
-		// Composite de fuera, donde van todos los empleados
-		final Composite c = composite;
-		GridData gd = new GridData(SWT.FILL,SWT.FILL,true,true,2,5);
-		// Alto de cada fila
-		gd.heightHint=50;
-		c.setLayoutData(gd);
-		GridLayout g = new GridLayout(2,false);
-		g.verticalSpacing = 0;
-		c.setLayout(g);
-		if (primero) {
-			// Crear un turno ficticio, sólo para pintar las horas
-			Turno tDummy = new Turno(123,"turnito","09:30:00","22:00:00","14:30:00",3);
-			new Label(c,SWT.NONE); // Para rellenar el hueco
-			tDummy.anadeGUI(c, horaInicio, horaFin, subdivisiones, true, color);
-		}
-		final Label nombre = new Label(c,SWT.NONE);
-		nombre.setLayoutData(new GridData(SWT.LEFT,SWT.CENTER,false,false,1,1));
-		nombre.setText(this.nombre);
-		Turno t = new Turno(123,"turnito","09:30:00","22:00:00","14:30:00",3);
-		t.anadeGUI(c, horaInicio, horaFin, subdivisiones, false, color);
-	}
-	
 	/**
 	 * 
 	 * @param dia Dia que queremos saber si puede trabajar nuestro empleado.

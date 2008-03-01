@@ -3,6 +3,8 @@ package interfaces;
 import org.eclipse.swt.*;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -90,7 +92,14 @@ public class I01_Login {
 			public void focusLost(FocusEvent arg0) {}
 		});
 		
-		
+		tUsuario.addModifyListener(new ModifyListener() {
+
+			public void modifyText(ModifyEvent arg0) {
+				if (tUsuario.getText().length()==tUsuario.getTextLimit())
+					tPassword.setFocus();
+			}
+			
+		});
 		tPassword.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 5, 1));
 
 		bAceptar.setText(bundle.getString("Aceptar"));
