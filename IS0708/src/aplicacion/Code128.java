@@ -3,17 +3,20 @@ package aplicacion;
 import org.eclipse.swt.graphics.GC;
 
 
+/**
+ * Conversor de Strings a códigos de barras utilizando Code-128. 
+ * @author Daniel Dionne
+ * <br>
+ * {@linkplain} http://www.barcodeisland.com/code128.phtml
+ * {@linkplain} http://www.piclist.com/techref/barcode/renderbarjs.htm
+ *
+ */
 public class Code128 {
 	final static int A = 203;
 	final static int B = 204;
 	final static int C = 205;
 	
-	static int ToA         = 201;
-	static int ToC         = 199;
 	static int codeTable   = 204;
-
-	
-	
 
 	/**
 	 * Convierte una cadena de texto en una cadena binaria, donde los 1's son barras
