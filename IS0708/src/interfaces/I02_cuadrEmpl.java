@@ -85,6 +85,21 @@ public class I02_cuadrEmpl extends Thread{
 		canvas.redraw();
 	}
 
+	public void run(){
+		while(true){
+			display.asyncExec(new Runnable () {
+				public void run() {
+					redibujar();
+				}
+			});
+			try {
+				sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 
 
 	public void dibujarCuadrante(GC gc) {
@@ -136,6 +151,11 @@ public class I02_cuadrEmpl extends Thread{
 		this._bundle = bundle;
 		this.fecha= fecha;
 		this.empleado=empleado;
+		
+		
+		
+		
+		//a partir de aqui hay q suprimir
 		final GridLayout l = new GridLayout(3,false);
 		c.setLayout(l);
 		
@@ -222,8 +242,7 @@ public class I02_cuadrEmpl extends Thread{
 //			}
 //		};
 		if (diario) setSemanal(); else setMensual();
-
-
+		start();
 	}
 
 

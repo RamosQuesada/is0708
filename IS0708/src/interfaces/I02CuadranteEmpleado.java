@@ -412,13 +412,9 @@ public class I02CuadranteEmpleado {
 			float tamanoy= tamanoFila/3;
 			
 			if (tamanox<tamanoy){
-	//			System.out.println("1");
-	//			System.out.println(tamanoy-tamanox);
 				tamano = (int)(tamanox);
 				}
 			else{
-	//			System.out.println("2");
-	//			System.out.println(tamanox-tamanoy);
 				tamano= (int)tamanoy;
 			}
 			
