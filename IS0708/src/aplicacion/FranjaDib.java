@@ -21,45 +21,9 @@ public class FranjaDib extends Franja {
 	public FranjaDib (Posicion pinicio, Posicion pfin) {
 		super(pinicio, pfin);
 	}
-	/**
-	 * Cambia el color del pincel (foreground) sin exceder los l�mites de Color.
-	 * Si se excede un l�mite, se pone a 0 o 255, respectivamente.
-	 * @param gc	El GC del que cambiar el color
-	 * @param r		Valor del componente rojo
-	 * @param g		Valor del componente verde
-	 * @param b		Valor del componente azul
-	 * @see #cambiarRelleno(GC, int, int, int)
-	 */
-	private void cambiarPincel (Display display, GC gc, int r, int g, int b) {
-		// Controlar l�mites de colores
-		if (r<0) r=0;
-		if (g<0) g=0;
-		if (b<0) b=0;
-		if (r>255) r=255;
-		if (g>255) g=255;
-		if (b>255) b=255;		
-		gc.setForeground(new Color(display,r, g, b));
-	}
-	/**
-	 * Cambia el color del fondo (background) sin exceder los l�mites de Color.
-	 * Si se excede un l�mite, se pone a 0 o 255, respectivamente.
-	 * @param gc	El GC del que cambiar el color
-	 * @param r		Valor del componente rojo
-	 * @param g		Valor del componente verde
-	 * @param b		Valor del componente azul
-	 * @see #cambiarPincel(GC, int, int, int)
-	 */
-	private void cambiarRelleno(Display display, GC gc, int r, int g, int b) {
-		// Controlar l�mites de colores
-		if (r<0) r=0;
-		if (g<0) g=0;
-		if (b<0) b=0;
-		if (r>255) r=255;
-		if (g>255) g=255;
-		if (b>255) b=255;		
-		gc.setBackground(new Color(display,r, g, b));
-	}
 
+
+	
 	/**
 	 * Dibuja una Franja. Si est� activa, coloca sobre la misma una pesta�a informativa
 	 * @param display Display sobre el que se est� dibujando
@@ -68,36 +32,9 @@ public class FranjaDib extends Franja {
 	 * @param color Color de la Franja
 	 */
 	public void dibujarFranja (Display display, GC gc, int despV, Color color) {
-		int r = color.getRed();
-		int g = color.getGreen();
-		int b = color.getBlue();
-		// Todos los cambios de colores
-		cambiarRelleno(display, gc, r-50,g-50,b-50);
-		gc.fillRoundRectangle(inicio+2,despV+2,fin-inicio,15,10,10);
-		cambiarRelleno(display, gc, r,g,b);
-		cambiarPincel(display, gc, r-100,g-100,b-100);
-		gc.fillRoundRectangle(inicio,despV,fin-inicio,15,8,8);
-		gc.drawRoundRectangle(inicio,despV,fin-inicio,15,8,8);
-		// Si la franja est� activa, mostrar una pesta�a con informaci�n adicional
-		// TODO Si la franja est� muy a la derecha y es peque�a, la pesta�a se sale
+		
 
-		// Dibujar pesta�a encima de la franja, si est� activa
-		if (activa) {
-			int subDivs = 0;
-			subDivs += (pfin.dameHora() - pinicio.dameHora())*12;
-			subDivs += (pfin.dameCMin() - pinicio.dameCMin());
-			// Modificar los colores teniendo siempre en cuenta los l�mites [0-255]
-			cambiarRelleno(display, gc, r-50,g-50,b-50);
-			gc.fillRoundRectangle(inicio+2,despV-13,135,20,10,10);
-			cambiarRelleno(display, gc, r,g,b);	
-			gc.fillRoundRectangle(inicio, despV-15, 135, 20,8,8);
-			gc.drawRoundRectangle(inicio, despV-15, 135, 20,8,8);
-			gc.fillRectangle(inicio+1,despV+1,Math.min(fin-inicio-1,136),12);
-			String s1 = "";
-			if (subDivs%12*60/12 != 0) s1=' '+String.valueOf(aString(subDivs%12*60/12))+'m';
-			String s  = aString(pinicio.dameHora()%24) + ":" + aString(pinicio.dameCMin()*60/12) + " - " + aString(pfin.dameHora()%24) + ":" + aString(pfin.dameCMin()*60/12) + " (" + String.valueOf(subDivs/12)+'h'+s1+')';
-			gc.drawText(s, inicio+5, despV-14, true);
-		}
+
 	}
 	/**
 	 * Evita que la barra se salga por los extremos. Si se sale, la coloca en el extremo.

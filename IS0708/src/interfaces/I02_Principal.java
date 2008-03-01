@@ -162,13 +162,15 @@ public class I02_Principal {
 
 		algoritmo.Trabaja t = new algoritmo.Trabaja();
 		t.setIdEmpl(10000100);
+		t.setIdTurno(1);
 
 		I_Cuadrante ic = new I_Cuadrante(vista, 2, 2008, "mi_dep");
+		//ic.setCuad(vista.getCuadrante(12, 2007, "DatosFijos"));
 		ic.setTrabajaDia(1, t);
-		ic.setConfig(3, 9, 22);
+		ic.setConfig(4, 9, 22);
 		ic.setTamano(200, 200);
 		ic.setComposite(cCuadrante);
-
+		ic.setDia(1);
 		Label lCalendario = new Label(cCuadrantes, SWT.LEFT);
 		lCalendario.setText(bundle.getString("Calendario"));
 		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
@@ -178,23 +180,15 @@ public class I02_Principal {
 				| SWT.SHORT);
 		calendario.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				String[] meses = { bundle.getString("enero"),
-						bundle.getString("febrero"), bundle.getString("marzo"),
-						bundle.getString("abril"), bundle.getString("mayo"),
-						bundle.getString("junio"), bundle.getString("julio"),
-						bundle.getString("agosto"),
-						bundle.getString("septiembre"),
-						bundle.getString("octubre"),
-						bundle.getString("noviembre"),
-						bundle.getString("diciembre") };
+				
 				// TODO BD Cargar el cuadrante con la fecha correspondiente en
 				// la variable cuadranteActual
-				/*
-				 * System.out.println("Fecha cambiada a " +
-				 * String.valueOf(calendario.getDay()) + " de " +
-				 * meses[calendario.getMonth()] + " de " +
-				 * String.valueOf(calendario.getYear()));
-				 */
+				
+				vista.infoDebug("I02_Principal", "Fecha cambiada a " +
+				String.valueOf(calendario.getDay()) + " de " +
+				aplicacion.Util.mesAString(bundle, calendario.getMonth()) + " de " +
+				String.valueOf(calendario.getYear()));
+				
 			}
 		});
 		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false,

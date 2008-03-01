@@ -3,6 +3,7 @@ package aplicacion;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Random;
+import java.util.ResourceBundle;
 import java.lang.String;
 import java.sql.Time;
 import java.util.Date;
@@ -317,5 +318,25 @@ public class Util {
 		
 		return cierto;
 		
+	}
+	
+	/**
+	 * Devuelve el nombre del mes i en el idioma del bundle.
+	 * @param bundle paquete de idioma
+	 * @param i entero del 1 al 12
+	 * @return el nombre del mes, o null si el parámetro i no es correcto
+	 */
+	public static String mesAString(ResourceBundle bundle, int i) {
+		String[] meses = { bundle.getString("enero"),
+				bundle.getString("febrero"), bundle.getString("marzo"),
+				bundle.getString("abril"), bundle.getString("mayo"),
+				bundle.getString("junio"), bundle.getString("julio"),
+				bundle.getString("agosto"),
+				bundle.getString("septiembre"),
+				bundle.getString("octubre"),
+				bundle.getString("noviembre"),
+				bundle.getString("diciembre") };
+		if (i<1 || i>12) return null;
+		return meses[i];
 	}
 }
