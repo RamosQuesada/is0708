@@ -19,11 +19,9 @@ public class I02_threadEmpl extends Thread{
 	}
 	
 	public synchronized void run(){
-		System.out.println("thread");
-		System.out.println("nace");
 		while(corriendo){try {
 			wait(100);
-			System.out.println("vive");
+
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -36,18 +34,10 @@ public class I02_threadEmpl extends Thread{
 			cuadrante.horaComienzoDescanso =  new ArrayList<Float>();
 			if(cuadrante.fecha==null){
 			cuadrante.fecha=new Date(System.currentTimeMillis());}
-			GregorianCalendar calendario = new GregorianCalendar();
-			//System.out.println(ahoraCal.getClass());
-			//calendario.setFirstDayOfWeek(calendario.MONDAY);
-			//calendario.set(fecha.getYear(),fecha.getMonth(),fecha.getDate());
-			//calendario.setGregorianChange(fecha);
-		//	System.out.println("pruebasel" +Util.dateAString(fecha));
-			
-	
+			GregorianCalendar calendario = new GregorianCalendar();	
 			calendario.set(GregorianCalendar.DAY_OF_MONTH, cuadrante.fecha.getDate());
 			calendario.set(GregorianCalendar.MONTH, cuadrante.fecha.getMonth());
 			calendario.set(GregorianCalendar.YEAR, cuadrante.fecha.getYear());
-	//		System.out.println(calendario.get(GregorianCalendar.DAY_OF_WEEK));
 			int numDias=0;
 			while(calendario.get(GregorianCalendar.DAY_OF_WEEK)!=6){
 				calendario.add(Calendar.DATE, -1);
@@ -62,9 +52,7 @@ public class I02_threadEmpl extends Thread{
 					Integer.toString(
 						calendario.get(GregorianCalendar.DATE)+cont)
 					));
-	
-			//	System.out.println("FECHA REAL:"+fecha);
-				//System.out.println(Util.dateAString(fecha));
+
 				int turno = cuadrante.vista.getControlador().getTurnoEmpleadoDia(cuadrante.fecha, cuadrante.empleado.getEmplId());
 				
 				Time horaEntrada,horaSalida,horaDescanso;
@@ -73,10 +61,8 @@ public class I02_threadEmpl extends Thread{
 				Float horaSalidaFloat=0.0f;
 				Float horaDescansoFloat = 0.0f;
 				Float finHoraDescansoFloat = 0.0f;
-				if(turno==0){System.out.println("vacio");}
 				if(turno!=0){
 					
-					System.out.println("turno no vacio");
 					int actual=0;
 					
 					while (turno!=cuadrante.tiposTurno.get(actual).getIdTurno())actual++;
@@ -106,7 +92,6 @@ public class I02_threadEmpl extends Thread{
 			
 			this.cuadrante.redibujar=true;
 			corriendo=false;
-			System.out.println("muere");
 	}
 
 }
