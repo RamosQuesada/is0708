@@ -3,6 +3,8 @@ package interfaces;
 import java.util.Random;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -85,6 +87,14 @@ public class I19_Excepcion {
 		bCancelar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		bCancelar.setText("Cancelar");
 		
+		bCancelar.addSelectionListener(new SelectionListener() {
+			public void widgetDefaultSelected(SelectionEvent arg0) {}
+			public void widgetSelected(SelectionEvent arg0) {
+				shell.close();
+				
+			}
+			
+		});
 		tMensaje.setFocus();
 		tMensaje.selectAll();
 		

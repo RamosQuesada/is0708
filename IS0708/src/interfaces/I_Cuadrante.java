@@ -235,7 +235,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		
 		mouseMoveListenerCuadrSemanal = new MouseMoveListener() {
 			public void mouseMove(MouseEvent e) {
-				if (vista.isCacheCargada()) {
+				if (cacheCargada) {
 			/*	// Si acabo de apretar el bot�n para crear una franja, pero
 				// todav�a no he movido el rat�n
 				if (creando && empleadoActivo != -1) {
@@ -350,7 +350,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					redibujar();
 				}
 				// Si no estoy moviendo ninguna franja,
-				// comprobar si el cursor est� en alguna franja, una por una
+				// comprobar si el cursor está en alguna franja, una por una
 				else {
 				*/	
 				// Comprueba el empleado activo (vertical)
@@ -368,22 +368,27 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 						empleadoActivo = empleadoActivoNuevo;
 						redibujar = true;
 					}
-					/*
+					
 					// Comprueba la franja activa (horizontal)
 					i = 0;
 					encontrado = false;
-					if (franjaActiva!=null)	franjaActiva.desactivarFranja();
-					franjaActiva = null;
-					while (empleadoActivo != -1 && !encontrado && i < cuadrante.empleados.get(empleadoActivo).turno.franjas.size()) {
-						f = cuadrante.empleados.get(empleadoActivo).turno.franjas.get(i);
-						if 		(f.contienePixelInt(e.x)) 	{ cursor(1); encontrado = true; franjaActiva = f; f.activarFranja(); redibujar=true;}
-						else if (f.tocaLadoIzquierdo(e.x)) { cursor(2); encontrado = true; franjaActiva = f; f.activarFranja(); redibujar=true;}
-						else if (f.tocaLadoDerecho(e.x)) 	{ cursor(2); encontrado = true; franjaActiva = f; f.activarFranja(); redibujar=true;}
-						else									  cursor(0);
+					Turno turnoActivo=null;
+					if (turnoActivo!=null)	turnoActivo.desactivarFranjas();
+					turnoActivo = null;
+					Turno t;
+					while (empleadoActivo != -1 && !encontrado && i < iCuad[dia].size()) {
+						t = iCuad[dia].get(i).getTurno();
+						if 		(t.contienePixelInt(e.x,margenIzq,margenNombres,horaApertura,tamHora))	{ cursor(1); encontrado = true; turnoActivo = t; redibujar=true;}
+//						else if (t.tocaLadoIzquierdo(e.x))	{ cursor(2); encontrado = true; turnoActivo = t; f.activarFranja(); redibujar=true;}
+//						else if (t.tocaLadoDerecho(e.x))	{ cursor(2); encontrado = true; turnoActivo = t; f.activarFranja(); redibujar=true;}
+						else {
+							cursor(0);
+							t.desactivarFranjas();
+						}
 						i++;
 					}
-					*/
-					if (redibujar) redibujar();
+					
+					if (redibujar) canvas.redraw();
 				}
 			}
 //			}
@@ -607,7 +612,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	 */
 	// TODO Debería lanzar una excepción si empleadoActivo > empleados.size
 	public void dibujarCuadranteDia(Display d, GC gc, int empleadoActivo) {
-		//dibujarSeleccion(gc, empleadoActivo);
+		dibujarSeleccion(gc, empleadoActivo);
 		dibujarHoras(gc);
 		dibujarTurnos(gc);
 	}
@@ -693,12 +698,11 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	// TODO Lanzar excepción si emp > empleados.size
 	private void dibujarSeleccion (GC gc, int emp) {
 		if (emp!=-1) {
-			Color color = new Color(display,128,128,128);
+			Color color = new Color(display,220,240,220);
 			if (vista.getEmpleados().get(emp).dameColor()!=null)
 				color = new Color(display, 255-(255-vista.getEmpleados().get(emp).dameColor().getRed())/5, 255-(255-vista.getEmpleados().get(emp).dameColor().getGreen())/5, 255-(255-vista.getEmpleados().get(emp).dameColor().getBlue())/5);
-			gc.setForeground(color);
-			gc.fillRectangle(100,100,200,200);
-			gc.fillRectangle(margenNombres+margenIzq,margenSup+(sep_vert_franjas+alto_franjas)*(emp+1)-5,ancho-margenNombres-margenIzq-margenDer,alto_franjas+11);
+			gc.setBackground(color);
+			gc.fillRectangle(Math.max(margenIzq-2,0),margenSup+(sep_vert_franjas+alto_franjas)*(emp+1)-5,ancho-margenIzq-margenDer,alto_franjas+11);
 		}
 	}
 	/**

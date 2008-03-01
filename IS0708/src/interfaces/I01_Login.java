@@ -3,6 +3,8 @@ package interfaces;
 import org.eclipse.swt.*;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -28,6 +30,7 @@ public class I01_Login {
 	Database db;
 	Text tEstado;
 	private Label progreso;
+	private boolean detectadoLector = false;
 	
 	
 	public I01_Login(Shell padre, ResourceBundle bundle, Database db) {
@@ -93,13 +96,18 @@ public class I01_Login {
 		});
 		
 		tUsuario.addModifyListener(new ModifyListener() {
-
 			public void modifyText(ModifyEvent arg0) {
+				int i = tUsuario.getText().length()-1;
+				if (i>0 && tUsuario.getText().charAt(i)==' ') {
+					if (tUsuario.getText().equals("a4 ")) detectadoLector = true;
+					tUsuario.setText("");
+				}
 				if (tUsuario.getText().length()==tUsuario.getTextLimit())
 					tPassword.setFocus();
 			}
 			
 		});
+		
 		tPassword.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 5, 1));
 
 		bAceptar.setText(bundle.getString("Aceptar"));
@@ -120,56 +128,63 @@ public class I01_Login {
 			}
 		};
 
-		// Un SelectionAdapter con lo que hace el botón bAceptar
-		SelectionAdapter sabAceptar = new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				if (tUsuario.getText().length()!=8) {
-					MessageBox messageBox = new MessageBox (dialog, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
-					messageBox.setText (bundle.getString("Error"));
-					messageBox.setMessage (bundle.getString("I01_err_NumVendedor1"));
-					e.doit = messageBox.open () == SWT.YES;
-					// Enfocar tUsuario y seleccionar texto
-					tUsuario.setFocus();
-					tUsuario.selectAll();
-				}
-				else { 
-					try {
-						numeroVendedor = Integer.valueOf(tUsuario.getText());
-						password = tPassword.getText();
-						botonPulsado=1;
-						// bloquear interfaz, cursor esperar, bucle de espera
-						dialog.setCursor(new Cursor(dialog.getDisplay(), SWT.CURSOR_WAIT));
-						bAceptar.setEnabled(false);
-						tUsuario.setEnabled(false);
-						tPassword.setEnabled(false);
-						boolean admin = tUsuario.getText().compareTo("00000000")==0 && tPassword.getText().compareTo("admin")==0;
-						while (!admin && !db.conexionAbierta()) {
-							if (!dialog.isDisposed() && !dialog.getDisplay().readAndDispatch()) {
-								dialog.getDisplay().sleep();
-							}
-						}
-						if (!dialog.isDisposed())
-							dialog.setCursor(new Cursor(dialog.getDisplay(), SWT.CURSOR_ARROW));
-						dialog.dispose();
-						fondo.dispose();
-					} catch (NumberFormatException exception) {
-						MessageBox messageBox = new MessageBox (dialog, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
-						messageBox.setText (bundle.getString("Error"));
-						messageBox.setMessage (bundle.getString("I01_err_NumVendedor2"));
-						e.doit = messageBox.open () == SWT.YES;
-						// Enfocar tUsuario y seleccionar texto
-						tUsuario.setFocus();
-						tUsuario.selectAll();
-					}
-				}
-			}
-		};
-
 		bCancelar.addSelectionListener(sabCancelar);
-		bAceptar.addSelectionListener(sabAceptar);
+
 
 		// Botón por defecto bAceptar
 		dialog.setDefaultButton(bAceptar);
+		
+		// Lo que pasa al pulsar el botón por defecto
+		dialog.addListener (SWT.Traverse, new Listener () {
+			public void handleEvent (Event event) {
+				switch (event.detail) {
+					case SWT.TRAVERSE_RETURN:
+						if (!detectadoLector && tUsuario.getText().length()!=8) {
+							MessageBox messageBox = new MessageBox (dialog, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
+							messageBox.setText (bundle.getString("Error"));
+							messageBox.setMessage (bundle.getString("I01_err_NumVendedor1"));
+							messageBox.open ();// == SWT.YES;
+							// Enfocar tUsuario y seleccionar texto
+							tUsuario.setFocus();
+							tUsuario.selectAll();
+						}
+						else if (!detectadoLector || (detectadoLector && tPassword.getText().length()!=0)) { 
+							try {
+								numeroVendedor = Integer.valueOf(tUsuario.getText());
+								password = tPassword.getText();
+								botonPulsado=1;
+								// bloquear interfaz, cursor esperar, bucle de espera
+								dialog.setCursor(new Cursor(dialog.getDisplay(), SWT.CURSOR_WAIT));
+								bAceptar.setEnabled(false);
+								tUsuario.setEnabled(false);
+								tPassword.setEnabled(false);
+								boolean admin = tUsuario.getText().compareTo("00000000")==0 && tPassword.getText().compareTo("admin")==0;
+								while (!admin && !db.conexionAbierta()) {
+									if (!dialog.isDisposed() && !dialog.getDisplay().readAndDispatch()) {
+										dialog.getDisplay().sleep();
+									}
+								}
+								if (!dialog.isDisposed())
+									dialog.setCursor(new Cursor(dialog.getDisplay(), SWT.CURSOR_ARROW));
+								dialog.dispose();
+								fondo.dispose();
+							} catch (NumberFormatException exception) {
+								MessageBox messageBox = new MessageBox (dialog, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
+								messageBox.setText (bundle.getString("Error"));
+								messageBox.setMessage (bundle.getString("I01_err_NumVendedor2"));
+								messageBox.open ();// == SWT.YES;
+								// Enfocar tUsuario y seleccionar texto
+								tUsuario.setFocus();
+								tUsuario.selectAll();
+							}
+						}
+					
+						event.detail = SWT.TRAVERSE_NONE;
+						event.doit = false;
+						break;
+				}
+			}
+		});
 
 		// Ajustar el tamaño de la ventana
 		dialog.setBackgroundImage(fondo);
