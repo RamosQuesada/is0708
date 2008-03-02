@@ -219,19 +219,19 @@ public class Util {
 	
 	/**
 	 * Convierte en un formato para crear fechas
-	 * @param año 
+	 * @param anio 
 	 * @param mes 
 	 * @param mes
 	 * @return
 	 */
-	public static String aFormatoDate(String año,String mes,String dia){
+	public static String aFormatoDate(String anio,String mes,String dia){
 		
 		String year;
 		//System.out.println(Integer.parseInt(año));
-		if((Integer.parseInt(año))<1000){
-			year="20"+año.substring(1);
+		if((Integer.parseInt(anio))<1000){
+			year="20"+anio.substring(1);
 		}
-		else{year=año;}
+		else{year=anio;}
 		String month;
 		String day;
 		if (mes.length()==1){month=("0"+mes);}

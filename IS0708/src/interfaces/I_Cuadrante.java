@@ -267,6 +267,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 
 				// Si estoy moviendo una franja
 					if (dameMovimiento() == 2) {
+						movimiento = turnoActivo.moverFranja(e.x, margenIzq, margenNombres, horaApertura, tamHora, tamSubdiv, numSubdivisiones);
+						canvas.redraw();
+	
 						// Ya he pinchado dentro de la franja activa, y la estoy moviendo
 						/*
 						Posicion ancho = f.pfin.diferencia(f.pinicio);
@@ -300,83 +303,21 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 						}
 						redibujar();
 						*/
-					}/*
+					}
 				// Si estoy cambiando el inicio de una franja
 				else if (dameMovimiento() == 1) {
-					f.inicio = e.x;
-					f.pinicio = cuadrante.sticky(f.inicio);
-					// Comprobar si toco el borde izquierdo
-					if (f.pinicio.dameHora() < horaInicio	|| f.pinicio.dameCMin() < 0) {
-						f.pinicio.ponHora(horaInicio);
-						f.pinicio.ponCMin(0);
-					}
-					f.actualizarPixeles(margenIzq, margenNombres, cuadrante.tamHora, cuadrante.tamSubdiv, cuadrante.subdivisiones, horaInicio);
-
-					// Comprobar si la barra es de tama�o menor o igual que 0
-					if (f.inicio > f.fin) {
-						desactivarFranja();
-						cuadrante.empleados.get(empleadoActivo).turno.franjas.remove(f);
-						cursor(0);
-					} else {
-						// Comprobar contacto con otras franjas
-						int j = 0;
-						FranjaDib f2;
-						Boolean encontrado2 = false;
-						while (!encontrado2 && j < cuadrante.empleados.get(empleadoActivo).turno.franjas.size()) {
-							f2 = cuadrante.empleados.get(empleadoActivo).turno.franjas.get(j);
-							if (f != f2 && ((f.pinicio.menorOIgualQue(f2.pfin) && f2.contienePixel(e.x - 10,0)) | (f.inicio <= f2.inicio && f.fin >= f2.fin))) {
-								encontrado2 = true;
-								f.pinicio = f2.pinicio;
-								cuadrante.empleados.get(empleadoActivo).turno.franjas.remove(j);
-								desactivarFranja();
-								f.actualizarPixeles(margenIzq, margenNombres, cuadrante.tamHora, cuadrante.tamSubdiv, cuadrante.subdivisiones, horaInicio);
-							}
-							j++;
-						}
-						redibujar();
-					}
+					movimiento = turnoActivo.moverLadoIzquierdo(e.x, margenIzq, margenNombres, horaApertura, tamHora, tamSubdiv, numSubdivisiones);
+					canvas.redraw();
 				}
 				// Si estoy cambiando el fin de una franja
 				else if (dameMovimiento() == 3) {
-					f.fin = e.x;
-					f.pfin = cuadrante.sticky(f.fin);
-					// Comprobar si toco el borde derecho
-					if (f.pfin.dameHora() > horaFin || (f.pfin.dameHora() == horaFin && f.pfin.dameCMin() > 0)) {
-						f.pfin.ponHora(horaFin);
-						f.pfin.ponCMin(0);
-					}
-					f.actualizarPixeles(margenIzq, margenNombres, cuadrante.tamHora, cuadrante.tamSubdiv, cuadrante.subdivisiones, horaInicio);
-					// Comprobar si la barra es de tama�o menor o igual que 0
-					if (f.inicio > f.fin) {
-						desactivarFranja();
-						cuadrante.empleados.get(empleadoActivo).turno.franjas
-								.remove(f);
-						cursor(0);
-					} else {
-						// Comprobar contacto con otras franjas
-						int j = 0;
-						FranjaDib f2;
-						Boolean encontrado2 = false;
-						while (terminadoDeCrear	&& !encontrado2	&& j < cuadrante.empleados.get(empleadoActivo).turno.franjas.size()) {
-							f2 = cuadrante.empleados.get(empleadoActivo).turno.franjas.get(j);
-							if (f != f2	&& (f.pfin.mayorOIgualQue(f2.pinicio) && f2.contienePixel(e.x + 10,0)) | (f.inicio <= f2.inicio && f.fin >= f2.fin)) {
-								encontrado2 = true;
-								f.pfin = f2.pfin;
-								cuadrante.empleados.get(empleadoActivo).turno.franjas.remove(j);
-								desactivarFranja();
-								f.actualizarPixeles(margenIzq, margenNombres, cuadrante.tamHora, cuadrante.tamSubdiv, cuadrante.subdivisiones, horaInicio);
-							}
-							j++;
-						}
-					}
-					redibujar();
+					movimiento = turnoActivo.moverLadoDerecho(e.x, margenIzq, margenNombres, horaApertura, horaFin, tamHora, tamSubdiv, numSubdivisiones);
+					canvas.redraw();
 				}
 				// Si no estoy moviendo ninguna franja,
 				// comprobar si el cursor está en alguna franja, una por una
-				*/
+				
 					else {
-
-
 						// Comprueba el empleado activo (vertical)
 						int i = 0;
 						Boolean encontrado = false;
@@ -425,12 +366,13 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					canvas.redraw();
 				} else
 				if (turnoActivo!=null && e.button == 1) {
-					movimiento = turnoActivo.botonPrimario(e.x, margenIzq, margenNombres, horaApertura, tamHora, tamSubdiv);
+					movimiento = turnoActivo.botonPrimario(e.x, margenIzq, margenNombres, horaApertura, tamHora, tamSubdiv, numSubdivisiones);
 				}
 			}
 			
 			public void mouseUp(MouseEvent e) {
-			/*	FranjaDib f;
+				movimiento=0;
+				/*	FranjaDib f;
 				redibujar();
 				desactivarFranja();
 				if (empleadoActivo != -1) {
@@ -538,6 +480,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	
 	private void setNumSubdivisiones(int i) {
 		numSubdivisiones = i;
+		tamSubdiv = tamHora/numSubdivisiones;
 		redibujar();
 	}
 	
