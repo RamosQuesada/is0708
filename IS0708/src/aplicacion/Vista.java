@@ -98,13 +98,16 @@ public class Vista {
 	public class Loader implements Runnable {
 		public synchronized void run() {
 			while (alive) {
-				// loadDepartamentos();
-				loadEmpleados();
-				loadMensajes();
-				// loadContratos();
-				loadTurnos();
-				// loadCuadranteMesActual();
-				cacheCargada = true;
+				// Si hay un usuario logueado
+				if (controlador.getEmpleadoActual() != null){
+					// loadDepartamentos();
+					loadEmpleados();
+					loadMensajes();
+					// loadContratos();
+					loadTurnos();
+					// loadCuadranteMesActual();
+					cacheCargada = true;
+				}
 				try {
 					// TODO Espera 1/2 minuto (¿cómo lo dejamos?)
 					wait(20000);

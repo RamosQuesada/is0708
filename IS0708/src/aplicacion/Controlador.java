@@ -50,12 +50,14 @@ public class Controlador {
 		_db = baseDatos;
 		// Crea calendario con la hora actual;
 		_calendario = new GregorianCalendar();
+		_empleadoActual = null;
 	}
 	
 	public Controlador(Vista vista, Database baseDatos, boolean modoDebug) {
 		this._vista = vista;
 		_db = baseDatos;
 		_modoDebug = modoDebug;
+		_empleadoActual = null;
 	}
 
 	/**
