@@ -40,7 +40,6 @@ public class Turno {
 		this.horaSalida = horaSalida;
 		this.horaDescanso = horaDescanso;
 		tDescanso = descanso;
-
 	}
 	
 	/**

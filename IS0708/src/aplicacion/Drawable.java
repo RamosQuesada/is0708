@@ -16,7 +16,7 @@ public interface Drawable {
 	 * @return el ImageData a imprimir
 	 * @see #getDrawableImage()
 	 */
-	public ImageData getPrintableImage(Display display, ResourceBundle bundle, boolean bn);
+	public ImageData getPrintableImage(Device device, ResourceBundle bundle, Rectangle size, boolean bn);
 	
 	/**
 	 * Este m�todo devuelve un ImageData que se puede dibujar en la pantalla. 

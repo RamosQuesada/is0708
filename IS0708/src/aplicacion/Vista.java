@@ -198,13 +198,19 @@ public class Vista {
 							locale = l.getCurrentLocale();
 						} else {
 							// Si el password no coincide
-							MessageBox messageBox = new MessageBox(shell,
-									SWT.APPLICATION_MODAL | SWT.ICON_ERROR
-											| SWT.OK);
-							messageBox.setText(bundle.getString("Error"));
-							messageBox.setMessage(bundle
-									.getString("I01_err_Login2"));
-							messageBox.open();
+							if (!login.detectadoLector()) {
+								MessageBox messageBox = new MessageBox(shell,
+										SWT.APPLICATION_MODAL | SWT.ICON_ERROR
+												| SWT.OK);
+								messageBox.setText(bundle.getString("Error"));
+								messageBox.setMessage(bundle
+										.getString("I01_err_Login2"));
+								messageBox.open();
+							}
+							else {
+								display.beep();
+							}
+							// TODO else mostrar un aviso pero que no haya que cerrarlo
 						}
 					} else {
 						// Si el usuario no existe en la base de datos

@@ -52,7 +52,7 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 				}
 				try {
 					// TODO Espera 10 segundos (¿cómo lo dejamos?)
-					sleep(10);					
+					sleep(10000);					
 				} catch (Exception e) {}
 			}
 		}
