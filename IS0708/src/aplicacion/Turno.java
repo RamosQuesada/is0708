@@ -1,24 +1,11 @@
 package aplicacion;
 
 import java.sql.Time;
-import java.util.ArrayList;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.SWTException;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.events.MouseMoveListener;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
-import aplicacion.FranjaDib;
-import aplicacion.Posicion;
 import aplicacion.Util;
 
 /**
@@ -172,6 +159,7 @@ public class Turno {
 	private boolean activa1 = false;
 	private boolean activa2 = false;
 	private int anchoLados = 4;
+	int inicio1, inicio2, fin1, fin2;
 
 	public void calculaTiempoTrabajado() {
 		int franja1, franja2;
@@ -199,8 +187,19 @@ public class Turno {
 		return b;
 	}
 	
-
-	public void dibujar(Display display, String nombre, GC gc, int posV, Color color, int margenIzq, int margenNombres, int margenSup, int sep_vert_franjas, int alto_franjas, int tamHora, int tamSubdiv, int horaInicio, int numSubdiv) {
+	public void recalcularFranjas(int margenIzq, int margenNombres, int horaApertura, int tamHora) {
+		inicio1 = margenIzq + margenNombres + (horaEntrada.getHours()-horaApertura) * tamHora + (tamHora*horaEntrada.getMinutes())/60;
+		if (tDescanso==0) {
+			fin1 = margenIzq + margenNombres + (horaSalida.getHours()-horaApertura) * tamHora + (tamHora*horaSalida.getMinutes())/60;
+		}
+		else {
+			fin1    = margenIzq + margenNombres + (horaDescanso.getHours()-horaApertura) * tamHora + (tamHora*horaDescanso.getMinutes())/60;
+			inicio2 = margenIzq + margenNombres + (horaDescanso.getHours()-horaApertura+tDescanso/60) * tamHora  + (tamHora*(horaDescanso.getMinutes()+(tDescanso%60)))/60;
+			fin2    = margenIzq + margenNombres + (horaSalida.getHours()-horaApertura) * tamHora + (tamHora*horaSalida.getMinutes())/60;
+		}
+	}
+	
+	public void dibujar(Display display, String nombre, GC gc, int posV, Color color, int margenIzq, int margenNombres, int margenSup, int sep_vert_franjas, int alto_franjas, int tamHora, int tamSubdiv, int horaApertura, int numSubdiv) {
 		calculaTiempoTrabajado();
 		// Si el empleado no tiene color, asignarle un color gris
 		if (color==null)
@@ -216,29 +215,15 @@ public class Turno {
 		int r = color.getRed();
 		int g = color.getGreen();
 		int b = color.getBlue();
-		int inicio1, inicio2, fin1, fin2;
-		inicio1 = margenIzq + margenNombres + (horaEntrada.getHours()-horaInicio) * tamHora + (tamHora*horaEntrada.getMinutes())/60;
-		fin1    = margenIzq + margenNombres + (horaDescanso.getHours()-horaInicio) * tamHora + (tamHora*horaDescanso.getMinutes())/60;
-		inicio2 = margenIzq + margenNombres + (horaDescanso.getHours()-horaInicio+tDescanso/60) * tamHora  + (tamHora*(horaDescanso.getMinutes()+(tDescanso%60)))/60;
-		fin2    = margenIzq + margenNombres + (horaSalida.getHours()-horaInicio) * tamHora + (tamHora*horaSalida.getMinutes())/60;
 		
-		if (tDescanso==0) {
-			// Dibujar franja
-			cambiarRelleno(display, gc, r-50,g-50,b-50);
-			gc.fillRoundRectangle(inicio1+2,despV+2,fin2-inicio1,15,10,10);
-			cambiarRelleno(display, gc, r,g,b);
-			cambiarPincel(display, gc, r-100,g-100,b-100);
-			gc.fillRoundRectangle(inicio1,despV,fin2-inicio1,15,8,8);
-			gc.drawRoundRectangle(inicio1,despV,fin2-inicio1,15,8,8);
-		}
-		else {
-			// Dibujar primera franja
-			cambiarRelleno(display, gc, r-50,g-50,b-50);
-			gc.fillRoundRectangle(inicio1+2,despV+2,fin1-inicio1,15,10,10);
-			cambiarRelleno(display, gc, r,g,b);
-			cambiarPincel(display, gc, r-100,g-100,b-100);
-			gc.fillRoundRectangle(inicio1,despV,fin1-inicio1,15,8,8);
-			gc.drawRoundRectangle(inicio1,despV,fin1-inicio1,15,8,8);
+		// Dibujar franja
+		cambiarRelleno(display, gc, r-50,g-50,b-50);
+		gc.fillRoundRectangle(inicio1+2,despV+2,fin1-inicio1,15,10,10);
+		cambiarRelleno(display, gc, r,g,b);
+		cambiarPincel(display, gc, r-100,g-100,b-100);
+		gc.fillRoundRectangle(inicio1,despV,fin1-inicio1,15,8,8);
+		gc.drawRoundRectangle(inicio1,despV,fin1-inicio1,15,8,8);
+		if (tDescanso!=0) {
 			// Dibujar segunda franja
 			cambiarRelleno(display, gc, r-50,g-50,b-50);
 			gc.fillRoundRectangle(inicio2+2,despV+2,fin2-inicio2,15,10,10);
@@ -259,7 +244,11 @@ public class Turno {
 			gc.fillRectangle(inicio1+1,despV+1,Math.min(fin1-inicio1-1,136),12);
 			String s1 = "";
 			if (minutos1 != 0) s1=' '+ String.valueOf(minutos1) +'m';
-			String s  = Util.aString(horaEntrada.getHours()) + ":" + Util.aString(horaEntrada.getMinutes()) + " - " + Util.aString(horaDescanso.getHours()) + ":" + Util.aString(horaDescanso.getMinutes()) + " (" + String.valueOf(horas1)+'h'+s1+')';
+			String s;
+			if (tDescanso==0)
+				s =  Util.aString(horaEntrada.getHours()) + ":" + Util.aString(horaEntrada.getMinutes()) + " - " + Util.aString(horaSalida.getHours()) + ":" + Util.aString(horaSalida.getMinutes()) + " (" + String.valueOf(horas1)+'h'+s1+')';
+			else
+				s = Util.aString(horaEntrada.getHours()) + ":" + Util.aString(horaEntrada.getMinutes()) + " - " + Util.aString(horaDescanso.getHours()) + ":" + Util.aString(horaDescanso.getMinutes()) + " (" + String.valueOf(horas1)+'h'+s1+')';
 			gc.drawText(s, inicio1+5, despV-14, true);
 		}
 		else if (activa2) {
@@ -335,22 +324,88 @@ public class Turno {
 	 * @see #tocaLadoIzquierdo(int)
 	 * @return Si inicio+d < x < fin-d.
 	 */
-	public Boolean contienePixelInt(int x, int margenIzq, int margenNombres, int horaInicio, int tamHora ) {
-		Boolean b = false;
-		int inicio1 = margenIzq + margenNombres + (horaEntrada.getHours()-horaInicio) * tamHora + (tamHora*horaEntrada.getMinutes())/60;
-		int fin1    = margenIzq + margenNombres + (horaDescanso.getHours()-horaInicio) * tamHora + (tamHora*horaDescanso.getMinutes())/60;
-		int inicio2 = margenIzq + margenNombres + (horaDescanso.getHours()-horaInicio+tDescanso/60) * tamHora  + (tamHora*(horaDescanso.getMinutes()+(tDescanso%60)))/60;
-		int fin2    = margenIzq + margenNombres + (horaSalida.getHours()-horaInicio) * tamHora + (tamHora*horaSalida.getMinutes())/60;
-		
-		if (x>inicio1+anchoLados && x<fin1-anchoLados) {
+	public boolean contienePixelInt(int x) {
+		return (contienePixelInt1(x, anchoLados) ||
+				contienePixelInt2(x, anchoLados));
+	}
+	
+	private boolean contienePixelInt1(int x, int ancho ) {
+		boolean b = false;
+		if (x>inicio1+ancho && x<fin1-ancho) {
 			activa1 = true; b = true;
-		}
-		else if (x>inicio2+anchoLados && x<fin2-anchoLados) {
-			activa2 = true; b = true;
 		}
 		return b;
 	}
 	
+	private boolean contienePixelInt2(int x, int ancho ) {
+		boolean b = false;
+		if (tDescanso!=0) {			
+			if (x>inicio2+ancho && x<fin2-ancho) {
+				activa2 = true; b = true;
+			}
+		}
+		return b;
+	}
+
+	/**
+	 * Comprueba si el píxel dado está contenido en el lado izquierdo de la franja, es decir,
+	 * en el intervalo cerrado [inicio-d,inicio+d], donde 'd' es el ancho del borde de la franja,
+	 * de donde se coge para estirarla y encogerla.
+	 * @param x P�xel a comprobar
+	 * @see #contienePixel(int)
+	 * @see #contienePixelInt(int)
+	 * @see	#tocaLadoDerecho(int)
+	 * @return Si inicio-d <= x <= inicio+d
+	 */
+	public boolean tocaLadoIzquierdo(int x) {
+		return (tocaLadoIzquierdo1(x) || 
+				tocaLadoIzquierdo2(x));
+	}
+
+	private boolean tocaLadoIzquierdo1(int x) {
+		boolean cambiaInicio = false;
+		if (x>=inicio1-anchoLados && x<=inicio1+anchoLados)                 { activa1 = true; activa2=false; cambiaInicio = true; }
+		return cambiaInicio;
+	}
+	
+	private boolean tocaLadoIzquierdo2(int x) {
+		boolean cambiaInicio = false;
+		if (tDescanso!=0) {
+			if (x>=inicio2-anchoLados && x<=inicio2+anchoLados) { activa2 = true; activa1=false; cambiaInicio = true; }
+		}
+		return cambiaInicio;
+	}
+
+
+	/**
+	 * Comprueba si el píxel dado está contenido en el lado izquierdo de la franja, es decir,
+	 * en el intervalo cerrado [inicio-d,inicio+d], donde 'd' es el ancho del borde de la franja,
+	 * de donde se coge para estirarla y encogerla. 
+	 * @param x
+	 * @see #contienePixel(int)
+	 * @see #contienePixelInt(int)
+	 * @see #tocaLadoIzquierdo(int)
+	 * @return Si fin-d <= x <= fin+d
+	 */
+	public boolean tocaLadoDerecho(int x) {
+		return (tocaLadoDerecho1(x) || 
+				tocaLadoDerecho2(x));
+	}
+	
+	private boolean tocaLadoDerecho1(int x) {
+		boolean cambiaFin = false;
+		if (x>=fin1-anchoLados && x<=fin1+anchoLados)                 { activa1 = true; activa2=false; cambiaFin = true; }
+		return cambiaFin;
+	}
+
+	private boolean tocaLadoDerecho2(int x) {
+		boolean cambiaFin = false;
+		if (tDescanso!=0) {
+			if (tDescanso!=0 && x>=fin2-anchoLados && x<=fin2+anchoLados) { activa2 = true; activa1=false; cambiaFin = true; }
+		}
+		return cambiaFin;
+	}
+
 
 	public void activarFranja1() {
 		activa1 = true;
@@ -358,5 +413,62 @@ public class Turno {
 	
 	public void activarFranja2() {
 		activa2 = true;
+	}
+	
+	/**
+	 * Realiza las acciones pertinentes al pulsar el botón secundario del ratón
+	 * @param x la posición horizontal del cursor
+	 * @param margenIzq el margen izquierdo
+	 * @param margenNombres el margen para los nombres
+	 * @param horaApertura la hora de apertura
+	 * @param tamHora el tamaño de una hora
+	 * @param tamSubdiv el tamaño de una subdivision
+	 */
+	public void botonSecundario (int x, int margenIzq, int margenNombres, int horaApertura, int tamHora, int tamSubdiv, int numSubdiv) {
+		// Si hay descanso, se elimina la franja seleccionada
+		if (tDescanso!=0) {
+			// Si estoy borrando la primera franja, tengo que copiar la segunda a la primera
+			if (contienePixelInt1(x, 0)) {
+				horaEntrada.setHours(horaDescanso.getHours()+(tDescanso/60));
+				horaEntrada.setMinutes(horaDescanso.getMinutes()+(tDescanso%60));
+				tDescanso = 0;
+				activa1 = false;
+				recalcularFranjas(margenIzq, margenNombres, horaApertura, tamHora);
+			}
+			// Si estoy borrando la segunda franja, tengo que adelantar la salida
+			else if (contienePixelInt2(x, 0)) {
+				horaSalida = horaDescanso;
+				tDescanso = 0;
+				activa2 = false;
+				recalcularFranjas(margenIzq, margenNombres, horaApertura, tamHora);
+			}
+		}
+		// Si no hay descanso, se añade 
+		else {
+			if (contienePixelInt1(x, 0)) {
+				//Insertar un descanso predeterminado de 30 minutos en donde se ha pinchado
+				tDescanso = 30;
+				horaDescanso.setHours(dameHoraCursor(x, margenIzq, margenNombres, horaApertura, tamHora));
+				horaDescanso.setMinutes(dameSubdivCursor(x, margenIzq, margenNombres, tamHora, tamSubdiv)*numSubdiv);
+				// Ahora falta comprobar que no se cruza ninguna hora
+				recalcularFranjas(margenIzq, margenNombres, horaApertura, tamHora);
+			}
+		}
+	}
+	
+	public int botonPrimario (int x, int margenIzq, int margenNombres, int horaApertura, int tamHora, int tamSubdiv) {
+		// Movimiento:
+		//  1 - Moviendo inicio franja
+		//  2 - Moviendo toda la franja
+		//  3 - Moviendo fin franja
+		
+	};
+	
+	public int dameHoraCursor(int x, int margenIzq, int margenNombres, int horaApertura, int tamHora) {
+		return ((x-margenIzq-margenNombres)/tamHora)+horaApertura;
+	}
+	
+	public int dameSubdivCursor(int x, int margenIzq, int margenNombres, int tamHora, int tamSubdiv) {
+		return ((x-margenIzq-margenNombres)%tamHora)/tamSubdiv;
 	}
 }

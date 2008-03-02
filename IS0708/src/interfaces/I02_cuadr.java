@@ -48,9 +48,6 @@ public class I02_cuadr {
 		movimiento = 0;
 	}
 
-	private int dameMovimiento() {
-		return movimiento;
-	}
 
 	private FranjaDib dameFranjaActiva() {
 		return franjaActiva;
