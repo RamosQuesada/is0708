@@ -91,7 +91,7 @@ public class TurnoMatic {
 					//creacionListas(e,i,inif,finf);
 				/*	if((e.getContratoId()!=1 && e.getContratoId()!=2 && e.getRango()==1) &&
 							(e.estaDisponible(i,inif,finf,controlador,j,estruc.getNumTrozos()))){*/
-					if((e.getRango()==1) &&
+					if((e.getRango()==1 || e.getRango()==2) &&
 							(e.estaDisponible(i,inif,finf,controlador,contratosDep,j,estruc.getNumTrozos()))){
 						//dispo.add(e);		
 						empl.add(e);
@@ -153,17 +153,17 @@ public class TurnoMatic {
 			}
 			
 			//dispoDia tiene a los empleados que no son fijos ni rotatorios (empleados con contrato distinto de 1 y de 2 y rango=1)
-		/*	for (int j=0;j<listaE.size();j++) {
+			for (int j=0;j<listaE.size();j++) {
 				e=listaE.get(j);
 				if (e.getContratoId()!=1 && e.getContratoId()!=2 && e.getRango()==1)
 					dispoDia.add(e);
 			}
 	
-			colocaNoFijos(dispoDia, reserDia, emplDia, i, cu);//se colocan para cada dia i del mes */
+			colocaNoFijos(dispoDia, reserDia, emplDia, i, cu);//se colocan para cada dia i del mes 
 		}
 		
 		cuadrante.setCuad(cu);
-		controlador.insertCuadrante(cuadrante);
+		//controlador.insertCuadrante(cuadrante);
 		return this.cuadrante;
 	}
 	
