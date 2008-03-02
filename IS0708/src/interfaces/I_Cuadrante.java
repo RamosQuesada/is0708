@@ -425,7 +425,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					canvas.redraw();
 				} else
 				if (turnoActivo!=null && e.button == 1) {
-					movimiento = 
+					movimiento = turnoActivo.botonPrimario(e.x, margenIzq, margenNombres, horaApertura, tamHora, tamSubdiv);
 				}
 			}
 			

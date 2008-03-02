@@ -461,6 +461,7 @@ public class Turno {
 		//  1 - Moviendo inicio franja
 		//  2 - Moviendo toda la franja
 		//  3 - Moviendo fin franja
+		return 0;
 		
 	};
 	
