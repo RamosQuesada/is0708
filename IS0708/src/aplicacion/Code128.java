@@ -1,5 +1,6 @@
 package aplicacion;
 
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 
 
@@ -215,10 +216,15 @@ public class Code128 {
 	 * @param gc el GC sobre el que pintar
 	 * @param input la cadena a convertir
 	 */
-	public static void pintarCode(GC gc, String input) {
+	public static void pintarCode(GC gc, String input, int x, int y, int alto, int grosor) {
 		String encoded = code128(input);
+		int c = 0;
+		gc.setBackground(new Color(gc.getDevice(), 255,255,255));
+		gc.fillRectangle(x, y, x+encoded.length()*grosor, y+alto);
+		gc.setBackground(new Color(gc.getDevice(), 0,0,0));
 		for (int i = 0; i < encoded.length(); i++) {
-			if (encoded.charAt(i)=='1') gc.drawLine(i, 0, i, 10);
+			if (encoded.charAt(i)=='1') gc.fillRectangle(x+c, y, grosor, alto);
+			c+=grosor;
 		}
 	}
 }

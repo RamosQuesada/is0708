@@ -198,11 +198,23 @@ public class Util {
 	 * @return el String con el formato apropiado
 	 * @author Jakub
 	 */
-
 	public static String dateAString(Date fecha) {
 		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		return formatter.format(fecha);
 	}
+
+	/**
+	 * Convierte un fecha de tipo Date en un String con el formato DD-MM-YYYY.
+	 * Si la fecha es null, devuelve 00-00-0000.
+	 * @param fecha la fecha a convertir
+	 * @return el String con el formato apropiado
+	 * @author Jakub
+	 */
+	public static String dateAString2(Date fecha) {
+		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		return formatter.format(fecha);
+	}
+
 	/**
 	 * Convierte un fecha de tipo long en un String con el formato YYYY-MM-DD.
 	 * Si la fecha es null, devuelve 0000-00-00.

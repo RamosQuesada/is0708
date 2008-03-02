@@ -239,4 +239,8 @@ public class I01_Login {
 	public void setProgreso(String s) {
 		progreso.setText(s);
 	}
+	
+	public boolean detectadoLector() {
+		return detectadoLector;
+	}
 }

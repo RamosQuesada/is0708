@@ -820,60 +820,60 @@ public class Empleado implements Drawable {
 		return null;
 	}
 	
-	public ImageData getPrintableImage(Display display, ResourceBundle bundle, boolean bn) {
-		Image image = new Image(display, 1500,1000);
+	public ImageData getPrintableImage(Device device, ResourceBundle bundle, Rectangle size, boolean bn) {
+		int w = size.width;
+		int h = size.height;
+		Image image = new Image(device, w, h); 
 		GC gc = new GC(image);
-		int marginLeft1 = 150;
-		int marginLeft2 = 400;
-		int marginTop = 100;
-		int marginVertical = 30;
+		int marginLeft = w/20;
+		int marginLeft1 = marginLeft + w/40;
+		int marginLeft2 = w/4;
+		int marginRight = w/2;
+		int marginTop = h/30;
+		int marginVertical = h/50;
 		
-		gc.setForeground(new Color(display, 0, 0, 0));
-		//Shell shell = new Shell(display);
-		Font font =  new Font(display, new FontData("Arial",10,SWT.BOLD));
-
+		Font font =  new Font(device, new FontData("Arial",20,SWT.BOLD));
 		gc.setFont(font);
-		gc.drawRectangle(0, 0, 650, 700);
-		int vert = marginTop-5;
-		for (int i = 0; i<=14; i++ ){
-			vert+=30;
-			gc.drawLine(50, vert, 600, vert);
+		gc.setBackground(new Color(device, 50, 127, 192));
+		gc.fillRectangle(marginLeft, marginTop, marginRight-marginLeft, marginVertical*2);
+		gc.fillRectangle(marginLeft, marginTop, marginVertical/10, h/3);
+		
+		gc.setForeground(device.getSystemColor(SWT.COLOR_WHITE));
+		gc.drawString(String.valueOf(idEmpl), marginLeft1*2, marginTop+marginVertical/10);
+		
+		gc.setBackground(device.getSystemColor(SWT.COLOR_WHITE));
+		gc.setForeground(device.getSystemColor(SWT.COLOR_BLACK));
+		font =  new Font(device, new FontData("Arial",10,SWT.NORMAL));
+		gc.setFont(font);
+		int altoFuente = gc.stringExtent("A").y-1;
+		for (int i = 3; i<=12; i++ ){
+			gc.drawLine(marginLeft1, marginTop+altoFuente+i*marginVertical, marginLeft2, marginTop+altoFuente+i*marginVertical);
 		}
 		String s;
-		if(this.sexo==0){s="femenino";}
-			else s="masculino";
-	
-		gc.drawString(bundle.getString("Vendedor"),                marginLeft1, marginTop+1*marginVertical);
-		gc.drawString(this.idEmpl+"",                              marginLeft2, marginTop+1*marginVertical);
-		gc.drawString(bundle.getString("Contrasena"),              marginLeft1, marginTop+2*marginVertical);
-		gc.drawString(this.password,                               marginLeft2, marginTop+2*marginVertical);
-		gc.drawString(bundle.getString("EMail"),                   marginLeft1, marginTop+3*marginVertical);
-		gc.drawString(this.email,                                  marginLeft2, marginTop+3*marginVertical);
-		gc.drawString(bundle.getString("Nombre"),                  marginLeft1, marginTop+4*marginVertical);
-		gc.drawString(this.nombre,                                 marginLeft2, marginTop+4*marginVertical);
-		gc.drawString(bundle.getString("I08_lab_Apellido1"),       marginLeft1, marginTop+5*marginVertical);
-		gc.drawString( this.apellido1,                             marginLeft2, marginTop+5*marginVertical);
-		gc.drawString(bundle.getString("I08_lab_Apellido2"),       marginLeft1, marginTop+6*marginVertical);
-		gc.drawString( this.apellido2,                             marginLeft2, marginTop+6*marginVertical);
-		gc.drawString(bundle.getString("I08_2_lab_FNacimiento") ,  marginLeft1, marginTop+7*marginVertical);
-		gc.drawString(Util.dateAString(this.fechaNac),             marginLeft2, marginTop+7*marginVertical);
-		gc.drawString(bundle.getString("Sexo"),                    marginLeft1, marginTop+8*marginVertical);		
-		gc.drawString(s,                                           marginLeft2, marginTop+8*marginVertical);
-		gc.drawString(bundle.getString("I08_lab_TipoContrato"),    marginLeft1, marginTop+9*marginVertical);
-		gc.drawString("",                                          marginLeft2, marginTop+9*marginVertical);
-		gc.drawString(bundle.getString("Experiencia"),             marginLeft1, marginTop+10*marginVertical);
-		gc.drawString("" ,                                         marginLeft2, marginTop+10*marginVertical);
-		gc.drawString(bundle.getString("Departamento") ,           marginLeft1, marginTop+11*marginVertical);
-		gc.drawString("",                                          marginLeft2, marginTop+11*marginVertical);
-		gc.drawString(bundle.getString("I08_2_lab_FAlta"),         marginLeft1, marginTop+12*marginVertical);
-		gc.drawString(Util.dateAString(this.fAlta),                marginLeft2, marginTop+12*marginVertical);
-		gc.drawString(bundle.getString("I08_2_lab_FContr"),        marginLeft1, marginTop+13*marginVertical);
-		gc.drawString(Util.dateAString(this.fContrato),            marginLeft2, marginTop+13*marginVertical);
-		gc.drawString(bundle.getString("I08_2_lab_SelColor"),      marginLeft1, marginTop+14*marginVertical);
-		gc.drawString("",                                          marginLeft2, marginTop+14*marginVertical);
+		if(this.sexo==0){s="Mujer";}
+			else s="Hombre";
+		gc.drawString(bundle.getString("Nombre"),                  marginLeft1, marginTop+3*marginVertical);
+		gc.drawString(nombre,                                      marginLeft2, marginTop+3*marginVertical);
+		gc.drawString(bundle.getString("Apellidos"),               marginLeft1, marginTop+4*marginVertical);
+		gc.drawString(apellido1 + " " + apellido2,                 marginLeft2, marginTop+4*marginVertical);
+		gc.drawString(bundle.getString("EMail"),                   marginLeft1, marginTop+5*marginVertical);
+		gc.drawString(email,                                       marginLeft2, marginTop+5*marginVertical);
+		gc.drawString(bundle.getString("I08_2_lab_FNacimiento") ,  marginLeft1, marginTop+6*marginVertical);
+		gc.drawString(Util.dateAString2(fechaNac),                 marginLeft2, marginTop+6*marginVertical);
+		gc.drawString(bundle.getString("Sexo"),                    marginLeft1, marginTop+7*marginVertical);		
+		gc.drawString(s,                                           marginLeft2, marginTop+7*marginVertical);
+		gc.drawString(bundle.getString("I08_lab_TipoContrato"),    marginLeft1, marginTop+8*marginVertical);
+		gc.drawString("",                                          marginLeft2, marginTop+8*marginVertical);
+		gc.drawString(bundle.getString("Experiencia"),             marginLeft1, marginTop+9*marginVertical);
+		gc.drawString("" ,                                         marginLeft2, marginTop+9*marginVertical);
+		gc.drawString(bundle.getString("Departamento") ,           marginLeft1, marginTop+10*marginVertical);
+		gc.drawString("",                                          marginLeft2, marginTop+10*marginVertical);
+		gc.drawString(bundle.getString("I08_2_lab_FAlta"),         marginLeft1, marginTop+11*marginVertical);
+		gc.drawString(Util.dateAString2(fAlta),                    marginLeft2, marginTop+11*marginVertical);
+		gc.drawString(bundle.getString("I08_2_lab_FContr"),        marginLeft1, marginTop+12*marginVertical);
+		gc.drawString(Util.dateAString2(fContrato),                marginLeft2, marginTop+12*marginVertical);
+		Code128.pintarCode(gc, idEmpl + password, marginLeft1,     marginTop+14*marginVertical, marginVertical*2,6);
 		
-		
-		gc.drawString("Empleado", 60, 1200);
 		gc.dispose();
 		return image.getImageData();
 	}

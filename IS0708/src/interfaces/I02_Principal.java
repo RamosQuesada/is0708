@@ -39,7 +39,6 @@ public class I02_Principal {
 	private Label lEstado;
 	private ProgressBar pbEstado;
 	private Date fechaSeleccionada;
-	private ImageData Img;
 	private Tray tray;
 
 	public I02_Principal(Shell shell, Display display, ResourceBundle bundle,
@@ -82,8 +81,17 @@ public class I02_Principal {
 		MenuItem itemImprimir = new MenuItem(submenu, SWT.PUSH);
 		itemImprimir.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				Imprimir imprimir = new Imprimir(display);
-				imprimir.imprimirImage(Img);
+				if (vista.isCacheCargada()) {
+					Imprimir imprimir = new Imprimir(display);
+					imprimir.imprimirImage(vista.getEmpleadoActual(), bundle);
+				}
+				else {
+					MessageBox messageBox = new MessageBox(shell,
+							SWT.APPLICATION_MODAL | SWT.OK);
+					messageBox.setText(bundle.getString("Error"));
+					messageBox.setMessage(bundle.getString("I02_dlg_EsperarCache"));
+					messageBox.open();
+				}
 			}
 		});
 		itemImprimir.setImage(ico_imprimir);
