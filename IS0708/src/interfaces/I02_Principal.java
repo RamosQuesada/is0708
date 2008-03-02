@@ -400,11 +400,11 @@ public class I02_Principal {
 	 * 
 	 * @param tabFolder
 	 *            el tabFolder donde colocarlo
-	 * @author David Rodilla
+	 * @author David Rodilla & Jose Maria Martin
 	 */
 	private void crearTabAdminInicio(TabFolder tabFolder) {
 		TabItem tabItemAdminInicio = new TabItem(tabFolder, SWT.NONE);
-		tabItemAdminInicio.setText("Admin:Inicio");
+		tabItemAdminInicio.setText(bundle.getString("I02_admin_inicio"));
 		tabItemAdminInicio.setImage(ico_cuadrante);
 
 		// Creamos el contenido de la pestaña cuadrantes
@@ -416,36 +416,66 @@ public class I02_Principal {
 		_fondo_turnomatic = new Image(display, I02_Principal.class
 				.getResourceAsStream("admin_fondo.jpg"));
 
-		cInicio
-				.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,
-						1));
+		cInicio.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,1));
+		
 		// Le añadimos un layout
 		GridLayout lInicio = new GridLayout();
 		lInicio.numColumns = 2;
 		cInicio.setLayout(lInicio);
 
 		final Label bienvenido = new Label(cInicio, SWT.None);
-		bienvenido.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, true,
-				2, 1));
-		bienvenido.setText("BIENVENIDO A TURNOMATIC");
+		bienvenido.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, true, 2, 1));
+		bienvenido.setText(bundle.getString("I02_bienvenido"));
+		
+		Image logo = new Image(display, I02_Principal.class
+				.getResourceAsStream("LogoTM.jpg"));
+		final Label lLogo = new Label(cInicio, SWT.None);
+		lLogo.setImage(logo);
+		lLogo.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, true,2,1));
+		
+		final Label lConfig = new Label(cInicio, SWT.None);
+		lConfig.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, false,1,1));
+		lConfig.setText(bundle.getString("I02_configBD"));
+		//lConfig.setText("Pulse el siguiente botón para comprobar y/o cambiar los parámetros de la base de datos");
+		
+		final Button configBD = new Button(cInicio, SWT.PUSH);
+		configBD.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, true,1, 1));
+		configBD.setText("CONFIG BD");
+		configBD.addSelectionListener(new SelectionListener() {
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
 
+			public void widgetSelected(SelectionEvent arg0) {
+				I30_Info_BD ventana=new I30_Info_BD(shell,bundle,vista);
+			}
+		});
+		
 		final Label lReset = new Label(cInicio, SWT.None);
-		lReset.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, true, false,
-				1, 1));
-		lReset.setText("Pincha este botón para reiniciar la base de datos");
+		lReset.setLayoutData(new GridData(SWT.CENTER, SWT.BOTTOM, false, false,	1, 1));
+		lReset.setText(bundle.getString("I02_resetBD"));
+		//lReset.setText("Pincha este botón para reiniciar la base de datos");
 
 		final Button resetBD = new Button(cInicio, SWT.PUSH);
-		resetBD.setLayoutData(new GridData(SWT.CENTER, SWT.BOTTOM, true, false,
-				1, 1));
+		resetBD.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, true, false, 1, 1));
 		resetBD.setText("RESET BD");
 		resetBD.addSelectionListener(new SelectionListener() {
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 			}
 
 			public void widgetSelected(SelectionEvent arg0) {
-				GeneraDatos.reset();
+				MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_QUESTION | SWT.OK | SWT.CANCEL);
+				messageBox.setText ("Reset BD");
+				messageBox.setMessage (bundle.getString("I02_confirm_reset"));
+				//messageBox.setMessage ("Esta seguro de reiniciar la base de datos??");
+				int response=messageBox.open();
+				if(response==SWT.OK){
+					System.out.println("BBDD reiniciada");
+					GeneraDatos.reset();
+				}
 			}
-		});
+				});
+
+		
 		cInicio.setBackgroundImage(_fondo_turnomatic);
 	}
 
