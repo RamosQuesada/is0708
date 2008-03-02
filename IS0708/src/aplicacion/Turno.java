@@ -160,6 +160,7 @@ public class Turno {
 	private boolean activa2 = false;
 	private int anchoLados = 4;
 	int inicio1, inicio2, fin1, fin2;
+	int despl = 0; // Para saber de dónde la he cogido
 
 	public void calculaTiempoTrabajado() {
 		int franja1, franja2;
@@ -209,7 +210,7 @@ public class Turno {
 		int despV = margenSup+(posV+1)*(alto_franjas+sep_vert_franjas);
 		if (margenNombres > 0) {
 			gc.drawText(nombre, margenIzq, despV, true);
-			gc.drawText(horas1+horas2 + ":" + Util.aString(minutos1+minutos2), margenNombres-10, despV, true);
+			gc.drawText(horas1+horas2+(minutos1+minutos2)/60 + ":" + Util.aString((minutos1+minutos2)%60), margenNombres-10, despV, true);
 		}
 		// Si tDescanso > 0, hay que pintar 2 trozos. Si no, solo 1.
 		int r = color.getRed();
@@ -431,14 +432,15 @@ public class Turno {
 			if (contienePixelInt1(x, 0)) {
 				horaEntrada.setHours(horaDescanso.getHours()+(tDescanso/60));
 				horaEntrada.setMinutes(horaDescanso.getMinutes()+(tDescanso%60));
-				tDescanso = 0;
+				quitarDescanso();
 				activa1 = false;
 				recalcularFranjas(margenIzq, margenNombres, horaApertura, tamHora);
 			}
 			// Si estoy borrando la segunda franja, tengo que adelantar la salida
 			else if (contienePixelInt2(x, 0)) {
-				horaSalida = horaDescanso;
-				tDescanso = 0;
+				horaSalida.setHours(horaDescanso.getHours());
+				horaSalida.setMinutes(horaDescanso.getMinutes());
+				quitarDescanso();
 				activa2 = false;
 				recalcularFranjas(margenIzq, margenNombres, horaApertura, tamHora);
 			}
@@ -449,27 +451,238 @@ public class Turno {
 				//Insertar un descanso predeterminado de 30 minutos en donde se ha pinchado
 				tDescanso = 30;
 				horaDescanso.setHours(dameHoraCursor(x, margenIzq, margenNombres, horaApertura, tamHora));
-				horaDescanso.setMinutes(dameSubdivCursor(x, margenIzq, margenNombres, tamHora, tamSubdiv)*numSubdiv);
-				// Ahora falta comprobar que no se cruza ninguna hora
+				horaDescanso.setMinutes(dameSubdivCursor(x, margenIzq, margenNombres, tamHora, tamSubdiv)*(60/numSubdiv));
+				// Ahora falta comprobar que la vuelta del descanso no sea posterior 
+				// a la salida
 				recalcularFranjas(margenIzq, margenNombres, horaApertura, tamHora);
+				if (fin1>=fin2) {
+					horaSalida.setHours(horaDescanso.getHours()+tDescanso/60+1);
+				}
 			}
 		}
 	}
 	
-	public int botonPrimario (int x, int margenIzq, int margenNombres, int horaApertura, int tamHora, int tamSubdiv) {
+	public int botonPrimario (int x, int margenIzq, int margenNombres, int horaApertura, int tamHora, int tamSubdiv, int numSubdiv) {
 		// Movimiento:
 		//  1 - Moviendo inicio franja
 		//  2 - Moviendo toda la franja
 		//  3 - Moviendo fin franja
-		return 0;
+		int m = 0;
+		if      (tocaLadoIzquierdo(x)) m = 1;
+		else if (contienePixelInt(x)) { m = 2; 
+			//Calcular minutos al inicio de la franja
+			calcularDespl(x, margenIzq, margenNombres, horaApertura, tamHora, tamSubdiv, numSubdiv);
+		}
+		else if (tocaLadoDerecho(x)) m = 3;
+		return m;
 		
 	};
 	
+	private void calcularDespl(int x, int margenIzq, int margenNombres, int horaApertura, int tamHora, int tamSubdiv, int numSubdiv) {
+		if (activa1) {
+			despl = 
+				dameHoraCursor(x, margenIzq, margenNombres, horaApertura, tamHora)*numSubdiv +
+				dameSubdivCursor(x, margenIzq, margenNombres, tamHora, tamSubdiv) -
+				horaEntrada.getHours()*numSubdiv -
+				horaEntrada.getMinutes()*numSubdiv/60;
+		}
+		else {
+			despl = 
+				dameHoraCursor(x, margenIzq, margenNombres, horaApertura, tamHora)*numSubdiv +
+				dameSubdivCursor(x, margenIzq, margenNombres, tamHora, tamSubdiv) -
+				horaDescanso.getHours()*numSubdiv -
+				horaDescanso.getMinutes()*numSubdiv/60 -
+				tDescanso*numSubdiv/60;
+		}
+
+	}
+	public int moverLadoIzquierdo(int x, int margenIzq, int margenNombres, int horaApertura, int tamHora, int tamSubdiv, int numSubdiv){
+		int mov = 1; // Esta variable indica si sigo moviendo el lado izquierdo
+		int h = dameHoraCursor(x, margenIzq, margenNombres, horaApertura, tamHora);
+		int m = dameSubdivCursor(x, margenIzq, margenNombres, tamHora, tamSubdiv)*(60/numSubdiv);
+		int t = h*60+m;
+		if (activa1) {
+			// Si me paso por la izquierda, pegar al borde
+			if (h<horaApertura) {
+				horaEntrada.setHours(horaApertura);
+				horaEntrada.setMinutes(0);
+			}
+			// Si me paso por la derecha, y hay descanso, eliminar franja
+			else if (tDescanso!=0 && t>=horaDescanso.getHours()*60 + horaDescanso.getMinutes()) {
+				horaEntrada.setHours(horaDescanso.getHours()+tDescanso/60);
+				horaEntrada.setMinutes(horaDescanso.getMinutes()+tDescanso%60);
+				quitarDescanso();
+				activa1=false;
+				mov = 0;
+				System.out.println("pasa derecha con descanso");
+			}
+			// Si me paso por la derecha, y no hay descanso
+			else if (tDescanso==0 && t>=horaSalida.getHours()*60 + horaSalida.getMinutes()) {
+				// no hace nada		
+			}
+			// Desplazamiento normal
+			else {
+				horaEntrada.setHours(h); 
+				horaEntrada.setMinutes(m);
+			}
+		}
+		else if (activa2) {
+			// Si me paso por la izquierda, juntar franjas
+			if (t<=horaDescanso.getHours()*60 + horaDescanso.getMinutes()) {
+				quitarDescanso();
+				activa2 = false;
+				mov = 0;
+			}
+			//Si me paso por la derecha, eliminar franja
+			else if (t>=horaSalida.getHours()*60+ horaSalida.getMinutes()) {
+				horaSalida.setHours(horaDescanso.getHours());
+				horaSalida.setMinutes(horaDescanso.getMinutes());
+				quitarDescanso();
+				activa2 = false;
+				mov = 0;
+			}
+			// Desplazamiento normal
+			else {
+				tDescanso = (h - horaDescanso.getHours())*60 + (m-horaDescanso.getMinutes());
+			}
+		}
+		recalcularFranjas(margenIzq, margenNombres, horaApertura, tamHora);
+		return mov;
+	}
+	
+	public int moverLadoDerecho(int x, int margenIzq, int margenNombres, int horaApertura, int horaCierre, int tamHora, int tamSubdiv, int numSubdiv){
+		int mov = 3;
+		int h = dameHoraCursor(x, margenIzq, margenNombres, horaApertura, tamHora);
+		int m = dameSubdivCursor(x, margenIzq, margenNombres, tamHora, tamSubdiv)*(60/numSubdiv);
+		int t = h*60+m;
+
+		if (activa1) {
+			// Si me paso por la izquierda 
+			if (t<=horaEntrada.getHours()*60 + horaEntrada.getMinutes()) {
+				// si hay descanso, eliminar franja
+				if (tDescanso!=0) { 
+					horaEntrada.setHours(horaDescanso.getHours()+tDescanso/60);
+					horaEntrada.setMinutes(horaDescanso.getMinutes()+tDescanso%60);
+					quitarDescanso();
+					activa1 = false;
+					mov = 0;
+				}
+				// si no hay descanso, no hace nada
+			}
+			// Si me paso por la derecha y hay descanso, juntar las dos barras
+			else if (tDescanso!= 0 && (h>horaDescanso.getHours()+tDescanso/60 ||
+				h==horaDescanso.getHours()+tDescanso/60 &&
+				m>horaDescanso.getMinutes()+tDescanso%60)) {
+				quitarDescanso();
+				activa1 = false;
+				mov = 0;
+			}
+			// Si me paso por la derecha y no hay descanso, pegar al borde
+			else if (tDescanso == 0 && (h>=horaCierre)) {
+				horaSalida.setHours(horaCierre);
+				horaSalida.setMinutes(0);
+			}
+			// Movimiento normal
+			else {
+				// Si hay descanso
+				if (tDescanso!=0) {
+				int dif = (horaDescanso.getHours()-h)*60 + horaDescanso.getMinutes()-m;
+				tDescanso+=dif;
+				horaDescanso.setHours(h);
+				horaDescanso.setMinutes(m);
+				}
+				else {
+					horaSalida.setHours(h);
+					horaSalida.setMinutes(m);					
+				}
+			}
+		}
+		else if (activa2) {
+			// Si me paso por la derecha, ajustar al borde
+			if (h>=horaCierre) {
+				horaSalida.setHours(horaCierre);
+				horaSalida.setMinutes(0);
+			}
+			// Si me paso por la izquierda, eliminar franja
+			else if (tDescanso!=0 && (
+					t<=horaDescanso.getHours()*60 + horaDescanso.getMinutes()+tDescanso)) {
+				horaSalida.setHours(horaDescanso.getHours());
+				horaSalida.setMinutes(horaDescanso.getMinutes());
+				quitarDescanso();
+				activa2 = false;
+				mov = 0;
+			}
+			// Movimiento normal
+			else {
+				horaSalida.setHours(h);
+				horaSalida.setMinutes(m);
+			}
+		}
+		recalcularFranjas(margenIzq, margenNombres, horaApertura, tamHora);
+		return mov;
+	}
+	
+	public int moverFranja(int x, int margenIzq, int margenNombres, int horaApertura, int tamHora, int tamSubdiv, int numSubdiv) {
+		int mov = 2;
+		int h = dameHoraCursor(x, margenIzq, margenNombres, horaApertura, tamHora) - (despl*(60/numSubdiv))/60;
+		int m = dameSubdivCursor(x, margenIzq, margenNombres, tamHora, tamSubdiv)*(60/numSubdiv) - (despl*(60/numSubdiv))%60;
+		if (activa1) {
+			// Despl es el número de subdivs desde horaEntrada hasta el cursor
+			// Si hay descanso
+			if (tDescanso!=0) {
+				int tVuelta = horaDescanso.getHours()*60+ horaDescanso.getMinutes() + tDescanso;
+				int tamFranja = horaDescanso.getHours()*60 + horaDescanso.getMinutes() - (
+						horaEntrada.getHours()*60 + horaEntrada.getMinutes());
+				horaDescanso.setHours(h + tamFranja/60);
+				horaDescanso.setMinutes(m + tamFranja%60);
+				tDescanso = tVuelta - (horaDescanso.getHours()*60+ horaDescanso.getMinutes());
+				// Si tDescanso resulta negativo, juntar las dos franjas
+				if (tDescanso<=0) quitarDescanso();
+			}
+			// Si no hay descanso
+			else {
+				int tamFranja = horaSalida.getHours()*60 + horaSalida.getMinutes() - (
+						horaEntrada.getHours()*60 + horaEntrada.getMinutes());
+				horaSalida.setHours(h + tamFranja/60);
+				horaSalida.setMinutes(m + tamFranja%60);
+			}
+			horaEntrada.setHours(h);
+			horaEntrada.setMinutes(m);
+		}
+		if (activa2) {
+			// Despl es el número de subdivs desde horaVuelta hasta el cursor
+			int tamFranja = horaSalida.getHours()*60 + horaSalida.getMinutes() - (
+					horaDescanso.getHours()*60 + horaDescanso.getMinutes()+tDescanso);
+			tDescanso = (h - horaDescanso.getHours())*60 + m - horaDescanso.getMinutes();
+			// Si tDescanso resulta negativo, juntar las dos franjas
+			horaSalida.setHours(horaDescanso.getHours() + tDescanso/60 + tamFranja/60);
+			horaSalida.setMinutes(horaDescanso.getMinutes() + tDescanso%60 + tamFranja%60);
+			if (tDescanso<=0) {
+				quitarDescanso();
+				activa2=false;
+				activa1=true;
+				calcularDespl(x, margenIzq, margenNombres, horaApertura, tamHora, tamSubdiv, numSubdiv);
+			}
+		}
+		recalcularFranjas(margenIzq, margenNombres, horaApertura, tamHora);
+		return mov;
+	}
+	
+	public void quitarDescanso() {
+		tDescanso=0;
+		horaDescanso.setMinutes(0);
+		horaDescanso.setHours(0);
+	}
+	
 	public int dameHoraCursor(int x, int margenIzq, int margenNombres, int horaApertura, int tamHora) {
-		return ((x-margenIzq-margenNombres)/tamHora)+horaApertura;
+		int h = ((x-margenIzq-margenNombres)/tamHora)+horaApertura;
+		if (h<0) h=0;
+		return h;
 	}
 	
 	public int dameSubdivCursor(int x, int margenIzq, int margenNombres, int tamHora, int tamSubdiv) {
-		return ((x-margenIzq-margenNombres)%tamHora)/tamSubdiv;
+		int m = ((x-margenIzq-margenNombres)%tamHora)/tamSubdiv;
+		if (m<0) m=0;
+		return m;
 	}
 }

@@ -161,6 +161,7 @@ public class Vista {
 				login.mostrarVentana("Conectado.");
 			else
 				login.mostrarVentana("Conectando...");
+			// Espera hasta que se cierre la ventana de login
 			while (!login.isDisposed()) {
 				if (!shell.getDisplay().readAndDispatch()) {
 					shell.getDisplay().sleep();
@@ -177,6 +178,7 @@ public class Vista {
 							"Administrador", "", "", null, 0, "", "admin", 0,
 							0, 0, null, null, null, null, null, 0, 0, 0));
 					identificado = true;
+				// Login normal
 				} else {
 					Empleado emp = getEmpleado(login.getNumeroVendedor());
 					if (!loader.isAlive())
@@ -375,9 +377,12 @@ public class Vista {
 	 */
 	public void loadEmpleados() {
 		infoDebug("Vista", "Cargando empleados");
-		empleados = getEmpleados(null,
+		try {
+			empleados = getEmpleados(null,
 				getEmpleadoActual().getDepartamentoId(), null, null, null,
 				null, null);
+		}
+		catch (Exception e) {}
 		infoDebug("Vista", "Acabado de cargar empleados");
 	}
 
