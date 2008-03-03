@@ -333,15 +333,7 @@ public class GeneraDatos {
         	if(i%3==0){//de vez en cuando metemos descansos
         		pat=ct.getPatron()+"/"+2+":"+"d";
         	}
-        	//como hemos añadido un nuevo turno a un contrato, el tipo será 3 o 4, analizamos
-        	if(ct.getTipoContrato()!=4){//
-        		if(util.trabaja_findes(pat)){//si trabaja fines de semana
-        			ct.set_tipoContrato(4);
-        		}else{
-        			ct.set_tipoContrato(3);
-        		}
-        		
-        	}
+        	ct.set_tipoContrato(3);
         	ct.setPatron(pat);
         	ct.setDuracionCiclo(dur_ciclo);
         	c.setContrato(ct);
