@@ -30,16 +30,19 @@ public class I09_1_1_Creacion_turnos {
 	private Shell padre = null;
 	private ResourceBundle bundle;
 	private aplicacion.Turno turno;
+	private int modo;
 	private int alto, ancho;
-	public I09_1_1_Creacion_turnos(Shell padre, ResourceBundle bundle) {
+	public I09_1_1_Creacion_turnos(Shell padre, ResourceBundle bundle,int modo) {
 		this.padre = padre;
 		this.bundle = bundle;
+		this.modo=modo;
 		mostrarVentana();
 	}
 		
 	public void mostrarVentana() {
 		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.RESIZE | SWT.APPLICATION_MODAL);		
-		shell.setText(bundle.getString("I09_lab_NuevoTurno"));
+		if (modo==0)	shell.setText(bundle.getString("I09_lab_NuevoTurno"));
+		else shell.setText(bundle.getString("I09_lab_ModifTurno"));
 		shell.setLayout(new GridLayout(2,true));
 
 		//Permite cerrar la ventana pulsando ESC
@@ -72,7 +75,7 @@ public class I09_1_1_Creacion_turnos {
 		lNombre		.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,false,true,1,1));
 		tNombre		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
 		tNombre		.setToolTipText(bundle.getString("I09_tip_NombreTurno"));
-		lId			.setText(bundle.getString("I09_lab_IdTurno"));
+		lId			.setText(bundle.getString("I09_lab_desc_Turno"));
 		lId			.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,false,true,1,1));
 		tId			.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
 		tId			.setToolTipText(bundle.getString("I09_tip_IdTurno"));
@@ -86,9 +89,9 @@ public class I09_1_1_Creacion_turnos {
 		grupo2.setLayoutData(gd);
 		
 
-		turno = new Turno(0,"nuevo turno","9:00:00","19:15:00","14:00:00",2);
-		turno.anadeGUI(grupo2, 9, 23, 3, true, new Color(grupo2.getDisplay(),80,180,80));
-		turno.anadeGUI(grupo2, 9, 23, 3, false, new Color(grupo2.getDisplay(),80,180,80));
+		//turno = new Turno(0,"nuevo turno","9:00:00","19:15:00","14:00:00",2);
+		//turno.anadeGUI(grupo2, 9, 23, 3, true, new Color(grupo2.getDisplay(),80,180,80));
+		//turno.anadeGUI(grupo2, 9, 23, 3, false, new Color(grupo2.getDisplay(),80,180,80));
 		
 		final Button bAceptar	= new Button(shell, SWT.PUSH);
 		final Button bCancelar	= new Button(shell, SWT.PUSH);		
@@ -123,6 +126,9 @@ public class I09_1_1_Creacion_turnos {
 		// Un listener con lo que hace el bot�n bAceptar
 		SelectionAdapter sabAceptar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
+				//modo = 0 es nuevo turno y modo =1 es modificar
+				if (modo==0){}
+				else{}
 			}
 		};
 		

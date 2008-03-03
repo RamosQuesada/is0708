@@ -216,12 +216,12 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 		});*/
 
 		final Button bEmplEditar = new Button(cEmplDer, SWT.PUSH);
-		bEmplEditar.setText(bundle.getString("Ver/Editar"));
+		//bEmplEditar.setText(bundle.getString("Ver/Editar"));
 		bEmplEditar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,1, 1));
 		
 		bEmplEditar.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent e){
-				new I08_1_Editar_empleado(_tabFolder.getShell(),_bundle, _vista,idVend);
+				//new I08_1_Editar_empleado(_tabFolder.getShell(),_bundle, _vista,idVend);
 			}
 		});
 		final Button bEmplBaja = new Button(cEmplDer, SWT.PUSH);

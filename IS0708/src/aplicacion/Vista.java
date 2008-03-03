@@ -379,6 +379,21 @@ public class Vista {
 		return null;
 
 	}
+	
+	/**
+	 * @deprecated
+	 * @return el numero de turnos de la base de datos
+	 */
+	public int getTurnoSize(){
+		return turnos.size();
+	}
+	/**
+	 * 
+	 * @return los turnos cargados de la base de datos
+	 */
+	public ArrayList <Turno> getTurnos(){
+		return turnos;
+	}
 
 	/**
 	 * Carga la lista de empleados que trabaja en el mismo departamento que el

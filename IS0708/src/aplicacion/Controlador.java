@@ -98,9 +98,28 @@ public class Controlador {
 	public Empleado getEmpleadoActual() {
 		return _empleadoActual;
 	}
-
+	/**
+	 * Asigna una vista al controlador 
+	 * @param vista
+	 */
 	public void setVista(Vista vista) {
 		this._vista = vista;
+	}
+	
+	/**
+	 * Abre una conexion a la base de datos si no estaba abierta
+	 *
+	 */
+	public void abrirConexionBD(){
+		if(!_db.conexionAbierta()) _db.abrirConexion();
+	}
+	
+	/**
+	 * Cierra la conexion a la base de datos
+	 *
+	 */
+	public void cerrarConexionBD(){
+		if(_db.conexionAbierta()) _db.cerrarConexion();
 	}
 
 
