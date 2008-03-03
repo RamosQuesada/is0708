@@ -5,6 +5,8 @@ import java.util.ResourceBundle;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
@@ -15,6 +17,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
@@ -191,10 +194,11 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 			}
 		});
 
-		final Button bEmplVer = new Button(cEmplDer, SWT.PUSH);
+		/*final Button bEmplVer = new Button(cEmplDer, SWT.PUSH);
 		bEmplVer.setText(bundle.getString("I02_but_Ver"));
 		bEmplVer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1,
 				1));
+			
 		bEmplVer.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				// TODO BD Coger empleado seleccionado de la BD y mostrarlo en
@@ -209,12 +213,17 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 				// null);
 				// new I08_2_Consultar_empleado(shell, emp, bundle);
 			}
-		});
+		});*/
 
 		final Button bEmplEditar = new Button(cEmplDer, SWT.PUSH);
-		bEmplEditar.setText(bundle.getString("Editar"));
+		bEmplEditar.setText(bundle.getString("Ver/Editar"));
 		bEmplEditar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,1, 1));
-
+		
+		bEmplEditar.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent e){
+				new I08_1_Editar_empleado(_tabFolder.getShell(),_bundle, _vista,idVend);
+			}
+		});
 		final Button bEmplBaja = new Button(cEmplDer, SWT.PUSH);
 
 		bEmplBaja.setText(bundle.getString("I02_but_Eliminar"));
