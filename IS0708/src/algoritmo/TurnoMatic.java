@@ -68,16 +68,18 @@ public class TurnoMatic {
 		ArrayList<Empleado> empl;
 		Turno turno;
 		Trabaja trab;
+		Contrato contAux;
 		
 		Empleado e;
 
 		//Recorremos los dias del mes
-		for(int i=0; i<Util.dameDias(mes,anio); i++){
+		for(int i=0; i<Util.dameDias(mes,anio); i++){ //FOR1
 			
 			horarioDia[i]=new ListasEmpleados("aux");
+			
 			//dividimos en el numero de franjas de cada dia
-			for(int j=0; j<estruc.getNumTrozos(); j++){
-			//for(int j=0; j<disp.size(); j++){
+			for(int j=0; j<estruc.getNumTrozos(); j++){ //FOR2
+
 				Time inif = estruc.getTrozosHorario().get(j); 
 				Time finf = estruc.getTrozosHorario().get(j+1);
 				dispo = horario[i][j].getDisponibles();
@@ -85,36 +87,34 @@ public class TurnoMatic {
 				empl = horario[i][j].getEmpleados();
 				
 				//Comprobamos la disponibilidad de cada empleado
-				for(int k=0; k<listaE.size(); k++){
+				for(int k=0; k<listaE.size(); k++){ //FOR3 
 					e = listaE.get(k);
+					int id = e.getContratoId();
+					contAux = this.controlador.getContrato(id);
+					if(contAux.getTipoContrato()==1 || contAux.getTipoContrato()==2){
+							
+						if(e.estaDisponible(i,inif,finf,controlador,contratosDep,j,estruc.getNumTrozos())){
 					
-					//creacionListas(e,i,inif,finf);
-				/*	if((e.getContratoId()!=1 && e.getContratoId()!=2 && e.getRango()==1) &&
-							(e.estaDisponible(i,inif,finf,controlador,j,estruc.getNumTrozos()))){*/
-					if((e.getRango()==1 || e.getRango()==2) &&
-							(e.estaDisponible(i,inif,finf,controlador,contratosDep,j,estruc.getNumTrozos()))){
-						//dispo.add(e);		
-						empl.add(e);
-						turno = e.getTurnoActual();
-						Time pr1 = new Time(19,49,00);
-						Time pr2 = new Time(19,49,00);
-						trab = new Trabaja(e.getEmplId(),pr1,pr2,turno.getIdTurno());
-						cu[i].add(trab);
+							empl.add(e);
+							turno = e.getTurnoActual();
+							Time pr1 = new Time(19,49,00);
+							Time pr2 = new Time(19,49,00);
+							trab = new Trabaja(e.getEmplId(),inif,finf,turno.getIdTurno());
+							cu[i].add(trab);
 						
-					}else{
-						if (e.getRango()==1)
-							reser.add(e);
+							}else{
+								if (contAux.getTipoContrato()==1 )
+									reser.add(e);
+							}
 					}
-				}
+				} //ENDFOR3
 				
-				//horario[i][j].setDisponibles(dispo);
+
 				horario[i][j].setReserva(reser);
 				horario[i][j].setEmpleados(empl);
+
 				
-				//coloca sólo a los empleados fijos.
-				//colocaFijos(i,dispo,i,j);
-				
-			}	
+			} //ENDFOR2	
 			
 			ArrayList<Empleado> reserDia = new ArrayList<Empleado>();
 			ArrayList<Empleado> trabajanDia = new ArrayList<Empleado>();
@@ -122,14 +122,16 @@ public class TurnoMatic {
 			ArrayList<Empleado> emplDia = new ArrayList<Empleado>();
 			Empleado aux;
 			
+			/*
 			for(int j=0; j<estruc.getNumTrozos(); j++){
-				/*int n=0;
+				¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
+				 int n=0;
 				while (n<horario[i][j].getReserva().size()) {
 					aux = horario[i][j].getReserva().get(n);
 						reserDia.add(aux);
 					n++;
-				}*/
-				
+				}
+				!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				int n=0;
 				while (n<horario[i][j].getEmpleados().size()) {
 					aux = horario[i][j].getEmpleados().get(n);
@@ -138,12 +140,14 @@ public class TurnoMatic {
 					n++;
 				}		
 				
-				/*n=0;
+				¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
+				n=0;
 				while (n<horario[i][j].getEmpleados().size()) {
 					aux = horario[i][j].getEmpleados().get(n);
 					emplDia.add(aux);
 					n++;
-				}*/
+				}
+				!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			}
 			
 			for (int k=0;k<listaE.size();k++){
@@ -158,12 +162,25 @@ public class TurnoMatic {
 				if (e.getContratoId()!=1 && e.getContratoId()!=2 && e.getRango()==1)
 					dispoDia.add(e);
 			}
+			*/
+			
+			//metemos en dispoDia a todos los empleados con contrato 3 o 4 y rango 1
+			for(int j=0;j<listaE.size();j++){
+				aux = listaE.get(j);
+				if(aux.getRango()==1){
+					int id = aux.getContratoId();
+					contAux = this.controlador.getContrato(id);
+					if(contAux.getTipoContrato()==3 || contAux.getTipoContrato()==4){
+						dispoDia.add(aux);
+					}
+				}
+			}
 	
 			colocaNoFijos(dispoDia, reserDia, emplDia, i, cu);//se colocan para cada dia i del mes 
 		}
 		
 		cuadrante.setCuad(cu);
-		//controlador.insertCuadrante(cuadrante);
+		controlador.insertCuadrante(cuadrante);
 		return this.cuadrante;
 	}
 	
