@@ -355,7 +355,7 @@ public class I02_Principal {
 				1, 1));
 		cContratos.setLayout(new GridLayout(3, false));
 
-		Table tablaContratos = new Table(cContratos, SWT.MULTI | SWT.BORDER
+		final Table tablaContratos = new Table(cContratos, SWT.MULTI | SWT.BORDER
 				| SWT.FULL_SELECTION);
 		tablaContratos.setLinesVisible(true);
 		tablaContratos.setHeaderVisible(true);
@@ -397,7 +397,39 @@ public class I02_Principal {
 
 		bNuevoContrato.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				new I09_1_Creacion_contratos(shell, bundle);
+				new I09_1_Creacion_contratos(shell, bundle, vista, 0);
+			}
+		});
+		
+		bModificarContrato.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				if(tablaContratos.getSelectionIndex()>-1){
+					new I09_1_Creacion_contratos(shell, bundle, vista, 1);
+				}
+				else {
+					MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_INFORMATION | SWT.OK | SWT.CANCEL);
+					messageBox.setMessage (bundle.getString("I09_bot_modif_contrato_no_select"));
+					messageBox.open();					
+				}
+				System.out.println(tablaContratos.getSelectionIndex());				
+			}
+		});
+		
+		bEliminarContrato.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				if(tablaContratos.getSelectionIndex()>-1){
+					MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_QUESTION | SWT.OK | SWT.CANCEL);
+					messageBox.setMessage (bundle.getString("I09_bot_elim_contrato"));
+					int response=messageBox.open();
+					if(response==SWT.OK){
+						
+					}
+				}
+				else {
+					MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_INFORMATION | SWT.OK | SWT.CANCEL);
+					messageBox.setMessage (bundle.getString("I09_bot_elim_contrato_no_select"));
+					messageBox.open();					
+				}				
 			}
 		});
 
