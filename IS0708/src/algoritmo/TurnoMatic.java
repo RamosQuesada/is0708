@@ -183,7 +183,8 @@ public class TurnoMatic {
 		/*hacemos unas comprobaciones básicas que permiten saber si, antes de ejecutar 
 		  el algoritmo de vuelta atrás, hay posibilidad de que se pueda generar un cuadrante.
 		  Si con estas primeras comprobaciones parece posible la generación, se ejecuta el algoritmo*/
-		if (comprobaciones(cuadAux, e1, dia))
+	//las comprobaciones no son necesarias
+		//if (comprobaciones(cuadAux, e1, dia))
 			hecho=vueltaAtrasMarcaje(e1,e2,0,dia,cuadAux);
 		
 		//no ha habido solucion con los disponibles, avisamos al usuario del problema surgido
