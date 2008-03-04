@@ -825,29 +825,33 @@ public class Empleado implements Drawable {
 		int h = size.height/2;
 		Image image = new Image(device, w, h); 
 		GC gc = new GC(image);
-		int marginLeft = w/20;
-		int marginLeft1 = marginLeft + w/40;
-		int marginLeft2 = w/4;
-		int marginRight = w/2;
-		int marginTop = h/30;
-		int marginVertical = h/50;
+		int marginLeft = w/10;
+		int marginLeft1 = marginLeft + w/20;
+		int marginLeft2 = marginLeft + w/2;
+		int marginRight = w;
+		int marginTop = h/15;
 		
-		Font font =  new Font(device, new FontData("Arial",marginVertical/5,SWT.BOLD));
+		
+		Font font =  new Font(device, new FontData("Arial",h/100,SWT.BOLD));
 		gc.setFont(font);
+		int marginVertical = gc.stringExtent("A").y-1;
+		
 		gc.setBackground(new Color(device, 50, 127, 192));
-		gc.fillRectangle(marginLeft, marginTop, marginRight-marginLeft, marginVertical*2);
-		gc.fillRectangle(marginLeft, marginTop, marginVertical/10, h/3);
+		gc.fillRectangle(marginLeft, marginTop, marginRight-marginLeft, marginVertical+marginVertical/5);
+		gc.fillRectangle(marginLeft, marginTop, marginVertical/10, h);
 		
 		gc.setForeground(device.getSystemColor(SWT.COLOR_WHITE));
 		gc.drawString(String.valueOf(idEmpl), marginLeft1*2, marginTop+marginVertical/10);
 		
+		marginTop = marginVertical+marginVertical/2;
 		gc.setBackground(device.getSystemColor(SWT.COLOR_WHITE));
 		gc.setForeground(device.getSystemColor(SWT.COLOR_BLACK));
-		font =  new Font(device, new FontData("Arial",marginVertical/10,SWT.NORMAL));
+		font =  new Font(device, new FontData("Arial",h/275,SWT.NORMAL));
 		gc.setFont(font);
-		int altoFuente = gc.stringExtent("A").y-1;
-		for (int i = 3; i<=12; i++ ){
-			gc.drawLine(marginLeft1, marginTop+altoFuente+i*marginVertical, marginLeft2, marginTop+altoFuente+i*marginVertical);
+		marginVertical = gc.stringExtent("A").y;
+		marginVertical += marginVertical/10;
+		for (int i = 4; i<=13; i++ ){
+			gc.drawLine(marginLeft1, marginTop+i*marginVertical-marginVertical/10, marginLeft2, marginTop+i*marginVertical-marginVertical/10);
 		}
 		String s;
 		if(this.sexo==0){s="Mujer";}
@@ -872,7 +876,7 @@ public class Empleado implements Drawable {
 		gc.drawString(Util.dateAString2(fAlta),                    marginLeft2, marginTop+11*marginVertical);
 		gc.drawString(bundle.getString("I08_2_lab_FContr"),        marginLeft1, marginTop+12*marginVertical);
 		gc.drawString(Util.dateAString2(fContrato),                marginLeft2, marginTop+12*marginVertical);
-		Code128.pintarCode(gc, idEmpl + password, marginLeft1,     marginTop+14*marginVertical, marginVertical*2,6);
+		Code128.pintarCode(gc, idEmpl + password, marginLeft1,     marginTop+16*marginVertical, marginVertical*4,w-marginLeft*2);
 		
 		gc.dispose();
 		return image.getImageData();
