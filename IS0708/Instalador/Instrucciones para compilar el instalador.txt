@@ -1,4 +1,4 @@
-Para poder compilar el instalador tiene que estar en este directorio el instalador de java "jre-6u3-windows-i586-p-s.exe",
+Para poder compilar el instalador tiene que estar en este directorio el instalador de java "jre-6u5-windows-i586-p-s.exe",
 Ademas hay que tener instalado el compilador de NSIS y su plugin para el eclipse.
 
 Los que querais probarlo, lo podeis bajar de "http://is0708.googlecode.com/files/Instalar%20Turno-matic.exe"
