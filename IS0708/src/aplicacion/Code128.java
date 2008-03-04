@@ -216,8 +216,9 @@ public class Code128 {
 	 * @param gc el GC sobre el que pintar
 	 * @param input la cadena a convertir
 	 */
-	public static void pintarCode(GC gc, String input, int x, int y, int alto, int grosor) {
+	public static void pintarCode(GC gc, String input, int x, int y, int alto, int ancho) {
 		String encoded = code128(input);
+		int grosor=ancho/encoded.length();
 		int c = 0;
 		gc.setBackground(new Color(gc.getDevice(), 255,255,255));
 		gc.fillRectangle(x, y, x+encoded.length()*grosor, y+alto);
