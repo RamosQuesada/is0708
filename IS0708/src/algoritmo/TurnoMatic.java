@@ -386,7 +386,7 @@ public class TurnoMatic {
 		boolean enc=false;
 		while (i<fHoraria.size() && !enc) {
 			if (fHoraria.get(i).getIdTurno()==tFavorito) enc=true;
-			i++;
+			else i++;
 		}
 		fHoraria.add(0, fHoraria.get(i)); //inserta el turno favorito en la primera posicion de la lista
 		fHoraria.remove(i+1); //elimina el turno favorito de la posicion inicial en la que estaba (i+1 porque ha quedado desplazado)
