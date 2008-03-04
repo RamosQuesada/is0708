@@ -395,17 +395,18 @@ public class TurnoMatic {
 		boolean hecho=false;
 		while (fHoraria.size()!=0) {
 			franjaHoraria = fHoraria.get(0);
-			ponerEmpleado (dispo.get(k), franjaHoraria.getHoraEntrada(), franjaHoraria.getHoraSalida(), cuadAux[dia]);
+			ponerEmpleado (dispo.get(k), franjaHoraria.getHoraEntrada(), franjaHoraria.getHoraSalida(), franjaHoraria, cuadAux[dia]);
 			//si el turno en el que se incluye al empleado en el cuadrante es el que él prefiere, aumenta su felicidad
 			if (franjaHoraria.getIdTurno()==tFavorito) 
 				dispo.get(k).setFelicidad(dispo.get(k).getFelicidad()+1);
 			k=k+1;      
-			if  (k==dispo.size())
+			if  (k==dispo.size()) {
 				if  (comprobarFranjasCompletas(cuadAux, dia, fHorariasDpto))
 					hecho=true;
-			else
+			} else {
 				if (k<dispo.size())
 					hecho=vueltaAtrasMarcaje(dispo, reser,k,dia,cuadAux);
+			}
 			k=k-1;
 			if (fHoraria.size()>1) {
 				quitarEmpleado(dispo.get(k),cuadAux[dia]);
@@ -517,8 +518,8 @@ public class TurnoMatic {
 	 * @param fin Fin de su turno de trabajo
 	 * @param dia Dia de su turno d trabajo
 	 */
-	private void ponerEmpleado (Empleado e, Time ini, Time fin, ArrayList<Trabaja> cuadDia){
-		Trabaja trabaja = new Trabaja(e.getEmplId(),ini,fin,e.getTurnoActual().getIdTurno());
+	private void ponerEmpleado (Empleado e, Time ini, Time fin, Turno turno, ArrayList<Trabaja> cuadDia){
+		Trabaja trabaja = new Trabaja(e.getEmplId(),ini,fin,turno.getIdTurno());
 		cuadDia.add(trabaja);
 	}
 	
@@ -682,4 +683,3 @@ public class TurnoMatic {
 	}
 	
 }
-
