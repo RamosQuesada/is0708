@@ -51,7 +51,7 @@ public class Database extends Thread {
 			con.close();
 			System.out.println("aplicacion.Database.java\t:: Conexion Cerrada Correctamente");
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			System.err.println("Error cerrando la conexión");
 		}
 	}
