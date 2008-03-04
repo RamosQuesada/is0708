@@ -159,7 +159,10 @@ public class I02_Principal {
 				| SWT.READ_ONLY);
 		cDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1));
+		/************************************************************/
+		//cDepartamentos.setItems(this.vista.getNombresDepartamentosJefe());
 		cDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
+		/************************************************************/
 		cDepartamentos.select(0);
 
 		// Un canvas para albergar el gráfico de los cuadrantes

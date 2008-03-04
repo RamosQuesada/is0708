@@ -156,6 +156,26 @@ public class Database extends Thread {
 	}
 	
 	/**
+	 * Metodo que devuelve de la bd los departamentos de un jefe
+	 * 
+	 * @param nvend
+	 *            el identificador del jefe
+	 * @return un ResultSet con los departamentos 
+	 */
+	public ResultSet obtenDepartamentosJefe(int nvend) {
+		ResultSet r = null;
+		try {
+			st = con.createStatement();
+			r = st.executeQuery("SELECT Nombre FROM DEPARTAMENTO " +
+					"WHERE JefeDepartamento = "+ nvend);
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println("Error al realizar la consulta de los ids departamentos");
+		}
+		return r;
+	}
+	
+	/**
 	 * Método que obtiene los empleados que pertenecen al id del departemento dado
 	 * @param idDept	identificador de departamento
 	 * @return			los empleados que pertenecen al id del departemento dado
