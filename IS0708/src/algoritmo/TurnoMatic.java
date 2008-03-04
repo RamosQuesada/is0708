@@ -137,16 +137,8 @@ public class TurnoMatic {
 			Empleado aux;
 			
 			for(int j=0; j<estruc.getNumTrozos(); j++){
-				
-				int n=0;
-				while (n<horario[i][j].getReserva().size()) {
-					aux = horario[i][j].getReserva().get(n);
-					if(!reserDia.contains(aux))
-						reserDia.add(aux);
-					n++;
-				}
 
-				n=0;
+				int n=0;
 				while (n<horario[i][j].getDisponibles().size()) {
 					aux = horario[i][j].getDisponibles().get(n);
 					if(!dispoDia.contains(aux))
@@ -163,6 +155,18 @@ public class TurnoMatic {
 					n++;
 				}
 
+			}
+			
+			for(int j=0; j<estruc.getNumTrozos(); j++){
+				
+				int n=0;
+				while (n<horario[i][j].getReserva().size()) {
+					aux = horario[i][j].getReserva().get(n);
+					if((!reserDia.contains(aux)) && (!emplDia.contains(aux)))
+						reserDia.add(aux);
+					n++;
+				}
+			
 			}
 			
 			//metemos en dispoDia a todos los empleados con contrato 3 o 4 y rango 1
