@@ -395,18 +395,20 @@ public class TurnoMatic {
 			if (franjaHoraria.getIdTurno()==tFavorito) 
 				dispo.get(k).setFelicidad(dispo.get(k).getFelicidad()+1);
 			k=k+1;      
-			if  (k==dispo.size()+1)
+			if  (k==dispo.size())
 				if  (comprobarFranjasCompletas(cuadAux, dia, fHorariasDpto))
 					hecho=true;
 			else
 				if (k<dispo.size())
 					hecho=vueltaAtrasMarcaje(dispo, reser,k,dia,cuadAux);
 			k=k-1;
-			quitarEmpleado(dispo.get(k),cuadAux[dia]);
-			/*si al recolocar a un empleado en un turno diferente, el turno del que se le quita es el que él prefiere, 
-			su felicidad queda igual que estaba antes de ejecutar el algoritmo*/
-			if (franjaHoraria.getIdTurno()==tFavorito)
-				dispo.get(k).setFelicidad(dispo.get(k).getFelicidad()-1);
+			if (fHoraria.size()>1) {
+				quitarEmpleado(dispo.get(k),cuadAux[dia]);
+				/*si al recolocar a un empleado en un turno diferente, el turno del que se le quita es el que él prefiere, 
+				su felicidad queda igual que estaba antes de ejecutar el algoritmo*/
+				if (franjaHoraria.getIdTurno()==tFavorito)
+					dispo.get(k).setFelicidad(dispo.get(k).getFelicidad()-1);
+			}
 			fHoraria.remove(0);
 		}
 		return hecho;
