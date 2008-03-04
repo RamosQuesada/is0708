@@ -96,7 +96,7 @@ Section "-Java 6" SEC0000
         njok:
             SetOutPath $INSTDIR
             SetOverwrite on
-            File jre-6u3-windows-i586-p-s.exe
+            File jre-6u5-windows-i586-p-s.exe
             WriteRegStr HKLM "${REGKEY}\Components" "Java 6" 1
             Goto njfin
         njcancel:
@@ -110,7 +110,7 @@ Section "-Java 6" SEC0000
         #jyes:
         #    SetOutPath $INSTDIR
         #    SetOverwrite on
-        #    File jre-6u3-windows-i586-p-s.exe
+        #    File jre-6u5-windows-i586-p-s.exe
         #    WriteRegStr HKLM "${REGKEY}\Components" "Java 6" 1
         #    Goto jfin
         #jno:
@@ -185,7 +185,7 @@ Section /o -un.jar UNSEC0001
 SectionEnd
 
 Section /o "-un.Java 6" UNSEC0000
-    Delete /REBOOTOK $INSTDIR\jre-6u3-windows-i586-p-s.exe
+    Delete /REBOOTOK $INSTDIR\jre-6u5-windows-i586-p-s.exe
     DeleteRegValue HKLM "${REGKEY}\Components" "Java 6"
 SectionEnd
 
@@ -307,8 +307,8 @@ LangString ^UninstallLink ${LANG_SPANISH} "Desinstalar $(^Name)"
 LangString ^UninstallLink ${LANG_ENGLISH} "Uninstall $(^Name)"
 LangString ^UninstallLink ${LANG_POLISH} "Uninstall $(^Name)"
 
-LangString SEC0000_DESC ${LANG_SPANISH} "Java jre1.6"
+LangString SEC0000_DESC ${LANG_SPANISH} "Java jre1.6 Update 5"
 
-LangString SEC0000_DESC ${LANG_ENGLISH} "Java jre1.6"
+LangString SEC0000_DESC ${LANG_ENGLISH} "Java jre1.6 Update 5"
 
-LangString SEC0000_DESC ${LANG_POLISH} "Java jre1.6"
+LangString SEC0000_DESC ${LANG_POLISH} "Java jre1.6 Update 5"
