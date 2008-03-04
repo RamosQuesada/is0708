@@ -130,4 +130,12 @@ public class HoraCalendario {
 		principiantes = Util.numPrincipiantes(patron);
 	}
 	
+	/**
+	 * Consulta si el departamento esta cerrado
+	 * @return true si min y max son 0
+	 */
+	public boolean horaLibre(){
+		return ((min == 0) && (max == 0));
+	}
+	
 }
