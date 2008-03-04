@@ -3,6 +3,7 @@ package interfaces;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -69,13 +70,11 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	
 	
 	private int movimiento;	
-	private int despl; // Este es para cuando movemos una barra, para saber de dónde la
-	// he cogido
-	private Boolean creando, terminadoDeCrear;
+//	private Boolean creando, terminadoDeCrear;
 
 	private MouseListener mouseListenerCuadrSemanal;
-	private MouseListener mouseListenerCuadrMensual;
 	private MouseMoveListener mouseMoveListenerCuadrSemanal;
+	private MouseListener mouseListenerCuadrMensual;
 	private MouseMoveListener mouseMoveListenerCuadrMensual;
 	
 	public class Loader extends Thread {
@@ -223,7 +222,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		final Label lCuadranteTitulo = new Label (cCuadrante, SWT.LEFT);
 		String fname = lCuadranteTitulo.getFont().getFontData()[0].getName();
 		lCuadranteTitulo.setFont(new Font(cCuadrante.getDisplay(),fname,15,0));
-		String sFecha = dia + " de " + aplicacion.Util.mesAString(vista.getBundle(), getMes()) + " de " + getAnio();// fecha.getDate() + " de " + fecha.getMonth() + " de " + fecha.getYear(); 
+		String sFecha = dia + " de " + aplicacion.Util.mesAString(vista.getBundle(), getMes()) + " de " + getAnio();
+		// fecha.getDate() + " de " + fecha.getMonth() + " de " + fecha.getYear(); 
 		lCuadranteTitulo.setText(sFecha);
 		lCuadranteTitulo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		
@@ -252,8 +252,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		canvas = new Canvas(cCuadrante, SWT.FILL | SWT.NO_BACKGROUND);
 		canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		// Inicializar algunas variables
-		creando = false;
-		terminadoDeCrear = true;
+//		creando = false;
+//		terminadoDeCrear = true;
 		movimiento = 0;
 		
 		calcularTamano();
@@ -342,7 +342,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 						while (!encontrado && i < iCuad[dia].size()) {
 							t = iCuad[dia].get(i).getTurno();
 							if (empleadoActivo==-1) { cursor(0); t.desactivarFranjas();}
-							else {
+							else if (iCuad[dia].get(i).getEmpl().getEmplId()==empleadoActivo) {
 								if 		(t.contienePixelInt(e.x))	{ cursor(1); encontrado = true; turnoActivo = t; redibujar=true;}
 								else if (t.tocaLadoIzquierdo(e.x))	{ cursor(2); encontrado = true; turnoActivo = t; redibujar=true;}
 								else if (t.tocaLadoDerecho(e.x))	{ cursor(2); encontrado = true; turnoActivo = t; redibujar=true;}
@@ -420,6 +420,10 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private void dibujarCuadrante(GC gc) {
 		// Doble buffering para evitar parpadeo
 		if (ancho != 0 && alto != 0) {
+			Long x,y;
+			Date t = new Date();
+			x = t.getTime();
+
 			Image bufferImage = new Image(display, ancho, alto);
 			GC gc2 = new GC(bufferImage);
 			// TODO Probar la siguiente linea en el laboratorio
@@ -431,8 +435,11 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			}
 			if (diario) dibujarCuadranteDia(display, gc2, empleadoActivo);
 			else dibujarCuadranteMes(gc2);
+			t = new Date();
+			y = t.getTime();
 			gc.drawImage(bufferImage, 0, 0);
 			bufferImage.dispose();
+//			vista.infoDebug("I_Cuadrante", "Total: " + String.valueOf(y-x) + "ms");
 		}
 	}
 	
@@ -478,9 +485,18 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	 */
 	// TODO Debería lanzar una excepción si empleadoActivo > empleados.size
 	public void dibujarCuadranteDia(Display d, GC gc, int empleadoActivo) {
+		
+		Long i = new Date().getTime();
 		dibujarSeleccion(gc, empleadoActivo);
+		Long j = new Date().getTime();
 		dibujarHoras(gc);
+		Long k = new Date().getTime();
 		dibujarTurnos(gc);
+		Long l = new Date().getTime();
+		vista.infoDebug("I_Cuadrante", "Tiempos dibujo: \n" +
+				String.valueOf(j-i) + " ms. dibujar seleccion\n" +
+				String.valueOf(k-j) + " ms. dibujar horas\n" + 
+				String.valueOf(l-k) + " ms. dibujar turnos\n");
 	}
 	
 	public void dibujarTurnos(GC gc) {

@@ -23,7 +23,6 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.events.*;
 
 import aplicacion.Empleado;
-import aplicacion.Franja;
 import aplicacion.Util;
 import aplicacion.Vista;
 
@@ -56,7 +55,6 @@ public class I02_cuadrEmpl extends Thread{
 
 	private int margenIzq, margenDer, margenSup, margenInf; // M�rgenes del cuadrante
 	private int margenNombres; // Un margen para pintar los nombres a la izquierda
-	private Franja franjaActiva;
 	private int movimiento;
 	private final Label lGridCuadrante;
 	private final Combo cGridCuadrante;
@@ -202,7 +200,6 @@ public class I02_cuadrEmpl extends Thread{
 	//	creando = false;
 	//	terminadoDeCrear = true;
 
-		franjaActiva = null;
 		movimiento = 0;
 		margenIzq = 15;
 		margenDer = 20;
