@@ -60,16 +60,10 @@ public class I02_cuadrEmpl extends Thread{
 	private int movimiento;
 	private final Label lGridCuadrante;
 	private final Combo cGridCuadrante;
-//	private Empleado empleado;
 	private Date fecha;
 	private Label lCuadranteTitulo;
-//	private MouseListener mouseListenerCuadrSemanal;
-//	private MouseListener mouseListenerCuadrMensual;
-//	private MouseMoveListener mouseMoveListenerCuadrSemanal;
-//	private MouseMoveListener mouseMoveListenerCuadrMensual;
 	private I02CuadranteEmpleado cuadrante;
 	private GC gc2;
-//	private GC gc3;
 	private Vista vista;
 
 
@@ -91,7 +85,14 @@ public class I02_cuadrEmpl extends Thread{
 			if (lCuadranteTitulo.isDisposed() || vista.getEmpleadoActual().getEmplId()==0) run = false;
 			display.asyncExec(new Runnable () {
 				public void run() {
-					redibujar();
+					if(cuadrante.redibujar){
+						System.out.println("redibujar");
+						cuadrante.redibujar=false;
+						redibujar();
+					}
+					else{
+						//TRATAR EL TIEMPO DE CARGADO...
+					}
 				}
 			});
 			try {
