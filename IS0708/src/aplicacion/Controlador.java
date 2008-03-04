@@ -426,6 +426,28 @@ public class Controlador {
 				idContrato, idTurno);
 	}
 
+	/**
+	 * Método que devuelve los nombres de los departamentos de un jefe
+	 * 
+	 * @param idJefe
+	 *            identificador del jefe
+	 * @return los departamentos que dirige el jefe
+	 */
+	public ArrayList<String> getDepartamentosJefe(int idJefe) {
+		ArrayList<String> depts = new ArrayList<String>();
+		ResultSet rs = _db.obtenDepartamentosJefe(idJefe);
+		try {
+			while (rs.next()) {
+				String idDept = rs.getString(1);
+				depts.add(idDept);
+			}
+		} catch (Exception e) {
+			System.err
+					.println("Error al obtener Lista de Departamentos en la base de datos");
+		}
+		return depts;
+	}
+	
 	/***************************************************************************
 	 * Métodos relacionados con departamentos
 	 */

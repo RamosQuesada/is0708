@@ -531,6 +531,20 @@ public class Vista {
 		return controlador.insertDepartamento(departamento);
 	}
 
+	/**
+     * Devuelve los nombres de todos los departamentos de un jefe.
+     *
+     * @return un array con los nombres
+     */
+    public String[] getNombresDepartamentosJefe(){
+        //Primero obtenemos el arrayList con los departamentos
+        ArrayList<String> dpts=controlador.getDepartamentosJefe(getEmpleadoActual().getEmplId());
+        //Devolvemos como array
+        String[] array=new String[dpts.size()];
+        dpts.toArray(array);
+        return array;
+    }
+	
 	/***************************************************************************
 	 * Métodos relacionados con mensajes
 	 */
