@@ -60,7 +60,7 @@ public class TurnoMatic {
 	public Cuadrante ejecutaAlgoritmo(){	
 		//Colocamos a los empleados correspondientes a cada día
 		ListasEmpleados[][] horario = estruc.getDias();
-		ListasEmpleados[] horarioDia =new ListasEmpleados[Util.dameDias(mes, anio)];
+		//ListasEmpleados[] horarioDia =new ListasEmpleados[Util.dameDias(mes, anio)];
 		ArrayList<Trabaja>[] cu = cuadrante.getCuad();
 		ArrayList<Contrato> contratosDep = this.controlador.getListaContratosDpto(this.idDepartamento);
 		ArrayList<Empleado> reser;
@@ -75,7 +75,7 @@ public class TurnoMatic {
 		//Recorremos los dias del mes
 		for(int i=0; i<Util.dameDias(mes,anio); i++){ //FOR1
 			
-			horarioDia[i]=new ListasEmpleados("aux");
+			//horarioDia[i] = new ListasEmpleados(idDepartamento);
 			
 			//dividimos en el numero de franjas de cada dia
 			for(int j=0; j<estruc.getNumTrozos(); j++){ //FOR2
@@ -91,7 +91,7 @@ public class TurnoMatic {
 					e = listaE.get(k);
 					int id = e.getContratoId();
 					contAux = this.controlador.getContrato(id);
-					if(contAux.getTipoContrato()==1 || contAux.getTipoContrato()==2){
+					/*if(contAux.getTipoContrato()==1 || contAux.getTipoContrato()==2){
 							
 						if(e.estaDisponible(i,inif,finf,controlador,contratosDep,j,estruc.getNumTrozos())){
 					
@@ -106,66 +106,67 @@ public class TurnoMatic {
 								if (contAux.getTipoContrato()==1 )
 									reser.add(e);
 							}
-					}
+					}*/
+					if(e.estaDisponible(i,inif,finf,controlador,contratosDep,j,estruc.getNumTrozos())){
+						
+						if(contAux.getTipoContrato()==1 || contAux.getTipoContrato()==2){
+							
+							empl.add(e);
+							turno = e.getTurnoActual();
+							trab = new Trabaja(e.getEmplId(),inif,finf,turno.getIdTurno());
+							cu[i].add(trab);
+							
+						}else
+							//(contAux.getTipoContrato()==3 || contAux.getTipoContrato()==4)
+							dispo.add(e);
+						
+					}else
+							reser.add(e);
+
 				} //ENDFOR3
-				
-
-				horario[i][j].setReserva(reser);
+						
 				horario[i][j].setEmpleados(empl);
-
+				horario[i][j].setDisponibles(dispo);
+				horario[i][j].setReserva(reser);
 				
 			} //ENDFOR2	
 			
 			ArrayList<Empleado> reserDia = new ArrayList<Empleado>();
-			ArrayList<Empleado> trabajanDia = new ArrayList<Empleado>();
 			ArrayList<Empleado> dispoDia = new ArrayList<Empleado>();
 			ArrayList<Empleado> emplDia = new ArrayList<Empleado>();
 			Empleado aux;
 			
-			/*
 			for(int j=0; j<estruc.getNumTrozos(); j++){
-				¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
-				 int n=0;
+				
+				int n=0;
 				while (n<horario[i][j].getReserva().size()) {
 					aux = horario[i][j].getReserva().get(n);
+					if(!reserDia.contains(aux))
 						reserDia.add(aux);
 					n++;
 				}
-				!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-				int n=0;
-				while (n<horario[i][j].getEmpleados().size()) {
-					aux = horario[i][j].getEmpleados().get(n);
-						if(!trabajanDia.contains(aux))
-							trabajanDia.add(aux);
+
+				n=0;
+				while (n<horario[i][j].getDisponibles().size()) {
+					aux = horario[i][j].getDisponibles().get(n);
+					if(!dispoDia.contains(aux))
+						dispoDia.add(aux);
 					n++;
 				}		
 				
-				¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
+
 				n=0;
 				while (n<horario[i][j].getEmpleados().size()) {
 					aux = horario[i][j].getEmpleados().get(n);
-					emplDia.add(aux);
+					if(!emplDia.contains(aux))
+						emplDia.add(aux);
 					n++;
 				}
-				!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 			}
-			
-			for (int k=0;k<listaE.size();k++){
-				aux  = listaE.get(k);
-				if(!trabajanDia.contains(aux) && !reserDia.contains(aux))
-					reserDia.add(aux);					
-			}
-			
-			//dispoDia tiene a los empleados que no son fijos ni rotatorios (empleados con contrato distinto de 1 y de 2 y rango=1)
-			for (int j=0;j<listaE.size();j++) {
-				e=listaE.get(j);
-				if (e.getContratoId()!=1 && e.getContratoId()!=2 && e.getRango()==1)
-					dispoDia.add(e);
-			}
-			*/
 			
 			//metemos en dispoDia a todos los empleados con contrato 3 o 4 y rango 1
-			for(int j=0;j<listaE.size();j++){
+			/*for(int j=0;j<listaE.size();j++){
 				aux = listaE.get(j);
 				if(aux.getRango()==1){
 					int id = aux.getContratoId();
@@ -174,7 +175,7 @@ public class TurnoMatic {
 						dispoDia.add(aux);
 					}
 				}
-			}
+			}*/
 	
 			colocaNoFijos(dispoDia, reserDia, emplDia, i, cu);//se colocan para cada dia i del mes 
 		}
