@@ -105,14 +105,12 @@ public class I15_Mensaje_nuevo {
 
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("peticion mensajeria interna in");
 				opcion_actual=I15_Mensaje_nuevo.MENSAJERIA_INTERNA;
 				
 			}
 
 			public void focusLost(FocusEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("peticion mensajeria interna out");
 				
 			}
 		}
@@ -126,14 +124,14 @@ public class I15_Mensaje_nuevo {
 
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("peticion baja in");
+				
 				opcion_actual=I15_Mensaje_nuevo.PETICION_BAJA;
 				
 			}
 
 			public void focusLost(FocusEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("peticion baja out");
+				
 				
 			}
 		}
@@ -144,14 +142,14 @@ public class I15_Mensaje_nuevo {
 
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("peticion cambio horario in");
+				
 				opcion_actual=I15_Mensaje_nuevo.CAMBIO_HORARIO;
 				
 			}
 
 			public void focusLost(FocusEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("peticion cambio horario out");
+				
 				
 			}
 		}
@@ -161,7 +159,7 @@ public class I15_Mensaje_nuevo {
 		bAceptar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		bAceptar.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				System.out.println(opcion_actual);
+				
 				if(opcion_actual==NO_INICIALIZADO){
 					//mostrar pantalla indicandolo
 					MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);

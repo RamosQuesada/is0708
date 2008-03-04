@@ -12,6 +12,10 @@ import aplicacion.Util;
 
 public class I02_threadEmpl extends Thread{
 	
+	private boolean finalizar=false;
+	public void ponFinalizar(){
+		finalizar=true;
+	}
 	private I02CuadranteEmpleado cuadrante;
 	private static boolean corriendo=false;
 	public I02_threadEmpl(I02CuadranteEmpleado cuadrante){
@@ -20,6 +24,7 @@ public class I02_threadEmpl extends Thread{
 	
 	public synchronized void run(){
 		while(corriendo){try {
+			System.out.println("hay 2");
 			wait(100);
 
 		} catch (InterruptedException e) {
@@ -27,6 +32,7 @@ public class I02_threadEmpl extends Thread{
 			e.printStackTrace();
 		}}
 		corriendo=true;
+		this.cuadrante.redibujar=false;
 			Date fechaActual;
 			cuadrante.horasFin= new ArrayList<Float>();
 			cuadrante.horasInicio = new ArrayList<Float>();
@@ -39,12 +45,14 @@ public class I02_threadEmpl extends Thread{
 			calendario.set(GregorianCalendar.MONTH, cuadrante.fecha.getMonth());
 			calendario.set(GregorianCalendar.YEAR, cuadrante.fecha.getYear());
 			int numDias=0;
-			while(calendario.get(GregorianCalendar.DAY_OF_WEEK)!=6){
+			while((calendario.get(GregorianCalendar.DAY_OF_WEEK)!=6)&&(!finalizar)){
 				calendario.add(Calendar.DATE, -1);
 				numDias++;
 			}
+			
 			cuadrante.tiposTurno= cuadrante.vista.getControlador().getListaTurnosEmpleados();
-			for(int cont=0;cont<7;cont++){
+			int cont=0;
+			while (cont < 7 && (! finalizar)){
 				cuadrante.fecha= Date.valueOf(Util.aFormatoDate(Integer.toString(
 					calendario.get(GregorianCalendar.YEAR)),
 					Integer.toString(
@@ -65,7 +73,7 @@ public class I02_threadEmpl extends Thread{
 					
 					int actual=0;
 					
-					while (turno!=cuadrante.tiposTurno.get(actual).getIdTurno())actual++;
+					while ((turno!=cuadrante.tiposTurno.get(actual).getIdTurno())&&(!finalizar))actual++;
 					if(cuadrante.tiposTurno.get(actual).getIdTurno()==turno){
 						horaEntrada=cuadrante.tiposTurno.get(actual).getHoraEntrada();
 						horaSalida=cuadrante.tiposTurno.get(actual).getHoraSalida();
@@ -88,10 +96,14 @@ public class I02_threadEmpl extends Thread{
 					cuadrante.horaComienzoDescanso.add(cont,0.0f);
 					cuadrante.horaFinDescanso.add(cont,0.0f);
 				}
+			cont++;
 		}
-			
-			this.cuadrante.redibujar=true;
+			System.out.println("finalizado");
 			corriendo=false;
+			if(!finalizar){
+				this.cuadrante.redibujar=true;
+			}
+			
 	}
 
 }

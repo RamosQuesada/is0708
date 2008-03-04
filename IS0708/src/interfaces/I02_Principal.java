@@ -868,10 +868,10 @@ public class I02_Principal {
 				int day = calendario.getDay();
 				int month = calendario.getMonth();
 				int year = calendario.getYear();
-				System.out
-						.println("Fecha cambiada a " + String.valueOf(day)
-								+ " de " + meses[month] + " de "
-								+ String.valueOf(year));
+			//	System.out
+			//			.println("Fecha cambiada a " + String.valueOf(day)
+			//					+ " de " + meses[month] + " de "
+			//					+ String.valueOf(year));
 				/*
 				 * System.out.println(Util.aFormatoDate( Integer.toString(year),
 				 * Integer.toString(month), Integer.toString(day)) );

@@ -228,6 +228,13 @@ public class I02CuadranteEmpleado {
 	}
 
 	public void actualizarTurnos(GC gc){
+		if(thread!=null){
+			if(thread.isAlive()){
+				System.out.println("vivo");
+				thread.ponFinalizar();
+				
+			}
+		}
 		thread = new I02_threadEmpl(this);
 		//redibujar=false;
 		thread.start();
