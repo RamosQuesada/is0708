@@ -821,8 +821,8 @@ public class Empleado implements Drawable {
 	}
 	
 	public ImageData getPrintableImage(Device device, ResourceBundle bundle, Rectangle size, boolean bn) {
-		int w = size.width;
-		int h = size.height;
+		int w = size.width/2;
+		int h = size.height/2;
 		Image image = new Image(device, w, h); 
 		GC gc = new GC(image);
 		int marginLeft = w/20;
@@ -832,7 +832,7 @@ public class Empleado implements Drawable {
 		int marginTop = h/30;
 		int marginVertical = h/50;
 		
-		Font font =  new Font(device, new FontData("Arial",20,SWT.BOLD));
+		Font font =  new Font(device, new FontData("Arial",marginVertical/5,SWT.BOLD));
 		gc.setFont(font);
 		gc.setBackground(new Color(device, 50, 127, 192));
 		gc.fillRectangle(marginLeft, marginTop, marginRight-marginLeft, marginVertical*2);
@@ -843,7 +843,7 @@ public class Empleado implements Drawable {
 		
 		gc.setBackground(device.getSystemColor(SWT.COLOR_WHITE));
 		gc.setForeground(device.getSystemColor(SWT.COLOR_BLACK));
-		font =  new Font(device, new FontData("Arial",10,SWT.NORMAL));
+		font =  new Font(device, new FontData("Arial",marginVertical/10,SWT.NORMAL));
 		gc.setFont(font);
 		int altoFuente = gc.stringExtent("A").y-1;
 		for (int i = 3; i<=12; i++ ){
