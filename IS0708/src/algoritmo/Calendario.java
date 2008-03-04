@@ -62,7 +62,7 @@ public class Calendario {
 	}
 	
 	/**
-	 * Modificadora del mes del calendario
+	 * Modifica el mes del calendario
 	 * @param mes Nuevo valor para mes
 	 */
 	public void setMes(int mes) {
@@ -78,8 +78,8 @@ public class Calendario {
 	}
 	
 	/**
-	 * Consulta el año del calendario
-	 * @return Año
+	 * Modifica el año del calendario
+	 * @param Nuevo valor para el año
 	 */
 	public void setAnio(int anio) {
 		this.anio = anio;
@@ -222,12 +222,37 @@ public class Calendario {
 		return (cal[dia][hora] != null);
 	}
 
+	/**
+	 * Consulta el identificador del departamento
+	 * @return Identificador
+	 */
 	public String getIdDepartamento() {
 		return idDepartamento;
 	}
 
+	/**
+	 * Modifica el identificador del departamento
+	 * @param Nuevo valor para el identificador
+	 */
 	public void setIdDepartamento(String idDepartamento) {
 		this.idDepartamento = idDepartamento;
+	}
+	
+	/**
+	 * Metodo para comprobar si el departamento cierra un dia
+	 * @param dia
+	 * @return true si el departamento cierra
+	 */
+	public boolean diaLibre(int dia) {
+		boolean libre = true;
+		int n = 0;
+		while ((libre) && (n<cal[dia].length)) {
+			if (cal[dia][n].horaLibre())
+				n++;
+			else
+				libre = false;
+		}
+		return libre;
 	}
 	
 }
