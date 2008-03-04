@@ -362,22 +362,33 @@ public class I02_Principal {
 				| SWT.FULL_SELECTION);
 		tablaContratos.setLinesVisible(true);
 		tablaContratos.setHeaderVisible(true);
-		String[] titles = { "Nombre contrato", "Empleados", "Total" };
+		String[] titles = { bundle.getString("Contrato"),bundle.getString("Empleados"),
+							bundle.getString("I09_turno_inicial"),bundle.getString("I09_lab_NombreContrato"),
+							bundle.getString("Patron"),bundle.getString("I09_lab_LongitudCiclo"),
+							bundle.getString("I09_lab_salario"),bundle.getString("I09_lab_tipo")};
 		for (int i = 0; i < titles.length; i++) {
 			TableColumn column = new TableColumn(tablaContratos, SWT.NONE);
 			column.setText(titles[i]);
 		}
 		// TODO Quitar este ejemplo
 		TableItem tItem = new TableItem(tablaContratos, SWT.NONE);
-		tItem.setText(0, "6:40h");
-		tItem
-				.setText(1,
-						"Mike Olfield, Lou Vega, Paul McCartney, Ricky Martin");
-		tItem.setText(2, "4");
+		tItem.setText(0, "1");
+		tItem.setText(1,"Mike Olfield, Lou Vega, Paul McCartney, Ricky Martin");
+		tItem.setText(2, "12");
+		tItem.setText(3, "aleatorio0");
+		tItem.setText(4, "6:12/2:8");
+		tItem.setText(5, "8");
+		tItem.setText(6, "1400.00");
+		tItem.setText(7, "3");
 		tItem = new TableItem(tablaContratos, SWT.NONE);
-		tItem.setText(0, "Días sueltos");
+		tItem.setText(0, "2");
 		tItem.setText(1, "Alicia Keys, Ana Torroja, Marylin Manson");
-		tItem.setText(2, "3");
+		tItem.setText(2, "12");
+		tItem.setText(3, "aleatorio1");
+		tItem.setText(4, "6:12/2:8");
+		tItem.setText(5, "8");
+		tItem.setText(6, "1400.00");
+		tItem.setText(7, "3");
 		for (int i = 0; i < titles.length; i++) {
 			tablaContratos.getColumn(i).pack();
 		}

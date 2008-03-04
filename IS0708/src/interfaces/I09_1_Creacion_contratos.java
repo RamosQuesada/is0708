@@ -27,6 +27,10 @@ public class I09_1_Creacion_contratos {
 	private ResourceBundle bundle;
 	private Vista vista;
 	private int modo;
+	//cambiar por tURNO, ahora solo para probar
+	private String id;
+	private String patron;
+	private List listaTurnosContrato;
 	
 	private final int longCicloDefault = 14;
 	public I09_1_Creacion_contratos(Shell padre, ResourceBundle bundle, Vista vista, int modo) {
@@ -34,6 +38,8 @@ public class I09_1_Creacion_contratos {
 		this.bundle = bundle;
 		this.vista = vista;
 		this.modo = modo;
+		id=null;
+		patron=null;
 		//vista.getControlador().abrirConexionBD();
 		crearVentana();
 	}
@@ -150,7 +156,7 @@ public class I09_1_Creacion_contratos {
 		private Shell shell = null;
 		
 		private final int longCicloDefault = 14;
-		public ElegirTurno(Shell padre) {
+		public ElegirTurno(final Shell padre) {
 			this.padre = padre;			
 			//vista.getControlador().abrirConexionBD();
 			shell = new Shell(SWT.APPLICATION_MODAL | SWT.CLOSE);
@@ -173,6 +179,10 @@ public class I09_1_Creacion_contratos {
 			lElegir.setText(bundle.getString("I09_lab_elegir"));
 			final List list = new List (shell, SWT.BORDER |  SWT.V_SCROLL);
 			list.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 4));
+			ArrayList <Turno> turnos=vista.getTurnos();
+			vista.loadTurnos();
+			for (int i=0;i<turnos.size();i++)
+				list.add(turnos.get(i).getIdTurno()+" "+turnos.get(i).getDescripcion());
 			final Composite grupo1 = new Composite(shell, SWT.NONE);
 			grupo1.setLayout(new GridLayout(2,false));
 			grupo1.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
@@ -189,6 +199,25 @@ public class I09_1_Creacion_contratos {
 				}
 			};
 			bCancelar.addSelectionListener(sabCancelar);
+//			 Listener para el bot�n bAceptar
+			SelectionAdapter sabAceptar = new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent e) {
+					if(list.getSelectionIndex()>-1){					
+						String aux=list.getItem(list.getSelectionIndex());
+						System.out.println(aux);
+						//aqui coger el turno correspondiente FALTA
+						id=aux;
+						shell.dispose();
+						listaTurnosContrato.add(id);
+					}
+					else {
+						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_INFORMATION | SWT.OK | SWT.CANCEL);
+						messageBox.setMessage (bundle.getString("I09_lab_elegir"));
+						messageBox.open();					
+					}
+				}
+			};
+			bAceptar.addSelectionListener(sabAceptar);
 			grupo1.pack();
 			shell.setDefaultButton(bAceptar);
 			shell.pack();			
@@ -239,29 +268,38 @@ public class I09_1_Creacion_contratos {
 
 // Grupo 2 - Turnos
 		grupo2.setLayout(new GridLayout(2,false));
-		final List list = new List (grupo2, SWT.BORDER |  SWT.V_SCROLL);
+		//final List list = new List (grupo2, SWT.BORDER |  SWT.V_SCROLL);
+		listaTurnosContrato = new List (grupo2, SWT.BORDER |  SWT.V_SCROLL);
 		//Alomejor hay q cambiar la llamada aqui
-		ArrayList <Turno> turnos=vista.getTurnos();
+		ArrayList <Turno> turnos2=vista.getTurnos();
 		vista.loadTurnos();
-		for (int i=0;i<turnos.size();i++)
-			list.add(turnos.get(i).getIdTurno()+" "+turnos.get(i).getDescripcion());
-		
-		list.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 4));
+		turnos2.remove(3);
+		turnos2.remove(2);
+		for (int i=0;i<turnos2.size();i++)
+			listaTurnosContrato.add(turnos2.get(i).getIdTurno()+" "+turnos2.get(i).getDescripcion());
+		//if(id!=null) {
+			//listaTurnosContrato.add(id);
+			//añadir a turnos2 el nuevo turno con id el q sea y agregar a liste turnos por contrato
+			//el turno y el contrato VAYA PUROOOOOOOO
+		//}
+		listaTurnosContrato.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 5));
 		
 		final Button bNuevoTurno		= new Button(grupo2, SWT.PUSH);
 		final Button bModificarTurno	= new Button(grupo2, SWT.PUSH);
 		final Button bEliminarTurno		= new Button(grupo2, SWT.PUSH);
 		final Button bElegirTurno		= new Button(grupo2, SWT.PUSH);
+		final Button bTurnoInicial		= new Button(grupo2, SWT.PUSH);
 		
 		bNuevoTurno		.setText(bundle.getString("I09_Nuevo_turno"));
 		bModificarTurno	.setText(bundle.getString("I09_Modif_turno"));
 		bEliminarTurno	.setText(bundle.getString("I09_Eliminar_turno"));
 		bElegirTurno.setText(bundle.getString("I09_Elegir_turno"));
+		bTurnoInicial.setText(bundle.getString("I09_turno_inicial"));
 		bNuevoTurno		.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1,1));
 		bModificarTurno	.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1,1));
 		bEliminarTurno	.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1,1));
 		bElegirTurno	.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1,1));
-		
+		bTurnoInicial	.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1,1));
 // Grupo 3 - Ciclo
 		grupo3.setLayout(new GridLayout(4,false));
 		final Label  lLongCiclo		= new Label (grupo3, SWT.LEFT);
@@ -315,7 +353,7 @@ public class I09_1_Creacion_contratos {
 		SelectionAdapter sabLCCambiar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
 				try {
-					new CheckBoxes(shell, Integer.valueOf(tLongCiclo.getText()), list.getItemCount());	
+					new CheckBoxes(shell, Integer.valueOf(tLongCiclo.getText()), listaTurnosContrato.getItemCount());	
 				} catch (Exception ex) {
 					MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_WARNING);
 					messageBox.setText(bundle.getString("Error"));
@@ -339,7 +377,7 @@ public class I09_1_Creacion_contratos {
 //		 Listener para el bot�n de modificar turno
 		SelectionAdapter sabModificarTurno = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
-				if(list.getSelectionIndex()>-1){
+				if(listaTurnosContrato.getSelectionIndex()>-1){
 					new I09_1_1_Creacion_turnos(shell, bundle, 1);
 				}
 				else {
@@ -354,12 +392,12 @@ public class I09_1_Creacion_contratos {
 //		 Listener para el bot�n de eliminar turno
 		SelectionAdapter sabEliminarTurno = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
-				if(list.getSelectionIndex()>-1){
+				if(listaTurnosContrato.getSelectionIndex()>-1){
 					MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_QUESTION | SWT.OK | SWT.CANCEL);
 					messageBox.setMessage (bundle.getString("I09_bot_elim_turno"));
 					int response=messageBox.open();
 					if(response==SWT.OK){
-						String aux=list.getItem(list.getSelectionIndex());
+						String aux=listaTurnosContrato.getItem(listaTurnosContrato.getSelectionIndex());
 						System.out.println(aux);
 					}
 				}
@@ -379,6 +417,21 @@ public class I09_1_Creacion_contratos {
 		};
 		bElegirTurno.addSelectionListener(sabElegirTurno);
 		
+//		 Listener para el bot�n de turno inicial
+		SelectionAdapter sabTurnoInicial = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e){
+				if(listaTurnosContrato.getSelectionIndex()>-1){					
+						String aux=listaTurnosContrato.getItem(listaTurnosContrato.getSelectionIndex());
+						System.out.println(aux);					
+				}
+				else {
+					MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_INFORMATION | SWT.OK | SWT.CANCEL);
+					messageBox.setMessage (bundle.getString("I09_bot_turno_ini_no_select"));
+					messageBox.open();					
+				}
+			}
+		};
+		bTurnoInicial.addSelectionListener(sabTurnoInicial);
 		// TODO Listener para el bot�n bAceptar
 		SelectionAdapter sabAceptar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
