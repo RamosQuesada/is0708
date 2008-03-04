@@ -895,7 +895,7 @@ public class Empleado implements Drawable {
 		java.util.Date today;
 		int diaCiclo,n;
 		long difFechas;
-		Turno tur;
+		//Turno tur;
 		boolean encontrado;
 		
 		//cálculo del dia en el que nos encontramos dentro del ciclo.
@@ -935,8 +935,11 @@ public class Empleado implements Drawable {
 		turnoStr = turnosStr.get(diaCiclo);
 		
 		//COMPROBAR SI TRABAJA UN DIA	
-		if(turnoStr.get(0).equals("d"))
+		if (turnoStr.get(0).equals("d"))
 			return false;
+		else
+			if ((contrato.getTipoContrato()==3) || (contrato.getTipoContrato()==4))
+				return true;
 		
 		//COMPROBAR SI ESTA DE VACACIONES ETC
 		//...
