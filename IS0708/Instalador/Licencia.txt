@@ -1,0 +1,14 @@
+Instalador creado con Nullsoft NSIS
+http://nsis.sourceforge.net/
+
+Con esta tecnología se pueden crear instaladores
+que instalen distintas opciones y se puede llamar
+a otros instaladores, por ejemplo, de MySQL o Java.
+También se puede detectar si la máquina virtual de
+Java está instalada.
+
+También se pueden personalizar todas las imágenes
+que se muestran en el instalador.
+
+-----
+Acepta la licencia para continuar
