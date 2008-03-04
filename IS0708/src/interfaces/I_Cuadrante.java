@@ -3,7 +3,6 @@ package interfaces;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -34,7 +33,6 @@ import algoritmo.Trabaja;
 import aplicacion.Empleado;
 import aplicacion.Posicion;
 import aplicacion.Turno;
-import aplicacion.Util;
 import aplicacion.Vista;
 //De dónde coger javadoc: http://javashoplm.sun.com/ECom/docs/Welcome.jsp?StoreId=22&PartDetailId=jdk-6u3-oth-JPR&SiteId=JSC&TransactionId=noreg
 
@@ -150,21 +148,61 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	 * bug: al hacer muchas franjas pequeñitas, no se pegan bien (ver si sigue pasando)
 	 */
 
-	
-	public I_Cuadrante(Vista vista, int mes, int anio, String idDepartamento) {
+	/**
+	 * Constructor del cuadrante.
+	 * @param d				Display sobre el que se dibujará el cuadrante
+	 * @param numSubdivisiones	Número de subdivisiones que se muestran en el cuadrante.  
+	 * 						<ul>
+	 * 						<li>12	(cada 5 min),
+	 * 						<li>6	(cada 10 min),
+	 * 						<li>4	(cada 15 min),
+	 * 						<li>2	(cada 30 min),
+	 * 						<li>1	(sin subdivisiones)
+	 * 						</ul>
+	 * @param horaApertura	Hora de inicio del cuadrante
+	 * @param horaFin		Hora de fin del cuadrante. Las horas pasadas de las 24 se muestran
+	 * 						como la madrugada del d�a siguiente.
+	 * @param margenIzq		Margen izquierdo en p�xeles
+	 * @param margenDer		Margen derecho en p�xeles
+	 * @param margenSup		Margen superior en p�xeles
+	 * @param margenInf		Margen inferior en p�xeles
+	 * @param margenNombres	Margen de los nombres en p�xeles (indica d�nde empieza a dibujarse
+	 * 						el cuadrante a partir del margen izquierdo, dejando un espacio para
+	 * 						los nombres.
+	 */
+	public I_Cuadrante(Vista vista, int mes, int anio, String idDepartamento, int subdivisiones, int horaInicio, int horaFin) {
 		super(mes, anio, idDepartamento);
 		this.vista = vista;
 		Thread loader = new Loader();
 		loader.start();
+		setConfig(subdivisiones, horaInicio, horaFin);
+		margenIzq = 15;
+		margenDer = 20;
+		margenSup = 1;
+		margenInf = 10;
+		margenNombres = 90;
 	}
 	
+	public void setMargenes(int margenIzq, int margenDer, int margenSup, int margenInf, int margenNombres) {
+		this.margenIzq  = margenIzq;
+		this.margenDer  = margenDer;
+		this.margenSup  = margenSup;
+		this.margenInf  = margenInf;
+		this.margenNombres  = margenNombres;	
+	}
+	
+	public void setConfig(int subdivisiones, int horaInicio, int horaFin) {
+		this.horaApertura = horaInicio;
+		this.horaFin = horaFin;
+		this.numSubdivisiones = subdivisiones;	
+	}
+
 	public void cargarCache() {
 		iCuad = new ArrayList[cuad.length];
 		for (int i=0; i<cuad.length; i++) {
+			iCuad[i] = new ArrayList<I_Trabaja>();
 			for (int j=0; j<cuad[i].size(); j++) {
-				iCuad[i] = new ArrayList<I_Trabaja>();
 				iCuad[i].add(new I_Trabaja(cuad[i].get(j)));
-				System.out.println(iCuad[i].get(j).empl.getNombre());
 			}
 		}
 		cacheCargada = true;
@@ -175,6 +213,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		});
 	}
 	
+	/**
+	 * Configura un composite para mostrar un cuadrante.
+	 */
 	public void setComposite(Composite cCuadrante) {
 		
 		cCuadrante.setLayout(new GridLayout(3,false));
@@ -214,13 +255,6 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		creando = false;
 		terminadoDeCrear = true;
 		movimiento = 0;
-		margenIzq = 15;
-		margenDer = 20;
-		margenSup = 1;
-		margenInf = 10;
-		margenNombres = 90;
-		horaApertura = 9;
-		horaFin = 23;
 		
 		calcularTamano();
 		display = canvas.getDisplay();
@@ -269,40 +303,6 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					if (dameMovimiento() == 2) {
 						movimiento = turnoActivo.moverFranja(e.x, margenIzq, margenNombres, horaApertura, tamHora, tamSubdiv, numSubdivisiones);
 						canvas.redraw();
-	
-						// Ya he pinchado dentro de la franja activa, y la estoy moviendo
-						/*
-						Posicion ancho = f.pfin.diferencia(f.pinicio);
-						f.pinicio = cuadrante.sticky(e.x - despl);
-						// System.out.println(String.valueOf(f.pinicio.hora)+"-"+String.valueOf(f.pinicio.cmin));
-						f.pfin.suma(f.pinicio, ancho);
-						f.pegarALosBordes(horaInicio, horaFin);
-						f.actualizarPixeles(margenIzq, margenNombres, cuadrante.tamHora, cuadrante.tamSubdiv, cuadrante.subdivisiones, horaInicio);
-						int j = 0;
-						FranjaDib f2;
-						Boolean encontrado2 = false;
-						while (!encontrado2	&& j < cuadrante.empleados.get(empleadoActivo).turno.franjas.size()) {
-							f2 = cuadrante.empleados.get(empleadoActivo).turno.franjas.get(j);
-							if ((f.pinicio.menorOIgualQue(f2.pfin) && f2.contienePixel(f.inicio - 10,0)) | (f.inicio < f2.inicio && f.fin > f2.fin)) {
-								encontrado2 = true;
-								Posicion ancho2 = f2.pfin.diferencia(f2.pinicio);
-								f.pinicio = f2.pinicio;
-								ancho2.suma(ancho, ancho2);
-								f.pfin.suma(f.pinicio, ancho2);
-								f.inicio = f2.inicio;
-								despl += (f2.fin - f2.inicio);
-								cuadrante.empleados.get(empleadoActivo).turno.franjas.remove(j);
-								f.actualizarPixeles(margenIzq, margenNombres, cuadrante.tamHora, cuadrante.tamSubdiv, cuadrante.subdivisiones, horaInicio);
-							} else if ((f.pfin.mayorOIgualQue(f2.pinicio) && f2.contienePixel(f.fin + 10,0))	| (f.inicio < f2.inicio && f.fin > f2.fin)) {
-								encontrado2 = true;
-								f.pfin = f2.pfin;
-								cuadrante.empleados.get(empleadoActivo).turno.franjas.remove(j);
-								f.actualizarPixeles(margenIzq, margenNombres, cuadrante.tamHora, cuadrante.tamSubdiv, cuadrante.subdivisiones, horaInicio);
-							}
-							j++;
-						}
-						redibujar();
-						*/
 					}
 				// Si estoy cambiando el inicio de una franja
 				else if (dameMovimiento() == 1) {
@@ -315,8 +315,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					canvas.redraw();
 				}
 				// Si no estoy moviendo ninguna franja,
-				// comprobar si el cursor está en alguna franja, una por una
-				
+				// comprobar si el cursor está en alguna franja, una por una	
 					else {
 						// Comprueba el empleado activo (vertical)
 						int i = 0;
@@ -372,48 +371,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			
 			public void mouseUp(MouseEvent e) {
 				movimiento=0;
-				/*	FranjaDib f;
-				redibujar();
-				desactivarFranja();
-				if (empleadoActivo != -1) {
-					for (int i = 0; i < cuadrante.empleados.get(empleadoActivo).turno.franjas
-							.size(); i++) {
-						f = cuadrante.empleados.get(empleadoActivo).turno.franjas
-								.get(i);
-						// Si acabo de crear una franja, comprobar que no est�
-						// del rev�s, y si lo est�, darle la vuelta
-						// Comprobar tambi�n si se cruza con otra.
-						if (!terminadoDeCrear) {
-							if (f.inicio > f.fin) {
-								int aux = f.inicio;
-								f.inicio = f.fin;
-								f.fin = aux;
-							}
-							FranjaDib f2;
-							int j = 0;
-							Boolean encontrado = false;
-							while (!encontrado
-									&& j < cuadrante.empleados
-											.get(empleadoActivo).turno.franjas.size()) {
-								f2 = cuadrante.empleados.get(empleadoActivo).turno.franjas
-										.get(j);
-								if (f2.contienePixelInt(f.inicio)
-										|| f2.contienePixelInt(f.fin)) {
-									// Juntar dos franjas que se tocan o cruzan
-									if (f2.inicio < f.inicio)
-										f.inicio = f2.inicio;
-									if (f2.fin > f2.fin)
-										f.fin = f2.fin;
-									cuadrante.empleados.get(empleadoActivo).turno.franjas
-											.remove(j);
-									redibujar();
-								}
-								j++;
-							}
-						}
-					}
-				}
-				terminadoDeCrear = true;*/
+				
 			}
 			public void mouseDoubleClick(MouseEvent e) {
 			/*	int i = 0;
@@ -512,48 +470,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			}
 		});
 	}
-
-
 	
-		
-	/**
-	 * Constructor del cuadrante.
-	 * @param d				Display sobre el que se dibujará el cuadrante
-	 * @param numSubdivisiones	Número de subdivisiones que se muestran en el cuadrante.  
-	 * 						<ul>
-	 * 						<li>12	(cada 5 min),
-	 * 						<li>6	(cada 10 min),
-	 * 						<li>4	(cada 15 min),
-	 * 						<li>2	(cada 30 min),
-	 * 						<li>1	(sin subdivisiones)
-	 * 						</ul>
-	 * @param horaApertura	Hora de inicio del cuadrante
-	 * @param horaFin		Hora de fin del cuadrante. Las horas pasadas de las 24 se muestran
-	 * 						como la madrugada del d�a siguiente.
-	 * @param margenIzq		Margen izquierdo en p�xeles
-	 * @param margenDer		Margen derecho en p�xeles
-	 * @param margenSup		Margen superior en p�xeles
-	 * @param margenInf		Margen inferior en p�xeles
-	 * @param margenNombres	Margen de los nombres en p�xeles (indica d�nde empieza a dibujarse
-	 * 						el cuadrante a partir del margen izquierdo, dejando un espacio para
-	 * 						los nombres.
-	 */
-	
-	public void setMargenes(int margenIzq, int margenDer, int margenSup, int margenInf, int margenNombres) {
-		this.margenIzq  = margenIzq;
-		this.margenDer  = margenDer;
-		this.margenSup  = margenSup;
-		this.margenInf  = margenInf;
-		this.margenNombres  = margenNombres;	
-	}
-	
-	public void setConfig(int subdivisiones, int horaInicio, int horaFin) {
-		this.horaApertura = horaInicio;
-		this.horaFin = horaFin;
-		this.numSubdivisiones = subdivisiones;	
-	}
-	
-
 	/**
 	 * Dibuja el cuadrante, resaltando el empleado activo.
 	 * @param gc				El GC del display sobre el que se dibujará el cuadrante.

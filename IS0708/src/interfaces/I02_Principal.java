@@ -168,18 +168,21 @@ public class I02_Principal {
 		cCuadrante.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
 				3, 5));
 
-		algoritmo.Trabaja t = new algoritmo.Trabaja();
-		t.setIdEmpl(10000100);
-		t.setIdTurno(1);
+		algoritmo.Trabaja t1 = new algoritmo.Trabaja();
+		t1.setIdEmpl(10000100);
+		t1.setIdTurno(1);
 
+		algoritmo.Trabaja t2 = new algoritmo.Trabaja();
+		t2.setIdEmpl(10000200);
+		t2.setIdTurno(2);
 		
-		I_Cuadrante ic = new I_Cuadrante(vista, 2, 2008, "mi_dep");
+		I_Cuadrante ic = new I_Cuadrante(vista, 2, 2008, "mi_dep", 4, 9, 22);
 		//ic.setCuad(vista.getCuadrante(12, 2007, "DatosFijos"));
-		ic.setTrabajaDia(1, t);
-		ic.setConfig(4, 9, 22);
-		ic.setTamano(200, 200);
+		ic.setTrabajaDia(1, t1);
+		ic.setTrabajaDia(1, t2);
 		ic.setComposite(cCuadrante);
 		ic.setDia(1);
+		
 		Label lCalendario = new Label(cCuadrantes, SWT.LEFT);
 		lCalendario.setText(bundle.getString("Calendario"));
 		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
