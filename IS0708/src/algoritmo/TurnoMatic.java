@@ -477,15 +477,25 @@ public class TurnoMatic {
 		
 		for(int i=0;i<lista.size();i++){
 			
-			
 			int minIni=lista.get(i).getFichIni().getMinutes()+(lista.get(i).getFichIni().getHours()*60);
 			int minFin=lista.get(i).getFichFin().getMinutes()+(lista.get(i).getFichFin().getHours()*60);
 			
 			//el metodo controlador.getTurnoEmpleadoDia DEBERIA devolver un TURNO en lugar de un INT
-			Turno t=controlador.getObjetoTurnoEmpleadoDia(dia, lista.get(i).getIdEmpl());
-			int minIniDescanso=(t.getHoraDescanso().getHours()*60)+t.getHoraDescanso().getMinutes();
-			int minFinDescanso=minIniDescanso+t.getTDescanso();
+			//Turno t=controlador.getObjetoTurnoEmpleadoDia(dia, lista.get(i).getIdEmpl());
 			
+			//t es el identificador del turno que tiene el empleado en el cuadrante
+			int t = lista.get(i).getIdTurno();
+			ArrayList<Turno> turnos = controlador.getListaTurnosEmpleadosDpto(this.idDepartamento);
+			int j=0;
+			boolean enc=false;
+			while (j<turnos.size() && !enc) {
+				if (turnos.get(j).getIdTurno()==t) enc=true;
+				else i++;
+			}
+			Turno turno=turnos.get(j);
+			
+			int minIniDescanso=(turno.getHoraDescanso().getHours()*60)+turno.getHoraDescanso().getMinutes();
+			int minFinDescanso=minIniDescanso+turno.getTDescanso();
 			
 			//comprobar si en ese minuto esta currando y no esta descansando
 			if (((minIni<=momento)&&(minFin>momento))&&((minIniDescanso>momento)||(minFinDescanso<momento))){
