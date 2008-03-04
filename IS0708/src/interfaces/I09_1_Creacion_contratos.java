@@ -53,7 +53,7 @@ public class I09_1_Creacion_contratos {
 		private Button[][] cbs;
 		private Shell shell;
 		private Shell padre;
-		public CheckBoxes (Shell padre, int longCiclo, int numTurnos) {
+		public CheckBoxes (Shell padre, final int longCiclo, final int numTurnos) {
 			this.padre = padre;
 			shell = new Shell(SWT.APPLICATION_MODAL | SWT.CLOSE);
 			shell.setLayout(new GridLayout(2,false));
@@ -130,6 +130,37 @@ public class I09_1_Creacion_contratos {
 				}
 			};
 			bCancelar.addSelectionListener(sabCancelar);
+			
+//			 Un listener con lo que hace el bot�n bCancelar
+			SelectionAdapter sabAceptar = new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent e) {	
+					int nDiasSeguidos=1;
+					String turnos1="";
+					String turnos2="";
+					String aux="";
+					for (int j=0;j<longCiclo;j++){
+						turnos2="";
+						for(int i=0;i<numTurnos;i++){
+							if(cbs[i][j].getSelection()){
+								if(turnos2=="") turnos2+=i;
+								else turnos2+=","+i;
+							}							
+						}
+						if(turnos2=="") turnos2+="d";
+						if(turnos1.equals(turnos2)) nDiasSeguidos++;
+						else {
+							if(turnos1!="") aux+=nDiasSeguidos+":"+turnos1+"/";
+							turnos1=turnos2;
+							nDiasSeguidos=1;
+						}
+					}
+					aux+=nDiasSeguidos+":"+turnos1+"/";
+					patron=aux.substring(0, aux.length()-1);
+					System.out.println(patron);
+					shell.dispose();
+				}				
+			};
+			bAceptar.addSelectionListener(sabAceptar);
 			
 			// TODO La acci�n del bot�n Aceptar
 			shell.setDefaultButton(bAceptar);
