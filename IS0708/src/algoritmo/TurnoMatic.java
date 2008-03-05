@@ -25,6 +25,8 @@ public class TurnoMatic {
 	
 	//Optimizacion Algoritmo (reduccion llamadas a BBDD)
 	private ArrayList<Empleado> listaE;
+	private ArrayList<Contrato> contratosDep;
+	private ArrayList<Turno> turnosDep;
 	
 	public TurnoMatic(){		
 	}
@@ -48,6 +50,8 @@ public class TurnoMatic {
 	    this.listaE = controlador.getEmpleadosDepartamento(idDepartamento);		
 		this.estruc = new Estructura(mes, year, cont, idDepartamento, listaE);
 		this.cuadrante = new Cuadrante(mes, year, idDepartamento);		
+		this.contratosDep = this.controlador.getListaContratosDpto(this.idDepartamento);
+		this.turnosDep = controlador.getListaTurnosEmpleadosDpto(this.idDepartamento);
 	}
 
 	/**
@@ -62,7 +66,6 @@ public class TurnoMatic {
 		ListasEmpleados[][] horario = estruc.getDias();
 		//ListasEmpleados[] horarioDia =new ListasEmpleados[Util.dameDias(mes, anio)];
 		ArrayList<Trabaja>[] cu = cuadrante.getCuad();
-		ArrayList<Contrato> contratosDep = this.controlador.getListaContratosDpto(this.idDepartamento);
 		ArrayList<Empleado> reser;
 		ArrayList<Empleado> dispo;
 		ArrayList<Empleado> empl;
@@ -92,8 +95,9 @@ public class TurnoMatic {
 				for(int k=0; k<listaE.size(); k++){ //FOR3 
 					e = listaE.get(k);
 					int id = e.getContratoId();
-					contAux = this.controlador.getContrato(id);
-					/*if(contAux.getTipoContrato()==1 || contAux.getTipoContrato()==2){
+					contAux = buscaContrato(id, contratosDep);
+					/*contAux = this.controlador.getContrato(id);
+					if(contAux.getTipoContrato()==1 || contAux.getTipoContrato()==2){
 							
 						if(e.estaDisponible(i,inif,finf,controlador,contratosDep,j,estruc.getNumTrozos())){
 					
@@ -115,8 +119,12 @@ public class TurnoMatic {
 							
 							empl.add(e);
 							turno = e.getTurnoActual();
-							trab = new Trabaja(e.getEmplId(),inif,finf,turno.getIdTurno());
-							cu[i].add(trab);
+							/*trab = new Trabaja(e.getEmplId(),inif,finf,turno.getIdTurno());
+							cu[i].add(trab);*/
+							if (!contiene(i, e.getEmplId(), cu)) {
+								trab = new Trabaja(e.getEmplId(),turno.getHoraEntrada(),turno.getHoraSalida(),turno.getIdTurno());
+								cu[i].add(trab);
+							}
 							
 						}else
 							//(contAux.getTipoContrato()==3 || contAux.getTipoContrato()==4)
@@ -487,14 +495,15 @@ public class TurnoMatic {
 			
 			//t es el identificador del turno que tiene el empleado en el cuadrante
 			int t = lista.get(i).getIdTurno();
-			ArrayList<Turno> turnos = controlador.getListaTurnosEmpleadosDpto(this.idDepartamento);
+			Turno turno = buscaTurno(t, turnosDep);
+/*			ArrayList<Turno> turnos = controlador.getListaTurnosEmpleadosDpto(this.idDepartamento);
 			int j=0;
 			boolean enc=false;
-			while (j<turnos.size() && !enc) {
-				if (turnos.get(j).getIdTurno()==t) enc=true;
+			while (j<turnosDep.size() && !enc) {
+				if (turnosDep.get(j).getIdTurno()==t) enc=true;
 				else i++;
 			}
-			Turno turno=turnos.get(j);
+			Turno turno=turnosDep.get(j);*/
 			
 			int minIniDescanso=(turno.getHoraDescanso().getHours()*60)+turno.getHoraDescanso().getMinutes();
 			int minFinDescanso=minIniDescanso+turno.getTDescanso();
@@ -534,6 +543,48 @@ public class TurnoMatic {
 		Trabaja trabaja = new Trabaja(e.getEmplId(),ini,fin,turno.getIdTurno());
 		cuadDia.add(trabaja);
 	}
+	
+	private boolean contiene(int dia, int IdEmpl, ArrayList<Trabaja>[] cuad) {
+		boolean encontrado = false;
+		int n = 0;
+		int e = 0;
+		ArrayList<Trabaja> cuadDia = cuad[dia];
+		while(!encontrado && n<cuadDia.size()){
+			e = cuadDia.get(n).getIdEmpl();
+			if(IdEmpl == e)
+				encontrado = true;			
+			n++;
+		}
+		return encontrado;
+	}
+
+	private Contrato buscaContrato(int idContrato, ArrayList<Contrato> listaContratos) {
+		boolean encontrado = false;
+		int n = 0;
+		Contrato c = null;
+		while(!encontrado && n<listaContratos.size()){
+			c = listaContratos.get(n);
+			if(idContrato == c.getNumeroContrato())
+				encontrado = true;			
+			n++;
+		}
+		return c;
+	}
+
+	private Turno buscaTurno(int idTurno, ArrayList<Turno> listaTurnos) {
+		boolean encontrado = false;
+		int n = 0;
+		Turno t = null;
+		while(!encontrado && n<listaTurnos.size()){
+			t = listaTurnos.get(n);
+			if(idTurno == t.getIdTurno())
+				encontrado = true;			
+			n++;
+		}
+		return t;
+	}
+
+//---------------------------------------------------------------------------------
 	
 	/**
 	 * Método que se encarga de colocar a los empleados fijos
@@ -653,6 +704,8 @@ public class TurnoMatic {
 			}
 		}
 	}
+
+//---------------------------------------------------------------------------------
 
 	public Cuadrante getCuadrante() {
 		return cuadrante;
