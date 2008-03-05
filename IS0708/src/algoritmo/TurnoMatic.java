@@ -74,13 +74,15 @@ public class TurnoMatic {
 
 		//Recorremos los dias del mes
 		for(int i=0; i<Util.dameDias(mes,anio); i++){ //FOR1
-			
+			System.out.println(i);
 			//horarioDia[i] = new ListasEmpleados(idDepartamento);
 			
 			//dividimos en el numero de franjas de cada dia
 			for(int j=0; j<estruc.getNumTrozos(); j++){ //FOR2
 
 				Time inif = estruc.getTrozosHorario().get(j); 
+				System.out.println(inif);
+				System.out.println(inif.toString());
 				Time finf = estruc.getTrozosHorario().get(j+1);
 				dispo = horario[i][j].getDisponibles();
 				reser = horario[i][j].getReserva();
@@ -181,7 +183,7 @@ public class TurnoMatic {
 				}
 			}*/
 	
-			colocaNoFijos(dispoDia, reserDia, emplDia, i, cu);//se colocan para cada dia i del mes 
+			//colocaNoFijos(dispoDia, reserDia, emplDia, i, cu);//se colocan para cada dia i del mes 
 		}
 		
 		cuadrante.setCuad(cu);

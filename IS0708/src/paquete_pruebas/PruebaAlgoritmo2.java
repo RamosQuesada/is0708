@@ -18,7 +18,12 @@ public class PruebaAlgoritmo2 {
 		Database prueba = new Database();
 		prueba.abrirConexion();
 		Controlador c = new Controlador(prueba, true);
-		
+		String me = "1";
+		if (me.length()==1)
+		{
+			me = "0" + me;
+		}	
+		System.out.println(me);
 		TurnoMatic alg = new TurnoMatic(12,2007,c,"DatosFijos");
 		//TurnoMatic alg = new TurnoMatic(12,2007,c,"pruebaAlg");
 		alg.ejecutaAlgoritmo();
