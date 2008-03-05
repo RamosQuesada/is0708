@@ -37,6 +37,7 @@ SetCompressor lzma
 !define MUI_STARTMENUPAGE_REGISTRY_KEY ${REGKEY}
 !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME StartMenuGroup
 !define MUI_STARTMENUPAGE_DEFAULTFOLDER Turno-matic
+!define MUI_STARTMENUPAGE
 !define MUI_FINISHPAGE_SHOWREADME $INSTDIR\Ayuda\ES\index.html
 !define MUI_UNFINISHPAGE_NOAUTOCLOSE
 
@@ -125,10 +126,11 @@ Section -jar SEC0001
     SetOutPath $INSTDIR
     SetOverwrite on
     File ..\Turno-matic.jar
+    File .\Tema\Icono.ico
     WriteRegStr HKLM "${REGKEY}\Components" jar 1
-    SetOutPath $SMPROGRAMS\$StartMenuGroup
-    CreateShortcut "$SMPROGRAMS\$StartMenuGroup\Turno-matic.lnk" "$INSTDIR\Turno-matic.jar"
-    SectionEnd
+    SetOutPath $INSTDIR
+    CreateShortCut "$INSTDIR\Turno-matic.lnk" "$INSTDIR\Turno-matic.jar" "" "$INSTDIR\Icono.ico"
+SectionEnd
 
 Section -Ayuda SEC0002
     SetOutPath $INSTDIR\Ayuda
@@ -136,8 +138,6 @@ Section -Ayuda SEC0002
     File /r ..\Ayuda\*
     SetOutPath $INSTDIR
     CreateShortcut $INSTDIR\Ayuda.lnk $INSTDIR\Ayuda\ES\index.html
-    SetOutPath $SMPROGRAMS\$StartMenuGroup
-    CreateShortcut "$SMPROGRAMS\$StartMenuGroup\Ayuda.lnk "$INSTDIR\Ayuda\ES\index.html
     WriteRegStr HKLM "${REGKEY}\Components" Ayuda 1
 SectionEnd
 
@@ -146,8 +146,14 @@ Section -post SEC0003
     SetOutPath $INSTDIR
     WriteUninstaller "$INSTDIR\Desinstalar Turno-matic.exe"
     !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
-    SetOutPath $SMPROGRAMS\$StartMenuGroup
-    CreateShortcut "$SMPROGRAMS\$StartMenuGroup\$(^UninstallLink).lnk" "$INSTDIR\Desinstalar Turno-matic.exe"
+        SetOutPath $SMPROGRAMS\$StartMenuGroup
+        CreateShortcut "$SMPROGRAMS\$StartMenuGroup\$(^UninstallLink).lnk" "$INSTDIR\Desinstalar Turno-matic.exe"
+        SetOutPath $SMPROGRAMS\$StartMenuGroup
+        CreateShortcut "$SMPROGRAMS\$StartMenuGroup\Ayuda.lnk "$INSTDIR\Ayuda\ES\index.html
+        SetOutPath $SMPROGRAMS\$StartMenuGroup
+        CreateShortCut "$SMPROGRAMS\$StartMenuGroup\Turno-matic.lnk" "$INSTDIR\Turno-matic.jar" "" "$INSTDIR\Icono.ico"
+        SetOutPath $DESKTOP
+        CreateShortCut "$DESKTOP\Turno-matic.lnk" "$INSTDIR\Turno-matic.jar" "" "$INSTDIR\Icono.ico"
     !insertmacro MUI_STARTMENU_WRITE_END
     WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayName "$(^Name)"
     WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayVersion "${VERSION}"
@@ -180,8 +186,11 @@ SectionEnd
 
 Section /o -un.jar UNSEC0001
     Delete /REBOOTOK $INSTDIR\Turno-matic.jar
+    Delete /REBOOTOK $INSTDIR\Icono.ico
     DeleteRegValue HKLM "${REGKEY}\Components" jar
     Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\Turno-matic.lnk"
+    Delete /REBOOTOK "$INSTDIR\Turno-matic.lnk"
+    Delete /REBOOTOK "$DESKTOP\Turno-matic.lnk"
 SectionEnd
 
 Section /o "-un.Java 6" UNSEC0000
@@ -296,9 +305,9 @@ Function un.onInit
 FunctionEnd
 
 # Section Descriptions
-!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-!insertmacro MUI_DESCRIPTION_TEXT ${SEC0000} $(SEC0000_DESC)
-!insertmacro MUI_FUNCTION_DESCRIPTION_END
+#!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
+#!insertmacro MUI_DESCRIPTION_TEXT ${SEC0000} $(SEC0000_DESC)
+#!insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 # Installer Language Strings
 # TODO Update the Language Strings with the appropriate translations.
@@ -307,8 +316,8 @@ LangString ^UninstallLink ${LANG_SPANISH} "Desinstalar $(^Name)"
 LangString ^UninstallLink ${LANG_ENGLISH} "Uninstall $(^Name)"
 LangString ^UninstallLink ${LANG_POLISH} "Uninstall $(^Name)"
 
-LangString SEC0000_DESC ${LANG_SPANISH} "Java jre1.6 Update 5"
+#LangString SEC0000_DESC ${LANG_SPANISH} "Java jre1.6 Update 5"
 
-LangString SEC0000_DESC ${LANG_ENGLISH} "Java jre1.6 Update 5"
+#LangString SEC0000_DESC ${LANG_ENGLISH} "Java jre1.6 Update 5"
 
-LangString SEC0000_DESC ${LANG_POLISH} "Java jre1.6 Update 5"
+#LangString SEC0000_DESC ${LANG_POLISH} "Java jre1.6 Update 5"
