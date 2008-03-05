@@ -84,7 +84,7 @@ public class I02_cuadrEmpl extends Thread{
 			display.asyncExec(new Runnable () {
 				public void run() {
 					if(cuadrante.redibujar){
-						System.out.println("redibujar");
+						
 						cuadrante.redibujar=false;
 						redibujar();
 					}
