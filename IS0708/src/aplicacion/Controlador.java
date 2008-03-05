@@ -1193,8 +1193,35 @@ public class Controlador {
 			ArrayList<Trabaja> cuad = cuadrante.getListaTrabajaDia(dia);
 			for (int i = 0; i < cuad.size(); i++) {
 				Trabaja trabaja = cuad.get(i);
-				String fecha = cuadrante.getAnio() + "-" + cuadrante.getMes()
-						+ "-" + (dia + 1);
+				System.out.println("*************************");
+				System.out.println("Vuelta " + dia + ", " + i);
+				String an = "" + cuadrante.getAnio();
+				if (an.length()==1)
+				{
+					an = "0" + an;
+				}
+				System.out.println(" Año: " + an);
+				String me = "" + cuadrante.getMes();
+				if (me.length()==1)
+				{
+					me = "0" + me;
+				}				
+				System.out.println(" Mes: " + me);
+				
+				int d = dia + 1;
+				String di = "" + d;
+				if (di.length()==1)
+				{
+					di = "0" + di;
+				}
+				System.out.println(" Dia: " + di);
+			
+				String fecha = an + "-" + me + "-" + di;
+				System.out.println(" Fecha: " + fecha);
+				System.out.println("*************************");				
+				
+				//String fecha = cuadrante.getAnio() + "-" + cuadrante.getMes()
+				//		+ "-" + (dia + 1);
 				_db.insertarTrabaja(trabaja.getIdEmpl(), trabaja.getIdTurno(),
 						fecha, trabaja.getFichIni(), trabaja.getFichFin());
 			}
