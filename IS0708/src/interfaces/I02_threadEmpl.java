@@ -24,7 +24,7 @@ public class I02_threadEmpl extends Thread{
 	
 	public synchronized void run(){
 		while(corriendo){try {
-			System.out.println("hay 2");
+			
 			wait(100);
 
 		} catch (InterruptedException e) {
@@ -98,7 +98,6 @@ public class I02_threadEmpl extends Thread{
 				}
 			cont++;
 		}
-			System.out.println("finalizado");
 			corriendo=false;
 			if(!finalizar){
 				this.cuadrante.redibujar=true;
