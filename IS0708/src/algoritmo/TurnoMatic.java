@@ -47,11 +47,11 @@ public class TurnoMatic {
 		this.idDepartamento = idDepartamento;
 		this.anio = year;
 		this.mes = m;
-	    this.listaE = controlador.getEmpleadosDepartamento(idDepartamento);		
+	    this.listaE = this.controlador.getEmpleadosDepartamento(idDepartamento);		
 		this.estruc = new Estructura(mes, year, cont, idDepartamento, listaE);
 		this.cuadrante = new Cuadrante(mes, year, idDepartamento);		
 		this.contratosDep = this.controlador.getListaContratosDpto(this.idDepartamento);
-		this.turnosDep = controlador.getListaTurnosEmpleadosDpto(this.idDepartamento);
+		this.turnosDep = this.controlador.getListaTurnosEmpleadosDpto(this.idDepartamento);
 	}
 
 	/**
@@ -131,7 +131,7 @@ public class TurnoMatic {
 							dispo.add(e);
 						
 					}else
-							reser.add(e);
+						reser.add(e);
 
 				} //ENDFOR3
 						
