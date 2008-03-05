@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Wed Mar 05 17:20:38 CET 2008
+onejar.license.required=true
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=false
+jarname=Turno-matic.jar
+manifest.mergeall=true
+manifest.mainclass=aplicacion.Aplicacion
+manifest.file=<createnew>
+jarname.isextern=false
+onejar.expand=
+excludes=
+includes=
