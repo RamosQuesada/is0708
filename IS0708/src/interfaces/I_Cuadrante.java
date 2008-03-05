@@ -51,7 +51,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private int margenNombres; // Un margen para pintar los nombres a la izquierda
 	private int alto_franjas = 15;
 	private int sep_vert_franjas = 10;
-	private int horaApertura, horaFin; // Definen de qué hora a qué hora es el cuadrante
+	private int horaApertura, horaCierre; // Definen de qué hora a qué hora es el cuadrante
 	public int tamHora, tamSubdiv;
 	public int numSubdivisiones; // Cuántas subdivisiones hacer por hora (0 = sin subdivisiones)
 	private Vista vista;
@@ -67,7 +67,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private Combo cGridCuadrante;
 	
 	private int dia = 1;
-	private Image fondo = null;
+	private Image fondo;
 	
 	
 	private int movimiento;	
@@ -193,7 +193,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	
 	public void setConfig(int subdivisiones, int horaInicio, int horaFin) {
 		this.horaApertura = horaInicio;
-		this.horaFin = horaFin;
+		this.horaCierre = horaFin;
 		this.numSubdivisiones = subdivisiones;	
 	}
 
@@ -302,7 +302,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 
 				// Si estoy moviendo una franja
 					if (dameMovimiento() == 2) {
-						movimiento = turnoActivo.moverFranja(e.x, margenIzq, margenNombres, horaApertura, tamHora, tamSubdiv, numSubdivisiones);
+						movimiento = turnoActivo.moverFranja(e.x, margenIzq, margenNombres, horaApertura, horaCierre, tamHora, tamSubdiv, numSubdivisiones);
 						canvas.redraw();
 					}
 				// Si estoy cambiando el inicio de una franja
@@ -312,7 +312,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				}
 				// Si estoy cambiando el fin de una franja
 				else if (dameMovimiento() == 3) {
-					movimiento = turnoActivo.moverLadoDerecho(e.x, margenIzq, margenNombres, horaApertura, horaFin, tamHora, tamSubdiv, numSubdivisiones);
+					movimiento = turnoActivo.moverLadoDerecho(e.x, margenIzq, margenNombres, horaApertura, horaCierre, tamHora, tamSubdiv, numSubdivisiones);
 					canvas.redraw();
 				}
 				// Si no estoy moviendo ninguna franja,
@@ -464,6 +464,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			}
 		}
 		fondo = null; // El fondo que hay ya no vale, hay que redibujarlo
+		
 	}
 	
 	private void redibujar() {
@@ -491,7 +492,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		Long i = new Date().getTime();
 		dibujarSeleccion(gc, empleadoActivo);
 		Long j = new Date().getTime();
-		dibujarHoras(gc);
+		actualizarFondo(gc);
 		Long k = new Date().getTime();
 		dibujarTurnos(gc);
 		Long l = new Date().getTime();
@@ -551,10 +552,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	 * Dibuja lineas verticales representando las horas y las subdivisiones del cuadrante.
 	 * @param gc	El GC del display sobre el que se dibujará el cuadrante.
 	 */
-	private void dibujarHoras(GC gc) {
-		gc.setForeground(new Color(display, 40,80,40));
+	private void actualizarFondo(GC gc) {
 		int m = margenIzq + margenNombres;
-		int h = horaFin - horaApertura;
+		int h = horaCierre - horaApertura;
 		int sep = (ancho - m - margenDer)/h;
 		int subsep = sep/numSubdivisiones;
 		if (fondo == null) {
@@ -575,7 +575,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			}
 			gcFondo.setLineStyle(SWT.LINE_SOLID);
 		}
-		gc.drawImage(fondo, 0, 0);
+		gc.drawImage(fondo,0,0);
+		
 	}
 	/**
 	 * Dibuja un fondo distinguido para el empleado seleccionado, basado en el color del empleado
@@ -621,7 +622,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	public void setTamano(int ancho, int alto) {
 		this.alto = alto;
 		this.ancho = ancho;
-		tamHora = (ancho - margenIzq-margenDer-margenNombres)/(horaFin-horaApertura);
+		tamHora = (ancho - margenIzq-margenDer-margenNombres)/(horaCierre-horaApertura);
 		tamSubdiv = tamHora/numSubdivisiones;
 	}
 	
