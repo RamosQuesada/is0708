@@ -67,6 +67,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private Combo cGridCuadrante;
 	
 	private int dia = 1;
+	private Image fondo = null;
 	
 	
 	private int movimiento;	
@@ -342,7 +343,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 						while (!encontrado && i < iCuad[dia].size()) {
 							t = iCuad[dia].get(i).getTurno();
 							if (empleadoActivo==-1) { cursor(0); t.desactivarFranjas();}
-							else if (iCuad[dia].get(i).getEmpl().getEmplId()==empleadoActivo) {
+							else if (i==empleadoActivo) {
 								if 		(t.contienePixelInt(e.x))	{ cursor(1); encontrado = true; turnoActivo = t; redibujar=true;}
 								else if (t.tocaLadoIzquierdo(e.x))	{ cursor(2); encontrado = true; turnoActivo = t; redibujar=true;}
 								else if (t.tocaLadoDerecho(e.x))	{ cursor(2); encontrado = true; turnoActivo = t; redibujar=true;}
@@ -462,6 +463,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				iCuad[dia].get(i).getTurno().recalcularFranjas(margenIzq, margenNombres, horaApertura, tamHora);
 			}
 		}
+		fondo = null; // El fondo que hay ya no vale, hay que redibujarlo
 	}
 	
 	private void redibujar() {
@@ -555,20 +557,25 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		int h = horaFin - horaApertura;
 		int sep = (ancho - m - margenDer)/h;
 		int subsep = sep/numSubdivisiones;
-		for (int i=0; i<=h; i++) {
-			gc.setLineStyle(SWT.LINE_SOLID);
-			gc.setForeground(new Color(display,40,80,40));
-			if (sep>14 && sep<=20) gc.drawText(String.valueOf((horaApertura+i)%24),     m+i*sep-5, margenSup, true);
-			else if (sep>20)     gc.drawText(String.valueOf((horaApertura+i)%24)+'h', m+i*sep-5, margenSup, true);
-			gc.drawLine(m+i*sep, 20+margenSup, m+i*sep, alto-margenInf);
-			gc.setForeground(new Color(display, 120,170,120));
-			gc.setLineStyle(SWT.LINE_DOT);
-			if (i!=h)
-				for (int j=1; j<numSubdivisiones; j++) {
-					gc.drawLine(m+i*sep+j*subsep, 20+margenSup+5, m+i*sep+j*subsep, alto-margenInf-5);
+		if (fondo == null) {
+			fondo = new Image(display,ancho,alto);
+			GC gcFondo = new GC(fondo);
+			for (int i=0; i<=h; i++) {
+				gcFondo.setLineStyle(SWT.LINE_SOLID);
+				gcFondo.setForeground(new Color(display,40,80,40));
+				if (sep>14 && sep<=20) gcFondo.drawText(String.valueOf((horaApertura+i)%24),     m+i*sep-5, margenSup, true);
+				else if (sep>20)     gcFondo.drawText(String.valueOf((horaApertura+i)%24)+'h', m+i*sep-5, margenSup, true);
+				gcFondo.drawLine(m+i*sep, 20+margenSup, m+i*sep, alto-margenInf);
+				gcFondo.setForeground(new Color(display, 120,170,120));
+				gcFondo.setLineStyle(SWT.LINE_DOT);
+				if (i!=h)
+					for (int j=1; j<numSubdivisiones; j++) {
+						gcFondo.drawLine(m+i*sep+j*subsep, 20+margenSup+5, m+i*sep+j*subsep, alto-margenInf-5);
+					}
 			}
+			gcFondo.setLineStyle(SWT.LINE_SOLID);
 		}
-		gc.setLineStyle(SWT.LINE_SOLID);
+		gc.drawImage(fondo, 0, 0);
 	}
 	/**
 	 * Dibuja un fondo distinguido para el empleado seleccionado, basado en el color del empleado
