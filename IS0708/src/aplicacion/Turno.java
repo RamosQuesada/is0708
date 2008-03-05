@@ -621,7 +621,7 @@ public class Turno {
 		return mov;
 	}
 	
-	public int moverFranja(int x, int margenIzq, int margenNombres, int horaApertura, int tamHora, int tamSubdiv, int numSubdiv) {
+	public int moverFranja(int x, int margenIzq, int margenNombres, int horaApertura, int horaCierre, int tamHora, int tamSubdiv, int numSubdiv) {
 		int mov = 2;
 		int h = dameHoraCursor(x, margenIzq, margenNombres, horaApertura, tamHora) - (despl*(60/numSubdiv))/60;
 		int m = dameSubdivCursor(x, margenIzq, margenNombres, tamHora, tamSubdiv)*(60/numSubdiv) - (despl*(60/numSubdiv))%60;
@@ -632,11 +632,25 @@ public class Turno {
 				int tVuelta = horaDescanso.getHours()*60+ horaDescanso.getMinutes() + tDescanso;
 				int tamFranja = horaDescanso.getHours()*60 + horaDescanso.getMinutes() - (
 						horaEntrada.getHours()*60 + horaEntrada.getMinutes());
-				horaDescanso.setHours(h + tamFranja/60);
-				horaDescanso.setMinutes(m + tamFranja%60);
-				tDescanso = tVuelta - (horaDescanso.getHours()*60+ horaDescanso.getMinutes());
+				// Me paso por la izquierda
+				if (h<horaApertura) {
+					horaEntrada.setHours(horaApertura);
+					horaEntrada.setMinutes(0);
+					horaDescanso.setHours(horaApertura + tamFranja/60);
+					horaDescanso.setMinutes(tamFranja%60);
+					tDescanso = tVuelta - (horaDescanso.getHours()*60+ horaDescanso.getMinutes());
+				// Me paso por la derecha (falta)
+				// Movimiento normal
+				} else {
+					horaEntrada.setHours(h);
+					horaEntrada.setMinutes(m);
+					horaDescanso.setHours(h + tamFranja/60);
+					horaDescanso.setMinutes(m + tamFranja%60);
+					tDescanso = tVuelta - (horaDescanso.getHours()*60+ horaDescanso.getMinutes());
+				}
 				// Si tDescanso resulta negativo, juntar las dos franjas
 				if (tDescanso<=0) quitarDescanso();
+
 			}
 			// Si no hay descanso
 			else {
@@ -645,10 +659,8 @@ public class Turno {
 				horaSalida.setHours(h + tamFranja/60);
 				horaSalida.setMinutes(m + tamFranja%60);
 			}
-			horaEntrada.setHours(h);
-			horaEntrada.setMinutes(m);
 		}
-		if (activa2) {
+		else if (activa2) {
 			// Despl es el número de subdivs desde horaVuelta hasta el cursor
 			int tamFranja = horaSalida.getHours()*60 + horaSalida.getMinutes() - (
 					horaDescanso.getHours()*60 + horaDescanso.getMinutes()+tDescanso);
