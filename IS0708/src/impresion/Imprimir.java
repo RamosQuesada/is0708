@@ -8,21 +8,13 @@ package impresion;
  */
 
 import java.util.ResourceBundle;
-
 import org.eclipse.swt.*;
 import org.eclipse.swt.widgets.*;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageData;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.Canvas;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
+
 import org.eclipse.swt.printing.*;
 
 /*import interfaces.Cuadrante;
@@ -98,11 +90,10 @@ public class Imprimir {
 		font = new Font(printer,"courier", 8, 0);
 		printer.startJob("PrintJob");
 		printer.startPage();
-		//Point size = imShell.getSize();    
+		//Point size = imShell.getSize();
 		GC gc = new GC(printer);
 		if (!image.isDisposed()){
-			//System.out.println(p.getClientArea().width);
-			gc.drawImage(image, 200, 200);
+			gc.drawImage(image, 0, 0);
 		}
 
 		printer.endPage();
@@ -110,7 +101,7 @@ public class Imprimir {
 		printer.endJob();
 		printer.dispose();}
 		catch (Exception e){
-			System.out.println("aplicacion.Imprimir :: Excepción al imprimir porque hay argumentos nulos");
+			System.err.println("aplicacion.Imprimir :: Excepción al imprimir");
 		}
 	}
 
