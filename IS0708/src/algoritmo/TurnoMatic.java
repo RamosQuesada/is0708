@@ -529,6 +529,7 @@ public class TurnoMatic {
 				cuadDia.remove(k);
 				enc=true;
 			}
+			else k++;
 		}				
 	}
 	
