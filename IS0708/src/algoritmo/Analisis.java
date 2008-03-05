@@ -57,7 +57,7 @@ public class Analisis {
 					// en caso contrario, se amplia en 5 minutos la franja de la sugerencia
 					if (contador<minimoDia){
 						if((sugAnterior!=null)&&(minimoDia-contador!=sugAnterior.getFaltas())){							
-							Sugerencia sug=new Sugerencia(minimoDia-contador, t,new Time(t.getHours(),k,0));
+							Sugerencia sug=new Sugerencia(minimoDia-contador, t,new Time(t.getHours(),k,0),i);
 							sugerencias[i].add(sug);
 						}
 						else{
@@ -78,5 +78,18 @@ public class Analisis {
 	
 	public ArrayList<Sugerencia> getSugerenciasDia(int i){
 		return sugerencias[i];
+	}
+	
+	public Resumen generarResumen(){
+		Resumen resumen= new Resumen(dias);
+		for (int i=0;i<dias;i++){
+			for (int j=0;j<getSugerenciasDia(i).size();j++){
+				resumen.add(i,getSugerenciasDia(i).get(j).toString());
+			}
+		}
+		
+		
+		
+		return resumen;
 	}
 }

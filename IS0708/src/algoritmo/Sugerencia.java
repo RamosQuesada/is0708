@@ -16,12 +16,14 @@ public class Sugerencia {
 	private int faltas;
 	private Time horaIni;
 	private Time horaFin;
+	private int dia;
 	
 	
-	public Sugerencia(int faltas, Time ini, Time fin){
+	public Sugerencia(int faltas, Time ini, Time fin, int dia){
 		this.faltas=faltas;
 		this.horaIni=ini;
 		this.horaFin=fin;
+		this.dia=dia;
 		this.tipo=1;//TODO pensar algo para el tipo
 	}
 	
@@ -85,11 +87,17 @@ public class Sugerencia {
 	public int getTipo() {
 		return tipo;
 	}
+	
+	
 	/**
 	 * @param tipo the tipo to set
 	 */
 	public void setTipo(int tipo) {
 		this.tipo = tipo;
+	}
+	
+	public String toString(){
+		return "El dia "+dia+", desde las "+horaIni.getHours()+":"+horaIni.getMinutes()+" hasta las "+horaFin.getHours()+":"+horaFin.getMinutes()+", faltan "+faltas+" empleados.";          
 	}
 
 }
