@@ -25,6 +25,12 @@ public class Sugerencia {
 		this.tipo=1;//TODO pensar algo para el tipo
 	}
 	
+	
+	public void ampliar(int horas, int minutos){
+		horaFin.setHours(horaFin.getHours()+horas);
+		horaFin.setMinutes(horaFin.getMinutes()+minutos);
+	}
+	
 	/**
 	 * @return the faltas
 	 */
