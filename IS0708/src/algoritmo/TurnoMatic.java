@@ -191,7 +191,7 @@ public class TurnoMatic {
 				}
 			}*/
 	
-			//colocaNoFijos(dispoDia, reserDia, emplDia, i, cu);//se colocan para cada dia i del mes 
+			colocaNoFijos(dispoDia, reserDia, emplDia, i, cu);//se colocan para cada dia i del mes 
 		}
 		
 		cuadrante.setCuad(cu);
@@ -509,7 +509,7 @@ public class TurnoMatic {
 			int minFinDescanso=minIniDescanso+turno.getTDescanso();
 			
 			//comprobar si en ese minuto esta currando y no esta descansando
-			if (((minIni<=momento)&&(minFin>momento))&&((minIniDescanso>momento)||(minFinDescanso<momento))){
+			if (((minIni<=momento)&&(minFin>momento))&&((minIniDescanso>momento)||(minFinDescanso<momento))&& ((turno.getTDescanso()>0))){
 				contador++;
 			}
 		}
