@@ -87,9 +87,7 @@ public class Analisis {
 				resumen.add(i,getSugerenciasDia(i).get(j).toString());
 			}
 		}
-		
-		
-		
+				
 		return resumen;
 	}
 }

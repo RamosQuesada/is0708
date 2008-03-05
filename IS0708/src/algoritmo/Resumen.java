@@ -7,7 +7,13 @@ import java.util.ArrayList;
 
 /**
  * @author Alberto
- *
+ * Esta clase devuelve el resultado del analisis
+ * se debe usar asi
+ * instanciar una clase analisis: 
+ * Analisis a =new Analisis(31,cuadrante);
+ * Resumen r=a.generarResumen();
+ * y ya usar el objeto Resumen
+ * 
  */
 public class Resumen {
 	
