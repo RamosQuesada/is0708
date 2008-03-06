@@ -1463,4 +1463,20 @@ public class Database extends Thread {
 		return r;
 	}
 
+	public ResultSet obtenNombreTodosDepartamentos() {
+		ResultSet r = null;
+		try {
+			st = con.createStatement();
+			r = st.executeQuery("SELECT Nombre FROM DEPARTAMENTO");
+		}
+		catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println("Error al realizar la consulta en departamento ");
+		}
+		return r;		
+	}
+	
+	
+	
+	
 }

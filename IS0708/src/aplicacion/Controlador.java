@@ -498,6 +498,32 @@ public class Controlador {
 		return departamentos;
 
 	}
+	
+	/**
+	 * 
+	 * @return devuelve un arraylist con los nombres de los departamentos de la base de datos
+	 *      
+	 */
+	public ArrayList<String> getNombreTodosDepartamentos() {
+		ArrayList<String> departamentos = new ArrayList<String>();
+		ResultSet rs = _db.obtenTodosDepartamentos();
+		try {
+			while (rs.next()) {
+				String id = rs.getString("Nombre");
+				departamentos.add(id);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.err
+					.println("Error al obtener todos los Departamentos en la base de datos");
+		}
+
+		return departamentos;
+
+	}
+	
+	
+	
 
 	/**
 	 * Guarda un departamento en la base de datos
