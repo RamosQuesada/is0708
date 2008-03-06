@@ -204,7 +204,7 @@ public class I02CuadranteEmpleado {
 				}
 
 				Font fuente=gc.getFont();
-				gc.setFont(new Font(display,"Verdana",tamano,SWT.BOLD|SWT.ITALIC));
+				gc.setFont(new Font(display,"Verdana",tamano+2,SWT.BOLD));
 				String text = diasSemana[((i)%7)];
 		        Point textSize = gc.textExtent(text);
 		        gc.drawText(diasSemana[((i)%7)],((m+i*sep)+((m+(i+1)*sep)))/2-textSize.x/2, margenSup+(alto/50), true);
@@ -252,25 +252,53 @@ public class I02CuadranteEmpleado {
 	
 	
 	
-	public void dibujaTurnosCargados(GC gc){			
+	public void dibujaTurnosCargados(GC gc){	
+		
 		for(int cont=0;cont<7;cont++){
 			if(horasInicio.size()>cont){
-				String horaUno = convertirString(horasInicio.get(cont))+"-"+convertirString(horaComienzoDescanso.get(cont));
-				dibujarTurno(gc,cont,this.horasInicio.get(cont),this.horaComienzoDescanso.get(cont),horaUno);
-				String horaDos = convertirString(horaFinDescanso.get(cont))+"-"+convertirString(horasFin.get(cont));
-				dibujarTurno(gc,cont,this.horaFinDescanso.get(cont),this.horasFin.get(cont),horaDos);
+				Font fuente=gc.getFont();
+				gc.setFont(new Font(display,"Verdana",tamano+5,SWT.BOLD|SWT.ITALIC));
+				int tamano2= (int) ((-horasInicio.get(cont)+horaComienzoDescanso.get(cont))*10);
+				if(tamano2>40){tamano2=40;}
+				String horaUno = convertirString(horasInicio.get(cont),tamano2,1)+convertirString(horaComienzoDescanso.get(cont),tamano2,2);
+				dibujarTurno(gc,cont,this.horasInicio.get(cont),this.horaComienzoDescanso.get(cont),horaUno,tamano2);
+				tamano2= (int) ((-horaFinDescanso.get(cont)+horasFin.get(cont))*10);
+				if(tamano2>40){tamano2=40;}
+				String horaDos = convertirString(horaFinDescanso.get(cont),tamano2,1)+convertirString(horasFin.get(cont),tamano2,2);
+				dibujarTurno(gc,cont,this.horaFinDescanso.get(cont),this.horasFin.get(cont),horaDos,tamano2);
+				gc.getFont().dispose();
+				gc.setFont(fuente);
 			}
 		}
 		this.superior.redibujar=true;
 		
 	}
 	
-	public String convertirString(double hora){
-		
+	public String convertirString(double hora, int tamano2,int posicion){
+		System.out.println("tamano2 "+tamano2);
 		Double Dhora = Math.floor(hora);
-		Double DMinutos= hora-Dhora*60;
-		DMinutos=DMinutos-Math.floor(DMinutos);
-		String devolver= Double.toString(Dhora)+":"+Double.toString(DMinutos);
+		double DMinutos= (hora-Dhora)*60;
+		//DMinutos=DMinutos-Math.floor(DMinutos);
+		int ihora= (int) (hora);
+		int iminutos = (int)(DMinutos);
+		String sminutos;
+		if(iminutos<10){
+			sminutos="0"+iminutos;
+			}
+		else{
+			sminutos=""+iminutos;
+			}
+		
+		String devolver;
+		if(tamano2>tamano+15){
+			devolver= ihora+":"+sminutos+'\n';
+		}
+		else if(posicion==1){
+			devolver= ihora+":"+sminutos+'-';
+		}
+		else{
+			devolver= ihora+":"+sminutos;
+		}
 		return devolver;
 	}
 
@@ -406,8 +434,9 @@ public class I02CuadranteEmpleado {
 	 * @param horaComienzo hora del comienzo del turno
 	 * @param horaFinal	hora del fin del turno
 	 * @param Departamento	Nombre del departamento en el que va a trabajar
+	 * @param tamano2 
 	 */
-	public void dibujarTurno(GC gc,int dia,float horaComienzo,float horaFinal,String Departamento){
+	public void dibujarTurno(GC gc,int dia,float horaComienzo,float horaFinal,String Departamento, int tamano2){
 		if (gc!=null) {
 			int x_comienzo=convertirDia(dia);
 			int y_comienzo=convertirHora(horaComienzo);
@@ -440,14 +469,14 @@ public class I02CuadranteEmpleado {
 			}
 			
 			Font fuente=gc.getFont();
-			gc.setFont(new Font(display,"Verdana",tamano,SWT.BOLD));
-			gc.drawText(String.valueOf((int)horaComienzo),x_comienzo, (y_comienzo), true);
+			gc.setFont(new Font(display,"Verdana",tamano+tamano2/10,SWT.BOLD));
+			//gc.drawText(String.valueOf((int)horaComienzo),x_comienzo, (y_comienzo), true);
 			String text = Departamento;
 	        Point textSize = gc.textExtent(text);
 	        gc.drawText(Departamento,x_comienzo_t-textSize.x/2, (y_comienzo*2+y_fin)/3, true);
 			String text2 = (String.valueOf((int)horaFinal));
 	        Point textSize2 = gc.textExtent(text2);
-			gc.drawText((String.valueOf((int)horaFinal)),x_comienzo , y_fin-textSize2.y, true);
+			//gc.drawText((String.valueOf((int)horaFinal)),x_comienzo , y_fin-textSize2.y, true);
 			gc.getFont().dispose();
 			gc.setFont(fuente);
 		}
@@ -491,7 +520,6 @@ public class I02CuadranteEmpleado {
 		int sep=(ancho - m - margenDer)/h;
 		gc.setLineStyle(SWT.LINE_DOT);
 		cambiarPincel(gc, 0,0,0);
-		
 		gc.setLineWidth(2);
 		gc.drawLine(this.margenIzq, convertirHora(hora), this.margenIzq+7*sep,convertirHora(hora));
 		gc.setLineStyle(SWT.LINE_SOLID);
