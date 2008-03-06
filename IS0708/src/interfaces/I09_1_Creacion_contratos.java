@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import org.eclipse.swt.graphics.*;
 
+import aplicacion.Contrato;
 import aplicacion.Turno;
 import aplicacion.Vista;
 
@@ -31,6 +32,7 @@ public class I09_1_Creacion_contratos {
 	private String id;
 	private String patron;
 	private List listaTurnosContrato;
+	private ArrayList <Contrato> contratos;
 	
 	private final int longCicloDefault = 14;
 	public I09_1_Creacion_contratos(Shell padre, ResourceBundle bundle, Vista vista, int modo) {
@@ -41,7 +43,9 @@ public class I09_1_Creacion_contratos {
 		id=null;
 		patron=null;
 		//vista.getControlador().abrirConexionBD();
+		contratos=vista.getControlador().getListaContratosDpto("DatosFijos");
 		crearVentana();
+		
 	}
 	/**
 	 * Esta clase muestra una ventana con casillas para marcar los turnos.
