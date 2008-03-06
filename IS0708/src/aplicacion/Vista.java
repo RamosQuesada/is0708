@@ -2,7 +2,6 @@ package aplicacion;
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -112,10 +111,9 @@ public class Vista {
 					cacheCargada = true;
 				}
 				try {
-					// TODO Espera 1/2 minuto (¿cómo lo dejamos?)
+					// TODO Espera 20 segundos (¿cómo lo dejamos?)
 					wait(20000);
-				} catch (Exception e) {
-				}
+				} catch (Exception e) {}
 			}
 		}
 	}

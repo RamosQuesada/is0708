@@ -264,8 +264,6 @@ public class Turno {
 			String s = Util.aString(horaDescanso.getHours()+tDescanso/60) + ":" + Util.aString(horaDescanso.getMinutes()+tDescanso%60) + " - " + Util.aString(horaSalida.getHours()) + ":" + Util.aString(horaSalida.getMinutes()) + " (" + String.valueOf(horas2)+'h'+s1+')';
 			gc.drawText(s, inicio2+5, despV-14, true);
 		}
-
-		
 	}
 	
 	/**
@@ -633,7 +631,7 @@ public class Turno {
 				int tamFranja = horaDescanso.getHours()*60 + horaDescanso.getMinutes() - (
 						horaEntrada.getHours()*60 + horaEntrada.getMinutes());
 				// Me paso por la izquierda
-				if (h<horaApertura) {
+				if (h*60+m<=horaApertura*60) {
 					horaEntrada.setHours(horaApertura);
 					horaEntrada.setMinutes(0);
 					horaDescanso.setHours(horaApertura + tamFranja/60);
@@ -656,8 +654,19 @@ public class Turno {
 			else {
 				int tamFranja = horaSalida.getHours()*60 + horaSalida.getMinutes() - (
 						horaEntrada.getHours()*60 + horaEntrada.getMinutes());
-				horaSalida.setHours(h + tamFranja/60);
-				horaSalida.setMinutes(m + tamFranja%60);
+				if (h*60+m<=horaApertura*60) {
+					horaEntrada.setHours(horaApertura);
+					horaEntrada.setMinutes(0);
+					horaSalida.setHours(horaApertura + tamFranja/60);
+					horaSalida.setMinutes(tamFranja%60);		
+				// Me paso por la derecha (falta)
+				// Movimiento normal
+				} else {
+					horaEntrada.setHours(h);
+					horaEntrada.setMinutes(m);
+					horaSalida.setHours(h + tamFranja/60);
+					horaSalida.setMinutes(m + tamFranja%60);
+				}
 			}
 		}
 		else if (activa2) {
