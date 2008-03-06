@@ -9,22 +9,21 @@ import java.util.ArrayList;
  * @author Alberto
  * Esta clase devuelve el resultado del analisis
  * se debe usar asi
- * instanciar una clase analisis: 
- * Analisis a =new Analisis(31,cuadrante);
- * Resumen r=a.generarResumen();
- * y ya usar el objeto Resumen
+ * instanciar un objto de clase Resumen: 
+ * Resumen r=new Resumen(dias, cuadrante);
+ * y ya leer con el método leerDia(i);
  * 
  */
 public class Resumen {
 	
-	private ArrayList<String>[] sugerencias;
+	private ArrayList<String>[] sugerencias=null;
 	private int dias;
 	
-	public Resumen(int dias){
+	public Resumen(int dias,Cuadrante cuadrante){
 		this.dias=dias;
-		for (int i=0;i<dias;i++){
-			sugerencias[i]=new ArrayList<String>();			
-		}
+		Analisis a=new Analisis(dias,cuadrante);
+		sugerencias=a.generarResumen();
+		
 	}
 	
 	public void add(int dia, String sugerencia){
