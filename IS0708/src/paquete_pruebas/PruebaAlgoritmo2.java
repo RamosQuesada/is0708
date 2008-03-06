@@ -24,7 +24,7 @@ public class PruebaAlgoritmo2 {
 			me = "0" + me;
 		}	
 		System.out.println(me);
-		TurnoMatic alg = new TurnoMatic(12,2007,c,"DatosFijos");
+		TurnoMatic alg = new TurnoMatic(1,2008,c,"DatosFijos");
 		//TurnoMatic alg = new TurnoMatic(12,2007,c,"pruebaAlg");
 		alg.ejecutaAlgoritmo();
 		alg.imprimeEstructura();
