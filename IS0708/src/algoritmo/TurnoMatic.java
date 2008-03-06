@@ -414,8 +414,10 @@ public class TurnoMatic {
 				if (comprobarFranjasCompletas(cuadAux, dia, fHorariasDpto))
 					 return true;
 			} else {
-				if (k<dispo.size())
-					hecho=vueltaAtrasMarcaje(dispo, reser,k,dia,cuadAux);
+				if (k<dispo.size()) {
+					if (vueltaAtrasMarcaje(dispo, reser,k,dia,cuadAux))
+						return true;
+				}
 			}
 			k=k-1;
 			if (fHoraria.size()>1) {
