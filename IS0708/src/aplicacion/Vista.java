@@ -48,6 +48,9 @@ public class Vista {
 	/** Caché local: Lista de turnos en los contratos de este departamento */
 	private ArrayList<Turno> turnos = new ArrayList<Turno>();
 
+	/** Caché local: Lista de departamentos de un jefe*/
+	private ArrayList<Departamento> departamentosJefe = new ArrayList<Departamento>();
+	
 	/**
 	 * Este hilo conecta con la base de datos.
 	 * 
@@ -637,5 +640,46 @@ public class Vista {
 	 */
 	public ResourceBundle getBundle() {
 		return bundle;
+	}
+	
+	/**
+	 * Carga la cache con los datos de la BD segun el tipo de usuario
+	 * que hace login 
+	 * @param tipo: Tipo de usuario: 0 empleado, 1 jefe
+	 * @param numvendedor: El numero de vendedor del usuario para el
+	 * que se van a cargar los datos
+	 */
+	public void loadCache(int tipo, int numvendedor, String dep) {
+		//empleados
+
+		/** Caché local: Lista de mensajes entrantes del usuario actual */
+		//mensajesEntrantes
+
+		/** Caché local: Lista de contratos disponibles para este departamento */
+		//contratos
+		//departamentos jefe
+		
+		/** Caché local: Lista de turnos en los contratos de este departamento */
+		//turnos 
+
+		
+		if (tipo == 0) {
+			empleados = controlador.getEmpleadosDepartamento(dep);
+			contratos = controlador.getListaContratosDpto(dep);
+			turnos = controlador.getListaTurnosEmpleadosDpto(dep);
+		} else if (tipo == 1) {
+			ArrayList<String> temp = new ArrayList<String>();
+			
+			empleados = controlador.getEmpleadosDepartamento(dep);
+			contratos = controlador.getListaContratosDpto(dep);
+			turnos = controlador.getListaTurnosEmpleadosDpto(dep);			 
+
+			temp = controlador.getDepartamentosJefe(numvendedor);
+			for (int i=0; i<temp.size(); i++)
+				departamentosJefe.add(controlador.getDepartamento(temp.get(i)));				
+			
+		} else {
+			System.out.println("Tipo de empleado invalido para cargar la cache");
+		}
 	}
 }
