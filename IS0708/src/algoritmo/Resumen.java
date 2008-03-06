@@ -35,7 +35,7 @@ public class Resumen {
 	public ArrayList<String> leerDia(int dia){
 		return sugerencias[dia];
 	}
-	public ArrayLis<String> getInforme(){
+	public ArrayList<String> getInforme(){
 		return informe;
 	}
 
