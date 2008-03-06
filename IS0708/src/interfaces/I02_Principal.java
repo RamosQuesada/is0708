@@ -447,6 +447,7 @@ public class I02_Principal {
 						TableItem it=tablaContratos.getItem(tablaContratos.getSelectionIndex());
 						//it.getText(0);
 						System.out.println(it.getText(0));
+						//vista.getControlador()
 					}
 				}
 				else {
