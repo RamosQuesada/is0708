@@ -304,8 +304,8 @@ public class Empleado implements Drawable {
 	/**
 	 * devuelve la fecha de alta del contrato del empleado
 	 * @return fecha de alta
-	 * @deprecated
-	 */
+	 * deprecated
+	 *	 */
 	public Date getFcontrato(){
 		return fContrato;
 	}
@@ -429,6 +429,7 @@ public class Empleado implements Drawable {
 	public void setFechaNac(Date fechaNac) {
 		this.fechaNac = fechaNac;
 	}
+	
 	
 	/**
 	 * Devuelve el sexo del empleado, siendo 0 femenino y 1 masculino.
@@ -616,7 +617,9 @@ public class Empleado implements Drawable {
 	{
 		turnoActual = t;
 	}
-
+	public Date getFAlta(){
+		return fAlta;
+	}
 	/**
 	 * Asigna un valor de felicidad al empleado.
 	 * @param felicidad el valor de felicidad a asignar
