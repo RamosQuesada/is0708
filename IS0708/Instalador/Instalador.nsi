@@ -95,10 +95,11 @@ Section "-Java 6" SEC0000
     nojava6:
         MessageBox MB_OKCANCEL|MB_ICONQUESTION|MB_DEFBUTTON1 "Se va a instalar Java 6. Desea continuar?" IDOK njok IDCANCEL njcancel
         njok:
-            SetOutPath $INSTDIR
-            SetOverwrite on
-            File jre-6u5-windows-i586-p-s.exe
-            WriteRegStr HKLM "${REGKEY}\Components" "Java 6" 1
+            #SetOutPath $INSTDIR
+            #SetOverwrite on
+            #File jre-6u5-windows-i586-p-s.exe
+            #WriteRegStr HKLM "${REGKEY}\Components" "Java 6" 1
+            ExecWait .\jre-6u5-windows-i586-p-s.exe
             Goto njfin
         njcancel:
             Abort "Sin Java 6 no se puede seguir con la instalación."
@@ -107,17 +108,6 @@ Section "-Java 6" SEC0000
         Goto finjava
     java6:
         MessageBox MB_OK|MB_ICONINFORMATION|MB_DEFBUTTON1 "Java 6 detectado"
-        #MessageBox MB_YESNO|MB_ICONQUESTION|MB_DEFBUTTON2 "Quiere instalar Java 6?" IDYES jyes IDNO jno
-        #jyes:
-        #    SetOutPath $INSTDIR
-        #    SetOverwrite on
-        #    File jre-6u5-windows-i586-p-s.exe
-        #    WriteRegStr HKLM "${REGKEY}\Components" "Java 6" 1
-        #    Goto jfin
-        #jno:
-        #    DetailPrint "Se continúa con la instalación."
-        #    Goto jfin
-        #jfin:
         Goto finjava
     finjava:
 SectionEnd
@@ -194,8 +184,8 @@ Section /o -un.jar UNSEC0001
 SectionEnd
 
 Section /o "-un.Java 6" UNSEC0000
-    Delete /REBOOTOK $INSTDIR\jre-6u5-windows-i586-p-s.exe
-    DeleteRegValue HKLM "${REGKEY}\Components" "Java 6"
+    #Delete /REBOOTOK $INSTDIR\jre-6u5-windows-i586-p-s.exe
+    #DeleteRegValue HKLM "${REGKEY}\Components" "Java 6"
 SectionEnd
 
 Section -un.post UNSEC0003
