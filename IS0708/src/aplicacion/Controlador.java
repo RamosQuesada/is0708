@@ -935,7 +935,24 @@ public class Controlador {
 		boolean exito = _db.borraTurno(t.getIdTurno());
 		return exito;
 	}
-
+	
+	/**
+	 * Modifica un turno en la BD. Se le pasan todos los parametros aunque no
+	 * cambien
+	 * 
+	 * @param IdTurno
+	 * @param Descripcion
+	 * @param HoraEntrada
+	 * @param HoraSalida
+	 * @param HoraInicioDescanso
+	 * @param Duracion
+	 * @return Devuelve un bool que dice si todo ha ido bien.
+	 */
+	public boolean modificarTurno(int IdTurno, String Descripcion,
+			Time HoraEntrada, Time HoraSalida, Time HoraInicioDescanso,
+			int Duracion) {
+		return _db.cambiarTurno(IdTurno, Descripcion, HoraEntrada, HoraSalida, HoraInicioDescanso, Duracion);
+	}
 	/**
 	 * 
 	 * Método que devuelve TODOS los turnos de la base de datos los cuales son los
