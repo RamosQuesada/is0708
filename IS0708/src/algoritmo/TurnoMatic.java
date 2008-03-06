@@ -3,7 +3,6 @@ package algoritmo;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import aplicacion.*;
 
@@ -603,7 +602,6 @@ public class TurnoMatic {
 		Empleado emp;
 		Turno turno;
 		Trabaja trab;
-		int max;
 		
 		listas = estruc.getDias();
 		numTrozos = estruc.getNumTrozos();
@@ -614,7 +612,7 @@ public class TurnoMatic {
 		Time hora;
 		hora = estruc.getTrozosHorario().get(q);
 		int gHora = hora.getHours();
-		max = calendario.getMaxHora(dia,gHora);
+		int max = calendario.getMaxHora(dia,gHora);
 		
 		//Para cada franja horaria
 		for(int i=0;i<numTrozos;i++){
@@ -674,8 +672,6 @@ public class TurnoMatic {
 	
 	public void imprimeEstructura(){
 		ArrayList<Empleado> emp;
-		ArrayList<Empleado> disp;
-		ArrayList<Empleado> reser;
 		ListasEmpleados[][] listas;
 		Empleado e;
 		
