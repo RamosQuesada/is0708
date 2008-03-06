@@ -932,6 +932,15 @@ public class Controlador {
 		return true;
 	}
 	
+	/**
+	 * 
+	 * @param id	Identificador del contrato a eliminar 
+	 * @return		si se ha eliminado el contrato correctamente o no
+	 */
+	public boolean eliminaContrato(int id){
+		return _db.borraContrato(id);
+	}
+	
 	/***************************************************************************
 	 * Métodos relacionados con turnos
 	 */
@@ -959,6 +968,17 @@ public class Controlador {
 	 */
 	public boolean eliminaTurno(Turno t) {
 		boolean exito = _db.borraTurno(t.getIdTurno());
+		return exito;
+	}
+	
+	/**
+	 * Elimina un turno en la base de datos.
+	 * 
+	 * @param id   el identificador del turno a eliminar
+	 * @return <i>true</i> si se ha eliminado el contrato correctamente
+	 */
+	public boolean eliminaTurno(int id) {
+		boolean exito = _db.borraTurno(id);
 		return exito;
 	}
 	
