@@ -56,8 +56,8 @@ public class Analisis {
 					// solo si no existia una anterior con las mismas caracteristas
 					// en caso contrario, se amplia en 5 minutos la franja de la sugerencia
 					if (contador<minimoDia){
-						if((sugAnterior!=null)&&(minimoDia-contador!=sugAnterior.getFaltas())){							
-							Sugerencia sug=new Sugerencia(minimoDia-contador, t,new Time(t.getHours(),k,0),i);
+						if((sugAnterior!=null)&&(minimoDia-contador!=sugAnterior.getFaltas()) && (sugAnterior.getTipo()!=tipoFalta(contador,minimoDia))){		
+							Sugerencia sug=new Sugerencia(minimoDia-contador,minimoDia, t,new Time(t.getHours(),k,0),i,tipoFalta(contador,minimoDia));
 							sugerencias[i].add(sug);
 						}
 						else{
@@ -69,6 +69,40 @@ public class Analisis {
 		}
 	}
 	
+	public ArrayList<String> analizarFaltas(){
+		ArrayList<String> resul=new ArrayList<String>();
+		
+		int cont1=0;
+		int cont2=0;
+		int cont3=0;
+		
+		for (int i=0;i<dias;i++){			
+			if (calcularValorFranja(getSugerenciasDia(i),1)>=12000){cont1++;}
+			if (calcularValorFranja(getSugerenciasDia(i),2)>=15000){cont2++;}
+			if (calcularValorFranja(getSugerenciasDia(i),3)>=15000){cont3++;}
+		}
+		
+		if(cont1>=10){resul.add("Se repiten faltas en el periodo de mañana (9h a 13h). Se recomienda contratar gente.");}
+		if(cont2>=10){resul.add("Se repiten faltas en el periodo de mediodia (13h a 18h). Se recomienda contratar gente.");}
+		if(cont3>=10){resul.add("Se repiten faltas en el periodo de tarde (18h a 23h). Se recomienda contratar gente.");}
+		
+		return resul;
+	}
+	
+	public int calcularValorFranja(ArrayList<Sugerencia> lista,int parte){
+		int resul=0;
+		for (int i=0;i<lista.size();i++){
+			int horaIni=lista.get(i).getHoraIni().getHours();
+			int horaFin=lista.get(i).getHoraFin().getHours();
+			switch (parte){
+			case 1:if (horaIni<13){resul=resul+lista.get(i).puntuacion();}
+			case 2:if (((horaIni>=13)&&(horaIni<18))||((horaFin>=13)&&(horaFin<18))){resul=resul+lista.get(i).puntuacion();}
+			case 3:if (horaIni>=18){resul=resul+lista.get(i).puntuacion();}
+			}						
+		}
+		return resul;
+	}
+	
 	public boolean compruebaHora(Time a, Time ini, Time fin){
 		boolean resultado=true;
 		if (a.before(ini)){resultado=false;}
@@ -76,9 +110,17 @@ public class Analisis {
 		return resultado;
 	}
 	
+	public int tipoFalta(int contador, int minimo){
+		int tipo=0;
+		if (contador==minimo){tipo=2;}
+		else{if (contador*2>=minimo){tipo=1;}}
+		return tipo;
+	}
+	
 	public ArrayList<Sugerencia> getSugerenciasDia(int i){
 		return sugerencias[i];
 	}
+	
 	
 	public ArrayList<String>[] generarResumen(){
 		ArrayList<String>[] textos = null;

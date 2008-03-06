@@ -17,12 +17,14 @@ import java.util.ArrayList;
 public class Resumen {
 	
 	private ArrayList<String>[] sugerencias=null;
+	private ArrayList<String> informe=null;
 	private int dias;
 	
 	public Resumen(int dias,Cuadrante cuadrante){
 		this.dias=dias;
 		Analisis a=new Analisis(dias,cuadrante);
 		sugerencias=a.generarResumen();
+		informe=a.analizarFaltas();
 		
 	}
 	
@@ -32,6 +34,9 @@ public class Resumen {
 	
 	public ArrayList<String> leerDia(int dia){
 		return sugerencias[dia];
+	}
+	public ArrayLis<String> getInforme(){
+		return informe;
 	}
 
 }

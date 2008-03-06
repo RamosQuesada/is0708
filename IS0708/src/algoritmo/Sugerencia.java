@@ -7,24 +7,29 @@ import java.sql.Time;
 
 /**
  * @author Alberto
- *
+ * el campo tipo:
+ * 0 es para una sugerencia de falta que no tiene mayor consecuencia
+ * 1 es para una sugerencia de falta de mas del 50% de personal
+ * 2 es para una sugerencia de falta extrema
  */
 public class Sugerencia {
 	
 	private String sugerencia;
 	private int tipo;
 	private int faltas;
+	private int minimo;
 	private Time horaIni;
 	private Time horaFin;
 	private int dia;
 	
 	
-	public Sugerencia(int faltas, Time ini, Time fin, int dia){
+	public Sugerencia(int faltas,int minimo, Time ini, Time fin, int dia,int tipo){
 		this.faltas=faltas;
+		this.minimo=minimo;
 		this.horaIni=ini;
 		this.horaFin=fin;
 		this.dia=dia;
-		this.tipo=1;//TODO pensar algo para el tipo
+		this.tipo=tipo;
 	}
 	
 	
@@ -97,7 +102,18 @@ public class Sugerencia {
 	}
 	
 	public String toString(){
-		return "El dia "+dia+", desde las "+horaIni.getHours()+":"+horaIni.getMinutes()+" hasta las "+horaFin.getHours()+":"+horaFin.getMinutes()+", faltan "+faltas+" empleados.";          
+		String cadena="El dia "+dia+", desde las "+horaIni.getHours()+":"+horaIni.getMinutes()+" hasta las "+horaFin.getHours()+":"+horaFin.getMinutes()+", faltan "+faltas+" empleados.";
+		if (tipo==1){cadena=cadena+"Falta mas del 50% del personal.";}
+		else{if(tipo==2){cadena=cadena+"Situación crítica. Falta todo el personal.";}}
+		return cadena;
 	}
+	
+	public int puntuacion(){
+		int resul=0;
+		resul=(horaFin.getHours()-horaIni.getHours())*60+(horaFin.getMinutes()-horaIni.getMinutes());
+		resul=resul*(faltas/minimo);
+		return resul;
+	}
+	
 
 }
