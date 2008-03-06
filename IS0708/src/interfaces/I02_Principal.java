@@ -12,8 +12,6 @@ import org.eclipse.swt.graphics.*;
 import aplicacion.Empleado;
 import aplicacion.Util;
 
-import paquete_pruebas.GeneraDatos;
-
 import java.util.ResourceBundle;
 import java.util.Locale;
 
@@ -527,7 +525,8 @@ public class I02_Principal {
 				int response=messageBox.open();
 				if(response==SWT.OK){
 					System.out.println("BBDD reiniciada");
-					GeneraDatos.reset();
+					//paquete_pruebas.GeneraDatos.reset();
+					paquete_pruebas.InsertaDatosFijos.insertar();
 				}
 			}
 				});
