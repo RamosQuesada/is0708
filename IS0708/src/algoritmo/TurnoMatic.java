@@ -411,8 +411,8 @@ public class TurnoMatic {
 				dispo.get(k).setFelicidad(dispo.get(k).getFelicidad()+1);
 			k=k+1;      
 			if  (k==dispo.size()) {
-				if  (comprobarFranjasCompletas(cuadAux, dia, fHorariasDpto))
-					hecho=true;
+				if (comprobarFranjasCompletas(cuadAux, dia, fHorariasDpto))
+					 return true;
 			} else {
 				if (k<dispo.size())
 					hecho=vueltaAtrasMarcaje(dispo, reser,k,dia,cuadAux);
