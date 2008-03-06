@@ -25,7 +25,7 @@ public class I02CuadranteEmpleado {
 	public boolean redibujar;
 	private Display display;
 	private int ancho;
-	private int alto;
+	private int alto=100;
 	private int margenIzq, margenDer, margenSup, margenInf; // M�rgenes del cuadrante
 	private int margenNombres; // Un margen para pintar los nombres a la izquierda
 	//private int alto_franjas;
@@ -89,7 +89,7 @@ public class I02CuadranteEmpleado {
 		this.horaComienzoDescanso =  new ArrayList<Float>();
 		this.margenIzq  = margenIzq;
 		this.margenDer  = margenDer;
-		this.margenSup  = margenSup;
+		this.margenSup  = margenSup+10;
 		this.margenInf  = margenInf;
 		this.margenNombres  = margenNombres;
 		this.horaInicio = horaInicio;
@@ -177,6 +177,7 @@ public class I02CuadranteEmpleado {
 		gc.drawLine(m, inferior_total, m+7*sep, inferior_total);
 		gc.drawRoundRectangle(m,this.margenSup,7*sep,tamanoFila,8,8);
 		gc.drawRectangle(m, this.margenSup, 7*sep, tamanoFila);
+		gc.setLineWidth(2);
 		for (int i=0; i<=h; i++) {
 			gc.setLineStyle(SWT.LINE_SOLID);
 			cambiarPincel(gc, 0,0,0);
@@ -212,7 +213,6 @@ public class I02CuadranteEmpleado {
 			}
 		}
 		gc.setLineStyle(SWT.LINE_SOLID);
-		dibujarTurnos(gc);
 		int num_subdivisiones=(int)((this.subdivisiones)*(this.horaFin-this.horaInicio)+1);
 		for(int cont=0;cont<num_subdivisiones;cont++){
 			float fraccion = 1.0f/this.subdivisiones;
@@ -220,6 +220,9 @@ public class I02CuadranteEmpleado {
 			hora +=this.horaInicio;
 			this.dibujarLineaHorizontal(gc, hora);
 		}
+		dibujarTurnos(gc);
+		
+
 	}
 	
 	public void actualizarFecha(Date fecha,GC gc){
@@ -252,16 +255,25 @@ public class I02CuadranteEmpleado {
 	public void dibujaTurnosCargados(GC gc){			
 		for(int cont=0;cont<7;cont++){
 			if(horasInicio.size()>cont){
-				dibujarTurno(gc,cont,this.horasInicio.get(cont),this.horaComienzoDescanso.get(cont),"INFOR.");
-				dibujarTurno(gc,cont,this.horaFinDescanso.get(cont),this.horasFin.get(cont),"INFOR.");
+				String horaUno = convertirString(horasInicio.get(cont))+"-"+convertirString(horaComienzoDescanso.get(cont));
+				dibujarTurno(gc,cont,this.horasInicio.get(cont),this.horaComienzoDescanso.get(cont),horaUno);
+				String horaDos = convertirString(horaFinDescanso.get(cont))+"-"+convertirString(horasFin.get(cont));
+				dibujarTurno(gc,cont,this.horaFinDescanso.get(cont),this.horasFin.get(cont),horaDos);
 			}
 		}
 		this.superior.redibujar=true;
 		
-		
-		
 	}
 	
+	public String convertirString(double hora){
+		
+		Double Dhora = Math.floor(hora);
+		Double DMinutos= hora-Dhora*60;
+		DMinutos=DMinutos-Math.floor(DMinutos);
+		String devolver= Double.toString(Dhora)+":"+Double.toString(DMinutos);
+		return devolver;
+	}
+
 	public void dibujarTurnos(GC gc){
 		//GregorianCalendar calendario=new GregorianCalendar();
 		if(fecha==null){ actualizarTurnos(gc);
@@ -402,14 +414,17 @@ public class I02CuadranteEmpleado {
 			int x_fin=convertirDia(dia+1);
 			int y_fin=convertirHora(horaFinal);
 			int m = margenIzq + margenNombres;
-			m = margenIzq;
+			m=margenIzq;
 			int h = horaFin - horaInicio;
 			h=7;
 			this.cambiarPincel(gc, 150, 255, 150);
 			this.cambiarRelleno(gc, 100, 200, 100);
-			int x_comienzo_c = (x_comienzo*8+x_fin*2)/10;
-			int x_comienzo_t = ((x_comienzo_c+x_fin)/2);
+		//	int x_comienzo_c = (x_comienzo*8+x_fin*2)/10;
+		//	int x_comienzo_t = ((x_comienzo_c+x_fin)/2);
+			int x_comienzo_c=x_comienzo;
+			int x_comienzo_t = (x_comienzo + x_fin)/2;
 			int longitud = (int)((x_fin-x_comienzo_c));
+			
 			gc.fillGradientRectangle(x_comienzo_c,y_comienzo,longitud,y_fin-y_comienzo,true);
 			this.cambiarPincel(gc, 0, 0, 0);
 			gc.drawRoundRectangle(x_comienzo_c,y_comienzo,longitud,y_fin-y_comienzo,8,8);
@@ -477,6 +492,7 @@ public class I02CuadranteEmpleado {
 		gc.setLineStyle(SWT.LINE_DOT);
 		cambiarPincel(gc, 0,0,0);
 		
+		gc.setLineWidth(2);
 		gc.drawLine(this.margenIzq, convertirHora(hora), this.margenIzq+7*sep,convertirHora(hora));
 		gc.setLineStyle(SWT.LINE_SOLID);
 	}
