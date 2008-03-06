@@ -80,14 +80,18 @@ public class Analisis {
 		return sugerencias[i];
 	}
 	
-	public Resumen generarResumen(){
-		Resumen resumen= new Resumen(dias);
+	public ArrayList<String>[] generarResumen(){
+		ArrayList<String>[] textos = null;
+		for (int i=0;i<dias;i++){
+			textos[i]=new ArrayList<String>();			
+		}
+		
 		for (int i=0;i<dias;i++){
 			for (int j=0;j<getSugerenciasDia(i).size();j++){
-				resumen.add(i,getSugerenciasDia(i).get(j).toString());
+				textos[i].add(getSugerenciasDia(i).get(j).toString());
 			}
 		}
 				
-		return resumen;
+		return textos;
 	}
 }
