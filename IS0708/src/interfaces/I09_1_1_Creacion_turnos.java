@@ -25,6 +25,7 @@ import org.eclipse.swt.graphics.*;
 import aplicacion.Empleado;
 import aplicacion.Posicion;
 import aplicacion.Turno;
+import aplicacion.Vista;
 
 public class I09_1_1_Creacion_turnos {
 	private Shell padre = null;
@@ -32,10 +33,16 @@ public class I09_1_1_Creacion_turnos {
 	private aplicacion.Turno turno;
 	private int modo;
 	private int alto, ancho;
-	public I09_1_1_Creacion_turnos(Shell padre, ResourceBundle bundle,int modo) {
+	private int idTurno;
+	private int idContrato;
+	private Vista vista;
+	public I09_1_1_Creacion_turnos(Shell padre, Vista vista, ResourceBundle bundle,int modo,int idTurno, int idContrato) {
 		this.padre = padre;
 		this.bundle = bundle;
 		this.modo=modo;
+		this.idTurno=idTurno;
+		this.idContrato=idContrato;
+		this.vista=vista;
 		mostrarVentana();
 	}
 		
@@ -65,20 +72,20 @@ public class I09_1_1_Creacion_turnos {
 
 // Grupo1 - Nombre
 		grupo1.setLayout(new GridLayout(2,false));
-		final Label  lNombre	= new Label (grupo1, SWT.LEFT);
-		final Text   tNombre	= new Text  (grupo1, SWT.BORDER);
+		//final Label  lNombre	= new Label (grupo1, SWT.LEFT);
+		//final Text   tNombre	= new Text  (grupo1, SWT.BORDER);
 
-		final Label  lId		= new Label (grupo1, SWT.LEFT);
-		final Text   tId		= new Text  (grupo1, SWT.BORDER);
+		final Label  lDesc		= new Label (grupo1, SWT.LEFT);
+		final Text   tDesc		= new Text  (grupo1, SWT.BORDER);
 
-		lNombre		.setText(bundle.getString("I09_lab_NombreTurno"));
-		lNombre		.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,false,true,1,1));
-		tNombre		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
-		tNombre		.setToolTipText(bundle.getString("I09_tip_NombreTurno"));
-		lId			.setText(bundle.getString("I09_lab_desc_Turno"));
-		lId			.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,false,true,1,1));
-		tId			.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
-		tId			.setToolTipText(bundle.getString("I09_tip_IdTurno"));
+		//lNombre		.setText(bundle.getString("I09_lab_NombreTurno"));
+		//lNombre		.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,false,true,1,1));
+		//tNombre		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
+		//tNombre		.setToolTipText(bundle.getString("I09_tip_NombreTurno"));
+		lDesc			.setText(bundle.getString("I09_lab_desc_Turno"));
+		lDesc			.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,false,true,1,1));
+		tDesc			.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
+		tDesc			.setToolTipText(bundle.getString("I09_tip_IdTurno"));
 
 // Grupo 2 - Turno
 		GridLayout g = new GridLayout(1,false);
@@ -127,8 +134,43 @@ public class I09_1_1_Creacion_turnos {
 		SelectionAdapter sabAceptar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				//modo = 0 es nuevo turno y modo =1 es modificar
-				if (modo==0){}
-				else{}
+				if (modo==0){
+					//String nombre=tNombre.getText();
+					String desc=tDesc.getText();
+					Turno t= new Turno(0,desc,"10:37:28","10:37:28","10:37:28",0);
+					int idT=vista.getControlador().insertTurno(t);
+					//cambiar insert turno por contrato
+					/*if ((idT!=-1)&&(vista.getControlador().insertTurnoPorContrato(idT, idContrato))){
+						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
+						messageBox.setText("Info");
+						messageBox.setMessage(bundle.getString("I09_insert_Turno"));
+						messageBox.open();
+					}
+					else {
+						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_WARNING);
+						messageBox.setText(bundle.getString("Error"));
+						messageBox.setMessage(bundle.getString("I09_err_insert_Turno"));
+						messageBox.open();
+					}*/
+					shell.dispose();
+				}
+				else{
+					String desc=tDesc.getText();					
+					boolean okis=vista.getControlador().modificarTurno(25,desc,null,null,null,0);					
+					if (okis){
+						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
+						messageBox.setText("Info");
+						messageBox.setMessage(bundle.getString("I09_modif_Turno"));
+						messageBox.open();
+					}
+					else {
+						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_WARNING);
+						messageBox.setText(bundle.getString("Error"));
+						messageBox.setMessage(bundle.getString("I09_err_modif_Turno"));
+						messageBox.open();
+					}
+					shell.dispose();
+				}
 			}
 		};
 		

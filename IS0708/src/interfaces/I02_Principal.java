@@ -415,14 +415,17 @@ public class I02_Principal {
 
 		bNuevoContrato.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				new I09_1_Creacion_contratos(shell, bundle, vista, 0);
+				new I09_1_Creacion_contratos(shell, bundle, vista, 0, -1);
 			}
 		});
 		
 		bModificarContrato.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				if(tablaContratos.getSelectionIndex()>-1){
-					new I09_1_Creacion_contratos(shell, bundle, vista, 1);
+					TableItem it=tablaContratos.getItem(tablaContratos.getSelectionIndex());
+					//it.getText(0);
+					System.out.println(it.getText(0));
+					new I09_1_Creacion_contratos(shell, bundle, vista, 1, Integer.parseInt(it.getText(0)));
 				}
 				else {
 					MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_INFORMATION | SWT.OK | SWT.CANCEL);
