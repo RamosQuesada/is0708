@@ -318,7 +318,7 @@ public class TurnoMatic {
 	 */
 	private boolean vueltaAtrasMarcaje (ArrayList<Empleado> dispo, ArrayList<Empleado> reser, int k, int dia, ArrayList<Trabaja>[] cuadAux){
 		/*fHoraria es un ArrayList con todos los turnos en los que puede trabajar el empleado situado en la 
-		 posición k de disponibles*/ 
+		 posición k de disponibles*/
 		ArrayList<Turno> fHoraria = controlador.getListaTurnosContrato (dispo.get(k).getEmplId());
 		int tFavorito = dispo.get(k).getTurnoFavorito(); //turno favorito del empleado
 		int i=0;
