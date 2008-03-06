@@ -318,7 +318,7 @@ public class I08_1_Editar_empleado {
 		
 		// INICIO DE RELLENO DE DATOS
 
-		Util.dateAString(fecha)
+		
 		Empleado emp=vista.getEmpleadoActual();
 		tNVend.setText(String.valueOf(idVend));		
 		tPassword.setText(emp.getPassword());	
