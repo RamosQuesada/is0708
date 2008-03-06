@@ -9,6 +9,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
 
+import aplicacion.Contrato;
 import aplicacion.Empleado;
 import aplicacion.Util;
 
@@ -372,24 +373,26 @@ public class I02_Principal {
 			column.setText(titles[i]);
 		}
 		// TODO Quitar este ejemplo
-		TableItem tItem = new TableItem(tablaContratos, SWT.NONE);
-		tItem.setText(0, "1");
-		tItem.setText(1,"Mike Olfield, Lou Vega, Paul McCartney, Ricky Martin");
-		tItem.setText(2, "12");
-		tItem.setText(3, "aleatorio0");
-		tItem.setText(4, "6:12/2:8");
-		tItem.setText(5, "8");
-		tItem.setText(6, "1400.00");
-		tItem.setText(7, "3");
-		tItem = new TableItem(tablaContratos, SWT.NONE);
-		tItem.setText(0, "2");
-		tItem.setText(1, "Alicia Keys, Ana Torroja, Marylin Manson");
-		tItem.setText(2, "12");
-		tItem.setText(3, "aleatorio1");
-		tItem.setText(4, "6:12/2:8");
-		tItem.setText(5, "8");
-		tItem.setText(6, "1400.00");
-		tItem.setText(7, "3");
+		ArrayList <Contrato> contratos=vista.getControlador().getListaContratosDpto("DatosFijos");
+		for(int i=0;i<contratos.size();i++){
+			TableItem tItem = new TableItem(tablaContratos, SWT.NONE);
+			Contrato c = contratos.get(i);
+			tItem.setText(0, Integer.toString(c.getNumeroContrato()));
+			ArrayList <Empleado> emp=vista.getControlador().getEmpleados(null, null, c.getNumeroContrato(),null, null, null, null);
+			String empleados="";
+			for (int j=0;j<emp.size();j++){
+				Empleado e=emp.get(j);
+				empleados+=e.getNombre()+" "+e.getApellido1();
+				if (j!=emp.size()-1) empleados+=",";
+			}
+			tItem.setText(1, empleados);
+			tItem.setText(2, Integer.toString(c.getTurnoInicial()));
+			tItem.setText(3, c.getNombreContrato());
+			tItem.setText(4, c.getPatron());
+			tItem.setText(5, Integer.toString(c.getDuracionCiclo()));
+			tItem.setText(6, Double.toString(c.getSalario()));
+			tItem.setText(7, Integer.toString(c.getTipoContrato()));
+		}
 		for (int i = 0; i < titles.length; i++) {
 			tablaContratos.getColumn(i).pack();
 		}
@@ -437,7 +440,9 @@ public class I02_Principal {
 					messageBox.setMessage (bundle.getString("I09_bot_elim_contrato"));
 					int response=messageBox.open();
 					if(response==SWT.OK){
-						
+						TableItem it=tablaContratos.getItem(tablaContratos.getSelectionIndex());
+						//it.getText(0);
+						System.out.println(it.getText(0));
 					}
 				}
 				else {
