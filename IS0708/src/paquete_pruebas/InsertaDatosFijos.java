@@ -13,7 +13,7 @@ import aplicacion.Turno;
  */
 public class InsertaDatosFijos {
 
-	public static void main(String[] args) {
+	public static void insertar() {
 		
 		// Comenzamos 
 		Database bd = new Database();
