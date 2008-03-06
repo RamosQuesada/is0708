@@ -49,6 +49,7 @@ public class I08_1_Editar_empleado {
 		fechaContrato = new Date(0);
 		fechaAlta = new Date(0);
 		fechaNacimiento = new Date(0);
+		this.idVend = idVend;
 		mostrarVentana();
 	}
 	
@@ -316,19 +317,18 @@ public class I08_1_Editar_empleado {
 		};
 		
 		// INICIO DE RELLENO DE DATOS
-		
-		tNVend		
-		tPassword	
-		tEMail		
-		tNombre		
-		tApell1		
-		tApell2		
-		tFNacimiento
-		tFContrato	
-		tFAlta		
-		
-		vista.getEmpleado()
 
+		Util.dateAString(fecha)
+		Empleado emp=vista.getEmpleadoActual();
+		tNVend.setText(String.valueOf(idVend));		
+		tPassword.setText(emp.getPassword());	
+		tEMail.setText(emp.getEmail());		
+		tNombre.setText(emp.getNombre());		
+		tApell1.setText(emp.getApellido1());
+		tApell2.setText(emp.getApellido2());
+		tFNacimiento.setText(Util.dateAString(emp.getFechaNac()));
+		tFContrato.setText(Util.dateAString(emp.getFcontrato()));	
+		tFAlta.setText(Util.dateAString(emp.getFAlta()));		
 		
 		bCancelar.addSelectionListener(sabCancelar);
 		bAceptar.addSelectionListener(sabAceptar);
