@@ -275,7 +275,7 @@ public class I02CuadranteEmpleado {
 	}
 	
 	public String convertirString(double hora, int tamano2,int posicion){
-		System.out.println("tamano2 "+tamano2);
+
 		Double Dhora = Math.floor(hora);
 		double DMinutos= (hora-Dhora)*60;
 		//DMinutos=DMinutos-Math.floor(DMinutos);
