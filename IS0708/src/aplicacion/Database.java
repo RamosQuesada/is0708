@@ -1402,6 +1402,10 @@ public class Database extends Thread {
 		}
 		return true;
 	}
+	
+//	public boolean cambiarEmpleado(int idEmp, String nomb, String Ape1, String Ape2, Date FNac, int sexo, String mail, String Passw, int grupo, Date FCont) {
+		
+	//}
 	/**
 	 * Modifica un turno en la BD. Se le pasan todos los parametros aunque no
 	 * cambien
