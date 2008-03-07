@@ -154,19 +154,19 @@ public class I02_Principal {
 		lDepartamentos.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
 				false, 1, 1));
 
-		Combo cDepartamentos = new Combo(cCuadrantes, SWT.BORDER
+		final Combo cDepartamentos = new Combo(cCuadrantes, SWT.BORDER
 				| SWT.READ_ONLY);
 		cDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1));
 		/************************************************************/
-		//cDepartamentos.setItems(this.vista.getNombresDepartamentosJefe());
-		cDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
+		cDepartamentos.setItems(vista.getNombresDepartamentosJefe());
+		//cDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
 		/************************************************************/
 		cDepartamentos.select(0);
 
 		// Un canvas para albergar el gráfico de los cuadrantes
 		// NO_BACKGROUND + doble buffer para evitar parpadeo
-		Composite cCuadrante = new Composite(cCuadrantes, SWT.BORDER);
+		final Composite cCuadrante = new Composite(cCuadrantes, SWT.BORDER);
 		cCuadrante.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
 				3, 5));
 
@@ -178,8 +178,16 @@ public class I02_Principal {
 		t2.setIdEmpl(10000200);
 		t2.setIdTurno(2);
 		
-		I_Cuadrante ic = new I_Cuadrante(vista, 2, 2008, "mi_dep", 4, 9, 22);
+		final I_Cuadrante ic = new I_Cuadrante(vista, 2, 2008,"mi_dep", 4, 9, 22);
 		//ic.setCuad(vista.getCuadrante(12, 2007, "DatosFijos"));
+		/************************************************************/
+		cDepartamentos.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) { 
+				//ic.setCuad(vista.getCuadrante(12,2007,cDepartamentos.getText()));
+				System.out.println("Dpto. "+cDepartamentos.getText());
+			}
+		});
+		/************************************************************/
 		ic.setTrabajaDia(1, t1);
 		ic.setTrabajaDia(1, t2);
 		ic.setComposite(cCuadrante);
@@ -219,25 +227,40 @@ public class I02_Principal {
 		 */
 		//		
 		// Img = cuadrante.dameImageImprimible();
-		/*
-		 * final Button bPorMes = new Button(cCuadrantes, SWT.RADIO);
-		 * bPorMes.setText(bundle.getString("I02_but_Verpormes"));
-		 * bPorMes.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false,
-		 * 2, 1)); // Oyente para saber cuando se ha modificado la seleccion del
-		 * boton bPorMes.addListener(SWT.Selection, new Listener() { //
-		 * Seleccionado por mes public void handleEvent(Event e) { if
-		 * (bPorMes.getSelection()) { cuadrante.ponImageMes(); Img =
-		 * cuadrante.dameImageImprimible(); cuadrante.setMensual(); } else
-		 * cuadrante.ponImageDia(); Img = cuadrante.dameImageImprimible();
-		 * cuadrante.setDiario(); } });
-		 * 
-		 * final Button bPorSemanas = new Button(cCuadrantes, SWT.RADIO);
-		 * bPorSemanas.setText(bundle.getString("I02_but_Verpordia"));
-		 * bPorSemanas.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false,
-		 * false, 2, 1));
-		 * 
-		 * bPorMes.setSelection(true);
-		 */
+		
+		final Button bPorMes = new Button(cCuadrantes, SWT.RADIO);
+		bPorMes.setText(bundle.getString("I02_but_Verpormes"));
+		bPorMes.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false,2,1));
+		// Oyente para saber cuando se ha modificado la seleccion del boton 
+		/************************************************************/
+		bPorMes.addListener(SWT.Selection, new Listener() {
+		//Seleccionado por mes 
+			public void handleEvent(Event e) { 
+				if (bPorMes.getSelection()) { 
+					//System.out.println("Mes");
+					ic.setDiario(false);
+					ic.redibujar();
+					//ic.setComposite(cCuadrante);
+					//cuadrante.ponImageMes(); 
+					//Img=cuadrante.dameImageImprimible(); 
+					//cuadrante.setMensual(); 
+				} 
+				else {
+					//System.out.println("Día");
+					ic.setDiario(true);
+					ic.redibujar();
+					//ic.setComposite(cCuadrante);
+					//cuadrante.ponImageDia(); 
+					//Img = cuadrante.dameImageImprimible();
+					//cuadrante.setDiario();
+				}
+			}
+		});
+		/************************************************************/
+		final Button bPorSemanas = new Button(cCuadrantes, SWT.RADIO);
+		bPorSemanas.setText(bundle.getString("I02_but_Verpordia"));
+		bPorSemanas.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false,false,2,1));
+		bPorSemanas.setSelection(true);    
 	}
 
 	/**
