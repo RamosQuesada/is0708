@@ -40,8 +40,9 @@ public class InsertaDatosFijos {
 		
 		// Crear contrato jefe departamento
 		String patronContratoJefe = "6:" + turnoJefe.getIdTurno() + "/1:d";
-		Contrato contratoJefe = new Contrato("contratoJefeFijo", 0, 1 ,7, patronContratoJefe, 1200, 0);
+		Contrato contratoJefe = new Contrato("contratoJefeFijo", 0, turnoJefe.getIdTurno() ,7, patronContratoJefe, 1200, 1);
 		contratoJefe.setNumeroContrato(c.insertContrato(contratoJefe));
+		//c.insertTurnoPorContrato(turnoJefe.getIdTurno(), contratoJefe.getNumeroContrato());
 	
 		// Crear el jefe de departamento
 		c.insertUsuario(10000100, "JefeFijo", "ape1", "ape2", nacimiento, 0, "email@email.es", "10000100", 2, 
@@ -153,7 +154,7 @@ public class InsertaDatosFijos {
 		//c.insertTurnoPorContrato(t7hT.getIdTurno(), c7hT.getNumeroContrato());
 		
 		//c.insertTurnoPorContrato(t4hM.getIdTurno(), c4hM.getNumeroContrato());
-		c.insertTurnoPorContrato(t7hT.getIdTurno(), c4hM.getNumeroContrato());
+		c.insertTurnoPorContrato(t4hT.getIdTurno(), c4hM.getNumeroContrato());
 		c.insertTurnoPorContrato(t4hM.getIdTurno(), c4hT.getNumeroContrato());
 		//c.insertTurnoPorContrato(t7hT.getIdTurno(), c4hT.getNumeroContrato());
 		
