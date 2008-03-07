@@ -1462,4 +1462,9 @@ public class Controlador {
 
 		return b;
 	}
+
+	public void insertIssue (String text) {
+		_db.insertarIssue(text);			
+	}
+
 }

@@ -1509,5 +1509,16 @@ public class Database extends Thread {
 		}
 		return true;
 	}	
-	
+
+	public void insertarIssue(String texto) {
+		try {
+			abrirConexion();
+			st = con.createStatement();
+			st.executeUpdate("INSERT INTO ISSUES (text) values ( '" + texto + "');");
+			System.out.println("aplicacion.Database.java\t::Issue insertado");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("Error al insertar el issue");
+		}
+	}	
 }
