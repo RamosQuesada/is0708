@@ -38,14 +38,18 @@ public class I09_1_1_Creacion_turnos {
 	private int idContrato;
 	private Turno turnoInsertado;
 	private Vista vista;
-	public I09_1_1_Creacion_turnos(Shell padre, Vista vista, ResourceBundle bundle,int modo,int idTurno, int idContrato) {
+	private I09_1_Creacion_contratos i09;
+	public I09_1_1_Creacion_turnos(Shell padre, Vista vista, ResourceBundle bundle,int modo,int idTurno, int idContrato
+									,I09_1_Creacion_contratos i09) {
 		this.padre = padre;
 		this.bundle = bundle;
 		this.modo=modo;
 		this.idTurno=idTurno;
 		this.idContrato=idContrato;
 		this.vista=vista;
-		shell = new Shell (padre, SWT.CLOSE | SWT.RESIZE | SWT.APPLICATION_MODAL);
+		this.i09=i09;
+		shell = new Shell(padre,SWT.APPLICATION_MODAL | SWT.CLOSE);
+//		shell = new Shell (padre, SWT.CLOSE | SWT.RESIZE | SWT.APPLICATION_MODAL);
 		mostrarVentana();
 	}
 	
@@ -142,11 +146,11 @@ public class I09_1_1_Creacion_turnos {
 				if (modo==0){
 					//String nombre=tNombre.getText();
 					String desc = tDesc.getText();
-					turnoInsertado = new Turno(0,desc,"10:37:28","10:37:28","10:37:28",0);
-					int id=vista.getControlador().insertTurno(turnoInsertado);
-					turnoInsertado = new Turno(id,desc,"10:37:28","10:37:28","10:37:28",0);
+					turnoInsertado = new Turno(30,desc,"10:37:28","10:37:28","10:37:28",0);
+					//int id=vista.getControlador().insertTurno(turnoInsertado);
+					//turnoInsertado = new Turno(id,desc,"10:37:28","10:37:28","10:37:28",0);
 					//(vista.getControlador().insertTurnoPorContrato(idT, idContrato))){
-					if (id!=-1){
+					/*if (id!=-1){
 						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
 						messageBox.setText("Info");
 						messageBox.setMessage(bundle.getString("I09_insert_Turno"));
@@ -157,7 +161,8 @@ public class I09_1_1_Creacion_turnos {
 						messageBox.setText(bundle.getString("Error"));
 						messageBox.setMessage(bundle.getString("I09_err_insert_Turno"));
 						messageBox.open();
-					}
+					}*/
+					i09.actualizaTurno(turnoInsertado);
 					shell.dispose();
 				}
 				else{
