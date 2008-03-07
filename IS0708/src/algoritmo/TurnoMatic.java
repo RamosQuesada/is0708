@@ -374,7 +374,10 @@ public class TurnoMatic {
 			Time timeIni=fHoraria.get(i);
 			Time timeFin=fHoraria.get(i+1);
 			int horaIni=timeIni.getHours();
-			int horaFin=timeFin.getHours()+1;
+			//si la hora final es una hora en punto, no es necesario redondear con +1
+			int horaFin=timeFin.getHours();
+			if (horaFin*60<timeFin.getHours()*60+timeFin.getMinutes())
+				horaFin++;
 			Date fecha=new Date(anio, mes, dia);
 			//bucle que recorre todas las horas de una franja
 			for (int j=horaIni;(j<horaFin) && valido;j++){
