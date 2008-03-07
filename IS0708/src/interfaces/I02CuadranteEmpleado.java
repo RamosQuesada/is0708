@@ -258,8 +258,7 @@ public class I02CuadranteEmpleado {
 			dibujarCarga(gc);
 		}
 		else{
-			System.out.println("r2");
-			System.out.println("redibujar"+redibujar);
+			
 		for(int cont=0;cont<7;cont++){
 			if(horasInicio.size()>cont){
 				Font fuente=gc.getFont();
@@ -275,9 +274,11 @@ public class I02CuadranteEmpleado {
 				gc.getFont().dispose();
 				gc.setFont(fuente);
 			}
+			
 		}
-		}
+		redibujar=false;
 		
+		}
 	}
 	
 	public String convertirString(double hora, int tamano2,int posicion){
