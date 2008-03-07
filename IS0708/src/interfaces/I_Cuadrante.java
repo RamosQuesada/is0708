@@ -242,11 +242,11 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		cGridCuadrante.addListener(SWT.Selection, new Listener () {
 			public void handleEvent (Event e){
 				switch (cGridCuadrante.getSelectionIndex()) {
-				case 0 : setNumSubdivisiones(12); break;
-				case 1 : setNumSubdivisiones(6); break;
-				case 2 : setNumSubdivisiones(4); break;
-				case 3 : setNumSubdivisiones(2); break;
-				case 4 : setNumSubdivisiones(1);
+				case 0 : setNumSubdivisiones(12); calcularTamano(); break;
+				case 1 : setNumSubdivisiones(6); calcularTamano(); break;
+				case 2 : setNumSubdivisiones(4); calcularTamano(); break;
+				case 3 : setNumSubdivisiones(2); calcularTamano(); break;
+				case 4 : setNumSubdivisiones(1); calcularTamano(); 
 				}
 			}
 		});

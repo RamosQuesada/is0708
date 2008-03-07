@@ -14,12 +14,13 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import aplicacion.Vista;
+
 public class I19_Excepcion {
 	private Shell shell;
-	
-	public I19_Excepcion(Display display, Exception excepcion) {		
-
-		shell = new Shell (display, SWT.CLOSE | SWT.RESIZE);
+	public I19_Excepcion(Vista v, Exception excepcion) {		
+		final Vista vista = v;
+		shell = new Shell (vista.getDisplay(), SWT.CLOSE | SWT.RESIZE);
 		
 		//Layout del shell
 		GridLayout lShell = new GridLayout();
@@ -45,13 +46,13 @@ public class I19_Excepcion {
 			e+= " y la aplicación se ha ido a tomar por culo.";
 			break;
 		case 2:
-			e+= " y ya estoy hasta los cojones.";
+			e+= " y ya estoy hasta los huevetes.";
 			break;
 		case 3:
 			e+= ". Se notificará a Gervás de forma automática.";
 			break;
 		case 4:
-			e+= " de la ostia. Mira, mira:";
+			e+= " del copón. Mira, mira:";
 			break;
 		case 5:
 			e+= ". Cómo no.";
@@ -70,8 +71,7 @@ public class I19_Excepcion {
 		}
 		excepcion.printStackTrace();
 		lMensaje.setText(e);
-		tMensaje.setText("CIERRA ESTA VENTANA. TODAVÍA NO HACE NADA.");
-		//tMensaje.setText("Por favor, explica brevemente cómo ha ocurrido este error.");
+		tMensaje.setText("Por favor, explica breve pero detalladamente cómo ha ocurrido este error.");
 		
 		final Composite cEnviarCancelar = new Composite (shell, SWT.BORDER);
 		cEnviarCancelar.setLayoutData(new GridData(SWT.FILL, SWT.DOWN, true, false, 1, 1));
@@ -79,9 +79,19 @@ public class I19_Excepcion {
 		lEnviarCancelar.numColumns = 2;
 		cEnviarCancelar.setLayout(lEnviarCancelar);
 		
+		final String traza = e;
 		final Button bEnviar = new Button(cEnviarCancelar, SWT.PUSH);
 		bEnviar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		bEnviar.setText("Enviar");
+		bEnviar.addSelectionListener(new SelectionListener() {
+			public void widgetDefaultSelected(SelectionEvent arg0) {}
+
+			public void widgetSelected(SelectionEvent arg0) {
+				vista.getControlador().insertIssue(tMensaje.getText() + "\nTraza:\n" + traza);
+				shell.close();
+			}
+			
+		});
 		
 		final Button bCancelar = new Button(cEnviarCancelar, SWT.PUSH);
 		bCancelar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
@@ -105,7 +115,7 @@ public class I19_Excepcion {
 		shell.pack();
 		shell.setSize(shell.getSize().x,shell.getSize().y+300);
 		// Mostrar ventana centrada
-		shell.setLocation(display.getClientArea().width/2 - shell.getSize().x/2, display.getClientArea().height/2 - shell.getSize().y/2);
+		shell.setLocation(vista.getDisplay().getClientArea().width/2 - shell.getSize().x/2, vista.getDisplay().getClientArea().height/2 - shell.getSize().y/2);
 		shell.open();
 		while (!shell.isDisposed()) {
 			if (!shell.getDisplay().readAndDispatch()) {
