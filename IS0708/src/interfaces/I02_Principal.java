@@ -373,8 +373,14 @@ public class I02_Principal {
 			TableColumn column = new TableColumn(tablaContratos, SWT.NONE);
 			column.setText(titles[i]);
 		}
-		// TODO Quitar este ejemplo
-		ArrayList <Contrato> contratos=vista.getControlador().getListaContratosDpto("DatosFijos");
+		
+		// Luke, usa la vista.
+		
+		// Chema creo que la siguiente instrucción es la que hace que tarde tanto.
+		
+		// ArrayList <Contrato> contratos=vista.getControlador().getListaContratosDpto("DatosFijos");
+		
+		ArrayList <Contrato> contratos = new ArrayList();
 		for(int i=0;i<contratos.size();i++){
 			TableItem tItem = new TableItem(tablaContratos, SWT.NONE);
 			Contrato c = contratos.get(i);
