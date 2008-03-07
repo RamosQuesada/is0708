@@ -1321,7 +1321,7 @@ public class Controlador {
 	public ArrayList<Trabaja> getCuadrante(int mes,int anio,String idDepartamento) {
 		ResultSet empl=null;
 		ResultSet cuad=null;
-		ArrayList<Trabaja> datos = new ArrayList();
+		ArrayList<Trabaja> datos = new ArrayList<Trabaja>();
 		try {
 			empl = _db.obtenEmpleadosDepartamento(idDepartamento);
 			
