@@ -74,6 +74,7 @@ public class I08_1_Editar_empleado {
 		grupoDer.setLayout(new GridLayout(2,false));
 		
 		final Label  lNVend			= new Label (grupoIzq, SWT.LEFT);
+		//cambiar por un label
 		final Text   tNVend			= new Text  (grupoIzq, SWT.BORDER);
 		final Label  lPassword		= new Label (grupoIzq, SWT.LEFT);
 		final Text   tPassword		= new Text  (grupoIzq, SWT.BORDER);
@@ -94,6 +95,7 @@ public class I08_1_Editar_empleado {
 		final Label  lContrato		= new Label (grupoDer, SWT.LEFT);
 		final Combo  cContrato		= new Combo (grupoDer, SWT.BORDER | SWT.READ_ONLY);
 		final Label  lExperiencia	= new Label (grupoDer, SWT.LEFT);
+		//posible cambio
 		final Combo  cExperiencia	= new Combo (grupoDer, SWT.BORDER | SWT.READ_ONLY);
 		final Label  lDepto			= new Label (grupoDer, SWT.LEFT);
 		final Combo  cDepto			= new Combo (grupoDer, SWT.BORDER | SWT.READ_ONLY);
@@ -106,7 +108,7 @@ public class I08_1_Editar_empleado {
 		
 		final Button bAceptar		= new Button(shell, SWT.PUSH);
 		final Button bCancelar		= new Button(shell, SWT.PUSH);
-		
+
 		lNVend			.setText(bundle.getString("Vendedor"));
 		lPassword		.setText(bundle.getString("Contrasena"));
 		lEMail			.setText(bundle.getString("EMail"));
@@ -309,16 +311,16 @@ public class I08_1_Editar_empleado {
 				}
 				// Si todo está bien, inserta el empleado
 				else {
-					Empleado emp = new Empleado(vista.getEmpleadoActual().getEmplId(), n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, 0, fechaContrato, fechaAlta, null, cDepto.getText(), null, 0, cIdioma.getSelectionIndex(),0);
-					vista.insertEmpleado(emp);
+			//		Empleado emp = new Empleado(vista.getEmpleadoActual().getEmplId(), n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), grupoactual, 0, 0, fechaContrato, fechaAlta, null, cDepto.getText(), null, 0, cIdioma.getSelectionIndex(),0);
+
+			//		vista.insertEmpleado(emp);
 					shell.dispose();
 				}
 			}
 		};
 		
 		// INICIO DE RELLENO DE DATOS
-
-		
+	
 		Empleado emp=vista.getEmpleadoActual();
 		tNVend.setText(String.valueOf(idVend));		
 		tPassword.setText(emp.getPassword());	
@@ -332,6 +334,7 @@ public class I08_1_Editar_empleado {
 		
 		bCancelar.addSelectionListener(sabCancelar);
 		bAceptar.addSelectionListener(sabAceptar);
+
 
 		// Botón por defecto bAceptar
 		shell.setDefaultButton(bAceptar);
