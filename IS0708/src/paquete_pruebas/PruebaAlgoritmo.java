@@ -35,12 +35,12 @@ public class PruebaAlgoritmo {
 		ArrayList<Turno> turnos = new ArrayList<Turno>();
 		turnos.add(t1);
 		turnos.add(t2);
-		emp1 = new Empleado(1,"emp1",t1);
-		emp2 = new Empleado(2,"emp2",t2);
-		emp3 = new Empleado(3,"emp3",t1);
-		disponibles.add(emp1);
-		disponibles.add(emp2);
-		disponibles.add(emp3);
+		//__emp1 = new Empleado(1,"emp1",t1);
+		//__emp2 = new Empleado(2,"emp2",t2);
+		//__emp3 = new Empleado(3,"emp3",t1);
+		//__disponibles.add(emp1);
+		//__disponibles.add(emp2);
+		//__disponibles.add(emp3);
 	
 		cuad = new Cuadrante(12,2007,idDepartamento);
 		System.out.println("Numero de dias del mes: "+cuad.getNumDias());
@@ -51,10 +51,10 @@ public class PruebaAlgoritmo {
 		Database db = new Database();
 		
 		// Creación del controlador
-		Controlador controlador = new Controlador(db);
+		//__ Controlador controlador = new Controlador(db);
 		
-		alg = new TurnoMatic(6,2007,controlador,turnos,idDepartamento);
-		alg.ejecutaAlgoritmo();
+		//__ alg = new TurnoMatic(6,2007,controlador,turnos,idDepartamento);
+		//__alg.ejecutaAlgoritmo();
 		
 		/*
 		
