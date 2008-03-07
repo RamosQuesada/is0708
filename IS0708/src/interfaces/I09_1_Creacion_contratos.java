@@ -416,33 +416,24 @@ public class I09_1_Creacion_contratos {
 		// Listener para el bot�n de nuevo turno
 		SelectionAdapter sabNuevoTurno = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){				
-				I09_1_1_Creacion_turnos i09=new I09_1_1_Creacion_turnos(shell, vista, bundle, 0, -1,idContrato);
-				
-				//while (!i09.getShell().isDisposed()){
+				I09_1_1_Creacion_turnos i09=new I09_1_1_Creacion_turnos(shell, vista, bundle, 0, -1,idContrato,getClase());
+				/*
+				while (!i09.getShell().isDisposed()){
 					//sleep(1000);
+				}*/
+				
 				//}
-				Turno t=i09.getTurnoAinsertar();
-				//Turno t=new Turno(26,"chusta","10:37:28","10:37:28","10:37:28",0);
-				idsTurnosInsertados.add(t.getIdTurno());				
-				turnos.add(t);				
-				for (int i=0;i<turnos.size();i++)
-					listaTurnosContrato.add(turnos.get(i).getIdTurno()+" "+turnos.get(i).getDescripcion());
-				listaTurnosContrato.redraw();
-				//}
-			}
-
-			private void sleep(int i) {
-				sleep(1000);				
-			}
+			}			
 		};
 		bNuevoTurno.addSelectionListener(sabNuevoTurno);
+		
 		
 //		 Listener para el bot�n de modificar turno
 		SelectionAdapter sabModificarTurno = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
 				if(listaTurnosContrato.getSelectionIndex()>-1){
 					int id=turnos.get(listaTurnosContrato.getSelectionIndex()).getIdTurno();
-					new I09_1_1_Creacion_turnos(shell, vista, bundle, 1,id,idContrato);
+					new I09_1_1_Creacion_turnos(shell, vista, bundle, 1,id,idContrato,null);
 				}
 				else {
 					MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_INFORMATION | SWT.OK | SWT.CANCEL);
@@ -538,6 +529,19 @@ public class I09_1_Creacion_contratos {
 	
 	public ArrayList <Integer> getTurnosAinsertar(){
 		return idsTurnosInsertados;
+	}
+	
+	public void actualizaTurno (Turno t){
+		//Turno t=i09.getTurnoAinsertar();
+		//Turno t=new Turno(26,"chusta","10:37:28","10:37:28","10:37:28",0);
+		idsTurnosInsertados.add(t.getIdTurno());				
+		turnos.add(t);				
+		for (int i=0;i<turnos.size();i++)
+			listaTurnosContrato.add(turnos.get(i).getIdTurno()+" "+turnos.get(i).getDescripcion());
+		listaTurnosContrato.redraw();
+	}
+	public I09_1_Creacion_contratos getClase(){
+		return this;
 	}
 	
 }
