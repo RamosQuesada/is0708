@@ -680,4 +680,9 @@ public class Vista {
 			System.out.println("Tipo de empleado invalido para cargar la cache");
 		}
 	}
+
+	public void cambiarNombreDepartamento(String nombreantiguo, String nombrenuevo) {
+		// TODO Auto-generated method stub
+		
+	}
 }

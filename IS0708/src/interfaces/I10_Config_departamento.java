@@ -30,6 +30,7 @@ public class I10_Config_departamento {
 	private Shell padre;
 	private Shell shell;
 	private Vista vista;
+	private String nombre;
 	
 	private Label labName;
 	private Label labNumber;
@@ -47,16 +48,17 @@ public class I10_Config_departamento {
 	private I13_Elegir_empleado tNombre;
 	
 	/** Constructor for new department */
-	public I10_Config_departamento(Shell padre, ResourceBundle bundle, Vista vista) {
+	public I10_Config_departamento(Shell padre, ResourceBundle bundle, Vista vista,String nombre) {
 		this.padre = padre;
 		this.bundle = bundle;
 		this.vista = vista;
+		this.nombre=nombre;
 		createWindow();
 	}
 
 	private void createWindow() {
 		shell = new Shell(padre, SWT.CLOSE | SWT.CLOSE | SWT.APPLICATION_MODAL );
-		shell.setText(bundle.getString("I10_tit_dep_nuevo"));
+		shell.setText(bundle.getString("I10_config_dep"));
 		shell.setLayout(new GridLayout(2,true));
 		
 		// Permite cerrar la ventana pulsando ESC
@@ -93,8 +95,9 @@ public class I10_Config_departamento {
 		
 		tName = new Text  (group, SWT.BORDER);	
 		tName.setSize(100,20);
+		tName.setText(nombre);
 		tName.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,2,1));
-		
+		/*
 		labNumber = new Label (group, SWT.NONE);
 		labNumber.setText(bundle.getString("I10_lab_num"));
 		labNumber.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));	
@@ -104,11 +107,11 @@ public class I10_Config_departamento {
 		
 		labBoss = new Label (group, SWT.NONE);
 		labBoss.setText(bundle.getString("I10_lab_jefe"));
-		labBoss.setLayoutData (new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));	
+		labBoss.setLayoutData (new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));*/	
 		
 		//textBoss = new Text (group, SWT.BORDER );
 		//textBoss.setLayoutData (new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
-		tNombre = new I13_Elegir_empleado(group,vista, bundle);
+		//tNombre = new I13_Elegir_empleado(group,vista, bundle);
 		//Button bSelect = new Button(group, SWT.NONE);
 		//bSelect.setText(bundle.getString("I10_but_seleccionar"));
 		//bSelect.setLayoutData(new GridData(SWT.LEFT,SWT.CENTER,true,true,1,1))	;	
@@ -119,9 +122,9 @@ public class I10_Config_departamento {
 		//	}
 		//};
 		//bSelect.addSelectionListener(bossSelectionListener);
-		butNewBoss = new Button(group, SWT.PUSH);
-		butNewBoss.setText(bundle.getString("I10_but_nuevo_jefe"));
-		butNewBoss.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		//butNewBoss = new Button(group, SWT.PUSH);
+		//butNewBoss.setText(bundle.getString("I10_but_nuevo_jefe"));
+		//butNewBoss.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
 		//Buttons "Accept" and "Cancel"
 		
@@ -149,11 +152,12 @@ public class I10_Config_departamento {
 		bAccept.addSelectionListener (
 				new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				if(integerCheck(tNumber.getText())==true){
+				/*if(integerCheck(tNumber.getText())==true){
 					// TODO Asignar jefe departamento
-					Empleado jefe = vista.getEmpleado(tNombre.getIdEmpl());
-					Departamento departamento = new Departamento(tName.getText(),Integer.parseInt(tNumber.getText()),jefe);
-					vista.insertDepartamento(departamento);
+					//Empleado jefe = vista.getEmpleado(tNombre.getIdEmpl());
+					//Departamento departamento = new Departamento(tName.getText(),Integer.parseInt(tNumber.getText()),jefe);
+					//vista.insertDepartamento(departamento);
+					//
 					shell.dispose();
 				}else{
 					//show message for user
@@ -163,7 +167,18 @@ public class I10_Config_departamento {
 					e.doit = messageBox.open () == SWT.CLOSE;
 					System.out.println("Non-integer value in Number field: "+tNumber.getText());
 				}		
-						
+					*/
+				if(tName.getText()!=""){
+					//cambiamos el nombre
+					System.out.println(tName.getText());
+					vista.cambiarNombreDepartamento(nombre,tName.getText());
+					shell.dispose();
+				}else{//si no se ha metido texto
+					MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
+					messageBox.setText (bundle.getString("Mensaje"));
+					messageBox.setMessage (bundle.getString("I10_err_string_vacio"));
+					e.doit = messageBox.open () == SWT.CLOSE;
+				}
 			}
 		});
 
