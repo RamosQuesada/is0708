@@ -235,27 +235,30 @@ public class Vista {
 
 		// Si todavía no he cerrado el display, ya he hecho login correctamente
 		if (!shell.isDisposed()) {
-			i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale,
-					this);
+			i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);
 			// Este bucle mantiene la ventana abierta
 			while (!shell.isDisposed()) {
 				if (!shell.getDisplay().readAndDispatch()) {
 					shell.getDisplay().sleep();
 				}
 			}
-			i02.dispose();
-			alive = false;
-			loader.interrupt();
-			if (!db.conexionAbierta())
-				db.cerrarConexion();
+			stop();
 		}
 	}
 
 	public void stop() {
-		alive = false;
-		shell.dispose();
-		loader.interrupt();
-		display.dispose();
+		try {
+			alive = false;
+			loader.interrupt();
+			if (db.conexionAbierta())
+				db.cerrarConexion();
+			i02.dispose();
+			shell.dispose();
+			display.dispose();
+		}
+		catch(Exception e) {
+			System.err.println("Error al parar la Vista.");
+		};
 	}
 
 	/**

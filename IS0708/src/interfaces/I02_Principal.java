@@ -560,7 +560,6 @@ public class I02_Principal {
 				MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_QUESTION | SWT.OK | SWT.CANCEL);
 				messageBox.setText ("Reset BD");
 				messageBox.setMessage (bundle.getString("I02_confirm_reset"));
-				//messageBox.setMessage ("Esta seguro de reiniciar la base de datos??");
 				int response=messageBox.open();
 				if(response==SWT.OK){
 					System.out.println("BBDD reiniciada");
@@ -1436,7 +1435,10 @@ public class I02_Principal {
 				// Diferentes iconos:
 				// http://www.developer.com/java/other/article.php/10936_3330861_2
 				messageBox.setMessage(bundle.getString("I02_dlg_CerrarAp"));
-				e.doit = messageBox.open() == SWT.YES;
+				if (messageBox.open() == SWT.YES) {
+					e.doit = true;
+					vista.stop();
+				}				
 			}
 		});
 	}
@@ -1450,7 +1452,7 @@ public class I02_Principal {
 		ico_chico.dispose();
 		ico_chica.dispose();
 		ico_chicos.dispose();
-		tray.getItem(0).dispose();
+//		tray.getItem(0).dispose();
 	}
 
 	/**

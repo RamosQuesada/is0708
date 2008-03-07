@@ -206,11 +206,13 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			}
 		}
 		cacheCargada = true;
-		display.asyncExec(new Runnable() {
-			public void run() {
-				calcularTamano();
-			}
-		});
+		if (!display.isDisposed()) {
+			display.asyncExec(new Runnable() {
+				public void run() {
+					calcularTamano();
+				}
+			});
+		}
 	}
 	
 	/**
@@ -473,11 +475,13 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		// c.redraw(0, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1),
 		// ancho, 18, false);
 		// c.redraw(0, 0, ancho, alto, false);
-		display.asyncExec(new Runnable() {
-			public void run() {
-				canvas.redraw();
-			}
-		});
+		if (!display.isDisposed()) {
+			display.asyncExec(new Runnable() {
+				public void run() {
+					canvas.redraw();
+				}
+			});
+		}
 	}
 	
 	/**

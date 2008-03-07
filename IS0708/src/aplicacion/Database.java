@@ -1233,7 +1233,6 @@ public class Database extends Thread {
 							+ " AND DESTINATARIO.IdMensaje=MENSAJE.IdMensaje LIMIT "
 							+ inicio + "," + (inicio + desp) + ";");
 		} catch (SQLException e) {
-			e.printStackTrace();
 			System.err.println("Error obtenMensajesEntrantes ");
 		}
 		return result;
