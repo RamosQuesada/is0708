@@ -681,8 +681,8 @@ public class Vista {
 		}
 	}
 
-	public void cambiarNombreDepartamento(String nombreantiguo, String nombrenuevo) {
+	public void cambiarNombreDepartamento(String NombreAntiguo, String NombreNuevo) {
 		// TODO Auto-generated method stub
-		
+		this.controlador.cambiaNombreDpto(NombreAntiguo, NombreNuevo);
 	}
 }

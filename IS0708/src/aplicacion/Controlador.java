@@ -557,7 +557,27 @@ public class Controlador {
 	public boolean insertDepartamentoPruebas(String nombre, int jefe) {
 		return _db.insertarDepartamento(nombre, jefe);
 	}
-
+	
+	
+	/**
+	 * Metodo que inserta en la base de datos los valores correspondientes a un
+	 * nuevo departamento(este metodo lo usa el programa que rellena
+	 * automaticamente las tablas de la base de datos)
+	 * 
+	 * @param nombre
+	 *            Nombre representativo de las actividades llevadas a cabo
+	 *            dentro del departamento
+	 * @param jefe
+	 *            Persona que dirige le departamento
+	 * @return Informa sobre si se ha podido realizar la inserci�n o no
+	 */
+	
+	public void modificaDpto(String Nombre, int jefe) {
+		 _db.modificaDepartamento(Nombre, jefe);
+	}
+	public void cambiaNombreDpto(String NombreAntiguo, String NombreNuevo) {
+		 _db.cambiaNombreDepartamento(NombreAntiguo, NombreNuevo);
+	}
 	/**
 	 * Metodo que a partir de un identificador de departamento y un dia de la
 	 * semana (entero) nos devuelve una lista dividida en horas con sus
