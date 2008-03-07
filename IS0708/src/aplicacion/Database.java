@@ -1483,30 +1483,32 @@ public class Database extends Thread {
 	//Cambiar el jefe de un Dpto.
 	
 	public boolean modificaDepartamento(String Nombre, int nvend) {
-		boolean correcto = false;
+		int r = 0;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("UPDATE DEPARTAMENTO SET JefeDepartamento= " + nvend
-					+ " WHERE Nombre=" + Nombre);
-			System.out.println("aplicacion.Database.java\t::Departamento Modificado");
-			correcto = true;
+			r = st.executeUpdate("UPDATE DEPARTAMENTO SET JefeDepartamento='"
+					+ nvend + "'" + "WHERE Nombre='" + Nombre + "';");
 		} catch (SQLException e) {
-			System.err.println("Error al Modificar el Departamento");
+			// TODO: handle exception
+			e.printStackTrace();
+			System.err.println("Error Cambiar Jefe de Dpto en la BD");
+			return false;
 		}
-		return correcto;
+		return true;
 	}	
 	public boolean cambiaNombreDepartamento(String NombreAntiguo, String NombreNuevo) {
-		boolean correcto = false;
+		int r = 0;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("UPDATE DEPARTAMENTO SET Nombre= " + NombreNuevo
-					+ " WHERE Nombre=" + NombreAntiguo);
-			System.out.println("aplicacion.Database.java\t::Departamento Modificado");
-			correcto = true;
+			r = st.executeUpdate("UPDATE DEPARTAMENTO SET Nombre='"
+					+ NombreNuevo + "'" + " WHERE Nombre='" + NombreAntiguo + "';");
 		} catch (SQLException e) {
-			System.err.println("Error al Cambiar el Nombre del Departamento");
+			// TODO: handle exception
+			e.printStackTrace();
+			System.err.println("Error Cambiar Nombre del Depto. en la BD");
+			return false;
 		}
-		return correcto;
+		return true;
 	}	
 	
 }
