@@ -122,7 +122,7 @@ public class InsertaDatosFijos {
 		
 		Turno tSabM = new Turno(0, "Sab Mañana", "10:00:00", "16:00:00", "10:00:00", 0);
 		tSabM.setIdTurno(c.insertTurno(tSabM));
-		Turno tSabT = new Turno(0, "Sab Tarde", "17:00:00", "22:00:00", "17:00:00", 0);
+		Turno tSabT = new Turno(0, "Sab Tarde", "16:00:00", "22:00:00", "16:00:00", 0);
 		tSabT.setIdTurno(c.insertTurno(tSabT));
 		
 		// Contratos
