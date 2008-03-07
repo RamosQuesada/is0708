@@ -25,7 +25,8 @@ public class PruebaAlgoritmo2 {
 		}	
 		System.out.println(me);
 		//hay q meter meses siguientes al dia en el que se genera el cuadrante
-		TurnoMatic alg = new TurnoMatic(4,2008,c,"DatosFijos");
+		//TurnoMatic alg = new TurnoMatic(4,2008,c,"DatosFijos");
+		TurnoMatic alg = new TurnoMatic(1,2008,c,"DatosFijos");
 		//TurnoMatic alg = new TurnoMatic(12,2007,c,"pruebaAlg");
 		alg.ejecutaAlgoritmo();
 		alg.imprimeEstructura();
