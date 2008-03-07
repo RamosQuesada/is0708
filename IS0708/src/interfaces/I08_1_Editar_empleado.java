@@ -75,7 +75,8 @@ public class I08_1_Editar_empleado {
 		
 		final Label  lNVend			= new Label (grupoIzq, SWT.LEFT);
 		//cambiar por un label
-		final Text   tNVend			= new Text  (grupoIzq, SWT.BORDER);
+		
+		final Label  llNVend		= new Label (grupoIzq, SWT.LEFT);
 		final Label  lPassword		= new Label (grupoIzq, SWT.LEFT);
 		final Text   tPassword		= new Text  (grupoIzq, SWT.BORDER);
 		final Label  lNombre		= new Label (grupoIzq, SWT.LEFT);
@@ -101,15 +102,16 @@ public class I08_1_Editar_empleado {
 		final Combo  cDepto			= new Combo (grupoDer, SWT.BORDER | SWT.READ_ONLY);
 		final Button bFContrato		= new Button(grupoDer, SWT.PUSH);
 		final Text   tFContrato		= new Text  (grupoDer, SWT.BORDER | SWT.READ_ONLY);
-		final Button bFAlta			= new Button(grupoDer, SWT.PUSH);
+		final Button cambios		= new Button(grupoDer, SWT.PUSH);
 		final Text   tFAlta			= new Text  (grupoDer, SWT.BORDER | SWT.READ_ONLY);
 		final Button bColor			= new Button(grupoDer, SWT.PUSH);
 		final Label  lColor			= new Label	(grupoDer,  SWT.NONE);
 		
 		final Button bAceptar		= new Button(shell, SWT.PUSH);
 		final Button bCancelar		= new Button(shell, SWT.PUSH);
-
+		String aux = String.valueOf(idVend);
 		lNVend			.setText(bundle.getString("Vendedor"));
+		llNVend			.setText(aux); 
 		lPassword		.setText(bundle.getString("Contrasena"));
 		lEMail			.setText(bundle.getString("EMail"));
 		lNombre			.setText(bundle.getString("Nombre"));
@@ -121,12 +123,11 @@ public class I08_1_Editar_empleado {
 		lContrato		.setText(bundle.getString("I08_lab_TipoContrato"));
 		lExperiencia	.setText(bundle.getString("Experiencia"));
 		lDepto			.setText(bundle.getString("Departamento"));
-		bFAlta			.setText(bundle.getString("I08_lab_FAlta"));
+		cambios			.setText("cambios en informacion laboral");
 		bFContrato		.setText(bundle.getString("I08_lab_FContr"));
 		bColor			.setText(bundle.getString("I08_lab_SelColor"));
 
 		lNVend		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
-		tNVend		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,false,1,1));
 		lPassword	.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
 		tPassword	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		lEMail		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
@@ -151,7 +152,7 @@ public class I08_1_Editar_empleado {
 		cDepto		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		bFContrato	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		tFContrato	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
-		bFAlta		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
+		cambios		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		tFAlta		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		bColor		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		lColor		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
@@ -162,9 +163,22 @@ public class I08_1_Editar_empleado {
 		grupoIzq.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
 		grupoDer.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
 		
-		tNVend.setTextLimit(8);
+		// INICIO DE RELLENO DE DATOS
+		
+		Empleado emp=vista.getEmpleado(idVend);		
+		tPassword.setText(emp.getPassword());	
+		tEMail.setText(emp.getEmail());		
+		tNombre.setText(emp.getNombre());		
+		tApell1.setText(emp.getApellido1());
+		tApell2.setText(emp.getApellido2());
+		tFNacimiento.setText(Util.dateAString(emp.getFechaNac()));
+		tFContrato.setText(Util.dateAString(emp.getFcontrato()));	
+		tFAlta.setText(Util.dateAString(emp.getFAlta()));
+		
+		
 		cSexo.setItems (new String [] {	bundle.getString("Femenino"),
 										bundle.getString("Masculino")});
+	
 		cIdioma.setItems (new String [] {	bundle.getString("esp"),
 											bundle.getString("eng"),
 											bundle.getString("pol")});
@@ -173,14 +187,21 @@ public class I08_1_Editar_empleado {
 												bundle.getString("Experto")});
 		
 		ArrayList<String> departamentos = vista.getEmpleadoActual().getDepartamentosId();
+		int j=0;
 		for (int i=0; i<departamentos.size(); i++) {
 			cDepto.add(departamentos.get(i));
+			if (emp.getDepartamentoId()!= departamentos.get(i)){
+				j=j+1;
+			}
 		}
-		cSexo.select(0);
-		cContrato.select(0);
-		cExperiencia.select(0);
-		cDepto.select(0);
-		cIdioma.select(0);
+		
+	
+		cSexo.select(emp.getSexo());
+		cContrato.select(emp.getContratoId());
+		cExperiencia.select(emp.getGrupo());
+		cDepto
+		cDepto.select();
+		cIdioma.select(emp.getIdioma());
 		
 		shell.setImage(ico_chico);
 		shell.setImage(ico_chica);
@@ -238,20 +259,13 @@ public class I08_1_Editar_empleado {
 		bFContrato.addSelectionListener(sabFContrato);
 		
 		// Listener para el selector de fecha de alta
-		SelectionAdapter sabFAlta = new SelectionAdapter() {
+		SelectionAdapter sabCambios = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
-				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shell);
-				while (!i17.isDisposed()) {
-					if (!shell.getDisplay().readAndDispatch()) {
-						shell.getDisplay().sleep();
-					}
-				}
-				fechaAlta = i17.getFecha(); 
-				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
-				tFAlta.setText(String.valueOf(fechaAlta.getDate()) + " de " + meses[fechaAlta.getMonth()]+ " de " + String.valueOf(fechaAlta.getYear()));
+//				I17_Editar_contrato i17= new I17_Editar_Contrato(shell);
+				
 			}
 		};
-		bFAlta.addSelectionListener(sabFAlta);
+		cambios.addSelectionListener(sabCambios);
 		
 		// Listener para el selector de color
 		SelectionAdapter sabColor = new SelectionAdapter() {
@@ -278,19 +292,10 @@ public class I08_1_Editar_empleado {
 		// Listener con lo que hace el botón bAceptar
 		SelectionAdapter sabAceptar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				// Comprueba el número de vendedor (campo obligatorio)
-				int n = Util.convertirNVend(tNVend.getText());
-				if (n<0) {
-					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
-					messageBox.setText (bundle.getString("Error"));
-					messageBox.setMessage (bundle.getString("I01_err_NumVendedor1"));
-					e.doit = messageBox.open () == SWT.YES;
-					// Enfocar tNVend y seleccionar texto
-					tNVend.setFocus();
-					tNVend.selectAll();
-				}
+				
+			
 				// Comprueba que la contraseña no es vacía (campo obligatorio)
-				else if (tPassword.getText().length()==0) {
+				if (tPassword.getText().length()==0) {
 					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
 					messageBox.setText (bundle.getString("Error"));
 					messageBox.setMessage (bundle.getString("I01_err_Password"));					
@@ -309,6 +314,7 @@ public class I08_1_Editar_empleado {
 					tEMail.setFocus();
 					tEMail.selectAll();
 				}
+			//	else if()
 				// Si todo está bien, inserta el empleado
 				else {
 			//		Empleado emp = new Empleado(vista.getEmpleadoActual().getEmplId(), n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), grupoactual, 0, 0, fechaContrato, fechaAlta, null, cDepto.getText(), null, 0, cIdioma.getSelectionIndex(),0);
@@ -319,18 +325,7 @@ public class I08_1_Editar_empleado {
 			}
 		};
 		
-		// INICIO DE RELLENO DE DATOS
-	
-		Empleado emp=vista.getEmpleadoActual();
-		tNVend.setText(String.valueOf(idVend));		
-		tPassword.setText(emp.getPassword());	
-		tEMail.setText(emp.getEmail());		
-		tNombre.setText(emp.getNombre());		
-		tApell1.setText(emp.getApellido1());
-		tApell2.setText(emp.getApellido2());
-		tFNacimiento.setText(Util.dateAString(emp.getFechaNac()));
-		tFContrato.setText(Util.dateAString(emp.getFcontrato()));	
-		tFAlta.setText(Util.dateAString(emp.getFAlta()));		
+		
 		
 		bCancelar.addSelectionListener(sabCancelar);
 		bAceptar.addSelectionListener(sabAceptar);
