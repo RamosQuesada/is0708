@@ -31,10 +31,13 @@ public class PruebasBaseDatos {
 		db.abrirConexion();
 		Controlador c = new Controlador(db, true);
 		
+		c.cambiaNombreDpto("RopaViejunos", "RopaViejunosNuevo");
+		c.modificaDpto("RopaViejunosNuevo", 10000100);
+		db.cerrarConexion();
 		//boolean b = db.cambiarContrato(15, 12, "aleatorio14", "1:12", 1, 4000.50, 1);
 		//ArrayList<Mensaje> misMensajes = c.getMensajesEntrantes(12345678, 0, 30);
 		
-		db.insertarTrabaja(5336917, 10, "1970-3-12", t1, t1);
+		//db.insertarTrabaja(5336917, 10, "1970-3-12", t1, t1);
 		
 		//java.sql.Date d = new java.sql.Date(0);
 		/*Turno t = c.getObjetoTurnoEmpleadoDia(Date.valueOf("1970-03-12"), 12345678);
