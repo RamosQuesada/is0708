@@ -51,6 +51,7 @@ public class PruebaAlgoritmo {
 		Database db = new Database();
 		
 		// Creación del controlador
+		//TODO ERRORES COMENTADOS CON DOBLE GUION
 		//__ Controlador controlador = new Controlador(db);
 		
 		//__ alg = new TurnoMatic(6,2007,controlador,turnos,idDepartamento);
