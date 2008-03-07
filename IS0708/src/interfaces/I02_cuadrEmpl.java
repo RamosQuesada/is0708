@@ -81,6 +81,7 @@ public class I02_cuadrEmpl extends Thread{
 		boolean run=true;
 		while(run){
 			if (lCuadranteTitulo.isDisposed() || vista.getEmpleadoActual().getEmplId()==0) run = false;
+			else{
 			display.asyncExec(new Runnable () {
 				public void run() {
 					if(cuadrante.redibujar){
@@ -103,6 +104,7 @@ public class I02_cuadrEmpl extends Thread{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
 		}
 	}
 
