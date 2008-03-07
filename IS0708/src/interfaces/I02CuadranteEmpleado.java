@@ -20,7 +20,7 @@ import aplicacion.Util;
 import aplicacion.Vista;
 
 public class I02CuadranteEmpleado {
-	//private final int anchoLados = 5; // El ancho de los lados de una franja, de donde se coge para estirarla y encogerla
+	
 	public Vista vista;
 	public boolean redibujar;
 	private Display display;
@@ -28,18 +28,19 @@ public class I02CuadranteEmpleado {
 	private int alto=100;
 	private int margenIzq, margenDer, margenSup, margenInf; // M�rgenes del cuadrante
 	private int margenNombres; // Un margen para pintar los nombres a la izquierda
-	//private int alto_franjas;
+	
 	private int tamanoFila;
-	//private int sep_vert_franjas;
+	
 	private int horaInicio, horaFin; // Definen de qu� hora a qu� hora es el cuadrante
 	private int tamHora;
-	//, tamSubdiv;
+	
 	public  int subdivisiones; // Cu�ntas subdivisiones hacer por hora (0 = sin subdivisiones)
 	public Empleado empleado;
 	private int tamano =8;
 	private ResourceBundle _bundle;
 	public Date fecha;
 	
+	public int avance=4;
 	public ArrayList<Integer> turnos;
 	public ArrayList<Float> horasInicio;
 	public ArrayList<Float> horasFin;
@@ -94,16 +95,9 @@ public class I02CuadranteEmpleado {
 		this.margenNombres  = margenNombres;
 		this.horaInicio = horaInicio;
 		this.horaFin = horaFin;
-		//alto_franjas = 15;
-		//sep_vert_franjas = 10;
 		this.subdivisiones = subdivisiones;
 		
-		// TODO Borrar esto cuando se importen los empleados
-/*		Empleado e1 = new Empleado(2, "M. Jackson", new Color (display, 104, 228,  85));
-		e1.turno.franjaNueva(new Posicion( 9,  6), new Posicion(14,  0));
-		e1.turno.franjaNueva(new Posicion(16,  0), new Posicion(18,  0));
-		empleado = e1;
-*/
+
 	}
 	/**
 	 * Dibuja el cuadrante, resaltando el empleado activo.
@@ -138,10 +132,6 @@ public class I02CuadranteEmpleado {
 			gc.drawRectangle(margenIzq + margenNombres + j*anchoDia, margenSup + 20 + 0*altoFila, anchoDia, altoFila);
 		}
 
-		
-		
-		
-		
 		// Esto es para un calendario normal
 		int altoMes = alto - margenSup - margenInf;
 		int numSemanas = 5;
@@ -238,22 +228,38 @@ public class I02CuadranteEmpleado {
 			}
 		}
 		thread = new I02_threadEmpl(this);
-		//redibujar=false;
-		thread.start();
 		
-//		while(!redibujar){try {
-//			sleep(100);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}}
-//		dibujaTurnosCargados(gc);
+		thread.start();
+	
 	}
 	
 	
+	public void dibujarCarga(GC gc){
+		cambiarPincel(gc, 100, 200, 100);
+		cambiarRelleno(gc, 100, 200, 100);
+		gc.fillRectangle((ancho-margenIzq-margenDer)/2-120,
+				(alto-margenInf-margenSup)/2-40,300,100);
+		cambiarPincel(gc, 0, 0, 0);
+		gc.drawRectangle((ancho-margenIzq-margenDer)/2-120,
+				(alto-margenInf-margenSup)/2-40,300,100);
+		Font fuente=gc.getFont();
+		cambiarPincel(gc, 0, 0, 0);
+		gc.setFont(new Font(display,"Times",10,SWT.BOLD));
+		//gc.drawText(String.valueOf((int)horaComienzo),x_comienzo, (y_comienzo), true);
+		gc.drawText("CARGANDO CUADRANTE",(ancho-margenIzq-margenDer)/2-40, (alto-margenInf-margenSup)/2,true);
+		//gc.drawText((String.valueOf((int)horaFinal)),x_comienzo , y_fin-textSize2.y, true);
+		gc.getFont().dispose();
+		gc.setFont(fuente);
+        
+	}
 	
 	public void dibujaTurnosCargados(GC gc){	
-		
+		if(this.avance!=0){
+			dibujarCarga(gc);
+		}
+		else{
+			System.out.println("r2");
+			System.out.println("redibujar"+redibujar);
 		for(int cont=0;cont<7;cont++){
 			if(horasInicio.size()>cont){
 				Font fuente=gc.getFont();
@@ -270,7 +276,7 @@ public class I02CuadranteEmpleado {
 				gc.setFont(fuente);
 			}
 		}
-		this.superior.redibujar=true;
+		}
 		
 	}
 	
@@ -309,61 +315,6 @@ public class I02CuadranteEmpleado {
 		else{
 			dibujaTurnosCargados(gc);
 		}
-//		GregorianCalendar calendario = new GregorianCalendar();
-//		System.out.println("pruebasel" +Util.dateAString(fecha));
-//		
-//
-//		calendario.set(GregorianCalendar.DAY_OF_MONTH, fecha.getDate());
-//		calendario.set(GregorianCalendar.MONTH, fecha.getMonth());
-//		calendario.set(GregorianCalendar.YEAR, fecha.getYear());
-//		System.out.println(calendario.get(GregorianCalendar.DAY_OF_WEEK));
-//		int numDias=0;
-//		while(calendario.get(GregorianCalendar.DAY_OF_WEEK)!=6){
-//			calendario.add(Calendar.DATE, -1);
-//			numDias++;
-//		}
-//		ArrayList<Turno> turnos= this.vista.getControlador().getListaTurnosEmpleados();
-//		for(int cont=0;cont<7;cont++){
-//			fecha= Date.valueOf(Util.aFormatoDate(Integer.toString(
-//				calendario.get(GregorianCalendar.YEAR)),
-//				Integer.toString(
-//					calendario.get(GregorianCalendar.MONTH)+1),
-//				Integer.toString(
-//					calendario.get(GregorianCalendar.DATE)+cont)
-//				));
-//
-//			System.out.println("FECHA REAL:"+fecha);
-//			//System.out.println(Util.dateAString(fecha));
-//			int turno = this.vista.getControlador().getTurnoEmpleadoDia(fecha, this.empleado.getEmplId());
-//			
-//			Time horaEntrada,horaSalida,horaDescanso;
-//			int duracionDescanso;
-//			Float horaEntradaFloat=0.0f;
-//			Float horaSalidaFloat=0.0f;
-//			Float horaDescansoFloat = 0.0f;
-//			Float finHoraDescansoFloat = 0.0f;
-//			if(turno==0){System.out.println("vacio");}
-//			if(turno!=0){
-//				System.out.println("turno no vacio");
-//				int actual=0;
-//				
-//				while (turno!=turnos.get(actual).getIdTurno())actual++;
-//				if(turnos.get(actual).getIdTurno()==turno){
-//					horaEntrada=turnos.get(actual).getHoraEntrada();
-//					horaSalida=turnos.get(actual).getHoraSalida();
-//					horaDescanso=turnos.get(actual).getHoraDescanso();
-//					duracionDescanso=turnos.get(actual).getTDescanso();
-//					horaEntradaFloat=(float)(horaEntrada.getHours()+horaEntrada.getMinutes()/60.0f);
-//					horaSalidaFloat=(float)(horaSalida.getHours()+horaSalida.getMinutes()/60.0f);
-//					horaDescansoFloat=(float)(horaDescanso.getHours()+horaDescanso.getMinutes()/60.0f);
-//					finHoraDescansoFloat = (float)(horaDescansoFloat + ((float)(duracionDescanso)/60));
-//				}
-//			}
-//			
-//			dibujarTurno(gc,cont,horaEntradaFloat,horaDescansoFloat,"INFOR.");
-//			dibujarTurno(gc,cont,finHoraDescansoFloat,horaSalidaFloat,"INFOR.");
-//		}
-//		//}
 	}
 	
 	/**
@@ -448,8 +399,6 @@ public class I02CuadranteEmpleado {
 			h=7;
 			this.cambiarPincel(gc, 150, 255, 150);
 			this.cambiarRelleno(gc, 100, 200, 100);
-		//	int x_comienzo_c = (x_comienzo*8+x_fin*2)/10;
-		//	int x_comienzo_t = ((x_comienzo_c+x_fin)/2);
 			int x_comienzo_c=x_comienzo;
 			int x_comienzo_t = (x_comienzo + x_fin)/2;
 			int longitud = (int)((x_fin-x_comienzo_c));
