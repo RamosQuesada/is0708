@@ -293,7 +293,7 @@ public class I02_Principal {
 
 	//	ArrayList<String> array = vista.getEmpleadoActual()
 		//		.getDepartamentosId();
-		ArrayList<String> array = vista.getControlador().getNombreTodosDepartamentos();
+		ArrayList<String> array = vista.getNombreTodosDepartamentos();
 		if (array != null) {
 			for (int i = 0; i < array.size(); i++) {
 				cmbDepartamentos.add(array.get(i));

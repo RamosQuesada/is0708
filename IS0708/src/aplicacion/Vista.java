@@ -1,6 +1,7 @@
 package aplicacion;
 
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -685,4 +686,13 @@ public class Vista {
 		// TODO Auto-generated method stub
 		this.controlador.cambiaNombreDpto(NombreAntiguo, NombreNuevo);
 	}
+	
+	
+	public ArrayList<String> getNombreTodosDepartamentos() {
+		return this.controlador.getNombreTodosDepartamentos();
+		}
+	
+	
+	
+	
 }
