@@ -56,8 +56,8 @@ public class I09_1_Creacion_contratos {
 	}
 	/**
 	 * Esta clase muestra una ventana con casillas para marcar los turnos.
-	 * Dibuja tantas filas como turnos, y tantas columnas como d�as haya en el ciclo. 
-	 * @author Daniel
+	 * Dibuja tantas filas como turnos, y tantas columnas como días haya en el ciclo. 
+	 * @author Daniel Dionne
 	 *
 	 */
 	private class CheckBoxes {

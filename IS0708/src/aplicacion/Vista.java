@@ -654,9 +654,6 @@ public class Vista {
 	public void loadCache(int tipo, int numvendedor, String dep) {
 		//empleados
 
-		/** Caché local: Lista de mensajes entrantes del usuario actual */
-		//mensajesEntrantes
-
 		/** Caché local: Lista de contratos disponibles para este departamento */
 		//contratos
 		//departamentos jefe
