@@ -1476,7 +1476,33 @@ public class Database extends Thread {
 		return r;		
 	}
 	
+	//Cambiar el jefe de un Dpto.
 	
-	
+	public boolean modificaDepartamento(String Nombre, int nvend) {
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("UPDATE DEPARTAMENTO SET JefeDepartamento= " + nvend
+					+ " WHERE Nombre=" + Nombre);
+			System.out.println("aplicacion.Database.java\t::Departamento Modificado");
+			correcto = true;
+		} catch (SQLException e) {
+			System.err.println("Error al Modificar el Departamento");
+		}
+		return correcto;
+	}	
+	public boolean cambiaNombreDepartamento(String NombreAntiguo, String NombreNuevo) {
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("UPDATE DEPARTAMENTO SET Nombre= " + NombreNuevo
+					+ " WHERE Nombre=" + NombreAntiguo);
+			System.out.println("aplicacion.Database.java\t::Departamento Modificado");
+			correcto = true;
+		} catch (SQLException e) {
+			System.err.println("Error al Cambiar el Nombre del Departamento");
+		}
+		return correcto;
+	}	
 	
 }
