@@ -431,7 +431,7 @@ public class TurnoMatic {
 			int minFinDescanso=minIniDescanso+turno.getTDescanso();
 			
 			//comprobar si en ese minuto esta currando y no esta descansando
-			if (((minIni<=momento)&&(minFin>momento))&&((minIniDescanso>momento)||(minFinDescanso<momento)||(turno.getTDescanso()==0))){
+			if (((minIni<=momento)&&(minFin>momento))&&((minIniDescanso>momento)||(minFinDescanso<=momento)||(turno.getTDescanso()==0))){
 				contador++;
 			}
 		}
