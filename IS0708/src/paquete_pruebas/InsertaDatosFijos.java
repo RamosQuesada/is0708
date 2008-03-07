@@ -223,27 +223,28 @@ public class InsertaDatosFijos {
 	
 	public static void insertarNdepart(int numDepartamentos) {
 	
-		for (int nd=1; nd<=numDepartamentos; nd++){
+		// Comenzamos 
+		Database bd = new Database();
+		Controlador c = new Controlador(bd, false);
+		bd.run();
 		
-			// Comenzamos 
-			Database bd = new Database();
-			Controlador c = new Controlador(bd,false);
-			bd.run();
+		Date inicio = Date.valueOf("2008-01-01");
+		Date nacimiento = new Date(0);
+		
+		//c.vaciarTodasTablas();//borramos las tablas
+		/*c.vaciarTabla("TURNOS");//VACIAMOS SOLO LAS TABLAS QUE RELLENAMOS Y LAS QUE VAN "LIGADAS"
+		c.vaciarTabla("CONTRATO");
+		c.vaciarTabla("DISTRIBUCION");
+		c.vaciarTabla("DEPARTAMENTO");
+		c.vaciarTabla("ListaTurnosPorContrato");
+		c.vaciarTabla("USUARIO");
+		c.vaciarTabla("MENSAJE");
+		c.vaciarTabla("VENTAS");*/
+		
+		for (int nd=1; nd<=numDepartamentos; nd++){
+			
 			String depart = "DatosFijos" + nd;
 			
-			Date inicio = Date.valueOf("2008-01-01");
-			Date nacimiento = new Date(0);
-			
-			//c.vaciarTodasTablas();//borramos las tablas
-			/*c.vaciarTabla("TURNOS");//VACIAMOS SOLO LAS TABLAS QUE RELLENAMOS Y LAS QUE VAN "LIGADAS"
-			c.vaciarTabla("CONTRATO");
-			c.vaciarTabla("DISTRIBUCION");
-			c.vaciarTabla("DEPARTAMENTO");
-			c.vaciarTabla("ListaTurnosPorContrato");
-			c.vaciarTabla("USUARIO");
-			c.vaciarTabla("MENSAJE");
-			c.vaciarTabla("VENTAS");*/
-					
 			// Crear turno jefe departamento
 			Turno turnoJefe = new Turno(0, "turnoJefeFijo"+nd, "9:00:00", "19:00:00", "13:00:00", 180);
 			turnoJefe.setIdTurno(c.insertTurno(turnoJefe));
