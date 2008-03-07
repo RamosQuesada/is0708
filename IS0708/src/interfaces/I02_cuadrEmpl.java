@@ -186,7 +186,7 @@ public class I02_cuadrEmpl extends Thread{
 		cGridCuadrante.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		cGridCuadrante.setItems(new String[] {"15 min","30 min", "1 hora"});
 		
-		cGridCuadrante.select(1);
+		cGridCuadrante.select(2);
 		
 		cGridCuadrante.addListener(SWT.Selection, new Listener () {
 			public void handleEvent (Event e){
