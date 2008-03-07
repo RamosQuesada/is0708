@@ -417,7 +417,6 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		return movimiento;
 	}
 
-	
 	private void dibujarCuadrante(GC gc) {
 		// Doble buffering para evitar parpadeo
 		if (ancho != 0 && alto != 0) {
@@ -467,7 +466,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		
 	}
 	
-	private void redibujar() {
+	public void redibujar() {
 		// Redibuja sólo las franjas que corresponden, para evitar calculos
 		// innecesarios
 		// TODO ¿Merece la pena? Hay que ver si hay alguna diferencia en el rendimiento.
@@ -652,4 +651,14 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		return null;
 	}
 	*/
+	
+	/**
+	 * Método que establece el atributo del cuadrante a diario o mensual
+	 * 
+	 * @param b
+	 * 		booleano con el valor a establecer
+	 */
+	public void setDiario(boolean d) {
+		diario=d;
+	}
 }
