@@ -32,7 +32,7 @@ public class I02_threadEmpl extends Thread{
 			e.printStackTrace();
 		}}
 		corriendo=true;
-		this.cuadrante.redibujar=false;
+		this.cuadrante.redibujar=true;
 			Date fechaActual;
 			cuadrante.horasFin= new ArrayList<Float>();
 			cuadrante.horasInicio = new ArrayList<Float>();

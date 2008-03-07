@@ -85,13 +85,13 @@ public class I02_cuadrEmpl extends Thread{
 				public void run() {
 					if(cuadrante.redibujar){
 						
-						System.out.println("r1");
+						
 						redibujar();
 						cuadrante.redibujar=false;
 					}
 					else{
 					//	System.out.println("Esperando"+cuadrante.avance);
-						redibujar();
+					//	redibujar();
 						//cuadrante.
 						
 					}
