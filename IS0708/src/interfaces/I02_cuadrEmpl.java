@@ -39,7 +39,7 @@ public class I02_cuadrEmpl extends Thread{
 	 * bug: al hacer muchas franjas peque�itas, no se pegan bien (ver si sigue pasando)
 	 */
 	private Canvas canvas;
-	public boolean redibujar;
+	//public boolean redibujar;
 	private int alto, ancho;
 	private Display display;
 	private ResourceBundle _bundle;
@@ -85,11 +85,15 @@ public class I02_cuadrEmpl extends Thread{
 				public void run() {
 					if(cuadrante.redibujar){
 						
-						cuadrante.redibujar=false;
+						System.out.println("r1");
 						redibujar();
+						cuadrante.redibujar=false;
 					}
 					else{
-						//TRATAR EL TIEMPO DE CARGADO...
+					//	System.out.println("Esperando"+cuadrante.avance);
+						redibujar();
+						//cuadrante.
+						
 					}
 				}
 			});
@@ -180,21 +184,22 @@ public class I02_cuadrEmpl extends Thread{
 		
 		cGridCuadrante = new Combo(c, SWT.BORDER | SWT.READ_ONLY);
 		cGridCuadrante.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		cGridCuadrante.setItems(new String[] {"5 min", "10 min", "15 min", "30 min", "1 hora"});
-		cGridCuadrante.select(2);
+		cGridCuadrante.setItems(new String[] {"15 min","30 min", "1 hora"});
+		
+		cGridCuadrante.select(1);
 		
 		cGridCuadrante.addListener(SWT.Selection, new Listener () {
 			public void handleEvent (Event e){
 				switch (cGridCuadrante.getSelectionIndex()) {
-				case 0 : setSubdivisiones(12); break;
-				case 1 : setSubdivisiones(6); break;
-				case 2 : setSubdivisiones(4); break;
-				case 3 : setSubdivisiones(2); break;
-				case 4 : setSubdivisiones(1);
+				//case 0 : setSubdivisiones(12); break;
+				case 0 : setSubdivisiones(4); break;
+				case 1 : setSubdivisiones(2); break;
+				case 2 : setSubdivisiones(1);
 				}
 			}
 		});
 
+		
 		this.canvas = new Canvas(c, SWT.FILL | SWT.NO_BACKGROUND);
 		canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 	//	creando = false;
@@ -210,7 +215,7 @@ public class I02_cuadrEmpl extends Thread{
 		horaInicio = 9;
 		horaFin = 23;
 		display = canvas.getDisplay();
-		cuadrante = new I02CuadranteEmpleado(display, 4, horaInicio, horaFin, margenIzq, margenDer, margenSup, margenInf, margenNombres,_bundle,
+		cuadrante = new I02CuadranteEmpleado(display, 1, horaInicio, horaFin, margenIzq, margenDer, margenSup, margenInf, margenNombres,_bundle,
 				empleado,fecha,vista,this);
 		calcularTamano();
 		
@@ -228,19 +233,6 @@ public class I02_cuadrEmpl extends Thread{
 			}
 		});			
 		
-				
-		
-	
-//		mouseListenerCuadrMensual = new MouseListener() {
-//			public void mouseDown(MouseEvent e){};
-//			public void mouseUp(MouseEvent e){};
-//			public void mouseDoubleClick(MouseEvent e){};
-//		};
-//		mouseMoveListenerCuadrMensual = new MouseMoveListener() {
-//			public void mouseMove(MouseEvent e) {
-//				
-//			}
-//		};
 		if (diario) setSemanal(); else setMensual();
 		start();
 	}

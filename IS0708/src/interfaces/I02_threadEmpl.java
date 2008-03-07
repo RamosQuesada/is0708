@@ -49,10 +49,20 @@ public class I02_threadEmpl extends Thread{
 				calendario.add(Calendar.DATE, -1);
 				numDias++;
 			}
-			
+			cuadrante.avance=4;
 			cuadrante.tiposTurno= cuadrante.vista.getControlador().getListaTurnosEmpleados();
+			//esperando 3...
+			cuadrante.avance=3;
 			int cont=0;
 			while (cont < 7 && (! finalizar)){
+				//si cont > 2 esperando 2..
+				if((cont>2)&&(cont<5)){
+					cuadrante.avance=2;
+				}
+				//si cont > 5 esperando 1..
+				if(cont>=5){
+					cuadrante.avance=1;
+				}
 				cuadrante.fecha= Date.valueOf(Util.aFormatoDate(Integer.toString(
 					calendario.get(GregorianCalendar.YEAR)),
 					Integer.toString(
@@ -99,7 +109,9 @@ public class I02_threadEmpl extends Thread{
 			cont++;
 		}
 			corriendo=false;
+			
 			if(!finalizar){
+				cuadrante.avance=0;
 				this.cuadrante.redibujar=true;
 			}
 			
