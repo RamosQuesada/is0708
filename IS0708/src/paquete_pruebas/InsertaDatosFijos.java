@@ -428,9 +428,9 @@ public class InsertaDatosFijos {
 			c.insertDepartamentoUsuario(10000701+nd*1000, depart);
 			c.insertDepartamentoUsuario(10000702+nd*1000, depart);
 			
-			bd.cerrarConexion();
-		
 		}
+		
+		bd.cerrarConexion();
 		
 	}
 
