@@ -377,7 +377,7 @@ public class TurnoMatic {
 			int horaFin=timeFin.getHours()+1;
 			Date fecha=new Date(anio, mes, dia);
 			//bucle que recorre todas las horas de una franja
-			for (int j=horaIni;j<=horaFin;j++){
+			for (int j=horaIni;j<horaFin;j++){
 				for (int min=0;min<60;min++){
 					if (estruc.getCalendario().getMinHora(dia,j)>contarEmpleadosHora(cuadAux[dia],fecha,j,min))
 						valido=false;
