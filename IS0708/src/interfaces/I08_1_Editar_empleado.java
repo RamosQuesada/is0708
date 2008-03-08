@@ -24,6 +24,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ColorDialog;
+
+import aplicacion.Contrato;
 import aplicacion.Util;
 import aplicacion.Vista;
 import aplicacion.Empleado;
@@ -187,20 +189,34 @@ public class I08_1_Editar_empleado {
 												bundle.getString("Experto")});
 		
 		ArrayList<String> departamentos = vista.getEmpleadoActual().getDepartamentosId();
-		int j=0;
+		int jj=0;
+		boolean cumple=true;
 		for (int i=0; i<departamentos.size(); i++) {
 			cDepto.add(departamentos.get(i));
-			if (emp.getDepartamentoId()!= departamentos.get(i)){
-				j=j+1;
+
+			if (emp.getDepartamentoId()!= departamentos.get(i)&& cumple){
+				jj=jj+1;
 			}
+			else
+				cumple=false;
+		}
+		
+		ArrayList<Contrato> contratos = vista.getListaContratosDepartamento();
+		int j=0;
+		cumple=true;
+		for(int i=0; i<contratos.size();i++){
+			cContrato.add(contratos.get(i).getNombreContrato());
+			if (emp.getContratoId() != contratos.get(i).getNumeroContrato() && cumple)
+				j=j+1;
+			else
+				cumple=false;
 		}
 		
 	
 		cSexo.select(emp.getSexo());
-		cContrato.select(emp.getContratoId());
+		cContrato.select(j);
 		cExperiencia.select(emp.getGrupo());
-//		cDepto
-//		cDepto.select();
+		cDepto.select(jj);
 		cIdioma.select(emp.getIdioma());
 		
 		shell.setImage(ico_chico);
