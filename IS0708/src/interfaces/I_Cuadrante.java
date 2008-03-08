@@ -407,13 +407,33 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			}
 		};
 		mouseListenerCuadrMensual = new MouseListener() {
-			public void mouseDown(MouseEvent e){};
+			public void mouseDown(MouseEvent e){
+				if (e.button == 1) {
+					//Volver a la vista diaria con el dia seleccionado
+				}
+			};
 			public void mouseUp(MouseEvent e){};
 			public void mouseDoubleClick(MouseEvent e){};
 		};
 		mouseMoveListenerCuadrMensual = new MouseMoveListener() {
 			public void mouseMove(MouseEvent e) {
-				
+				//Comprueba las franjas verticales
+				int i=0;
+				Boolean encontrado = false;
+				int empleadoActivoNuevo = -1;
+				// Seleccionar empleado activo
+				while (!encontrado && i < vista.getEmpleados().size()) { 
+					if (iCuad[dia-1].get(i).turno.contienePunto(e.y, i,margenSup,sep_vert_franjas,alto_franjas))
+						empleadoActivoNuevo = i;
+					i++;
+				}
+				Boolean redibujar = false;
+				if (empleadoActivoNuevo != empleadoActivo) {
+					empleadoActivo = empleadoActivoNuevo;
+					redibujar = true;
+				}
+
+				// Comprueba la franja activa (horizontal)
 			}
 		};
 
@@ -537,7 +557,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		}
 	}
 	
-	public void dibujarCuadranteMes(GC gc){
+	public void dibujarCuadranteMes(GC gc) {
 		Calendar c = Calendar.getInstance();
 		// Esto coge el día 1 de este mes
 		c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),1);
@@ -554,14 +574,29 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			for (int j=0; j < ultimoDia; j++) {
 				gc.drawText(String.valueOf(j+1), margenIzq + margenNombres + j*anchoDia + anchoDia/2, margenSup);
 			}
-
-		for (int i=0; i < vista.getEmpleados().size(); i++) {
-			gc.drawText(vista.getEmpleados().get(i).getNombre(), margenIzq, margenSup + 20 + i*altoFila);
+		/**********************************************************************/
+		ArrayList<Empleado> empleados=vista.getEmpleados();
+		for (int i=0; i < empleados.size(); i++) {
+			aplicacion.Empleado e=empleados.get(i);
+			gc.drawText(e.getNombre(), margenIzq, margenSup + 20 + i*altoFila);
 			for (int j=0; j < ultimoDia; j++) {
 				gc.drawRectangle(margenIzq + margenNombres + j*anchoDia, margenSup + 20 + i*altoFila, anchoDia, altoFila);
+				/**********************************************************************/
+				if (j+1<cuad.length){
+					for (int k=0;k<cuad[j+1].size();k++) {
+						if(cuad[j+1].get(k).getIdEmpl()==e.getEmplId()) {
+							if(cuad[j+1].get(k).getIdTurno()==1) {
+								gc.drawText("M",margenIzq + margenNombres + j*anchoDia + (7/2), margenSup + 20 + i*altoFila + 2,altoFila);
+							} else {
+								gc.drawText("T",margenIzq + margenNombres + j*anchoDia + 4, margenSup + 20 + i*altoFila + 2,altoFila);
+							}
+						}
+					}
+				}
+				/**********************************************************************/
 			}
 		}
-			
+		
 		// Esto es para un calendario normal
 		int altoMes = alto - margenSup - margenInf;
 		int numSemanas = 5;
@@ -677,11 +712,28 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	/**
 	 * Método que establece el atributo del cuadrante a diario o mensual
 	 * 
-	 * @param b
+	 * @param d
 	 * 		booleano con el valor a establecer
 	 */
 	public void setDiario(boolean d) {
 		diario=d;
 		redibujar();
+	}
+	
+	/**
+	 * Método que activa/desactiva las acciones del raton sobre los cuadrantes diarios
+	 * 
+	 * @param b
+	 * 		true activa, false desactiva
+	 */
+	public void setMovCuadSemanal(boolean b) {
+		if (b) {
+			canvas.addMouseMoveListener(mouseMoveListenerCuadrSemanal);
+			canvas.addMouseListener(mouseListenerCuadrSemanal);
+		}
+		else {
+			canvas.removeMouseMoveListener(mouseMoveListenerCuadrSemanal);
+			canvas.removeMouseListener(mouseListenerCuadrSemanal);
+		}
 	}
 }
