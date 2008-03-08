@@ -1569,16 +1569,14 @@ public class Database extends Thread {
 			/**
 			 * SELECT * FROM CONTRATO
 			 * WHERE IdContrato IN (
-			 * 		SELECT IdContrato FROM USUARIO
-			 * 		WHERE NumVendedor IN (
-			 * 			SELECT NumVendedor FROM DepartamentoUsuario
-			 * 			WHERE NombreDepartamento = "dpto"));
+			 * 		SELECT u.IdContrato FROM USUARIO u, DepartamentoUsuario d
+			 * 		WHERE u.NumVendedor=d.NumVendedor AND d.NombreDepartamento = "dpto");
 			 */
 			
 			r = st.executeQuery("SELECT * FROM CONTRATO WHERE IdContrato IN ("
-					+ "SELECT IdContrato FROM USUARIO WHERE NumVendedor IN ("
-					+ "SELECT NumVendedor FROM DepartamentoUsuario WHERE "
-					+ "NombreDepartamento = '"+ departamento +"'));");
+					+ "SELECT IdContrato FROM USUARIO u, DepartamentoUsuario d "
+					+ "WHERE u.NumVendedor=d.NumVendedor AND "
+					+ "d.NombreDepartamento = '"+ departamento +"'));");
 			
 		} catch (SQLException e) {
 			System.err.println("Error al realizar la consulta de contratos");

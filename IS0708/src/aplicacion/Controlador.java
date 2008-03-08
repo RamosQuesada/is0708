@@ -677,7 +677,7 @@ public class Controlador {
 	 */
 	public ArrayList<Contrato> getListaContratosDpto(String idDepartamento) {
 		ArrayList<Contrato> contratos = new ArrayList<Contrato>();
-		ResultSet rs = null;
+	/*	ResultSet rs = null;
 		try {
 			rs = _db.obtenContratosDepartamento(idDepartamento);
 			
@@ -690,14 +690,14 @@ public class Controlador {
 			System.out.println("Error en getListaContratosDpto");
 			return null;
 		}
-	}
+	}*/
 		
 		
-/*		ArrayList arrayIdContratos = new ArrayList();
+		ArrayList arrayIdContratos = new ArrayList();
 		Contrato contrato;
 		try {
 			ArrayList<Empleado> e = new ArrayList<Empleado>();
-			e = getEmpleadosDepartamento(dpto);
+			e = getEmpleadosDepartamento(idDepartamento);
 			// obtener Turnos a partir de los IdTurno's
 
 			for (int i = 0; i < e.size(); i++) {
@@ -715,8 +715,8 @@ public class Controlador {
 			System.err
 					.println("Error al obtener Lista de Contratos del Departamento dado en la base de datos");
 		}
-		return contratos;s
-	}*/
+		return contratos;
+	}
 
 	/**
 	 * Metodo que asocia empleados a un departamento y los inserta en la base de

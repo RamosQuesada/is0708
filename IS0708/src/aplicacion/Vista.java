@@ -662,9 +662,13 @@ public class Vista {
 		int numvendedor = getEmpleadoActual().getEmplId();
 		
 		if (tipo == 1) {
+			setProgreso("Cargando empleados", 25);
 			empleados = controlador.getEmpleadosDepartamento(dep);
+			setProgreso("Cargando contratos", 50);
 			contratos = controlador.getListaContratosDpto(dep);
+			setProgreso("Cargando turnos", 75);
 			turnos = controlador.getListaTurnosEmpleadosDpto(dep);
+			setProgreso("", 100);
 		} else if (tipo == 2) {
 			ArrayList<String> temp = new ArrayList<String>();
 			setProgreso("Cargando empleados", 25);
