@@ -663,7 +663,7 @@ public class Vista {
 		setProgreso("Cargando contratos", 50);
 		contratos = controlador.getListaContratosDpto(dep);
 		if (!alive) return;
-		setProgreso("Cargando turnos", 75);
+		setProgreso("Cargando turnos", 70);
 		turnos = controlador.getListaTurnosEmpleadosDpto(dep);
 		setProgreso("", 100);
 		if (!alive) return;

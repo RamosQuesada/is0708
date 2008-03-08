@@ -65,6 +65,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 
 	private Label lGridCuadrante;
 	private Combo cGridCuadrante;
+	private Label lCuadranteTitulo;
 	
 	private int dia=1;
 	private int mes=6;
@@ -85,7 +86,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		public void run() {
 			try {
 				while(!vista.isCacheCargada()) {
-					sleep(500);
+					sleep(50);
 				}
 				cargarCache();
 				redibujar();
@@ -204,7 +205,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	}
 
 	public void cargarCache() {
+		vista.setProgreso("Cargando cuadrantes", 80);
 		ArrayList<Trabaja> c[] = vista.getCuadrante(mes, anio, departamento).getCuad();
+		vista.setProgreso("", 100);
 		iCuad = new ArrayList[c.length];
 		for (int i=0; i<c.length; i++) {
 			iCuad[i] = new ArrayList<I_Trabaja>();
@@ -213,6 +216,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					iCuad[i].add(new I_Trabaja(c[i].get(j)));
 			}
 		}
+
 		cacheCargada = true;
 		if (!display.isDisposed()) {
 			display.asyncExec(new Runnable() {
@@ -230,12 +234,11 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		
 		cCuadrante.setLayout(new GridLayout(3,false));
 
-		final Label lCuadranteTitulo = new Label (cCuadrante, SWT.LEFT);
+		lCuadranteTitulo = new Label (cCuadrante, SWT.LEFT);
 		String fname = lCuadranteTitulo.getFont().getFontData()[0].getName();
 		lCuadranteTitulo.setFont(new Font(cCuadrante.getDisplay(),fname,15,0));
-		String sFecha = dia + " de " + aplicacion.Util.mesAString(vista.getBundle(), getMes()) + " de " + getAnio();
-		// fecha.getDate() + " de " + fecha.getMonth() + " de " + fecha.getYear(); 
-		lCuadranteTitulo.setText(sFecha);
+
+		lCuadranteTitulo.setText("");
 		lCuadranteTitulo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		
 		lGridCuadrante= new Label (cCuadrante, SWT.LEFT);
@@ -485,12 +488,16 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		this.anio = anio;
 		if (vista.isCacheCargada()) {
 			cargarCache();
-			redibujar();
+			redibujar();			
 		}
 	}
 	
 	public void setDepartamento(String departamento) {
 		this.departamento = departamento;
+		if (cacheCargada) {
+			cargarCache();
+			redibujar();
+		}
 	}
 	
 	private void calcularTamano() {
@@ -517,6 +524,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			display.asyncExec(new Runnable() {
 				public void run() {
 					canvas.redraw();
+					lCuadranteTitulo.setText(dia + " de " + aplicacion.Util.mesAString(vista.getBundle(), getMes()) + " de " + anio);
 				}
 			});
 		}
@@ -558,24 +566,28 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	}
 	
 	public void dibujarCuadranteMes(GC gc) {
+		if (cacheCargada){
 		Calendar c = Calendar.getInstance();
-		// Esto coge el día 1 de este mes
-		c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),1);
-		// Y esto en qué día de la semana cae
-		int primerDia = c.get(Calendar.DAY_OF_WEEK);
-		c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),1);
-		c.roll(Calendar.DAY_OF_MONTH,false); // Pasa al último día del este mes
-		int ultimoDia = c.get(Calendar.DAY_OF_MONTH);
+		// Esto coge el primer domingo
+		boolean domingoEncontrado = false;
+		int dom = 1;
+		while (!domingoEncontrado) {
+			c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),dom);
+			if (c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) domingoEncontrado=true;
+			else dom++;
+		}
+		System.out.println(dom);
 		int anchoMes = ancho - margenIzq - margenDer - margenNombres;
-		int anchoDia = anchoMes/ultimoDia;
+		int anchoDia = anchoMes/iCuad.length;
 		int altoFila = 20;
 		// Dibujar números de los días
 		if (anchoDia>14)
 			for (int j=0; j < iCuad.length; j++) {
-				if (j%7==0) gc.setForeground(new Color(display,255,0,0));
-				else if (j%7==1) gc.setForeground(new Color(display,0,0,0));
+				if ((j+dom)%7==6) gc.setForeground(new Color(display,255,0,0));
+				else if ((j+dom)%7==0) gc.setForeground(new Color(display,0,0,0));
 				gc.drawText(String.valueOf(j+1), margenIzq + margenNombres + j*anchoDia + anchoDia/2, margenSup);
 			}
+		gc.setForeground(new Color(display,0,0,0));
 		/**********************************************************************/
 		ArrayList<Empleado> empleados=vista.getEmpleados();
 		for (int i=0; i < empleados.size(); i++) {
@@ -594,7 +606,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		int altoMes = alto - margenSup - margenInf;
 		int numSemanas = 5;
 		int altoDia = alto/numSemanas;
-		
+		}
 	}
 	
 	/**

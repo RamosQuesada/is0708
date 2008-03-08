@@ -139,6 +139,7 @@ public class I02_Principal {
 			}
 		});
 		helpHelpItem.setAccelerator(SWT.F1);
+		setProgreso("Cargando datos", 10);
 
 	}
 
@@ -169,10 +170,10 @@ public class I02_Principal {
 				| SWT.READ_ONLY);
 		cDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1));
-		/** ********************************************************* */
+		
+		// TODO coger de la cache
 		cDepartamentos.setItems(vista.getNombresDepartamentosJefe());
-		// cDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
-		/** ********************************************************* */
+//		 cDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
 		cDepartamentos.select(0);
 
 		// Un canvas para albergar el gráfico de los cuadrantes
@@ -189,21 +190,15 @@ public class I02_Principal {
 		t2.setIdEmpl(10000200);
 		t2.setIdTurno(2);
 
-		final I_Cuadrante ic = new I_Cuadrante(vista, 2, 2008, "mi_dep", 4, 9,
-				23);
-		// ic.setCuad(vista.getCuadrante(6, 2008, "DatosFijos").getCuad());
-		/** ********************************************************* */
+		final I_Cuadrante ic = new I_Cuadrante(vista, 0, 0, "mi_dep", 4, 9, 23);
 		cDepartamentos.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				// ic.setCuad(vista.getCuadrante(12,2007,cDepartamentos.getText()));
-				System.out.println("Dpto. " + cDepartamentos.getText());
+				ic.setDepartamento(cDepartamentos.getText());
 			}
 		});
-		/** ********************************************************* */
 		ic.setTrabajaDia(1, t1);
 		ic.setTrabajaDia(1, t2);
 		ic.setComposite(cCuadrante);
-		// ic.setDia(1);
 
 		Label lCalendario = new Label(cCuadrantes, SWT.LEFT);
 		lCalendario.setText(bundle.getString("Calendario"));
