@@ -8,6 +8,7 @@ import java.util.GregorianCalendar;
 
 import org.eclipse.swt.graphics.GC;
 
+import algoritmo.Trabaja;
 import aplicacion.Turno;
 import aplicacion.Util;
 
@@ -73,9 +74,7 @@ public class I02_threadEmpl extends Thread{
 						calendario.get(GregorianCalendar.DATE)+cont)
 					));
 
-				int turno = cuadrante.vista.getControlador().getTurnoEmpleadoDia(cuadrante.fecha, cuadrante.empleado.getEmplId());
-				//__ boss
-				
+				//ESPERA A QUE SE CARGUE LA CACHE
 				while((!cuadrante.vista.isCacheCargada())&&(!finalizar)){
 					
 
@@ -86,6 +85,38 @@ public class I02_threadEmpl extends Thread{
 						e.printStackTrace();
 					}
 				}
+				if(cuadrante.vista.isCacheCargada()){
+	//CACHE NO QUITAR MAS UNO DE MES ARRIBA...
+	/*			
+				ArrayList<Trabaja> lista_trabaja=new ArrayList<Trabaja>();
+				try{
+				 lista_trabaja=cuadrante.vista.getListaTrabajaDia(cuadrante.fecha.getDate(), cuadrante.fecha.getMonth()+2, 2008, cuadrante.empleado.getDepartamentoId());
+				}
+				catch(Exception e){
+			//		System.out.println("fecha "+cuadrante.fecha.getDate()+" "+cuadrante.fecha.getMonth()+" "+"2008");	
+				}
+				
+			//	System.out.println("fecha "+cuadrante.fecha.getDate()+" "+cuadrante.fecha.getMonth()+" "+cuadrante.fecha.getYear());
+				int contador=0;
+				int tamaño=lista_trabaja.size();
+				Trabaja trabaja=null;
+				
+				
+				while((contador<tamaño)&&(lista_trabaja.get(contador).getIdEmpl()!=cuadrante.empleado.getEmplId())){
+					if((lista_trabaja.get(contador).getIdEmpl()!=cuadrante.empleado.getEmplId())){
+						trabaja=lista_trabaja.get(contador);
+					}
+					contador++;
+				}
+				int turno=0;
+				if(trabaja!=null){
+					turno= trabaja.getIdTurno();
+				}
+    */
+				int turno = cuadrante.vista.getControlador().getTurnoEmpleadoDia(cuadrante.fecha, cuadrante.empleado.getEmplId());
+				//__ boss
+				
+
 				
 				Turno tturno= cuadrante.vista.getTurno(turno);
 				
@@ -118,6 +149,7 @@ public class I02_threadEmpl extends Thread{
 						cuadrante.horaComienzoDescanso.add(cont,horaDescansoFloat);
 						cuadrante.horaFinDescanso.add(cont,finHoraDescansoFloat);
 						*/
+						
 						horaEntrada=tturno.getHoraEntrada();
 						horaSalida=tturno.getHoraSalida();
 						horaDescanso=tturno.getHoraDescanso();
@@ -140,6 +172,7 @@ public class I02_threadEmpl extends Thread{
 					cuadrante.horaFinDescanso.add(cont,0.0f);
 				}
 			cont++;
+		}
 		}
 			corriendo=false;
 			
