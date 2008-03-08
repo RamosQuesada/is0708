@@ -1,7 +1,6 @@
 package aplicacion;
 
 import java.sql.Date;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -382,7 +381,6 @@ public class Vista {
 		// Si no, buscar en BD
 		//return controlador.getTurno(idTurno);
 		return null;
-
 	}
 	
 	public Cuadrante getCuadrante(int mes, int anio, String idDepartamento) {
@@ -675,5 +673,9 @@ public class Vista {
 	
 	public ArrayList<String> getNombreTodosDepartamentos() {
 		return this.controlador.getNombreTodosDepartamentos();
+	}
+
+	public ArrayList<Contrato> getListaContratosDepartamento() {
+		return contratos;
 	}
 }
