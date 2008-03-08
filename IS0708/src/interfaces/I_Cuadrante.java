@@ -69,6 +69,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private int dia=1;
 	private int mes=6;
 	private int anio=2008;
+	private String departamento="Ropa Viejunos";
 	private Image fondo;
 	
 	
@@ -101,11 +102,14 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		private Time FichFin;//Fichaje final
 		private Turno turno;//Identificador del turno
 		
-		public I_Trabaja (Trabaja t) {
-			this.empl=vista.getEmpleado(t.getIdEmpl());
-			this.FichIni=t.getFichIni();
-			this.FichFin=t.getFichFin();
-			this.turno=vista.getTurno(t.getIdTurno());
+		public I_Trabaja (Trabaja tr) {
+			this.empl=vista.getEmpleado(tr.getIdEmpl());
+			this.FichIni=tr.getFichIni();
+			this.FichFin=tr.getFichFin();
+			// Aquí hay que hacer una copia del turno
+			Turno t = vista.getTurno(tr.getIdTurno());
+			this.turno= new Turno(t);
+					
 		}
 
 		public Empleado getEmpl() {
@@ -200,7 +204,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	}
 
 	public void cargarCache() {
-		ArrayList<Trabaja> c[] = vista.getCuadrante(mes, anio, "Ropa Viejunos").getCuad();
+		ArrayList<Trabaja> c[] = vista.getCuadrante(mes, anio, departamento).getCuad();
 		iCuad = new ArrayList[c.length];
 		for (int i=0; i<c.length; i++) {
 			iCuad[i] = new ArrayList<I_Trabaja>();
@@ -463,6 +467,10 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			cargarCache();
 			redibujar();
 		}
+	}
+	
+	public void setDepartamento(String departamento) {
+		this.departamento = departamento;
 	}
 	
 	private void calcularTamano() {
