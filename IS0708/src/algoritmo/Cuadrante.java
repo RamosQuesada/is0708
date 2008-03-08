@@ -85,6 +85,16 @@ public class Cuadrante {
 		this.idDepartamento = idDepartamento;
 	}
 	
-	
+	public String toString() {
+		String s = "";
+		s+= mes + ", " +anio+"\n";
+		for (int i=0; i<numDias; i++){
+			s+=String.valueOf(i+1)+"\n";
+			for (int j=0; j<cuad[i].size(); j++) {
+				s+=cuad[i].get(j).getIdEmpl() + " - " +cuad[i].get(j).getIdTurno() +"\n"; 
+			}
+		}
+		return s;
+	}
 
 }

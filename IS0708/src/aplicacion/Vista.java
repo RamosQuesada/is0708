@@ -55,9 +55,6 @@ public class Vista {
 	/** Caché local: Cuadrantes del departamento actual */
 	private ArrayList<Cuadrante> cuadrantes = new ArrayList<Cuadrante>();
 	
-	/** Fecha del cuadrante que está cargado */
-	private int mes, anio;
-
 	/**
 	 * Este hilo conecta con la base de datos.
 	 * 
@@ -401,13 +398,14 @@ public class Vista {
 		}
 		// Si no, buscar en BD
 		Cuadrante c = controlador.getCuadrante(mes, anio, idDepartamento);
+		System.out.println(c);
 		cuadrantes.add(c);
 		return c;
 	}
 	
 	public ArrayList<Trabaja> getListaTrabajaDia(int dia, int mes, int anio, String idDepartamento) {
 		Cuadrante c = getCuadrante(mes, anio, idDepartamento);
-		return c.getListaTrabajaDia(dia);
+		return c.getListaTrabajaDia(dia-1);
 	}
 	
 	/**
@@ -435,15 +433,6 @@ public class Vista {
 		mensajesEntrantes = getMensajesEntrantes(getEmpleadoActual()
 				.getEmplId(), 0, num_men_hoja);
 		infoDebug("Vista", "Acabado");
-	}
-	
-	public void loadTurnos() {
-		// De momento, carga una lista ficticia de cuatro turnos
-		turnos.clear();
-		turnos.add(new Turno(1,"pa","14:00:00","19:00:00","17:00:00",60));
-		turnos.add(new Turno(2,"pe","12:15:00","22:15:00","16:00:00",120));
-		turnos.add(new Turno(3,"pi","12:10:00","20:10:00","16:10:00",35));
-		turnos.add(new Turno(4,"po","15:05:00","17:05:00","00:00:00",0));
 	}
 	
 	/**
@@ -518,7 +507,7 @@ public class Vista {
 	}
 
 	public ArrayList<Empleado> getEmpleadosDepartamento(String idDept) {
-		return controlador.getEmpleadosDepartamento(idDept);
+		return controlador.getEmpleadosDepartamento(getEmpleadoActual().getEmplId(),idDept);
 	}
 
 	/***************************************************************************
@@ -674,9 +663,8 @@ public class Vista {
 		int tipo = getEmpleadoActual().getRango();
 		String dep = getEmpleadoActual().getDepartamentoId();
 		int numvendedor = getEmpleadoActual().getEmplId();
-
 		setProgreso("Cargando empleados", 25);
-		empleados = controlador.getEmpleadosDepartamento(dep);
+		empleados = controlador.getEmpleadosDepartamento(getEmpleadoActual().getEmplId(),dep);
 		setProgreso("Cargando contratos", 50);
 		contratos = controlador.getListaContratosDpto(dep);
 		setProgreso("Cargando turnos", 75);

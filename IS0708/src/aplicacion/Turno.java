@@ -261,7 +261,8 @@ public class Turno {
 			gc.fillRectangle(inicio2+1,despV+1,Math.min(fin2-inicio2-1,136),12);
 			String s1 = "";
 			if (minutos2 != 0) s1=' '+ String.valueOf(minutos2) +'m';
-			String s = Util.aString(horaDescanso.getHours()+tDescanso/60) + ":" + Util.aString(horaDescanso.getMinutes()+tDescanso%60) + " - " + Util.aString(horaSalida.getHours()) + ":" + Util.aString(horaSalida.getMinutes()) + " (" + String.valueOf(horas2)+'h'+s1+')';
+			int hd = horaDescanso.getHours()*60+horaDescanso.getMinutes()+tDescanso;
+			String s = Util.aString(hd/60) + ":" + Util.aString(hd%60) + " - " + Util.aString(horaSalida.getHours()) + ":" + Util.aString(horaSalida.getMinutes()) + " (" + String.valueOf(horas2)+'h'+s1+')';
 			gc.drawText(s, inicio2+5, despV-14, true);
 		}
 	}

@@ -653,9 +653,47 @@ public class Controlador {
 	 *            identificador del departamento
 	 * @return lista de los empleados de un departamento
 	 */
-	public ArrayList<Empleado> getEmpleadosDepartamento(String idDept) {
+	public ArrayList<Empleado> getEmpleadosDepartamento(int idEmpl, String idDept) {
 		ArrayList<Empleado> emps = new ArrayList<Empleado>();
-		ResultSet rs = _db.obtenEmpleadosDepartamento(idDept);
+		ResultSet rs = _db.obtenListaEmpleadosDepartamento(idDept);
+		try {
+			while (rs.next()) {
+				String nombre = rs.getString("Nombre");
+				String apellido1 = rs.getString("Apellido1");
+				String apellido2 = rs.getString("Apellido2");
+				Date fechaNac = rs.getDate("FechaNacimiento");
+				int id = rs.getInt("NumVendedor");
+				String email = rs.getString("Email");
+				String password = rs.getString("Password");
+				int sexo = rs.getInt("Sexo");
+				int grupo = rs.getInt("IndicadorGrupo");
+				int rango = rs.getInt("Rango");
+				int idContrato = rs.getInt("IdContrato");
+				Date fechaContrato = rs.getDate("FechaContrato");
+				Date fechaAlta = rs.getDate("FechaEntrada");
+				Color color = null;
+				int idSuperior = this.getIdSuperior(idEmpl);
+				ArrayList<Integer> idSubordinados = this
+						.getIdsSubordinados(idEmpl);
+				ArrayList<String> idDepartamentos = this
+						.getIdsDepartamentos(idEmpl);
+				int felicidad = rs.getInt("Felicidad");
+				int idioma = rs.getInt("Idioma");
+				//TODO cargarlo de la BD
+				int turnoFavorito = rs.getInt("IdTurno");
+				Empleado emp = new Empleado(idSuperior, id, nombre, apellido1,
+						apellido2, fechaNac, sexo, email, password, grupo,
+						rango, idContrato, fechaContrato, fechaAlta, color,
+						null, idSubordinados, felicidad, idioma, turnoFavorito);
+				emp.setIDDepartamentos(idDepartamentos);
+				emps.add(emp);
+			}
+		} catch (Exception e) {
+			System.err
+					.println("Error al obtener Lista de Departamentos en la base de datos");
+		}
+		return emps;
+	/*	ResultSet rs = _db.obtenEmpleadosDepartamento(idDept);
 		try {
 			while (rs.next()) {
 				int id = rs.getInt("NumVendedor");
@@ -665,7 +703,7 @@ public class Controlador {
 			System.err
 					.println("Error al obtener Lista de Departamentos en la base de datos");
 		}
-		return emps;
+		return emps;*/
 	}
 
 	/**
@@ -1126,7 +1164,7 @@ public class Controlador {
 			rs = _db.obtenTurnosDepartamento(idDepartamento);
 			
 			while (rs.next()) {
-				turnos.add(new Turno(rs.getInt("IdTurno"), rs.getString("Descripcion"), rs.getTime("HoraEntrada"), rs.getTime("HoraSalida"), rs.getTime("HoraInicioDescanso"), rs.getInt("DuracionDescanso")));				
+				turnos.add(new Turno(rs.getInt("IdTurno"), rs.getString("Descripcion"), rs.getTime("HoraEntrada"), rs.getTime("HoraSalida"), rs.getTime("HoraInicioDescanso"), rs.getTime("DuracionDescanso").getHours()*60+rs.getTime("DuracionDescanso").getMinutes()));				
 			}
 			return turnos;		
 		} catch (Exception e){
@@ -1331,11 +1369,10 @@ public class Controlador {
 		Cuadrante datos = new Cuadrante(mes,anio,idDepartamento);
 		try {
 			cuad = _db.obtenCuadrante(mes, anio, idDepartamento);
-			
 			while (cuad.next()) {
 				Trabaja nuevo = new Trabaja(cuad.getInt("NumVendedor"), cuad.getTime("HoraEntrada"), cuad.getTime("HoraSalida"), cuad.getInt("IdTurno"));
 				datos.setTrabajaDia(cuad.getDate("Fecha").getDate()-1, nuevo);
-//				System.out.println("añade " + String.valueOf((cuad.getDate("Fecha").getDate()-1)));
+				//System.out.println("añade " + String.valueOf((cuad.getDate("Fecha").getDate())));
 			}
 			return datos;		
 		} catch (Exception e){

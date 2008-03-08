@@ -1475,6 +1475,8 @@ public class Database extends Thread {
 	 * @param anio el año del cuadrante
 	 * @param departamento el identificador del departamento
 	 * @return Devuelve un ResultSet con los datos leídos de la BD
+	 * 
+	 * @author Daniel Dionne
 	 */
 	public ResultSet obtenCuadrante(int mes, int anio, String departamento) {
 		ResultSet r = null;
@@ -1496,6 +1498,36 @@ public class Database extends Thread {
 			
 		} catch (SQLException e) {
 			System.err.println("Error al realizar la consulta de cuadrantes");
+		}
+		return r;
+	}
+
+	/**
+	 * Método que lee los empleados un departamento concreto
+	 * 
+	 * @param mes el mes del cuadrante
+	 * @param anio el año del cuadrante
+	 * @param departamento el identificador del departamento
+	 * @return Devuelve un ResultSet con los datos leídos de la BD
+	 * 
+	 * @author Daniel Dionne
+	 */
+	public ResultSet obtenListaEmpleadosDepartamento(String departamento) {
+		ResultSet r = null;
+		try {
+			st = con.createStatement();
+
+			// SELECT * FROM USUARIO
+			// WHERE  NumVendedor IN (
+			//		SELECT NumVendedor FROM DepartamentoUsuario
+			//		WHERE NombreDepartamento = 'departamento');
+			
+			r = st.executeQuery("SELECT * FROM USUARIO WHERE NumVendedor IN (" +
+							"SELECT NumVendedor FROM DepartamentoUsuario WHERE " +
+							"NombreDepartamento = '"+ departamento +"');");
+			
+		} catch (SQLException e) {
+			System.err.println("Error al realizar la consulta de empleados");
 		}
 		return r;
 	}
