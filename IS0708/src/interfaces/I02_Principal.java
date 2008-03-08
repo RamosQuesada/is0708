@@ -406,14 +406,14 @@ public class I02_Principal {
 
 		// Luke, usa la vista.
 
-		// Chema creo que la siguiente instrucción es la que hace que tarde
-		// tanto.
-
-		// ArrayList <Contrato>
-		// contratos=vista.getControlador().getListaContratosDpto("DatosFijos");
-
-		ArrayList<Contrato> contratos = new ArrayList();
-		for (int i = 0; i < contratos.size(); i++) {
+		
+		// Chema creo que la siguiente instrucción es la que hace que tarde tanto.
+		
+		// ArrayList <Contrato> contratos=vista.getControlador().getListaContratosDpto("DatosFijos");
+		
+		final ArrayList <Contrato> contratos = new ArrayList <Contrato>();
+		contratos.add(new Contrato("perry",23,72,1,"1:d",50,1));
+		for(int i=0;i<contratos.size();i++){
 			TableItem tItem = new TableItem(tablaContratos, SWT.NONE);
 			Contrato c = contratos.get(i);
 			tItem.setText(0, Integer.toString(c.getNumeroContrato()));
@@ -434,6 +434,7 @@ public class I02_Principal {
 			tItem.setText(6, Double.toString(c.getSalario()));
 			tItem.setText(7, Integer.toString(c.getTipoContrato()));
 		}
+		
 		for (int i = 0; i < titles.length; i++) {
 			tablaContratos.getColumn(i).pack();
 		}
@@ -444,9 +445,9 @@ public class I02_Principal {
 		final Button bModificarContrato = new Button(cContratos, SWT.PUSH);
 		final Button bEliminarContrato = new Button(cContratos, SWT.PUSH);
 
-		bNuevoContrato.setText("Nuevo contrato");
-		bModificarContrato.setText("Modificar contrato");
-		bEliminarContrato.setText("Eliminar contrato");
+		bNuevoContrato.setText(bundle.getString("I09_lab_NuevoContrato"));
+		bModificarContrato.setText(bundle.getString("I09_Modif_contrato"));
+		bEliminarContrato.setText(bundle.getString("I09_Eliminar_contrato"));
 		bNuevoContrato.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 				false, 1, 1));
 		bModificarContrato.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
@@ -456,17 +457,53 @@ public class I02_Principal {
 
 		bNuevoContrato.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				new I09_1_Creacion_contratos(shell, bundle, vista, 0, -1);
+				I09_1_Creacion_contratos i09 = new I09_1_Creacion_contratos(shell, bundle, vista, 0, -1);
+				while (!i09.getShell().isDisposed()) {
+			         if (!shell.getDisplay().readAndDispatch()) {
+			             shell.getDisplay().sleep();
+			         }
+			      }
+				Contrato c=i09.getContratoInsertado();
+				if (c!=null){
+				//Turno t=new Turno(26,"chusta","10:37:28","10:37:28","10:37:28",0);
+				contratos.add(c);	
+				tablaContratos.removeAll();
+				ArrayList <Integer> ids=i09.getTurnosInsertados();
+				int idc=c.getNumeroContrato();
+				for(int i=0;i<ids.size();i++){
+					int idt=ids.get(i);
+					if (idt!=c.getTurnoInicial()) 
+						vista.getControlador().insertTurnoPorContrato(idt, idc);
+				}
+								
+				for(int i=0;i<contratos.size();i++){
+					TableItem tItem = new TableItem(tablaContratos, SWT.NONE);
+					Contrato aux = contratos.get(i);
+					tItem.setText(0, Integer.toString(aux.getNumeroContrato()));
+					ArrayList <Empleado> emps=vista.getControlador().getEmpleados(null, null, aux.getNumeroContrato(),null, null, null, null);
+					String empleados="";
+					for (int j=0;j<emps.size();j++){
+						Empleado emp=emps.get(j);
+						empleados+=emp.getNombre()+" "+emp.getApellido1();
+						if (j!=emps.size()-1) empleados+=",";
+					}
+					tItem.setText(1, empleados);
+					tItem.setText(2, Integer.toString(aux.getTurnoInicial()));
+					tItem.setText(3, aux.getNombreContrato());
+					tItem.setText(4, aux.getPatron());
+					tItem.setText(5, Integer.toString(aux.getDuracionCiclo()));
+					tItem.setText(6, Double.toString(aux.getSalario()));
+					tItem.setText(7, Integer.toString(aux.getTipoContrato()));
+				}
+				tablaContratos.redraw();
+				}
 			}
 		});
 
 		bModificarContrato.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				if (tablaContratos.getSelectionIndex() > -1) {
-					TableItem it = tablaContratos.getItem(tablaContratos
-							.getSelectionIndex());
-					// it.getText(0);
-					System.out.println(it.getText(0));
+				if(tablaContratos.getSelectionIndex()>-1){
+					TableItem it=tablaContratos.getItem(tablaContratos.getSelectionIndex());
 					new I09_1_Creacion_contratos(shell, bundle, vista, 1,
 							Integer.parseInt(it.getText(0)));
 				} else {
@@ -476,26 +513,58 @@ public class I02_Principal {
 					messageBox.setMessage(bundle
 							.getString("I09_bot_modif_contrato_no_select"));
 					messageBox.open();
+					
+					//HACER QUE ACTUALICE COMO LO HE HECHO EN TURNOS Y MIRAR COMO AFECTA LOS IDSELIMINADOS
+					//NO DEJAR EN BLANCO
+					//AUTORRELLENADO EN MODIFICAR??
+					//CAMBIAR CONTROLADOR POR VISTA
 				}
-				System.out.println(tablaContratos.getSelectionIndex());
 			}
 		});
 
 		bEliminarContrato.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				if (tablaContratos.getSelectionIndex() > -1) {
-					MessageBox messageBox = new MessageBox(shell,
-							SWT.APPLICATION_MODAL | SWT.ICON_QUESTION | SWT.OK
-									| SWT.CANCEL);
-					messageBox.setMessage(bundle
-							.getString("I09_bot_elim_contrato"));
-					int response = messageBox.open();
-					if (response == SWT.OK) {
-						TableItem it = tablaContratos.getItem(tablaContratos
-								.getSelectionIndex());
-						// it.getText(0);
-						System.out.println(it.getText(0));
-						// vista.getControlador()
+				if(tablaContratos.getSelectionIndex()>-1){
+					MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_QUESTION | SWT.OK | SWT.CANCEL);
+					messageBox.setMessage (bundle.getString("I09_bot_elim_contrato"));
+					int response=messageBox.open();
+					if(response==SWT.OK){						
+						boolean okis=vista.getControlador().eliminaContrato(tablaContratos.getSelectionIndex());				
+						if (okis){
+							int index=tablaContratos.getSelectionIndex();
+							tablaContratos.removeAll();
+							contratos.remove(index);
+							for(int i=0;i<contratos.size();i++){
+								TableItem tItem = new TableItem(tablaContratos, SWT.NONE);
+								Contrato aux = contratos.get(i);
+								tItem.setText(0, Integer.toString(aux.getNumeroContrato()));
+								ArrayList <Empleado> emps=vista.getControlador().getEmpleados(null, null, aux.getNumeroContrato(),null, null, null, null);
+								String empleados="";
+								for (int j=0;j<emps.size();j++){
+									Empleado emp=emps.get(j);
+									empleados+=emp.getNombre()+" "+emp.getApellido1();
+									if (j!=emps.size()-1) empleados+=",";
+								}
+								tItem.setText(1, empleados);
+								tItem.setText(2, Integer.toString(aux.getTurnoInicial()));
+								tItem.setText(3, aux.getNombreContrato());
+								tItem.setText(4, aux.getPatron());
+								tItem.setText(5, Integer.toString(aux.getDuracionCiclo()));
+								tItem.setText(6, Double.toString(aux.getSalario()));
+								tItem.setText(7, Integer.toString(aux.getTipoContrato()));
+							}
+							tablaContratos.redraw();
+							MessageBox messageBox2 = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
+							messageBox2.setText("Info");
+							messageBox2.setMessage(bundle.getString("I09_elim_Contrato"));
+							messageBox2.open();
+						}
+						else {
+							MessageBox messageBox2 = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
+							messageBox2.setText(bundle.getString("Error"));
+							messageBox2.setMessage(bundle.getString("I09_err_elim_Contrato"));
+							messageBox2.open();
+						}
 					}
 				} else {
 					MessageBox messageBox = new MessageBox(shell,

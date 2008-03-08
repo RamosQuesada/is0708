@@ -15,6 +15,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.custom.ScrolledComposite;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import org.eclipse.swt.graphics.*;
@@ -25,6 +26,7 @@ import aplicacion.Vista;
 
 public class I09_1_Creacion_contratos {
 	private Shell padre = null;
+	private Shell shell = null;
 	private ResourceBundle bundle;
 	private Vista vista;
 	private int modo;
@@ -32,10 +34,10 @@ public class I09_1_Creacion_contratos {
 	private int idContrato;  // id del contrato a modificar o -1 en caso de nuevo contrato
 	private String patron;
 	private List listaTurnosContrato;
-	private ArrayList <Contrato> contratos;
 	private ArrayList <Turno> turnos;
-	private int idContratoInsertado;
+	private Contrato contratoInsertado;
 	private ArrayList <Integer> idsTurnosInsertados;
+	private ArrayList <Integer> idsTurnosEliminados;
 	private int turnoInicial;
 	
 	private final int longCicloDefault = 14;
@@ -49,7 +51,7 @@ public class I09_1_Creacion_contratos {
 		if(idContrato!=-1) turnos=vista.getControlador().getTurnosDeUnContrato(idContrato);
 		else turnos=new ArrayList <Turno>();
 		idsTurnosInsertados=new ArrayList <Integer>();
-		//vista.getControlador().abrirConexionBD();
+		idsTurnosEliminados=new ArrayList <Integer>();
 		//contratos=vista.getControlador().getListaContratosDpto("DatosFijos");
 		crearVentana();
 		
@@ -109,7 +111,8 @@ public class I09_1_Creacion_contratos {
 					l = new Label(c1,SWT.NONE);
 				else {
 					l = new Label(c1,SWT.NONE);
-					l.setText("Turno " + String.valueOf(i+1));
+					//l.setText("Turno " + String.valueOf(i+1));
+					l.setText(listaTurnosContrato.getItem(i));
 				}
 				for (int j = 1; j <= longCiclo; j++) {
 					if (i==-1) {
@@ -153,8 +156,8 @@ public class I09_1_Creacion_contratos {
 						turnos2="";
 						for(int i=0;i<numTurnos;i++){
 							if(cbs[i][j].getSelection()){
-								if(turnos2=="") turnos2+=i;
-								else turnos2+=","+i;
+								if(turnos2=="") turnos2+=turnos.get(i).getIdTurno();
+								else turnos2+=","+turnos.get(i).getIdTurno();
 							}							
 						}
 						if(turnos2=="") turnos2+="d";
@@ -271,7 +274,7 @@ public class I09_1_Creacion_contratos {
 	 * Crea el contenido de la ventana
 	 */
 	public void crearVentana() {
-		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);		
+		shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);		
 		if(modo==0)shell.setText(bundle.getString("I09_lab_NuevoContrato"));
 		else shell.setText(bundle.getString("I09_lab_ModifTurno"));
 		shell.setLayout(new GridLayout(2,true));
@@ -308,25 +311,12 @@ public class I09_1_Creacion_contratos {
 
 // Grupo 2 - Turnos
 		grupo2.setLayout(new GridLayout(2,false));
-		//final List list = new List (grupo2, SWT.BORDER |  SWT.V_SCROLL);
 		listaTurnosContrato = new List (grupo2, SWT.BORDER |  SWT.V_SCROLL);
 		if(idContrato!=-1){
 			for (int i=0;i<turnos.size();i++){		
 				listaTurnosContrato.add(turnos.get(i).getIdTurno()+" "+turnos.get(i).getDescripcion());
 			}
 		}
-		//Alomejor hay q cambiar la llamada aqui
-		//ArrayList <Turno> turnos2=vista.getTurnos();
-		//vista.loadTurnos();
-		//turnos2.remove(3);
-		//turnos2.remove(2);
-		//for (int i=0;i<turnos2.size();i++)
-		//	listaTurnosContrato.add(turnos2.get(i).getIdTurno()+" "+turnos2.get(i).getDescripcion());
-		//if(id!=null) {
-			//listaTurnosContrato.add(id);
-			//añadir a turnos2 el nuevo turno con id el q sea y agregar a liste turnos por contrato
-			//el turno y el contrato VAYA PUROOOOOOOO
-		//}
 		listaTurnosContrato.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 5));
 		
 		final Button bNuevoTurno		= new Button(grupo2, SWT.PUSH);
@@ -377,6 +367,7 @@ public class I09_1_Creacion_contratos {
 		lTipo			.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,false,true,1,1));
 		tTipo			.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
 		tTipo			.setToolTipText(bundle.getString("I09_tip_IdTurno"));
+		tTipo			.setTextLimit(1);
 
 // Parte inferior de la ventana
 		final Button bAceptar		= new Button(shell, SWT.PUSH);
@@ -414,13 +405,21 @@ public class I09_1_Creacion_contratos {
 		// Listener para el bot�n de nuevo turno
 		SelectionAdapter sabNuevoTurno = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){				
-				I09_1_1_Creacion_turnos i09=new I09_1_1_Creacion_turnos(shell, vista, bundle, 0, -1,idContrato,getClase());
-				/*
-				while (!i09.getShell().isDisposed()){
-					//sleep(1000);
-				}*/
-				
-				//}
+				I09_1_1_Creacion_turnos i09=new I09_1_1_Creacion_turnos(shell, vista, bundle, 0, -1,idContrato);
+				while (!i09.getShell().isDisposed()) {
+			         if (!shell.getDisplay().readAndDispatch()) {
+			             shell.getDisplay().sleep();
+			         }
+			      }
+				Turno t=i09.getTurnoInsertado();
+				if (t!=null){
+					idsTurnosInsertados.add(t.getIdTurno());	
+					listaTurnosContrato.removeAll();
+					turnos.add(t);				
+					for (int i=0;i<turnos.size();i++)
+						listaTurnosContrato.add(turnos.get(i).getIdTurno()+" "+turnos.get(i).getDescripcion());
+					listaTurnosContrato.redraw();
+				}
 			}			
 		};
 		bNuevoTurno.addSelectionListener(sabNuevoTurno);
@@ -430,8 +429,21 @@ public class I09_1_Creacion_contratos {
 		SelectionAdapter sabModificarTurno = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
 				if(listaTurnosContrato.getSelectionIndex()>-1){
-					int id=turnos.get(listaTurnosContrato.getSelectionIndex()).getIdTurno();
-					new I09_1_1_Creacion_turnos(shell, vista, bundle, 1,id,idContrato,null);
+					int index=listaTurnosContrato.getSelectionIndex();
+					int id=turnos.get(index).getIdTurno();
+					I09_1_1_Creacion_turnos i091=new I09_1_1_Creacion_turnos(shell, vista, bundle, 1,id,idContrato);
+					while (!i091.getShell().isDisposed()) {
+				         if (!shell.getDisplay().readAndDispatch()) {
+				             shell.getDisplay().sleep();
+				         }
+				      }
+					Turno taux=i091.getTurnoModificado();
+					if(taux!=null){
+						turnos.remove(index);
+						listaTurnosContrato.remove(index);						
+						listaTurnosContrato.add(taux.getIdTurno()+" "+taux.getDescripcion(),index);
+						turnos.add(index, taux);
+					}
 				}
 				else {
 					MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_INFORMATION | SWT.OK | SWT.CANCEL);
@@ -450,9 +462,15 @@ public class I09_1_Creacion_contratos {
 					messageBox.setMessage (bundle.getString("I09_bot_elim_turno"));
 					int response=messageBox.open();
 					if(response==SWT.OK){
-						boolean okis=vista.getControlador().eliminaTurno(turnos.get(listaTurnosContrato.getSelectionIndex()));
+						Turno t=turnos.get(listaTurnosContrato.getSelectionIndex());
+						int idEliminado=t.getIdTurno();
+						boolean okis=vista.getControlador().eliminaTurno(t);
 						//boolean okis=vista.getControlador().eliminaTurno(27);					
 						if (okis){
+							int index=listaTurnosContrato.getSelectionIndex();
+							idsTurnosEliminados.add(idEliminado);
+							turnos.remove(index);
+							listaTurnosContrato.remove(index);
 							MessageBox messageBox2 = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
 							messageBox2.setText("Info");
 							messageBox2.setMessage(bundle.getString("I09_elim_Turno"));
@@ -464,8 +482,6 @@ public class I09_1_Creacion_contratos {
 							messageBox2.setMessage(bundle.getString("I09_err_elim_Turno"));
 							messageBox2.open();
 						}
-						//String aux=listaTurnosContrato.getItem(listaTurnosContrato.getSelectionIndex());
-						//System.out.println(aux);
 					}
 				}
 				else {
@@ -488,8 +504,8 @@ public class I09_1_Creacion_contratos {
 		SelectionAdapter sabTurnoInicial = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
 				if(listaTurnosContrato.getSelectionIndex()>-1){					
-						String aux=listaTurnosContrato.getItem(listaTurnosContrato.getSelectionIndex());
-						System.out.println(aux);					
+						turnoInicial=turnos.get(listaTurnosContrato.getSelectionIndex()).getIdTurno();
+						System.out.println(turnoInicial);					
 				}
 				else {
 					MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_INFORMATION | SWT.OK | SWT.CANCEL);
@@ -503,8 +519,46 @@ public class I09_1_Creacion_contratos {
 		SelectionAdapter sabAceptar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 //				modo = 0 es nuevo turno y modo =1 es modificar
-				if (modo==0){}
-				else{}				
+				String nombre=tContrato.getText();
+				int longCiclo=Integer.valueOf(tLongCiclo.getText());
+				double sueldo=Double.valueOf(tSalario.getText());
+				int tipo = Integer.valueOf(tTipo.getText());
+				if (modo==0){
+					contratoInsertado=new Contrato(nombre,0,turnoInicial,longCiclo,patron,sueldo,tipo);
+					int id=vista.getControlador().insertContrato(contratoInsertado);
+					contratoInsertado=new Contrato(nombre,id,turnoInicial,longCiclo,patron,sueldo,tipo);
+					if (id!=-1){
+						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
+						messageBox.setText("Info");
+						messageBox.setMessage(bundle.getString("I09_insert_Contrato"));
+						messageBox.open();
+					}
+					else {
+						contratoInsertado=null;
+						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
+						messageBox.setText(bundle.getString("Error"));
+						messageBox.setMessage(bundle.getString("I09_err_insert_Contrato"));
+						messageBox.open();
+					}					
+					shell.dispose();
+				}
+				else{					
+					boolean okis=vista.getControlador().modificarContrato(idContrato, turnoInicial, nombre, patron, longCiclo, sueldo, tipo);					
+					//boolean okis=vista.getControlador().modificarContrato(23, turnoInicial, nombre, patron, longCiclo, sueldo, tipo);
+					if (okis){
+						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
+						messageBox.setText("Info");
+						messageBox.setMessage(bundle.getString("I09_modif_Contrato"));
+						messageBox.open();
+					}
+					else {
+						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
+						messageBox.setText(bundle.getString("Error"));
+						messageBox.setMessage(bundle.getString("I09_err_modif_Contrato"));
+						messageBox.open();
+					}
+					shell.dispose();
+				}				
 			}
 		};		
 		bAceptar.addSelectionListener(sabAceptar);
@@ -524,21 +578,20 @@ public class I09_1_Creacion_contratos {
 		shell.open();
 	}
 	
-	public ArrayList <Integer> getTurnosAinsertar(){
+	public ArrayList <Integer> getTurnosInsertados(){
 		return idsTurnosInsertados;
 	}
 	
-	public void actualizaTurno (Turno t){
-		//Turno t=i09.getTurnoAinsertar();
-		//Turno t=new Turno(26,"chusta","10:37:28","10:37:28","10:37:28",0);
-		idsTurnosInsertados.add(t.getIdTurno());				
-		turnos.add(t);				
-		for (int i=0;i<turnos.size();i++)
-			listaTurnosContrato.add(turnos.get(i).getIdTurno()+" "+turnos.get(i).getDescripcion());
-		listaTurnosContrato.redraw();
+	public ArrayList <Integer> getTurnosEliminados(){
+		return idsTurnosEliminados;
 	}
-	public I09_1_Creacion_contratos getClase(){
-		return this;
+	
+	public Contrato getContratoInsertado(){
+		return contratoInsertado;
+	}
+	
+	public Shell getShell(){
+		return shell;
 	}
 	
 }
