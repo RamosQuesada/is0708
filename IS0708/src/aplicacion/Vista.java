@@ -708,6 +708,7 @@ public class Vista {
 	 */
 	public void crearDepartamento(String nombredep, String num, String nomJefe) {
 		// TODO Auto-generated method stub by carlos Sánchez
-		
+		//Agustin deberia devolverme algo q me indique si hay un fallo alcrearlo cual es
+		//hazlo como mas facil te sea.Yo no se cuantos distintos puede haber.
 	}
 }
