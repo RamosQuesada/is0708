@@ -157,7 +157,7 @@ public class Vista {
 	}
 
 	/**
-	 * Este método realiza el login
+	 * Este método realiza el login.
 	 */
 	public void start() {
 		// Login y conexión a la base de datos
@@ -177,13 +177,12 @@ public class Vista {
 					shell.getDisplay().sleep();
 				}
 			}
+			// Una vez cerrada la ventana de login
 			if (login.getBotonPulsado() == 1) {
-				// Si llega aquí, ya hay conexión con la base de datos
 				// Login de administrador
 				if (login.getNumeroVendedor() == 0
 						&& login.getPassword().compareTo("admin") == 0) {
-					System.out
-							.println("aplicacion.Vista.java\t::Administrador identificado");
+					System.out.println("aplicacion.Vista\t::Administrador identificado");
 					controlador.setEmpleadoActual(new Empleado(0, 0,
 							"Administrador", "", "", null, 0, "", "admin", 0,
 							0, 0, null, null, null, null, null, 0, 0, 0));
@@ -191,8 +190,6 @@ public class Vista {
 				// Login normal
 				} else {
 					Empleado emp = getEmpleado(login.getNumeroVendedor());
-					if (!loader.isAlive())
-						loader.start();
 					if (emp != null) {
 						// Comprobar la clave
 						if (emp.getPassword().compareTo(login.getPassword()) == 0) {
@@ -203,18 +200,16 @@ public class Vista {
 									.getIdioma());
 							bundle = l.getBundle();
 							locale = l.getCurrentLocale();
+							loader.start();
 						} else {
 							// Si el password no coincide
 							if (!login.detectadoLector()) {
 								MessageBox messageBox = new MessageBox(shell,
-										SWT.APPLICATION_MODAL | SWT.ICON_ERROR
-												| SWT.OK);
+										SWT.APPLICATION_MODAL | SWT.ICON_ERROR | SWT.OK);
 								messageBox.setText(bundle.getString("Error"));
-								messageBox.setMessage(bundle
-										.getString("I01_err_Login2"));
+								messageBox.setMessage(bundle.getString("I01_err_Login2"));
 								messageBox.open();
-							}
-							else {
+							} else {
 								display.beep();
 							}
 							// TODO else mostrar un aviso pero que no haya que cerrarlo
@@ -391,6 +386,7 @@ public class Vista {
 	}
 	
 	public Cuadrante getCuadrante(int mes, int anio, String idDepartamento) {
+		if (!alive) return null;
 		int i = 0;
 		while (i<cuadrantes.size()) {
 			if (cuadrantes.get(i).getAnio()==anio && cuadrantes.get(i).getMes()==mes && cuadrantes.get(i).getIdDepartamento().equals(idDepartamento)) {
@@ -400,7 +396,6 @@ public class Vista {
 		}
 		// Si no, buscar en BD
 		Cuadrante c = controlador.getCuadrante(mes, anio, idDepartamento);
-//		System.out.println(c);
 		cuadrantes.add(c);
 		return c;
 	}
