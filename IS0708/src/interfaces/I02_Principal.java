@@ -178,8 +178,8 @@ public class I02_Principal {
 		t2.setIdEmpl(10000200);
 		t2.setIdTurno(2);
 		
-//		final I_Cuadrante ic = new I_Cuadrante(vista, 2, 2008,"mi_dep", 4, 9, 23);
-//		ic.setCuad(vista.getCuadrante(6, 2008, "DatosFijos").getCuad());
+		final I_Cuadrante ic = new I_Cuadrante(vista, 2, 2008,"mi_dep", 4, 9, 23);
+		ic.setCuad(vista.getCuadrante(6, 2008, "DatosFijos").getCuad());
 		/************************************************************/
 		cDepartamentos.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) { 
@@ -188,11 +188,11 @@ public class I02_Principal {
 			}
 		});
 		/************************************************************/
-//		ic.setTrabajaDia(1, t1);
-//		ic.setTrabajaDia(1, t2);
-//		ic.setComposite(cCuadrante);
-//		ic.setDia(1);
-//		
+		ic.setTrabajaDia(1, t1);
+		ic.setTrabajaDia(1, t2);
+		ic.setComposite(cCuadrante);
+		ic.setDia(1);
+		
 		Label lCalendario = new Label(cCuadrantes, SWT.LEFT);
 		lCalendario.setText(bundle.getString("Calendario"));
 		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,

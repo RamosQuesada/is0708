@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
 import algoritmo.Cuadrante;
+import algoritmo.Trabaja;
 
 import idiomas.LanguageChanger;
 import interfaces.*;
@@ -51,8 +52,9 @@ public class Vista {
 	/** Caché local: Lista de departamentos de un jefe*/
 	private ArrayList<Departamento> departamentosJefe = new ArrayList<Departamento>();
 	
-	/** Caché local: Cuadrante del departamento actual y el mes seleccionado */
-	private Cuadrante cuadrante;
+	/** Caché local: Cuadrantes del departamento actual */
+	private ArrayList<Cuadrante> cuadrantes;
+	
 	/** Fecha del cuadrante que está cargado */
 	private int mes, anio;
 
@@ -389,6 +391,25 @@ public class Vista {
 
 	}
 	
+	public Cuadrante getCuadrante(int mes, int anio, String idDepartamento) {
+		int i = 0;
+		while (i<cuadrantes.size()) {
+			if (cuadrantes.get(i).getAnio()==anio && cuadrantes.get(i).getMes()==mes && cuadrantes.get(i).getIdDepartamento().equals(idDepartamento)) {
+				return cuadrantes.get(i);
+			}
+			i++;
+		}
+		// Si no, buscar en BD
+		Cuadrante c = controlador.getCuadrante(mes, anio, idDepartamento);
+		cuadrantes.add(c);
+		return c;
+	}
+	
+	public ArrayList<Trabaja> getListaTrabajaDia(int dia, int mes, int anio, String idDepartamento) {
+		Cuadrante c = getCuadrante(mes, anio, idDepartamento);
+		return c.getListaTrabajaDia(dia);
+	}
+	
 	/**
 	 * @deprecated
 	 * @return el numero de turnos de la base de datos
@@ -592,13 +613,6 @@ public class Vista {
 	}
 
 
-	/***************************************************************************
-	 * Métodos relacionados con cuadrantes
-	 */
-
-	public Cuadrante getCuadrante(int mes, int anio, String idDepartamento) {
-		return controlador.getCuadrante(mes, anio, idDepartamento);
-	}
 		
 	
 	
@@ -660,24 +674,18 @@ public class Vista {
 		int tipo = getEmpleadoActual().getRango();
 		String dep = getEmpleadoActual().getDepartamentoId();
 		int numvendedor = getEmpleadoActual().getEmplId();
+
+		setProgreso("Cargando empleados", 25);
+		empleados = controlador.getEmpleadosDepartamento(dep);
+		setProgreso("Cargando contratos", 50);
+		contratos = controlador.getListaContratosDpto(dep);
+		setProgreso("Cargando turnos", 75);
+		turnos = controlador.getListaTurnosEmpleadosDpto(dep);
+		setProgreso("", 100);
 		
 		if (tipo == 1) {
-			setProgreso("Cargando empleados", 25);
-			empleados = controlador.getEmpleadosDepartamento(dep);
-			setProgreso("Cargando contratos", 50);
-			contratos = controlador.getListaContratosDpto(dep);
-			setProgreso("Cargando turnos", 75);
-			turnos = controlador.getListaTurnosEmpleadosDpto(dep);
-			setProgreso("", 100);
 		} else if (tipo == 2) {
 			ArrayList<String> temp = new ArrayList<String>();
-			setProgreso("Cargando empleados", 25);
-			empleados = controlador.getEmpleadosDepartamento(dep);
-			setProgreso("Cargando contratos", 50);
-			contratos = controlador.getListaContratosDpto(dep);
-			setProgreso("Cargando turnos", 75);
-			turnos = controlador.getListaTurnosEmpleadosDpto(dep);			 
-			setProgreso("", 100);
 			temp = controlador.getDepartamentosJefe(numvendedor);
 			for (int i=0; i<temp.size(); i++)
 				departamentosJefe.add(controlador.getDepartamento(temp.get(i)));				
