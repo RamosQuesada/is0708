@@ -178,8 +178,8 @@ public class I02_Principal {
 		t2.setIdEmpl(10000200);
 		t2.setIdTurno(2);
 		
-		final I_Cuadrante ic = new I_Cuadrante(vista, 2, 2008,"mi_dep", 4, 9, 22);
-		//ic.setCuad(vista.getCuadrante(12, 2007, "DatosFijos"));
+		final I_Cuadrante ic = new I_Cuadrante(vista, 2, 2008,"mi_dep", 4, 9, 23);
+//		ic.setCuad(vista.getCuadrante(6, 2008, "DatosFijos").getCuad());
 		/************************************************************/
 		cDepartamentos.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) { 
@@ -210,7 +210,7 @@ public class I02_Principal {
 				String.valueOf(calendario.getDay()) + " de " +
 				aplicacion.Util.mesAString(bundle, calendario.getMonth()) + " de " +
 				String.valueOf(calendario.getYear()));
-				
+				//ic.setDia(calendario.getDay());
 			}
 		});
 		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false,
@@ -218,7 +218,6 @@ public class I02_Principal {
 		fechaSeleccionada = new Date(calendario.getYear(), calendario
 				.getMonth(), calendario.getDay());
 
-		// Falta añadir el combobox de los intervalos
 		/*
 		 * e1.anadeGUI(cCuadrante,9,23,3, true); e2.anadeGUI(cCuadrante,9,23,3,
 		 * false); e3.anadeGUI(cCuadrante,9,23,3, false);
@@ -1473,13 +1472,21 @@ public class I02_Principal {
 	 *            Un valor de 0 a 99, ó 100 para que desaparezca.
 	 */
 	public void setProgreso(String mensaje, int i) {
-		if (i >= 0 && i < 100) {
-			lEstado.setText(mensaje);
-			pbEstado.setVisible(true);
-			pbEstado.setSelection(i);
-		} else if (i == 100) {
-			lEstado.setText("Conectado");
-			pbEstado.setVisible(false);
+		final int i2 = i;
+		final String mens = mensaje;
+		if (!display.isDisposed()) {
+			display.asyncExec(new Runnable() {
+				public void run() {
+					if (i2 >= 0 && i2 < 100) {
+						lEstado.setText(mens);
+						pbEstado.setVisible(true);
+						pbEstado.setSelection(i2);
+					} else if (i2 == 100) {
+						lEstado.setText("Conectado");
+						pbEstado.setVisible(false);
+					}
+				}
+			});
 		}
 	}
 }

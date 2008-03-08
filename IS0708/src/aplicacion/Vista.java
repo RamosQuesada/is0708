@@ -12,7 +12,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
-import algoritmo.Trabaja;
+import algoritmo.Cuadrante;
 
 import idiomas.LanguageChanger;
 import interfaces.*;
@@ -51,6 +51,11 @@ public class Vista {
 	/** Caché local: Lista de departamentos de un jefe*/
 	private ArrayList<Departamento> departamentosJefe = new ArrayList<Departamento>();
 	
+	/** Caché local: Cuadrante del departamento actual y el mes seleccionado */
+	private Cuadrante cuadrante;
+	/** Fecha del cuadrante que está cargado */
+	private int mes, anio;
+
 	/**
 	 * Este hilo conecta con la base de datos.
 	 * 
@@ -100,24 +105,23 @@ public class Vista {
 	 */
 	public class Loader implements Runnable {
 		public synchronized void run() {
-			while (alive) {
-				// Si hay un usuario logueado
-				if (controlador.getEmpleadoActual() != null){
-					// loadDepartamentos();
-					loadEmpleados();
+			// Si hay un usuario logueado
+			if (controlador.getEmpleadoActual() != null){
+				loadCache();
+				cacheCargada = true;
+				// Se queda consultando los mensajes periódicamente
+				while (alive) {
 					loadMensajes();
-					// loadContratos();
-					loadTurnos();
-					// loadCuadranteMesActual();
 					cacheCargada = true;
+					try {
+						// TODO Espera 20 segundos (¿cómo lo dejamos?)
+						wait(20000);
+					} catch (Exception e) {}
 				}
-				try {
-					// TODO Espera 20 segundos (¿cómo lo dejamos?)
-					wait(20000);
-				} catch (Exception e) {}
 			}
 		}
 	}
+
 
 	/**
 	 * Constructor de la vista:
@@ -400,20 +404,6 @@ public class Vista {
 		return turnos;
 	}
 
-	/**
-	 * Carga la lista de empleados que trabaja en el mismo departamento que el
-	 * actual
-	 */
-	public void loadEmpleados() {
-		infoDebug("Vista", "Cargando empleados");
-		try {
-			empleados = getEmpleados(null,
-				getEmpleadoActual().getDepartamentoId(), null, null, null,
-				null, null);
-		}
-		catch (Exception e) {}
-		infoDebug("Vista", "Acabado de cargar empleados");
-	}
 
 	/**
 	 * Carga los mensajes de la base de datos
@@ -434,7 +424,7 @@ public class Vista {
 		turnos.add(new Turno(3,"pi","12:10:00","20:10:00","16:10:00",35));
 		turnos.add(new Turno(4,"po","15:05:00","17:05:00","00:00:00",0));
 	}
-
+	
 	/**
 	 * Devuelve la lista de empleados que trabaja en el mismo departamento que
 	 * el actual. La carga si esta no se ha cargado todavía.
@@ -606,7 +596,7 @@ public class Vista {
 	 * Métodos relacionados con cuadrantes
 	 */
 
-	public ArrayList<Trabaja> getCuadrante(int mes, int anio, String idDepartamento) {
+	public Cuadrante getCuadrante(int mes, int anio, String idDepartamento) {
 		return controlador.getCuadrante(mes, anio, idDepartamento);
 	}
 		
@@ -624,7 +614,7 @@ public class Vista {
 	 *            Un valor de 0 a 99, ó 100 para que desaparezca.
 	 */
 	public void setProgreso(String s, int i) {
-		i02.setProgreso(s, i);
+		if (i02!=null) i02.setProgreso(s, i);
 	}
 
 	/**
@@ -651,7 +641,7 @@ public class Vista {
 	 * @param numvendedor: El numero de vendedor del usuario para el
 	 * que se van a cargar los datos
 	 */
-	public void loadCache(int tipo, int numvendedor, String dep) {
+	public void loadCache() {
 		//empleados
 
 		/** Caché local: Lista de contratos disponibles para este departamento */
@@ -662,23 +652,34 @@ public class Vista {
 		//turnos 
 
 		
-		if (tipo == 0) {
+//		empleados = getEmpleados(null,
+//				getEmpleadoActual().getDepartamentoId(), null, null, null,
+//				null, null);
+
+		
+		int tipo = getEmpleadoActual().getRango();
+		String dep = getEmpleadoActual().getDepartamentoId();
+		int numvendedor = getEmpleadoActual().getEmplId();
+		
+		if (tipo == 1) {
 			empleados = controlador.getEmpleadosDepartamento(dep);
 			contratos = controlador.getListaContratosDpto(dep);
 			turnos = controlador.getListaTurnosEmpleadosDpto(dep);
-		} else if (tipo == 1) {
+		} else if (tipo == 2) {
 			ArrayList<String> temp = new ArrayList<String>();
-			
+			setProgreso("Cargando empleados", 25);
 			empleados = controlador.getEmpleadosDepartamento(dep);
+			setProgreso("Cargando contratos", 50);
 			contratos = controlador.getListaContratosDpto(dep);
+			setProgreso("Cargando turnos", 75);
 			turnos = controlador.getListaTurnosEmpleadosDpto(dep);			 
-
+			setProgreso("", 100);
 			temp = controlador.getDepartamentosJefe(numvendedor);
 			for (int i=0; i<temp.size(); i++)
 				departamentosJefe.add(controlador.getDepartamento(temp.get(i)));				
 			
 		} else {
-			System.out.println("Tipo de empleado invalido para cargar la cache");
+			System.out.println("Tipo de empleado inválido para cargar la cache");
 		}
 	}
 
@@ -690,9 +691,5 @@ public class Vista {
 	
 	public ArrayList<String> getNombreTodosDepartamentos() {
 		return this.controlador.getNombreTodosDepartamentos();
-		}
-	
-	
-	
-	
+	}
 }

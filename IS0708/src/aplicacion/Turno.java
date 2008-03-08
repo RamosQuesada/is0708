@@ -201,7 +201,7 @@ public class Turno {
 	
 	public void dibujar(Display display, String nombre, GC gc, int posV, Color color, int margenIzq, int margenNombres, int margenSup, int sep_vert_franjas, int alto_franjas, int tamHora, int tamSubdiv, int horaApertura, int numSubdiv) {
 		calculaTiempoTrabajado();
-		// Si el empleado no tiene color, asignarle un color gris
+		// Si el empleado no tiene color, asignarle un color verde
 		if (color==null)
 			color = new Color(display,120,170,120);
 		gc.setBackground(new Color(display, 0,0,0));
