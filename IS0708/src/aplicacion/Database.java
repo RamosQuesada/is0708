@@ -686,7 +686,7 @@ public class Database extends Thread {
 	// como es autoincrementable he quitado el id
 	public int insertarTurno(String Descripcion, Time HoraEntrada,
 			Time HoraSalida, Time HoraInicioDescanso, int Duracion) {
-		int i = 0;
+		int i = -1;
 		ResultSet r = null;
 		try {
 			Time tdesc = new Time(0);
@@ -705,9 +705,11 @@ public class Database extends Thread {
 							+ "', '"
 							+ tdesc + "')");
 			System.out.println("aplicacion.Database.java\t::Turno insertado");
-			r = st.getGeneratedKeys();
-			r.next();
-			i = r.getInt(1);
+			//r = st.getGeneratedKeys();
+			r = st.executeQuery("SELECT LAST_INSERT_ID()");
+			if(r.next()) 
+				i = r.getInt(1);
+			else System.err.println("Error al obtener el identificador auto-generado");
 		} catch (SQLException e) {
 			i = -1;
 			e.printStackTrace();
@@ -769,9 +771,11 @@ public class Database extends Thread {
 							+ asunto
 							+ "', '" + texto + "', " + marcado + ");");
 			System.out.println("aplicacion.Database.java\t::Mensaje insertado");
-			r = st.getGeneratedKeys();
-			r.next();
-			i = r.getInt(1);
+			//r = st.getGeneratedKeys();
+			r = st.executeQuery("SELECT LAST_INSERT_ID()");
+			if(r.next()) 
+				i = r.getInt(1);
+			else System.err.println("Error al obtener el identificador auto-generado");
 		} catch (SQLException e) {
 			i = -1;
 			e.printStackTrace();
@@ -887,9 +891,11 @@ public class Database extends Thread {
 
 			System.out
 					.println("aplicacion.Database.java\t::Contrato insertado");
-			r = st.getGeneratedKeys();
-			r.next();
-			i = r.getInt(1);
+			//r = st.getGeneratedKeys();
+			r = st.executeQuery("SELECT LAST_INSERT_ID()");
+			if(r.next()) 
+				i = r.getInt(1);
+			else System.err.println("Error al obtener el identificador auto-generado");
 		} catch (SQLException e) {
 			i = -1;
 			e.printStackTrace();
