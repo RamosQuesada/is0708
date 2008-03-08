@@ -687,7 +687,12 @@ public class Vista {
 		// TODO Auto-generated method stub by Carlos Sánchez
 		return null;
 	}
-
+	/**
+	 * Funcion que incluye en la BBDD un nuevo departamento
+	 * @param nombredep Nombre del departamento
+	 * @param num Numero de departamento
+	 * @param nomJefe nombre del Jefe de departamento
+	 */
 	public void crearDepartamento(String nombredep, String num, String nomJefe) {
 		// TODO Auto-generated method stub by carlos Sánchez
 		
