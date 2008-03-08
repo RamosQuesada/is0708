@@ -53,7 +53,7 @@ public class Vista {
 	private ArrayList<Departamento> departamentosJefe = new ArrayList<Departamento>();
 	
 	/** Caché local: Cuadrantes del departamento actual */
-	private ArrayList<Cuadrante> cuadrantes;
+	private ArrayList<Cuadrante> cuadrantes = new ArrayList<Cuadrante>();
 	
 	/** Fecha del cuadrante que está cargado */
 	private int mes, anio;
