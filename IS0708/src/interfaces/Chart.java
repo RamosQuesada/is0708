@@ -14,7 +14,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 /**
  * Clase que genera graficos
- * @author Carlos Sánchez Garcia
+ * @author Carlos Sanchez Garcia
  *
  */
 public class Chart {
