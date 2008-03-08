@@ -92,6 +92,7 @@ public class Vista {
 				// En este caso se ha cerrado la aplicación antes de que termine
 				// de conectar.
 				if (db.conexionAbierta())
+					System.out.println("Vista-Conetor cerrando conexioooooon");
 					db.cerrarConexion();
 			}
 		}
@@ -117,6 +118,7 @@ public class Vista {
 						wait(20000);
 					} catch (Exception e) {}
 				}
+				db.cerrarConexion();
 			}
 		}
 	}
@@ -231,8 +233,10 @@ public class Vista {
 				// Salir de la aplicación
 				shell.getDisplay().dispose();
 				identificado = true; // Para que salga del bucle
-				if (db.conexionAbierta())
+				if (db.conexionAbierta()) {
+					System.out.println("Vista-start cerrando conexioooon");
 					db.cerrarConexion();
+				}
 			}
 		}
 
@@ -253,8 +257,6 @@ public class Vista {
 		try {
 			alive = false;
 			loader.interrupt();
-			if (db.conexionAbierta())
-				db.cerrarConexion();
 			i02.dispose();
 			shell.dispose();
 			display.dispose();
@@ -645,36 +647,26 @@ public class Vista {
 	 * que se van a cargar los datos
 	 */
 	public void loadCache() {
-		//empleados
-
-		/** Caché local: Lista de contratos disponibles para este departamento */
-		//contratos
-		//departamentos jefe
-		
-		/** Caché local: Lista de turnos en los contratos de este departamento */
-		//turnos 
-
-		
-
-		
 		int tipo = getEmpleadoActual().getRango();
 		String dep = getEmpleadoActual().getDepartamentoId();
 		int numvendedor = getEmpleadoActual().getEmplId();
+		if (!alive) return;
 		setProgreso("Cargando empleados", 25);
 		empleados = controlador.getEmpleadosDepartamento(getEmpleadoActual().getEmplId(),dep);
+		if (!alive) return;
 		setProgreso("Cargando contratos", 50);
 		contratos = controlador.getListaContratosDpto(dep);
+		if (!alive) return;
 		setProgreso("Cargando turnos", 75);
 		turnos = controlador.getListaTurnosEmpleadosDpto(dep);
 		setProgreso("", 100);
-		
+		if (!alive) return;
 		if (tipo == 1) {
 		} else if (tipo == 2) {
 			ArrayList<String> temp = new ArrayList<String>();
 			temp = controlador.getDepartamentosJefe(numvendedor);
 			for (int i=0; i<temp.size(); i++)
-				departamentosJefe.add(controlador.getDepartamento(temp.get(i)));				
-			
+				departamentosJefe.add(controlador.getDepartamento(temp.get(i)));	
 		} else {
 			System.out.println("Tipo de empleado inválido para cargar la cache");
 		}

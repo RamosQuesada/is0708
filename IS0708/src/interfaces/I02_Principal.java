@@ -1464,6 +1464,7 @@ public class I02_Principal {
 					e.doit = true;
 					vista.stop();
 				}
+				else e.doit = false;
 			}
 		});
 	}

@@ -78,7 +78,7 @@ public class I12_Ayuda {
 		localpath = localpath.replaceAll("\\\\", "/");
 		filePath = localpath + helppath;
 		localpath = localpath.replaceAll(" ", "%20");
-		System.out.print("file://localhost/" + localpath + helppath);
+//		System.out.print("file://localhost/" + localpath + helppath);
 
 		// Source Code of a Web Page that redirects user to a locally kept Help
 		// Web Page
