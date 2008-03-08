@@ -684,12 +684,12 @@ public class Vista {
 	 * @return Nombres de los jefes
 	 */
 	public ArrayList<String> getNombreTodosJefes() {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub by Carlos Sánchez
 		return null;
 	}
 
-	public void crearDepartamento(String text, String text2, String text3) {
-		// TODO Auto-generated method stub
+	public void crearDepartamento(String nombredep, String num, String nomJefe) {
+		// TODO Auto-generated method stub by carlos Sánchez
 		
 	}
 }
