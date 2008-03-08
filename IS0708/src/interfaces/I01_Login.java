@@ -243,7 +243,8 @@ public class I01_Login {
 	 * @return <i>true</i> si la ventana se ha cerrado
 	 */
 	public boolean isDisposed() {
-		return dialog.isDisposed();
+		if (dialog==null) return true; 
+		else return dialog.isDisposed();
 	}
 	
 	/**

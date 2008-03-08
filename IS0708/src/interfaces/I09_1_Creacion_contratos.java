@@ -513,7 +513,6 @@ public class I09_1_Creacion_contratos {
 		SelectionAdapter sabCancelar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 					shell.dispose();
-					vista.getControlador().cerrarConexionBD();
 			}
 		};
 		bCancelar.addSelectionListener(sabCancelar);

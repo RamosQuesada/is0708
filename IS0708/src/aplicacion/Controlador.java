@@ -99,8 +99,6 @@ public class Controlador {
 		if(_db.conexionAbierta()) _db.cerrarConexion();
 	}
 
-
-
 	/***************************************************************************
 	 * Métodos relacionados con empleados
 	 */
