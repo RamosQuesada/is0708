@@ -202,7 +202,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		for (int i=0; i<cuad.length; i++) {
 			iCuad[i] = new ArrayList<I_Trabaja>();
 			for (int j=0; j<cuad[i].size(); j++) {
-				iCuad[i].add(new I_Trabaja(cuad[i].get(j)));
+				if (cuad[i].get(j)!=null)
+					iCuad[i].add(new I_Trabaja(cuad[i].get(j)));
 			}
 		}
 		cacheCargada = true;
@@ -664,5 +665,6 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	 */
 	public void setDiario(boolean d) {
 		diario=d;
+		redibujar();
 	}
 }

@@ -12,29 +12,6 @@ import algoritmo.*;
 
 /**
  * Esta clase conecta el modelo (la base de datos) con la vista (los interfaces)
- * Resumen de los métodos que hay: (si añadís alguno, por favor, añadidlo aquí
- * también) - Métodos relacionados con empleados: (P = pendiente)
- * getEmpleado(int) Carga un empleado P getEmpleados(...) Carga uno o varios
- * empleados que coincidan con los parámetros dados getIdsDepartamentos(int)
- * Carga los nombres de sus departamentos P getIdsDepartamentosRec(int) Lo mismo
- * pero recursivamente getIdsSubordinados(int) Carga los subordinados
- * getIdSuperior(int) Carga el identificador del superior
- * insertEmpleado(Empleado) Inserta un empleado en la base de datos - Métodos
- * relacionados con departamentos: P getDepartamento(String) Carga un
- * departamento P insertDepartamento(Dep) Inserta un departamento
- * getDistribucionDia(int, String) Carga la distribución de un departamento para
- * un día concreto. NOTA: El idDepartamento debería ser un string - Dani
- * getDistribucionMes getEmpleadosDepartamento listar todos los empleados de un
- * departamento - Métodos relacionados con mensajes: P getMensajesEntrantes(...)
- * Carga un número determinado de mensajes entrantes P getMensajesSalientes(...)
- * Carga un número determinado de mensajes salientes ? getMensajes(int) Carga
- * todos los mensajes (¿necesario?) insertMensaje(Mensaje) Inserta un mensaje
- * eliminaMensaje Elimina un mensaje marcarMensaje Marca un mensaje en la bd -
- * Métodos relacionados con contratos P getContrato(int) Carga un contrato dado
- * su id P insertContrato(Contrato) Inserta un contrato - Métodos relacionados
- * con turnos getListaTurnosEmpleados() Carga una lista de turnos - Métodos
- * relacionados con cuadrantes insertCuadrante(Cuadrante) Guarda un cuadrante en
- * la base de datos
  * 
  * @author Todos
  */
@@ -695,12 +672,28 @@ public class Controlador {
 	 * Método para obtener los contratos de un departamento
 	 * 
 	 * @param dpto
-	 *            nombre del departaento
+	 *            nombre del departamento
 	 * @return ArrayList de los contratos que existen en en ese departamento
 	 */
-	public ArrayList<Contrato> getListaContratosDpto(String dpto) {
+	public ArrayList<Contrato> getListaContratosDpto(String idDepartamento) {
 		ArrayList<Contrato> contratos = new ArrayList<Contrato>();
-		ArrayList arrayIdContratos = new ArrayList();
+		ResultSet rs = null;
+		try {
+			rs = _db.obtenContratosDepartamento(idDepartamento);
+			
+			while (rs.next()) {
+				contratos.add(new Contrato(rs.getString("Nombre"), rs.getInt("IdContrato"), rs.getInt("TurnoInicial"), rs.getInt("DuracionCiclo"), rs.getString("Patron"), rs.getDouble("Salario"), rs.getInt("Tipo")));				
+			}
+			return contratos;		
+		} catch (Exception e){
+			e.printStackTrace();
+			System.out.println("Error en getListaContratosDpto");
+			return null;
+		}
+	}
+		
+		
+/*		ArrayList arrayIdContratos = new ArrayList();
 		Contrato contrato;
 		try {
 			ArrayList<Empleado> e = new ArrayList<Empleado>();
@@ -722,8 +715,8 @@ public class Controlador {
 			System.err
 					.println("Error al obtener Lista de Contratos del Departamento dado en la base de datos");
 		}
-		return contratos;
-	}
+		return contratos;s
+	}*/
 
 	/**
 	 * Metodo que asocia empleados a un departamento y los inserta en la base de
@@ -1120,21 +1113,36 @@ public class Controlador {
 	}
 
 	/**
-	 * 
+	 * Método para obtener los contratos de un departamento
 	 * 
 	 * @param dpto
-	 *            el nombre del Dpto.
-	 * @return Devuelve lista de los turnos de los empleados del dpto. dpto en
-	 *         un ArrayList
+	 *            nombre del departamento
+	 * @return ArrayList de los contratos que existen en en ese departamento
 	 */
-	public ArrayList<Turno> getListaTurnosEmpleadosDpto(String dpto) {
+	public ArrayList<Turno> getListaTurnosEmpleadosDpto(String idDepartamento) {
+	/*	ArrayList<Turno> turnos = new ArrayList<Turno>();
+		ResultSet rs = null;
+		try {
+			rs = _db.obtenTurnosDepartamento(idDepartamento);
+			
+			while (rs.next()) {
+				turnos.add(new Turno(rs.getInt("IdTurno"), rs.getString("Descripcion"), rs.getTime("HoraEntrada"), rs.getTime("HoraSalida"), rs.getTime("HoraInicioDescanso"), rs.getInt("DuracionDescanso")));				
+			}
+			return turnos;		
+		} catch (Exception e){
+			e.printStackTrace();
+			System.out.println("Error en getListaContratosDpto");
+			return null;
+		}
+	}*/
+
 		ArrayList<Turno> turnos = new ArrayList<Turno>();
 		ArrayList<Turno> turnosAux = new ArrayList<Turno>();
 		ArrayList<String> nombres = new ArrayList<String>();
 		Turno tur;
 		try {
 			ArrayList<Empleado> e = new ArrayList<Empleado>();
-			e = getEmpleadosDepartamento(dpto);
+			e = getEmpleadosDepartamento(idDepartamento);
 			
 
 			for (int i = 0; i < e.size(); i++) {
@@ -1312,54 +1320,29 @@ public class Controlador {
 	}
 	
 	/**
-	 * Metodo que lee un cuadrante de la BD para un mes determinado
-	 * @param mes
-	 * @param anio
-	 * @param idDepartamento
-	 * @return Devuelve un ArrayList de objetos Trabaja
+	 * Metodo que lee un cuadrante de la BD para un mes, año y departamento determinados
+	 * @param mes el mes del cuadrante
+	 * @param anio el año del cuadrante
+	 * @param idDepartamento el departamento del cuadrante
+	 * @return el Cuadrante
 	 */
-	public ArrayList<Trabaja> getCuadrante(int mes,int anio,String idDepartamento) {
-		ResultSet empl=null;
+	public Cuadrante getCuadrante(int mes,int anio,String idDepartamento) {
 		ResultSet cuad=null;
-		ArrayList<Trabaja> datos = new ArrayList<Trabaja>();
+		Cuadrante datos = new Cuadrante(mes,anio,idDepartamento);
 		try {
-			empl = _db.obtenEmpleadosDepartamento(idDepartamento);
-			
-			empl.last();
-			int num = empl.getRow();
-			int[] empleados = new int[num];
-			empl.beforeFirst();
-			
-			for (int i=0; i<num; i++) {
-				empl.next();
-				empleados[i] = empl.getInt("NumVendedor");
-			}
-			
-			cuad = _db.obtenCuadrante(mes, anio);
+			cuad = _db.obtenCuadrante(mes, anio, idDepartamento);
 			
 			while (cuad.next()) {
-				boolean esta=false;
-				int vend = cuad.getInt("NumVendedor");
-				
-				for (int i=0; i<num; i++)
-					if (vend==empleados[i]) {
-						esta = true;
-						break;
-					}
-				
-				if (esta) {
-					Trabaja nuevo = new Trabaja(vend, cuad.getTime("HoraEntrada"), cuad.getTime("HoraSalida"), cuad.getInt("IdTurno"));
-					datos.add(nuevo);
-					esta=false;
-				}
+				Trabaja nuevo = new Trabaja(cuad.getInt("NumVendedor"), cuad.getTime("HoraEntrada"), cuad.getTime("HoraSalida"), cuad.getInt("IdTurno"));
+				datos.setTrabajaDia(cuad.getDate("Fecha").getDate()-1, nuevo);
+//				System.out.println("añade " + String.valueOf((cuad.getDate("Fecha").getDate()-1)));
 			}
-			
 			return datos;		
 		} catch (Exception e){
+			e.printStackTrace();
 			System.out.println("Error en getCuadrante");
 			return null;
 		}
-		//return null;
 	}
 
 	/***************************************************************************

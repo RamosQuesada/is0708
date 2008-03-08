@@ -1466,6 +1466,40 @@ public class Database extends Thread {
 		return r;
 	}
 
+	
+	/**
+	 * Método que lee los datos de un mes determinado de la tabla Trabaja 
+	 * para un departamento concreto
+	 * 
+	 * @param mes el mes del cuadrante
+	 * @param anio el año del cuadrante
+	 * @param departamento el identificador del departamento
+	 * @return Devuelve un ResultSet con los datos leídos de la BD
+	 */
+	public ResultSet obtenCuadrante(int mes, int anio, String departamento) {
+		ResultSet r = null;
+		try {
+			String inicio = anio + "-" + mes + "-" + "1";
+			String fin = anio + "-" + mes + "-" + "31";
+			st = con.createStatement();
+
+			// SELECT * FROM Trabaja
+			// WHERE Fecha>= 'inicio' AND Fecha<= 'fin'
+			// AND NumVendedor IN (
+			//		SELECT NumVendedor FROM DepartamentoUsuario
+			//		WHERE NombreDepartamento = 'departamento');
+			
+			r = st.executeQuery("SELECT * FROM Trabaja WHERE Fecha>='" + inicio
+					+ "' AND Fecha<='" + fin + "' AND NumVendedor IN (" +
+							"SELECT NumVendedor FROM DepartamentoUsuario WHERE " +
+							"NombreDepartamento = '"+ departamento +"');");
+			
+		} catch (SQLException e) {
+			System.err.println("Error al realizar la consulta de cuadrantes");
+		}
+		return r;
+	}
+
 	public ResultSet obtenNombreTodosDepartamentos() {
 		ResultSet r = null;
 		try {
@@ -1520,5 +1554,72 @@ public class Database extends Thread {
 			e.printStackTrace();
 			System.err.println("Error al insertar el issue");
 		}
-	}	
+	}
+	
+	/**
+	 * Método que lee todos los contratos de un departamento
+	 * 
+	 * @param departamento el identificador del departamento
+	 * @return Devuelve un ResultSet con los datos leídos de la BD
+	 */
+	public ResultSet obtenContratosDepartamento(String departamento) {
+		ResultSet r = null;
+		try {
+			st = con.createStatement();
+			/**
+			 * SELECT * FROM CONTRATO
+			 * WHERE IdContrato IN (
+			 * 		SELECT IdContrato FROM USUARIO
+			 * 		WHERE NumVendedor IN (
+			 * 			SELECT NumVendedor FROM DepartamentoUsuario
+			 * 			WHERE NombreDepartamento = "dpto"));
+			 */
+			
+			r = st.executeQuery("SELECT * FROM CONTRATO WHERE IdContrato IN ("
+					+ "SELECT IdContrato FROM USUARIO WHERE NumVendedor IN ("
+					+ "SELECT NumVendedor FROM DepartamentoUsuario WHERE "
+					+ "NombreDepartamento = '"+ departamento +"'));");
+			
+		} catch (SQLException e) {
+			System.err.println("Error al realizar la consulta de contratos");
+		}
+		return r;
+	}
+	
+	/**
+	 * Método que lee todos los turnos de los contratos de un departamento
+	 * 
+	 * @param departamento el identificador del departamento
+	 * @return Devuelve un ResultSet con los datos leídos de la BD
+	 */
+	public ResultSet obtenTurnosDepartamento(String departamento) {
+		ResultSet r = null;
+		try {
+			st = con.createStatement();
+			/**
+			 * SELECT * FROM TURNOS
+			 * WHERE IdTurno IN (
+			 * 		SELECT IdTurno FROM ListaTurnosPorContrato
+			 * 		WHERE IdContrato IN (
+			 * 			SELECT * FROM CONTRATO
+			 * 			WHERE IdContrato IN (
+			 * 				SELECT IdContrato FROM USUARIO
+			 * 				WHERE NumVendedor IN (
+			 * 					SELECT NumVendedor FROM DepartamentoUsuario
+			 * 					WHERE NombreDepartamento = "dpto"))));
+			 */
+			
+			r = st.executeQuery("SELECT * FROM TURNOS WHERE IdTurno IN ("
+					+ "SELECT IdTurno FROM ListaTurnosPorContrato WHERE IdContrato IN ("
+					+ "SELECT IdContrato FROM CONTRATO WHERE IdContrato IN ("
+					+ "SELECT IdContrato FROM USUARIO WHERE NumVendedor IN ("
+					+ "SELECT NumVendedor FROM DepartamentoUsuario WHERE "
+					+ "NombreDepartamento = '"+ departamento +"'))));");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("Error al realizar la consulta de turnos de contratos");
+		}
+		return r;
+	}
 }
