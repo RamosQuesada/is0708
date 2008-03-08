@@ -238,19 +238,19 @@ public class I02CuadranteEmpleado {
 	}
 	
 	
-	public void dibujarCarga(GC gc){
+	public void dibujarCarga(GC gc,String texto){
 		cambiarPincel(gc, 100, 200, 100);
 		cambiarRelleno(gc, 100, 200, 100);
-		gc.fillRectangle((ancho-margenIzq-margenDer)/2-120,
+		gc.fillRectangle((ancho-margenIzq-margenDer)/2-130,
 				(alto-margenInf-margenSup)/2-40,300,100);
 		cambiarPincel(gc, 0, 0, 0);
-		gc.drawRectangle((ancho-margenIzq-margenDer)/2-120,
+		gc.drawRectangle((ancho-margenIzq-margenDer)/2-130,
 				(alto-margenInf-margenSup)/2-40,300,100);
 		Font fuente=gc.getFont();
 		cambiarPincel(gc, 0, 0, 0);
 		gc.setFont(new Font(display,"Times",10,SWT.BOLD));
 		//gc.drawText(String.valueOf((int)horaComienzo),x_comienzo, (y_comienzo), true);
-		gc.drawText("CARGANDO CUADRANTE",(ancho-margenIzq-margenDer)/2-40, (alto-margenInf-margenSup)/2,true);
+		gc.drawText(texto,(ancho-margenIzq-margenDer)/2-55, (alto-margenInf-margenSup)/2,true);
 		//gc.drawText((String.valueOf((int)horaFinal)),x_comienzo , y_fin-textSize2.y, true);
 		gc.getFont().dispose();
 		gc.setFont(fuente);
@@ -258,8 +258,12 @@ public class I02CuadranteEmpleado {
 	}
 	
 	public void dibujaTurnosCargados(GC gc){	
+		if(this.avance==-1){
+			dibujarCarga(gc," CARGANDO BASE DATOS ");
+		}
+		else
 		if(this.avance!=0){
-			dibujarCarga(gc);
+			dibujarCarga(gc," CARGANDO CUADRANTES ");
 		}
 		else{
 			

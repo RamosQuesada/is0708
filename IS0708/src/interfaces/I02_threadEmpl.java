@@ -79,7 +79,7 @@ public class I02_threadEmpl extends Thread{
 				//ESPERA A QUE SE CARGUE LA CACHE
 				while((!cuadrante.vista.isCacheCargada())&&(!finalizar)){
 					
-
+					cuadrante.avance=-1;
 					try {
 						sleep(100);
 					} catch (InterruptedException e) {
