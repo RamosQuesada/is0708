@@ -687,4 +687,9 @@ public class Vista {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public void crearDepartamento(String text, String text2, String text3) {
+		// TODO Auto-generated method stub
+		
+	}
 }
