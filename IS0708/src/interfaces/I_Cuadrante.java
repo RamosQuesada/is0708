@@ -571,7 +571,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		int altoFila = 20;
 		// Dibujar números de los días
 		if (anchoDia>14)
-			for (int j=0; j < ultimoDia; j++) {
+			for (int j=0; j < iCuad.length; j++) {
+				if (j%7==0) gc.setForeground(new Color(display,255,0,0));
+				else if (j%7==1) gc.setForeground(new Color(display,0,0,0));
 				gc.drawText(String.valueOf(j+1), margenIzq + margenNombres + j*anchoDia + anchoDia/2, margenSup);
 			}
 		/**********************************************************************/
@@ -579,21 +581,12 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		for (int i=0; i < empleados.size(); i++) {
 			aplicacion.Empleado e=empleados.get(i);
 			gc.drawText(e.getNombre(), margenIzq, margenSup + 20 + i*altoFila);
-			for (int j=0; j < ultimoDia; j++) {
+			for (int j=0; j < iCuad.length; j++) {
 				gc.drawRectangle(margenIzq + margenNombres + j*anchoDia, margenSup + 20 + i*altoFila, anchoDia, altoFila);
-				/**********************************************************************/
-				if (j+1<cuad.length){
-					for (int k=0;k<cuad[j+1].size();k++) {
-						if(cuad[j+1].get(k).getIdEmpl()==e.getEmplId()) {
-							if(cuad[j+1].get(k).getIdTurno()==1) {
-								gc.drawText("M",margenIzq + margenNombres + j*anchoDia + (7/2), margenSup + 20 + i*altoFila + 2,altoFila);
-							} else {
-								gc.drawText("T",margenIzq + margenNombres + j*anchoDia + 4, margenSup + 20 + i*altoFila + 2,altoFila);
-							}
-						}
-					}
+				for (int k=0;k<iCuad[j].size();k++) {
+//					gc.drawText(String.valueOf(iCuad[j].get(k).getTurno().getAbreviatura().charAt(0)),margenIzq + margenNombres + j*anchoDia + (7/2), margenSup + 20 + i*altoFila + 2,altoFila);
+					gc.drawText(String.valueOf(iCuad[j].get(k).getTurno().getIdTurno()),margenIzq + margenNombres + j*anchoDia + (7/2), margenSup + 20 + i*altoFila + 2,altoFila);
 				}
-				/**********************************************************************/
 			}
 		}
 		

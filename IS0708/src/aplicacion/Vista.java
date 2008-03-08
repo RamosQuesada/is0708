@@ -396,7 +396,6 @@ public class Vista {
 		return controlador.getContrato(idContrato);
 	}
 	
-
 	public Cuadrante getCuadrante(int mes, int anio, String idDepartamento) {
 		if (!alive) return null;
 		int i = 0;

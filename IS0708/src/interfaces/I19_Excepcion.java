@@ -26,7 +26,8 @@ public class I19_Excepcion {
 		GridLayout lShell = new GridLayout();
 		lShell.numColumns = 1;		
 		shell.setLayout(lShell);
-		shell.setText("¡Excepcioooooooooon!");
+		if (excepcion!=null)shell.setText("¡Excepcioooooooooon!");
+		else shell.setText("Informe de errores");
 
 		final Composite cCuerpoMen = new Composite (shell, SWT.BORDER);
 		cCuerpoMen.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -65,13 +66,19 @@ public class I19_Excepcion {
 			break;
 
 		}
-		e += "\n\n" + excepcion.toString() + "\n";
-		for (int i=0; i < excepcion.getStackTrace().length; i++) {
-			e+= "\tat " + excepcion.getStackTrace()[i].toString() + "\n";
+		if (excepcion==null) e="";
+		else {
+			e += "\n\n" + excepcion.toString() + "\n";
+			for (int i=0; i < excepcion.getStackTrace().length; i++) {
+				e+= "\tat " + excepcion.getStackTrace()[i].toString() + "\n";
+			}
+			excepcion.printStackTrace();
 		}
-		excepcion.printStackTrace();
 		lMensaje.setText(e);
-		tMensaje.setText("Por favor, explica breve pero detalladamente cómo ha ocurrido este error.");
+		if (excepcion!=null)
+			tMensaje.setText("Por favor, explica breve pero detalladamente cómo ha ocurrido este error.");
+		else
+			tMensaje.setText("Por favor, explica breve pero detalladamente el fallo que has visto.");
 		
 		final Composite cEnviarCancelar = new Composite (shell, SWT.BORDER);
 		cEnviarCancelar.setLayoutData(new GridData(SWT.FILL, SWT.DOWN, true, false, 1, 1));
