@@ -43,7 +43,6 @@ public class Turno {
 	 * @param horaSalida	 Hora teórica a la que debería terminar la jornada laboral del usuario
 	 * @param horaDescanso	 Hora de inicio del descanso
 	 * @param descanso		 Tiempo asignado a descanso (en minutos)
-
 	 */
 	public Turno(int idTurno, String descripcion, Time horaEntrada, Time horaSalida, Time horaDescanso, int descanso) {
 		this.idTurno = idTurno;
@@ -55,7 +54,6 @@ public class Turno {
 	}
 	
 	/**
-	 * 
 	 * @param idTurno  	 Identificador del turno
 	 * @param descripcion    Nombre y/o datos del turno 
 	 * @param horaEntrada	 Hora te�rica a la que deber�a comenzar la jornada laboral del usuario 
@@ -74,10 +72,8 @@ public class Turno {
 		this.horaEntrada=Time.valueOf(horaEntrada);
 		this.horaSalida=Time.valueOf(horaSalida);
 		this.horaDescanso=Time.valueOf(horaDescanso);
-
 	}
-	
-	
+
 	/**
 	 * Prueba, algoritmo
 	 * @param id
@@ -85,7 +81,6 @@ public class Turno {
 	 */
 	public Turno(int id){
 		this.idTurno = id;
-		
 	}
 	
 	/**
@@ -190,8 +185,7 @@ public class Turno {
 			minutos2 = 0;
 			horas2 = 0;
 		}
-	}
-	
+	}	
 	
 	public Boolean contienePunto (int y, int posV, int margenSup, int sep_vert_franjas, int alto_franjas) {
 		Boolean b = false;
@@ -650,7 +644,6 @@ public class Turno {
 					horaDescanso.setHours(horaApertura + tamFranja/60);
 					horaDescanso.setMinutes(tamFranja%60);
 					tDescanso = tVuelta - (horaDescanso.getHours()*60+ horaDescanso.getMinutes());
-				// Me paso por la derecha (falta)
 				// Movimiento normal
 				} else {
 					horaEntrada.setHours(h);
@@ -673,6 +666,13 @@ public class Turno {
 					horaSalida.setHours(horaApertura + tamFranja/60);
 					horaSalida.setMinutes(tamFranja%60);		
 				// Me paso por la derecha (falta)
+				} else if (h*60+m+tamFranja > horaCierre*60) {
+					horaSalida.setHours(horaCierre);
+					horaSalida.setMinutes(0);
+					int j = horaCierre*60-tamFranja;
+					horaEntrada.setHours(j/60);
+					horaEntrada.setMinutes(j%60);
+					
 				// Movimiento normal
 				} else {
 					horaEntrada.setHours(h);
@@ -695,6 +695,12 @@ public class Turno {
 				activa2=false;
 				activa1=true;
 				calcularDespl(x, margenIzq, margenNombres, horaApertura, tamHora, tamSubdiv, numSubdiv);
+			} else if (h*60+m+tamFranja > horaCierre*60) {
+				horaSalida.setHours(horaCierre);
+				horaSalida.setMinutes(0);
+				int vuelta = horaCierre*60-tamFranja;
+				tDescanso=vuelta-(horaDescanso.getHours()*60+horaDescanso.getMinutes());
+				
 			}
 		}
 		recalcularFranjas(margenIzq, margenNombres, horaApertura, tamHora);
