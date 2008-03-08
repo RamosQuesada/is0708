@@ -1505,8 +1505,6 @@ public class Database extends Thread {
 	/**
 	 * Método que lee los empleados un departamento concreto
 	 * 
-	 * @param mes el mes del cuadrante
-	 * @param anio el año del cuadrante
 	 * @param departamento el identificador del departamento
 	 * @return Devuelve un ResultSet con los datos leídos de la BD
 	 * 
