@@ -240,10 +240,12 @@ public class Util {
 		
 		String year;
 		//System.out.println(Integer.parseInt(año));
+		
 		if((Integer.parseInt(anio))<1000){
 			year="20"+anio.substring(1);
 		}
 		else{year=anio;}
+
 		String month;
 		String day;
 		if (mes.length()==1){month=("0"+mes);}
