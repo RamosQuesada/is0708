@@ -99,17 +99,12 @@ public class I02_threadEmpl extends Thread{
 				
 			//	System.out.println("fecha "+cuadrante.fecha.getDate()+" "+cuadrante.fecha.getMonth()+" "+cuadrante.fecha.getYear());
 				
-				int tamaño=lista_trabaja.size();
-				Trabaja trabaja=null;
-				
-				System.out.println("id "+cuadrante.empleado.getEmplId());
+				Trabaja trabaja=null;	
 				int contador=0;
 				boolean fin=false;
 				while((!fin)&&(contador<lista_trabaja.size())){
 					if((lista_trabaja.get(contador).getIdEmpl()==cuadrante.empleado.getEmplId())){
 						trabaja=lista_trabaja.get(contador);
-						System.out.println("empleado "+ (lista_trabaja.get(contador).getIdEmpl()));
-						System.out.println("turno "+trabaja.getIdTurno());
 						fin=true;
 					}
 					contador++;
