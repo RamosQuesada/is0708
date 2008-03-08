@@ -678,4 +678,13 @@ public class Vista {
 	public ArrayList<Contrato> getListaContratosDepartamento() {
 		return contratos;
 	}
+	/**
+	 * Funcion que devuelve todos los nombres de los jefes
+	 * que pueden ser jefes de departamento
+	 * @return Nombres de los jefes
+	 */
+	public ArrayList<String> getNombreTodosJefes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
