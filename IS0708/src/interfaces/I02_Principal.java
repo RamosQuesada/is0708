@@ -83,12 +83,12 @@ public class I02_Principal {
 				if (vista.isCacheCargada()) {
 					Imprimir imprimir = new Imprimir(display);
 					imprimir.imprimirImage(vista.getEmpleadoActual(), bundle);
-				}
-				else {
+				} else {
 					MessageBox messageBox = new MessageBox(shell,
 							SWT.APPLICATION_MODAL | SWT.OK);
 					messageBox.setText(bundle.getString("Error"));
-					messageBox.setMessage(bundle.getString("I02_dlg_EsperarCache"));
+					messageBox.setMessage(bundle
+							.getString("I02_dlg_EsperarCache"));
 					messageBox.open();
 				}
 			}
@@ -158,10 +158,10 @@ public class I02_Principal {
 				| SWT.READ_ONLY);
 		cDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1));
-		/************************************************************/
+		/** ********************************************************* */
 		cDepartamentos.setItems(vista.getNombresDepartamentosJefe());
-		//cDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
-		/************************************************************/
+		// cDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
+		/** ********************************************************* */
 		cDepartamentos.select(0);
 
 		// Un canvas para albergar el gráfico de los cuadrantes
@@ -177,22 +177,23 @@ public class I02_Principal {
 		algoritmo.Trabaja t2 = new algoritmo.Trabaja();
 		t2.setIdEmpl(10000200);
 		t2.setIdTurno(2);
-		
-		final I_Cuadrante ic = new I_Cuadrante(vista, 2, 2008,"mi_dep", 4, 9, 23);
-		ic.setCuad(vista.getCuadrante(6, 2008, "DatosFijos").getCuad());
-		/************************************************************/
+
+		final I_Cuadrante ic = new I_Cuadrante(vista, 2, 2008, "mi_dep", 4, 9,
+				23);
+		// ic.setCuad(vista.getCuadrante(6, 2008, "DatosFijos").getCuad());
+		/** ********************************************************* */
 		cDepartamentos.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event e) { 
-				//ic.setCuad(vista.getCuadrante(12,2007,cDepartamentos.getText()));
-				System.out.println("Dpto. "+cDepartamentos.getText());
+			public void handleEvent(Event e) {
+				// ic.setCuad(vista.getCuadrante(12,2007,cDepartamentos.getText()));
+				System.out.println("Dpto. " + cDepartamentos.getText());
 			}
 		});
-		/************************************************************/
+		/** ********************************************************* */
 		ic.setTrabajaDia(1, t1);
 		ic.setTrabajaDia(1, t2);
 		ic.setComposite(cCuadrante);
-		ic.setDia(1);
-		
+		// ic.setDia(1);
+
 		Label lCalendario = new Label(cCuadrantes, SWT.LEFT);
 		lCalendario.setText(bundle.getString("Calendario"));
 		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
@@ -202,22 +203,26 @@ public class I02_Principal {
 				| SWT.SHORT);
 		calendario.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				
+
 				// TODO BD Cargar el cuadrante con la fecha correspondiente en
 				// la variable cuadranteActual
-				
-				vista.infoDebug("I02_Principal", "Fecha cambiada a " +
-				String.valueOf(calendario.getDay()) + " de " +
-				aplicacion.Util.mesAString(bundle, calendario.getMonth()) + " de " +
-				String.valueOf(calendario.getYear()));
-				//ic.setDia(calendario.getDay());
+
+				vista.infoDebug("I02_Principal", "Fecha cambiada a "
+						+ String.valueOf(calendario.getDay())
+						+ " de "
+						+ aplicacion.Util.mesAString(bundle, calendario
+								.getMonth()) + " de "
+						+ String.valueOf(calendario.getYear()));
+				ic.setDia(calendario.getDay(), calendario.getMonth()+1,
+						calendario.getYear());
 			}
 		});
 		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false,
 				2, 1));
 		fechaSeleccionada = new Date(calendario.getYear(), calendario
 				.getMonth(), calendario.getDay());
-
+		// ic.setDia(calendario.getDay(), calendario.getMonth(),
+		// calendario.getYear());
 		/*
 		 * e1.anadeGUI(cCuadrante,9,23,3, true); e2.anadeGUI(cCuadrante,9,23,3,
 		 * false); e3.anadeGUI(cCuadrante,9,23,3, false);
@@ -226,30 +231,30 @@ public class I02_Principal {
 		 */
 		//		
 		// Img = cuadrante.dameImageImprimible();
-		
 		final Button bPorMes = new Button(cCuadrantes, SWT.RADIO);
 		bPorMes.setText(bundle.getString("I02_but_Verpormes"));
-		bPorMes.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false,2,1));
-		// Oyente para saber cuando se ha modificado la seleccion del boton 
-		/************************************************************/
-//		bPorMes.addListener(SWT.Selection, new Listener() {
-//		//Seleccionado por mes 
-//			public void handleEvent(Event e) { 
-//				if (bPorMes.getSelection()) { 
-//					ic.setDiario(false);
-//					ic.redibujar();
-//				} 
-//				else {
-//					ic.setDiario(true);
-//					ic.redibujar();
-//				}
-//			}
-//		});
-		/************************************************************/
+		bPorMes.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2,
+				1));
+		// Oyente para saber cuando se ha modificado la seleccion del boton
+		/** ********************************************************* */
+		bPorMes.addListener(SWT.Selection, new Listener() {
+			// Seleccionado por mes
+			public void handleEvent(Event e) {
+				if (bPorMes.getSelection()) {
+					ic.setDiario(false);
+					ic.redibujar();
+				} else {
+					ic.setDiario(true);
+					ic.redibujar();
+				}
+			}
+		});
+		/** ********************************************************* */
 		final Button bPorSemanas = new Button(cCuadrantes, SWT.RADIO);
 		bPorSemanas.setText(bundle.getString("I02_but_Verpordia"));
-		bPorSemanas.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false,false,2,1));
-		bPorSemanas.setSelection(true);    
+		bPorSemanas.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false,
+				2, 1));
+		bPorSemanas.setSelection(true);
 	}
 
 	/**
@@ -303,8 +308,8 @@ public class I02_Principal {
 		cmbDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 1, 1));
 
-	//	ArrayList<String> array = vista.getEmpleadoActual()
-		//		.getDepartamentosId();
+		// ArrayList<String> array = vista.getEmpleadoActual()
+		// .getDepartamentosId();
 		ArrayList<String> array = vista.getNombreTodosDepartamentos();
 		if (array != null) {
 			for (int i = 0; i < array.size(); i++) {
@@ -329,7 +334,8 @@ public class I02_Principal {
 				System.out
 						.println("I02 :: Pulsado Configuración departamentos: "
 								+ cmbDepartamentos.getText());
-				new I10_Config_departamento(shell, bundle, vista,cmbDepartamentos.getText());
+				new I10_Config_departamento(shell, bundle, vista,
+						cmbDepartamentos.getText());
 			}
 		});
 
@@ -340,7 +346,8 @@ public class I02_Principal {
 		bNew.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				// System.out.println("I02 :: Pulsado Nuevo Departamento");
-				new I10_Config_departamento(shell, bundle, vista,cmbDepartamentos.getText());
+				new I10_Config_departamento(shell, bundle, vista,
+						cmbDepartamentos.getText());
 			}
 		});
 
@@ -373,36 +380,44 @@ public class I02_Principal {
 				1, 1));
 		cContratos.setLayout(new GridLayout(3, false));
 
-		final Table tablaContratos = new Table(cContratos, SWT.MULTI | SWT.BORDER
-				| SWT.FULL_SELECTION);
+		final Table tablaContratos = new Table(cContratos, SWT.MULTI
+				| SWT.BORDER | SWT.FULL_SELECTION);
 		tablaContratos.setLinesVisible(true);
 		tablaContratos.setHeaderVisible(true);
-		String[] titles = { bundle.getString("Contrato"),bundle.getString("Empleados"),
-							bundle.getString("I09_turno_inicial"),bundle.getString("I09_lab_NombreContrato"),
-							bundle.getString("Patron"),bundle.getString("I09_lab_LongitudCiclo"),
-							bundle.getString("I09_lab_salario"),bundle.getString("I09_lab_tipo")};
+		String[] titles = { bundle.getString("Contrato"),
+				bundle.getString("Empleados"),
+				bundle.getString("I09_turno_inicial"),
+				bundle.getString("I09_lab_NombreContrato"),
+				bundle.getString("Patron"),
+				bundle.getString("I09_lab_LongitudCiclo"),
+				bundle.getString("I09_lab_salario"),
+				bundle.getString("I09_lab_tipo") };
 		for (int i = 0; i < titles.length; i++) {
 			TableColumn column = new TableColumn(tablaContratos, SWT.NONE);
 			column.setText(titles[i]);
 		}
-		
+
 		// Luke, usa la vista.
-		
-		// Chema creo que la siguiente instrucción es la que hace que tarde tanto.
-		
-		// ArrayList <Contrato> contratos=vista.getControlador().getListaContratosDpto("DatosFijos");
-		
-		ArrayList <Contrato> contratos = new ArrayList();
-		for(int i=0;i<contratos.size();i++){
+
+		// Chema creo que la siguiente instrucción es la que hace que tarde
+		// tanto.
+
+		// ArrayList <Contrato>
+		// contratos=vista.getControlador().getListaContratosDpto("DatosFijos");
+
+		ArrayList<Contrato> contratos = new ArrayList();
+		for (int i = 0; i < contratos.size(); i++) {
 			TableItem tItem = new TableItem(tablaContratos, SWT.NONE);
 			Contrato c = contratos.get(i);
 			tItem.setText(0, Integer.toString(c.getNumeroContrato()));
-			ArrayList <Empleado> emp=vista.getControlador().getEmpleados(null, null, c.getNumeroContrato(),null, null, null, null);
-			String empleados="";
-			for (int j=0;j<emp.size();j++){
-				Empleado e=emp.get(j);
-				empleados+=e.getNombre()+" "+e.getApellido1();
-				if (j!=emp.size()-1) empleados+=",";
+			ArrayList<Empleado> emp = vista.getControlador().getEmpleados(null,
+					null, c.getNumeroContrato(), null, null, null, null);
+			String empleados = "";
+			for (int j = 0; j < emp.size(); j++) {
+				Empleado e = emp.get(j);
+				empleados += e.getNombre() + " " + e.getApellido1();
+				if (j != emp.size() - 1)
+					empleados += ",";
 			}
 			tItem.setText(1, empleados);
 			tItem.setText(2, Integer.toString(c.getTurnoInicial()));
@@ -437,42 +452,52 @@ public class I02_Principal {
 				new I09_1_Creacion_contratos(shell, bundle, vista, 0, -1);
 			}
 		});
-		
+
 		bModificarContrato.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				if(tablaContratos.getSelectionIndex()>-1){
-					TableItem it=tablaContratos.getItem(tablaContratos.getSelectionIndex());
-					//it.getText(0);
+				if (tablaContratos.getSelectionIndex() > -1) {
+					TableItem it = tablaContratos.getItem(tablaContratos
+							.getSelectionIndex());
+					// it.getText(0);
 					System.out.println(it.getText(0));
-					new I09_1_Creacion_contratos(shell, bundle, vista, 1, Integer.parseInt(it.getText(0)));
+					new I09_1_Creacion_contratos(shell, bundle, vista, 1,
+							Integer.parseInt(it.getText(0)));
+				} else {
+					MessageBox messageBox = new MessageBox(shell,
+							SWT.APPLICATION_MODAL | SWT.ICON_INFORMATION
+									| SWT.OK | SWT.CANCEL);
+					messageBox.setMessage(bundle
+							.getString("I09_bot_modif_contrato_no_select"));
+					messageBox.open();
 				}
-				else {
-					MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_INFORMATION | SWT.OK | SWT.CANCEL);
-					messageBox.setMessage (bundle.getString("I09_bot_modif_contrato_no_select"));
-					messageBox.open();					
-				}
-				System.out.println(tablaContratos.getSelectionIndex());				
+				System.out.println(tablaContratos.getSelectionIndex());
 			}
 		});
-		
+
 		bEliminarContrato.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				if(tablaContratos.getSelectionIndex()>-1){
-					MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_QUESTION | SWT.OK | SWT.CANCEL);
-					messageBox.setMessage (bundle.getString("I09_bot_elim_contrato"));
-					int response=messageBox.open();
-					if(response==SWT.OK){
-						TableItem it=tablaContratos.getItem(tablaContratos.getSelectionIndex());
-						//it.getText(0);
+				if (tablaContratos.getSelectionIndex() > -1) {
+					MessageBox messageBox = new MessageBox(shell,
+							SWT.APPLICATION_MODAL | SWT.ICON_QUESTION | SWT.OK
+									| SWT.CANCEL);
+					messageBox.setMessage(bundle
+							.getString("I09_bot_elim_contrato"));
+					int response = messageBox.open();
+					if (response == SWT.OK) {
+						TableItem it = tablaContratos.getItem(tablaContratos
+								.getSelectionIndex());
+						// it.getText(0);
 						System.out.println(it.getText(0));
-						//vista.getControlador()
+						// vista.getControlador()
 					}
+				} else {
+					MessageBox messageBox = new MessageBox(shell,
+							SWT.APPLICATION_MODAL | SWT.ICON_INFORMATION
+									| SWT.OK | SWT.CANCEL);
+					messageBox.setMessage(bundle
+							.getString("I09_bot_elim_contrato_no_select"));
+					messageBox.open();
 				}
-				else {
-					MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_INFORMATION | SWT.OK | SWT.CANCEL);
-					messageBox.setMessage (bundle.getString("I09_bot_elim_contrato_no_select"));
-					messageBox.open();					
-				}				
 			}
 		});
 
@@ -499,66 +524,77 @@ public class I02_Principal {
 		_fondo_turnomatic = new Image(display, I02_Principal.class
 				.getResourceAsStream("admin_fondo.jpg"));
 
-		cInicio.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,1));
-		
+		cInicio
+				.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,
+						1));
+
 		// Le añadimos un layout
 		GridLayout lInicio = new GridLayout();
 		lInicio.numColumns = 2;
 		cInicio.setLayout(lInicio);
 
 		final Label bienvenido = new Label(cInicio, SWT.None);
-		bienvenido.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, true, 2, 1));
+		bienvenido.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, true,
+				2, 1));
 		bienvenido.setText(bundle.getString("I02_bienvenido"));
-		
+
 		Image logo = new Image(display, I02_Principal.class
 				.getResourceAsStream("LogoTM.jpg"));
 		final Label lLogo = new Label(cInicio, SWT.None);
 		lLogo.setImage(logo);
-		lLogo.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, true,2,1));
-		
+		lLogo
+				.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, true, 2,
+						1));
+
 		final Label lConfig = new Label(cInicio, SWT.None);
-		lConfig.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, false,1,1));
+		lConfig.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, false, 1,
+				1));
 		lConfig.setText(bundle.getString("I02_configBD"));
-		//lConfig.setText("Pulse el siguiente botón para comprobar y/o cambiar los parámetros de la base de datos");
-		
+		// lConfig.setText("Pulse el siguiente botón para comprobar y/o cambiar
+		// los parámetros de la base de datos");
+
 		final Button configBD = new Button(cInicio, SWT.PUSH);
-		configBD.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, true,1, 1));
+		configBD
+				.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, true, 1, 1));
 		configBD.setText("CONFIG BD");
 		configBD.addSelectionListener(new SelectionListener() {
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 			}
 
 			public void widgetSelected(SelectionEvent arg0) {
-				I30_Info_BD ventana=new I30_Info_BD(shell,bundle,vista);
+				I30_Info_BD ventana = new I30_Info_BD(shell, bundle, vista);
 			}
 		});
-		
+
 		final Label lReset = new Label(cInicio, SWT.None);
-		lReset.setLayoutData(new GridData(SWT.CENTER, SWT.BOTTOM, false, false,	1, 1));
+		lReset.setLayoutData(new GridData(SWT.CENTER, SWT.BOTTOM, false, false,
+				1, 1));
 		lReset.setText(bundle.getString("I02_resetBD"));
-		//lReset.setText("Pincha este botón para reiniciar la base de datos");
+		// lReset.setText("Pincha este botón para reiniciar la base de datos");
 
 		final Button resetBD = new Button(cInicio, SWT.PUSH);
-		resetBD.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, true, false, 1, 1));
+		resetBD.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, true, false,
+				1, 1));
 		resetBD.setText("RESET BD");
 		resetBD.addSelectionListener(new SelectionListener() {
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 			}
 
 			public void widgetSelected(SelectionEvent arg0) {
-				MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_QUESTION | SWT.OK | SWT.CANCEL);
-				messageBox.setText ("Reset BD");
-				messageBox.setMessage (bundle.getString("I02_confirm_reset"));
-				int response=messageBox.open();
-				if(response==SWT.OK){
+				MessageBox messageBox = new MessageBox(shell,
+						SWT.APPLICATION_MODAL | SWT.ICON_QUESTION | SWT.OK
+								| SWT.CANCEL);
+				messageBox.setText("Reset BD");
+				messageBox.setMessage(bundle.getString("I02_confirm_reset"));
+				int response = messageBox.open();
+				if (response == SWT.OK) {
 					System.out.println("BBDD reiniciada");
-					//paquete_pruebas.GeneraDatos.reset();
+					// paquete_pruebas.GeneraDatos.reset();
 					paquete_pruebas.InsertaDatosFijos.insertar();
 				}
 			}
-				});
+		});
 
-		
 		cInicio.setBackgroundImage(_fondo_turnomatic);
 	}
 
@@ -911,10 +947,10 @@ public class I02_Principal {
 				int day = calendario.getDay();
 				int month = calendario.getMonth();
 				int year = calendario.getYear();
-			//	System.out
-			//			.println("Fecha cambiada a " + String.valueOf(day)
-			//					+ " de " + meses[month] + " de "
-			//					+ String.valueOf(year));
+				// System.out
+				// .println("Fecha cambiada a " + String.valueOf(day)
+				// + " de " + meses[month] + " de "
+				// + String.valueOf(year));
 				/*
 				 * System.out.println(Util.aFormatoDate( Integer.toString(year),
 				 * Integer.toString(month), Integer.toString(day)) );
@@ -1427,7 +1463,7 @@ public class I02_Principal {
 				if (messageBox.open() == SWT.YES) {
 					e.doit = true;
 					vista.stop();
-				}				
+				}
 			}
 		});
 	}
@@ -1441,7 +1477,7 @@ public class I02_Principal {
 		ico_chico.dispose();
 		ico_chica.dispose();
 		ico_chicos.dispose();
-//		tray.getItem(0).dispose();
+		// tray.getItem(0).dispose();
 	}
 
 	/**

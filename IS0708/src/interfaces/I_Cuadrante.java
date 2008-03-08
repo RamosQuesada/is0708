@@ -66,7 +66,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private Label lGridCuadrante;
 	private Combo cGridCuadrante;
 	
-	private int dia = 1;
+	private int dia=1;
+	private int mes=6;
+	private int anio=2008;
 	private Image fondo;
 	
 	
@@ -198,12 +200,13 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	}
 
 	public void cargarCache() {
-		iCuad = new ArrayList[cuad.length];
-		for (int i=0; i<cuad.length; i++) {
+		ArrayList<Trabaja> c[] = vista.getCuadrante(mes, anio, "DatosFijos").getCuad();
+		iCuad = new ArrayList[c.length];
+		for (int i=0; i<c.length; i++) {
 			iCuad[i] = new ArrayList<I_Trabaja>();
-			for (int j=0; j<cuad[i].size(); j++) {
-				if (cuad[i].get(j)!=null)
-					iCuad[i].add(new I_Trabaja(cuad[i].get(j)));
+			for (int j=0; j<c[i].size(); j++) {
+				if (c[i].get(j)!=null)
+					iCuad[i].add(new I_Trabaja(c[i].get(j)));
 			}
 		}
 		cacheCargada = true;
@@ -279,8 +282,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			public void mouseExit(MouseEvent arg0) {
 				if (cacheCargada) {
 					empleadoActivo=-1;
-					for (int i = 0; i < iCuad[dia].size(); i++) {
-						iCuad[dia].get(i).getTurno().desactivarFranjas();
+					for (int i = 0; i < iCuad[dia-1].size(); i++) {
+						iCuad[dia-1].get(i).getTurno().desactivarFranjas();
 					}
 					canvas.redraw();
 				}
@@ -326,8 +329,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 						Boolean encontrado = false;
 						int empleadoActivoNuevo = -1;
 						// Seleccionar empleado activo
-						while (!encontrado && i < iCuad[dia].size()) { 
-							if (iCuad[dia].get(i).turno.contienePunto(e.y, i,margenSup,sep_vert_franjas,alto_franjas))
+						while (!encontrado && i < iCuad[dia-1].size()) { 
+							if (iCuad[dia-1].get(i).turno.contienePunto(e.y, i,margenSup,sep_vert_franjas,alto_franjas))
 								empleadoActivoNuevo = i;
 							i++;
 						}
@@ -343,8 +346,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 
 						if (turnoActivo != null) turnoActivo.desactivarFranjas();
 						Turno t;
-						while (!encontrado && i < iCuad[dia].size()) {
-							t = iCuad[dia].get(i).getTurno();
+						while (!encontrado && i < iCuad[dia-1].size()) {
+							t = iCuad[dia-1].get(i).getTurno();
 							if (empleadoActivo==-1) { cursor(0); t.desactivarFranjas();}
 							else if (i==empleadoActivo) {
 								if 		(t.contienePixelInt(e.x))	{ cursor(1); encontrado = true; turnoActivo = t; redibujar=true;}
@@ -409,7 +412,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				
 			}
 		};
-		//if (diario) setDiario(); else setMensual();
+
 	//}
 
 	canvas.addMouseMoveListener(mouseMoveListenerCuadrSemanal);
@@ -452,8 +455,14 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		redibujar();
 	}
 	
-	public void setDia(int i) {
-		dia = i;
+	public void setDia(int dia, int mes, int anio) {
+		this.dia = dia;
+		this.mes = mes;
+		this.anio = anio;
+		if (vista.isCacheCargada()) {
+			cargarCache();
+			redibujar();
+		}
 	}
 	
 	private void calcularTamano() {
@@ -461,8 +470,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		alto = canvas.getClientArea().height;
 		setTamano(ancho, alto);
 		if (cacheCargada) {
-			for (int i = 0; i < iCuad[dia].size(); i++) {
-				iCuad[dia].get(i).getTurno().recalcularFranjas(margenIzq, margenNombres, horaApertura, tamHora);
+			for (int i = 0; i < iCuad[dia-1].size(); i++) {
+				iCuad[dia-1].get(i).getTurno().recalcularFranjas(margenIzq, margenNombres, horaApertura, tamHora);
 			}
 		}
 		fondo = null; // El fondo que hay ya no vale, hay que redibujarlo
@@ -512,10 +521,10 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			gc.drawText("Cargando\ndatos...", 5, 5);
 		}
 		else {
-			for (int i = 0; i < iCuad[dia].size(); i++) {
+			for (int i = 0; i < iCuad[dia-1].size(); i++) {
 				// Dibujar el nombre del empleado y el turno
-				String nombre = iCuad[dia].get(i).getEmpl().getNombre().charAt(0) + ". " + iCuad[dia].get(i).getEmpl().getApellido1();
-				iCuad[dia].get(i).getTurno().dibujar(display, nombre, gc, i, vista.getEmpleados().get(i).dameColor() ,margenIzq, margenNombres,margenSup,sep_vert_franjas,alto_franjas,tamHora, tamSubdiv, horaApertura, numSubdivisiones);
+				String nombre = iCuad[dia-1].get(i).getEmpl().getNombre().charAt(0) + ". " + iCuad[dia-1].get(i).getEmpl().getApellido1();
+				iCuad[dia-1].get(i).getTurno().dibujar(display, nombre, gc, i, vista.getEmpleados().get(i).dameColor() ,margenIzq, margenNombres,margenSup,sep_vert_franjas,alto_franjas,tamHora, tamSubdiv, horaApertura, numSubdivisiones);
 			}
 		}
 	}
