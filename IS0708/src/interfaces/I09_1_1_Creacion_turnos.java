@@ -18,6 +18,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 
+import java.sql.Time;
 import java.util.ResourceBundle;
 import java.util.ArrayList;
 import org.eclipse.swt.graphics.*;
@@ -38,18 +39,16 @@ public class I09_1_1_Creacion_turnos {
 	private int idContrato;
 	private Turno turnoInsertado;
 	private Vista vista;
-	private I09_1_Creacion_contratos i09;
-	public I09_1_1_Creacion_turnos(Shell padre, Vista vista, ResourceBundle bundle,int modo,int idTurno, int idContrato
-									,I09_1_Creacion_contratos i09) {
+	private Turno turnoModificado;
+	public I09_1_1_Creacion_turnos(Shell padre, Vista vista, ResourceBundle bundle,int modo,int idTurno, int idContrato) {
 		this.padre = padre;
 		this.bundle = bundle;
 		this.modo=modo;
 		this.idTurno=idTurno;
 		this.idContrato=idContrato;
 		this.vista=vista;
-		this.i09=i09;
-		shell = new Shell(padre,SWT.APPLICATION_MODAL | SWT.CLOSE);
-//		shell = new Shell (padre, SWT.CLOSE | SWT.RESIZE | SWT.APPLICATION_MODAL);
+		//shell = new Shell(padre,SWT.APPLICATION_MODAL | SWT.CLOSE);
+		shell = new Shell (padre, SWT.CLOSE | SWT.RESIZE | SWT.APPLICATION_MODAL);
 		mostrarVentana();
 	}
 	
@@ -143,32 +142,33 @@ public class I09_1_1_Creacion_turnos {
 		SelectionAdapter sabAceptar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				//modo = 0 es nuevo turno y modo =1 es modificar
-				if (modo==0){
-					//String nombre=tNombre.getText();
-					String desc = tDesc.getText();
-					turnoInsertado = new Turno(30,desc,"10:37:28","10:37:28","10:37:28",0);
-					//int id=vista.getControlador().insertTurno(turnoInsertado);
-					//turnoInsertado = new Turno(id,desc,"10:37:28","10:37:28","10:37:28",0);
+				String desc = tDesc.getText();
+				if (modo==0){					
+					turnoInsertado = new Turno(0,desc,"10:37:28","10:37:28","10:37:28",0);
+					int id=vista.getControlador().insertTurno(turnoInsertado);
+					turnoInsertado = new Turno(id,desc,"10:37:28","10:37:28","10:37:28",0);
 					//(vista.getControlador().insertTurnoPorContrato(idT, idContrato))){
-					/*if (id!=-1){
+					if (id!=-1){
 						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
 						messageBox.setText("Info");
 						messageBox.setMessage(bundle.getString("I09_insert_Turno"));
 						messageBox.open();
 					}
 					else {
+						turnoInsertado = null;
 						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
 						messageBox.setText(bundle.getString("Error"));
 						messageBox.setMessage(bundle.getString("I09_err_insert_Turno"));
 						messageBox.open();
-					}*/
-					i09.actualizaTurno(turnoInsertado);
+					}
+					
 					shell.dispose();
 				}
 				else{
-					String desc=tDesc.getText();			
-					//boolean okis=vista.getControlador().modificarTurno(idTurno,desc,null,null,null,0);	
-					boolean okis=vista.getControlador().modificarTurno(25,desc,null,null,null,0);					
+					Time t=new Time(1000);
+					boolean okis=vista.getControlador().modificarTurno(idTurno,desc,t,t,t,0);					
+					//boolean okis=vista.getControlador().modificarTurno(25,desc,t,t,t,0);
+					turnoModificado = new Turno(idTurno,desc,t,t,t,0);
 					if (okis){
 						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
 						messageBox.setText("Info");
@@ -176,6 +176,7 @@ public class I09_1_1_Creacion_turnos {
 						messageBox.open();
 					}
 					else {
+						turnoModificado=null;
 						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
 						messageBox.setText(bundle.getString("Error"));
 						messageBox.setMessage(bundle.getString("I09_err_modif_Turno"));
@@ -200,7 +201,12 @@ public class I09_1_1_Creacion_turnos {
 		shell.open();
 	}
 	
-	public Turno getTurnoAinsertar(){
+	public Turno getTurnoInsertado(){
 		return turnoInsertado;
 	}
+	
+	public Turno getTurnoModificado(){
+		return turnoModificado;
+	}
+	
 }

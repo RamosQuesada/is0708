@@ -990,6 +990,25 @@ public class Controlador {
 		return _db.borraContrato(id);
 	}
 	
+	/**
+	 * Modifica un contrato en la BD. Se le pasan todos los parametros aunque no
+	 * cambien
+	 * 
+	 * @param IdContrato
+	 * @param TurnoInicial
+	 * @param Nombre
+	 * @param Patron
+	 * @param DuracionCiclo
+	 * @param Salario
+	 * @param Tipo
+	 * @return Devuelve un bool que dice si todo ha ido bien.
+	 */
+	public boolean modificarContrato(int IdContrato, int TurnoInicial,
+			String Nombre, String Patron, int DuracionCiclo, double Salario,
+			int Tipo) {
+		return _db.cambiarContrato(IdContrato, TurnoInicial, Nombre, Patron, DuracionCiclo, Salario, Tipo);
+	}
+	
 	/***************************************************************************
 	 * Métodos relacionados con turnos
 	 */
@@ -1284,6 +1303,28 @@ public class Controlador {
 	 */
 	public boolean insertTurnoPorContrato(int idTurno, int idContrato) {
 		return _db.insertarTurnoPorContrato(idTurno, idContrato);
+	}
+	
+	public Turno getTurno(int id){
+		ResultSet rs2 = _db.obtenTurno(id);
+		Turno t=null;
+		try {
+			if (rs2.next()) {
+				String descr = rs2.getString("Descripcion");
+				Time HoraE = rs2.getTime("HoraEntrada");
+				Time HoraS = rs2.getTime("HoraSalida");
+				Time HoraI = rs2.getTime("HoraInicioDescanso");
+				Time duracion = rs2.getTime("DuracionDescanso");
+				int descanso = aplicacion.Util.dameMinutos(duracion);
+				t = new Turno(id, descr, HoraE, HoraS, HoraI,
+						descanso);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.print("Error al obtener el turno de la base de datos");
+		}
+		return t;
 	}
 
 	/**
