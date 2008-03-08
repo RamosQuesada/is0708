@@ -46,6 +46,7 @@ public class I02_threadEmpl extends Thread{
 			calendario.set(GregorianCalendar.DAY_OF_MONTH, cuadrante.fecha.getDate());
 			calendario.set(GregorianCalendar.MONTH, cuadrante.fecha.getMonth());
 			calendario.set(GregorianCalendar.YEAR, cuadrante.fecha.getYear());
+			System.out.println("dia "+cuadrante.fecha.getDate()+"mes "+cuadrante.fecha.getMonth()+"año "+cuadrante.fecha.getYear());
 			int numDias=0;
 			while((calendario.get(GregorianCalendar.DAY_OF_WEEK)!=6)&&(!finalizar)){
 				calendario.add(Calendar.DATE, -1);
