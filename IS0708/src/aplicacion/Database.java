@@ -1069,6 +1069,23 @@ public class Database extends Thread {
 		return rs;
 	}
 
+	public ResultSet obtenDistribuciones(String nombre) {
+
+		try {
+			st = con.createStatement();
+			rs = st
+					.executeQuery("SELECT * FROM DISTRIBUCION WHERE NombreDept ='"
+							+ nombre
+							+ " ORDER BY Hora ASC");
+
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err
+					.println("Error al realizar la consulta de las distribuciones ");
+		}
+		return rs;
+	}
+	
 	/**
 	 * Metodo que selecciona de la tabla de festivos aquellas filas cuyo
 	 * departamento y fecha coinciden con los parametros
@@ -1084,6 +1101,25 @@ public class Database extends Thread {
 			rs = st.executeQuery("SELECT * FROM FESTIVOS WHERE NombreDept ='"
 					+ nombre + "' AND FechaInicio<='" + Fecha
 					+ "' AND FechaFin>='" + Fecha + "' ORDER BY Hora ASC");
+
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			System.err
+					.println("Error al realizar la consulta de los festivos ");
+		}
+		return rs;
+	}
+	
+	public ResultSet obtenFestivosMes(String nombre, int anio, int mes) {
+		String FechaInicio = anio+mes+"1";
+		String FechaFin = anio+mes+Integer.toString(Util.dameDias(mes, anio));
+		
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT * FROM FESTIVOS WHERE NombreDept ='"
+					+ nombre + "' AND FechaInicio>='" + FechaInicio
+					+ "' AND FechaInicio<='" + FechaFin + "' ORDER BY Hora ASC");
 
 		} catch (SQLException e) {
 			// TODO: handle exception

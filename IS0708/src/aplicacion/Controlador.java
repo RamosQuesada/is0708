@@ -645,6 +645,51 @@ public class Controlador {
 	}
 
 	/**
+	 * Pruebas para optimizar el metodo getDistribucionMes NO USAR
+	 * @param nombre
+	 * @param cal
+	 * @deprecated NO USAR, ES SOLO PARA PRUEBAS INTERNAS
+	 */
+	public void getDistribucionMesOpt(String nombre, Calendario cal) {
+		int j=0;
+		ResultSet r,r1;
+		Date d = new Date(0);
+		
+		r = _db.obtenDistribuciones(nombre);
+		r1 = _db.obtenFestivosMes(nombre, cal.getAnio(), cal.getMes());
+		
+		d.setYear(cal.getAnio());
+		d.setMonth(cal.getMes());
+		
+		for (int i=0; i<cal.getNumDias(); i++) {
+		
+			while (j < 24) {
+				cal.actualizaHora(i, j, -1, -1, -1, -1);
+				j++;
+			}
+			
+			d.setDate(i);
+			int dia = d.getDay()+1;
+			
+			try {
+				while (r.next()) {
+					if (r.getInt("DiaSemana") == dia)
+						cal.actualizaHora(i, r.getInt("Hora"), r.getInt("NumMax"), r.getInt("NumMin"), Util.numExpertos(r.getString("Patron")), Util.numPrincipiantes(r.getString("Patron")));
+				}
+				r.beforeFirst();
+				
+				while (r1.next())
+					cal.actualizaHora(r1.getDate("FechaInicio").getDay(), r1.getInt("Hora"), r1.getInt("NumMax"), r1.getInt("NumMin"), Util.numExpertos(r1.getString("Patron")), Util.numPrincipiantes(r1.getString("Patron")));
+				r1.beforeFirst();
+				
+			} catch(SQLException e) {
+				System.err.println("Fallo en getDistribucionMesOpt");
+			}
+		}
+		
+	}
+	
+	/**
 	 * Método para listar todos los empleados de un departamento
 	 * 
 	 * @param idDept
