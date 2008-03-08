@@ -91,7 +91,7 @@ public class TurnoMatic {
 					int id = e.getContratoId();
 					contAux = buscaContrato(id, contratosDep);
 					
-					if(e.estaDisponible(i,inif,finf,controlador,contratosDep,j,estruc.getNumTrozos())){
+					if(e.estaDisponible(i,inif,finf,controlador,contratosDep,j,estruc.getNumTrozos(),mes,anio)){
 						
 						if(contAux.getTipoContrato()==1 || contAux.getTipoContrato()==2){
 							empl.add(e);
@@ -147,7 +147,7 @@ public class TurnoMatic {
 				}
 			}
 
-			colocaNoFijos(dispoDia, reserDia, emplDia, i, cu);//se colocan para cada dia i del mes 
+			//colocaNoFijos(dispoDia, reserDia, emplDia, i, cu);//se colocan para cada dia i del mes 
 		}
 		
 		cuadrante.setCuad(cu);

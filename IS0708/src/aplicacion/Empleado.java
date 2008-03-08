@@ -65,7 +65,7 @@ public class Empleado implements Drawable {
 	private int rango; // 0 administrador, 1 empleado, 2 jefe, 3 gerente
 	private int idContrato;
 	private Contrato contrato;
-	private Date fContrato;
+	private java.sql.Date fContrato;
 	private Date fAlta;
 	private int felicidad;
 	private int idioma;
@@ -894,7 +894,8 @@ public class Empleado implements Drawable {
 	 * @return <i>true</i> si el empleado puede trabajar en el periodo solicitado, <i>false</i> si
 	 * no puede hacerlo (libra, vacaciones, baja...).
 	 */
-	public boolean estaDisponible(int dia, Time iniH, Time finH, Controlador cont, ArrayList<Contrato> listaContratos, int hora, int numTrozos){
+	public boolean estaDisponible(int dia, Time iniH, Time finH, Controlador cont, ArrayList<Contrato> listaContratos, int hora, int numTrozos,
+			int mes,int anio){
 		
 		Contrato contrato;
 		String patron;
@@ -906,15 +907,17 @@ public class Empleado implements Drawable {
 		boolean encontrado;
 		
 		//cálculo del dia en el que nos encontramos dentro del ciclo.
-		today = new java.util.Date();
-		java.sql.Date fechaActual = new java.sql.Date(today.getTime());
+		//today = new java.util.Date();
+		//java.sql.Date fechaActual = new java.sql.Date(today.getTime());
+		java.sql.Date fechaActual = new java.sql.Date(anio-1900,mes-1,1);
+		String ff=fechaActual.toString();
 		if(fContrato == null)
 			fContrato = new Date(fechaActual.getTime());
 		
 		//ya va!!!!!!!!!!!
 		long milsDia = 24*60*60*1000;
 		difFechas = (fechaActual.getTime()+(dia*milsDia))-fContrato.getTime();
-		diaCiclo = (int) (difFechas/(milsDia));  		
+		diaCiclo = (int) (difFechas/(milsDia)); 
 		
 		//Obtencion del contrato del empleado.
 		//contrato = cont.getContrato(this.getContratoId());
