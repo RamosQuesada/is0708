@@ -22,6 +22,18 @@ public class Turno {
 	private Time horaDescanso;
 	private int tDescanso; //minutos de descanso
 	
+	/**
+	 * Crea una instancia nueva a partir de un turno dado
+	 * @param t turno a copiar
+	 */
+	public Turno (Turno t){
+		this.idTurno = t.getIdTurno();
+		this.descripcion = t.getDescripcion();
+		horaEntrada  = new Time(t.getHoraEntrada() .getTime());
+		horaSalida   = new Time(t.getHoraSalida()  .getTime());
+		horaDescanso = new Time(t.getHoraDescanso().getTime());
+		tDescanso = t.tDescanso;
+	}
 	
 	/**
 	 * 
