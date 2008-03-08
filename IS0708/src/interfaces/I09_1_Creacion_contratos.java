@@ -222,7 +222,6 @@ public class I09_1_Creacion_contratos {
 			final List list = new List (shell, SWT.BORDER |  SWT.V_SCROLL);
 			list.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 4));
 			ArrayList <Turno> turnos=vista.getTurnos();
-			vista.loadTurnos();
 			for (int i=0;i<turnos.size();i++)
 				list.add(turnos.get(i).getIdTurno()+" "+turnos.get(i).getDescripcion());
 			final Composite grupo1 = new Composite(shell, SWT.NONE);
