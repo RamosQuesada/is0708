@@ -677,7 +677,7 @@ public class Controlador {
 	 */
 	public ArrayList<Contrato> getListaContratosDpto(String idDepartamento) {
 		ArrayList<Contrato> contratos = new ArrayList<Contrato>();
-	/*	ResultSet rs = null;
+		ResultSet rs = null;
 		try {
 			rs = _db.obtenContratosDepartamento(idDepartamento);
 			
@@ -690,9 +690,9 @@ public class Controlador {
 			System.out.println("Error en getListaContratosDpto");
 			return null;
 		}
-	}*/
+	}
 		
-		
+	/*	
 		ArrayList arrayIdContratos = new ArrayList();
 		Contrato contrato;
 		try {
@@ -716,7 +716,7 @@ public class Controlador {
 					.println("Error al obtener Lista de Contratos del Departamento dado en la base de datos");
 		}
 		return contratos;
-	}
+	}*/
 
 	/**
 	 * Metodo que asocia empleados a un departamento y los inserta en la base de
@@ -1120,7 +1120,7 @@ public class Controlador {
 	 * @return ArrayList de los contratos que existen en en ese departamento
 	 */
 	public ArrayList<Turno> getListaTurnosEmpleadosDpto(String idDepartamento) {
-	/*	ArrayList<Turno> turnos = new ArrayList<Turno>();
+		ArrayList<Turno> turnos = new ArrayList<Turno>();
 		ResultSet rs = null;
 		try {
 			rs = _db.obtenTurnosDepartamento(idDepartamento);
@@ -1134,8 +1134,8 @@ public class Controlador {
 			System.out.println("Error en getListaContratosDpto");
 			return null;
 		}
-	}*/
-
+	}
+	/*
 		ArrayList<Turno> turnos = new ArrayList<Turno>();
 		ArrayList<Turno> turnosAux = new ArrayList<Turno>();
 		ArrayList<String> nombres = new ArrayList<String>();
@@ -1163,7 +1163,7 @@ public class Controlador {
 					.println("Error al obtener Lista de Turnos del Departamento dado en la base de datos");
 		}
 		return turnos;
-	}
+	}*/
 
 	/**
 	 * Metodo que recoge el turno que le corresponde a un empleado en un dia
