@@ -31,8 +31,11 @@ public class PruebasBaseDatos {
 		db.abrirConexion();
 		Controlador c = new Controlador(db, true);
 		
-		c.cambiaNombreDpto("RopaViejunos", "RopaViejunosNuevo");
-		c.modificaDpto("RopaViejunosNuevo", 10000100);
+		ArrayList<String> s = c.getNombreTodosJefes();
+		for(int i=0; i<s.size();i++){
+			System.out.println(s.get(i));
+			
+		}
 		db.cerrarConexion();
 		//boolean b = db.cambiarContrato(15, 12, "aleatorio14", "1:12", 1, 4000.50, 1);
 		//ArrayList<Mensaje> misMensajes = c.getMensajesEntrantes(12345678, 0, 30);

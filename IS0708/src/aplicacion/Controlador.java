@@ -401,6 +401,33 @@ public class Controlador {
 				idContrato, idTurno);
 	}
 
+	
+	
+	public ArrayList<String> getNombreTodosJefes() {
+		ArrayList<String> jefes = new ArrayList<String>();
+		// TODO BD RELLENAR LISTACOINCIDENCIAS Empleado e1 = new Empleado(1, "M.
+		// Jackson", new Color (shell.getDisplay(), 104, 228, 85));
+		ResultSet rs = _db.obtenTodosNombresJefes();
+		try {
+			while (rs.next()) {
+				String nombrejefe = rs.getString("Nombre");
+				jefes.add(nombrejefe);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.err
+					.println("Error al obtener los nombres de los jefes de la base de datos");
+		}
+	
+	return jefes;
+	
+	}
+	
+	
+	
+	
+	
+	
 	/**
 	 * Método que devuelve los nombres de los departamentos de un jefe
 	 * 
@@ -476,7 +503,7 @@ public class Controlador {
 	
 	/**
 	 * 
-	 * @return devuelve un arraylist con los nombres de los departamentos de la base de datos
+	 * @return devuelve un arraylist con los nombres de los todos los Dpto.s de la BBDD
 	 *      
 	 */
 	public ArrayList<String> getNombreTodosDepartamentos() {
@@ -496,8 +523,16 @@ public class Controlador {
 		return departamentos;
 
 	}
-	
-	
+	/**
+	 * Inserción en la tabla NumerosDepartamento en la BBDD
+	 * @param num
+	 *            el numero del departamento
+	 *   @param nombre
+	 *            el nombre del departamento
+	 */
+	public boolean insertNumerosDepartamento(int num, String nombre) {
+		return this._db.insertarNumerosDepartamento(num, nombre);
+	}
 	
 
 	/**
