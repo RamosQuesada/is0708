@@ -494,9 +494,9 @@ public class Vista {
 		setProgreso("Insertando empleado", 50);
 		boolean b = controlador.insertEmpleado(empleado);
 		int i = 0;
-		while (i < empleado.getDepartamentosId(this).size() && b) {
+		while (i < empleado.getDepartamentosId().size() && b) {
 			b = controlador.insertDepartamentoUsuario(empleado.getEmplId(),
-					empleado.getDepartamentoId(this, i));
+					empleado.getDepartamentoId(i));
 			i++;
 		}
 		if (b)
@@ -658,7 +658,7 @@ public class Vista {
 
 		
 		int tipo = getEmpleadoActual().getRango();
-		String dep = getEmpleadoActual().getDepartamentoId(this);
+		String dep = getEmpleadoActual().getDepartamentoId();
 		int numvendedor = getEmpleadoActual().getEmplId();
 		setProgreso("Cargando empleados", 25);
 		empleados = controlador.getEmpleadosDepartamento(getEmpleadoActual().getEmplId(),dep);

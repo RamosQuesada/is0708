@@ -167,7 +167,7 @@ public class I08_1_Anadir_empleado {
 		cExperiencia.setItems (new String [] {	bundle.getString("Principiante"),
 												bundle.getString("Experto")});
 		
-		ArrayList<String> departamentos = vista.getEmpleadoActual().getDepartamentosId(vista);
+		ArrayList<String> departamentos = vista.getEmpleadoActual().getDepartamentosId();
 		for (int i=0; i<departamentos.size(); i++) {
 			cDepto.add(departamentos.get(i));
 		}

@@ -6,11 +6,15 @@ import java.util.ResourceBundle;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 
 import java.sql.Date;
 import java.sql.Time;
 
+import aplicacion.Controlador;
 
 /**
  * Esta clase representa a un empleado.
@@ -61,7 +65,7 @@ public class Empleado implements Drawable {
 	private int rango; // 0 administrador, 1 empleado, 2 jefe, 3 gerente
 	private int idContrato;
 	private Contrato contrato;
-	private java.sql.Date fContrato;
+	private Date fContrato;
 	private Date fAlta;
 	private int felicidad;
 	private int idioma;
@@ -86,11 +90,6 @@ public class Empleado implements Drawable {
 	 */
 	private void actualizarDepartamentos(Controlador c) {		
 		// Actualizar la lista si hace falta
-		// Actualizar la lista si hace falta
-		if (idDepartamentos==null) {
-			c.setProgreso("Cargando departamentos", 1);
-			c.getIdsDepartamentos(idEmpl);
-		}
 		if (idDepartamentos.size() > departamentos.size())
 			departamentos.clear();
 			for (int i = 0; i < idDepartamentos.size(); i++) {
@@ -105,10 +104,6 @@ public class Empleado implements Drawable {
 	 */
 	private void actualizarSubordinados(Controlador c) {
 		// Actualizar la lista si hace falta
-		if (idSubordinados==null) {
-			c.setProgreso("Cargando empleados", 1);
-			c.getIdsSubordinados(idEmpl);
-		}
 		if (idSubordinados.size() > subordinados.size())
 			subordinados.clear();
 			for (int i = 0; i < idSubordinados.size(); i++) {
@@ -667,8 +662,8 @@ public class Empleado implements Drawable {
 	 * Devuelve los departamentos a los que pertenece el empleado.
 	 * @return la lista de departamentos del usuario
 	 */
-	public ArrayList<Departamento> getDepartamentos(Vista vista) {
-		actualizarDepartamentos(vista.getControlador());
+	public ArrayList<Departamento> getDepartamentos(Controlador c) {
+		actualizarDepartamentos(c);
 		return departamentos;
 	}
 	
@@ -676,8 +671,7 @@ public class Empleado implements Drawable {
 	 * Devuelve los nombres de los departamentos a los que pertenece el empleado.
 	 * @return la lista de nombres de los departamentos del usuario
 	 */
-	public ArrayList<String> getDepartamentosId(Vista vista) {
-		actualizarDepartamentos(vista.getControlador());
+	public ArrayList<String> getDepartamentosId() {
 		return idDepartamentos;
 	}
 
@@ -688,8 +682,8 @@ public class Empleado implements Drawable {
 	 * cero.
 	 * @return el departamento número <i>i</i> del usuario
 	 */
-	public Departamento getDepartamento(Vista vista, int i) {
-		actualizarDepartamentos(vista.getControlador());
+	public Departamento getDepartamento(Controlador c, int i) {
+		actualizarDepartamentos(c);
 		return departamentos.get(i);
 	}
 	
@@ -698,8 +692,7 @@ public class Empleado implements Drawable {
 	 * @param i el departamento a coger, 0 es el principal
 	 * @return el identificador del departamento
 	 */
-	public String getDepartamentoId(Vista vista, int i) {
-		actualizarDepartamentos(vista.getControlador());
+	public String getDepartamentoId(int i) {
 		return idDepartamentos.get(i);
 	}
 	
@@ -707,8 +700,7 @@ public class Empleado implements Drawable {
 	 * Devuelve el identificador de su departamento principal
 	 * @return el identificador del departamento
 	 */
-	public String getDepartamentoId(Vista vista) {
-		actualizarDepartamentos(vista.getControlador());
+	public String getDepartamentoId() {
 		return idDepartamentos.get(0);
 	}
 
@@ -902,8 +894,7 @@ public class Empleado implements Drawable {
 	 * @return <i>true</i> si el empleado puede trabajar en el periodo solicitado, <i>false</i> si
 	 * no puede hacerlo (libra, vacaciones, baja...).
 	 */
-	public boolean estaDisponible(int dia, Time iniH, Time finH, Controlador cont, ArrayList<Contrato> listaContratos, int hora, int numTrozos,
-			int mes,int anio){
+	public boolean estaDisponible(int dia, Time iniH, Time finH, Controlador cont, ArrayList<Contrato> listaContratos, int hora, int numTrozos){
 		
 		Contrato contrato;
 		String patron;
@@ -915,17 +906,15 @@ public class Empleado implements Drawable {
 		boolean encontrado;
 		
 		//cálculo del dia en el que nos encontramos dentro del ciclo.
-		//today = new java.util.Date();
-		//java.sql.Date fechaActual = new java.sql.Date(today.getTime());
-		java.sql.Date fechaActual = new java.sql.Date(anio-1900,mes-1,1);
-		String ff=fechaActual.toString();
+		today = new java.util.Date();
+		java.sql.Date fechaActual = new java.sql.Date(today.getTime());
 		if(fContrato == null)
 			fContrato = new Date(fechaActual.getTime());
 		
 		//ya va!!!!!!!!!!!
 		long milsDia = 24*60*60*1000;
 		difFechas = (fechaActual.getTime()+(dia*milsDia))-fContrato.getTime();
-		diaCiclo = (int) (difFechas/(milsDia)); 
+		diaCiclo = (int) (difFechas/(milsDia));  		
 		
 		//Obtencion del contrato del empleado.
 		//contrato = cont.getContrato(this.getContratoId());
