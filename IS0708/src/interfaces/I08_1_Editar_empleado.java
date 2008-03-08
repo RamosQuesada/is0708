@@ -186,11 +186,11 @@ public class I08_1_Editar_empleado {
 		cExperiencia.setItems (new String [] {	bundle.getString("Principiante"),
 												bundle.getString("Experto")});
 		
-		ArrayList<String> departamentos = vista.getEmpleadoActual().getDepartamentosId();
+		ArrayList<String> departamentos = vista.getEmpleadoActual().getDepartamentosId(vista);
 		int j=0;
 		for (int i=0; i<departamentos.size(); i++) {
 			cDepto.add(departamentos.get(i));
-			if (emp.getDepartamentoId()!= departamentos.get(i)){
+			if (emp.getDepartamentoId(vista)!= departamentos.get(i)){
 				j=j+1;
 			}
 		}
@@ -199,8 +199,8 @@ public class I08_1_Editar_empleado {
 		cSexo.select(emp.getSexo());
 		cContrato.select(emp.getContratoId());
 		cExperiencia.select(emp.getGrupo());
-		cDepto
-		cDepto.select();
+//		cDepto
+//		cDepto.select();
 		cIdioma.select(emp.getIdioma());
 		
 		shell.setImage(ico_chico);

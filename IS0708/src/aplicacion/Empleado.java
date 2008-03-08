@@ -6,15 +6,11 @@ import java.util.ResourceBundle;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 
 import java.sql.Date;
 import java.sql.Time;
 
-import aplicacion.Controlador;
 
 /**
  * Esta clase representa a un empleado.
@@ -90,6 +86,11 @@ public class Empleado implements Drawable {
 	 */
 	private void actualizarDepartamentos(Controlador c) {		
 		// Actualizar la lista si hace falta
+		// Actualizar la lista si hace falta
+		if (idDepartamentos==null) {
+			c.setProgreso("Cargando departamentos", 1);
+			c.getIdsDepartamentos(idEmpl);
+		}
 		if (idDepartamentos.size() > departamentos.size())
 			departamentos.clear();
 			for (int i = 0; i < idDepartamentos.size(); i++) {
@@ -104,6 +105,10 @@ public class Empleado implements Drawable {
 	 */
 	private void actualizarSubordinados(Controlador c) {
 		// Actualizar la lista si hace falta
+		if (idSubordinados==null) {
+			c.setProgreso("Cargando empleados", 1);
+			c.getIdsSubordinados(idEmpl);
+		}
 		if (idSubordinados.size() > subordinados.size())
 			subordinados.clear();
 			for (int i = 0; i < idSubordinados.size(); i++) {
@@ -662,8 +667,8 @@ public class Empleado implements Drawable {
 	 * Devuelve los departamentos a los que pertenece el empleado.
 	 * @return la lista de departamentos del usuario
 	 */
-	public ArrayList<Departamento> getDepartamentos(Controlador c) {
-		actualizarDepartamentos(c);
+	public ArrayList<Departamento> getDepartamentos(Vista vista) {
+		actualizarDepartamentos(vista.getControlador());
 		return departamentos;
 	}
 	
@@ -671,7 +676,8 @@ public class Empleado implements Drawable {
 	 * Devuelve los nombres de los departamentos a los que pertenece el empleado.
 	 * @return la lista de nombres de los departamentos del usuario
 	 */
-	public ArrayList<String> getDepartamentosId() {
+	public ArrayList<String> getDepartamentosId(Vista vista) {
+		actualizarDepartamentos(vista.getControlador());
 		return idDepartamentos;
 	}
 
@@ -682,8 +688,8 @@ public class Empleado implements Drawable {
 	 * cero.
 	 * @return el departamento número <i>i</i> del usuario
 	 */
-	public Departamento getDepartamento(Controlador c, int i) {
-		actualizarDepartamentos(c);
+	public Departamento getDepartamento(Vista vista, int i) {
+		actualizarDepartamentos(vista.getControlador());
 		return departamentos.get(i);
 	}
 	
@@ -692,7 +698,8 @@ public class Empleado implements Drawable {
 	 * @param i el departamento a coger, 0 es el principal
 	 * @return el identificador del departamento
 	 */
-	public String getDepartamentoId(int i) {
+	public String getDepartamentoId(Vista vista, int i) {
+		actualizarDepartamentos(vista.getControlador());
 		return idDepartamentos.get(i);
 	}
 	
@@ -700,7 +707,8 @@ public class Empleado implements Drawable {
 	 * Devuelve el identificador de su departamento principal
 	 * @return el identificador del departamento
 	 */
-	public String getDepartamentoId() {
+	public String getDepartamentoId(Vista vista) {
+		actualizarDepartamentos(vista.getControlador());
 		return idDepartamentos.get(0);
 	}
 

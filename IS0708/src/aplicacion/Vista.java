@@ -398,7 +398,7 @@ public class Vista {
 		}
 		// Si no, buscar en BD
 		Cuadrante c = controlador.getCuadrante(mes, anio, idDepartamento);
-		System.out.println(c);
+//		System.out.println(c);
 		cuadrantes.add(c);
 		return c;
 	}
@@ -494,9 +494,9 @@ public class Vista {
 		setProgreso("Insertando empleado", 50);
 		boolean b = controlador.insertEmpleado(empleado);
 		int i = 0;
-		while (i < empleado.getDepartamentosId().size() && b) {
+		while (i < empleado.getDepartamentosId(this).size() && b) {
 			b = controlador.insertDepartamentoUsuario(empleado.getEmplId(),
-					empleado.getDepartamentoId(i));
+					empleado.getDepartamentoId(this, i));
 			i++;
 		}
 		if (b)
@@ -658,9 +658,8 @@ public class Vista {
 
 		
 		int tipo = getEmpleadoActual().getRango();
-		String dep = getEmpleadoActual().getDepartamentoId();
+		String dep = getEmpleadoActual().getDepartamentoId(this);
 		int numvendedor = getEmpleadoActual().getEmplId();
-		System.out.println("get empleados");
 		setProgreso("Cargando empleados", 25);
 		empleados = controlador.getEmpleadosDepartamento(getEmpleadoActual().getEmplId(),dep);
 		setProgreso("Cargando contratos", 50);

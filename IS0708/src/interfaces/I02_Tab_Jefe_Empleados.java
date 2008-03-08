@@ -71,7 +71,7 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 				tItem.setImage(ico_chico);
 			tItem.setText(1, String.valueOf(_vista.getEmpleados().get(i).getEmplId()));
 			tItem.setText(2, _vista.getEmpleados().get(i).getNombreCompleto());
-			tItem.setText(3, _vista.getEmpleados().get(i).getDepartamentoId());
+			tItem.setText(3, _vista.getEmpleados().get(i).getDepartamentoId(_vista));
 			tItem.setText(4, "6:40h");
 			tItem.setText(5, "911234567");
 			tItem.setImage(6, ico_mens);
