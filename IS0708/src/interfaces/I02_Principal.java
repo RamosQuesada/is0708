@@ -346,8 +346,7 @@ public class I02_Principal {
 		bNew.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				// System.out.println("I02 :: Pulsado Nuevo Departamento");
-				new I10_Config_departamento(shell, bundle, vista,
-						cmbDepartamentos.getText());
+				new I10_Nuevo_departamento(shell,bundle,vista);
 			}
 		});
 
