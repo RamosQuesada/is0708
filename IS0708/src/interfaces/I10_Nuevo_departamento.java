@@ -1,5 +1,6 @@
 package interfaces;
 
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -7,6 +8,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
@@ -101,8 +103,20 @@ public class I10_Nuevo_departamento {
 		
 		labBoss = new Label (group, SWT.NONE);
 		labBoss.setText(bundle.getString("I10_elige_jefe"));
-		labBoss.setLayoutData (new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));	
+		labBoss.setLayoutData (new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
 		
+		final Combo cmbJefes = new Combo(group, SWT.BORDER
+				| SWT.READ_ONLY);
+		cmbJefes.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+				false, 1, 1));
+		
+		ArrayList<String> array = vista.getNombreTodosJefes();
+		if (array != null) {
+			for (int i = 0; i < array.size(); i++) {
+				cmbJefes.add(array.get(i));
+			}
+		}
+		cmbJefes.select(0);
 		//textBoss = new Text (group, SWT.BORDER );
 		//textBoss.setLayoutData (new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
 		//tNombre = new I13_Elegir_empleado(group,vista, bundle);
