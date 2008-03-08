@@ -77,7 +77,7 @@ public class I02_threadEmpl extends Thread{
 				//__ boss
 				
 				while((!cuadrante.vista.isCacheCargada())&&(!finalizar)){
-					System.out.println("espera boss");
+					
 
 					try {
 						sleep(100);
