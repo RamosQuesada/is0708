@@ -134,8 +134,10 @@ public class Controlador {
 				Date fechaAlta = rs.getDate("FechaEntrada");
 				Color color = null;
 				int idSuperior = this.getIdSuperior(idEmpl);
-				ArrayList<Integer> idSubordinados = null;
-				ArrayList<String> idDepartamentos = null;
+				ArrayList<Integer> idSubordinados = this
+						.getIdsSubordinados(idEmpl);
+				ArrayList<String> idDepartamentos = this
+						.getIdsDepartamentos(idEmpl);
 				int felicidad = rs.getInt("Felicidad");
 				int idioma = rs.getInt("Idioma");
 				//TODO cargarlo de la BD
@@ -164,7 +166,7 @@ public class Controlador {
 	 *            identificador del empleado
 	 * @return los departamentos a los que pertenece el empleado
 	 */
-	public ArrayList<String> getIdsDepartamentos(int idEmpl) {
+	private ArrayList<String> getIdsDepartamentos(int idEmpl) {
 		ArrayList<String> depts = new ArrayList<String>();
 		ResultSet rs = _db.obtenIdsDepartamentos(idEmpl);
 		try {
@@ -231,7 +233,7 @@ public class Controlador {
 	 *            identificador del empleado
 	 * @return los subordinados del empleado en cuestion
 	 */
-	public ArrayList<Integer> getIdsSubordinados(int idEmpl) {
+	private ArrayList<Integer> getIdsSubordinados(int idEmpl) {
 		ArrayList<Integer> subs = new ArrayList<Integer>();
 		ResultSet rs = _db.obtenIdsSubordinados(idEmpl);
 		try {
@@ -1483,10 +1485,6 @@ public class Controlador {
 
 	public void insertIssue (String text) {
 		_db.insertarIssue(text);			
-	}
-	
-	public Vista getVista() {
-		return _vista;
 	}
 
 }
