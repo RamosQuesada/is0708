@@ -6,15 +6,11 @@ import java.util.ResourceBundle;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 
 import java.sql.Date;
 import java.sql.Time;
 
-import aplicacion.Controlador;
 
 /**
  * Esta clase representa a un empleado.
@@ -88,13 +84,13 @@ public class Empleado implements Drawable {
 	 * Actualiza la lista de departamentos cargándolos de la BD
 	 * @param c
 	 */
-	private void actualizarDepartamentos(Controlador c) {		
+	private void actualizarDepartamentos(Vista v) {		
 		// Actualizar la lista si hace falta
 		if (idDepartamentos.size() > departamentos.size())
 			departamentos.clear();
 			for (int i = 0; i < idDepartamentos.size(); i++) {
-				c.setProgreso("Cargando departamentos", (100/idDepartamentos.size())*i);
-				departamentos.add(c.getDepartamento(idDepartamentos.get(i)));
+				v.getControlador().setProgreso("Cargando departamentos", (100/idDepartamentos.size())*i);
+				departamentos.add(v.getControlador().getDepartamento(idDepartamentos.get(i)));
 			}
 	}
 	
@@ -102,13 +98,13 @@ public class Empleado implements Drawable {
 	 * Actualiza la lista de subordinados cargándolos de la BD
 	 * @param c
 	 */
-	private void actualizarSubordinados(Controlador c) {
+	private void actualizarSubordinados(Vista v) {
 		// Actualizar la lista si hace falta
 		if (idSubordinados.size() > subordinados.size())
 			subordinados.clear();
 			for (int i = 0; i < idSubordinados.size(); i++) {
-				c.setProgreso("Cargando empleados", (100/idSubordinados.size())*i);
-				subordinados.add(c.getEmpleado(idSubordinados.get(i)));
+				v.getControlador().setProgreso("Cargando empleados", (100/idSubordinados.size())*i);
+				subordinados.add(v.getControlador().getEmpleado(idSubordinados.get(i)));
 			}
 	}
 
@@ -116,12 +112,12 @@ public class Empleado implements Drawable {
 	 * Actualiza el empleado superior cargándolo de la BD
 	 * @param c
 	 */
-	private void actualizarSuperior(Controlador c) {
+	private void actualizarSuperior(Vista v) {
 		// Actualizar el superior si hace falta
 		if (superior==null && idSuperior!=0) {
-			c.setProgreso("Cargando empleado", 50);
-			superior= c.getEmpleado(idSuperior);
-			c.setProgreso("",100);
+			v.getControlador().setProgreso("Cargando empleado", 50);
+			superior= v.getControlador().getEmpleado(idSuperior);
+			v.getControlador().setProgreso("",100);
 		}
 	}
 	
@@ -129,12 +125,12 @@ public class Empleado implements Drawable {
 	 * Actualiza el contrato cargándolo de la BD
 	 * @param c
 	 */
-	private void actualizarContrato(Controlador c) {
+	private void actualizarContrato(Vista v) {
 		// Actualizar el contrato si hace falta
 		if (contrato==null && idContrato!=0) {
-			c.setProgreso("Cargando contrato", 50);
-			contrato= c.getContrato(idContrato);
-			c.setProgreso("",100);
+			v.getControlador().setProgreso("Cargando contrato", 50);
+			contrato= v.getControlador().getContrato(idContrato);
+			v.getControlador().setProgreso("",100);
 		}
 	}
 	
@@ -142,10 +138,10 @@ public class Empleado implements Drawable {
 	 * Comprueba si un empleado es gerente.
 	 * @return <i>true</i> si es gerente
 	 */
-	private boolean esGerente(Controlador c) {
+	private boolean esGerente(Vista v) {
 		// Un empleado es gerente cuando subordinados que son jefes o gerentes
 		int i = 0; boolean b = false;
-		actualizarSubordinados(c);
+		actualizarSubordinados(v);
 		while (i<subordinados.size() && !b) {
 			if (subordinados.get(i).getRango()>1) b = true;
 		}
@@ -156,11 +152,11 @@ public class Empleado implements Drawable {
 	 * Comprueba si un empleado es jefe.
 	 * @return <i>true</i> si es jefe
 	 */
-	private boolean esJefe(Controlador c) {
+	private boolean esJefe(Vista v) {
 		// Un empleado es jefe si tiene departamentos a su cargo
 		// Dicho de otra manera, si es jefe de alguno de sus departamentos
 		int i = 0; boolean b = false;
-		actualizarDepartamentos(c);
+		actualizarDepartamentos(v);
 		while (i<departamentos.size() && !b) {
 			if (this == departamentos.get(i).getJefeDepartamento()) b = true;
 		}
@@ -170,10 +166,10 @@ public class Empleado implements Drawable {
 	/**
 	 * Actualiza el rango de un empleado.
 	 */
-	private void actualizarRango(Controlador c) {
+	private void actualizarRango(Vista v) {
 		rango = 1;
-		if (esJefe(c)) rango = 2;
-		else if (esGerente(c)) rango=3;
+		if (esJefe(v)) rango = 2;
+		else if (esGerente(v)) rango=3;
 	}
 
 	
@@ -279,8 +275,8 @@ public class Empleado implements Drawable {
 	 * @param c el controlador de la aplicación.
 	 * @return
 	 */
-	public Empleado getSuperior(Controlador c) {
-		actualizarSuperior(c);
+	public Empleado getSuperior(Vista v) {
+		actualizarSuperior(v);
 		return superior;
 	}
 	
@@ -588,8 +584,8 @@ public class Empleado implements Drawable {
 	 * @param c el controlador de la aplicación
 	 * @return el contrato del empleado
 	 */
-	public Contrato getContrato(Controlador c) {
-		actualizarContrato(c);
+	public Contrato getContrato(Vista v) {
+		actualizarContrato(v);
 		return contrato;
 	}
 	
@@ -662,8 +658,8 @@ public class Empleado implements Drawable {
 	 * Devuelve los departamentos a los que pertenece el empleado.
 	 * @return la lista de departamentos del usuario
 	 */
-	public ArrayList<Departamento> getDepartamentos(Controlador c) {
-		actualizarDepartamentos(c);
+	public ArrayList<Departamento> getDepartamentos(Vista v) {
+		actualizarDepartamentos(v);
 		return departamentos;
 	}
 	
@@ -682,8 +678,8 @@ public class Empleado implements Drawable {
 	 * cero.
 	 * @return el departamento número <i>i</i> del usuario
 	 */
-	public Departamento getDepartamento(Controlador c, int i) {
-		actualizarDepartamentos(c);
+	public Departamento getDepartamento(Vista v, int i) {
+		actualizarDepartamentos(v);
 		return departamentos.get(i);
 	}
 	
@@ -706,7 +702,6 @@ public class Empleado implements Drawable {
 
 	/**
 	 * Añade/asigna un departamento a un usuario y actualiza su rango.
-	 * @param c el controlador de la aplicación
 	 * @param departamento el departamento
 	 * @return <i>true</i> si el departamento se ha añadido, false en caso contrario
 	 */
@@ -728,13 +723,13 @@ public class Empleado implements Drawable {
 	 * @param departamento el departamento a quitar
 	 * @return
 	 */
-	public boolean removeDepartamento(Controlador c, Departamento departamento) {
+	public boolean removeDepartamento(Vista v, Departamento departamento) {
 		boolean b = idDepartamentos.remove(departamento.getNombreDepartamento());
 		// Quitar departamentos afecta a la condición de jefe, pero deja intacta la de 
 		// gerente. Hay que mirar si todavía tiene algún departamento.
-		if (rango == 2 && !esJefe(c)) {
+		if (rango == 2 && !esJefe(v)) {
 			rango=1;
-			superior.actualizarRango(c);
+			superior.actualizarRango(v);
 		}
 		return b;
 	}
@@ -747,8 +742,8 @@ public class Empleado implements Drawable {
 	 * Devuelve la lista de subordinados del empleado 
 	 * @return la lista de subordinados
 	 */
-	public ArrayList<Empleado> getSubordinados(Controlador c) {
-		actualizarSubordinados(c);
+	public ArrayList<Empleado> getSubordinados(Vista v) {
+		actualizarSubordinados(v);
 		return subordinados;
 	}
 		
@@ -799,7 +794,7 @@ public class Empleado implements Drawable {
 	 * @return <i>true</i> si se ha eliminado el empleado, <i>false</i>
 	 * si no existía en la lista de subordinados del empleado 
 	 */
-	public boolean removeSubordinado (Controlador c, Empleado e) {
+	public boolean removeSubordinado (Vista v, Empleado e) {
 		boolean b = idSubordinados.remove((Integer)e.getEmplId());
 		if (b) idSubordinados.remove(e.getEmplId());
 		// quitar subordinados afecta a la condición de gerente
@@ -807,7 +802,7 @@ public class Empleado implements Drawable {
 		if (idSubordinados.isEmpty()) rango=1;
 		else {
 			int i = 0;
-			actualizarSubordinados(c);
+			actualizarSubordinados(v);
 			while (i<idSubordinados.size() && rango==2) {
 				if (subordinados.get(i).getRango()>1) rango=3;
 			}
@@ -894,7 +889,7 @@ public class Empleado implements Drawable {
 	 * @return <i>true</i> si el empleado puede trabajar en el periodo solicitado, <i>false</i> si
 	 * no puede hacerlo (libra, vacaciones, baja...).
 	 */
-	public boolean estaDisponible(int dia, Time iniH, Time finH, Controlador cont, ArrayList<Contrato> listaContratos, int hora, int numTrozos){
+	public boolean estaDisponible(int dia, Time iniH, Time finH, Vista v, ArrayList<Contrato> listaContratos, int hora, int numTrozos){
 		
 		Contrato contrato;
 		String patron;
@@ -954,7 +949,7 @@ public class Empleado implements Drawable {
 		//Obtencion del turno a partir de la base de datos.
 		if (turnoE == null)
 		{
-			turnoE = cont.getListaTurnosContrato(this.idEmpl); //ponerlo al principio del alg.
+			turnoE = v.getControlador().getListaTurnosContrato(this.idEmpl); //ponerlo al principio del alg.
 		}
 		
 		//Obtencion del turno que le corresponde.

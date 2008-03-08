@@ -34,13 +34,24 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 	final TabFolder _tabFolder;
 	final Table tablaEmpleados;
 	final Image ico_chico, ico_chica, ico_mens;
-	
+	private boolean datosInterfazCargados = false;
 	/**
 	 * Implementa un hilo que coge los empleados del departamento del servidor.
 	 */
 	public void run() {
 		boolean run = true;
+		try {
+			while (!_vista.isCacheCargada()) {
+				sleep(5000);
+			}
+		} catch (Exception e) {}
+		// Coge los datos de todos los contratos
+		for (int i=0; i<_vista.getEmpleados().size(); i++) {
+			_vista.getEmpleados().get(i).getContrato(_vista);
+		}
+		datosInterfazCargados = true;
 		while (run) {
+			
 			if (tablaEmpleados.isDisposed() || _vista.getEmpleadoActual().getEmplId()==0) run = false;
 			else {
 				if (!tablaEmpleados.isDisposed()) {
@@ -62,21 +73,22 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 	}
 	
 	private void mostrarEmpleados() {
-		tablaEmpleados.removeAll();
-		for (int i = 0; i < _vista.getEmpleados().size(); i++) {
-			TableItem tItem = new TableItem(tablaEmpleados, SWT.NONE);
-			if (_vista.getEmpleados().get(i).getSexo()==0)
-				tItem.setImage(ico_chica);
-			else 
-				tItem.setImage(ico_chico);
-			tItem.setText(1, String.valueOf(_vista.getEmpleados().get(i).getEmplId()));
-			tItem.setText(2, _vista.getEmpleados().get(i).getNombreCompleto());
-			tItem.setText(3, _vista.getEmpleados().get(i).getDepartamentoId());
-		//	tItem.setText(4, _vista.getContrato(_vista.getEmpleados().get(i).getContratoId()).getNombreContrato());
-			tItem.setText(5, "911234567");
-			tItem.setImage(6, ico_mens);
+		if (_vista.isCacheCargada() && datosInterfazCargados) {
+			tablaEmpleados.removeAll();
+			for (int i = 0; i < _vista.getEmpleados().size(); i++) {
+				TableItem tItem = new TableItem(tablaEmpleados, SWT.NONE);
+				if (_vista.getEmpleados().get(i).getSexo()==0)
+					tItem.setImage(ico_chica);
+				else 
+					tItem.setImage(ico_chico);
+				tItem.setText(1, String.valueOf(_vista.getEmpleados().get(i).getEmplId()));
+				tItem.setText(2, _vista.getEmpleados().get(i).getNombreCompleto());
+				tItem.setText(3, _vista.getEmpleados().get(i).getDepartamentoId());
+				tItem.setText(4, _vista.getEmpleados().get(i).getContrato(_vista).getNombreContrato());
+				tItem.setText(5, "911234567");
+				tItem.setImage(6, ico_mens);
+			}
 		}
-		
 		// table.setSize (table.computeSize (SWT.DEFAULT, 200));
 	}
 	

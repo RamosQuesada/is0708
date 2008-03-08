@@ -57,11 +57,21 @@ public class I02_Principal {
 		// Con un elemento "archivo"
 		MenuItem archivoItem = new MenuItem(barra, SWT.CASCADE);
 		archivoItem.setText(bundle.getString("I02_men_Archivo"));
+	
+		MenuItem debugMenu = new MenuItem(barra, SWT.CASCADE);
+		debugMenu.setText("Debug");
+		debugMenu.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				new I19_Excepcion(vista, null);
+			}
+		});
+	
 		// Y un submenú de persiana asociado al elemento
 		Menu submenu = new Menu(shell, SWT.DROP_DOWN);
 		archivoItem.setMenu(submenu);
 		// Aquí los elementos del submenú
-		// Item Abrir
+
+/*		// Item Abrir
 		MenuItem itemAbrir = new MenuItem(submenu, SWT.PUSH);
 		itemAbrir.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
@@ -69,13 +79,14 @@ public class I02_Principal {
 				// System.out.println("Pulsado abrir");
 			}
 		});
+
 		// Texto del item de menú
 		itemAbrir.setText(bundle.getString("I02_men_itm_Abrir") + "\tCtrl+"
 				+ bundle.getString("I02_men_itm_abriracc"));
 		// Acceso rápido (ctrl+a)
 		itemAbrir.setAccelerator(SWT.MOD1
 				+ bundle.getString("I02_men_itm_abriracc").charAt(0));
-
+*/
 		// Item Imprimir
 		MenuItem itemImprimir = new MenuItem(submenu, SWT.PUSH);
 		itemImprimir.addListener(SWT.Selection, new Listener() {
