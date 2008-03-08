@@ -8,6 +8,7 @@ import java.util.GregorianCalendar;
 
 import org.eclipse.swt.graphics.GC;
 
+import aplicacion.Turno;
 import aplicacion.Util;
 
 public class I02_threadEmpl extends Thread{
@@ -50,7 +51,8 @@ public class I02_threadEmpl extends Thread{
 				numDias++;
 			}
 			cuadrante.avance=4;
-			cuadrante.tiposTurno= cuadrante.vista.getControlador().getListaTurnosEmpleados();
+			//__yo cuadrante.tiposTurno= cuadrante.vista.getControlador().getListaTurnosEmpleados();
+			//cuadrante.tiposTurno=cuadrante.vista.getTurnos();
 			//esperando 3...
 			cuadrante.avance=3;
 			int cont=0;
@@ -72,19 +74,36 @@ public class I02_threadEmpl extends Thread{
 					));
 
 				int turno = cuadrante.vista.getControlador().getTurnoEmpleadoDia(cuadrante.fecha, cuadrante.empleado.getEmplId());
+				//__ boss
 				
+				while((!cuadrante.vista.isCacheCargada())&&(!finalizar)){
+					System.out.println("espera boss");
+
+					try {
+						sleep(100);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+				Turno tturno= cuadrante.vista.getTurno(turno);
+				
+				//__fin boss
 				Time horaEntrada,horaSalida,horaDescanso;
 				int duracionDescanso;
 				Float horaEntradaFloat=0.0f;
 				Float horaSalidaFloat=0.0f;
 				Float horaDescansoFloat = 0.0f;
 				Float finHoraDescansoFloat = 0.0f;
-				if(turno!=0){
+				if((turno!=0)&&(!finalizar)){
 					
 					int actual=0;
 					
-					while ((turno!=cuadrante.tiposTurno.get(actual).getIdTurno())&&(!finalizar))actual++;
-					if(cuadrante.tiposTurno.get(actual).getIdTurno()==turno){
+				//__yo	while ((turno!=cuadrante.tiposTurno.get(actual).getIdTurno())&&(!finalizar))actual++;
+				//	cuadrante.tiposTurno.set(0, tturno);
+				//	if(cuadrante.tiposTurno.get(actual).getIdTurno()==turno){
+						/*
 						horaEntrada=cuadrante.tiposTurno.get(actual).getHoraEntrada();
 						horaSalida=cuadrante.tiposTurno.get(actual).getHoraSalida();
 						horaDescanso=cuadrante.tiposTurno.get(actual).getHoraDescanso();
@@ -98,7 +117,21 @@ public class I02_threadEmpl extends Thread{
 						cuadrante.horasFin.add(cont,horaSalidaFloat);
 						cuadrante.horaComienzoDescanso.add(cont,horaDescansoFloat);
 						cuadrante.horaFinDescanso.add(cont,finHoraDescansoFloat);
-					}
+						*/
+						horaEntrada=tturno.getHoraEntrada();
+						horaSalida=tturno.getHoraSalida();
+						horaDescanso=tturno.getHoraDescanso();
+						duracionDescanso=tturno.getTDescanso();
+						
+						horaEntradaFloat=(float)(horaEntrada.getHours()+horaEntrada.getMinutes()/60.0f);
+						horaSalidaFloat=(float)(horaSalida.getHours()+horaSalida.getMinutes()/60.0f);
+						horaDescansoFloat=(float)(horaDescanso.getHours()+horaDescanso.getMinutes()/60.0f);
+						finHoraDescansoFloat = (float)(horaDescansoFloat + ((float)(duracionDescanso)/60));
+						cuadrante.horasInicio.add(cont,horaEntradaFloat);
+						cuadrante.horasFin.add(cont,horaSalidaFloat);
+						cuadrante.horaComienzoDescanso.add(cont,horaDescansoFloat);
+						cuadrante.horaFinDescanso.add(cont,finHoraDescansoFloat);
+				//	}
 				}
 				else{
 					cuadrante.horasInicio.add(cont,0.0f);
