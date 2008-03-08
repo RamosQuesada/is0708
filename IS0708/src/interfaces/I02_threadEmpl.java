@@ -92,7 +92,9 @@ public class I02_threadEmpl extends Thread{
 				
 				ArrayList<Trabaja> lista_trabaja=new ArrayList<Trabaja>();
 				try{
-				 lista_trabaja=cuadrante.vista.getListaTrabajaDia(cuadrante.fecha.getDate(), cuadrante.fecha.getMonth()+2, 2008, cuadrante.empleado.getDepartamentoId());
+					System.out.println("mes "+cuadrante.fecha.getMonth());
+				// lista_trabaja=cuadrante.vista.getListaTrabajaDia(cuadrante.fecha.getDate(), cuadrante.fecha.getMonth()+2, 2008, cuadrante.empleado.getDepartamentoId());
+					 lista_trabaja=cuadrante.vista.getListaTrabajaDia(cuadrante.fecha.getDate(), cuadrante.fecha.getMonth()+2, cuadrante.fecha.getYear()+1900, cuadrante.empleado.getDepartamentoId());
 				}
 				catch(Exception e){
 			//		System.out.println("fecha "+cuadrante.fecha.getDate()+" "+cuadrante.fecha.getMonth()+" "+"2008");	
