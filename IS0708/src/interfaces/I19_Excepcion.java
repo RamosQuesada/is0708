@@ -32,7 +32,7 @@ public class I19_Excepcion {
 		cCuerpoMen.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		cCuerpoMen.setLayout(new GridLayout(1, false));
 		final Label lMensaje	= new Label(cCuerpoMen, SWT.LEFT);
-		final Text tMensaje = new Text(cCuerpoMen,SWT.BORDER);
+		final Text tMensaje = new Text(cCuerpoMen,SWT.BORDER | SWT.WRAP);
 		tMensaje.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		Random rnd = new Random(5);
 		String e = "Ha ocurrido una excepción";
@@ -107,10 +107,7 @@ public class I19_Excepcion {
 		});
 		tMensaje.setFocus();
 		tMensaje.selectAll();
-		
-		// Botón por defecto bAceptar
-		shell.setDefaultButton(bEnviar);
-		
+				
 		// Ajustar el tamaño de la ventana al contenido
 		shell.pack();
 		shell.setSize(shell.getSize().x,shell.getSize().y+300);

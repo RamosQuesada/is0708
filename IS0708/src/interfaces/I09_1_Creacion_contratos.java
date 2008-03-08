@@ -284,7 +284,6 @@ public class I09_1_Creacion_contratos {
 						shell.close ();
 						event.detail = SWT.TRAVERSE_NONE;
 						event.doit = false;
-						vista.getControlador().cerrarConexionBD();
 						break;
 				}
 			}
