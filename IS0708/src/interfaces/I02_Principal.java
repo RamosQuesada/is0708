@@ -253,9 +253,11 @@ public class I02_Principal {
 			public void handleEvent(Event e) {
 				if (bPorMes.getSelection()) {
 					ic.setDiario(false);
+					ic.setMovCuadSemanal(false);
 					ic.redibujar();
 				} else {
 					ic.setDiario(true);
+					ic.setMovCuadSemanal(true);
 					ic.redibujar();
 				}
 			}
