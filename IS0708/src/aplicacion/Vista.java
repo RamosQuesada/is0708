@@ -383,6 +383,20 @@ public class Vista {
 		return null;
 	}
 	
+	public Contrato getContrato (int idContrato) {
+		// Buscar en cache
+		int i = 0;
+		while (i<contratos.size()) {
+			if (contratos.get(i).getNumeroContrato()==idContrato) {
+				return contratos.get(i);
+			}
+			i++;
+		}
+		// Si no, buscar en BD
+		return controlador.getContrato(idContrato);
+	}
+	
+
 	public Cuadrante getCuadrante(int mes, int anio, String idDepartamento) {
 		if (!alive) return null;
 		int i = 0;
