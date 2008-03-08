@@ -41,7 +41,7 @@ public class I02CuadranteEmpleado {
 	public Date fecha;
 	
 	public int avance=4;
-	public ArrayList<Integer> turnos;
+	private ArrayList<Integer> turnos;//SE USA?
 	public ArrayList<Float> horasInicio;
 	public ArrayList<Float> horasFin;
 	public ArrayList<Float> horaComienzoDescanso;
@@ -50,6 +50,10 @@ public class I02CuadranteEmpleado {
 	private I02_threadEmpl thread;
 	private I02_cuadrEmpl superior;
 	private GC gc;
+	
+	public void ponHorasInicio(ArrayList<Float> horasInicio){
+		this.horasInicio=horasInicio;
+	}
 	
 
 
