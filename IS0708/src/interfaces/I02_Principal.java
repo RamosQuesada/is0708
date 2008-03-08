@@ -178,7 +178,7 @@ public class I02_Principal {
 		t2.setIdEmpl(10000200);
 		t2.setIdTurno(2);
 		
-		final I_Cuadrante ic = new I_Cuadrante(vista, 2, 2008,"mi_dep", 4, 9, 23);
+//		final I_Cuadrante ic = new I_Cuadrante(vista, 2, 2008,"mi_dep", 4, 9, 23);
 //		ic.setCuad(vista.getCuadrante(6, 2008, "DatosFijos").getCuad());
 		/************************************************************/
 		cDepartamentos.addListener(SWT.Selection, new Listener() {
@@ -188,11 +188,11 @@ public class I02_Principal {
 			}
 		});
 		/************************************************************/
-		ic.setTrabajaDia(1, t1);
-		ic.setTrabajaDia(1, t2);
-		ic.setComposite(cCuadrante);
-		ic.setDia(1);
-		
+//		ic.setTrabajaDia(1, t1);
+//		ic.setTrabajaDia(1, t2);
+//		ic.setComposite(cCuadrante);
+//		ic.setDia(1);
+//		
 		Label lCalendario = new Label(cCuadrantes, SWT.LEFT);
 		lCalendario.setText(bundle.getString("Calendario"));
 		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
@@ -232,29 +232,19 @@ public class I02_Principal {
 		bPorMes.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false,2,1));
 		// Oyente para saber cuando se ha modificado la seleccion del boton 
 		/************************************************************/
-		bPorMes.addListener(SWT.Selection, new Listener() {
-		//Seleccionado por mes 
-			public void handleEvent(Event e) { 
-				if (bPorMes.getSelection()) { 
-					//System.out.println("Mes");
-					ic.setDiario(false);
-					ic.redibujar();
-					//ic.setComposite(cCuadrante);
-					//cuadrante.ponImageMes(); 
-					//Img=cuadrante.dameImageImprimible(); 
-					//cuadrante.setMensual(); 
-				} 
-				else {
-					//System.out.println("Día");
-					ic.setDiario(true);
-					ic.redibujar();
-					//ic.setComposite(cCuadrante);
-					//cuadrante.ponImageDia(); 
-					//Img = cuadrante.dameImageImprimible();
-					//cuadrante.setDiario();
-				}
-			}
-		});
+//		bPorMes.addListener(SWT.Selection, new Listener() {
+//		//Seleccionado por mes 
+//			public void handleEvent(Event e) { 
+//				if (bPorMes.getSelection()) { 
+//					ic.setDiario(false);
+//					ic.redibujar();
+//				} 
+//				else {
+//					ic.setDiario(true);
+//					ic.redibujar();
+//				}
+//			}
+//		});
 		/************************************************************/
 		final Button bPorSemanas = new Button(cCuadrantes, SWT.RADIO);
 		bPorSemanas.setText(bundle.getString("I02_but_Verpordia"));
