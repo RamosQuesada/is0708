@@ -655,14 +655,12 @@ public class Vista {
 		//turnos 
 
 		
-//		empleados = getEmpleados(null,
-//				getEmpleadoActual().getDepartamentoId(), null, null, null,
-//				null, null);
 
 		
 		int tipo = getEmpleadoActual().getRango();
 		String dep = getEmpleadoActual().getDepartamentoId();
 		int numvendedor = getEmpleadoActual().getEmplId();
+		System.out.println("get empleados");
 		setProgreso("Cargando empleados", 25);
 		empleados = controlador.getEmpleadosDepartamento(getEmpleadoActual().getEmplId(),dep);
 		setProgreso("Cargando contratos", 50);

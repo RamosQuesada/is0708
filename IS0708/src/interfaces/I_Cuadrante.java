@@ -200,7 +200,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	}
 
 	public void cargarCache() {
-		ArrayList<Trabaja> c[] = vista.getCuadrante(mes, anio, "DatosFijos").getCuad();
+		ArrayList<Trabaja> c[] = vista.getCuadrante(mes, anio, "Ropa Viejunos").getCuad();
 		iCuad = new ArrayList[c.length];
 		for (int i=0; i<c.length; i++) {
 			iCuad[i] = new ArrayList<I_Trabaja>();
