@@ -182,13 +182,7 @@ public class I02_Principal {
 		cCuadrante.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
 				3, 5));
 
-		algoritmo.Trabaja t1 = new algoritmo.Trabaja();
-		t1.setIdEmpl(10000100);
-		t1.setIdTurno(1);
-
-		algoritmo.Trabaja t2 = new algoritmo.Trabaja();
-		t2.setIdEmpl(10000200);
-		t2.setIdTurno(2);
+		
 
 		final I_Cuadrante ic = new I_Cuadrante(vista, 0, 0, "mi_dep", 4, 9, 23);
 		cDepartamentos.addListener(SWT.Selection, new Listener() {
@@ -196,8 +190,7 @@ public class I02_Principal {
 				ic.setDepartamento(cDepartamentos.getText());
 			}
 		});
-		ic.setTrabajaDia(1, t1);
-		ic.setTrabajaDia(1, t2);
+
 		ic.setComposite(cCuadrante);
 
 		Label lCalendario = new Label(cCuadrantes, SWT.LEFT);
@@ -207,6 +200,8 @@ public class I02_Principal {
 
 		final DateTime calendario = new DateTime(cCuadrantes, SWT.CALENDAR
 				| SWT.SHORT);
+		ic.setDia(calendario.getDay(), calendario.getMonth(), calendario.getYear());
+
 		calendario.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 

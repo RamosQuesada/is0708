@@ -68,8 +68,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private Label lCuadranteTitulo;
 	
 	private int dia=1;
-	private int mes=6;
-	private int anio=2008;
+	private int mes=1;
+	private int anio=1990;
 	private String departamento="Ropa Viejunos";
 	private Image fondo;
 	
@@ -227,6 +227,18 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		}
 	}
 	
+	public void setCompositeUnTurno(Composite cCuadrante) {
+		setComposite(cCuadrante);
+		iCuad = new ArrayList[1];
+		I_Trabaja i = new I_Trabaja(new Trabaja());
+		i.turno = new Turno(0,"","12:00:00","14:00:00","00:00:00",0);
+		iCuad[0].add(i);		
+	}
+	
+	public Turno getTurno() {
+		return iCuad[0].get(0).getTurno();
+	}
+	
 	/**
 	 * Configura un composite para mostrar un cuadrante.
 	 */
@@ -239,11 +251,11 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		lCuadranteTitulo.setFont(new Font(cCuadrante.getDisplay(),fname,15,0));
 
 		lCuadranteTitulo.setText("");
-		lCuadranteTitulo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		lCuadranteTitulo.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		
 		lGridCuadrante= new Label (cCuadrante, SWT.LEFT);
 		lGridCuadrante.setText("Mostrar intervalos de");
-		lGridCuadrante.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
+		lGridCuadrante.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		
 		cGridCuadrante = new Combo(cCuadrante, SWT.BORDER | SWT.READ_ONLY);
 		cGridCuadrante.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -524,7 +536,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			display.asyncExec(new Runnable() {
 				public void run() {
 					canvas.redraw();
-					lCuadranteTitulo.setText(dia + " de " + aplicacion.Util.mesAString(vista.getBundle(), getMes()) + " de " + anio);
+					lCuadranteTitulo.setText(String.valueOf(dia) + " de " + aplicacion.Util.mesAString(vista.getBundle(), mes-1) + " de " + String.valueOf(anio));
 				}
 			});
 		}
