@@ -1444,9 +1444,30 @@ public class Database extends Thread {
 		return true;
 	}
 	
-//	public boolean cambiarEmpleado(int idEmp, String nomb, String Ape1, String Ape2, Date FNac, int sexo, String mail, String Passw, int grupo, Date FCont) {
-		
-	//}
+	public boolean cambiarEmpleado(int idEmp, String nomb, String Ape1, String Ape2, Date FNac, int sexo, 
+			String mail, String Passw, int grupo, Date FCont, Date Fentr, int Extras, int Felic, int Idiom, 
+			int Rang, int Turn, int Contr) {
+	int r = 0;
+	try {
+		st = con.createStatement();
+		r = st.executeUpdate("UPDATE USUARIO SET Nombre="
+				+ nomb + ", Apellido1='" + Ape1 + "', Apellido2='"
+				+ Ape2 + "', FechaNacimiento=" + FNac
+				+ ", Sexo=" + sexo + ", Email=" + mail
+				+ ", Password=" + Passw + ", IndicadorGrupo=" + grupo
+				+ ", FechaContrato=" + FCont + ", FechaEntrada=" + Fentr
+				+ ", HorasExtras=" + Extras + ", Felicidad=" + Felic
+				+ ", Idioma=" + Idiom + ", Rango=" + Rang
+				+ ", IdContrato=" + Contr + ", IdTurno=" + Turn
+				+ " WHERE NumVendedor=" + idEmp + ";");
+	} catch (SQLException e) {
+		// TODO: handle exception
+		e.printStackTrace();
+		System.err.println("Error modificar empleado en la BD");
+		return false;
+	}
+	return true;
+	}
 	/**
 	 * Modifica un turno en la BD. Se le pasan todos los parametros aunque no
 	 * cambien

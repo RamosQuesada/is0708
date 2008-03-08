@@ -109,7 +109,7 @@ public class I08_1_Editar_empleado {
 		final Button bColor			= new Button(grupoDer, SWT.PUSH);
 		final Label  lColor			= new Label	(grupoDer,  SWT.NONE);
 		
-		final Button bAceptar		= new Button(shell, SWT.PUSH);
+		final Button bGuardar		= new Button(shell, SWT.PUSH);
 		final Button bCancelar		= new Button(shell, SWT.PUSH);
 		String aux = String.valueOf(idVend);
 		lNVend			.setText(bundle.getString("Vendedor"));
@@ -159,7 +159,7 @@ public class I08_1_Editar_empleado {
 		bColor		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		lColor		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		
-		bAceptar	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		bGuardar	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		bCancelar	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 
 		grupoIzq.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
@@ -191,10 +191,13 @@ public class I08_1_Editar_empleado {
 		ArrayList<String> departamentos = vista.getEmpleadoActual().getDepartamentosId();
 		int jj=0;
 		boolean cumple=true;
+		String prueba = emp.getDepartamentoId();
+
 		for (int i=0; i<departamentos.size(); i++) {
 			cDepto.add(departamentos.get(i));
+			String prueba2 = departamentos.get(i);
 
-			if (emp.getDepartamentoId()!= departamentos.get(i)&& cumple){
+			if (!emp.getDepartamentoId().equals(departamentos.get(i))&& cumple){
 				jj=jj+1;
 			}
 			else
@@ -225,8 +228,8 @@ public class I08_1_Editar_empleado {
 		shell.setText(bundle.getString("I08_but_NuevoEmpleado"));
 		shell.setLayout(layout);
 		
-		bAceptar.setText(bundle.getString("Aceptar"));
-		bAceptar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
+		bGuardar.setText(bundle.getString("Guardar"));
+		bGuardar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		
 		bCancelar.setText(bundle.getString("Cancelar"));
 		bCancelar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
@@ -306,7 +309,7 @@ public class I08_1_Editar_empleado {
 		};
 
 		// Listener con lo que hace el botón bAceptar
-		SelectionAdapter sabAceptar = new SelectionAdapter() {
+		SelectionAdapter sabGuardar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				
 			
@@ -344,11 +347,11 @@ public class I08_1_Editar_empleado {
 		
 		
 		bCancelar.addSelectionListener(sabCancelar);
-		bAceptar.addSelectionListener(sabAceptar);
+		bGuardar.addSelectionListener(sabGuardar);
 
 
 		// Botón por defecto bAceptar
-		shell.setDefaultButton(bAceptar);
+		shell.setDefaultButton(bGuardar);
 		// Ajustar el tama�o de la ventana al contenido
 		shell.pack();
 		// Mostrar ventana centrada sobre el padre
