@@ -698,7 +698,10 @@ public class Vista {
 	 */
 	public ArrayList<String> getNombreTodosJefes() {
 		// TODO Auto-generated method stub by Carlos Sánchez
-		return null;
+	//OJO: te devuelvo los usuarios con rango=2 de jefes, lo que 
+	// no estoy seguro es de si los de rango 1 (empleados) tambien pueden serlo o no
+	// en caso de que aumenten de rango.	
+		return this.controlador.getNombreTodosJefes();
 	}
 	/**
 	 * Funcion que incluye en la BBDD un nuevo departamento
@@ -706,9 +709,19 @@ public class Vista {
 	 * @param num Numero de departamento
 	 * @param nomJefe nombre del Jefe de departamento
 	 */
-	public void crearDepartamento(String nombredep, String num, String nomJefe) {
+	public void crearDepartamento(String nombredep, int num, int nvJefe) {
 		// TODO Auto-generated method stub by carlos Sánchez
 		//Agustin deberia devolverme algo q me indique si hay un fallo alcrearlo cual es
 		//hazlo como mas facil te sea.Yo no se cuantos distintos puede haber.
+	
+	//para añadir el Dpto en la BBDD no se necesita el Nombre del Jefe
+	//pero si su numero de vendedor que forma parte de la PK
+	//Ademas he cambiado "num" como int ya que ese es su tipo en la BBDD 
+	//en éste método y en el método en aplicacion.Database en el que aparecia como String	 
+		this.controlador.insertDepartamentoUsuario(nvJefe, nombredep);
+		this.controlador.insertNumerosDepartamento(num, nombredep);
+		this.controlador.insertDepartamentoPruebas(nombredep, nvJefe);
+		
+	
 	}
 }

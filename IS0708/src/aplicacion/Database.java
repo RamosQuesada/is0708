@@ -499,7 +499,7 @@ public class Database extends Thread {
 	 *            Nombre del departamento
 	 * @return Informa sobre si se ha podido realizar la inserci�n o no
 	 */
-	public boolean insertarNumerosDepartamento(String numero, String nombre) {
+	public boolean insertarNumerosDepartamento(int numero, String nombre) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
@@ -1713,4 +1713,18 @@ public class Database extends Thread {
 		}
 		return r;
 	}
+	
+	
+	public ResultSet obtenTodosNombresJefes() {
+		ResultSet r = null;
+		try {
+			st = con.createStatement();
+			r = st.executeQuery("SELECT Nombre FROM USUARIO WHERE Rango='"+2+"';");
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println("Error al realizar la consulta de nombres de (posibles) jefes de departamento ");
+		}
+		return r;
+	}
+
 }
