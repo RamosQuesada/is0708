@@ -69,11 +69,12 @@ public class I02_threadEmpl extends Thread{
 				cuadrante.fecha= Date.valueOf(Util.aFormatoDate(Integer.toString(
 					calendario.get(GregorianCalendar.YEAR)),
 					Integer.toString(
-						calendario.get(GregorianCalendar.MONTH)+1),
+						calendario.get(GregorianCalendar.MONTH)),
 					Integer.toString(
 						calendario.get(GregorianCalendar.DATE)+cont)
 					));
 
+				
 				//ESPERA A QUE SE CARGUE LA CACHE
 				while((!cuadrante.vista.isCacheCargada())&&(!finalizar)){
 					
@@ -87,7 +88,7 @@ public class I02_threadEmpl extends Thread{
 				}
 				if(cuadrante.vista.isCacheCargada()){
 	//CACHE NO QUITAR MAS UNO DE MES ARRIBA...
-	/*			
+				
 				ArrayList<Trabaja> lista_trabaja=new ArrayList<Trabaja>();
 				try{
 				 lista_trabaja=cuadrante.vista.getListaTrabajaDia(cuadrante.fecha.getDate(), cuadrante.fecha.getMonth()+2, 2008, cuadrante.empleado.getDepartamentoId());
@@ -110,10 +111,15 @@ public class I02_threadEmpl extends Thread{
 				}
 				int turno=0;
 				if(trabaja!=null){
-					turno= trabaja.getIdTurno();
+					turno= trabaja.getIdTurno()+1;
+					System.out.println("yo idturno"+turno);
 				}
-    */
-				int turno = cuadrante.vista.getControlador().getTurnoEmpleadoDia(cuadrante.fecha, cuadrante.empleado.getEmplId());
+				else{
+					System.out.println("yo null");
+				}
+    
+			//mio poner mas uno
+		//		int turno = cuadrante.vista.getControlador().getTurnoEmpleadoDia(cuadrante.fecha, cuadrante.empleado.getEmplId());
 				//__ boss
 				
 
