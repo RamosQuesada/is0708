@@ -112,10 +112,10 @@ public class I02_threadEmpl extends Thread{
 				int turno=0;
 				if(trabaja!=null){
 					turno= trabaja.getIdTurno()+1;
-					System.out.println("yo idturno"+turno);
+					
 				}
 				else{
-					System.out.println("yo null");
+					//turno vacio
 				}
     
 			//mio poner mas uno
