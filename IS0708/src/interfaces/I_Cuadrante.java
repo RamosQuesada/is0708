@@ -735,10 +735,15 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		if (b) {
 			canvas.addMouseMoveListener(mouseMoveListenerCuadrSemanal);
 			canvas.addMouseListener(mouseListenerCuadrSemanal);
+			lGridCuadrante.setVisible(true);
+			cGridCuadrante.setVisible(true);
 		}
 		else {
 			canvas.removeMouseMoveListener(mouseMoveListenerCuadrSemanal);
 			canvas.removeMouseListener(mouseListenerCuadrSemanal);
+			//Ocultamos el combo de los intervalos
+			lGridCuadrante.setVisible(false);
+			cGridCuadrante.setVisible(false);
 		}
 	}
 }
