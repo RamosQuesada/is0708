@@ -586,6 +586,7 @@ public class Empleado implements Drawable {
 	 */
 	public Contrato getContrato(Vista v) {
 		actualizarContrato(v);
+		if (contrato==null) System.err.println("No se ha encontrado el contrato. Posible inconsistencia en la BD.");
 		return contrato;
 	}
 	
