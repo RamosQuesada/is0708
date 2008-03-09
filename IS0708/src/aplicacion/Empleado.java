@@ -889,7 +889,8 @@ public class Empleado implements Drawable {
 	 * @return <i>true</i> si el empleado puede trabajar en el periodo solicitado, <i>false</i> si
 	 * no puede hacerlo (libra, vacaciones, baja...).
 	 */
-	public boolean estaDisponible(int dia, Time iniH, Time finH, Controlador c, ArrayList<Contrato> listaContratos, int hora, int numTrozos){
+	public boolean estaDisponible(int dia, Time iniH, Time finH, Controlador c, ArrayList<Contrato> listaContratos, int hora, int numTrozos, 
+			int mes, int anio){
 		
 		Contrato contrato;
 		String patron;
@@ -901,8 +902,9 @@ public class Empleado implements Drawable {
 		boolean encontrado;
 		
 		//cálculo del dia en el que nos encontramos dentro del ciclo.
-		today = new java.util.Date();
-		java.sql.Date fechaActual = new java.sql.Date(today.getTime());
+		//today = new java.util.Date();
+		//java.sql.Date fechaActual = new java.sql.Date(today.getTime());
+		java.sql.Date fechaActual = new java.sql.Date(anio,mes,0);
 		if(fContrato == null)
 			fContrato = new Date(fechaActual.getTime());
 		
