@@ -1,7 +1,6 @@
 package paquete_pruebas;
 
 import java.sql.Date;
-import java.util.ArrayList;
 
 import aplicacion.Contrato;
 import aplicacion.Controlador;
