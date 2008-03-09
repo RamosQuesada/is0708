@@ -44,7 +44,7 @@ public class TurnoMatic {
 		this.idDepartamento = idDepartamento;
 		this.anio = year;
 		this.mes = m;
-	    this.listaE = this.controlador.getEmpleadosDepartamento(/*controlador.getEmpleadoActual().getEmplId(), */idDepartamento);		
+	    this.listaE = this.controlador.getEmpleadosDepartamentoPruebasAlg(/*controlador.getEmpleadoActual().getEmplId(), */idDepartamento);		
 		this.estruc = new Estructura(mes, year, cont, idDepartamento, listaE);
 		this.cuadrante = new Cuadrante(mes, year, idDepartamento);		
 		this.contratosDep = this.controlador.getListaContratosDpto(this.idDepartamento);
