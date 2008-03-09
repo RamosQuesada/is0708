@@ -128,7 +128,7 @@ public class I02_cuadrEmpl extends Thread{
 		}
 	}
 	private void setSubdivisiones(int i) {
-		cuadrante.subdivisiones = i;
+		cuadrante.ponSubdivisiones(i);
 		redibujar();
 	}
 	public void setSemanal()  {

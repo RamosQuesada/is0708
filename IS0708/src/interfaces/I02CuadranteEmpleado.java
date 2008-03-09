@@ -1,10 +1,8 @@
 package interfaces;
 
 import java.sql.Date;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
@@ -14,9 +12,6 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
 import aplicacion.Empleado;
-import aplicacion.Posicion;
-import aplicacion.Turno;
-import aplicacion.Util;
 import aplicacion.Vista;
 
 public class I02CuadranteEmpleado {
@@ -34,13 +29,13 @@ public class I02CuadranteEmpleado {
 	private int horaInicio, horaFin; // Definen de qu� hora a qu� hora es el cuadrante
 	private int tamHora;
 	
-	public  int subdivisiones; // Cu�ntas subdivisiones hacer por hora (0 = sin subdivisiones)
-	public Empleado empleado;
+	private  int subdivisiones; // Cu�ntas subdivisiones hacer por hora (0 = sin subdivisiones)
+	private Empleado empleado;
 	private int tamano =8;
 	private ResourceBundle _bundle;
-	public Date fecha;
+	private Date fecha;
 	
-	public int avance=4;
+	private int avance=4;
 	//private ArrayList<Integer> turnos;//SE USA?
 	private ArrayList<Float> horasInicio;
 	private ArrayList<Float> horasFin;
@@ -48,9 +43,24 @@ public class I02CuadranteEmpleado {
 	private ArrayList<Float> horaFinDescanso;
 	//private ArrayList<Turno> tiposTurno;
 	private I02_threadEmpl thread;
-	private I02_cuadrEmpl superior;
+	//private I02_cuadrEmpl superior;
 	private GC gc;
 
+	public Empleado dameEmpleado(){
+		return empleado;
+	}
+	public void ponSubdivisiones(int subdivisiones){
+		this.subdivisiones=subdivisiones;
+	}
+	public void ponAvance(int avance){
+		this.avance=avance;
+	}
+	public Date dameFecha(){
+		return fecha;
+	}
+	public void ponFecha(Date fecha){
+		this.fecha=fecha;
+	}
 	public void ponHorasFinDescanso(ArrayList<Float> horaFinDescanso){
 		this.horaFinDescanso=horaFinDescanso;
 	}
@@ -132,7 +142,7 @@ public class I02CuadranteEmpleado {
 		display = d;
 		_bundle=bundle;
 		this.vista=vista;
-		this.superior=sup;
+	//	this.superior=sup;
 		this.empleado=empleado;
 		this.fecha=fecha;
 		this.horasFin= new ArrayList<Float>();

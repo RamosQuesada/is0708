@@ -41,34 +41,35 @@ public class I02_threadEmpl extends Thread{
 			//cuadrante.horaFinDescanso = new ArrayList<Float>();
 			cuadrante.ponHorasFinDescanso(new ArrayList<Float>());
 			cuadrante.ponHorasComienzoDescanso(new ArrayList<Float>());
-			if(cuadrante.fecha==null){
-			cuadrante.fecha=new Date(System.currentTimeMillis());}
+			Date fecha=cuadrante.dameFecha();
+			if(fecha==null){
+			fecha=new Date(System.currentTimeMillis());}
 			GregorianCalendar calendario = new GregorianCalendar();	
-			calendario.set(GregorianCalendar.DAY_OF_MONTH, cuadrante.fecha.getDate());
-			calendario.set(GregorianCalendar.MONTH, cuadrante.fecha.getMonth());
-			calendario.set(GregorianCalendar.YEAR, cuadrante.fecha.getYear());
+			calendario.set(GregorianCalendar.DAY_OF_MONTH, fecha.getDate());
+			calendario.set(GregorianCalendar.MONTH, fecha.getMonth());
+			calendario.set(GregorianCalendar.YEAR, fecha.getYear());
 			//System.out.println("dia "+cuadrante.fecha.getDate()+"mes "+cuadrante.fecha.getMonth()+"año "+cuadrante.fecha.getYear());
 			int numDias=0;
 			while((calendario.get(GregorianCalendar.DAY_OF_WEEK)!=6)&&(!finalizar)){
 				calendario.add(Calendar.DATE, -1);
 				numDias++;
 			}
-			cuadrante.avance=4;
+			cuadrante.ponAvance(4);
 			//__yo cuadrante.tiposTurno= cuadrante.vista.getControlador().getListaTurnosEmpleados();
 			//cuadrante.tiposTurno=cuadrante.vista.getTurnos();
 			//esperando 3...
-			cuadrante.avance=3;
+			cuadrante.ponAvance(3);
 			int cont=0;
 			while (cont < 7 && (! finalizar)){
 				//si cont > 2 esperando 2..
 				if((cont>2)&&(cont<5)){
-					cuadrante.avance=2;
+					cuadrante.ponAvance(2);
 				}
 				//si cont > 5 esperando 1..
 				if(cont>=5){
-					cuadrante.avance=1;
+					cuadrante.ponAvance(1);
 				}
-				cuadrante.fecha= Date.valueOf(Util.aFormatoDate(Integer.toString(
+				fecha= Date.valueOf(Util.aFormatoDate(Integer.toString(
 					calendario.get(GregorianCalendar.YEAR)),
 					Integer.toString(
 						calendario.get(GregorianCalendar.MONTH)),
@@ -80,7 +81,7 @@ public class I02_threadEmpl extends Thread{
 				//ESPERA A QUE SE CARGUE LA CACHE
 				while((!(cuadrante.dameVista()).isCacheCargada())&&(!finalizar)){
 					
-					cuadrante.avance=-1;
+					cuadrante.ponAvance(-1);
 					try {
 						sleep(100);
 					} catch (InterruptedException e) {
@@ -95,7 +96,7 @@ public class I02_threadEmpl extends Thread{
 				try{
 					
 				// lista_trabaja=cuadrante.vista.getListaTrabajaDia(cuadrante.fecha.getDate(), cuadrante.fecha.getMonth()+2, 2008, cuadrante.empleado.getDepartamentoId());
-					 lista_trabaja=(cuadrante.dameVista()).getListaTrabajaDia(cuadrante.fecha.getDate(), cuadrante.fecha.getMonth()+2, cuadrante.fecha.getYear()+1900, cuadrante.empleado.getDepartamentoId());
+					 lista_trabaja=(cuadrante.dameVista()).getListaTrabajaDia(fecha.getDate(), fecha.getMonth()+2, fecha.getYear()+1900, cuadrante.dameEmpleado().getDepartamentoId());
 				}
 				catch(Exception e){
 			//		System.out.println("fecha "+cuadrante.fecha.getDate()+" "+cuadrante.fecha.getMonth()+" "+"2008");	
@@ -107,7 +108,7 @@ public class I02_threadEmpl extends Thread{
 				int contador=0;
 				boolean fin=false;
 				while((!fin)&&(contador<lista_trabaja.size())){
-					if((lista_trabaja.get(contador).getIdEmpl()==cuadrante.empleado.getEmplId())){
+					if((lista_trabaja.get(contador).getIdEmpl()==cuadrante.dameEmpleado().getEmplId())){
 						trabaja=lista_trabaja.get(contador);
 						fin=true;
 					}
@@ -193,7 +194,7 @@ public class I02_threadEmpl extends Thread{
 			corriendo=false;
 			
 			if(!finalizar){
-				cuadrante.avance=0;
+				cuadrante.ponAvance(0);
 				cuadrante.ponRedibujar(true);
 			}
 			
