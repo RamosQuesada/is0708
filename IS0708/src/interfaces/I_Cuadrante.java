@@ -73,6 +73,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private String departamento="Ropa Viejunos";
 	private Image fondo;
 	
+	private int diaActVistaMes=0;
+	private boolean diaValido=false;
 	
 	private int movimiento;	
 //	private Boolean creando, terminadoDeCrear;
@@ -423,8 +425,16 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		};
 		mouseListenerCuadrMensual = new MouseListener() {
 			public void mouseDown(MouseEvent e){
-				if (e.button == 1) {//&& diaActivo
+				if (e.button == 1 &&(diaValido)) {
 					//Volver a la vista diaria con el dia seleccionado
+					diario=true;
+					setMovCuadSemanal(true);
+					cursor(0);
+					setDia(diaActVistaMes+1);
+				}
+				else {
+					diario=false;
+					setMovCuadSemanal(false);
 				}
 			};
 			public void mouseUp(MouseEvent e){};
@@ -432,34 +442,50 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		};
 		mouseMoveListenerCuadrMensual = new MouseMoveListener() {
 			public void mouseMove(MouseEvent e) {
-				//Primero comprobamos que la y del cursor se encuente en el canvas
-				//if (e.y>margenInf && e.y<(canvas.getClientArea().height-margenSup)) {
-					//Comprueba si el cursor esta situado sobre algun dia
-					int dia=1;
-					Boolean encontrado = false;
-					int inicioX=margenNombres+margenIzq;
-					int anchoMes = ancho - margenIzq - margenDer - margenNombres;
-					int anchoDia = anchoMes/iCuad.length;
-					int anchoDiaCont = 0;
-					while (!encontrado && (dia <= iCuad.length)){
-						//Calculamos la franja horizontal de cada dia
-						if (e.x>(inicioX+anchoDiaCont) && e.x<(inicioX+anchoDiaCont+anchoDia)){
-							/*if (!iCuad[dia].isEmpty()) {
-							}*/
-							//System.out.println(dia+"XX");
-							cursor(1);
-							encontrado = true;
-							canvas.redraw();
-						}
-						else {
-							cursor(0);
-							encontrado=false;
-							canvas.redraw();
-						}
-						anchoDiaCont+=anchoDia;
-						dia++;
+				//Comprueba si el cursor esta situado sobre algun dia
+				diaValido=false;
+				int dia=0;
+				Boolean diaEncontrado = false;
+				int inicioX=margenNombres+margenIzq;
+				int anchoMes=ancho - margenIzq - margenDer - margenNombres;
+				int anchoDia=anchoMes/iCuad.length;
+				int anchoDiaCont=0;
+				while (!diaEncontrado && (dia<iCuad.length)){
+					//Calculamos la franja horizontal de cada dia
+					if (e.x>(inicioX+anchoDiaCont+1) && e.x<(inicioX+anchoDiaCont+anchoDia-1)){
+						diaActVistaMes=dia;
+						diaEncontrado = true;
 					}
-				//}
+					anchoDiaCont+=anchoDia;
+					dia++;
+				}
+				//Comprueba si el cursor esta situado sobre algun empleado
+				int iEmp=0;
+				Boolean empEncontrado=false;
+				ArrayList<Empleado> empleados = vista.getEmpleados();
+				int altoFila=20;
+				int altoFilaCont=0;
+				int inicioY=margenSup+altoFila;
+				while (!empEncontrado && (iEmp<empleados.size())){
+					//Calculamos la franja vertical de cada empleado
+					if (e.y>(inicioY+altoFilaCont+1) && e.y<(inicioY+altoFilaCont+altoFila-1)){
+						empEncontrado=true;
+					}
+					altoFilaCont+=altoFila;
+					iEmp++;
+				}
+				if (empEncontrado&&diaEncontrado) {
+					//if (empTrabDia(dia,empleados.get(iEmp).getEmplId())) {
+						cursor(1);
+						canvas.redraw();
+						diaValido=true;
+					//}
+				}
+				else {
+					cursor(0);
+					canvas.redraw();
+					diaValido=false;
+				}
 			}
 		};
 
@@ -502,6 +528,14 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		tamSubdiv = tamHora/numSubdivisiones;
 		redibujar();
 	}
+	
+	public void setDia(int dia){
+		this.dia = dia;
+		if (vista.isCacheCargada()) {
+			cargarCache();
+			redibujar();			
+		}
+	};
 	
 	public void setDia(int dia, int mes, int anio) {
 		this.dia = dia;
@@ -618,14 +652,22 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			aplicacion.Empleado e=empleados.get(i);
 			gc.drawText(e.getNombre(), margenIzq, margenSup + 20 + i*altoFila);
 			for (int j=0; j < iCuad.length; j++) {
+				//Primero se pinta el rectangulo
 				gc.drawRectangle(margenIzq + margenNombres + j*anchoDia, margenSup + 20 + i*altoFila, anchoDia, altoFila);
-				for (int k=0;k<iCuad[j].size();k++) {
-					if (anchoDia>14)
-						//gc.drawText(String.valueOf(iCuad[j].get(k).getTurno().getAbreviatura().charAt(0)),margenIzq + margenNombres + j*anchoDia + (7/2), margenSup + 20 + i*altoFila + 2,altoFila);
-						gc.drawText(String.valueOf(iCuad[j].get(k).getTurno().getIdTurno()),margenIzq + margenNombres + j*anchoDia + (7/2),margenSup + 20 + i*altoFila + 2,altoFila);
-					else {
-						gc.fillOval(margenIzq + margenNombres + j*anchoDia + 5,margenSup + 20 + i*altoFila + 4,anchoDia-2,altoFila-2);
+				//Despues calculamos el turno a visualizar
+				Boolean encontrado=false;
+				int k=0;
+				while (!encontrado && k<iCuad[j].size()) {
+					if (iCuad[j].get(k).getEmpl().getEmplId()==e.getEmplId()) {	
+						if (anchoDia>14)
+							//gc.drawText(String.valueOf(iCuad[j].get(k).getTurno().getAbreviatura().charAt(0)),margenIzq + margenNombres + j*anchoDia + (7/2), margenSup + 20 + i*altoFila + 2,altoFila);
+							gc.drawText(String.valueOf(iCuad[j].get(k).getTurno().getIdTurno()),margenIzq + margenNombres + j*anchoDia + (7/2),margenSup + 20 + i*altoFila + 2,altoFila);
+						else {
+							gc.fillOval(margenIzq + margenNombres + j*anchoDia + 5,margenSup + 20 + i*altoFila + 4,anchoDia-2,altoFila-2);
+						}
+						encontrado=true;
 					}
+					k++;
 				}
 			}
 		}
@@ -762,24 +804,38 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	public void setMovCuadSemanal(boolean b) {
 		if (b) {
 			canvas.removeMouseMoveListener(mouseMoveListenerCuadrMensual);
+			canvas.removeMouseListener(mouseListenerCuadrMensual);
 			canvas.addMouseMoveListener(mouseMoveListenerCuadrSemanal);
 			canvas.addMouseListener(mouseListenerCuadrSemanal);
 			lGridCuadrante.setVisible(true);
 			cGridCuadrante.setVisible(true);
-			
-			//Pruebas
-			//System.out.println(canvas.getLocation().y+" canvas");
 		}
 		else {
 			canvas.removeMouseMoveListener(mouseMoveListenerCuadrSemanal);
 			canvas.removeMouseListener(mouseListenerCuadrSemanal);
 			canvas.addMouseMoveListener(mouseMoveListenerCuadrMensual);
+			canvas.addMouseListener(mouseListenerCuadrMensual);
 			//Ocultamos el combo de los intervalos
 			lGridCuadrante.setVisible(false);
 			cGridCuadrante.setVisible(false);
-			
-			//Pruebas
-			//System.out.println(canvas.+" canvas");
 		}
+	}
+	
+	/**
+	 * Método que 
+	 * 
+	 * @param dia
+	 * 		dia en el que hay que buscar dentro de iCuad
+	 * @param idEmpl
+	 * 		empleado del que se desea saber si trabaja ese dia
+	 */
+	public boolean empTrabDia(int dia,int idEmpl){
+		Boolean encontrado=false;
+		int i=0;
+		while (!encontrado && i<iCuad[dia].size()){
+			if (iCuad[dia].get(i).getEmpl().getEmplId()==idEmpl)
+				encontrado=true;
+		}
+		return encontrado;
 	}
 }
