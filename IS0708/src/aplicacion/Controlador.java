@@ -794,6 +794,49 @@ public class Controlador {
 		}
 		return emps;*/
 	}
+	
+	
+	/**
+	 * Método para listar todos los empleados de un departamento
+	 * SOLO PARA PRUEBAS DEL ALGORITMO
+	 * @deprecated
+	 */
+	public ArrayList<Empleado> getEmpleadosDepartamentoPruebasAlg(String idDept) {
+		ArrayList<Empleado> emps = new ArrayList<Empleado>();
+		ResultSet rs = _db.obtenListaEmpleadosDepartamento(idDept);
+		try {
+			while (rs.next()) {
+				String nombre = rs.getString("Nombre");
+				String apellido1 = rs.getString("Apellido1");
+				String apellido2 = rs.getString("Apellido2");
+				Date fechaNac = rs.getDate("FechaNacimiento");
+				int id = rs.getInt("NumVendedor");
+				String email = rs.getString("Email");
+				String password = rs.getString("Password");
+				int sexo = rs.getInt("Sexo");
+				int grupo = rs.getInt("IndicadorGrupo");
+				int rango = rs.getInt("Rango");
+				int idContrato = rs.getInt("IdContrato");
+				Date fechaContrato = rs.getDate("FechaContrato");
+				Date fechaAlta = rs.getDate("FechaEntrada");
+				Color color = null;
+				int felicidad = rs.getInt("Felicidad");
+				int idioma = rs.getInt("Idioma");
+				//TODO cargarlo de la BD
+				int turnoFavorito = rs.getInt("IdTurno");
+				Empleado emp = new Empleado(null, id, nombre, apellido1,
+						apellido2, fechaNac, sexo, email, password, grupo,
+						rango, idContrato, fechaContrato, fechaAlta, color,
+						null, null, felicidad, idioma, turnoFavorito);
+				emp.setIDDepartamentos(null);
+				emps.add(emp);
+			}
+		} catch (Exception e) {
+			System.err
+					.println("Error al obtener Lista de Departamentos en la base de datos");
+		}
+		return emps;
+	}	
 
 	/**
 	 * Método para obtener los contratos de un departamento
