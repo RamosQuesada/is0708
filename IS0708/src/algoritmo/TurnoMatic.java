@@ -349,13 +349,14 @@ public class TurnoMatic {
 				}
 			}
 			k=k-1;
-			/*if (fHoraria.size()>1) {
-				quitarEmpleado(dispo.get(k),cuadAux[dia]);*/
+			
+			//if (fHoraria.size()>1) {
+				quitarEmpleado(dispo.get(k),/*cuadAux[*/dia/*]*/);
 				/*si al recolocar a un empleado en un turno diferente, el turno del que se le quita es el que él prefiere, 
 				su felicidad queda igual que estaba antes de ejecutar el algoritmo*/
-				/*if (franjaHoraria.getIdTurno()==tFavorito)
+				if (franjaHoraria.getIdTurno()==tFavorito)
 					dispo.get(k).setFelicidad(dispo.get(k).getFelicidad()-1);
-			}*/
+			//}
 			fHoraria.remove(0);
 		}
 		return hecho;
@@ -443,9 +444,10 @@ public class TurnoMatic {
 	 * @param e Empleado a eliminar del cuadrante
 	 * @param dia Dia para el que estamos generando el cuadrante
 	 */
-	private void quitarEmpleado (Empleado e, ArrayList<Trabaja> cuadDia){
+	private void quitarEmpleado (Empleado e, int dia/*ArrayList<Trabaja> cuadDia*/){
 		boolean enc=false;
 		int k=0;
+		ArrayList<Trabaja> cuadDia = cuadrante.getListaTrabajaDia(dia);
 		while ((!enc) && (k<cuadDia.size())){
 			if (cuadDia.get(k).getIdEmpl()==e.getEmplId()) {
 				cuadDia.remove(k);
