@@ -1066,15 +1066,15 @@ public class I02_Principal {
 				if (bPorMes.getSelection()) {
 				//	cuadrante.setMensual();
 					//crear ventana informando
-					System.out.println("vista por meses");
+					
 					MessageBox messageBox = new MessageBox(shell,
-							SWT.APPLICATION_MODAL | SWT.YES
-									| SWT.ICON_WARNING);
+							SWT.APPLICATION_MODAL | SWT.OK
+									| SWT.ICON_INFORMATION);
 					messageBox.setText(bundle.getString("Mensaje"));
 					// Diferentes iconos:
 					messageBox.setMessage("Vista por meses, aun no creada");
-					if (messageBox.open() == SWT.YES) {
-						
+					if (messageBox.open() == SWT.OK) {
+						System.out.println("hola");
 						bPorSemanas.setFocus();
 					}
 					
