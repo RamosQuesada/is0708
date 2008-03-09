@@ -84,11 +84,11 @@ public class I02_cuadrEmpl extends Thread{
 			else{
 			display.asyncExec(new Runnable () {
 				public void run() {
-					if(cuadrante.redibujar){
+					if(cuadrante.dameRedibujar()){
 						
 						
 						redibujar();
-						cuadrante.redibujar=false;
+						cuadrante.ponRedibujar(false);
 					}
 					else{
 					//	System.out.println("Esperando"+cuadrante.avance);

@@ -34,12 +34,13 @@ public class I02_threadEmpl extends Thread{
 			e.printStackTrace();
 		}}
 		corriendo=true;
-		this.cuadrante.redibujar=true;
+		this.cuadrante.ponRedibujar(true);
 			Date fechaActual;
-			cuadrante.horasFin= new ArrayList<Float>();
-			cuadrante.horasInicio = new ArrayList<Float>();
-			cuadrante.horaFinDescanso = new ArrayList<Float>();
-			cuadrante.horaComienzoDescanso =  new ArrayList<Float>();
+			cuadrante.ponHorasFin(new ArrayList<Float>());
+			cuadrante.ponHorasInicio(new ArrayList<Float>());
+			//cuadrante.horaFinDescanso = new ArrayList<Float>();
+			cuadrante.ponHorasFinDescanso(new ArrayList<Float>());
+			cuadrante.ponHorasComienzoDescanso(new ArrayList<Float>());
 			if(cuadrante.fecha==null){
 			cuadrante.fecha=new Date(System.currentTimeMillis());}
 			GregorianCalendar calendario = new GregorianCalendar();	
@@ -169,17 +170,22 @@ public class I02_threadEmpl extends Thread{
 						horaSalidaFloat=(float)(horaSalida.getHours()+horaSalida.getMinutes()/60.0f);
 						horaDescansoFloat=(float)(horaDescanso.getHours()+horaDescanso.getMinutes()/60.0f);
 						finHoraDescansoFloat = (float)(horaDescansoFloat + ((float)(duracionDescanso)/60));
-						cuadrante.horasInicio.add(cont,horaEntradaFloat);
-						cuadrante.horasFin.add(cont,horaSalidaFloat);
-						cuadrante.horaComienzoDescanso.add(cont,horaDescansoFloat);
-						cuadrante.horaFinDescanso.add(cont,finHoraDescansoFloat);
+						//cuadrante.horasInicio.add(cont,horaEntradaFloat);
+						
+						cuadrante.anadeHoraInicio(cont, horaEntradaFloat);
+						cuadrante.anadeHoraFin(cont, horaSalidaFloat);
+						cuadrante.anadeHoraComienzoDescanso(cont, horaDescansoFloat);
+						cuadrante.anadeHoraFinDescanso(cont, finHoraDescansoFloat);
+						//cuadrante.horaComienzoDescanso.add(cont,horaDescansoFloat);
+						//cuadrante.horaFinDescanso.add(cont,finHoraDescansoFloat);
 				//	}
 				}
 				else{
-					cuadrante.horasInicio.add(cont,0.0f);
-					cuadrante.horasFin.add(cont,0.0f);
-					cuadrante.horaComienzoDescanso.add(cont,0.0f);
-					cuadrante.horaFinDescanso.add(cont,0.0f);
+					cuadrante.anadeHoraInicio(cont, 0.0f);
+					cuadrante.anadeHoraFin(cont, 0.0f);
+					cuadrante.anadeHoraComienzoDescanso(cont, 0.0f);
+					cuadrante.anadeHoraFinDescanso(cont, 0.0f);
+//					cuadrante.horaFinDescanso.add(cont,0.0f);
 				}
 			cont++;
 		}
@@ -188,7 +194,7 @@ public class I02_threadEmpl extends Thread{
 			
 			if(!finalizar){
 				cuadrante.avance=0;
-				this.cuadrante.redibujar=true;
+				cuadrante.ponRedibujar(true);
 			}
 			
 	}
