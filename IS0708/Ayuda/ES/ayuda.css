@@ -1,25 +1,34 @@
 
-body{
+body {
 background-color:#EEFFEE;
 }
 
-h1,h2,h3,h4,h5,h6{ 
-  font-variant:small-caps;
+h1, h2, h3, h4, h5, h6 { 
+ 
   background-color:#CCFFCC;
-  color:green;
+  color:#228822;
   padding-left:1em;
   padding-right:1em;
   text-align:left;
   clear:both;
  }
 
-ul, li, p{
-font-family:arial;
+ul, li, p {
+  font-family:arial;
 }
 
-p { 
-  text-indent:2em;
+ul {
+  margin:10px
+}
+
+a, p { 
+  font-size:15px;
  }
-p:first-letter{ 
-  font-size:150%;
- }
+
+a {color:#005500;}
+a:visited {color:#005500;}
+a:active {color:#66AA66;}
+a:hover {text-decoration:none;}
+
+#faq p {margin-left:40px}
+#faq h4 {background-color:#EEFFEE;}
