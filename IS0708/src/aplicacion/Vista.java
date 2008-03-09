@@ -718,9 +718,9 @@ public class Vista {
 	//pero si su numero de vendedor que forma parte de la PK
 	//Ademas he cambiado "num" como int ya que ese es su tipo en la BBDD 
 	//en éste método y en el método en aplicacion.Database en el que aparecia como String	 
-		this.controlador.insertDepartamentoUsuario(nvJefe, nombredep);
-		this.controlador.insertNumerosDepartamento(num, nombredep);
-		this.controlador.insertDepartamentoPruebas(nombredep, nvJefe);
+		this.controlador.insertDepartamentoUsuario(nvJefe, nombredep); //tabla DepartamentoUsuario
+		this.controlador.insertNumerosDepartamento(num, nombredep); //tabla NumerosDEPARTAMENTOs
+		this.controlador.insertDepartamentoPruebas(nombredep, nvJefe); //tabla DEPARTAMENTO
 		
 	
 	}
