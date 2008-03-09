@@ -402,6 +402,13 @@ public class Controlador {
 	}
 
 	
+	/**
+	 * Método que devuelve los nombres completos (nombre+apellidos) de 
+	 * los (posibles) jefes de departamento 
+	 * es decir, aquellos de rango=2
+	 * 
+	 * @return los nombres de los posibles jefes de Dpto.
+	 */
 	
 	public ArrayList<String> getNombreTodosJefes() {
 		ArrayList<String> jefes = new ArrayList<String>();
@@ -411,7 +418,9 @@ public class Controlador {
 		try {
 			while (rs.next()) {
 				String nombrejefe = rs.getString("Nombre");
-				jefes.add(nombrejefe);
+				String ap1 = rs.getString("Apellido1");
+				String ap2 = rs.getString("Apellido2");
+				jefes.add(nombrejefe+" "+ap1+" "+ap2);
 			}
 		} catch (Exception e) {
 			// TODO: handle exception

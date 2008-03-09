@@ -30,8 +30,8 @@ public class PruebasBaseDatos {
 		Database db = new Database();
 		db.abrirConexion();
 		Controlador c = new Controlador(db, true);
-		
 		ArrayList<String> s = c.getNombreTodosJefes();
+		System.out.println(s.size());
 		for(int i=0; i<s.size();i++){
 			System.out.println(s.get(i));
 			

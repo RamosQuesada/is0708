@@ -1714,7 +1714,7 @@ public class Database extends Thread {
 	}
 	
 	/**
-	 * Método que obtiene el Nombre de todos los jefes (usuarios de rango=2)
+	 * Método que obtiene el Nombre completo (Nombres + Apellidos) de todos los jefes (usuarios de rango=2)
 	 * 
 	 * @return Devuelve un ResultSet con los datos leídos de la BD
 	 */
@@ -1722,7 +1722,7 @@ public class Database extends Thread {
 		ResultSet r = null;
 		try {
 			st = con.createStatement();
-			r = st.executeQuery("SELECT Nombre FROM USUARIO WHERE Rango='"+2+"';");
+			r = st.executeQuery("SELECT Nombre, Apellido1, Apellido2 FROM USUARIO WHERE Rango='"+2+"';");
 		} catch (SQLException e) {
 			// TODO: handle exception
 			System.err.println("Error al realizar la consulta de nombres de (posibles) jefes de departamento ");
