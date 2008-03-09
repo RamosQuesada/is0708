@@ -709,17 +709,17 @@ public class Vista {
 	 * @param num Numero de departamento
 	 * @param nomJefe nombre del Jefe de departamento
 	 */
-	public void crearDepartamento(String nombredep, int num, int nvJefe) {
+	public void crearDepartamento(String nombredep, String num, int nvJefe) {
 		// TODO Auto-generated method stub by carlos Sánchez
 		//Agustin deberia devolverme algo q me indique si hay un fallo alcrearlo cual es
 		//hazlo como mas facil te sea.Yo no se cuantos distintos puede haber.
 	
 	//para añadir el Dpto en la BBDD no se necesita el Nombre del Jefe
-	//pero si su numero de vendedor que forma parte de la PK
-	//Ademas he cambiado "num" como int ya que ese es su tipo en la BBDD 
-	//en éste método y en el método en aplicacion.Database en el que aparecia como String	 
+	//pero si su numero de vendedor (por eso lo he puesto como int) que forma parte de la PK 
+		
+		int n= Integer.parseInt(num);
 		this.controlador.insertDepartamentoUsuario(nvJefe, nombredep); //tabla DepartamentoUsuario
-		this.controlador.insertNumerosDepartamento(num, nombredep); //tabla NumerosDEPARTAMENTOs
+		this.controlador.insertNumerosDepartamento(n, nombredep); //tabla NumerosDEPARTAMENTOs
 		this.controlador.insertDepartamentoPruebas(nombredep, nvJefe); //tabla DEPARTAMENTO
 		
 	
