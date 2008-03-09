@@ -346,4 +346,21 @@ public class Util {
 		if (i<1 || i>12) return null;
 		return meses[i];
 	}
+	
+	
+	/**
+	 * Añade los ceros necesarios por la izquierda a un numero de vendedor
+	 * @param nv : numero de vendedor 
+	 * @return numero de vendedor de 8 digitos 
+	 */
+	public static String completaNumVendedor(String nv) {
+		while (nv.length()<8) {
+			nv = "0"+nv;
+		}		
+		return nv;
+	}	
+	
+	
+	
+	
 }

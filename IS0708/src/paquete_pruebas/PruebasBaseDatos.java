@@ -12,6 +12,7 @@ import aplicacion.Controlador;
 import aplicacion.Database;
 import aplicacion.Mensaje;
 import aplicacion.Turno;
+import aplicacion.Util;
 
 
 public class PruebasBaseDatos {
@@ -36,6 +37,14 @@ public class PruebasBaseDatos {
 			System.out.println(s.get(i));
 			
 		}
+		
+		String prueba= "00000000";
+		int n=Integer.parseInt(prueba);
+		System.out.println(n);
+		String p = String.valueOf(n);
+		System.out.println(p);
+		String p2= aplicacion.Util.completaNumVendedor(p);
+		System.out.println(p2);
 		db.cerrarConexion();
 		//boolean b = db.cambiarContrato(15, 12, "aleatorio14", "1:12", 1, 4000.50, 1);
 		//ArrayList<Mensaje> misMensajes = c.getMensajesEntrantes(12345678, 0, 30);
