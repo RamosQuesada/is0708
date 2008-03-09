@@ -802,8 +802,7 @@ public class Controlador {
 			}
 			return contratos;		
 		} catch (Exception e){
-			e.printStackTrace();
-			System.out.println("Error en getListaContratosDpto");
+			System.err.println("Error en Controlador.getListaContratosDpto");
 			return null;
 		}
 	}
@@ -1056,7 +1055,7 @@ public class Controlador {
 		try {
 			boolean b = _db.cambiarContrato(c.getNumeroContrato(), c.getTurnoInicial(), c.getNombreContrato(), c.getPatron(), c.getDuracionCiclo(), c.getSalario(), c.getTipoContrato());
 		} catch (Exception e) {
-			System.out.println("Error moificando Contrato");
+			System.err.println("Error Controlador.setContrato");
 		}
 		return true;
 	}
@@ -1265,8 +1264,7 @@ public class Controlador {
 			}
 			return turnos;		
 		} catch (Exception e){
-			e.printStackTrace();
-			System.out.println("Error en getListaContratosDpto");
+			System.err.println("Error en Controlador.getListaContratosDpto");
 			return null;
 		}
 	}
@@ -1359,7 +1357,7 @@ public class Controlador {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.err
-					.println("Error al obtener el turno de un día en la base de datos");
+					.println("Controlador :: Error al obtener el turno de un día en la base de datos");
 			e.printStackTrace();
 		}
 		if (turnos.size() != 0)
@@ -1402,7 +1400,7 @@ public class Controlador {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.print("Error al obtener el turno de la base de datos");
+			System.err.print("Controlador :: Error al obtener el turno de la base de datos");
 		}
 		return t;
 	}
@@ -1491,12 +1489,10 @@ public class Controlador {
 			while (cuad.next()) {
 				Trabaja nuevo = new Trabaja(cuad.getInt("NumVendedor"), cuad.getTime("HoraEntrada"), cuad.getTime("HoraSalida"), cuad.getInt("IdTurno"));
 				datos.setTrabajaDia(cuad.getDate("Fecha").getDate()-1, nuevo);
-				//System.out.println("añade " + String.valueOf((cuad.getDate("Fecha").getDate())));
 			}
 			return datos;		
-		} catch (Exception e){
-			e.printStackTrace();
-			System.out.println("Error en getCuadrante");
+		} catch (Exception e) {
+			System.err.println("Controlador :: Error en getCuadrante");
 			return null;
 		}
 	}

@@ -130,7 +130,6 @@ public class Imprimir {
 			GC gc = new GC(p);         
 			Image printImage = new Image(p, image.getImageData());
 			if (!printImage.isDisposed()){
-				//System.out.println(p.getClientArea().width);
 				gc.setFont(font);
 				gc.drawString("Imprimir Composite Ejemplo", 50, 50, true);
 				gc.drawImage(printImage, 750, 150);

@@ -14,7 +14,6 @@ public class Aplicacion {
 		boolean modoDebug = false;
 		if (args.length>0)
 			if (args[0].equals("-debug")) {
-				System.out.println("Modo debug");
 				modoDebug = true;
 			}
 		// Iniciar SWT

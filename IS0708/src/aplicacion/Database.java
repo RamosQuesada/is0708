@@ -38,8 +38,7 @@ public class Database extends Thread {
 			System.out.println("aplicacion.Database.java\t:: Conexión a la BD");
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.err
-					.println("aplicacion.Database.java\t:: Error en conexión");
+			System.err.println("aplicacion.Database.java\t:: Error en conexión");
 		}
 	}
 
@@ -51,10 +50,10 @@ public class Database extends Thread {
 		try {
 			con.close();
 			System.out
-					.println("aplicacion.Database.java\t:: Conexion Cerrada Correctamente");
+					.println("aplicacion.Database.java\t:: Conexión cerrada correctamente");
 		} catch (Exception e) {
 			// e.printStackTrace();
-			System.err.println("Error cerrando la conexión");
+			System.err.println("aplicacion.Database.java\t:: Error cerrando la conexión");
 		}
 	}
 
@@ -409,7 +408,7 @@ public class Database extends Thread {
 					+ "','" + fechaEntrada + "','" + horasExtras + "','"
 					+ felicidad + "','" + idioma + "','" + rango + "','"
 					+ idContrato + "','" + idTurno + "')");
-			System.out.println("aplicacion.Database.java\t::Usuario insertado");
+//			System.out.println("aplicacion.Database.java\t::Usuario insertado");
 			correcto = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -431,7 +430,7 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 			st.executeUpdate("DELETE FROM USUARIOS WHERE NumVendedor=" + id);
-			System.out.println("aplicacion.Database.java\t::Usuario Borrado");
+//			System.out.println("aplicacion.Database.java\t::Usuario Borrado");
 			correcto = true;
 		} catch (SQLException e) {
 			System.err.println("Error al Borrar el usuario");
@@ -564,7 +563,7 @@ public class Database extends Thread {
 			st = con.createStatement();
 			st.executeUpdate("INSERT INTO VENTAS values ('" + Fecha + "', '"
 					+ numVentas + "', '" + idUsuario + "')");
-			System.out.println("aplicacion.Database.java\t::Ventas insertada");
+//			System.out.println("aplicacion.Database.java\t::Ventas insertada");
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
@@ -658,7 +657,7 @@ public class Database extends Thread {
 					+ FechaInicio + "', '" + FechaFin + "', '" + Patron
 					+ "', '" + NumMax + "', '" + NumMin + "', '"
 					+ IdDepartamento + "')");
-			System.out.println("aplicacion.Database.java\t::Festivo insertado");
+//			System.out.println("aplicacion.Database.java\t::Festivo insertado");
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
@@ -704,7 +703,7 @@ public class Database extends Thread {
 							+ HoraInicioDescanso
 							+ "', '"
 							+ tdesc + "')");
-			System.out.println("aplicacion.Database.java\t::Turno insertado");
+//			System.out.println("aplicacion.Database.java\t::Turno insertado");
 			//r = st.getGeneratedKeys();
 			r = st.executeQuery("SELECT LAST_INSERT_ID()");
 			if(r.next()) 
@@ -730,7 +729,7 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 			st.executeUpdate("DELETE FROM TURNOS WHERE IdTurno=" + id);
-			System.out.println("aplicacion.Database.java\t::Turno Borrado");
+//			System.out.println("aplicacion.Database.java\t::Turno Borrado");
 			correcto = true;
 		} catch (SQLException e) {
 			System.err.println("Error al Borrar el turno");
@@ -770,7 +769,7 @@ public class Database extends Thread {
 							+ "', '"
 							+ asunto
 							+ "', '" + texto + "', " + marcado + ");");
-			System.out.println("aplicacion.Database.java\t::Mensaje insertado");
+//			System.out.println("aplicacion.Database.java\t::Mensaje insertado");
 			//r = st.getGeneratedKeys();
 			r = st.executeQuery("SELECT LAST_INSERT_ID()");
 			if(r.next()) 
@@ -796,7 +795,7 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 			st.executeUpdate("DELETE FROM MENSAJE WHERE IdMensaje=" + id);
-			System.out.println("aplicacion.Database.java\t::Mensaje Borrado");
+//			System.out.println("aplicacion.Database.java\t::Mensaje Borrado");
 			correcto = true;
 		} catch (SQLException e) {
 			System.err.println("Error al Borrar el mensaje");
@@ -818,7 +817,7 @@ public class Database extends Thread {
 			st = con.createStatement();
 			st.executeUpdate("UPDATE MENSAJE SET Marcado= " + marca
 					+ " WHERE IdMensaje=" + id);
-			System.out.println("aplicacion.Database.java\t::Mensaje Marcado");
+//			System.out.println("aplicacion.Database.java\t::Mensaje Marcado");
 			correcto = true;
 		} catch (SQLException e) {
 			System.err.println("Error al Marcar el mensaje");
@@ -916,7 +915,7 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 			st.executeUpdate("DELETE FROM CONTRATO WHERE IdContrato=" + id);
-			System.out.println("aplicacion.Database.java\t::Contrato Borrado");
+//			System.out.println("aplicacion.Database.java\t::Contrato Borrado");
 			correcto = true;
 		} catch (SQLException e) {
 			System.err.println("Error al Borrar el contrato");
@@ -1642,7 +1641,7 @@ public class Database extends Thread {
 			abrirConexion();
 			st = con.createStatement();
 			st.executeUpdate("INSERT INTO ISSUES (text) values ( '" + texto + "');");
-			System.out.println("aplicacion.Database.java\t::Issue insertado");
+//			System.out.println("aplicacion.Database.java\t::Issue insertado");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.err.println("Error al insertar el issue");

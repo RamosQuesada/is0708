@@ -91,7 +91,7 @@ public class Vista {
 				// En este caso se ha cerrado la aplicación antes de que termine
 				// de conectar.
 				if (db.conexionAbierta())
-					System.out.println("Vista-Conetor cerrando conexioooooon");
+					System.out.println("Vista-Conector cerrando conexion");
 					db.cerrarConexion();
 			}
 		}
@@ -228,7 +228,7 @@ public class Vista {
 				shell.getDisplay().dispose();
 				identificado = true; // Para que salga del bucle
 				if (db.conexionAbierta()) {
-					System.out.println("Vista-start cerrando conexioooon");
+					System.out.println("Vista-start cerrando conexion. Si ves este mensaje sin venir a cuento, avísanos.");
 					db.cerrarConexion();
 				}
 			}
@@ -674,7 +674,7 @@ public class Vista {
 			for (int i=0; i<temp.size(); i++)
 				departamentosJefe.add(controlador.getDepartamento(temp.get(i)));	
 		} else {
-			System.out.println("Tipo de empleado inválido para cargar la cache");
+			System.err.println("Vista\t:: Tipo de empleado inválido para cargar la cache.");
 		}
 	}
 
