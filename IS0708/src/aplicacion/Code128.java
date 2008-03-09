@@ -207,7 +207,6 @@ public class Code128 {
 		checkDigit %= 103;
 		decoded += checkDigit;
 		encoded = startChar + encoded + charSet[checkDigit] + stopChar;
-		//System.out.println(decoded);
 		return encoded;
 	}
 	

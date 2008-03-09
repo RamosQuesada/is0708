@@ -61,7 +61,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	// La variable terminadoDeCrear sirve para que una franja nueva no desaparezca al crearla
 	private Boolean diario = true; // 1: muestra cuadrante diario, 0: muestra cuadrante mensual
 	private int empleadoActivo = -1;
-	private Turno turnoActivo  = null; 
+	private I_Turno turnoActivo  = null; 
 
 	private Label lGridCuadrante;
 	private Combo cGridCuadrante;
@@ -101,7 +101,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		private Empleado empl;//id del empleado
 		private Time FichIni;//Fichaje inicial,hay que mirar bien los tipos que van a llevar las fechas
 		private Time FichFin;//Fichaje final
-		private Turno turno;//Identificador del turno
+		private I_Turno turno;//Identificador del turno
 		
 		public I_Trabaja (Trabaja tr) {
 			this.empl=vista.getEmpleado(tr.getIdEmpl());
@@ -109,7 +109,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			this.FichFin=tr.getFichFin();
 			// Aquí hay que hacer una copia del turno
 			Turno t = vista.getTurno(tr.getIdTurno());
-			this.turno= new Turno(t);
+			this.turno= new I_Turno(t);
 					
 		}
 
@@ -137,11 +137,11 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			FichFin = fichFin;
 		}
 
-		public Turno getTurno() {
+		public I_Turno getTurno() {
 			return turno;
 		}
 
-		public void setIdTurno(Turno idTurno) {
+		public void setIdTurno(I_Turno idTurno) {
 			this.turno = idTurno;
 		}
 		
@@ -231,7 +231,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		setComposite(cCuadrante);
 		iCuad = new ArrayList[1];
 		I_Trabaja i = new I_Trabaja(new Trabaja());
-		i.turno = new Turno(0,"","12:00:00","14:00:00","00:00:00",0);
+		i.turno = new I_Turno(0,"","12:00:00","14:00:00","00:00:00",0);
 		iCuad[0].add(i);		
 	}
 	
@@ -364,7 +364,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 						encontrado = false;
 
 						if (turnoActivo != null) turnoActivo.desactivarFranjas();
-						Turno t;
+						I_Turno t;
 						while (!encontrado && i < iCuad[dia-1].size()) {
 							t = iCuad[dia-1].get(i).getTurno();
 							if (empleadoActivo==-1) { cursor(0); t.desactivarFranjas();}
@@ -583,20 +583,23 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		// Esto coge el primer domingo
 		boolean domingoEncontrado = false;
 		int dom = 1;
+		c.set(anio,mes,dom);
 		while (!domingoEncontrado) {
-			c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),dom);
+			c.roll(Calendar.DATE, true);
 			if (c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) domingoEncontrado=true;
 			else dom++;
 		}
 		System.out.println(dom);
+		System.out.println(c.get(Calendar.DAY_OF_WEEK));
+		//System.out.println(c.toString());
 		int anchoMes = ancho - margenIzq - margenDer - margenNombres;
 		int anchoDia = anchoMes/iCuad.length;
 		int altoFila = 20;
 		// Dibujar números de los días
 		if (anchoDia>14)
 			for (int j=0; j < iCuad.length; j++) {
-				if ((j+dom)%7==6) gc.setForeground(new Color(display,255,0,0));
-				else if ((j+dom)%7==0) gc.setForeground(new Color(display,0,0,0));
+				if ((j-dom)%7==0) gc.setForeground(new Color(display,255,0,0));
+				else if ((j-dom)%7==1) gc.setForeground(new Color(display,0,0,0));
 				gc.drawText(String.valueOf(j+1), margenIzq + margenNombres + j*anchoDia + anchoDia/2, margenSup);
 			}
 		gc.setForeground(new Color(display,0,0,0));
