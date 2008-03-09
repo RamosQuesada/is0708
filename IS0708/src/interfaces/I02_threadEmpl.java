@@ -77,7 +77,7 @@ public class I02_threadEmpl extends Thread{
 
 				
 				//ESPERA A QUE SE CARGUE LA CACHE
-				while((!cuadrante.vista.isCacheCargada())&&(!finalizar)){
+				while((!(cuadrante.dameVista()).isCacheCargada())&&(!finalizar)){
 					
 					cuadrante.avance=-1;
 					try {
@@ -87,14 +87,14 @@ public class I02_threadEmpl extends Thread{
 						e.printStackTrace();
 					}
 				}
-				if(cuadrante.vista.isCacheCargada()){
+				if((cuadrante.dameVista()).isCacheCargada()){
 	//CACHE NO QUITAR MAS UNO DE MES ARRIBA...
 				
 				ArrayList<Trabaja> lista_trabaja=new ArrayList<Trabaja>();
 				try{
 					
 				// lista_trabaja=cuadrante.vista.getListaTrabajaDia(cuadrante.fecha.getDate(), cuadrante.fecha.getMonth()+2, 2008, cuadrante.empleado.getDepartamentoId());
-					 lista_trabaja=cuadrante.vista.getListaTrabajaDia(cuadrante.fecha.getDate(), cuadrante.fecha.getMonth()+2, cuadrante.fecha.getYear()+1900, cuadrante.empleado.getDepartamentoId());
+					 lista_trabaja=(cuadrante.dameVista()).getListaTrabajaDia(cuadrante.fecha.getDate(), cuadrante.fecha.getMonth()+2, cuadrante.fecha.getYear()+1900, cuadrante.empleado.getDepartamentoId());
 				}
 				catch(Exception e){
 			//		System.out.println("fecha "+cuadrante.fecha.getDate()+" "+cuadrante.fecha.getMonth()+" "+"2008");	
@@ -128,7 +128,7 @@ public class I02_threadEmpl extends Thread{
 				
 
 				
-				Turno tturno= cuadrante.vista.getTurno(turno);
+				Turno tturno= (cuadrante.dameVista()).getTurno(turno);
 				
 				//__fin boss
 				Time horaEntrada,horaSalida,horaDescanso;
