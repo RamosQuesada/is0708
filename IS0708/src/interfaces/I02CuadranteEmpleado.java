@@ -22,7 +22,7 @@ import aplicacion.Vista;
 public class I02CuadranteEmpleado {
 	
 	private Vista vista;
-	public boolean redibujar;
+	private boolean redibujar;
 	private Display display;
 	private int ancho;
 	private int alto=100;
@@ -41,19 +41,66 @@ public class I02CuadranteEmpleado {
 	public Date fecha;
 	
 	public int avance=4;
-	private ArrayList<Integer> turnos;//SE USA?
-	public ArrayList<Float> horasInicio;
-	public ArrayList<Float> horasFin;
-	public ArrayList<Float> horaComienzoDescanso;
-	public ArrayList<Float> horaFinDescanso;
-	public ArrayList<Turno> tiposTurno;
+	//private ArrayList<Integer> turnos;//SE USA?
+	private ArrayList<Float> horasInicio;
+	private ArrayList<Float> horasFin;
+	private ArrayList<Float> horaComienzoDescanso;
+	private ArrayList<Float> horaFinDescanso;
+	//private ArrayList<Turno> tiposTurno;
 	private I02_threadEmpl thread;
 	private I02_cuadrEmpl superior;
 	private GC gc;
+
+	public void ponHorasFinDescanso(ArrayList<Float> horaFinDescanso){
+		this.horaFinDescanso=horaFinDescanso;
+	}
+	
+	public ArrayList<Float> dameHoraFinDescanso(){
+		return this.horaFinDescanso;
+	}
+	
+	public void anadeHoraFinDescanso(int posicion,Float horaFin){
+		this.horaFinDescanso.add(posicion,horaFin);
+	}
+	
+	public void ponHorasComienzoDescanso(ArrayList<Float> horaComienzoDescanso){
+		this.horaComienzoDescanso=horaComienzoDescanso;
+	}
+	
+	public ArrayList<Float> dameHoraComienzoDescanso(){
+		return this.horaComienzoDescanso;
+	}
+	
+	public void anadeHoraComienzoDescanso(int posicion,Float horaFin){
+		this.horaComienzoDescanso.add(posicion,horaFin);
+	}
+	
+	public void ponHorasFin(ArrayList<Float> horasFin){
+		this.horasFin=horasFin;
+	}
+	
+	public ArrayList<Float> dameHorasFin(){
+		return this.horasFin;
+	}
+	
+	public void anadeHoraFin(int posicion,Float horaFin){
+		this.horasFin.add(posicion,horaFin);
+	}
 	
 	public void ponHorasInicio(ArrayList<Float> horasInicio){
 		this.horasInicio=horasInicio;
 	}
+	
+	public ArrayList<Float> dameHorasInicio(){
+		return this.horasInicio;
+	}
+	
+	public void anadeHoraInicio(int posicion,Float horaInicio){
+		this.horasInicio.add(posicion,horaInicio);
+	}
+	
+	
+
 	
 
 
@@ -491,4 +538,11 @@ public class I02CuadranteEmpleado {
 		gc.setLineStyle(SWT.LINE_SOLID);
 	}
 
+	public void ponRedibujar(boolean redibujar){
+		this.redibujar=redibujar;
+	}
+	
+	public boolean dameRedibujar(){
+		return redibujar;
+	}
 }
