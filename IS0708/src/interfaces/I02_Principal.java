@@ -1046,8 +1046,10 @@ public class I02_Principal {
 			public void handleEvent(Event e) {
 				if (bPorSemanas.getSelection()) {
 					cuadrante.setSemanal();
-				} else
-					cuadrante.setMensual();
+				} else{
+				//	bPorSemanas.setFocus();
+				}
+				//	cuadrante.setMensual();
 
 			}
 		});
@@ -1062,9 +1064,26 @@ public class I02_Principal {
 			// Seleccionado por mes
 			public void handleEvent(Event e) {
 				if (bPorMes.getSelection()) {
-					cuadrante.setMensual();
-				} else
-					cuadrante.setSemanal();
+				//	cuadrante.setMensual();
+					//crear ventana informando
+					System.out.println("vista por meses");
+					MessageBox messageBox = new MessageBox(shell,
+							SWT.APPLICATION_MODAL | SWT.YES
+									| SWT.ICON_WARNING);
+					messageBox.setText(bundle.getString("Mensaje"));
+					// Diferentes iconos:
+					messageBox.setMessage("Vista por meses, aun no creada");
+					if (messageBox.open() == SWT.YES) {
+						
+						bPorSemanas.setFocus();
+					}
+					
+					
+					
+				} else{
+					
+				}
+				//	cuadrante.setSemanal();
 
 			}
 		});

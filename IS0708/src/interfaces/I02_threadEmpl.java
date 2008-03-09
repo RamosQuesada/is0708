@@ -5,9 +5,6 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
-import org.eclipse.swt.graphics.GC;
-
 import algoritmo.Trabaja;
 import aplicacion.Turno;
 import aplicacion.Util;

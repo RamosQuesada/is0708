@@ -168,8 +168,9 @@ public class I02_cuadrEmpl extends Thread{
 		
 		
 		lCuadranteTitulo= new Label (c, SWT.LEFT);
-		String fname = lCuadranteTitulo.getFont().getFontData()[0].getName();
-		lCuadranteTitulo.setFont(new Font(c.getDisplay(),fname,10,0));
+		//String fname = lCuadranteTitulo.getFont().getFontData()[0].getName();
+		//lCuadranteTitulo.setFont(new Font(c.getDisplay(),fname,10,0));
+		lCuadranteTitulo.setFont(new Font(display,"Verdana",this.ancho,SWT.BOLD));
 		// TODO Esto tendr� que cambiarse por la fecha elegida en el calendario
 		if(fecha!=null){
 			lCuadranteTitulo.setText("BIENVENIDO "+empleado.getNombre().toUpperCase()+"  :"+Util.dateAString(fecha));
@@ -258,6 +259,7 @@ public class I02_cuadrEmpl extends Thread{
 		this.fecha=fecha;
 		//"BIENVENIDO "+empleado.getNombre().toUpperCase()+"  :"+Util.dateAString(new Date(System.currentTimeMillis()))
 
+		lCuadranteTitulo.setFont(new Font(display,"Verdana",this.ancho/10,SWT.BOLD));
 		lCuadranteTitulo.setText("BIENVENIDO "+empleado.getNombre().toUpperCase()+Util.dateAString(fecha));
 		this.cuadrante.actualizarFecha(fecha,gc2);
 		this.redibujar();
