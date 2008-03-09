@@ -630,6 +630,8 @@ public class Controlador {
 			} else {
 				Date d = Fecha;
 				int diaSemana = d.getDay();
+				
+				if (diaSemana==0) diaSemana=7;
 
 				r = _db.obtenDistribucion(nombre, diaSemana);
 				if (r.next()) {
