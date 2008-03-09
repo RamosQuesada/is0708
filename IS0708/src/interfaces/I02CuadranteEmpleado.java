@@ -21,7 +21,7 @@ import aplicacion.Vista;
 
 public class I02CuadranteEmpleado {
 	
-	public Vista vista;
+	private Vista vista;
 	public boolean redibujar;
 	private Display display;
 	private int ancho;
@@ -326,6 +326,14 @@ public class I02CuadranteEmpleado {
 		}
 	}
 	
+	
+	public Vista dameVista(){
+		return vista;
+	}
+	
+	public void ponVista(Vista vista){
+		this.vista=vista;
+	}
 	/**
 	 * Cambia el color del pincel (foreground) sin exceder los l�mites de Color.
 	 * Si se excede un l�mite, se pone a 0 o 255, respectivamente.
