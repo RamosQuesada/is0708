@@ -889,7 +889,7 @@ public class Empleado implements Drawable {
 	 * @return <i>true</i> si el empleado puede trabajar en el periodo solicitado, <i>false</i> si
 	 * no puede hacerlo (libra, vacaciones, baja...).
 	 */
-	public boolean estaDisponible(int dia, Time iniH, Time finH, Vista v, ArrayList<Contrato> listaContratos, int hora, int numTrozos){
+	public boolean estaDisponible(int dia, Time iniH, Time finH, Controlador c, ArrayList<Contrato> listaContratos, int hora, int numTrozos){
 		
 		Contrato contrato;
 		String patron;
@@ -949,7 +949,7 @@ public class Empleado implements Drawable {
 		//Obtencion del turno a partir de la base de datos.
 		if (turnoE == null)
 		{
-			turnoE = v.getControlador().getListaTurnosContrato(this.idEmpl); //ponerlo al principio del alg.
+			turnoE = c.getListaTurnosContrato(this.idEmpl); //ponerlo al principio del alg.
 		}
 		
 		//Obtencion del turno que le corresponde.
