@@ -1,6 +1,7 @@
 package paquete_pruebas;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 import aplicacion.Contrato;
 import aplicacion.Controlador;
@@ -251,7 +252,7 @@ public class InsertaDatosFijos {
 			
 			// Crear contrato jefe departamento
 			String patronContratoJefe = "6:" + turnoJefe.getIdTurno() + "/1:d";
-			Contrato contratoJefe = new Contrato("contratoJefeFijo"+nd, 0, turnoJefe.getIdTurno() ,7, patronContratoJefe, 1200, 1);
+			Contrato contratoJefe = new Contrato("contratoJefeFijo "+nd, 0, turnoJefe.getIdTurno() ,7, patronContratoJefe, 1200, 1);
 			contratoJefe.setNumeroContrato(c.insertContrato(contratoJefe));
 			//c.insertTurnoPorContrato(turnoJefe.getIdTurno(), contratoJefe.getNumeroContrato());
 		
@@ -321,41 +322,41 @@ public class InsertaDatosFijos {
 			c.insertDistribucion(21, 7, "1e1p", 6, 4, depart);
 			
 			// Turnos
-			Turno t7hM = new Turno(0, "7h Mañana", "09:00:00", "16:00:00", "09:40:00", 20);
+			Turno t7hM = new Turno(0, "7h Mañana"+nd, "09:00:00", "16:00:00", "09:40:00", 20);
 			t7hM.setIdTurno(c.insertTurno(t7hM));
-			Turno t7hT = new Turno(0, "7h Tarde", "15:00:00", "22:00:00", "18:30:00", 20);
+			Turno t7hT = new Turno(0, "7h Tarde"+nd, "15:00:00", "22:00:00", "18:30:00", 20);
 			t7hT.setIdTurno(c.insertTurno(t7hT));
 			
-			Turno t4hM = new Turno(0, "4h Mañana", "09:00:00", "13:00:00", "09:00:00", 0);
+			Turno t4hM = new Turno(0, "4h Mañana"+nd, "09:00:00", "13:00:00", "09:00:00", 0);
 			t4hM.setIdTurno(c.insertTurno(t4hM));
-			Turno t4hT = new Turno(0, "4h Tarde", "18:00:00", "22:00:00", "18:00:00", 0);
+			Turno t4hT = new Turno(0, "4h Tarde"+nd, "18:00:00", "22:00:00", "18:00:00", 0);
 			t4hT.setIdTurno(c.insertTurno(t4hT));
 			
-			Turno tSabM = new Turno(0, "Sab Mañana", "10:00:00", "16:00:00", "10:00:00", 0);
+			Turno tSabM = new Turno(0, "Sab Mañana"+nd, "10:00:00", "16:00:00", "10:00:00", 0);
 			tSabM.setIdTurno(c.insertTurno(tSabM));
-			Turno tSabT = new Turno(0, "Sab Tarde", "16:00:00", "22:00:00", "16:00:00", 0);
+			Turno tSabT = new Turno(0, "Sab Tarde"+nd, "16:00:00", "22:00:00", "16:00:00", 0);
 			tSabT.setIdTurno(c.insertTurno(tSabT));
 			
 			// Contratos
 			String patron7hM = "6:" + t7hM.getIdTurno() + "/1:d/" +
 			                   "6:" + t7hT.getIdTurno() + "/1:d";
-			Contrato c7hM = new Contrato("7 horas mañana", 0, t7hM.getIdTurno(), 14, patron7hM, 800, 1);
+			Contrato c7hM = new Contrato("7 horas mañana "+nd, 0, t7hM.getIdTurno(), 14, patron7hM, 800, 1);
 			c7hM.setNumeroContrato(c.insertContrato(c7hM));
 			String patron7hT = "6:" + t7hT.getIdTurno() + "/1:d/" +
 	         				   "6:" + t7hM.getIdTurno() + "/1:d";
-			Contrato c7hT = new Contrato("7 horas tarde", 0, t7hT.getIdTurno(), 14, patron7hT, 800, 1);
+			Contrato c7hT = new Contrato("7 horas tarde "+nd, 0, t7hT.getIdTurno(), 14, patron7hT, 800, 1);
 			c7hT.setNumeroContrato(c.insertContrato(c7hT));
 			
 			String patron4h = "7:" + t4hM.getIdTurno() + "," + t4hT.getIdTurno();
-			Contrato c4hM = new Contrato("4 horas mañana", 0, t4hM.getIdTurno(), 7, patron4h, 600, 4);
+			Contrato c4hM = new Contrato("4 horas mañana "+nd, 0, t4hM.getIdTurno(), 7, patron4h, 600, 4);
 			c4hM.setNumeroContrato(c.insertContrato(c4hM));
-			Contrato c4hT = new Contrato("4 horas tarde", 0, t4hT.getIdTurno(), 7, patron4h, 600, 4);
+			Contrato c4hT = new Contrato("4 horas tarde "+nd, 0, t4hT.getIdTurno(), 7, patron4h, 600, 4);
 			c4hT.setNumeroContrato(c.insertContrato(c4hT));
 			
 			String patronSab = "5:d/2:" + tSabM.getIdTurno() + "," + tSabT.getIdTurno();	
-			Contrato cSabM = new Contrato("Sabadero mañana", 0, tSabM.getIdTurno(), 7, patronSab, 600, 4);
+			Contrato cSabM = new Contrato("Sabadero mañana "+nd, 0, tSabM.getIdTurno(), 7, patronSab, 600, 4);
 			cSabM.setNumeroContrato(c.insertContrato(cSabM));
-			Contrato cSabT = new Contrato("Sabadero tarde", 0, tSabT.getIdTurno(), 7, patronSab, 600, 4);
+			Contrato cSabT = new Contrato("Sabadero tarde "+nd, 0, tSabT.getIdTurno(), 7, patronSab, 600, 4);
 			cSabT.setNumeroContrato(c.insertContrato(cSabT));
 			
 			// turnosPorContrato - solo hace falta insertar los que sean distintos del inicial del contrato
@@ -435,7 +436,9 @@ public class InsertaDatosFijos {
 	}
 
 	public static void main(String[] args){
-		//InsertaDatosFijos.insertarNdepart(5);
+		
+		//InsertaDatosFijos.insertarNdepart(10);
+		
 	}
 
 }
