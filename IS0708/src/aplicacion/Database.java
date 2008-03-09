@@ -1713,7 +1713,11 @@ public class Database extends Thread {
 		return r;
 	}
 	
-	
+	/**
+	 * Método que obtiene el Nombre de todos los jefes (usuarios de rango=2)
+	 * 
+	 * @return Devuelve un ResultSet con los datos leídos de la BD
+	 */
 	public ResultSet obtenTodosNombresJefes() {
 		ResultSet r = null;
 		try {
