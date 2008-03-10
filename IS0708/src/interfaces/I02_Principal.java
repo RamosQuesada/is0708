@@ -1138,7 +1138,7 @@ public class I02_Principal {
 					// Diferentes iconos:
 					messageBox.setMessage("Vista por meses, aun no creada");
 					if (messageBox.open() == SWT.OK) {
-						System.out.println("hola");
+						
 						bPorSemanas.setFocus();
 					}
 					
