@@ -803,8 +803,8 @@ public class Vista {
 	}
 	/**
 	 * Funcion que devuelve todos los nombres completos (nombre+apellidos)
-	 *  de los empleados que pueden ser jefes de departamento
-	 * @return Nombres de los jefes
+	 *  de los empleados que pueden ser jefes de departamento y su numero de vendedor
+	 * @return Nombres completos de los jefes y sus numeros de vendedores
 	 */
 	public ArrayList<String> getNombreTodosJefes() {
 		return this.controlador.getNombreTodosJefes();
