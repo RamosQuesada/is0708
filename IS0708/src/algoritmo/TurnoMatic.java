@@ -238,7 +238,7 @@ public class TurnoMatic {
 			//min fijado para cada 5min
 			empleadosFranja[i]=minMinutos[i];
 			//comprueba si el numero de empleados del departamento es mayor que el minimo de cada franja.
-			if (empleadosFranja[i]-contarEmpleadosMin(cuadrante.getListaTrabajaDia(dia),i,minHorasDia,dia)<listaE.size()) 
+			if (empleadosFranja[i]-contarEmpleadosMin(cuadrante.getListaTrabajaDia(dia),i,minHorasDia,dia)>listaE.size()) 
 				compruebaNumEmpleados=false;
 			else {
 				//al minimo necesario para cada 5min se restan los empleados fijos y rotatorios ya incluidos en el cuadrante
