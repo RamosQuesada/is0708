@@ -604,7 +604,7 @@ public class TurnoMatic {
 				t = t + p.charAt(i); 
 				i++;
 			}
-			if (t != "d")
+			if (!t.equals("d"))
 				turnos.add(Integer.parseInt(t));
 		}
 	}
