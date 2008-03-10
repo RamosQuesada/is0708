@@ -175,6 +175,7 @@ public class TurnoMatic {
 	 * @param cuadAux Cuadrante con los fijos y rotatorios ya incluidos
 	 * @param dispoDia ArrayList de empleados que trabajan el dia para el que se genera el cuadrante 
 	 * @param dia Dia para el que se esta generando el cuadrante
+	 * @return true si es posible generar el cuadrante
 	 */
 	private boolean comprobaciones (/*ArrayList<Trabaja>[]cuadAux, */ArrayList<Empleado> dispoDia, int dia) {
 		Empleado empleado;
@@ -364,6 +365,12 @@ public class TurnoMatic {
 		return hecho;
 	}
 	
+	/**
+	 * Metodo que coloca a los empleados a trabajar en su turno preferido porque el algoritmo vueltas atras no
+	 * encuentra solucion
+	 * @param dispo ArrayList de empleados que trabajan el dia para el que se genera el cuadrante 
+	 * @param dia Dia para el que se esta generando el cuadrante
+	 */
 	public void colocarPreferidos(ArrayList<Empleado> dispo,int dia){
 		for (int i=0;i<dispo.size();i++){
 			ArrayList<Turno> fHoraria = controlador.getListaTurnosContrato (dispo.get(i).getEmplId());
