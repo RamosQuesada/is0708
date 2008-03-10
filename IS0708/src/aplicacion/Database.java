@@ -999,6 +999,28 @@ public class Database extends Thread {
 	}
 	
 	/**
+	 * 
+	 * @param mes
+	 * @param anio
+	 * @return
+	 */
+	public boolean borraMesTrabaja(int mes, int anio){
+		String fechaIni = anio + mes + "0";
+		String fechaFin = anio + mes + "0";
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("DELETE FROM ListaTurnosPorContrato WHERE fecha >=" + fechaIni + "and fecha >=" +
+					fechaFin );
+			correcto = true;
+		} catch (SQLException e) {
+			System.err.println("Error al Borrar el mes de La tabla trabaja");			
+			System.err.println(e.getMessage());			
+		}
+		return correcto;
+	}
+	
+	/**
 	 * Metodo que borra un contrato que pertenecia a un contrato
 	 * @param idContrato	el identificador del contrato a eliminar
 	 * @return	si se ha realizado correctamente la eliminacion

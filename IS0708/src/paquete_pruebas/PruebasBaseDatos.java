@@ -27,6 +27,11 @@ public class PruebasBaseDatos {
 	public static void main(String[] args) {
 		
 		
+		Database db = new Database();
+		db.abrirConexion();
+		db.borraMesTrabaja(6,2008);
+		
+		/*
 		Time t1= new Time(0);
 		Database db = new Database();
 		db.abrirConexion();
@@ -48,6 +53,9 @@ public class PruebasBaseDatos {
 		db.cerrarConexion();
 		//boolean b = db.cambiarContrato(15, 12, "aleatorio14", "1:12", 1, 4000.50, 1);
 		//ArrayList<Mensaje> misMensajes = c.getMensajesEntrantes(12345678, 0, 30);
+		 
+		  
+		 */
 		
 		//db.insertarTrabaja(5336917, 10, "1970-3-12", t1, t1);
 		
