@@ -1,10 +1,10 @@
 package interfaces;
 /*******************************************************************************
- * INTERFAZ I-08.1 :: Creación de empleado
- *   por Daniel Dionne
+ * INTERFAZ I-08.2 :: Edición de empleado
+ *   por Dulce
  *   
- * Interfaz para dar de alta un empleado nuevo.
- * ver 0.1
+ * Interfaz para dar de editar un empleado existente.
+ * ver 0.2
  *******************************************************************************/
 
 import org.eclipse.swt.SWT;
@@ -26,13 +26,15 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ColorDialog;
 
 import aplicacion.Contrato;
+import aplicacion.Database;
 import aplicacion.Util;
 import aplicacion.Vista;
 import aplicacion.Empleado;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
-import java.sql.Date;
+//import java.sql.Date;
 
 // TODO Mostrar elección de rangos inferiores al usuario
 public class I08_1_Editar_empleado {
@@ -98,7 +100,6 @@ public class I08_1_Editar_empleado {
 		final Label  lContrato		= new Label (grupoDer, SWT.LEFT);
 		final Combo  cContrato		= new Combo (grupoDer, SWT.BORDER | SWT.READ_ONLY);
 		final Label  lExperiencia	= new Label (grupoDer, SWT.LEFT);
-		//posible cambio
 		final Combo  cExperiencia	= new Combo (grupoDer, SWT.BORDER | SWT.READ_ONLY);
 		final Label  lDepto			= new Label (grupoDer, SWT.LEFT);
 		final Combo  cDepto			= new Combo (grupoDer, SWT.BORDER | SWT.READ_ONLY);
@@ -167,7 +168,7 @@ public class I08_1_Editar_empleado {
 		
 		// INICIO DE RELLENO DE DATOS
 		
-		Empleado emp=vista.getEmpleado(idVend);		
+		final Empleado emp=vista.getEmpleado(idVend);		
 		tPassword.setText(emp.getPassword());	
 		tEMail.setText(emp.getEmail());		
 		tNombre.setText(emp.getNombre());		
@@ -191,11 +192,9 @@ public class I08_1_Editar_empleado {
 		ArrayList<String> departamentos = vista.getEmpleadoActual().getDepartamentosId();
 		int jj=0;
 		boolean cumple=true;
-		String prueba = emp.getDepartamentoId();
-
+		
 		for (int i=0; i<departamentos.size(); i++) {
 			cDepto.add(departamentos.get(i));
-			String prueba2 = departamentos.get(i);
 
 			if (!emp.getDepartamentoId().equals(departamentos.get(i))&& cumple){
 				jj=jj+1;
@@ -225,10 +224,10 @@ public class I08_1_Editar_empleado {
 		shell.setImage(ico_chico);
 		shell.setImage(ico_chica);
 		
-		shell.setText(bundle.getString("I08_but_NuevoEmpleado"));
+		shell.setText("Editar empleado");
 		shell.setLayout(layout);
 		
-		bGuardar.setText(bundle.getString("Guardar"));
+		bGuardar.setText("Guardar");
 		bGuardar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		
 		bCancelar.setText(bundle.getString("Cancelar"));
@@ -324,7 +323,7 @@ public class I08_1_Editar_empleado {
 					tPassword.selectAll();
 				}
 				// Comprueba la dirección de email (campo no obligatorio)
-				else if (tEMail.getText().length()!=0 && !Util.comprobarEmail(tEMail.getText())) {
+				if (tEMail.getText().length()!=0 && !Util.comprobarEmail(tEMail.getText())) {
 					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
 					messageBox.setText (bundle.getString("Error"));
 					messageBox.setMessage (bundle.getString("I08_err_EmailNoValido"));
@@ -333,19 +332,35 @@ public class I08_1_Editar_empleado {
 					tEMail.setFocus();
 					tEMail.selectAll();
 				}
-			//	else if()
-				// Si todo está bien, inserta el empleado
-				else {
+				// Si se han modificado los campos de datos laborables mostrar mensaje de necesidad de
+				// actualizacion de cuadrante
+				//else if()
+				// Si todo está bien, modifica el empleado
+			
 			//		Empleado emp = new Empleado(vista.getEmpleadoActual().getEmplId(), n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), grupoactual, 0, 0, fechaContrato, fechaAlta, null, cDepto.getText(), null, 0, cIdioma.getSelectionIndex(),0);
+					Database dat=null;
+					
+					try {
+						dat.cambiarEmpleado(idVend, tNombre.getText(), tApell1.getText(), tApell2.getText(), 
+								Util.stringADate(tFNacimiento.getText()), cSexo.getSelectionIndex(), 
+								tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 
+								Util.stringADate(tFContrato.getText()),Util.stringADate(tFAlta.getText()), emp.getFelicidad(), 
+								cIdioma.getSelectionIndex(), emp.getRango(), emp.getTurnoFavorito(), 
+								(int)Integer.valueOf(cContrato.getItem(cContrato.getSelectionIndex())));
+					} catch (NumberFormatException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 
-			//		vista.insertEmpleado(emp);
-					shell.dispose();
+					shell.dispose(); 
 				}
-			}
+			
 		};
 		
-		
-		
+
 		bCancelar.addSelectionListener(sabCancelar);
 		bGuardar.addSelectionListener(sabGuardar);
 
