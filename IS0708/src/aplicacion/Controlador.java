@@ -169,7 +169,7 @@ public class Controlador {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.err
-					.println("Error al obtener el turno de un día en la base de datos");
+					.println("Error al obtener numeros de vendedores de jefes en la base de datos");
 			e.printStackTrace();
 		}
 		return numvendedores;
