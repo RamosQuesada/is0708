@@ -60,14 +60,21 @@ public class Vista {
 	java.util.Queue<ElementoCache> colaEscritura;
 	
 	int INSERTAR = 0;
-	int ACTUALIZAR = 1;
+	int MODIFICAR = 1;
+	int ELIMINAR = 2;
 	private class ElementoCache {
-		public Object o;
-		public int i;
-		String tipo;
+		public Object o; // El objeto a insertar
+		public int i;    // INSERTAR, ACTUALIZAR o ELIMINAR
+		String tipo;     // El tipo de objeto
+		public int id1, id2; // Parámetros especiales para insertar relaciones
 		public ElementoCache(Object o, int i, String tipo) {
 			this.o=o;
 			this.i=i;
+			this.tipo = tipo;
+		}
+		public ElementoCache(int id1, int id2, String tipo) {
+			this.id1 = id1;
+			this.id2 = id2;
 			this.tipo = tipo;
 		}
 	}
@@ -76,21 +83,43 @@ public class Vista {
 		colaEscritura.add(new ElementoCache(o, INSERTAR, tipo));
 	}
 	
-	private void actualizarCache(Object o, String tipo) {
-		colaEscritura.add(new ElementoCache(o, ACTUALIZAR, tipo));
+	private void insertCache(int id1, int id2, String tipo) {
+		colaEscritura.add(new ElementoCache(id1, id2, tipo));
 	}
+
+	private void modifyCache(Object o, String tipo) {
+		colaEscritura.add(new ElementoCache(o, MODIFICAR, tipo));
+	}
+	
+	private void deleteCache(Object o, String tipo) {
+		colaEscritura.add(new ElementoCache(o, ELIMINAR, tipo));
+	}
+	
 	
 	
 	private class CacheUploaderDaemon extends Thread {
 		public void run() {
 			this.setName("Vista.CacheUploaderDaemon");
+			int frac = 0;
+			int prog = 0;
 			while (alive) {
+				
+				if (!colaEscritura.isEmpty()) {
+					frac = 100/colaEscritura.size();
+					prog = 0;
+				}
 				while (!colaEscritura.isEmpty()) {
+					setProgreso("Actualizando base de datos", prog);
+					prog+=frac;
 					ElementoCache e = colaEscritura.poll();
 					if (e.i==INSERTAR) {
-						if (e.tipo.equals("Empleado")) insertEmpleadoDB((Empleado) e.o);
+						if      (e.tipo.equals("Empleado" ))		insertEmpleadoDB((Empleado) e.o);
+						else if (e.tipo.equals("Cuadrante"))		controlador.insertCuadrante((Cuadrante) e.o);
+						else if (e.tipo.equals("Turno")) 			controlador.insertTurno((Turno) e.o);
+						else if (e.tipo.equals("TurnoContrato"))	controlador.insertTurnoPorContrato(e.id1, e.id2);
 					}
 				}
+				setProgreso("", 100);
 				try {
 					sleep(5000);
 				} catch (Exception e) {};
@@ -99,7 +128,6 @@ public class Vista {
 		}
 	}
 	
-	
 	public boolean insertEmpleado(Empleado e) {
 		if (getEmpleado(e.getEmplId())!=null) return false;
 		empleados.add(e);
@@ -107,7 +135,25 @@ public class Vista {
 		return true;
 	}
 	
+	public boolean insertTurno(Turno t) {
+		if (getTurno(t.getIdTurno())!=null) return false;
+		turnos.add(t);
+		insertCache(t, "Turno");
+		return true;
+	}
 	
+	public boolean insertCuadrante(Cuadrante c) {
+		if (getCuadrante(c.getMes(), c.getAnio(), c.getIdDepartamento())!=null) return false;
+		cuadrantes.add(c);
+		insertCache(c, "Cuadrante");
+		return true;
+	}
+	
+	public boolean insertTurnoPorContrato(int idTurno, int idContrato) {
+		insertCache(idTurno, idContrato, "TurnoContrato");
+		return true;
+	}
+
 	/**
 	 * Este hilo conecta con la base de datos.
 	 * 
@@ -557,7 +603,6 @@ public class Vista {
 	 * @return <i>true</i> si el empleado ha sido guardado
 	 */
 	public boolean insertEmpleadoDB(Empleado empleado) {
-		setProgreso("Insertando empleado", 50);
 		boolean b = controlador.insertEmpleado(empleado);
 		int i = 0;
 		while (i < empleado.getDepartamentosId().size() && b) {
@@ -565,13 +610,11 @@ public class Vista {
 					empleado.getDepartamentoId(i));
 			i++;
 		}
-		if (b)
-			setProgreso("Empleado insertado", 100);
-		else
-			setProgreso("No se pudo insertar el empleado", 100);
 		return b;
 	}
 
+
+	
 	public ArrayList<Empleado> getEmpleadosDepartamento(String idDept) {
 		return controlador.getEmpleadosDepartamento(getEmpleadoActual().getEmplId(),idDept);
 	}
@@ -814,10 +857,4 @@ public class Vista {
 		return numeros.contains(text);
 
 	}
-	
-	
-	
-	
-	
-	
 }
