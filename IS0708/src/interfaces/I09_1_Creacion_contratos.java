@@ -36,6 +36,7 @@ public class I09_1_Creacion_contratos {
 	private List listaTurnosContrato;
 	private ArrayList <Turno> turnos;
 	private Contrato contratoInsertado;
+	private Contrato contratoModificado;
 	private ArrayList <Integer> idsTurnosInsertados;
 	private ArrayList <Integer> idsTurnosEliminados;
 	private int turnoInicial;
@@ -464,23 +465,30 @@ public class I09_1_Creacion_contratos {
 					if(response==SWT.OK){
 						Turno t=turnos.get(listaTurnosContrato.getSelectionIndex());
 						int idEliminado=t.getIdTurno();
-						boolean okis=vista.getControlador().eliminaTurno(t);
-						//boolean okis=vista.getControlador().eliminaTurno(27);					
-						if (okis){
-							int index=listaTurnosContrato.getSelectionIndex();
-							idsTurnosEliminados.add(idEliminado);
-							turnos.remove(index);
-							listaTurnosContrato.remove(index);
-							MessageBox messageBox2 = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
+						if (idEliminado==turnoInicial){
+							MessageBox messageBox2 = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_WARNING);
 							messageBox2.setText("Info");
-							messageBox2.setMessage(bundle.getString("I09_elim_Turno"));
+							messageBox2.setMessage(bundle.getString("I09_warn_elim_Turno_ini"));
 							messageBox2.open();
 						}
-						else {
-							MessageBox messageBox2 = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
-							messageBox2.setText(bundle.getString("Error"));
-							messageBox2.setMessage(bundle.getString("I09_err_elim_Turno"));
-							messageBox2.open();
+						else{
+							boolean okis=vista.getControlador().eliminaTurno(t);				
+							if (okis){
+								int index=listaTurnosContrato.getSelectionIndex();
+								idsTurnosEliminados.add(idEliminado);
+								turnos.remove(index);
+								listaTurnosContrato.remove(index);
+								MessageBox messageBox2 = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
+								messageBox2.setText("Info");
+								messageBox2.setMessage(bundle.getString("I09_elim_Turno"));
+								messageBox2.open();
+							}
+							else {
+								MessageBox messageBox2 = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
+								messageBox2.setText(bundle.getString("Error"));
+								messageBox2.setMessage(bundle.getString("I09_err_elim_Turno"));
+								messageBox2.open();
+							}
 						}
 					}
 				}
@@ -496,6 +504,8 @@ public class I09_1_Creacion_contratos {
 		SelectionAdapter sabElegirTurno = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
 				new ElegirTurno(shell);
+				//Contrato c=new Contrato("prueba",0,1000,1,"",1,1);
+				//vista.getControlador().insertContrato(c);
 			}
 		};
 		bElegirTurno.addSelectionListener(sabElegirTurno);
@@ -543,8 +553,12 @@ public class I09_1_Creacion_contratos {
 					shell.dispose();
 				}
 				else{					
-					boolean okis=vista.getControlador().modificarContrato(idContrato, turnoInicial, nombre, patron, longCiclo, sueldo, tipo);					
-					//boolean okis=vista.getControlador().modificarContrato(23, turnoInicial, nombre, patron, longCiclo, sueldo, tipo);
+					boolean okis=vista.getControlador().modificarContrato(idContrato, turnoInicial, nombre, patron, longCiclo, sueldo, tipo);
+					contratoModificado=new Contrato(nombre,idContrato, turnoInicial, longCiclo, patron, sueldo, tipo);
+					for(int i=0;i<idsTurnosEliminados.size();i++){
+						int aux=idsTurnosEliminados.get(i);
+						okis=okis&&vista.getControlador().eliminaTurnoDeContrato(aux);
+					}
 					if (okis){
 						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
 						messageBox.setText("Info");
@@ -552,6 +566,7 @@ public class I09_1_Creacion_contratos {
 						messageBox.open();
 					}
 					else {
+						contratoModificado=null;						
 						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
 						messageBox.setText(bundle.getString("Error"));
 						messageBox.setMessage(bundle.getString("I09_err_modif_Contrato"));
@@ -588,6 +603,10 @@ public class I09_1_Creacion_contratos {
 	
 	public Contrato getContratoInsertado(){
 		return contratoInsertado;
+	}
+	
+	public Contrato getContratoModificado(){
+		return contratoModificado;
 	}
 	
 	public Shell getShell(){

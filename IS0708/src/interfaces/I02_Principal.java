@@ -11,6 +11,7 @@ import org.eclipse.swt.graphics.*;
 
 import aplicacion.Contrato;
 import aplicacion.Empleado;
+import aplicacion.Turno;
 import aplicacion.Util;
 
 import java.util.ResourceBundle;
@@ -519,20 +520,32 @@ public class I02_Principal {
 			public void handleEvent(Event e) {
 				if(tablaContratos.getSelectionIndex()>-1){
 					TableItem it=tablaContratos.getItem(tablaContratos.getSelectionIndex());
-					new I09_1_Creacion_contratos(shell, bundle, vista, 1,
+					I09_1_Creacion_contratos i09c=new I09_1_Creacion_contratos(shell, bundle, vista, 1,
 							Integer.parseInt(it.getText(0)));
+					int index=tablaContratos.getSelectionIndex();
+					while (!i09c.getShell().isDisposed()) {
+				         if (!shell.getDisplay().readAndDispatch()) {
+				             shell.getDisplay().sleep();
+				         }
+				    }
+					Contrato caux=i09c.getContratoModificado();
+					if(caux!=null){					
+						it=tablaContratos.getItem(index);
+						it.setText(2, Integer.toString(caux.getTurnoInicial()));
+						it.setText(3, caux.getNombreContrato());
+						it.setText(4, caux.getPatron());
+						it.setText(5, Integer.toString(caux.getDuracionCiclo()));
+						it.setText(6, Double.toString(caux.getSalario()));
+						it.setText(7, Integer.toString(caux.getTipoContrato()));
+						
+					}
 				} else {
 					MessageBox messageBox = new MessageBox(shell,
 							SWT.APPLICATION_MODAL | SWT.ICON_INFORMATION
 									| SWT.OK | SWT.CANCEL);
 					messageBox.setMessage(bundle
 							.getString("I09_bot_modif_contrato_no_select"));
-					messageBox.open();
-					
-					//HACER QUE ACTUALICE COMO LO HE HECHO EN TURNOS Y MIRAR COMO AFECTA LOS IDSELIMINADOS
-					//NO DEJAR EN BLANCO
-					//AUTORRELLENADO EN MODIFICAR??
-					//CAMBIAR CONTROLADOR POR VISTA
+					messageBox.open();					
 				}
 			}
 		});
@@ -543,10 +556,11 @@ public class I02_Principal {
 					MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_QUESTION | SWT.OK | SWT.CANCEL);
 					messageBox.setMessage (bundle.getString("I09_bot_elim_contrato"));
 					int response=messageBox.open();
-					if(response==SWT.OK){						
-						boolean okis=vista.getControlador().eliminaContrato(tablaContratos.getSelectionIndex());				
-						if (okis){
-							int index=tablaContratos.getSelectionIndex();
+					if(response==SWT.OK){
+						int index=tablaContratos.getSelectionIndex();
+						TableItem tit=tablaContratos.getItem(index);
+						boolean okis=vista.getControlador().eliminaContrato(Integer.valueOf(tit.getText(0)));				
+						if (okis){							
 							tablaContratos.removeAll();
 							contratos.remove(index);
 							for(int i=0;i<contratos.size();i++){
