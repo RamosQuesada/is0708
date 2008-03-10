@@ -182,7 +182,7 @@ public class I10_Nuevo_departamento {
 					shell.dispose();
 					if(tNumber.getText()!=""){
 						//creamos el departamento
-						vista.crearDepartamento(tName.getText(),tNumber.getText(),cmbJefes.getText());
+						//vista.crearDepartamento(tName.getText(),tNumber.getText(),cmbJefes.getText());
 					}else{
 						MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
 						messageBox.setText (bundle.getString("Mensaje"));
