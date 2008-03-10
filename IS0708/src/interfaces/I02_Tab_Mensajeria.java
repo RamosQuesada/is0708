@@ -47,7 +47,7 @@ public class I02_Tab_Mensajeria extends Thread{
 	private int primerMensaje = 0;
 	// Este argumento sirve para que el hilo se ejecute indefinidamente o solo una vez
 	// (para las llamadas puntuales de actualizar, siguientes y anteriores
-
+	
 	private Button bMensAnteriores,bMensSiguientes,bActualizar;
 	
 	public I02_Tab_Mensajeria (TabFolder tabFolder, Vista vista, ResourceBundle bundle) {
@@ -118,6 +118,7 @@ public class I02_Tab_Mensajeria extends Thread{
 //			}	
 //			else 
 //				tItem.setImage(ico_mens);
+			if (remitentes.size()>i)
 			tItem.setText(1, remitentes.get(i));
 			
 			tItem.setText(2, Util.recortarTexto(vista.getMensajesEntrantes().get(i).getAsunto(), prevAsuntoMens));
