@@ -258,7 +258,8 @@ public class I02_Principal {
 				2, 1));
 		bPorSemanas.setSelection(true);
 		
-		ic.setComposite(cCuadrante,bPorMes,bPorSemanas);
+//		ic.setComposite(cCuadrante,bPorMes,bPorSemanas);
+		ic.setCompositeUnTurno(cCuadrante);
 		
 		final Button itsMagic = new Button(cCuadrantes, SWT.PUSH);
 		itsMagic.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 2, 1));
