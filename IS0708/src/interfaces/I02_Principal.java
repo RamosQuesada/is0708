@@ -429,20 +429,18 @@ public class I02_Principal {
 			column.setText(titles[i]);
 		}
 
-		// Luke, usa la vista.
-
 		
-		// Chema creo que la siguiente instrucción es la que hace que tarde tanto.
+		final ArrayList <Contrato> contratos = vista.getListaContratosDepartamento();
 		
-		// ArrayList <Contrato> contratos=vista.getControlador().getListaContratosDpto("DatosFijos");
-		
-		final ArrayList <Contrato> contratos = new ArrayList <Contrato>();
-		contratos.add(new Contrato("perry",23,72,1,"1:d",50,1));
+		//final ArrayList <Contrato> contratos = new ArrayList <Contrato>();
+		//contratos.add(new Contrato("perry",23,72,1,"1:d",50,1));
 		for(int i=0;i<contratos.size();i++){
 			TableItem tItem = new TableItem(tablaContratos, SWT.NONE);
 			Contrato c = contratos.get(i);
 			tItem.setText(0, Integer.toString(c.getNumeroContrato()));
-			ArrayList<Empleado> emp = vista.getControlador().getEmpleados(null,
+			//ArrayList<Empleado> emp = vista.getControlador().getEmpleados(null,
+			//		null, c.getNumeroContrato(), null, null, null, null);
+			ArrayList<Empleado> emp = vista.getEmpleados(null,
 					null, c.getNumeroContrato(), null, null, null, null);
 			String empleados = "";
 			for (int j = 0; j < emp.size(); j++) {
@@ -497,6 +495,7 @@ public class I02_Principal {
 				for(int i=0;i<ids.size();i++){
 					int idt=ids.get(i);
 					if (idt!=c.getTurnoInicial()) 
+						//CAMBIAR cuando este actualizada la vista
 						vista.getControlador().insertTurnoPorContrato(idt, idc);
 				}
 								
@@ -504,7 +503,7 @@ public class I02_Principal {
 					TableItem tItem = new TableItem(tablaContratos, SWT.NONE);
 					Contrato aux = contratos.get(i);
 					tItem.setText(0, Integer.toString(aux.getNumeroContrato()));
-					ArrayList <Empleado> emps=vista.getControlador().getEmpleados(null, null, aux.getNumeroContrato(),null, null, null, null);
+					ArrayList <Empleado> emps=vista.getEmpleados(null, null, aux.getNumeroContrato(),null, null, null, null);
 					String empleados="";
 					for (int j=0;j<emps.size();j++){
 						Empleado emp=emps.get(j);
@@ -567,6 +566,7 @@ public class I02_Principal {
 					if(response==SWT.OK){
 						int index=tablaContratos.getSelectionIndex();
 						TableItem tit=tablaContratos.getItem(index);
+						//CAMBIAR 
 						boolean okis=vista.getControlador().eliminaContrato(Integer.valueOf(tit.getText(0)));
 						okis=okis&&vista.getControlador().eliminaContratoConTurnos(Integer.valueOf(tit.getText(0)));
 						if (okis){							
@@ -576,7 +576,7 @@ public class I02_Principal {
 								TableItem tItem = new TableItem(tablaContratos, SWT.NONE);
 								Contrato aux = contratos.get(i);
 								tItem.setText(0, Integer.toString(aux.getNumeroContrato()));
-								ArrayList <Empleado> emps=vista.getControlador().getEmpleados(null, null, aux.getNumeroContrato(),null, null, null, null);
+								ArrayList <Empleado> emps=vista.getEmpleados(null, null, aux.getNumeroContrato(),null, null, null, null);
 								String empleados="";
 								for (int j=0;j<emps.size();j++){
 									Empleado emp=emps.get(j);

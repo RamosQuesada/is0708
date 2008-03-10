@@ -30,7 +30,6 @@ public class I09_1_Creacion_contratos {
 	private ResourceBundle bundle;
 	private Vista vista;
 	private int modo;
-	//cambiar por tURNO, ahora solo para probar
 	private int idContrato;  // id del contrato a modificar o -1 en caso de nuevo contrato
 	private String patron;
 	private List listaTurnosContrato;
@@ -495,6 +494,7 @@ public class I09_1_Creacion_contratos {
 							messageBox2.open();
 						}
 						else{
+							//CAMBIAR
 							boolean okis=vista.getControlador().eliminaTurno(t);				
 							if (okis){
 								int index=listaTurnosContrato.getSelectionIndex();
@@ -558,6 +558,7 @@ public class I09_1_Creacion_contratos {
 				int tipo = Integer.valueOf(tTipo.getText());
 				if (modo==0){
 					contratoInsertado=new Contrato(nombre,0,turnoInicial,longCiclo,patron,sueldo,tipo);
+					//CAMBIAR
 					int id=vista.getControlador().insertContrato(contratoInsertado);
 					contratoInsertado=new Contrato(nombre,id,turnoInicial,longCiclo,patron,sueldo,tipo);
 					if (id!=-1){
@@ -576,10 +577,12 @@ public class I09_1_Creacion_contratos {
 					shell.dispose();
 				}
 				else{					
+					//CAMBIAR
 					boolean okis=vista.getControlador().modificarContrato(idContrato, turnoInicial, nombre, patron, longCiclo, sueldo, tipo);
 					contratoModificado=new Contrato(nombre,idContrato, turnoInicial, longCiclo, patron, sueldo, tipo);
 					for(int i=0;i<idsTurnosEliminados.size();i++){
 						int aux=idsTurnosEliminados.get(i);
+						//CAMBIAR
 						okis=okis&&vista.getControlador().eliminaTurnoDeContrato(aux,idContrato);
 					}
 					if (okis){
