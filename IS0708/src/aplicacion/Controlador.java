@@ -440,7 +440,10 @@ public class Controlador {
 				String nombrejefe = rs.getString("Nombre");
 				String ap1 = rs.getString("Apellido1");
 				String ap2 = rs.getString("Apellido2");
-				jefes.add(nombrejefe+" "+ap1+" "+ap2);
+				int nv = rs.getInt("NumVendedor");
+				String numvendedoraux = String.valueOf(nv);
+				String numvendedor = aplicacion.Util.completaNumVendedor(numvendedoraux);
+				jefes.add(nombrejefe+" "+ap1+" "+ap2 + "  Nº: "+ numvendedor );
 			}
 		} catch (Exception e) {
 			// TODO: handle exception

@@ -1810,7 +1810,7 @@ public class Database extends Thread {
 		ResultSet r = null;
 		try {
 			st = con.createStatement();
-			r = st.executeQuery("SELECT Nombre, Apellido1, Apellido2 FROM USUARIO WHERE Rango='"+2+"';");
+			r = st.executeQuery("SELECT Nombre, Apellido1, Apellido2, NumVendedor FROM USUARIO WHERE Rango='"+2+"';");
 		} catch (SQLException e) {
 			// TODO: handle exception
 			System.err.println("Error al realizar la consulta de nombres de (posibles) jefes de departamento ");
