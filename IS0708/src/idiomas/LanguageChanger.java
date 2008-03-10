@@ -1,7 +1,11 @@
 package idiomas;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
+/**
+ * Clase que cambia el idioma de la aplicación
+ * @author Carlos Sanchez
+ *
+ */
 public class LanguageChanger {
 	 private Locale currentLocale;
 	 private ResourceBundle labels;
