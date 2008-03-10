@@ -557,7 +557,7 @@ public class I09_1_Creacion_contratos {
 					contratoModificado=new Contrato(nombre,idContrato, turnoInicial, longCiclo, patron, sueldo, tipo);
 					for(int i=0;i<idsTurnosEliminados.size();i++){
 						int aux=idsTurnosEliminados.get(i);
-						okis=okis&&vista.getControlador().eliminaTurnoDeContrato(aux);
+						okis=okis&&vista.getControlador().eliminaTurnoDeContrato(aux,idContrato);
 					}
 					if (okis){
 						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);

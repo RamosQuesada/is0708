@@ -1460,10 +1460,11 @@ public class Controlador {
 	/**
 	 * Elimina el turno introducido del contrato al que pertenecía
 	 * @param idTurno	el id del turno a eliminar
+	 * @param idContrato	el identificador del contrato cuyos turnos se eliminan
 	 * @return	si se ha eliminado correctamente o no
 	 */
-	public boolean eliminaTurnoDeContrato(int idTurno){
-		return _db.borraTurnoDeContrato(idTurno);
+	public boolean eliminaTurnoDeContrato(int idTurno, int idContrato){
+		return _db.borraTurnoDeContrato(idTurno,idContrato);
 	}
 	
 	/**
@@ -1471,7 +1472,7 @@ public class Controlador {
 	 * @param idContrato	el identificador del contrato eliminado
 	 * @return	si se han eliminado los turnos correctamente o no
 	 */
-	public boolean elimina(int idContrato){
+	public boolean eliminaContratoConTurnos(int idContrato){
 		return _db.borraContratoConTurnos(idContrato);
 	}
 	
