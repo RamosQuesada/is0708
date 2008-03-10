@@ -733,6 +733,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				}
 			}
 		}
+		if (fondo!=null)
 		gc.drawImage(fondo,0,0);
 		
 	}

@@ -261,6 +261,7 @@ public class I02_Principal {
 		ic.setComposite(cCuadrante,bPorMes,bPorSemanas);
 		
 		final Button itsMagic = new Button(cCuadrantes, SWT.PUSH);
+		itsMagic.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 2, 1));
 		itsMagic.setText(bundle.getString("I02_but_generarCuadrantes"));
 		itsMagic.addSelectionListener(new SelectionListener() {
 			public void widgetDefaultSelected(SelectionEvent arg0) {}
