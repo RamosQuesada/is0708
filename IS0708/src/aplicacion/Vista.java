@@ -29,7 +29,7 @@ public class Vista {
 	private I02_Principal i02;
 	private boolean alive = true;
 	private LanguageChanger l;
-	private Thread conector, loader;
+	private Thread conector, loader, cacheUploader;
 	private boolean cacheCargada = false;
 	private int num_men_hoja = 10;
 	
@@ -53,6 +53,60 @@ public class Vista {
 	
 	/** Caché local: Cuadrantes del departamento actual */
 	private ArrayList<Cuadrante> cuadrantes = new ArrayList<Cuadrante>();
+	
+	/**
+	 * cola FIFO de inserciones/actualizaciones a realizar en la BD
+	 */
+	java.util.Queue<ElementoCache> colaEscritura;
+	
+	int INSERTAR = 0;
+	int ACTUALIZAR = 1;
+	private class ElementoCache {
+		public Object o;
+		public int i;
+		String tipo;
+		public ElementoCache(Object o, int i, String tipo) {
+			this.o=o;
+			this.i=i;
+			this.tipo = tipo;
+		}
+	}
+	
+	private void insertCache(Object o, String tipo) {
+		colaEscritura.add(new ElementoCache(o, INSERTAR, tipo));
+	}
+	
+	private void actualizarCache(Object o, String tipo) {
+		colaEscritura.add(new ElementoCache(o, ACTUALIZAR, tipo));
+	}
+	
+	
+	private class CacheUploaderDaemon extends Thread {
+		public void run() {
+			this.setName("Vista.CacheUploaderDaemon");
+			while (alive) {
+				while (!colaEscritura.isEmpty()) {
+					ElementoCache e = colaEscritura.poll();
+					if (e.i==INSERTAR) {
+						if (e.tipo.equals("Empleado")) insertEmpleadoDB((Empleado) e.o);
+					}
+				}
+				try {
+					sleep(5000);
+				} catch (Exception e) {};
+
+			}
+		}
+	}
+	
+	
+	public boolean insertEmpleado(Empleado e) {
+		if (getEmpleado(e.getEmplId())!=null) return false;
+		empleados.add(e);
+		insertCache(e, "Empleado");
+		return true;
+	}
+	
 	
 	/**
 	 * Este hilo conecta con la base de datos.
@@ -153,6 +207,7 @@ public class Vista {
 		l = new LanguageChanger();
 		bundle = l.getBundle();
 		locale = l.getCurrentLocale();
+		colaEscritura = new java.util.LinkedList<ElementoCache>();		
 	}
 
 	/**
@@ -163,7 +218,9 @@ public class Vista {
 		login = new I01_Login(shell, bundle, db);
 		conector = new Thread(new Conector());
 		loader = new Thread(new Loader());
+		cacheUploader = new CacheUploaderDaemon();
 		conector.start();
+		cacheUploader.start();
 		boolean identificado = false;
 		while (!identificado) {
 			if (db.conexionAbierta())
@@ -351,6 +408,7 @@ public class Vista {
 	/**
 	 * Obtiene un empleado, dado su número de vendedor o identificador. Primero
 	 * mira en la caché, y si no está, lo coge de la base de datos.
+	 * Si no lo encuentra, devuelve <b>null</b>.
 	 * 
 	 * @param idEmpl
 	 *            el identificador del empleado o número de vendedor
@@ -498,7 +556,7 @@ public class Vista {
 	 *            el empleado a guardar
 	 * @return <i>true</i> si el empleado ha sido guardado
 	 */
-	public boolean insertEmpleado(Empleado empleado) {
+	public boolean insertEmpleadoDB(Empleado empleado) {
 		setProgreso("Insertando empleado", 50);
 		boolean b = controlador.insertEmpleado(empleado);
 		int i = 0;

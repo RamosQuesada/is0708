@@ -246,7 +246,46 @@ public class Empleado implements Drawable {
 		this.turnosStr	= null;
 		this.turnoFavorito = turnoFavorito;
 	}
+/*
+	public Empleado(Empleado e) {
+		this.idSuperior=e.idSuperior;
+		this.idEmpl = e.idEmpl;
+		this.nombre		= e.nombre;
+		this.apellido1	= e.apellido1;
+		this.apellido2	= e.apellido2;
+		this.color		= e.color;
+		this.fechaNac	= e.fechaNac;
+		this.sexo		= e.sexo;
+		this.email		= e.email;
+		this.password	= e.password;
+		this.grupo		= e.grupo;
+		this.rango		= e.rango;
+		this.idContrato	= e.idContrato;
+		this.fContrato	= e.fContrato;
+		this.fAlta		= e.fAlta;
+		idDepartamentos = new ArrayList<String>();
+		for (int i=0; i<e.idDepartamentos.size(); i++)
+			idDepartamentos.add(e.idDepartamentos.get(i));
+		superior 		= e.superior;
+		for (int i=0; i<e.idSubordinados.size(); i++)
+			idSubordinados.add(e.idSubordinados.get(i));
 
+		this.felicidad	= e.felicidad;
+		this.idioma		= e.idioma;
+		this.turnoActual = e.turnoActual;
+		for (int i=0; i<e.turnoE.size(); i++)
+			turnoE.add(new Turno(e.turnoE.get(i)));
+
+		
+		
+		this.turnosStr	= null;
+		this.turnoFavorito = turnoFavorito;
+	}
+	*/
+	
+	public String toString() {
+		return String.valueOf(idEmpl) + getNombreCompleto();
+	}
 	/**
 	 * Devuelve el número de vendedor del superior. Si no tiene, devuelve cero.
 	 * @return
@@ -586,7 +625,7 @@ public class Empleado implements Drawable {
 	 */
 	public Contrato getContrato(Vista v) {
 		actualizarContrato(v);
-		if (contrato==null) System.err.println("No se ha encontrado el contrato. Posible inconsistencia en la BD.");
+		if (contrato==null) System.err.println("No se ha encontrado el contrato de "+ idEmpl +". Posible inconsistencia en la BD.");
 		return contrato;
 	}
 	
