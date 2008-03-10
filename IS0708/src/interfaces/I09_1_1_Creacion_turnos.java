@@ -40,13 +40,14 @@ public class I09_1_1_Creacion_turnos {
 	private Turno turnoInsertado;
 	private Vista vista;
 	private Turno turnoModificado;
-	public I09_1_1_Creacion_turnos(Shell padre, Vista vista, ResourceBundle bundle,int modo,int idTurno, int idContrato) {
+	public I09_1_1_Creacion_turnos(Shell padre, Vista vista, ResourceBundle bundle,int modo,int idTurno, int idContrato, Turno tm) {
 		this.padre = padre;
 		this.bundle = bundle;
 		this.modo=modo;
 		this.idTurno=idTurno;
 		this.idContrato=idContrato;
 		this.vista=vista;
+		turnoModificado=tm;
 		shell = new Shell (padre, SWT.CLOSE | SWT.RESIZE | SWT.APPLICATION_MODAL);
 		mostrarVentana();
 	}
@@ -78,20 +79,14 @@ public class I09_1_1_Creacion_turnos {
 
 // Grupo1 - Nombre
 		grupo1.setLayout(new GridLayout(2,false));
-		//final Label  lNombre	= new Label (grupo1, SWT.LEFT);
-		//final Text   tNombre	= new Text  (grupo1, SWT.BORDER);
-
 		final Label  lDesc		= new Label (grupo1, SWT.LEFT);
 		final Text   tDesc		= new Text  (grupo1, SWT.BORDER);
-
-		//lNombre		.setText(bundle.getString("I09_lab_NombreTurno"));
-		//lNombre		.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,false,true,1,1));
-		//tNombre		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
-		//tNombre		.setToolTipText(bundle.getString("I09_tip_NombreTurno"));
 		lDesc			.setText(bundle.getString("I09_lab_desc_Turno"));
 		lDesc			.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,false,true,1,1));
 		tDesc			.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
 		tDesc			.setToolTipText(bundle.getString("I09_tip_IdTurno"));
+		if (modo==0) tDesc.setText("");
+		else tDesc.setText(turnoModificado.getDescripcion());
 
 // Grupo 2 - Turno
 		GridLayout g = new GridLayout(1,false);

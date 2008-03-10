@@ -398,7 +398,7 @@ public class I02_Principal {
 	 * 
 	 * @param tabFolder
 	 *            el tabFolder donde colocarlo
-	 * @author Daniel Dionne
+	 * @author Jose Maria Martin
 	 */
 	private void crearTabJefeContratos(TabFolder tabFolder) {
 		TabItem tabItemContratos = new TabItem(tabFolder, SWT.NONE);
@@ -651,6 +651,8 @@ public class I02_Principal {
 		bienvenido.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, true,
 				2, 1));
 		bienvenido.setText(bundle.getString("I02_bienvenido"));
+		//Color color = new Color(display,0, 0, 0);
+		//bienvenido.setBackground(color);
 
 		Image logo = new Image(display, I02_Principal.class
 				.getResourceAsStream("LogoTM.jpg"));
@@ -664,8 +666,6 @@ public class I02_Principal {
 		lConfig.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, false, 1,
 				1));
 		lConfig.setText(bundle.getString("I02_configBD"));
-		// lConfig.setText("Pulse el siguiente botón para comprobar y/o cambiar
-		// los parámetros de la base de datos");
 
 		final Button configBD = new Button(cInicio, SWT.PUSH);
 		configBD
@@ -684,7 +684,6 @@ public class I02_Principal {
 		lReset.setLayoutData(new GridData(SWT.CENTER, SWT.BOTTOM, false, false,
 				1, 1));
 		lReset.setText(bundle.getString("I02_resetBD"));
-		// lReset.setText("Pincha este botón para reiniciar la base de datos");
 
 		final Button resetBD = new Button(cInicio, SWT.PUSH);
 		resetBD.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, true, false,
