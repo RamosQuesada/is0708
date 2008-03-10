@@ -58,6 +58,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private Vista vista;
 	private Canvas canvas;
 	private boolean cacheCargada = false;
+	private boolean unTurno = false;
 	
 	// La variable terminadoDeCrear sirve para que una franja nueva no desaparezca al crearla
 	private Boolean diario = true; // 1: muestra cuadrante diario, 0: muestra cuadrante mensual
@@ -118,7 +119,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			this.FichFin=tr.getFichFin();
 			// Aquí hay que hacer una copia del turno
 			Turno t = vista.getTurno(tr.getIdTurno());
-			this.turno= new I_Turno(t);
+			if (t!=null)
+				this.turno= new I_Turno(t);
 					
 		}
 
@@ -237,11 +239,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	}
 	
 	public void setCompositeUnTurno(Composite cCuadrante) {
+		unTurno = true;
 		setComposite(cCuadrante,null,null);
-		iCuad = new ArrayList[1];
-		I_Trabaja i = new I_Trabaja(new Trabaja());
-		i.turno = new I_Turno(0,"","12:00:00","14:00:00","00:00:00",0);
-		iCuad[0].add(i);		
 	}
 	
 	public Turno getTurno() {
@@ -440,7 +439,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					cursor(0);
 					bPorMes.setSelection(false);
 					bPorDia.setSelection(true);
-					setDia(diaActVistaMes+1);
+					//setDia(diaActVistaMes+1);
 					//System.out.println("Dia "+diaActVistaMes);
 					diaValido=false;
 				}
@@ -450,7 +449,6 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		};
 		mouseMoveListenerCuadrMensual = new MouseMoveListener() {
 			public void mouseMove(MouseEvent e) {
-				if (cacheCargada) {
 				//Comprueba si el cursor esta situado sobre algun dia
 				diaValido = false;
 				int dia = 0;
@@ -500,7 +498,6 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				}
 			canvas.redraw();
 			}
-			}
 		};
 
 	canvas.addMouseMoveListener(mouseMoveListenerCuadrDiario);
@@ -544,20 +541,24 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	}
 	
 	public void setDia(int dia){
-		this.dia = dia;
-		if (vista.isCacheCargada()) {
-			cargarCache();
-			redibujar();			
+		if (!unTurno) {
+			this.dia = dia;
+			if (vista.isCacheCargada()) {
+				cargarCache();
+				redibujar();			
+			}
 		}
 	};
 	
 	public void setDia(int dia, int mes, int anio) {
-		this.dia = dia;
-		this.mes = mes;
-		this.anio = anio;
-		if (vista.isCacheCargada()) {
-			cargarCache();
-			redibujar();			
+		if (!unTurno) {
+			this.dia = dia;
+			this.mes = mes;
+			this.anio = anio;
+			if (vista.isCacheCargada()) {
+				cargarCache();
+				redibujar();			
+			}
 		}
 	}
 	
@@ -621,16 +622,19 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	}
 	
 	public void dibujarTurnos(GC gc) {
-		if (!cacheCargada) {
+		if (!unTurno && !cacheCargada) {
 			gc.setForeground(new Color(display, 0,0,0));
 			gc.drawText("Cargando\ndatos...", 5, 5);
 		}
-		else {
+		else if (!unTurno) {
 			for (int i = 0; i < iCuad[dia-1].size(); i++) {
 				// Dibujar el nombre del empleado y el turno
 				String nombre = iCuad[dia-1].get(i).getEmpl().getNombre().charAt(0) + ". " + iCuad[dia-1].get(i).getEmpl().getApellido1();
 				iCuad[dia-1].get(i).getTurno().dibujar(display, nombre, gc, i, vista.getEmpleados().get(i).dameColor() ,margenIzq, margenNombres,margenSup,sep_vert_franjas,alto_franjas,tamHora, tamSubdiv, horaApertura, numSubdivisiones);
 			}
+		}
+		else if (unTurno) {			
+			iCuad[0].get(0).getTurno().dibujar(display, "", gc, 0, null, margenIzq, margenNombres,margenSup,sep_vert_franjas,alto_franjas,tamHora, tamSubdiv, horaApertura, numSubdivisiones);
 		}
 	}
 	
@@ -639,25 +643,16 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			actualizarFondo(gc);
 		gc.drawImage(fondo, 0, 0);
 		if (diaValido){
-			int alto=39;
-			int ancho=91;
+			int alto=25;
 			//Sacamos la informacion del turno
-			int idTurno=iCuad[diaActVistaMes].get(empActVistaMes-1).getTurno().getIdTurno();
-			String descTurno=iCuad[diaActVistaMes].get(empActVistaMes-1).getTurno().getDescripcion();
-			
+			//int idTurno=iCuad[diaActVistaMes-1].get(empActVistaMes-1).getTurno().getIdTurno();
+			//String descTurno=iCuad[diaActVistaMes-1].get(empActVistaMes-1).getTurno().getDescripcion();
 			gc.drawRectangle(margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
-					margenSup+altoFila+((empActVistaMes)*altoFila)-alto,ancho,alto);
-			gc.setBackground(new Color(display,120,170,120));
+					margenSup+altoFila+((empActVistaMes)*altoFila)-alto,anchoDia+10,alto);
+			gc.setBackground(new Color(display,90,140,90));
 			gc.fillRectangle(margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
-					margenSup+altoFila+((empActVistaMes)*altoFila)-alto,ancho,alto);
-			gc.drawText("Id. Turno: "+String.valueOf(idTurno),
-					margenIzq+margenNombres+((diaActVistaMes)*anchoDia)+2,
-					margenSup+altoFila+((empActVistaMes)*altoFila)-alto+2,altoFila);
-			gc.drawText("Desc.: "+descTurno,
-					margenIzq+margenNombres+((diaActVistaMes)*anchoDia)+2,
-					margenSup+altoFila+((empActVistaMes)*altoFila)-(alto-(altoFila+2)),altoFila);
+					margenSup+altoFila+((empActVistaMes)*altoFila)-alto, anchoDia+10,alto);
 			gc.setBackground(new Color(display,255,255,255));
-			//System.out.println(idTurno+" , "+descTurno);
 		}
 	}
 	

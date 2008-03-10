@@ -95,8 +95,6 @@ public class Vista {
 		colaEscritura.add(new ElementoCache(o, ELIMINAR, tipo));
 	}
 	
-	
-	
 	private class CacheUploaderDaemon extends Thread {
 		public void run() {
 			this.setName("Vista.CacheUploaderDaemon");
@@ -602,7 +600,7 @@ public class Vista {
 	 *            el empleado a guardar
 	 * @return <i>true</i> si el empleado ha sido guardado
 	 */
-	public boolean insertEmpleadoDB(Empleado empleado) {
+	private boolean insertEmpleadoDB(Empleado empleado) {
 		boolean b = controlador.insertEmpleado(empleado);
 		int i = 0;
 		while (i < empleado.getDepartamentosId().size() && b) {
