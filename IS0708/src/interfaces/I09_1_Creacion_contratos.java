@@ -57,6 +57,7 @@ public class I09_1_Creacion_contratos {
 		}
 		
 		contratoModificado=cm;
+		//CAMBIAR
 		if(idContrato!=-1) turnos=vista.getControlador().getTurnosDeUnContrato(idContrato);
 		else turnos=new ArrayList <Turno>();
 		idsTurnosInsertados=new ArrayList <Integer>();
@@ -527,8 +528,6 @@ public class I09_1_Creacion_contratos {
 		SelectionAdapter sabElegirTurno = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
 				new ElegirTurno(shell);
-				//Contrato c=new Contrato("prueba",0,1000,1,"",1,1);
-				//vista.getControlador().insertContrato(c);
 			}
 		};
 		bElegirTurno.addSelectionListener(sabElegirTurno);
@@ -607,6 +606,10 @@ public class I09_1_Creacion_contratos {
 		// Listener para el bot�n bCancelar
 		SelectionAdapter sabCancelar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
+					turnos.clear();
+					for (int i=0;i<idsTurnosInsertados.size();i++){
+						vista.getControlador().eliminaTurno(idsTurnosInsertados.get(i));
+					}
 					shell.dispose();
 			}
 		};
