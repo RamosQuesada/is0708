@@ -38,7 +38,7 @@ public class PruebasBaseDatos {
 		Database db = new Database();
 		db.abrirConexion();
 		Controlador c = new Controlador(db, true);
-		ArrayList<String> s = c.getNombreTodosJefes();
+		/*ArrayList<String> s = c.getNombreTodosJefes();
 		System.out.println(s.size());
 		for(int i=0; i<s.size();i++){
 			System.out.println(s.get(i));
@@ -48,6 +48,10 @@ public class PruebasBaseDatos {
 			System.out.println(s.get(i).subSequence(s.get(i).length()-8, s.get(i).length()));
 			
 		}
+		*/
+		
+		String s=c.getInfoJefedeDepartamento("RopaSado");
+		System.out.println(s);
 		db.cerrarConexion();
 		//boolean b = db.cambiarContrato(15, 12, "aleatorio14", "1:12", 1, 4000.50, 1);
 		//ArrayList<Mensaje> misMensajes = c.getMensajesEntrantes(12345678, 0, 30);
