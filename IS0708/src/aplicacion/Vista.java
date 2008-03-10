@@ -735,6 +735,24 @@ public class Vista {
 		this.controlador.insertNumerosDepartamento(n, nombredep); //tabla NumerosDEPARTAMENTOs
 		this.controlador.insertDepartamentoPruebas(nombredep, nvJefe); //tabla DEPARTAMENTO
 	}
+	/**
+	 * Función que nos dice si ya existe ese nombre de departament
+	 * @param text nombre a comparar
+	 * @return
+	 */
+	public boolean existeNombreDepartamento(String text) {
+		// TODO Auto-generated method stub by Carlos Sánchez
+		return false;
+	}
+	/**
+	 * Función que nos dice si ya existe ese número de departamento
+	 * @param text Numero a comparar
+	 * @return
+	 */
+	public boolean existeNumDepartamento(String text) {
+		// TODO Auto-generated method stub by Carlos Sánchez
+		return false;
+	}
 	
 	
 	

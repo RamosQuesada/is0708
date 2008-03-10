@@ -177,11 +177,28 @@ public class I10_Nuevo_departamento {
 				}		
 					*/
 				if(tName.getText()!=""){
-					//cambiamos el nombre
-					System.out.println(tName.getText());
-					shell.dispose();
 					if(tNumber.getText()!=""){
+						if(vista.existeNombreDepartamento(tName.getText())){
+							MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
+							messageBox.setText (bundle.getString("Mensaje"));
+							messageBox.setMessage (bundle.getString("I10_nombre_ya_existe"));
+							e.doit = messageBox.open () == SWT.CLOSE;
+						}else{
+							if(vista.existeNumDepartamento(tNumber.getText())){
+								MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
+								messageBox.setText (bundle.getString("Mensaje"));
+								messageBox.setMessage (bundle.getString("I10_num_ya_existe"));
+								e.doit = messageBox.open () == SWT.CLOSE;
+							}else{
+								//creamos el departamento
+								String numjefe=(cmbJefes.getText().subSequence(cmbJefes.getText().length()-8, cmbJefes.getText().length())).toString();
+								vista.crearDepartamento(tName.getText(),tNumber.getText(),Integer.parseInt(numjefe));
+								shell.dispose();
+							}
+						}
 						//creamos el departamento
+						String numjefe=(cmbJefes.getText().subSequence(cmbJefes.getText().length()-8, cmbJefes.getText().length())).toString();
+						System.out.println(numjefe+" asdasdasd");
 						//vista.crearDepartamento(tName.getText(),tNumber.getText(),cmbJefes.getText());
 					}else{
 						MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
