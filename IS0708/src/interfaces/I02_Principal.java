@@ -200,8 +200,7 @@ public class I02_Principal {
 		cCuadrante.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
 				3, 6));
 
-		
-
+		//TODO
 		final I_Cuadrante ic = new I_Cuadrante(vista, 0, 0, "mi_dep", 4, 9, 23);
 		cDepartamentos.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
@@ -276,7 +275,6 @@ public class I02_Principal {
 		bPorSemanas.setSelection(true);
 		
 		ic.setComposite(cCuadrante,bPorMes,bPorSemanas);
-//		ic.setCompositeUnTurno(cCuadrante);
 		
 		final Button itsMagic = new Button(cCuadrantes, SWT.PUSH);
 		itsMagic.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 2, 1));

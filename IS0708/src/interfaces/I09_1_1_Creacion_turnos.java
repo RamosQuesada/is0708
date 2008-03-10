@@ -97,9 +97,8 @@ public class I09_1_1_Creacion_turnos {
 		grupo2.setLayoutData(gd);
 		
 
-		//turno = new Turno(0,"nuevo turno","9:00:00","19:15:00","14:00:00",2);
-		//turno.anadeGUI(grupo2, 9, 23, 3, true, new Color(grupo2.getDisplay(),80,180,80));
-		//turno.anadeGUI(grupo2, 9, 23, 3, false, new Color(grupo2.getDisplay(),80,180,80));
+		final I_Cuadrante ic = new I_Cuadrante(vista, 0, 0, "mi_dep", 4, 9, 23);
+		ic.setCompositeUnTurno(grupo2);
 		
 		final Button bAceptar	= new Button(shell, SWT.PUSH);
 		final Button bCancelar	= new Button(shell, SWT.PUSH);		
