@@ -981,6 +981,39 @@ public class Database extends Thread {
 		}
 		return correcto;
 	}
+	/**
+	 * Metodo que borra un turno que pertenecia a un contrato
+	 * @param idTurno	el identificador del turno a eliminar
+	 * @return	si se ha realizado correctamente la eliminacion
+	 */
+	public boolean borraTurnoDeContrato(int idTurno){
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("DELETE FROM ListaTurnosPorContrato WHERE IdTurno=" + idTurno);
+			correcto = true;
+		} catch (SQLException e) {
+			System.err.println("Error al Borrar el turno de ListaTurnosPorContrato");
+		}
+		return correcto;
+	}
+	
+	/**
+	 * Metodo que borra un contrato que pertenecia a un contrato
+	 * @param idContrato	el identificador del contrato a eliminar
+	 * @return	si se ha realizado correctamente la eliminacion
+	 */
+	public boolean borraContratoConTurnos(int idContrato){
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("DELETE FROM ListaTurnosPorContrato WHERE IdContrato=" + idContrato);
+			correcto = true;
+		} catch (SQLException e) {
+			System.err.println("Error al Borrar el contrato y sus turnos de ListaTurnosPorContrato");
+		}
+		return correcto;
+	}
 
 	/**
 	 * Método que inserta una incidencia en la base de datos

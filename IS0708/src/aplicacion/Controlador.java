@@ -1457,6 +1457,29 @@ public class Controlador {
 		return _db.insertarTurnoPorContrato(idTurno, idContrato);
 	}
 	
+	/**
+	 * Elimina el turno introducido del contrato al que pertenecía
+	 * @param idTurno	el id del turno a eliminar
+	 * @return	si se ha eliminado correctamente o no
+	 */
+	public boolean eliminaTurnoDeContrato(int idTurno){
+		return _db.borraTurnoDeContrato(idTurno);
+	}
+	
+	/**
+	 * Elimina los turnos asociados al contrato que se ha eliminado
+	 * @param idContrato	el identificador del contrato eliminado
+	 * @return	si se han eliminado los turnos correctamente o no
+	 */
+	public boolean elimina(int idContrato){
+		return _db.borraContratoConTurnos(idContrato);
+	}
+	
+	/**
+	 * Devuelve un turno de la base de datos
+	 * @param id	el identificador del turno 
+	 * @return	el turno solicitado
+	 */
 	public Turno getTurno(int id){
 		ResultSet rs2 = _db.obtenTurno(id);
 		Turno t=null;
