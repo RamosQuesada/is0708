@@ -2,7 +2,7 @@ package aplicacion;
 
 import java.sql.*;
 import java.util.ArrayList;
-
+import java.util.Date;
 import algoritmo.Calendario;
 
 /**
@@ -1444,7 +1444,7 @@ public class Database extends Thread {
 	}
 	
 	public boolean cambiarEmpleado(int idEmp, String nomb, String Ape1, String Ape2, Date FNac, int sexo, 
-			String mail, String Passw, int grupo, Date FCont, Date Fentr, int Extras, int Felic, int Idiom, 
+			String mail, String Passw, int grupo, Date FCont, Date Fentr, int Felic, int Idiom, 
 			int Rang, int Turn, int Contr) {
 	int r = 0;
 	try {
@@ -1455,7 +1455,7 @@ public class Database extends Thread {
 				+ ", Sexo=" + sexo + ", Email=" + mail
 				+ ", Password=" + Passw + ", IndicadorGrupo=" + grupo
 				+ ", FechaContrato=" + FCont + ", FechaEntrada=" + Fentr
-				+ ", HorasExtras=" + Extras + ", Felicidad=" + Felic
+				+ ", Felicidad=" + Felic
 				+ ", Idioma=" + Idiom + ", Rango=" + Rang
 				+ ", IdContrato=" + Contr + ", IdTurno=" + Turn
 				+ " WHERE NumVendedor=" + idEmp + ";");
