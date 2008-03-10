@@ -365,7 +365,7 @@ public class I08_1_Editar_empleado {
 						e2.printStackTrace();
 					}
 					try {
-						dat.cambiarEmpleado(idVend, tNombre.getText(), tApell1.getText(), tApell2.getText(), 
+						dat.cambiarEmpleado(idVend, prr, prr, prr, 
 								Util.stringADate(tFNacimiento.getText()), cSexo.getSelectionIndex(), 
 								tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 
 								Util.stringADate(tFContrato.getText()),Util.stringADate(tFAlta.getText()), emp.getFelicidad(), 
