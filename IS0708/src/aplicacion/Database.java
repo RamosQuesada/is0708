@@ -407,7 +407,7 @@ public class Database extends Thread {
 					+ password + "','" + indicadorGrupo + "','" + fechaContrato
 					+ "','" + fechaEntrada + "','" + horasExtras + "','"
 					+ felicidad + "','" + idioma + "','" + rango + "','"
-					+ idContrato + "','" + idTurno + "' 0)");
+					+ idContrato + "','" + idTurno + "', 0)");
 //			System.out.println("aplicacion.Database.java\t::Usuario insertado");
 			correcto = true;
 		} catch (SQLException e) {
