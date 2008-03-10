@@ -164,10 +164,10 @@ public class TurnoMatic {
 		//ordeno las 2 listas segun la felicidad de los empleados		
 		ArrayList<Empleado> e1=ordenarLista(dispo,1);
 		ArrayList<Empleado> e2=ordenarLista(reser,2);
-		if (comprobaciones(dispo,dia))
+		//if (comprobaciones(dispo,dia))
 			vueltaAtrasMarcaje(e1,e2,0,dia/*,cuadAux*/);
-		else
-			colocarPreferidos(dispo,dia);
+		//else
+			//colocarPreferidos(dispo,dia);
 	}
 	
 	/**
