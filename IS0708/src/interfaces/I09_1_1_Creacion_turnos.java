@@ -138,6 +138,7 @@ public class I09_1_1_Creacion_turnos {
 				String desc = tDesc.getText();
 				if (modo==0){					
 					turnoInsertado = new Turno(0,desc,"10:37:28","10:37:28","10:37:28",0);
+					//CAMBIAR
 					int id=vista.getControlador().insertTurno(turnoInsertado);
 					turnoInsertado = new Turno(id,desc,"10:37:28","10:37:28","10:37:28",0);
 					if (id!=-1){
@@ -158,6 +159,7 @@ public class I09_1_1_Creacion_turnos {
 				}
 				else{
 					Time t=new Time(1000);
+					//CAMBIAR
 					boolean okis=vista.getControlador().modificarTurno(idTurno,desc,t,t,t,0);
 					turnoModificado = new Turno(idTurno,desc,t,t,t,0);
 					if (okis){
