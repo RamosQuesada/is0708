@@ -440,7 +440,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					cursor(0);
 					bPorMes.setSelection(false);
 					bPorDia.setSelection(true);
-					//setDia(diaActVistaMes+1);
+					setDia(diaActVistaMes+1);
 					//System.out.println("Dia "+diaActVistaMes);
 					diaValido=false;
 				}
@@ -450,6 +450,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		};
 		mouseMoveListenerCuadrMensual = new MouseMoveListener() {
 			public void mouseMove(MouseEvent e) {
+				if (cacheCargada) {
 				//Comprueba si el cursor esta situado sobre algun dia
 				diaValido = false;
 				int dia = 0;
@@ -498,6 +499,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					diaValido = false;
 				}
 			canvas.redraw();
+			}
 			}
 		};
 
@@ -637,16 +639,25 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			actualizarFondo(gc);
 		gc.drawImage(fondo, 0, 0);
 		if (diaValido){
-			int alto=25;
+			int alto=39;
+			int ancho=91;
 			//Sacamos la informacion del turno
-			//int idTurno=iCuad[diaActVistaMes-1].get(empActVistaMes-1).getTurno().getIdTurno();
-			//String descTurno=iCuad[diaActVistaMes-1].get(empActVistaMes-1).getTurno().getDescripcion();
+			int idTurno=iCuad[diaActVistaMes].get(empActVistaMes-1).getTurno().getIdTurno();
+			String descTurno=iCuad[diaActVistaMes].get(empActVistaMes-1).getTurno().getDescripcion();
+			
 			gc.drawRectangle(margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
-					margenSup+altoFila+((empActVistaMes)*altoFila)-alto,anchoDia+10,alto);
-			gc.setBackground(new Color(display,90,140,90));
+					margenSup+altoFila+((empActVistaMes)*altoFila)-alto,ancho,alto);
+			gc.setBackground(new Color(display,120,170,120));
 			gc.fillRectangle(margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
-					margenSup+altoFila+((empActVistaMes)*altoFila)-alto, anchoDia+10,alto);
+					margenSup+altoFila+((empActVistaMes)*altoFila)-alto,ancho,alto);
+			gc.drawText("Id. Turno: "+String.valueOf(idTurno),
+					margenIzq+margenNombres+((diaActVistaMes)*anchoDia)+2,
+					margenSup+altoFila+((empActVistaMes)*altoFila)-alto+2,altoFila);
+			gc.drawText("Desc.: "+descTurno,
+					margenIzq+margenNombres+((diaActVistaMes)*anchoDia)+2,
+					margenSup+altoFila+((empActVistaMes)*altoFila)-(alto-(altoFila+2)),altoFila);
 			gc.setBackground(new Color(display,255,255,255));
+			//System.out.println(idTurno+" , "+descTurno);
 		}
 	}
 	
