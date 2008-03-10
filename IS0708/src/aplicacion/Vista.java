@@ -33,6 +33,7 @@ public class Vista {
 	private boolean cacheCargada = false;
 	private int num_men_hoja = 10;
 
+	
 	/**
 	 * Caché local: Lista de empleados que trabajan en el mismo departamento que
 	 * el usuario actual
@@ -663,16 +664,22 @@ public class Vista {
 		setProgreso("Cargando contratos", 50);
 		contratos = controlador.getListaContratosDpto(dep);
 		if (!alive) return;
-		setProgreso("Cargando turnos", 70);
-		turnos = controlador.getListaTurnosEmpleadosDpto(dep);
-		setProgreso("", 100);
 		if (!alive) return;
 		if (tipo == 1) {
+			setProgreso("Cargando turnos", 70);
+			turnos = controlador.getListaTurnosEmpleadosDpto(dep);
+			setProgreso("", 100);
 		} else if (tipo == 2) {
 			ArrayList<String> temp = new ArrayList<String>();
 			temp = controlador.getDepartamentosJefe(numvendedor);
 			for (int i=0; i<temp.size(); i++)
-				departamentosJefe.add(controlador.getDepartamento(temp.get(i)));	
+				departamentosJefe.add(controlador.getDepartamento(temp.get(i)));
+			setProgreso("Cargando turnos", 70);
+			for (int i=0; i<departamentosJefe.size(); i++) {
+				turnos = controlador.getListaTurnosEmpleadosDpto(departamentosJefe.get(i).getNombreDepartamento());
+			}
+			setProgreso("", 100);
+			
 		} else {
 			System.err.println("Vista\t:: Tipo de empleado inválido para cargar la cache.");
 		}
@@ -728,9 +735,9 @@ public class Vista {
 		this.controlador.insertDepartamentoUsuario(nvJefe, nombredep); //tabla DepartamentoUsuario
 		this.controlador.insertNumerosDepartamento(n, nombredep); //tabla NumerosDEPARTAMENTOs
 		this.controlador.insertDepartamentoPruebas(nombredep, nvJefe); //tabla DEPARTAMENTO
-		
-	
 	}
+	
+	
 	
 	
 	
