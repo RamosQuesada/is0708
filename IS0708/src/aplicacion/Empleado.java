@@ -930,10 +930,11 @@ public class Empleado implements Drawable {
 			patron = contrato.getPatron();
 			turnosStr = obtenerTurnos(patron);
 		}
-		diaCiclo = diaCiclo%turnosStr.size();
+		
 		int diaSemanaInicioContrato = fContrato.getDay();
 		if (diaSemanaInicioContrato==0) diaSemanaInicioContrato=7;
-		diaCiclo=diaCiclo+diaSemanaInicioContrato;
+		diaCiclo=diaCiclo+diaSemanaInicioContrato-1;
+		diaCiclo = diaCiclo%turnosStr.size();
 		
 	/*	if((diaCiclo == contrato.getDuracionCiclo()-1) && (hora == numTrozos-1))
 				fContrato.setTime(fechaActual.getTime() + ((dia+1)*milsDia));*/
