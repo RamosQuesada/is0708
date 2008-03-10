@@ -240,6 +240,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	
 	public void setCompositeUnTurno(Composite cCuadrante) {
 		unTurno = true;
+		iCuad = new ArrayList[1];
+		iCuad[0] = new ArrayList<I_Trabaja>();
+		
 		setComposite(cCuadrante,null,null);
 	}
 	
