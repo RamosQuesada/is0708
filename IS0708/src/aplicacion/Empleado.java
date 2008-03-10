@@ -899,17 +899,16 @@ public class Empleado implements Drawable {
 		java.util.Date today;
 		int diaCiclo,n;
 		long difFechas;
-		//Turno tur;
 		boolean encontrado;
 		
 		//cálculo del dia en el que nos encontramos dentro del ciclo.
 		//today = new java.util.Date();
 		//java.sql.Date fechaActual = new java.sql.Date(today.getTime());
-		java.sql.Date fechaActual = new java.sql.Date(anio-1900,mes-1,1);
+		//java.sql.Date fechaActual = new java.sql.Date(anio,mes,0);
+		java.sql.Date fechaActual = new java.sql.Date(anio-1900,mes-1,dia+1);
 		if(fContrato == null)
 			fContrato = new Date(fechaActual.getTime());
 		
-		//ya va!!!!!!!!!!!
 		long milsDia = 24*60*60*1000;
 		difFechas = (fechaActual.getTime()+(dia*milsDia))-(fContrato.getTime());
 		diaCiclo = (int) (difFechas/(milsDia))+1;  		
