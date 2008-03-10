@@ -1193,6 +1193,16 @@ public class Controlador {
 	}
 	
 	/**
+	 * Borra el periodo de un mes indicado por los parámetros de entrada
+	 * @param mes identifica el mes del periodo a borrar
+	 * @param anio identifica el anio del periodo a borrar
+	 * @return si se ha realizado correctamente la eliminacion
+	 */
+	public boolean eliminaMesTrabaja(int mes, int anio){
+		return _db.borraMesTrabaja(mes, anio);
+	}
+	
+	/**
 	 * Elimina un turno en la base de datos.
 	 * 
 	 * @param id   el identificador del turno a eliminar
