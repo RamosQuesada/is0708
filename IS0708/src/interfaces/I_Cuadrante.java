@@ -22,6 +22,7 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -75,6 +76,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	
 	private int diaActVistaMes=0;
 	private boolean diaValido=false;
+	
+	private Button bPorMes;
+	private Button bPorDia;
 	
 	private int movimiento;	
 //	private Boolean creando, terminadoDeCrear;
@@ -230,7 +234,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	}
 	
 	public void setCompositeUnTurno(Composite cCuadrante) {
-		setComposite(cCuadrante);
+		setComposite(cCuadrante,null,null);
 		iCuad = new ArrayList[1];
 		I_Trabaja i = new I_Trabaja(new Trabaja());
 		i.turno = new I_Turno(0,"","12:00:00","14:00:00","00:00:00",0);
@@ -244,8 +248,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	/**
 	 * Configura un composite para mostrar un cuadrante.
 	 */
-	public void setComposite(Composite cCuadrante) {
-		
+	public void setComposite(Composite cCuadrante, Button bPM, Button bPD) {
+		bPorMes=bPM;
+		bPorDia=bPD;
 		cCuadrante.setLayout(new GridLayout(3,false));
 
 		lCuadranteTitulo = new Label (cCuadrante, SWT.LEFT);
@@ -430,11 +435,10 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					diario=true;
 					setMovCuadSemanal(true);
 					cursor(0);
+					bPorMes.setSelection(false);
+					bPorDia.setSelection(true);
 					setDia(diaActVistaMes+1);
-				}
-				else {
-					diario=false;
-					setMovCuadSemanal(false);
+					//System.out.println("Dia "+diaActVistaMes);
 				}
 			};
 			public void mouseUp(MouseEvent e){};
@@ -475,11 +479,16 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					iEmp++;
 				}
 				if (empEncontrado&&diaEncontrado) {
-					//if (empTrabDia(dia,empleados.get(iEmp).getEmplId())) {
+					if (empTrabDia(dia-1,empleados.get(iEmp-1).getEmplId())) {
 						cursor(1);
 						canvas.redraw();
 						diaValido=true;
-					//}
+					}
+					else {
+						cursor(0);
+						canvas.redraw();
+						diaValido=false;
+					}
 				}
 				else {
 					cursor(0);
@@ -659,23 +668,18 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				int k=0;
 				while (!encontrado && k<iCuad[j].size()) {
 					if (iCuad[j].get(k).getEmpl().getEmplId()==e.getEmplId()) {	
+						gc.setBackground(new Color(display,120,170,120));
+						gc.fillRectangle(margenIzq + margenNombres + j*anchoDia+2, margenSup + 20 + i*altoFila+2, anchoDia-2, altoFila-2);
 						if (anchoDia>14)
 							//gc.drawText(String.valueOf(iCuad[j].get(k).getTurno().getAbreviatura().charAt(0)),margenIzq + margenNombres + j*anchoDia + (7/2), margenSup + 20 + i*altoFila + 2,altoFila);
 							gc.drawText(String.valueOf(iCuad[j].get(k).getTurno().getIdTurno()),margenIzq + margenNombres + j*anchoDia + (7/2),margenSup + 20 + i*altoFila + 2,altoFila);
-						else {
-							gc.fillOval(margenIzq + margenNombres + j*anchoDia + 5,margenSup + 20 + i*altoFila + 4,anchoDia-2,altoFila-2);
-						}
+						gc.setBackground(new Color(display,255,255,255));
 						encontrado=true;
 					}
 					k++;
 				}
 			}
 		}
-		
-		// Esto es para un calendario normal
-		int altoMes = alto - margenSup - margenInf;
-		int numSemanas = 5;
-		int altoDia = alto/numSemanas;
 		}
 	}
 	
@@ -835,6 +839,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		while (!encontrado && i<iCuad[dia].size()){
 			if (iCuad[dia].get(i).getEmpl().getEmplId()==idEmpl)
 				encontrado=true;
+			i++;
 		}
 		return encontrado;
 	}
