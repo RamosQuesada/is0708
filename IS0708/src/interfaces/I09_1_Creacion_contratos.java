@@ -42,13 +42,22 @@ public class I09_1_Creacion_contratos {
 	private int turnoInicial;
 	
 	private final int longCicloDefault = 14;
-	public I09_1_Creacion_contratos(Shell padre, ResourceBundle bundle, Vista vista, int modo, int id) {
+	public I09_1_Creacion_contratos(Shell padre, ResourceBundle bundle, Vista vista, int modo, int id, Contrato cm) {
 		this.padre = padre;
 		this.bundle = bundle;
 		this.vista = vista;
 		this.modo = modo;
 		this.idContrato=id;
-		patron=null;
+		if(modo==0){
+			patron="";
+			turnoInicial=0;
+		}
+		else{
+			patron=cm.getPatron();
+			turnoInicial=contratoModificado.getTurnoInicial();
+		}
+		
+		contratoModificado=cm;
 		if(idContrato!=-1) turnos=vista.getControlador().getTurnosDeUnContrato(idContrato);
 		else turnos=new ArrayList <Turno>();
 		idsTurnosInsertados=new ArrayList <Integer>();
@@ -112,7 +121,6 @@ public class I09_1_Creacion_contratos {
 					l = new Label(c1,SWT.NONE);
 				else {
 					l = new Label(c1,SWT.NONE);
-					//l.setText("Turno " + String.valueOf(i+1));
 					l.setText(listaTurnosContrato.getItem(i));
 				}
 				for (int j = 1; j <= longCiclo; j++) {
@@ -308,7 +316,9 @@ public class I09_1_Creacion_contratos {
 		lNombre		.setText(bundle.getString("I09_lab_NombreContrato"));
 		lNombre		.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,false,true,1,1));
 		tContrato	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
-		tContrato	.setToolTipText(bundle.getString("I09_tip_NombreContrato"));
+		tContrato	.setToolTipText(bundle.getString("I09_tip_NombreContrato"));			
+		if (modo==0) tContrato	.setText("");
+		else tContrato.setText(contratoModificado.getNombreContrato());
 
 // Grupo 2 - Turnos
 		grupo2.setLayout(new GridLayout(2,false));
@@ -347,7 +357,8 @@ public class I09_1_Creacion_contratos {
 		tLongCiclo		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,true,1,1));
 		tLongCiclo		.setTextLimit(2);
 		tLongCiclo		.setToolTipText(bundle.getString("I09_tip_LongCiclo"));
-		tLongCiclo		.setText(String.valueOf(longCicloDefault));
+		if (modo==0) tLongCiclo		.setText(String.valueOf(longCicloDefault));
+		else tLongCiclo.setText(String.valueOf(contratoModificado.getDuracionCiclo()));
 		bLCCambiar.setText(bundle.getString("I09_but_Configurar"));
 		bLCCambiar.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,true,1,1));
 
@@ -356,10 +367,14 @@ public class I09_1_Creacion_contratos {
 //Salario y Tipo
 		final Label  lSalario	= new Label (shell, SWT.LEFT);
 		final Text   tSalario	= new Text  (shell, SWT.BORDER);
+		if (modo==0) tSalario.setText(Integer.toString(0));
+		else tSalario.setText(Double.toString(contratoModificado.getSalario()));
 
 		final Label  lTipo		= new Label (shell, SWT.LEFT);
 		final Text   tTipo		= new Text  (shell, SWT.BORDER);
-
+		if (modo==0) tTipo.setText(Integer.toString(1));
+		else tTipo.setText(Integer.toString(contratoModificado.getTipoContrato()));
+		
 		lSalario		.setText(bundle.getString("I09_lab_salario"));
 		lSalario		.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,false,true,1,1));
 		tSalario		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
@@ -465,7 +480,10 @@ public class I09_1_Creacion_contratos {
 					if(response==SWT.OK){
 						Turno t=turnos.get(listaTurnosContrato.getSelectionIndex());
 						int idEliminado=t.getIdTurno();
-						if (idEliminado==turnoInicial){
+						boolean cond=false;
+						if(modo==0) cond=idEliminado==turnoInicial;
+						else cond=idEliminado==contratoModificado.getTurnoInicial();
+						if (cond){
 							MessageBox messageBox2 = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_WARNING);
 							messageBox2.setText("Info");
 							messageBox2.setMessage(bundle.getString("I09_warn_elim_Turno_ini"));
