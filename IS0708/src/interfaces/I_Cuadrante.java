@@ -75,10 +75,14 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private Image fondo;
 	
 	private int diaActVistaMes=0;
+	private int empActVistaMes=0;
 	private boolean diaValido=false;
 	
 	private Button bPorMes;
 	private Button bPorDia;
+	
+	private int altoFila=0;
+	private int anchoDia=0;
 	
 	private int movimiento;	
 	
@@ -474,6 +478,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					// Calculamos la franja vertical de cada empleado
 					if (e.y > (inicioY + altoFilaCont + 1)
 							&& e.y < (inicioY + altoFilaCont + altoFila - 1)) {
+						empActVistaMes = iEmp;
 						empEncontrado = true;
 					}
 					altoFilaCont += altoFila;
@@ -491,6 +496,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					cursor(0);
 					diaValido = false;
 				}
+			canvas.redraw();
 			}
 		};
 
@@ -629,6 +635,17 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		if (fondo==null)
 			actualizarFondo(gc);
 		gc.drawImage(fondo, 0, 0);
+		if (diaValido){
+			//Sacamos la informacion del turno
+			//int idTurno=iCuad[diaActVistaMes-1].get(empActVistaMes-1).getTurno().getIdTurno();
+			//String descTurno=iCuad[diaActVistaMes-1].get(empActVistaMes-1).getTurno().getDescripcion();
+			gc.drawRectangle(margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
+					margenSup+altoFila+((empActVistaMes)*altoFila), anchoDia+10, altoFila+10);
+			gc.setBackground(new Color(display,90,140,90));
+			gc.fillRectangle(margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
+					margenSup+altoFila+((empActVistaMes)*altoFila), anchoDia+10, altoFila+10);
+			gc.setBackground(new Color(display,255,255,255));
+		}
 	}
 	
 	/**
@@ -675,8 +692,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				//System.out.println(c.get(Calendar.DAY_OF_WEEK));
 				//System.out.println(c.toString());
 				int anchoMes = ancho - margenIzq - margenDer - margenNombres;
-				int anchoDia = anchoMes/iCuad.length;
-				int altoFila = 20;
+				anchoDia = anchoMes/iCuad.length;
+				altoFila = 20;
 				// Dibujar números de los días
 				if (anchoDia>14)
 					for (int j=0; j < iCuad.length; j++) {
@@ -689,6 +706,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				ArrayList<Empleado> empleados=vista.getEmpleados();
 				for (int i=0; i < empleados.size(); i++) {
 					aplicacion.Empleado e=empleados.get(i);
+					//if (e.getDepartamentoId()==departamento) {
 					gcFondo.drawText(e.getNombre(), margenIzq, margenSup + 20 + i*altoFila);
 					for (int j=0; j < iCuad.length; j++) {
 						//Primero se pinta el rectangulo
@@ -708,6 +726,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 							}
 							k++;
 						}
+					//}
 					}
 				}
 			}

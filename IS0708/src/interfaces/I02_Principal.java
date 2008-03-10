@@ -243,11 +243,11 @@ public class I02_Principal {
 				if (bPorMes.getSelection()) {
 					ic.setDiario(false);
 					ic.setMovCuadSemanal(false);
-					ic.redibujar();
+					//ic.redibujar();
 				} else {
 					ic.setDiario(true);
 					ic.setMovCuadSemanal(true);
-					ic.redibujar();
+					//ic.redibujar();
 				}
 			}
 		});
