@@ -155,7 +155,27 @@ public class Controlador {
 		return emp;
 
 	}
+	
 
+	public ArrayList<Integer> getNumVendedorTodosJefes() {
+		ArrayList<Integer> numvendedores=new ArrayList<Integer>();
+		ResultSet rs = this._db.obtenTodosNumVendedoresJefes();
+		int nv = 0;
+		try {
+			if (rs.next()) {
+				nv = rs.getInt("NumVendedor");
+				numvendedores.add(nv);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.err
+					.println("Error al obtener el turno de un día en la base de datos");
+			e.printStackTrace();
+		}
+		return numvendedores;
+	}
+	
+	
 	/**
 	 * Método que devuelve los nombres de los departamentos a los que pertenece
 	 * el empleado.
@@ -1656,4 +1676,15 @@ public class Controlador {
 		_db.insertarIssue(text);			
 	}
 
+	
+	public void cambiaNombreDepartamentoUsuario(String NombreAntiguo, String NombreNuevo) {
+		this._db.cambiaNombreDepartamentoUsuario(NombreAntiguo, NombreNuevo);
+	}		
+	
+	public void cambiaNombreNumerosDEPARTAMENTOs(String NombreAntiguo, String NombreNuevo) {
+		
+		this._db.cambiaNombreNumerosDEPARTAMENTOs(NombreAntiguo, NombreNuevo);
+	}		
+	
+	
 }

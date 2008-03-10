@@ -150,8 +150,8 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 			r = st
-					.executeQuery("SELECT NombreDepartamento FROM DepartamentoUsuario WHERE NumVendedor = "
-							+ nvend);
+			.executeQuery("SELECT NombreDepartamento FROM DepartamentoUsuario WHERE NumVendedor = "
+					+ nvend);
 		} catch (SQLException e) {
 			// TODO: handle exception
 			System.err
@@ -1635,6 +1635,38 @@ public class Database extends Thread {
 		}
 		return true;
 	}	
+	
+	public boolean cambiaNombreDepartamentoUsuario(String NombreAntiguo, String NombreNuevo) {
+		int r = 0;
+		try {
+			st = con.createStatement();
+			r = st.executeUpdate("UPDATE DepartamentoUsuario SET NombreDepartamento='"
+					+ NombreNuevo + "'" + " WHERE NombreDepartamento='" + NombreAntiguo + "';");
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			System.err.println("Error Cambiar Nombre del Depto. en la BD");
+			return false;
+		}
+		return true;
+	}	
+	
+	
+	public boolean cambiaNombreNumerosDEPARTAMENTOs(String NombreAntiguo, String NombreNuevo) {
+		int r = 0;
+		try {
+			st = con.createStatement();
+			r = st.executeUpdate("UPDATE NumerosDEPARTAMENTOs SET Nombre='"
+					+ NombreNuevo + "'" + " WHERE Nombre='" + NombreAntiguo + "';");
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			System.err.println("Error Cambiar Nombre del Depto. en la BD");
+			return false;
+		}
+		return true;
+	}		
+	
 
 	public void insertarIssue(String texto) {
 		try {
@@ -1729,5 +1761,18 @@ public class Database extends Thread {
 		}
 		return r;
 	}
+	public ResultSet obtenTodosNumVendedoresJefes() {
+		ResultSet r = null;
+		try {
+			st = con.createStatement();
+			r = st.executeQuery("SELECT NumVendedor FROM USUARIO WHERE Rango='"+2+"';");
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println("Error al realizar la consulta de nombres de (posibles) jefes de departamento ");
+		}
+		return r;
+	}
+	
+	
 
 }
