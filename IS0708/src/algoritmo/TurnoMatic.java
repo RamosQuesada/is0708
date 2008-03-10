@@ -164,10 +164,10 @@ public class TurnoMatic {
 		//ordeno las 2 listas segun la felicidad de los empleados		
 		ArrayList<Empleado> e1=ordenarLista(dispo,1);
 		ArrayList<Empleado> e2=ordenarLista(reser,2);
-		//if (comprobaciones(dispo,dia))
+		if (comprobaciones(dispo,dia))
 			vueltaAtrasMarcaje(e1,e2,0,dia/*,cuadAux*/);
-		//else
-			//colocarPreferidos(dispo,dia);
+		else
+			colocarPreferidos(dispo,dia);
 	}
 	
 	/**
@@ -254,7 +254,10 @@ public class TurnoMatic {
 						int hora=0, aux=0;
 						boolean enc=false;
 						while (aux<24 && !enc) {
-							if (minHorasDia[aux]>0) hora=aux+h;
+							if (minHorasDia[aux]>0) {
+								hora=aux+h;
+								enc=true;
+							}
 							aux++;
 						}
 						if (turnoEmpl.getHoraEntrada().getHours()<=hora && turnoEmpl.getHoraSalida().getHours()>hora &&
@@ -420,17 +423,17 @@ public class TurnoMatic {
 	 * Metodo para contar el numero de empleados que trabajan en 5min concretos indicados por el minuto de inicio 
 	 * contabilizando sólo las horas en las que el departamento esta abierto
 	 * @param lista Lista de trabajadores de un dia
-	 * @param min Minuto de inicio a comprobar
+	 * @param div Division a comprobar
 	 */
-	private int contarEmpleadosMin (ArrayList<Trabaja> lista, int min, int[] minHorasDia,int dia) {
-		int h=min/12; //h nos permite utilizar el array minHoras, es la hora "en punto" a la que pertenece el minuto que buscamos
-		int m=min-h*12; //m es el minuto dentro de la hora h que buscamos
+	private int contarEmpleadosMin (ArrayList<Trabaja> lista, int div, int[] minHorasDia,int dia) {		
+		int h=div/12; //h nos permite utilizar el array minHoras, es la hora "en punto" a la que pertenece el minuto que buscamos
+		int m=div-h*12; //m es el minuto dentro de la hora h que buscamos
 		int hora=0, aux=0;
 		boolean enc=false;
 		while (aux<24 && !enc) {
 			if (minHorasDia[aux]>0) hora=aux+h;
 			aux++;
-		}
+		}		
 		Date fecha=new Date(anio, mes, dia);
 		return contarEmpleadosHora(lista,fecha,hora,m);
 	}
