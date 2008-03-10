@@ -160,24 +160,8 @@ public class I10_Nuevo_departamento {
 		bAccept.addSelectionListener (
 				new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				/*if(integerCheck(tNumber.getText())==true){
-					// TODO Asignar jefe departamento
-					//Empleado jefe = vista.getEmpleado(tNombre.getIdEmpl());
-					//Departamento departamento = new Departamento(tName.getText(),Integer.parseInt(tNumber.getText()),jefe);
-					//vista.insertDepartamento(departamento);
-					//
-					shell.dispose();
-				}else{
-					//show message for user
-					MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
-					messageBox.setText (bundle.getString("Mensaje"));
-					messageBox.setMessage (bundle.getString("I10_err_check_number"));
-					e.doit = messageBox.open () == SWT.CLOSE;
-					System.out.println("Non-integer value in Number field: "+tNumber.getText());
-				}		
-					*/
 				if(tName.getText()!=""){
-					if(tNumber.getText()!=""){
+					if(tNumber.getText()!="" && integerCheck(tNumber.getText())==true){
 						if(vista.existeNombreDepartamento(tName.getText())){
 							MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
 							messageBox.setText (bundle.getString("Mensaje"));
@@ -201,10 +185,17 @@ public class I10_Nuevo_departamento {
 						System.out.println(numjefe+" asdasdasd");
 						//vista.crearDepartamento(tName.getText(),tNumber.getText(),cmbJefes.getText());
 					}else{
-						MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
-						messageBox.setText (bundle.getString("Mensaje"));
-						messageBox.setMessage (bundle.getString("I10_err_string_vacio"));
-						e.doit = messageBox.open () == SWT.CLOSE;
+						if(tNumber.getText()==""){
+							MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
+							messageBox.setText (bundle.getString("Mensaje"));
+							messageBox.setMessage (bundle.getString("I10_err_string_vacio"));
+							e.doit = messageBox.open () == SWT.CLOSE;
+						}else{//si no es integer
+							MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
+							messageBox.setText (bundle.getString("Mensaje"));
+							messageBox.setMessage (bundle.getString("I10_err_check_number"));
+							e.doit = messageBox.open () == SWT.CLOSE;
+						}
 					}
 				}else{//si no se ha metido texto
 					MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
