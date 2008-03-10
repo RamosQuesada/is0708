@@ -680,7 +680,10 @@ public class Vista {
 
 	public void cambiarNombreDepartamento(String NombreAntiguo, String NombreNuevo) {
 		// TODO Auto-generated method stub
+//se modifica el nombre del Dpto. en las 3 tablas de Departamentos
 		this.controlador.cambiaNombreDpto(NombreAntiguo, NombreNuevo);
+		this.controlador.cambiaNombreDepartamentoUsuario(NombreAntiguo, NombreNuevo);
+		this.controlador.cambiaNombreNumerosDEPARTAMENTOs(NombreAntiguo, NombreNuevo);
 	}
 	
 	
@@ -692,17 +695,21 @@ public class Vista {
 		return contratos;
 	}
 	/**
-	 * Funcion que devuelve todos los nombres de los jefes
-	 * que pueden ser jefes de departamento
+	 * Funcion que devuelve todos los nombres completos (nombre+apellidos)
+	 *  de los empleados que pueden ser jefes de departamento
 	 * @return Nombres de los jefes
 	 */
 	public ArrayList<String> getNombreTodosJefes() {
-		// TODO Auto-generated method stub by Carlos Sánchez
-	//OJO: te devuelvo los usuarios con rango=2 de jefes, lo que 
-	// no estoy seguro es de si los de rango 1 (empleados) tambien pueden serlo o no
-	// en caso de que aumenten de rango.	
 		return this.controlador.getNombreTodosJefes();
 	}
+
+
+	public ArrayList<Integer> getNumVendedorTodosJefes() {
+		return this.controlador.getNumVendedorTodosJefes();
+	}
+	
+	
+	
 	/**
 	 * Funcion que incluye en la BBDD un nuevo departamento
 	 * @param nombredep Nombre del departamento
@@ -724,4 +731,8 @@ public class Vista {
 		
 	
 	}
+	
+	
+	
+	
 }
