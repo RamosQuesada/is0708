@@ -32,7 +32,6 @@ public class Vista {
 	private Thread conector, loader;
 	private boolean cacheCargada = false;
 	private int num_men_hoja = 10;
-
 	
 	/**
 	 * Caché local: Lista de empleados que trabajan en el mismo departamento que
