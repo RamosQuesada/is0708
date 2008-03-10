@@ -180,7 +180,7 @@ public class I02_Principal {
 		// NO_BACKGROUND + doble buffer para evitar parpadeo
 		final Composite cCuadrante = new Composite(cCuadrantes, SWT.BORDER);
 		cCuadrante.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
-				3, 5));
+				3, 6));
 
 		
 
@@ -258,6 +258,26 @@ public class I02_Principal {
 		bPorSemanas.setSelection(true);
 		
 		ic.setComposite(cCuadrante,bPorMes,bPorSemanas);
+		
+		final Button itsMagic = new Button(cCuadrantes, SWT.PUSH);
+		itsMagic.setText(bundle.getString("I02_but_generarCuadrantes"));
+		itsMagic.addSelectionListener(new SelectionListener() {
+			public void widgetDefaultSelected(SelectionEvent arg0) {}
+			public void widgetSelected(SelectionEvent arg0) {
+				MessageBox messageBox = new MessageBox(shell,
+						SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
+				messageBox.setText(bundle.getString("Aviso"));
+				messageBox.setMessage(
+						bundle.getString("I02_dlg_CrearCuadrante1") 
+						+ calendario.getMonth() + "/"
+						+ calendario.getYear() + " " +
+						bundle.getString("I02_dlg_CrearCuadrante2"));
+				if (messageBox.open()==SWT.YES) {
+					algoritmo.TurnoMatic t = new algoritmo.TurnoMatic(calendario.getMonth(), calendario.getYear(),vista.getControlador(), cDepartamentos.getText());
+					t.ejecutaAlgoritmo();
+				}
+			}
+		});
 	}
 
 	/**
