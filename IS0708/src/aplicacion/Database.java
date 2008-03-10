@@ -986,11 +986,12 @@ public class Database extends Thread {
 	 * @param idTurno	el identificador del turno a eliminar
 	 * @return	si se ha realizado correctamente la eliminacion
 	 */
-	public boolean borraTurnoDeContrato(int idTurno){
+	public boolean borraTurnoDeContrato(int idTurno, int idContrato){
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("DELETE FROM ListaTurnosPorContrato WHERE IdTurno=" + idTurno);
+			st.executeUpdate("DELETE FROM ListaTurnosPorContrato WHERE IdTurno=" + idTurno 
+							 + " and IdContrato= "+ idContrato);
 			correcto = true;
 		} catch (SQLException e) {
 			System.err.println("Error al Borrar el turno de ListaTurnosPorContrato");

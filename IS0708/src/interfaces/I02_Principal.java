@@ -481,7 +481,6 @@ public class I02_Principal {
 			      }
 				Contrato c=i09.getContratoInsertado();
 				if (c!=null){
-				//Turno t=new Turno(26,"chusta","10:37:28","10:37:28","10:37:28",0);
 				contratos.add(c);	
 				tablaContratos.removeAll();
 				ArrayList <Integer> ids=i09.getTurnosInsertados();
@@ -559,7 +558,8 @@ public class I02_Principal {
 					if(response==SWT.OK){
 						int index=tablaContratos.getSelectionIndex();
 						TableItem tit=tablaContratos.getItem(index);
-						boolean okis=vista.getControlador().eliminaContrato(Integer.valueOf(tit.getText(0)));				
+						boolean okis=vista.getControlador().eliminaContrato(Integer.valueOf(tit.getText(0)));
+						okis=okis&&vista.getControlador().eliminaContratoConTurnos(Integer.valueOf(tit.getText(0)));
 						if (okis){							
 							tablaContratos.removeAll();
 							contratos.remove(index);
