@@ -379,7 +379,7 @@ public class I02_Principal {
 		Composite cInfo = new Composite(cDepartamentos, SWT.BORDER);
 		cInfo.setLayout(new GridLayout(2, false));
 		cInfo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
-		final Label lContenido = new Label(cInfo, SWT.CENTER);
+		final Text lContenido = new Text(cInfo, SWT.CENTER & SWT.READ_ONLY & SWT.WRAP);
 		lContenido.setText("Aquí va información del departamento");
 		lContenido.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true,
 				true, 2, 1));
@@ -387,8 +387,6 @@ public class I02_Principal {
 		//listener para el combo y mostrar la info debajo
 		cmbDepartamentos.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				System.out
-						.println("Cambiado posicion tab");
 				lContenido.setText(cmbDepartamentos.getText());
 			}
 		});
