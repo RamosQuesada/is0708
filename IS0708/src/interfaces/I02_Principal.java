@@ -191,8 +191,6 @@ public class I02_Principal {
 			}
 		});
 
-		ic.setComposite(cCuadrante);
-
 		Label lCalendario = new Label(cCuadrantes, SWT.LEFT);
 		lCalendario.setText(bundle.getString("Calendario"));
 		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
@@ -258,6 +256,8 @@ public class I02_Principal {
 		bPorSemanas.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false,
 				2, 1));
 		bPorSemanas.setSelection(true);
+		
+		ic.setComposite(cCuadrante,bPorMes,bPorSemanas);
 	}
 
 	/**
