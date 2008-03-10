@@ -150,7 +150,7 @@ public class TurnoMatic {
 			colocaNoFijos(dispoDia, reserDia, emplDia, i/*, cu*/);//se colocan para cada dia i del mes 
 		}
 		
-		//controlador.insertCuadrante(cuadrante);
+		controlador.insertCuadrante(cuadrante);
 		return this.cuadrante;
 	}
 	
@@ -225,8 +225,6 @@ public class TurnoMatic {
 		cuenta que ya han sido incluidos los fijos y rotatorios en el cuadrante.*/
 		int[] empleadosFranja=new int[div]; 
 		
-		ArrayList<Turno> turnosEmpleado;
-		Turno turnoEmpl;
 		/*comprueba si el numero de empleados fijos y rotatorios (ya incluidos en el cuadrante) 
 		es suficiente para cubrir las necesidades de los minimos*/ 
 		for (int i=0;i<div;i++) {
@@ -244,10 +242,15 @@ public class TurnoMatic {
 					for (int k=0;k<dispoDia.size();k++) {
 						if (empleadosFranja[i]>0) {
 							empleado=dispoDia.get(k);	
-							turnosEmpleado=controlador.getListaTurnosContrato(empleado.getEmplId());
+/**/						Contrato c = buscaContrato(empleado.getContratoId(), contratosDep);
+							ArrayList<Integer> turnosEmpl = obtenerTurnosContrato(c.getPatron());
+							ArrayList<Turno> turnosEmpleado = new ArrayList<Turno>();
+							for (int l=0; l<turnosEmpl.size(); l++)
+								turnosEmpleado.add(buscaTurno(turnosEmpl.get(l), turnosDep));
+//							ArrayList<Turno> turnosEmpleado=controlador.getListaTurnosContrato(empleado.getEmplId());
 							for (int l=0;l<turnosEmpleado.size();l++) {
 								if (empleadosFranja[i]>0) {
-									turnoEmpl=turnosEmpleado.get(l);
+									Turno turnoEmpl=turnosEmpleado.get(l);
 									int h=i/12; //h nos permite utilizar el array minHoras, es la hora "en punto" a la que pertenece el minuto que buscamos
 									int min=(i-h*12)*5; //min es el minuto dentro de la hora h que buscamos
 									int hora=0, aux=0;
@@ -322,7 +325,12 @@ public class TurnoMatic {
 	private boolean vueltaAtrasMarcaje (ArrayList<Empleado> dispo, ArrayList<Empleado> reser, int k, int dia/*, ArrayList<Trabaja>[] cuadAux*/){
 		/*fHoraria es un ArrayList con todos los turnos en los que puede trabajar el empleado situado en la 
 		 posición k de disponibles*/
-		ArrayList<Turno> fHoraria = controlador.getListaTurnosContrato (dispo.get(k).getEmplId());
+/**/	Contrato c = buscaContrato(dispo.get(k).getContratoId(), contratosDep);
+		ArrayList<Integer> turnosEmpl = obtenerTurnosContrato(c.getPatron());
+		ArrayList<Turno> fHoraria = new ArrayList<Turno>();
+		for (int j=0; j<turnosEmpl.size(); j++)
+			fHoraria.add(buscaTurno(turnosEmpl.get(j), turnosDep));
+//		ArrayList<Turno> fHoraria = controlador.getListaTurnosContrato (dispo.get(k).getEmplId());
 		int tFavorito = dispo.get(k).getTurnoFavorito(); //turno favorito del empleado
 		int i=0;
 		boolean enc=false;
@@ -373,7 +381,12 @@ public class TurnoMatic {
 	 */
 	public void colocarPreferidos(ArrayList<Empleado> dispo,int dia){
 		for (int i=0;i<dispo.size();i++){
-			ArrayList<Turno> fHoraria = controlador.getListaTurnosContrato (dispo.get(i).getEmplId());
+/**/		Contrato c = buscaContrato(dispo.get(i).getContratoId(), contratosDep);
+			ArrayList<Integer> turnosEmpl = obtenerTurnosContrato(c.getPatron());
+			ArrayList<Turno> fHoraria = new ArrayList<Turno>();
+			for (int j=0; j<turnosEmpl.size(); j++)
+				fHoraria.add(buscaTurno(turnosEmpl.get(j), turnosDep));
+//			ArrayList<Turno> fHoraria = controlador.getListaTurnosContrato (dispo.get(i).getEmplId());
 			int tFavorito = dispo.get(i).getTurnoFavorito(); //turno favorito del empleado
 			int n=0;
 			boolean enc=false;
@@ -550,6 +563,50 @@ public class TurnoMatic {
 			n++;
 		}
 		return t;
+	}
+	
+	private ArrayList<Integer> obtenerTurnosContrato(String p){
+		
+		ArrayList<Integer> turnos = new ArrayList<Integer>();
+		
+		String tiempo;
+		String tipo;
+		int k = 0;
+		
+		for (int i=0; i<p.length(); i++)
+		{
+			tipo = "";
+			while (p.charAt(i) != ':')
+			{ 
+				i++;
+			}
+			i++; 
+			while ((i<p.length())&&(p.charAt(i) != '/'))
+			{
+				tipo = tipo + p.charAt(i);
+				i++;
+			}
+			obtenerTurnosContratoAux(turnos, tipo);
+		}		
+		return turnos;
+	}
+	
+	private void obtenerTurnosContratoAux(ArrayList<Integer> turnos, String p){
+		
+		String t;
+		
+		for (int i=0; i<p.length(); i++)
+		{
+			t = "";
+			while ((i<p.length()) && (p.charAt(i) != ',')
+					)
+			{
+				t = t + p.charAt(i); 
+				i++;
+			}
+			if (t != "d")
+				turnos.add(Integer.parseInt(t));
+		}
 	}
 
 //---------------------------------------------------------------------------------
