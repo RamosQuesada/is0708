@@ -96,8 +96,8 @@ public class I09_1_1_Creacion_turnos {
 		grupo2.setLayout(g);
 		grupo2.setLayoutData(gd);
 		
-
-		final I_Cuadrante ic = new I_Cuadrante(vista, 0, 0, "mi_dep", 4, 9, 23);
+		// TODO Coger hora de apertura y cierre del departamento
+		final I_Cuadrante ic = new I_Cuadrante(vista, 0, 0, "", 4, 9, 23);
 		ic.setCompositeUnTurno(grupo2);
 		
 		final Button bAceptar	= new Button(shell, SWT.PUSH);
