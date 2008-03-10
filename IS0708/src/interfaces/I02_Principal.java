@@ -372,7 +372,7 @@ public class I02_Principal {
 		bNew.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				// System.out.println("I02 :: Pulsado Nuevo Departamento");
-				new I10_Nuevo_departamento(shell,bundle,vista);
+				new I10_Nuevo_departamento(shell,bundle,vista,cmbDepartamentos);
 			}
 		});
 
@@ -1230,7 +1230,7 @@ public class I02_Principal {
 				System.out.println("Ventas totales out");
 			}
 		});
-
+//
 		final Button bVentasPTiempo = new Button(cEstIzq, SWT.RADIO);
 		bVentasPTiempo.setText(this.bundle.getString("ventaspertime"));
 		bVentasPTiempo.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false,
@@ -1648,4 +1648,5 @@ public class I02_Principal {
 			});
 		}
 	}
+
 }

@@ -44,12 +44,14 @@ public class I10_Nuevo_departamento {
 
 	private ResourceBundle bundle;
 	private I13_Elegir_empleado tNombre;
+	private Combo father;
 	
 	/** Constructor for new department */
-	public I10_Nuevo_departamento(Shell padre, ResourceBundle bundle, Vista vista) {
+	public I10_Nuevo_departamento(Shell padre, ResourceBundle bundle, Vista vista,Combo father) {
 		this.padre = padre;
 		this.bundle = bundle;
 		this.vista = vista;
+		this.father = father;
 		createWindow();
 	}
 
@@ -177,7 +179,8 @@ public class I10_Nuevo_departamento {
 								//creamos el departamento
 								String numjefe=(cmbJefes.getText().subSequence(cmbJefes.getText().length()-8, cmbJefes.getText().length())).toString();
 								vista.crearDepartamento(tName.getText(),tNumber.getText(),Integer.parseInt(numjefe));
-								shell.dispose();
+								father.add(tName.getText());
+								shell.dispose();					
 							}
 						}
 					}else{
