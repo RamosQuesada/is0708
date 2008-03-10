@@ -440,7 +440,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					cursor(0);
 					bPorMes.setSelection(false);
 					bPorDia.setSelection(true);
-					setDia(diaActVistaMes+1);
+					//setDia(diaActVistaMes+1);
 					//System.out.println("Dia "+diaActVistaMes);
 					diaValido=false;
 				}
@@ -637,14 +637,15 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			actualizarFondo(gc);
 		gc.drawImage(fondo, 0, 0);
 		if (diaValido){
+			int alto=25;
 			//Sacamos la informacion del turno
 			//int idTurno=iCuad[diaActVistaMes-1].get(empActVistaMes-1).getTurno().getIdTurno();
 			//String descTurno=iCuad[diaActVistaMes-1].get(empActVistaMes-1).getTurno().getDescripcion();
 			gc.drawRectangle(margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
-					margenSup+altoFila+((empActVistaMes)*altoFila), anchoDia+10, altoFila+10);
+					margenSup+altoFila+((empActVistaMes)*altoFila)-alto,anchoDia+10,alto);
 			gc.setBackground(new Color(display,90,140,90));
 			gc.fillRectangle(margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
-					margenSup+altoFila+((empActVistaMes)*altoFila), anchoDia+10, altoFila+10);
+					margenSup+altoFila+((empActVistaMes)*altoFila)-alto, anchoDia+10,alto);
 			gc.setBackground(new Color(display,255,255,255));
 		}
 	}
