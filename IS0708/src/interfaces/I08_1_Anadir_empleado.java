@@ -23,6 +23,8 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ColorDialog;
+
+import aplicacion.Contrato;
 import aplicacion.Util;
 import aplicacion.Vista;
 import aplicacion.Empleado;
@@ -39,6 +41,7 @@ public class I08_1_Anadir_empleado {
 	private Date fechaContrato;
 	private Date fechaAlta;
 	private Date fechaNacimiento;
+	private ArrayList<Contrato> contratos;
 	//http://java.sun.com/j2se/1.4.2/docs/api/java/util/GregorianCalendar.html 
 	public I08_1_Anadir_empleado(Shell padre, ResourceBundle bundle, Vista vista) {
 		this.padre = padre;
@@ -47,6 +50,7 @@ public class I08_1_Anadir_empleado {
 		fechaContrato = new Date(0);
 		fechaAlta = new Date(0);
 		fechaNacimiento = new Date(0);
+		contratos = vista.getListaContratosDepartamento();
 		mostrarVentana();
 	}
 	
@@ -163,9 +167,12 @@ public class I08_1_Anadir_empleado {
 		cIdioma.setItems (new String [] {	bundle.getString("esp"),
 											bundle.getString("eng"),
 											bundle.getString("pol")});
-		cContrato.setItems (new String [] {"6:40", "Dias sueltos"});
+		
 		cExperiencia.setItems (new String [] {	bundle.getString("Principiante"),
 												bundle.getString("Experto")});
+		
+		for (int i=0; i<contratos.size(); i++)
+			cContrato.add(contratos.get(i).getNombreContrato());
 		
 		ArrayList<String> departamentos = vista.getEmpleadoActual().getDepartamentosId();
 		for (int i=0; i<departamentos.size(); i++) {
@@ -306,7 +313,17 @@ public class I08_1_Anadir_empleado {
 				}
 				// Si todo está bien, inserta el empleado
 				else {
-					Empleado emp = new Empleado(vista.getEmpleadoActual().getEmplId(), n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, 0, fechaContrato, fechaAlta, null, cDepto.getText(), null, 0, cIdioma.getSelectionIndex(),0);
+					String cont = cContrato.getText();
+					int id=0;
+					
+					for (int i=0; i<contratos.size(); i++) {
+						String nombre = contratos.get(i).getNombreContrato();
+						if (cont.equals(nombre)) {
+							id = contratos.get(i).getNumeroContrato();
+							break;
+						}
+					}
+					Empleado emp = new Empleado(vista.getEmpleadoActual().getEmplId(), n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, id, fechaContrato, fechaAlta, null, cDepto.getText(), null, 0, cIdioma.getSelectionIndex(),0);
 					vista.insertEmpleado(emp);
 					shell.dispose();
 				}
