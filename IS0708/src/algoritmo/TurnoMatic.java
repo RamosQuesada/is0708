@@ -150,7 +150,6 @@ public class TurnoMatic {
 			colocaNoFijos(dispoDia, reserDia, emplDia, i/*, cu*/);//se colocan para cada dia i del mes 
 		}
 		
-//		cuadrante.setCuad(cu);
 		//controlador.insertCuadrante(cuadrante);
 		return this.cuadrante;
 	}
@@ -165,7 +164,10 @@ public class TurnoMatic {
 		//ordeno las 2 listas segun la felicidad de los empleados		
 		ArrayList<Empleado> e1=ordenarLista(dispo,1);
 		ArrayList<Empleado> e2=ordenarLista(reser,2);
-		vueltaAtrasMarcaje(e1,e2,0,dia/*,cuadAux*/);
+		if (comprobaciones(dispo,dia))
+			vueltaAtrasMarcaje(e1,e2,0,dia/*,cuadAux*/);
+		else
+			colocarPreferidos(dispo,dia);
 	}
 	
 	/**
@@ -174,7 +176,7 @@ public class TurnoMatic {
 	 * @param dispoDia ArrayList de empleados que trabajan el dia para el que se genera el cuadrante 
 	 * @param dia Dia para el que se esta generando el cuadrante
 	 */
-	private boolean comprobaciones (ArrayList<Trabaja>[]cuadAux, ArrayList<Empleado> dispoDia, int dia) {
+	private boolean comprobaciones (/*ArrayList<Trabaja>[]cuadAux, */ArrayList<Empleado> dispoDia, int dia) {
 		Empleado empleado;
 		/*compruebaNumEmpleados sera false si para alguna franja horaria se necesita un minimo de 
 		empleados superior al numero de empleados de que disponemos.*/  
@@ -235,11 +237,11 @@ public class TurnoMatic {
 			//min fijado para cada 5min
 			empleadosFranja[i]=minMinutos[i];
 			//comprueba si el numero de empleados del departamento es mayor que el minimo de cada franja.
-			if (empleadosFranja[i]-contarEmpleadosMin(cuadAux[dia],i,minHorasDia,dia)<listaE.size()) 
+			if (empleadosFranja[i]-contarEmpleadosMin(cuadrante.getListaTrabajaDia(dia),i,minHorasDia,dia)<listaE.size()) 
 				compruebaNumEmpleados=false;
 			else {
 				//al minimo necesario para cada 5min se restan los empleados fijos y rotatorios ya incluidos en el cuadrante
-				empleadosFranja[i]=empleadosFranja[i]-contarEmpleadosMin(cuadAux[dia],i,minHorasDia,dia);
+				empleadosFranja[i]=empleadosFranja[i]-contarEmpleadosMin(cuadrante.getListaTrabajaDia(dia),i,minHorasDia,dia);
 				//se resta cada empleado en cada una de las divisiones de 5min en las que hay posibilidad de que trabaje en cualquiera de sus turnos
 				for (int k=0;k<dispoDia.size();k++) {
 					empleado=dispoDia.get(k);	
@@ -360,6 +362,22 @@ public class TurnoMatic {
 			fHoraria.remove(0);
 		}
 		return hecho;
+	}
+	
+	public void colocarPreferidos(ArrayList<Empleado> dispo,int dia){
+		for (int i=0;i<dispo.size();i++){
+			ArrayList<Turno> fHoraria = controlador.getListaTurnosContrato (dispo.get(i).getEmplId());
+			int tFavorito = dispo.get(i).getTurnoFavorito(); //turno favorito del empleado
+			int n=0;
+			boolean enc=false;
+			while (n<fHoraria.size() && !enc) {
+				if (fHoraria.get(n).getIdTurno()==tFavorito) enc=true;
+				else n++;
+			}
+			Turno franjaHoraria=fHoraria.get(n);
+			ponerEmpleado (dispo.get(i), franjaHoraria.getHoraEntrada(), franjaHoraria.getHoraSalida(), franjaHoraria, /*cuadAux[*/dia/*]*/);
+			dispo.get(i).setFelicidad(dispo.get(i).getFelicidad()+1);
+		}
 	}
 
 	/**
