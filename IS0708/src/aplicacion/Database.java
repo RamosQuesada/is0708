@@ -503,7 +503,7 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 			st.executeUpdate("INSERT INTO NumerosDEPARTAMENTOs values ('"
-					+ numero + "', '" + nombre + "')");
+					+ nombre + "', '" + numero + "')");
 			System.out
 					.println("aplicacion.Database.java\t::Departamento insertado");
 			correcto = true;

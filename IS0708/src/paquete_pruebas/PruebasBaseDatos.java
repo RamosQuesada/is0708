@@ -50,7 +50,7 @@ public class PruebasBaseDatos {
 		}
 		*/
 		
-		String s=c.getInfoJefedeDepartamento("RopaSado");
+		String s=c.getInfoJefedeDepartamento("RopaViejunosNuevos");
 		System.out.println(s);
 		db.cerrarConexion();
 		//boolean b = db.cambiarContrato(15, 12, "aleatorio14", "1:12", 1, 4000.50, 1);
