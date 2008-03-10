@@ -54,7 +54,7 @@ public class I09_1_Creacion_contratos {
 		}
 		else{
 			patron=cm.getPatron();
-			turnoInicial=contratoModificado.getTurnoInicial();
+			turnoInicial=cm.getTurnoInicial();
 		}
 		
 		contratoModificado=cm;
@@ -346,6 +346,10 @@ public class I09_1_Creacion_contratos {
 		bEliminarTurno	.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1,1));
 		bElegirTurno	.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1,1));
 		bTurnoInicial	.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1,1));
+		
+		if(turnos.isEmpty()) bTurnoInicial.setEnabled(false);
+		bElegirTurno.setEnabled(false);
+		
 // Grupo 3 - Ciclo
 		grupo3.setLayout(new GridLayout(4,false));
 		final Label  lLongCiclo		= new Label (grupo3, SWT.LEFT);
@@ -421,7 +425,7 @@ public class I09_1_Creacion_contratos {
 		// Listener para el bot�n de nuevo turno
 		SelectionAdapter sabNuevoTurno = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){				
-				I09_1_1_Creacion_turnos i09=new I09_1_1_Creacion_turnos(shell, vista, bundle, 0, -1,idContrato);
+				I09_1_1_Creacion_turnos i09=new I09_1_1_Creacion_turnos(shell, vista, bundle, 0, -1,idContrato,null);
 				while (!i09.getShell().isDisposed()) {
 			         if (!shell.getDisplay().readAndDispatch()) {
 			             shell.getDisplay().sleep();
@@ -429,6 +433,7 @@ public class I09_1_Creacion_contratos {
 			      }
 				Turno t=i09.getTurnoInsertado();
 				if (t!=null){
+					if (!bTurnoInicial.isEnabled()) bTurnoInicial.setEnabled(true);
 					idsTurnosInsertados.add(t.getIdTurno());	
 					listaTurnosContrato.removeAll();
 					turnos.add(t);				
@@ -447,7 +452,7 @@ public class I09_1_Creacion_contratos {
 				if(listaTurnosContrato.getSelectionIndex()>-1){
 					int index=listaTurnosContrato.getSelectionIndex();
 					int id=turnos.get(index).getIdTurno();
-					I09_1_1_Creacion_turnos i091=new I09_1_1_Creacion_turnos(shell, vista, bundle, 1,id,idContrato);
+					I09_1_1_Creacion_turnos i091=new I09_1_1_Creacion_turnos(shell, vista, bundle, 1,id,idContrato,turnos.get(index));
 					while (!i091.getShell().isDisposed()) {
 				         if (!shell.getDisplay().readAndDispatch()) {
 				             shell.getDisplay().sleep();
