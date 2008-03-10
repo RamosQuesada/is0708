@@ -225,11 +225,6 @@ public class TurnoMatic {
 		cuenta que ya han sido incluidos los fijos y rotatorios en el cuadrante.*/
 		int[] empleadosFranja=new int[div]; 
 		
-		//empleadoMin guarda el numero de posibilidades que hay de que un empleado trabaje a cada de las divisiones de 5min
-		int[] empleadoMin=new int[div]; 
-		for (int i=0;i<div;i++)
-			empleadoMin[i]=0;
-		
 		ArrayList<Turno> turnosEmpleado;
 		Turno turnoEmpl;
 		/*comprueba si el numero de empleados fijos y rotatorios (ya incluidos en el cuadrante) 
@@ -243,32 +238,34 @@ public class TurnoMatic {
 			else {
 				//al minimo necesario para cada 5min se restan los empleados fijos y rotatorios ya incluidos en el cuadrante
 				empleadosFranja[i]=empleadosFranja[i]-contarEmpleadosMin(cuadrante.getListaTrabajaDia(dia),i,minHorasDia,dia);
-				//se resta cada empleado en cada una de las divisiones de 5min en las que hay posibilidad de que trabaje en cualquiera de sus turnos
-				for (int k=0;k<dispoDia.size();k++) {
-					empleado=dispoDia.get(k);	
-					turnosEmpleado=controlador.getListaTurnosContrato(empleado.getEmplId());
-					for (int l=0;l<turnosEmpleado.size();l++) {
-						turnoEmpl=turnosEmpleado.get(l);
-						int h=i/12; //h nos permite utilizar el array minHoras, es la hora "en punto" a la que pertenece el minuto que buscamos
-						int m=i-h*12; //m es el minuto dentro de la hora h que buscamos
-						int hora=0, aux=0;
-						boolean enc=false;
-						while (aux<24 && !enc) {
-							if (minHorasDia[aux]>0) {
-								hora=aux+h;
-								enc=true;
+				//si el valor obtenido menor o igual que 0 es que ya hemos completado la franja con los fijos y rotatorios
+				if (empleadosFranja[i]>0) {
+					//se resta cada empleado en cada una de las divisiones de 5min en las que hay posibilidad de que trabaje en cualquiera de sus turnos
+					for (int k=0;k<dispoDia.size();k++) {
+						if (empleadosFranja[i]>0) {
+							empleado=dispoDia.get(k);	
+							turnosEmpleado=controlador.getListaTurnosContrato(empleado.getEmplId());
+							for (int l=0;l<turnosEmpleado.size();l++) {
+								if (empleadosFranja[i]>0) {
+									turnoEmpl=turnosEmpleado.get(l);
+									int h=i/12; //h nos permite utilizar el array minHoras, es la hora "en punto" a la que pertenece el minuto que buscamos
+									int min=(i-h*12)*5; //min es el minuto dentro de la hora h que buscamos
+									int hora=0, aux=0;
+									boolean enc=false;
+									while (aux<24 && !enc) {
+										if (minHorasDia[aux]>0) {
+											hora=aux+h;
+											enc=true;
+										}
+										aux++;
+									}
+									
+									if (trabajaTurno(turnoEmpl, hora, min)) 
+										empleadosFranja[i]--;
+								}
 							}
-							aux++;
 						}
-						if (turnoEmpl.getHoraEntrada().getHours()<=hora && turnoEmpl.getHoraSalida().getHours()>hora &&
-							turnoEmpl.getHoraEntrada().getMinutes()<=m && turnoEmpl.getHoraSalida().getMinutes()>m)
-							empleadoMin[i]++;
-					}
-					/*si en algun turno el empleado puede trabajar a la hora i, se resta de empleadosFranja[i] 
-					indicando que al menos él puede trabajar a esa hora*/
-					for (int l=0;l<div;l++) 
-						if (empleadoMin[l]>0)
-							empleadosFranja[l]--;
+					}	
 				}
 			}
 		}
@@ -427,15 +424,18 @@ public class TurnoMatic {
 	 */
 	private int contarEmpleadosMin (ArrayList<Trabaja> lista, int div, int[] minHorasDia,int dia) {		
 		int h=div/12; //h nos permite utilizar el array minHoras, es la hora "en punto" a la que pertenece el minuto que buscamos
-		int m=div-h*12; //m es el minuto dentro de la hora h que buscamos
+		int min=(div-h*12)*5; //min es el minuto dentro de la hora h que buscamos
 		int hora=0, aux=0;
 		boolean enc=false;
 		while (aux<24 && !enc) {
-			if (minHorasDia[aux]>0) hora=aux+h;
+			if (minHorasDia[aux]>0) {
+				enc=true;
+				hora=aux+h;
+			}
 			aux++;
 		}		
 		Date fecha=new Date(anio, mes, dia);
-		return contarEmpleadosHora(lista,fecha,hora,m);
+		return contarEmpleadosHora(lista,fecha,hora,min);
 	}
 	
 	/**
@@ -465,6 +465,21 @@ public class TurnoMatic {
 			}
 		}
 		return contador;
+	}
+	
+	private boolean trabajaTurno(Turno turnoEmpl, int hora, int minuto) {
+		int momento=hora*60+minuto;
+		
+		int minIni = turnoEmpl.getHoraEntrada().getHours()*60+turnoEmpl.getHoraEntrada().getMinutes();
+		int minFin = turnoEmpl.getHoraSalida().getHours()*60+turnoEmpl.getHoraSalida().getMinutes();
+		
+		int minIniDescanso = (turnoEmpl.getHoraDescanso().getHours()*60)+turnoEmpl.getHoraDescanso().getMinutes();
+		int minFinDescanso = minIniDescanso+turnoEmpl.getTDescanso();
+		
+		if ((minIni<=momento && minFin>momento) && (minIniDescanso>momento || minFinDescanso<=momento || turnoEmpl.getTDescanso()==0)) {
+			return true;
+		}
+		return false;
 	}
 	
 	/**
