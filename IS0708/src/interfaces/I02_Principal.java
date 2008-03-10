@@ -482,7 +482,7 @@ public class I02_Principal {
 
 		bNuevoContrato.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				I09_1_Creacion_contratos i09 = new I09_1_Creacion_contratos(shell, bundle, vista, 0, -1);
+				I09_1_Creacion_contratos i09 = new I09_1_Creacion_contratos(shell, bundle, vista, 0, -1,null);
 				while (!i09.getShell().isDisposed()) {
 			         if (!shell.getDisplay().readAndDispatch()) {
 			             shell.getDisplay().sleep();
@@ -529,7 +529,7 @@ public class I02_Principal {
 				if(tablaContratos.getSelectionIndex()>-1){
 					TableItem it=tablaContratos.getItem(tablaContratos.getSelectionIndex());
 					I09_1_Creacion_contratos i09c=new I09_1_Creacion_contratos(shell, bundle, vista, 1,
-							Integer.parseInt(it.getText(0)));
+							Integer.parseInt(it.getText(0)),contratos.get(tablaContratos.getSelectionIndex()));
 					int index=tablaContratos.getSelectionIndex();
 					while (!i09c.getShell().isDisposed()) {
 				         if (!shell.getDisplay().readAndDispatch()) {
