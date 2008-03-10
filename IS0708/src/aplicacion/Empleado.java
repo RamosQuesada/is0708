@@ -905,14 +905,14 @@ public class Empleado implements Drawable {
 		//cálculo del dia en el que nos encontramos dentro del ciclo.
 		//today = new java.util.Date();
 		//java.sql.Date fechaActual = new java.sql.Date(today.getTime());
-		java.sql.Date fechaActual = new java.sql.Date(anio,mes,0);
+		java.sql.Date fechaActual = new java.sql.Date(anio-1900,mes-1,1);
 		if(fContrato == null)
 			fContrato = new Date(fechaActual.getTime());
 		
 		//ya va!!!!!!!!!!!
 		long milsDia = 24*60*60*1000;
-		difFechas = (fechaActual.getTime()+(dia*milsDia))-fContrato.getTime();
-		diaCiclo = (int) (difFechas/(milsDia));  		
+		difFechas = (fechaActual.getTime()+(dia*milsDia))-(fContrato.getTime());
+		diaCiclo = (int) (difFechas/(milsDia))+1;  		
 		
 		//Obtencion del contrato del empleado.
 		//contrato = cont.getContrato(this.getContratoId());
@@ -932,6 +932,9 @@ public class Empleado implements Drawable {
 			turnosStr = obtenerTurnos(patron);
 		}
 		diaCiclo = diaCiclo%turnosStr.size();
+		int diaSemanaInicioContrato = fContrato.getDay();
+		if (diaSemanaInicioContrato==0) diaSemanaInicioContrato=7;
+		diaCiclo=diaCiclo+diaSemanaInicioContrato;
 		
 	/*	if((diaCiclo == contrato.getDuracionCiclo()-1) && (hora == numTrozos-1))
 				fContrato.setTime(fechaActual.getTime() + ((dia+1)*milsDia));*/
