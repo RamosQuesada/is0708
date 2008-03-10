@@ -481,18 +481,15 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				if (empEncontrado&&diaEncontrado) {
 					if (empTrabDia(dia-1,empleados.get(iEmp-1).getEmplId())) {
 						cursor(1);
-						canvas.redraw();
 						diaValido=true;
 					}
 					else {
 						cursor(0);
-						canvas.redraw();
 						diaValido=false;
 					}
 				}
 				else {
 					cursor(0);
-					canvas.redraw();
 					diaValido=false;
 				}
 			}
@@ -642,7 +639,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			else dom++;
 		}
 		//100System.out.println(dom);
-		System.out.println(c.get(Calendar.DAY_OF_WEEK));
+		//System.out.println(c.get(Calendar.DAY_OF_WEEK));
 		//System.out.println(c.toString());
 		int anchoMes = ancho - margenIzq - margenDer - margenNombres;
 		int anchoDia = anchoMes/iCuad.length;
@@ -811,6 +808,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			canvas.removeMouseListener(mouseListenerCuadrMensual);
 			canvas.addMouseMoveListener(mouseMoveListenerCuadrSemanal);
 			canvas.addMouseListener(mouseListenerCuadrSemanal);
+			lCuadranteTitulo.setVisible(true);
 			lGridCuadrante.setVisible(true);
 			cGridCuadrante.setVisible(true);
 		}
@@ -820,6 +818,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			canvas.addMouseMoveListener(mouseMoveListenerCuadrMensual);
 			canvas.addMouseListener(mouseListenerCuadrMensual);
 			//Ocultamos el combo de los intervalos
+			lCuadranteTitulo.setVisible(false);
 			lGridCuadrante.setVisible(false);
 			cGridCuadrante.setVisible(false);
 		}
