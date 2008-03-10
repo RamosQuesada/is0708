@@ -50,6 +50,23 @@ public class I02_Principal {
 		this.vista = vista;
 		crearVentana(vista.getEmpleadoActual().getRango());
 	}
+	
+	private class ContratosLoader extends Thread {
+		public synchronized void run() {
+			try {
+				while (!vista.isCacheCargada()) {
+					sleep(5000);
+				}
+			} catch (Exception e) {}
+//			if (!objeto_del_interfaz.isDisposed()) {
+				display.asyncExec(new Runnable () {
+					public void run() {
+						//Aquí colocas todos los datos en su sitio
+					}
+				});
+//			}
+		}
+	}
 
 	private void crearBarraMenu() {
 		// Una barra de menús
@@ -1650,5 +1667,4 @@ public class I02_Principal {
 			});
 		}
 	}
-
 }
