@@ -60,12 +60,12 @@ public class I08_1_Editar_empleado {
 	public void mostrarVentana() {		
 		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 
-		final Image ico_chico = new Image(padre.getDisplay(), I08_1_Anadir_empleado.class.getResourceAsStream("ico_chico.gif"));
-		final Image ico_chica = new Image(padre.getDisplay(), I08_1_Anadir_empleado.class.getResourceAsStream("ico_chica.gif"));
+		final Image ico_chico = new Image(padre.getDisplay(), I08_1_Editar_empleado.class.getResourceAsStream("ico_chico.gif"));
+		final Image ico_chica = new Image(padre.getDisplay(), I08_1_Editar_empleado.class.getResourceAsStream("ico_chica.gif"));
 		
-		final Image ico_esp = new Image(padre.getDisplay(), I08_1_Anadir_empleado.class.getResourceAsStream("ico_esp.gif"));
-		final Image ico_usa = new Image(padre.getDisplay(), I08_1_Anadir_empleado.class.getResourceAsStream("ico_usa.gif"));
-		final Image ico_pol = new Image(padre.getDisplay(), I08_1_Anadir_empleado.class.getResourceAsStream("ico_pol.gif"));
+		final Image ico_esp = new Image(padre.getDisplay(), I08_1_Editar_empleado.class.getResourceAsStream("ico_esp.gif"));
+		final Image ico_usa = new Image(padre.getDisplay(), I08_1_Editar_empleado.class.getResourceAsStream("ico_usa.gif"));
+		final Image ico_pol = new Image(padre.getDisplay(), I08_1_Editar_empleado.class.getResourceAsStream("ico_pol.gif"));
 
 		GridLayout layout = new GridLayout(2,false);
 
@@ -126,7 +126,7 @@ public class I08_1_Editar_empleado {
 		lContrato		.setText(bundle.getString("I08_lab_TipoContrato"));
 		lExperiencia	.setText(bundle.getString("Experiencia"));
 		lDepto			.setText(bundle.getString("Departamento"));
-		cambios			.setText("cambios en informacion laboral");
+		cambios			.setText("I08_lab_FAlta");
 		bFContrato		.setText(bundle.getString("I08_lab_FContr"));
 		bColor			.setText(bundle.getString("I08_lab_SelColor"));
 
@@ -185,8 +185,7 @@ public class I08_1_Editar_empleado {
 		cIdioma.setItems (new String [] {	bundle.getString("esp"),
 											bundle.getString("eng"),
 											bundle.getString("pol")});
-		cContrato.setItems (new String [] {"6:40", "Dias sueltos"});
-		cExperiencia.setItems (new String [] {	bundle.getString("Principiante"),
+			cExperiencia.setItems (new String [] {	bundle.getString("Principiante"),
 												bundle.getString("Experto")});
 		
 		ArrayList<String> departamentos = vista.getEmpleadoActual().getDepartamentosId();
@@ -197,26 +196,33 @@ public class I08_1_Editar_empleado {
 			cDepto.add(departamentos.get(i));
 
 			if (!emp.getDepartamentoId().equals(departamentos.get(i))&& cumple){
-				jj=jj+1;
+				jj=i;
 			}
 			else
 				cumple=false;
 		}
 		
-		ArrayList<Contrato> contratos = vista.getListaContratosDepartamento();
+		final ArrayList<Contrato> contratos = vista.getListaContratosDepartamento();
+		final ArrayList<Integer> ids = new ArrayList();
 		int j=0;
 		cumple=true;
 		for(int i=0; i<contratos.size();i++){
+			String nombre =contratos.get(i).getNombreContrato();
+			int num =contratos.get(i).getNumeroContrato();
+			int emp1 = emp.getContratoId();
 			cContrato.add(contratos.get(i).getNombreContrato());
-			if (emp.getContratoId() != contratos.get(i).getNumeroContrato() && cumple)
-				j=j+1;
-			else
+			ids.add(contratos.get(i).getNumeroContrato());
+			if (emp.getContratoId() == num && cumple){
+				j=i;
 				cumple=false;
+			}
+
 		}
 		
 	
 		cSexo.select(emp.getSexo());
 		cContrato.select(j);
+
 		cExperiencia.select(emp.getGrupo());
 		cDepto.select(jj);
 		cIdioma.select(emp.getIdioma());
@@ -339,14 +345,32 @@ public class I08_1_Editar_empleado {
 			
 			//		Empleado emp = new Empleado(vista.getEmpleadoActual().getEmplId(), n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), grupoactual, 0, 0, fechaContrato, fechaAlta, null, cDepto.getText(), null, 0, cIdioma.getSelectionIndex(),0);
 					Database dat=null;
-					
+					int j=0;
+					for (int i=0; i<contratos.size();i++){
+						if (contratos.get(i).getNombreContrato().equals(cContrato.getSelectionIndex())){
+							j=i;
+						}
+						}
+					int cont= ids.get(j);
+					cont =cSexo.getSelectionIndex();
+					cont = cExperiencia.getSelectionIndex();
+					String prr=tNombre.getText();
+					prr=tApell1.getText();
+					Date d;
+					try {
+						d =Util.stringADate(tFNacimiento.getText());
+						cont=1;
+					} catch (Exception e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
 					try {
 						dat.cambiarEmpleado(idVend, tNombre.getText(), tApell1.getText(), tApell2.getText(), 
 								Util.stringADate(tFNacimiento.getText()), cSexo.getSelectionIndex(), 
 								tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 
 								Util.stringADate(tFContrato.getText()),Util.stringADate(tFAlta.getText()), emp.getFelicidad(), 
 								cIdioma.getSelectionIndex(), emp.getRango(), emp.getTurnoFavorito(), 
-								(int)Integer.valueOf(cContrato.getItem(cContrato.getSelectionIndex())));
+								ids.get(j));
 					} catch (NumberFormatException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
