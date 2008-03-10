@@ -27,12 +27,14 @@ public class PruebasBaseDatos {
 	public static void main(String[] args) {
 		
 		
-		Database db = new Database();
+		/*Database db = new Database();
 		db.abrirConexion();
 		db.borraMesTrabaja(6,2008);
+		db.cerrarConexion();*/
 		
-		/*
-		Time t1= new Time(0);
+		
+		//Time t1= new Time(0);
+		
 		Database db = new Database();
 		db.abrirConexion();
 		Controlador c = new Controlador(db, true);
@@ -42,20 +44,16 @@ public class PruebasBaseDatos {
 			System.out.println(s.get(i));
 			
 		}
-		
-		String prueba= "00000000";
-		int n=Integer.parseInt(prueba);
-		System.out.println(n);
-		String p = String.valueOf(n);
-		System.out.println(p);
-		String p2= aplicacion.Util.completaNumVendedor(p);
-		System.out.println(p2);
+		for(int i=0; i<s.size();i++){
+			System.out.println(s.get(i).subSequence(s.get(i).length()-8, s.get(i).length()));
+			
+		}
 		db.cerrarConexion();
 		//boolean b = db.cambiarContrato(15, 12, "aleatorio14", "1:12", 1, 4000.50, 1);
 		//ArrayList<Mensaje> misMensajes = c.getMensajesEntrantes(12345678, 0, 30);
 		 
 		  
-		 */
+		 
 		
 		//db.insertarTrabaja(5336917, 10, "1970-3-12", t1, t1);
 		
