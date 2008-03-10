@@ -20,6 +20,7 @@ import java.util.Locale;
 import java.sql.Date;
 
 import impresion.Imprimir;
+import interfaces.I_Cuadrante.Loader;
 import aplicacion.Vista;
 
 /**
@@ -40,6 +41,7 @@ public class I02_Principal {
 	private ProgressBar pbEstado;
 	private Date fechaSeleccionada;
 	private Tray tray;
+	//private ArrayList <Contrato> contratos;
 
 	public I02_Principal(Shell shell, Display display, ResourceBundle bundle,
 			Locale locale, Vista vista) {
@@ -48,26 +50,28 @@ public class I02_Principal {
 		this.bundle = bundle;
 		this.locale = locale;
 		this.vista = vista;
+		//Thread loader = new ContratosLoader();
+		//loader.start();
 		crearVentana(vista.getEmpleadoActual().getRango());
 	}
 	
-	private class ContratosLoader extends Thread {
+	/*private class ContratosLoader extends Thread {
 		public synchronized void run() {
 			try {
 				while (!vista.isCacheCargada()) {
 					sleep(5000);
 				}
+				contratos = vista.getListaContratosDepartamento();
 			} catch (Exception e) {}
-//			if (!objeto_del_interfaz.isDisposed()) {
+			if (!shell.isDisposed()) {
 				display.asyncExec(new Runnable () {
 					public void run() {
-						//Aquí colocas todos los datos en su sitio
+						contratos = vista.getListaContratosDepartamento();
 					}
-				});
-//			}
+				});			
+			}
 		}
-	}
-
+	}*/
 	private void crearBarraMenu() {
 		// Una barra de menús
 		Menu barra = new Menu(shell, SWT.BAR);
@@ -451,6 +455,7 @@ public class I02_Principal {
 		
 		//final ArrayList <Contrato> contratos = new ArrayList <Contrato>();
 		//contratos.add(new Contrato("perry",23,72,1,"1:d",50,1));
+		//if(contratos!=null){
 		for(int i=0;i<contratos.size();i++){
 			TableItem tItem = new TableItem(tablaContratos, SWT.NONE);
 			Contrato c = contratos.get(i);
@@ -474,7 +479,7 @@ public class I02_Principal {
 			tItem.setText(6, Double.toString(c.getSalario()));
 			tItem.setText(7, Integer.toString(c.getTipoContrato()));
 		}
-		
+		//}
 		for (int i = 0; i < titles.length; i++) {
 			tablaContratos.getColumn(i).pack();
 		}
@@ -511,7 +516,7 @@ public class I02_Principal {
 				int idc=c.getNumeroContrato();
 				for(int i=0;i<ids.size();i++){
 					int idt=ids.get(i);
-					if (idt!=c.getTurnoInicial()) 
+					if (idt!=c.getTurnoInicial()&&(idc!=-1)) 
 						//CAMBIAR cuando este actualizada la vista
 						vista.getControlador().insertTurnoPorContrato(idt, idc);
 				}
@@ -631,7 +636,7 @@ public class I02_Principal {
 				}
 			}
 		});
-
+		
 	}
 
 	/**

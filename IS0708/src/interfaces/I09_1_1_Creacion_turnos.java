@@ -99,7 +99,10 @@ public class I09_1_1_Creacion_turnos {
 		// TODO Coger hora de apertura y cierre del departamento
 		final I_Cuadrante ic = new I_Cuadrante(vista, 0, 0, "", 4, 9, 23);
 		ic.setCompositeUnTurno(grupo2);
-		
+		if (modo==1) {
+			I_Turno itaux=new I_Turno(turnoModificado);
+			//ic.setTurno(turnoModificado);
+		}
 		final Button bAceptar	= new Button(shell, SWT.PUSH);
 		final Button bCancelar	= new Button(shell, SWT.PUSH);		
 		
@@ -135,11 +138,16 @@ public class I09_1_1_Creacion_turnos {
 			public void widgetSelected(SelectionEvent e) {
 				//modo = 0 es nuevo turno y modo =1 es modificar
 				String desc = tDesc.getText();
+				Turno it=ic.getTurno();
+//				System.out.println(it.getHoraEntrada());
+//				System.out.println(it.getHoraSalida());
+//				System.out.println(it.getHoraDescanso());
+//				System.out.println(it.getTDescanso());
 				if (modo==0){					
-					turnoInsertado = new Turno(0,desc,"10:37:28","10:37:28","10:37:28",0);
+					turnoInsertado = new Turno(0,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso());
 					//CAMBIAR
 					int id=vista.getControlador().insertTurno(turnoInsertado);
-					turnoInsertado = new Turno(id,desc,"10:37:28","10:37:28","10:37:28",0);
+					turnoInsertado = new Turno(id,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso());
 					if (id!=-1){
 						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
 						messageBox.setText("Info");
@@ -157,10 +165,9 @@ public class I09_1_1_Creacion_turnos {
 					shell.dispose();
 				}
 				else{
-					Time t=new Time(1000);
 					//CAMBIAR
-					boolean okis=vista.getControlador().modificarTurno(idTurno,desc,t,t,t,0);
-					turnoModificado = new Turno(idTurno,desc,t,t,t,0);
+					boolean okis=vista.getControlador().modificarTurno(idTurno,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso());
+					turnoModificado = new Turno(idTurno,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso());
 					if (okis){
 						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
 						messageBox.setText("Info");

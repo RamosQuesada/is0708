@@ -152,7 +152,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 
 		public I_Turno getTurno() {
 			return turno;
-		}
+		}		
 
 		public void setIdTurno(I_Turno idTurno) {
 			this.turno = idTurno;
@@ -893,4 +893,5 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		}
 		return encontrado;
 	}
+
 }
