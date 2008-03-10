@@ -180,10 +180,6 @@ public class I10_Nuevo_departamento {
 								shell.dispose();
 							}
 						}
-						//creamos el departamento
-						String numjefe=(cmbJefes.getText().subSequence(cmbJefes.getText().length()-8, cmbJefes.getText().length())).toString();
-						System.out.println(numjefe+" asdasdasd");
-						//vista.crearDepartamento(tName.getText(),tNumber.getText(),cmbJefes.getText());
 					}else{
 						if(tNumber.getText()==""){
 							MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
