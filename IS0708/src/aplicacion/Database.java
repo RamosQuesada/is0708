@@ -1723,6 +1723,7 @@ public class Database extends Thread {
 		return true;
 	}		
 	
+	
 
 	public void insertarIssue(String texto) {
 		try {
@@ -1828,6 +1829,30 @@ public class Database extends Thread {
 		}
 		return r;
 	}
+	
+	public ResultSet obtenJefedeDepartamento(String nombreDep) {
+		ResultSet r = null;
+		try {
+			st = con.createStatement();
+			r = st.executeQuery("SELECT JefeDepartamento FROM DEPARTAMENTO WHERE Nombre='"+nombreDep+"';");
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println("Error al realizar la consulta del Jefe del Dpto");
+		}
+		return r;
+	}	
+	
+	public ResultSet obtenTodosNumerosDEPARTAMENTOs() {
+		ResultSet r = null;
+		try {
+			st = con.createStatement();
+			r = st.executeQuery("SELECT Numero FROM NumerosDEPARTAMENTOs ';");
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println("Error al realizar la consulta del Jefe del Dpto");
+		}
+		return r;
+	}	
 	
 	
 

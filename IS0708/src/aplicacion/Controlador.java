@@ -455,7 +455,33 @@ public class Controlador {
 	
 	}
 	
+	public String getInfoJefedeDepartamento(String nombreDep) {
+		String nombrejefe=null;
+		String horaentrada=null;
+		String horasalida=null;
+		ResultSet rs = _db.obtenJefedeDepartamento(nombreDep);
+		try {
+			while (rs.next()) {
+				int nv = rs.getInt("JefeDepartamento");
+			    nombrejefe =this.getEmpleado(nv).getNombreCompleto();
+			    Turno t= this.getObjetoTurnoEmpleadoDia(this.getFechaActual(), nv);
+			    Time horaentradaaux = t.getHoraEntrada();
+			    horaentrada = horaentradaaux.toString();
+			    Time horasalidaaux = t.getHoraSalida();
+			    horasalida = horasalidaaux.toString();
+			}
+			
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.err
+					.println("Error al obtener los nombres de los jefes de la base de datos");
+		}
 	
+	return "Jefe de Dpto:"+ nombrejefe+ ": " + horaentrada+ " - "+ horasalida;
+
+	}	
 	
 	
 	
@@ -1722,6 +1748,25 @@ public class Controlador {
 		
 		this._db.cambiaNombreNumerosDEPARTAMENTOs(NombreAntiguo, NombreNuevo);
 	}		
+	
+	public ArrayList<String> getTodosNumerosDEPARTAMENTOs() {
+		ArrayList<String> numeros = new ArrayList<String>();
+		try {
+			ResultSet rs = _db.obtenTodosNumerosDEPARTAMENTOs();
+			while (rs.next()) {
+				int numaux = rs.getInt("Numero");
+				String num = Integer.toString(numaux);
+				numeros.add(num);
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.err
+					.println("Error al obtener Lista de Turnos en la base de datos");
+		}
+		return numeros;
+	
+}
 	
 	
 }

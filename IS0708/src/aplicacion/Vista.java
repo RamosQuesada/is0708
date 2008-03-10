@@ -742,7 +742,8 @@ public class Vista {
 	 */
 	public boolean existeNombreDepartamento(String text) {
 		// TODO Auto-generated method stub by Carlos Sánchez
-		return false;
+		ArrayList<String> departamentos = this.getNombreTodosDepartamentos();
+		return departamentos.contains(text);
 	}
 	/**
 	 * Función que nos dice si ya existe ese número de departamento
@@ -751,7 +752,9 @@ public class Vista {
 	 */
 	public boolean existeNumDepartamento(String text) {
 		// TODO Auto-generated method stub by Carlos Sánchez
-		return false;
+		ArrayList<String> numeros = this.controlador.getTodosNumerosDEPARTAMENTOs();
+		return numeros.contains(text);
+
 	}
 	
 	
