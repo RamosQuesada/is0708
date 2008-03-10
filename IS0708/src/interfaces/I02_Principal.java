@@ -343,6 +343,8 @@ public class I02_Principal {
 		// cmbDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
 		cmbDepartamentos.select(0);
 
+
+		
 		// Composite for Buttons: "New Department" and "Configure Department"
 		Composite cBut = new Composite(cDepartamentos, SWT.LEFT);
 		cBut.setLayout(new GridLayout(2, false));
@@ -377,10 +379,19 @@ public class I02_Principal {
 		Composite cInfo = new Composite(cDepartamentos, SWT.BORDER);
 		cInfo.setLayout(new GridLayout(2, false));
 		cInfo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
-		Label lContenido = new Label(cInfo, SWT.CENTER);
+		final Label lContenido = new Label(cInfo, SWT.CENTER);
 		lContenido.setText("Aquí va información del departamento");
 		lContenido.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true,
 				true, 2, 1));
+		
+		//listener para el combo y mostrar la info debajo
+		cmbDepartamentos.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				System.out
+						.println("Cambiado posicion tab");
+				lContenido.setText(cmbDepartamentos.getText());
+			}
+		});
 
 	}
 
