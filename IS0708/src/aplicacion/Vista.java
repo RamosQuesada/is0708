@@ -208,18 +208,13 @@ public class Vista {
 		return true;
 	}
 	
-//	public boolean eliminaContratoConTurnos(int idContrato) {
-//		Contrato c = getContrato(idContrato);
-//		if (c==null) return false;
-//		Turno t;
-//		for (int t=0; )
-//			
-//		
-//		
+	public boolean eliminaContratoConTurnos(int idContrato) {
+		Contrato c = getContrato(idContrato);
+		if (c==null) return false;
 //		contratos.remove(idContrato);
 //		deleteCache(idContrato, "ContratoConTurnos");
-//		return true;
-//	}
+		return true;
+	}
 	
 	
 	/**
