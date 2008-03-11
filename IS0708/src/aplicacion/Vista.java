@@ -57,24 +57,26 @@ public class Vista {
 	/**
 	 * cola FIFO de inserciones/actualizaciones a realizar en la BD
 	 */
-	java.util.Queue<ElementoCache> colaEscritura;
+	private java.util.Queue<ElementoCache> colaEscritura;
 	
-	int INSERTAR = 0;
-	int MODIFICAR = 1;
-	int ELIMINAR = 2;
+	private int INSERTAR  = 0;
+	private int MODIFICAR = 1;
+	private int ELIMINAR  = 2;
 	private class ElementoCache {
-		public Object o; // El objeto a insertar
+		public ArrayList<Object> o; // El objeto a insertar
 		public int i;    // INSERTAR, ACTUALIZAR o ELIMINAR
 		String tipo;     // El tipo de objeto
-		public int id1, id2; // Parámetros especiales para insertar relaciones
 		public ElementoCache(Object o, int i, String tipo) {
-			this.o=o;
+			this.o= new ArrayList<Object>();
+			this.o.add(o);
 			this.i=i;
 			this.tipo = tipo;
 		}
-		public ElementoCache(int id1, int id2, String tipo) {
-			this.id1 = id1;
-			this.id2 = id2;
+		public ElementoCache(Object o1, Object o2, int i, String tipo) {
+			this.o= new ArrayList<Object>();
+			this.o.add(o1);
+			this.o.add(o2);
+			this.i=i;
 			this.tipo = tipo;
 		}
 	}
@@ -83,8 +85,8 @@ public class Vista {
 		colaEscritura.add(new ElementoCache(o, INSERTAR, tipo));
 	}
 	
-	private void insertCache(int id1, int id2, String tipo) {
-		colaEscritura.add(new ElementoCache(id1, id2, tipo));
+	private void insertCache(int id1, int id2, String tipo) {		
+		colaEscritura.add(new ElementoCache(id1, id2, INSERTAR, tipo));
 	}
 
 	private void modifyCache(Object o, String tipo) {
@@ -101,7 +103,6 @@ public class Vista {
 			int frac = 0;
 			int prog = 0;
 			while (alive) {
-				
 				if (!colaEscritura.isEmpty()) {
 					frac = 100/colaEscritura.size();
 					prog = 0;
@@ -111,21 +112,30 @@ public class Vista {
 					prog+=frac;
 					ElementoCache e = colaEscritura.poll();
 					if (e.i==INSERTAR) {
-						if      (e.tipo.equals("Empleado" ))		insertEmpleadoDB((Empleado) e.o);
-						else if (e.tipo.equals("Cuadrante"))		controlador.insertCuadrante((Cuadrante) e.o);
-						else if (e.tipo.equals("Turno")) 			controlador.insertTurno((Turno) e.o);
-						else if (e.tipo.equals("TurnoContrato"))	controlador.insertTurnoPorContrato(e.id1, e.id2);
+						if      (e.tipo.equals("Empleado" ))		insertEmpleadoBD((Empleado) e.o.get(0));
+						else if (e.tipo.equals("Cuadrante"))		controlador.insertCuadrante((Cuadrante) e.o.get(0));
+						else if (e.tipo.equals("Turno")) 			controlador.insertTurno((Turno) e.o.get(0));
+						else if (e.tipo.equals("TurnoContrato"))	controlador.insertTurnoPorContrato((Integer)e.o.get(0), (Integer)e.o.get(1));
+						else if (e.tipo.equals("Contrato"))			controlador.insertContrato((Contrato) e.o.get(0));
 					}
+					if(e.i==ELIMINAR)
+						if      (e.tipo.equals("Contrato"))			controlador.eliminaContrato((Integer) e.o.get(0));
+						else if (e.tipo.equals("Turno"))			controlador.eliminaTurno((Integer) e.o.get(0));
+						else if (e.tipo.equals("ContratoConTurnos"))	controlador.eliminaContratoConTurnos((Integer) e.o.get(0));
 				}
 				setProgreso("", 100);
 				try {
-					sleep(5000);
+					sleep(1000);
 				} catch (Exception e) {};
-
 			}
 		}
 	}
 	
+	/**
+	 * Inserta un empleado en la base de datos
+	 * @param e el empleado a insertar
+	 * @return false si el empleado ya existe
+	 */
 	public boolean insertEmpleado(Empleado e) {
 		if (getEmpleado(e.getEmplId())!=null) return false;
 		empleados.add(e);
@@ -133,6 +143,11 @@ public class Vista {
 		return true;
 	}
 	
+	/**
+	 * Inserta un turno en la base de datos
+	 * @param t el turno a insertar
+	 * @return false si el turno ya existe
+	 */
 	public boolean insertTurno(Turno t) {
 		if (getTurno(t.getIdTurno())!=null) return false;
 		turnos.add(t);
@@ -140,6 +155,11 @@ public class Vista {
 		return true;
 	}
 	
+	/**
+	 * Inserta un cuadrante en la base de datos
+	 * @param c el cuadrante a insertar
+	 * @return false si el cuadrante ya existe
+	 */
 	public boolean insertCuadrante(Cuadrante c) {
 		if (getCuadrante(c.getMes(), c.getAnio(), c.getIdDepartamento())!=null) return false;
 		cuadrantes.add(c);
@@ -147,8 +167,62 @@ public class Vista {
 		return true;
 	}
 	
+	/**
+	 * Inserta un contrato en la base de datos
+	 * @param c el contrato a insertar
+	 * @return false si el contrato ya existe
+	 */
+	public boolean insertContrato(Contrato c) {
+		if (getContrato(c.getNumeroContrato())!=null) return false;
+		insertCache(c, "Contrato");
+		return true;
+	}
+	
+	/**
+	 * Inserta una relación turno-contrato en la base de datos
+	 * @param idTurno el turno contenido en el contrato
+	 * @param idContrato el contrato que contiene al turno
+	 * @return siempre true
+	 */
 	public boolean insertTurnoPorContrato(int idTurno, int idContrato) {
 		insertCache(idTurno, idContrato, "TurnoContrato");
+		return true;
+	}
+	
+	/**
+	 * Elimina un contrato de la base de datos
+	 * @param idContrato el contrato a eliminar
+	 * @return false si el contrato no existe
+	 */
+	public boolean eliminaContrato(int idContrato) {
+		Contrato c = getContrato(idContrato);
+		if (c==null) return false;
+		contratos.remove(idContrato);
+		deleteCache(idContrato, "Contrato");
+		return true;
+	}
+	
+//	public boolean eliminaContratoConTurnos(int idContrato) {
+//		Contrato c = getContrato(idContrato);
+//		if (c==null) return false;
+//		Turno t;
+//		for (int t=0; )
+//			
+//		
+//		
+//		contratos.remove(idContrato);
+//		deleteCache(idContrato, "ContratoConTurnos");
+//		return true;
+//	}
+	
+	
+	/**
+	 * Elimina un turno de la base de datos
+	 * @param idTurno el turno a eliminar
+	 * @return false si el turno no existe
+	 */
+	public boolean eliminaTurno(int idTurno) {
+		deleteCache(idTurno, "Turno");
 		return true;
 	}
 
@@ -228,6 +302,7 @@ public class Vista {
 	 * <li>Crea el gestor de idiomas
 	 * <li>Conecta con la base de datos
 	 * <li>Identifica al usuario
+	 * <li>Inicia la caché y carga los datos
 	 * </ul>
 	 * 
 	 * @param controlador
@@ -591,6 +666,7 @@ public class Vista {
 			String apellido2, Integer rango) {
 		return controlador.getEmpleados(idEmpl, idDpto, idContrato, nombre,
 				apellido1, apellido2, rango);
+		//TODO
 	}
 
 	/**
@@ -600,7 +676,7 @@ public class Vista {
 	 *            el empleado a guardar
 	 * @return <i>true</i> si el empleado ha sido guardado
 	 */
-	private boolean insertEmpleadoDB(Empleado empleado) {
+	private boolean insertEmpleadoBD(Empleado empleado) {
 		boolean b = controlador.insertEmpleado(empleado);
 		int i = 0;
 		while (i < empleado.getDepartamentosId().size() && b) {
@@ -721,7 +797,7 @@ public class Vista {
 	 * parámetro, y la hace desaparecer si ha terminado.
 	 * 
 	 * @param i
-	 *            Un valor de 0 a 99, ó 100 para que desaparezca.
+	 *            un valor de 0 a 99, ó 100 para que desaparezca.
 	 */
 	public void setProgreso(String s, int i) {
 		if (i02!=null) i02.setProgreso(s, i);
@@ -761,7 +837,6 @@ public class Vista {
 		if (!alive) return;
 		setProgreso("Cargando contratos", 50);
 		contratos = controlador.getListaContratosDpto(dep);
-		if (!alive) return;
 		if (!alive) return;
 		if (tipo == 1) {
 			setProgreso("Cargando turnos", 70);
