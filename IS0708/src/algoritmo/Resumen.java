@@ -20,9 +20,9 @@ public class Resumen {
 	private ArrayList<String> informe=null;
 	private int dias;
 	
-	public Resumen(int dias,Cuadrante cuadrante){
+	public Resumen(int dias,Cuadrante cuadrante,Estructura estructura){
 		this.dias=dias;
-		Analisis a=new Analisis(dias,cuadrante);
+		Analisis a=new Analisis(dias,cuadrante,estructura);
 		sugerencias=a.generarResumen();
 		informe=a.analizarFaltas();
 		

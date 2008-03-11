@@ -58,7 +58,7 @@ public class TurnoMatic {
 	 * @return cuadrante Cuadrante resultante de aplicar el algoritmo
 	 * El arrayList disp es solo para pruebas
 	 */
-	public Cuadrante ejecutaAlgoritmo(){	
+	public ResultadoTurnoMatic ejecutaAlgoritmo(){	
 		//Colocamos a los empleados correspondientes a cada día
 		ListasEmpleados[][] horario = estruc.getDias();
 		//ArrayList<Trabaja>[] cu = cuadrante.getCuad();
@@ -149,8 +149,10 @@ public class TurnoMatic {
 			colocaNoFijos(dispoDia, reserDia, emplDia, i/*, cu*/);//se colocan para cada dia i del mes 
 		}
 		
-		controlador.insertCuadrante(cuadrante);
-		return this.cuadrante;
+		//controlador.insertCuadrante(cuadrante);
+		Resumen resumen = new Resumen(Util.dameDias(mes,anio), cuadrante, estruc);
+		ResultadoTurnoMatic resultado = new ResultadoTurnoMatic(cuadrante, resumen);
+		return resultado;
 	}
 	
 	/**
