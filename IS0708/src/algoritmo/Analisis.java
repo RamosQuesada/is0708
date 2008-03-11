@@ -14,28 +14,28 @@ import java.util.ArrayList;
 public class Analisis {
 	private ArrayList<Sugerencia>[] sugerencias;
 	private int dias;
-	private Cuadrante cuadrante;
 	
-	public Analisis(int dias, Cuadrante cuadrante){
-		this.sugerencias =new ArrayList[dias];
-		this.cuadrante=cuadrante;
+	public Analisis(int dias, Cuadrante cuadrante, Estructura estructura){
+		this.sugerencias=new ArrayList[dias];
 		this.dias=dias;
 		for (int i=0;i<dias;i++){
 			sugerencias[i]=new ArrayList<Sugerencia>();			
 		}
-		recorrido(cuadrante);
+		recorrido(cuadrante,estructura);
 		
 	}
 	
-	public void recorrido (Cuadrante cuadrante){
+	public void recorrido (Cuadrante cuadrante, Estructura estructura){
 		for (int i=0;i<dias;i++){
 			Time t=new Time(8,0,0);
 			for (int j=0;j<24;j++){
 				t.setHours(j);
 				
-				for (int k=-5;k<60;k=k+5){
+/**/			//for (int k=-5;k<60;k=k+5){
+				for (int k=0;k<60;k=k+5){
 					t.setMinutes(k);
-					int minimoDia=0;//TODO buscar como se saca el minimo de trabajadores en un dia
+					//int minimoDia=0;//TODO buscar como se saca el minimo de trabajadores en un dia
+					int minimoDia=estructura.getCal().getMinHora(i, j);
 					Sugerencia sugAnterior=null;
 					//si ya hay alguna sugerencias del dia, se coge la ultima, si no se queda null
 					if (!sugerencias[i].isEmpty()){
