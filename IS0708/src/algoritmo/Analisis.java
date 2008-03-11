@@ -36,7 +36,8 @@ public class Analisis {
 					Sugerencia sugAnterior=null;
 					//si ya hay alguna sugerencias del dia, se coge la ultima, si no se queda null
 					if (!sugerencias[i].isEmpty()){
-						sugAnterior=sugerencias[i].get(sugerencias[i].size()-1);
+						if (sugerencias[i].get(sugerencias[i].size()-1).getHoraFin().equals(new Time(t.getHours(),t.getMinutes(),0)))
+							sugAnterior=sugerencias[i].get(sugerencias[i].size()-1);
 					}
 					
 					//se comprueba cuantos trabajadores hay en un minuto concreto
@@ -77,9 +78,12 @@ public class Analisis {
 		int cont3=0;
 		
 		for (int i=0;i<dias;i++){			
-			if (calcularValorFranja(getSugerenciasDia(i),1)>=12000){cont1++;}
+			/*if (calcularValorFranja(getSugerenciasDia(i),1)>=12000){cont1++;}
 			if (calcularValorFranja(getSugerenciasDia(i),2)>=15000){cont2++;}
-			if (calcularValorFranja(getSugerenciasDia(i),3)>=15000){cont3++;}
+			if (calcularValorFranja(getSugerenciasDia(i),3)>=15000){cont3++;}*/
+			if (calcularValorFranja(getSugerenciasDia(i),1)>=5){cont1++;}
+			if (calcularValorFranja(getSugerenciasDia(i),2)>=6){cont2++;}
+			if (calcularValorFranja(getSugerenciasDia(i),3)>=6){cont3++;}
 		}
 		
 		if(cont1>=10){resul.add("Se repiten faltas en el periodo de mañana (9h a 13h). Se recomienda contratar gente.");}
@@ -89,15 +93,29 @@ public class Analisis {
 		return resul;
 	}
 	
-	public int calcularValorFranja(ArrayList<Sugerencia> lista,int parte){
+	/*public int calcularValorFranja(ArrayList<Sugerencia> lista,int parte){
 		int resul=0;
 		for (int i=0;i<lista.size();i++){
 			int horaIni=lista.get(i).getHoraIni().getHours();
 			int horaFin=lista.get(i).getHoraFin().getHours();
 			switch (parte){
-			case 1:if (horaIni<13){resul=resul+lista.get(i).puntuacion();}
-			case 2:if (((horaIni>=13)&&(horaIni<18))||((horaFin>=13)&&(horaFin<18))){resul=resul+lista.get(i).puntuacion();}
-			case 3:if (horaIni>=18){resul=resul+lista.get(i).puntuacion();}
+				case 1: if (horaIni<13){resul=resul+lista.get(i).puntuacion();} break;
+				case 2: if (((horaIni>=13)&&(horaIni<18))||((horaFin>=13)&&(horaFin<18))){resul=resul+lista.get(i).puntuacion();} break;
+				case 3: if (horaIni>=18){resul=resul+lista.get(i).puntuacion();} break;
+			}						
+		}
+		return resul;
+	}*/
+	
+	public double calcularValorFranja(ArrayList<Sugerencia> lista,int parte){
+		double resul=0;
+		for (int i=0;i<lista.size();i++){
+			int horaIni=lista.get(i).getHoraIni().getHours();
+			int horaFin=lista.get(i).getHoraFin().getHours();
+			switch (parte){
+				case 1: if (horaIni<13){resul=resul+lista.get(i).puntuacion();} break;
+				case 2: if (((horaIni>=13)&&(horaIni<18))||((horaFin>=13)&&(horaFin<18))){resul=resul+lista.get(i).puntuacion();} break;
+				case 3: if (horaIni>=18){resul=resul+lista.get(i).puntuacion();} break;
 			}						
 		}
 		return resul;
