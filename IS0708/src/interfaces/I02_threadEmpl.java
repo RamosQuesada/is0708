@@ -74,7 +74,10 @@ public class I02_threadEmpl extends Thread{
 			//esperando 3...
 			cuadrante.ponAvance(3);
 			int cont=0;
-			boolean inicializado=false;
+			ArrayList<Float> HorasFinAux=new ArrayList<Float>();
+			ArrayList<Float> HorasInicioAux=new ArrayList<Float>();
+			ArrayList<Float> HorasComienzoDescansoAux=new ArrayList<Float>();
+			ArrayList<Float> HorasFinDescansoAux=new ArrayList<Float>();
 			while (cont < 7 && (! finalizar)){
 				//si cont > 2 esperando 2..
 				if((cont>2)&&(cont<5)){
@@ -115,14 +118,7 @@ public class I02_threadEmpl extends Thread{
 					}
 				}
 				if((cuadrante.dameVista()).isCacheCargada()){
-				if(inicializado==false){
-					cuadrante.ponHorasFin(new ArrayList<Float>());
-					cuadrante.ponHorasInicio(new ArrayList<Float>());
-					//cuadrante.horaFinDescanso = new ArrayList<Float>();
-					cuadrante.ponHorasFinDescanso(new ArrayList<Float>());
-					cuadrante.ponHorasComienzoDescanso(new ArrayList<Float>());
-					inicializado=true;
-				}
+
 	//CACHE NO QUITAR MAS UNO DE MES ARRIBA...
 				
 				ArrayList<Trabaja> lista_trabaja=new ArrayList<Trabaja>();
@@ -211,20 +207,20 @@ public class I02_threadEmpl extends Thread{
 						finHoraDescansoFloat = (float)(horaDescansoFloat + ((float)(duracionDescanso)/60));
 						//cuadrante.horasInicio.add(cont,horaEntradaFloat);
 						
-						cuadrante.anadeHoraInicio(cont, horaEntradaFloat);
-						cuadrante.anadeHoraFin(cont, horaSalidaFloat);
-						cuadrante.anadeHoraComienzoDescanso(cont, horaDescansoFloat);
-						cuadrante.anadeHoraFinDescanso(cont, finHoraDescansoFloat);
+						HorasFinAux.add(cont,horaSalidaFloat);
+						HorasInicioAux.add(cont,horaEntradaFloat);
+						HorasComienzoDescansoAux.add(cont,horaDescansoFloat);
+						HorasFinDescansoAux.add(cont,finHoraDescansoFloat);
+
 						//cuadrante.horaComienzoDescanso.add(cont,horaDescansoFloat);
 						//cuadrante.horaFinDescanso.add(cont,finHoraDescansoFloat);
 				//	}
 				}
 				else{
-					cuadrante.anadeHoraInicio(cont, 0.0f);
-					cuadrante.anadeHoraFin(cont, 0.0f);
-					cuadrante.anadeHoraComienzoDescanso(cont, 0.0f);
-					cuadrante.anadeHoraFinDescanso(cont, 0.0f);
-//					cuadrante.horaFinDescanso.add(cont,0.0f);
+					HorasFinAux.add(cont,0.0f);
+					HorasInicioAux.add(cont,0.0f);
+					HorasComienzoDescansoAux.add(cont,0.0f);
+					HorasFinDescansoAux.add(cont,0.0f);
 				}
 			
 		}
@@ -236,6 +232,10 @@ public class I02_threadEmpl extends Thread{
 			
 			if(!finalizar){
 				cuadrante.ponAvance(0);
+				cuadrante.ponHorasComienzoDescanso(HorasComienzoDescansoAux);
+				cuadrante.ponHorasFin(HorasFinAux);
+				cuadrante.ponHorasFinDescanso(HorasFinDescansoAux);
+				cuadrante.ponHorasInicio(HorasInicioAux);
 				cuadrante.ponRedibujar(true);
 			}
 			
