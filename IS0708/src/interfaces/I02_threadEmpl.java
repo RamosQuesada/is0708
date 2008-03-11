@@ -31,7 +31,7 @@ public class I02_threadEmpl extends Thread{
 			e.printStackTrace();
 		}}
 		corriendo=true;
-		this.cuadrante.ponRedibujar(true);
+		this.cuadrante.ponRedibujar(false);
 			//Date fechaActual;
 
 			Date fecha=cuadrante.dameFecha();
