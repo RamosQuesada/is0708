@@ -56,12 +56,15 @@ public class Analisis {
 					// solo si no existia una anterior con las mismas caracteristas
 					// en caso contrario, se amplia en 5 minutos la franja de la sugerencia
 					if (contador<minimoDia){
-						if((sugAnterior!=null)&&(minimoDia-contador!=sugAnterior.getFaltas()) && (sugAnterior.getTipo()!=tipoFalta(contador,minimoDia))){		
-							Sugerencia sug=new Sugerencia(minimoDia-contador,minimoDia,t,new Time(t.getHours(),k,0),i,tipoFalta(contador,minimoDia));
+						if ((sugAnterior!=null)&&(minimoDia-contador!=sugAnterior.getFaltas()) && (sugAnterior.getTipo()!=tipoFalta(contador,minimoDia))){		
+							Sugerencia sug=new Sugerencia(minimoDia-contador,minimoDia,new Time(t.getHours(),t.getMinutes(),0),new Time(t.getHours(),t.getMinutes()+5,0),i,tipoFalta(contador,minimoDia));
 							sugerencias[i].add(sug);
-						}
-						else{
-							sugAnterior.ampliar(0,5);
+						} else {
+							if (sugAnterior==null) {
+								Sugerencia sug=new Sugerencia(minimoDia-contador,minimoDia,new Time(t.getHours(),t.getMinutes(),0),new Time(t.getHours(),t.getMinutes()+5,0),i,tipoFalta(contador,minimoDia));
+								sugerencias[i].add(sug);
+							} else 
+								sugAnterior.ampliar(0,5);
 						}
 					}										
 				}					
