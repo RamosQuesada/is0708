@@ -35,6 +35,7 @@ import algoritmo.Trabaja;
 import aplicacion.Empleado;
 import aplicacion.Posicion;
 import aplicacion.Turno;
+import aplicacion.Util;
 import aplicacion.Vista;
 //De dónde coger javadoc: http://javashoplm.sun.com/ECom/docs/Welcome.jsp?StoreId=22&PartDetailId=jdk-6u3-oth-JPR&SiteId=JSC&TransactionId=noreg
 
@@ -652,24 +653,39 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		gc.drawImage(fondo, 0, 0);
 		if (diaValido){
 			int alto=39;
-			int ancho=91;
+			//int ancho=98;
 			//Sacamos la informacion del turno
 			int idTurno=iCuad[diaActVistaMes].get(empActVistaMes-1).getTurno().getIdTurno();
+			String idTurnoS=("Id. Turno: "+String.valueOf(idTurno));
 			String descTurno=iCuad[diaActVistaMes].get(empActVistaMes-1).getTurno().getDescripcion();
-			
-			gc.drawRectangle(margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
-					margenSup+altoFila+((empActVistaMes)*altoFila)-alto,ancho,alto);
-			gc.setBackground(new Color(display,120,170,120));
-			gc.fillRectangle(margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
-					margenSup+altoFila+((empActVistaMes)*altoFila)-alto,ancho,alto);
+			int ancho=Math.max(gc.textExtent(descTurno).x+15,gc.textExtent(idTurnoS).x+15);
+			//Información del color
+			Color color = new Color(display,120,170,120);
+			int r = color.getRed();
+			int g = color.getGreen();
+			int b = color.getBlue();
+			//Pintamos segun turno
+			int inicioX=margenIzq+margenNombres+10-(ancho/2);
+			int inicioY=margenSup+altoFila;
+			Util.cambiarRelleno(display, gc, r-50,g-50,b-50);
+			gc.fillRectangle(inicioX+((diaActVistaMes)*anchoDia),
+					inicioY+((empActVistaMes)*altoFila)-alto,ancho,alto);
+			Util.cambiarRelleno(display, gc, r,g,b);
+			Util.cambiarPincel(display, gc, r-100,g-100,b-100);
+			gc.fillRectangle(inicioX+((diaActVistaMes)*anchoDia)-2,
+					inicioY+((empActVistaMes)*altoFila)-(alto+2),ancho-2,alto-2);
+			gc.drawRectangle(inicioX+((diaActVistaMes)*anchoDia)-2,
+					inicioY+((empActVistaMes)*altoFila)-(alto+2),ancho-2,alto-2);
 			gc.drawText("Id. Turno: "+String.valueOf(idTurno),
-					margenIzq+margenNombres+((diaActVistaMes)*anchoDia)+2,
-					margenSup+altoFila+((empActVistaMes)*altoFila)-alto+2,altoFila);
-			gc.drawText("Desc.: "+descTurno,
-					margenIzq+margenNombres+((diaActVistaMes)*anchoDia)+2,
-					margenSup+altoFila+((empActVistaMes)*altoFila)-(alto-(altoFila+2)),altoFila);
-			gc.setBackground(new Color(display,255,255,255));
-			//System.out.println(idTurno+" , "+descTurno);
+					inicioX+((diaActVistaMes)*anchoDia)+2,
+					inicioY+((empActVistaMes)*altoFila)-alto+2,altoFila);
+			gc.drawText(descTurno,
+					inicioX+((diaActVistaMes)*anchoDia)+2,
+					inicioY+((empActVistaMes)*altoFila)-(alto-(altoFila+2)),altoFila);
+			Util.darBrillo(display, gc, r, g, b,30);
+			
+			gc.fillRectangle(margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
+					inicioY+((empActVistaMes)*altoFila),anchoDia,altoFila);
 		}
 	}
 	
