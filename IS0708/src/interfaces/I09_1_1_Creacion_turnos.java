@@ -100,8 +100,7 @@ public class I09_1_1_Creacion_turnos {
 		final I_Cuadrante ic = new I_Cuadrante(vista, 0, 0, "", 4, 9, 23);
 		ic.setCompositeUnTurno(grupo2);
 		if (modo==1) {
-			I_Turno itaux=new I_Turno(turnoModificado);
-			//ic.setTurno(turnoModificado);
+			ic.setTurno(turnoModificado);
 		}
 		final Button bAceptar	= new Button(shell, SWT.PUSH);
 		final Button bCancelar	= new Button(shell, SWT.PUSH);		
@@ -138,11 +137,17 @@ public class I09_1_1_Creacion_turnos {
 			public void widgetSelected(SelectionEvent e) {
 				//modo = 0 es nuevo turno y modo =1 es modificar
 				String desc = tDesc.getText();
+				if (desc.equals("")){
+					MessageBox messageBox = new MessageBox(shell,
+							SWT.APPLICATION_MODAL | SWT.OK
+									| SWT.ICON_INFORMATION);
+					messageBox.setText("Info");
+					messageBox
+							.setMessage(bundle.getString("I09_descrip_Turno"));
+					messageBox.open();
+				}
+				else {
 				Turno it=ic.getTurno();
-//				System.out.println(it.getHoraEntrada());
-//				System.out.println(it.getHoraSalida());
-//				System.out.println(it.getHoraDescanso());
-//				System.out.println(it.getTDescanso());
 				if (modo==0){					
 					turnoInsertado = new Turno(0,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso());
 					//CAMBIAR
@@ -166,6 +171,7 @@ public class I09_1_1_Creacion_turnos {
 				}
 				else{
 					//CAMBIAR
+					//boolean okis=vista.modificarTurno(idTurno,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso());
 					boolean okis=vista.getControlador().modificarTurno(idTurno,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso());
 					turnoModificado = new Turno(idTurno,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso());
 					if (okis){
@@ -183,6 +189,7 @@ public class I09_1_1_Creacion_turnos {
 					}
 					shell.dispose();
 				}
+			}
 			}
 		};
 		
