@@ -73,6 +73,24 @@ public class Turno {
 		this.horaSalida=Time.valueOf(horaSalida);
 		this.horaDescanso=Time.valueOf(horaDescanso);
 	}
+	
+	public static void intercambiar(Turno t1, Turno t2){
+		Turno aux = new Turno(t1);
+		t1.idTurno = t2.getIdTurno();
+		t1.descripcion = t2.getDescripcion();
+		t1.horaEntrada  = new Time(t2.getHoraEntrada() .getTime());
+		t1.horaSalida   = new Time(t2.getHoraSalida()  .getTime());
+		t1.horaDescanso = new Time(t2.getHoraDescanso().getTime());
+		t1.tDescanso = t2.tDescanso;
+		
+		t2.idTurno = aux.getIdTurno();
+		t2.descripcion = aux.getDescripcion();
+		t2.horaEntrada  = new Time(aux.getHoraEntrada() .getTime());
+		t2.horaSalida   = new Time(aux.getHoraSalida()  .getTime());
+		t2.horaDescanso = new Time(aux.getHoraDescanso().getTime());
+		t2.tDescanso = aux.tDescanso;
+
+	}
 
 	/**
 	 * Prueba, algoritmo

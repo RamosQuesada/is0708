@@ -85,6 +85,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private Button bPorDia;
 	
 	private Turno turnoSeleccionado = null;
+	private Empleado empleadoSeleccionado = null;
 	private int altoFila=0;
 	private int anchoDia=0;
 	
@@ -455,12 +456,22 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		mouseListenerCuadrMensual = new MouseListener() {
 			public void mouseDown(MouseEvent e){
 				if (e.button == 1 &&(diaValido)) {
-					int idTurno=iCuad[diaActVistaMes].get(empActVistaMes-1).getTurno().getIdTurno();
-					turnoSeleccionado = vista.getTurno(idTurno);
+					empleadoSeleccionado = iCuad[diaActVistaMes].get(empActVistaMes-1).getEmpl();
+					turnoSeleccionado = iCuad[diaActVistaMes].get(empActVistaMes-1).getTurno();
 				}
 			};
 			public void mouseUp(MouseEvent e){
-				turnoSeleccionado = null;
+				if (e.button == 1 &&(diaValido)) {
+					Turno turnoSeleccionado2=iCuad[diaActVistaMes].get(empActVistaMes-1).getTurno();
+					//Si los dos empleados tienen el mismo contrato
+					if (turnoSeleccionado!=null && empleadoSeleccionado.getContratoId() == iCuad[diaActVistaMes].get(empActVistaMes-1).getEmpl().getContratoId()) {
+						// Intercambiar turnos
+						Turno.intercambiar(turnoSeleccionado, turnoSeleccionado2);
+						calcularTamano();						
+					}
+					turnoSeleccionado = null;
+				}
+				canvas.redraw();
 			};
 			public void mouseDoubleClick(MouseEvent e){
 				//Volver a la vista diaria con el dia seleccionado
