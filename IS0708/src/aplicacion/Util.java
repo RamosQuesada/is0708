@@ -415,9 +415,16 @@ public class Util {
 	 */
 	public static void darBrillo (Display display, GC gc, int r, int g, int b,int brillo) {
 		// Controlar límites de colores
-		if (r>255-brillo) r=0; else r+=brillo;
-		if (g>255-brillo) g=0; else g+=brillo;
-		if (b>255-brillo) b=0; else b+=brillo;
+		if (brillo>0) {
+			if (r>255-brillo) r=255; else r+=brillo;
+			if (g>255-brillo) g=255; else g+=brillo;
+			if (b>255-brillo) b=255; else b+=brillo;
+		}
+		else {
+			if (r<-brillo) r=0; else r+=brillo;
+			if (g<-brillo) g=0; else g+=brillo;
+			if (b<-brillo) b=0; else b+=brillo;
+		}
 		gc.setBackground(new Color(display,r, g, b));
 	}
 	
