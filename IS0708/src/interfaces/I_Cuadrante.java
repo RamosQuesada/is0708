@@ -20,6 +20,7 @@ import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -83,8 +84,11 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private Button bPorMes;
 	private Button bPorDia;
 	
+	private Turno turnoSeleccionado = null;
 	private int altoFila=0;
 	private int anchoDia=0;
+	
+	private Point cursor = new Point(0,0);
 	
 	private int movimiento;	
 	
@@ -451,23 +455,29 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		mouseListenerCuadrMensual = new MouseListener() {
 			public void mouseDown(MouseEvent e){
 				if (e.button == 1 &&(diaValido)) {
-					//Volver a la vista diaria con el dia seleccionado
-					diario=true;
-					setMovCuadSemanal(true);
-					cursor(0);
-					bPorMes.setSelection(false);
-					bPorDia.setSelection(true);
-					setDia(diaActVistaMes+1);
-					//System.out.println("Dia "+diaActVistaMes);
-					diaValido=false;
+					int idTurno=iCuad[diaActVistaMes].get(empActVistaMes-1).getTurno().getIdTurno();
+					turnoSeleccionado = vista.getTurno(idTurno);
 				}
 			};
-			public void mouseUp(MouseEvent e){};
-			public void mouseDoubleClick(MouseEvent e){};
+			public void mouseUp(MouseEvent e){
+				turnoSeleccionado = null;
+			};
+			public void mouseDoubleClick(MouseEvent e){
+				//Volver a la vista diaria con el dia seleccionado
+				diario=true;
+				setMovCuadSemanal(true);
+				cursor(0);
+				bPorMes.setSelection(false);
+				bPorDia.setSelection(true);
+				setDia(diaActVistaMes+1);
+				//System.out.println("Dia "+diaActVistaMes);
+				diaValido=false;
+			};
 		};
 		mouseMoveListenerCuadrMensual = new MouseMoveListener() {
 			public void mouseMove(MouseEvent e) {
 				//Comprueba si el cursor esta situado sobre algun dia
+				cursor.x = e.x; cursor.y = e.y;
 				diaValido = false;
 				int dia = 0;
 				Boolean diaEncontrado = false;
@@ -531,7 +541,6 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		if (ancho != 0 && alto != 0) {
 			Image bufferImage = new Image(display, ancho, alto);
 			GC gc2 = new GC(bufferImage);
-			// TODO Probar la siguiente linea en el laboratorio
 			try {
 				gc2.setAntialias(SWT.ON);
 			}
@@ -686,6 +695,14 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			
 			gc.fillRectangle(margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
 					inicioY+((empActVistaMes)*altoFila),anchoDia,altoFila);
+		}
+		if (turnoSeleccionado!=null) {
+			gc.setBackground(new Color(display,120,170,120));
+			gc.drawRectangle(cursor.x-anchoDia/2, cursor.y-altoFila/2, anchoDia, altoFila);
+			gc.fillRectangle(cursor.x-anchoDia/2, cursor.y-altoFila/2, anchoDia-2, altoFila-2);
+			if (anchoDia>14)
+				gc.drawText(String.valueOf(turnoSeleccionado.getIdTurno()),cursor.x-anchoDia/2 + (7/2),cursor.y - altoFila/2 + 2,altoFila);
+				gc.setBackground(new Color(display,255,255,255));
 		}
 	}
 	
