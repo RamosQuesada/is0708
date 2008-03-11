@@ -340,37 +340,51 @@ public class I08_1_Editar_empleado {
 				}
 				// Si se han modificado los campos de datos laborables mostrar mensaje de necesidad de
 				// actualizacion de cuadrante
-				//else if()
+				int j=0;
+				for (int i=0; i<contratos.size();i++){
+					String p1=contratos.get(i).getNombreContrato();
+					String p2=cContrato.getItem(cContrato.getSelectionIndex());
+					if (contratos.get(i).getNombreContrato().equals(cContrato.getItem(cContrato.getSelectionIndex()))){
+						j=i;
+					}
+				}
+				int indice = ids.get(j);
+				int Exp=cExperiencia.getSelectionIndex();
+				if(emp.getContratoId()!=ids.get(j)|| emp.getGrupo()!=cExperiencia.getSelectionIndex()){
+					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
+					messageBox.setText ("Aviso");
+					messageBox.setMessage ("Para que algunos de estos cambios sean efectivos debe recalcular el cuadrante");
+					e.doit = messageBox.open () == SWT.YES;
+				 }
 				// Si todo está bien, modifica el empleado
 			
-			//		Empleado emp = new Empleado(vista.getEmpleadoActual().getEmplId(), n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), grupoactual, 0, 0, fechaContrato, fechaAlta, null, cDepto.getText(), null, 0, cIdioma.getSelectionIndex(),0);
+		
 					Database dat=null;
-					int j=0;
-					for (int i=0; i<contratos.size();i++){
-						if (contratos.get(i).getNombreContrato().equals(cContrato.getSelectionIndex())){
-							j=i;
-						}
-						}
-					int cont= ids.get(j);
-					cont =cSexo.getSelectionIndex();
-					cont = cExperiencia.getSelectionIndex();
-					String prr=tNombre.getText();
-					prr=tApell1.getText();
-					Date d;
+					
+
+					String nom=tNombre.getText();
+					String ap1=tApell1.getText();
+					String ap2=tApell2.getText();
+					String mail =tEMail.getText();
+					String pass=tPassword.getText();
+					int sex=cSexo.getSelectionIndex();
+
+					int Fel=emp.getFelicidad();
+					int idiom= cIdioma.getSelectionIndex();
+					int ran=emp.getRango();
+					int turn= emp.getTurnoFavorito();
+					
 					try {
-						d =Util.stringADate(tFNacimiento.getText());
-						cont=1;
-					} catch (Exception e2) {
-						// TODO Auto-generated catch block
-						e2.printStackTrace();
-					}
-					try {
-						dat.cambiarEmpleado(idVend, prr, prr, prr, 
-								Util.stringADate(tFNacimiento.getText()), cSexo.getSelectionIndex(), 
-								tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 
-								Util.stringADate(tFContrato.getText()),Util.stringADate(tFAlta.getText()), emp.getFelicidad(), 
-								cIdioma.getSelectionIndex(), emp.getRango(), emp.getTurnoFavorito(), 
-								ids.get(j));
+					java.util.Date Fnac=Util.stringADate(tFNacimiento.getText());
+					java.util.Date FContr=Util.stringADate(tFContrato.getText());
+					java.util.Date Falta= Util.stringADate(tFAlta.getText());
+					int id =idVend;
+
+
+					
+					
+						vista.getControlador().cambiarEmpleado(id, nom, ap1, ap2, Fnac, sex,  mail, pass, 
+								Exp, FContr,Falta, Fel, idiom, ran, turn, indice);
 					} catch (NumberFormatException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
