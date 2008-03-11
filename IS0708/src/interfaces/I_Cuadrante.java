@@ -263,6 +263,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	
 	public void setTurno(Turno t) {
 		turno = new I_Turno(t);
+		redibujar();
 	}
 	
 	/**
