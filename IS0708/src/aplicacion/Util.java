@@ -8,6 +8,10 @@ import java.lang.String;
 import java.sql.Time;
 import java.util.Date;
 
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.widgets.Display;
+
 /**
  * El caj�n desastre de las funciones que no tienen cabida en ninguna clase,
  * pero que interesa que est�n juntas para usarse en distintos �mbitos. 
@@ -360,7 +364,45 @@ public class Util {
 		return nv;
 	}	
 	
-	
+	/**
+	 * Cambia el color del fondo (background) sin exceder los límites de Color.
+	 * Si se excede un límite, se pone a 0 o 255, respectivamente.
+	 * @param gc	El GC del que cambiar el color
+	 * @param r		Valor del componente rojo
+	 * @param g		Valor del componente verde
+	 * @param b		Valor del componente azul
+	 * @see #cambiarPincel(GC, int, int, int)
+	 */
+	public static void cambiarRelleno(Display display, GC gc, int r, int g, int b) {
+		// Controlar límites de colores
+		if (r<0) r=0;
+		if (g<0) g=0;
+		if (b<0) b=0;
+		if (r>255) r=255;
+		if (g>255) g=255;
+		if (b>255) b=255;		
+		gc.setBackground(new Color(display,r, g, b));
+	}
+
+	/**
+	 * Cambia el color del pincel (foreground) sin exceder los límites de Color.
+	 * Si se excede un límite, se pone a 0 o 255, respectivamente.
+	 * @param gc	El GC del que cambiar el color
+	 * @param r		Valor del componente rojo
+	 * @param g		Valor del componente verde
+	 * @param b		Valor del componente azul
+	 * @see #cambiarRelleno(GC, int, int, int)
+	 */
+	public static void cambiarPincel (Display display, GC gc, int r, int g, int b) {
+		// Controlar límites de colores
+		if (r<0) r=0;
+		if (g<0) g=0;
+		if (b<0) b=0;
+		if (r>255) r=255;
+		if (g>255) g=255;
+		if (b>255) b=255;		
+		gc.setForeground(new Color(display,r, g, b));
+	}
 	
 	
 }

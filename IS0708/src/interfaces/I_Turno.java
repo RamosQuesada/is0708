@@ -101,18 +101,18 @@ public class I_Turno extends aplicacion.Turno {
 		int b = color.getBlue();
 		
 		// Dibujar franja
-		cambiarRelleno(display, gc, r-50,g-50,b-50);
+		Util.cambiarRelleno(display, gc, r-50,g-50,b-50);
 		gc.fillRoundRectangle(inicio1+2,despV+2,fin1-inicio1,15,10,10);
-		cambiarRelleno(display, gc, r,g,b);
-		cambiarPincel(display, gc, r-100,g-100,b-100);
+		Util.cambiarRelleno(display, gc, r,g,b);
+		Util.cambiarPincel(display, gc, r-100,g-100,b-100);
 		gc.fillRoundRectangle(inicio1,despV,fin1-inicio1,15,8,8);
 		gc.drawRoundRectangle(inicio1,despV,fin1-inicio1,15,8,8);
 		if (tDescanso!=0) {
 			// Dibujar segunda franja
-			cambiarRelleno(display, gc, r-50,g-50,b-50);
+			Util.cambiarRelleno(display, gc, r-50,g-50,b-50);
 			gc.fillRoundRectangle(inicio2+2,despV+2,fin2-inicio2,15,10,10);
-			cambiarRelleno(display, gc, r,g,b);
-			cambiarPincel(display, gc, r-100,g-100,b-100);
+			Util.cambiarRelleno(display, gc, r,g,b);
+			Util.cambiarPincel(display, gc, r-100,g-100,b-100);
 			gc.fillRoundRectangle(inicio2,despV,fin2-inicio2,15,8,8);
 			gc.drawRoundRectangle(inicio2,despV,fin2-inicio2,15,8,8);
 		}
@@ -120,9 +120,9 @@ public class I_Turno extends aplicacion.Turno {
 		// Dibujar pestaña encima de la franja, si está activa
 		if (activa1) {
 			// Modificar los colores teniendo siempre en cuenta los límites [0-255]
-			cambiarRelleno(display, gc, r-50,g-50,b-50);
+			Util.cambiarRelleno(display, gc, r-50,g-50,b-50);
 			gc.fillRoundRectangle(inicio1+2,despV-13,135,20,10,10);
-			cambiarRelleno(display, gc, r,g,b);	
+			Util.cambiarRelleno(display, gc, r,g,b);	
 			gc.fillRoundRectangle(inicio1, despV-15, 135, 20,8,8);
 			gc.drawRoundRectangle(inicio1, despV-15, 135, 20,8,8);
 			gc.fillRectangle(inicio1+1,despV+1,Math.min(fin1-inicio1-1,136),12);
@@ -137,9 +137,9 @@ public class I_Turno extends aplicacion.Turno {
 		}
 		else if (activa2) {
 			// Modificar los colores teniendo siempre en cuenta los límites [0-255]
-			cambiarRelleno(display, gc, r-50,g-50,b-50);
+			Util.cambiarRelleno(display, gc, r-50,g-50,b-50);
 			gc.fillRoundRectangle(inicio2+2,despV-13,135,20,10,10);
-			cambiarRelleno(display, gc, r,g,b);	
+			Util.cambiarRelleno(display, gc, r,g,b);	
 			gc.fillRoundRectangle(inicio2, despV-15, 135, 20,8,8);
 			gc.drawRoundRectangle(inicio2, despV-15, 135, 20,8,8);
 			gc.fillRectangle(inicio2+1,despV+1,Math.min(fin2-inicio2-1,136),12);
@@ -151,45 +151,7 @@ public class I_Turno extends aplicacion.Turno {
 		}
 	}
 	
-	/**
-	 * Cambia el color del fondo (background) sin exceder los límites de Color.
-	 * Si se excede un límite, se pone a 0 o 255, respectivamente.
-	 * @param gc	El GC del que cambiar el color
-	 * @param r		Valor del componente rojo
-	 * @param g		Valor del componente verde
-	 * @param b		Valor del componente azul
-	 * @see #cambiarPincel(GC, int, int, int)
-	 */
-	private void cambiarRelleno(Display display, GC gc, int r, int g, int b) {
-		// Controlar límites de colores
-		if (r<0) r=0;
-		if (g<0) g=0;
-		if (b<0) b=0;
-		if (r>255) r=255;
-		if (g>255) g=255;
-		if (b>255) b=255;		
-		gc.setBackground(new Color(display,r, g, b));
-	}
-
-	/**
-	 * Cambia el color del pincel (foreground) sin exceder los límites de Color.
-	 * Si se excede un límite, se pone a 0 o 255, respectivamente.
-	 * @param gc	El GC del que cambiar el color
-	 * @param r		Valor del componente rojo
-	 * @param g		Valor del componente verde
-	 * @param b		Valor del componente azul
-	 * @see #cambiarRelleno(GC, int, int, int)
-	 */
-	private void cambiarPincel (Display display, GC gc, int r, int g, int b) {
-		// Controlar límites de colores
-		if (r<0) r=0;
-		if (g<0) g=0;
-		if (b<0) b=0;
-		if (r>255) r=255;
-		if (g>255) g=255;
-		if (b>255) b=255;		
-		gc.setForeground(new Color(display,r, g, b));
-	}
+	
 	
 	public void desactivarFranjas() {
 		activa1 = false;
