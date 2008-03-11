@@ -673,7 +673,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	public void dibujarCuadranteMes(GC gc) {
 		if (fondo==null)
 			actualizarFondo(gc);
-		gc.drawImage(fondo, 0, 0);
+		else gc.drawImage(fondo, 0, 0);
 		if (diaValido){
 			int alto=39;
 			//Sacamos la informacion del turno
