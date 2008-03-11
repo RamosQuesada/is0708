@@ -1,14 +1,15 @@
 package aplicacion;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.sql.Date;
 import java.sql.Time;
-import org.eclipse.swt.graphics.Color;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
-
-import algoritmo.*;
+import org.eclipse.swt.graphics.Color;
+import algoritmo.Calendario;
+import algoritmo.Cuadrante;
+import algoritmo.Trabaja;
 
 /**
  * Esta clase conecta el modelo (la base de datos) con la vista (los interfaces)
@@ -1748,6 +1749,12 @@ public class Controlador {
 		
 		this._db.cambiaNombreNumerosDEPARTAMENTOs(NombreAntiguo, NombreNuevo);
 	}		
+	
+	public void cambiarEmpleado (int idEmp, String nomb, String Ape1, String Ape2, java.util.Date FNac, int sexo, 
+			String mail, String Passw, int grupo, java.util.Date FCont, java.util.Date Fentr, int Felic, int Idiom, 
+			int Rang, int Turn, int Contr){
+		this._db.cambiarEmpleado(idEmp, nomb, Ape1, Ape2, FNac, sexo, mail, Passw, grupo, FCont, Fentr, Felic, Idiom, Rang, Turn, Contr);
+	}
 	
 	public ArrayList<String> getTodosNumerosDEPARTAMENTOs() {
 		ArrayList<String> numeros = new ArrayList<String>();
