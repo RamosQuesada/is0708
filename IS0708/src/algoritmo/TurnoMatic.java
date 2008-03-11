@@ -92,7 +92,7 @@ public class TurnoMatic {
 						if(contAux.getTipoContrato()==1 || contAux.getTipoContrato()==2){
 							empl.add(e);
 							turno = e.getTurnoActual();
-							if (!contiene(i, e.getEmplId()/*, cu*/)) {
+							if (!contiene(i, e.getEmplId())) {
 								trab = new Trabaja(e.getEmplId(),turno.getHoraEntrada(),turno.getHoraSalida(),turno.getIdTurno());
 								cuadrante.setTrabajaDia(i, trab);
 							}
@@ -240,12 +240,11 @@ public class TurnoMatic {
 					for (int k=0;k<dispoDia.size();k++) {
 						if (empleadosFranja[i]>0) {
 							empleado=dispoDia.get(k);	
-/**/						Contrato c = buscaContrato(empleado.getContratoId(), contratosDep);
+							Contrato c = buscaContrato(empleado.getContratoId(), contratosDep);
 							ArrayList<Integer> turnosEmpl = obtenerTurnosContrato(c.getPatron());
 							ArrayList<Turno> turnosEmpleado = new ArrayList<Turno>();
 							for (int l=0; l<turnosEmpl.size(); l++)
 								turnosEmpleado.add(buscaTurno(turnosEmpl.get(l), turnosDep));
-//							ArrayList<Turno> turnosEmpleado=controlador.getListaTurnosContrato(empleado.getEmplId());
 							for (int l=0;l<turnosEmpleado.size();l++) {
 								if (empleadosFranja[i]>0) {
 									Turno turnoEmpl=turnosEmpleado.get(l);
@@ -323,12 +322,11 @@ public class TurnoMatic {
 	private boolean vueltaAtrasMarcaje (ArrayList<Empleado> dispo, ArrayList<Empleado> reser, int k, int dia){
 		/*fHoraria es un ArrayList con todos los turnos en los que puede trabajar el empleado situado en la 
 		 posición k de disponibles*/
-/**/	Contrato c = buscaContrato(dispo.get(k).getContratoId(), contratosDep);
+		Contrato c = buscaContrato(dispo.get(k).getContratoId(), contratosDep);
 		ArrayList<Integer> turnosEmpl = obtenerTurnosContrato(c.getPatron());
 		ArrayList<Turno> fHoraria = new ArrayList<Turno>();
 		for (int j=0; j<turnosEmpl.size(); j++)
 			fHoraria.add(buscaTurno(turnosEmpl.get(j), turnosDep));
-//		ArrayList<Turno> fHoraria = controlador.getListaTurnosContrato (dispo.get(k).getEmplId());
 		int tFavorito = dispo.get(k).getTurnoFavorito(); //turno favorito del empleado
 		int i=0;
 		boolean enc=false;
@@ -376,12 +374,11 @@ public class TurnoMatic {
 	 */
 	public void colocarPreferidos(ArrayList<Empleado> dispo,int dia){
 		for (int i=0;i<dispo.size();i++){
-/**/		Contrato c = buscaContrato(dispo.get(i).getContratoId(), contratosDep);
+			Contrato c = buscaContrato(dispo.get(i).getContratoId(), contratosDep);
 			ArrayList<Integer> turnosEmpl = obtenerTurnosContrato(c.getPatron());
 			ArrayList<Turno> fHoraria = new ArrayList<Turno>();
 			for (int j=0; j<turnosEmpl.size(); j++)
 				fHoraria.add(buscaTurno(turnosEmpl.get(j), turnosDep));
-//			ArrayList<Turno> fHoraria = controlador.getListaTurnosContrato (dispo.get(i).getEmplId());
 			int tFavorito = dispo.get(i).getTurnoFavorito(); //turno favorito del empleado
 			int n=0;
 			boolean enc=false;
