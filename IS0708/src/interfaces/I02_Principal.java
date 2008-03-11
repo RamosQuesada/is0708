@@ -41,7 +41,6 @@ public class I02_Principal {
 	private ProgressBar pbEstado;
 	private Date fechaSeleccionada;
 	private Tray tray;
-	//private ArrayList <Contrato> contratos;
 
 	public I02_Principal(Shell shell, Display display, ResourceBundle bundle,
 			Locale locale, Vista vista) {
@@ -50,28 +49,9 @@ public class I02_Principal {
 		this.bundle = bundle;
 		this.locale = locale;
 		this.vista = vista;
-		//Thread loader = new ContratosLoader();
-		//loader.start();
 		crearVentana(vista.getEmpleadoActual().getRango());
 	}
 	
-	/*private class ContratosLoader extends Thread {
-		public synchronized void run() {
-			try {
-				while (!vista.isCacheCargada()) {
-					sleep(5000);
-				}
-				contratos = vista.getListaContratosDepartamento();
-			} catch (Exception e) {}
-			if (!shell.isDisposed()) {
-				display.asyncExec(new Runnable () {
-					public void run() {
-						contratos = vista.getListaContratosDepartamento();
-					}
-				});			
-			}
-		}
-	}*/
 	private void crearBarraMenu() {
 		// Una barra de menús
 		Menu barra = new Menu(shell, SWT.BAR);

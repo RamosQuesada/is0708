@@ -204,6 +204,7 @@ public class I09_Tab_Contratos extends Thread{
 					int idt=ids.get(i);
 					if (idt!=c.getTurnoInicial()&&(idc!=-1)) 
 						//CAMBIAR cuando este actualizada la vista
+						//vista.insertTurnoPorContrato(idt, idc);
 						vista.getControlador().insertTurnoPorContrato(idt, idc);
 				}
 								
@@ -275,6 +276,7 @@ public class I09_Tab_Contratos extends Thread{
 						int index=tablaContratos.getSelectionIndex();
 						TableItem tit=tablaContratos.getItem(index);
 						//CAMBIAR 
+						//boolean okis=vista.eliminaContrato(Integer.valueOf(tit.getText(0)));
 						boolean okis=vista.getControlador().eliminaContrato(Integer.valueOf(tit.getText(0)));
 						okis=okis&&vista.getControlador().eliminaContratoConTurnos(Integer.valueOf(tit.getText(0)));
 						if (okis){							
