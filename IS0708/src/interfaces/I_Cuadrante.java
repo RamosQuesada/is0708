@@ -704,10 +704,31 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					inicioX+((diaActVistaMes)*anchoDia)+2,
 					inicioY+((empActVistaMes)*altoFila)-(alto-(altoFila)),altoFila);
 			
-			Util.darBrillo(display, gc, r, g, b,30);
-			
-			gc.fillRectangle(margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
-					inicioY+((empActVistaMes)*altoFila),anchoDia,altoFila);
+			//Util.darBrillo(display, gc, r, g, b,30);
+			//Lineas grises
+			gc.setForeground(new Color(display,210,210,210));
+			//Vertical
+			gc.drawLine(margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
+					inicioY+((empActVistaMes)*altoFila),
+					margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
+					inicioY+((empActVistaMes)*altoFila)+altoFila-1);
+			//Horizontal
+			gc.drawLine(margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
+					inicioY+((empActVistaMes)*altoFila),
+					margenIzq+margenNombres+((diaActVistaMes)*anchoDia)+anchoDia-1,
+					inicioY+((empActVistaMes)*altoFila));
+			//Lineas negras
+			gc.setForeground(new Color(display,50,50,50));
+			//Vertical
+			gc.drawLine(margenIzq+margenNombres+((diaActVistaMes)*anchoDia)+anchoDia,
+					inicioY+((empActVistaMes)*altoFila),
+					margenIzq+margenNombres+((diaActVistaMes)*anchoDia)+anchoDia,
+					inicioY+((empActVistaMes)*altoFila)+altoFila);
+			//Horizontal
+			gc.drawLine(margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
+					inicioY+((empActVistaMes)*altoFila)+altoFila,
+					margenIzq+margenNombres+((diaActVistaMes)*anchoDia)+anchoDia,
+					inicioY+((empActVistaMes)*altoFila)+altoFila);
 		}
 		if (turnoSeleccionado!=null) {
 			gc.setBackground(new Color(display,120,170,120));
@@ -801,10 +822,11 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	
 	public void dibujaCasilla(GC gc, int i, int j, int empl, Color color){
 		//Primero se pinta el rectangulo
-		gc.setForeground(new Color(display,0,0,0));
+		gc.setForeground(new Color(display,85,135,85));
 		gc.drawRectangle(margenIzq + margenNombres + j*anchoDia, margenSup + 20 + i*altoFila, anchoDia, altoFila);
 		gc.setBackground(color);
-		gc.fillRectangle(margenIzq + margenNombres + j*anchoDia+2, margenSup + 20 + i*altoFila+2, anchoDia-2, altoFila-2);
+		gc.fillRectangle(margenIzq + margenNombres + j*anchoDia+1, margenSup + 20 + i*altoFila+1, anchoDia-1, altoFila-1);
+		gc.setForeground(new Color(display,0,0,0));
 		if (anchoDia>14)
 			//gc.drawText(String.valueOf(iCuad[j].get(k).getTurno().getAbreviatura().charAt(0)),margenIzq + margenNombres + j*anchoDia + (7/2), margenSup + 20 + i*altoFila + 2,altoFila);
 			gc.drawText(String.valueOf(iCuad[j].get(empl).getTurno().getIdTurno()),margenIzq + margenNombres + j*anchoDia + (7/2),margenSup + 20 + i*altoFila + 2,altoFila);
