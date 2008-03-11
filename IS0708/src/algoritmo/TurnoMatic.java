@@ -21,8 +21,6 @@ public class TurnoMatic {
 	private int anio;
 	private String idDepartamento;
 	private Controlador controlador;
-	
-	//Optimizacion Algoritmo (reduccion llamadas a BBDD)
 	private ArrayList<Empleado> listaE;
 	private ArrayList<Contrato> contratosDep;
 	private ArrayList<Turno> turnosDep;
@@ -39,16 +37,15 @@ public class TurnoMatic {
 	 * El arrayList turnos es de prueba
 	 */
 	public TurnoMatic(int m, int year, Controlador cont, String idDepartamento){
-		// Llamada a la base de datos para que nos dé todos los empleados del departamento.
 		this.controlador = cont;
 		this.idDepartamento = idDepartamento;
 		this.anio = year;
 		this.mes = m;
 	    this.listaE = this.controlador.getEmpleadosDepartamentoPruebasAlg(/*controlador.getEmpleadoActual().getEmplId(), */idDepartamento);		
+		this.contratosDep = this.controlador.getListaContratosDpto(this.idDepartamento);
+		this.turnosDep = this.controlador.getListaTurnosEmpleadosDpto(this.idDepartamento);		
 		this.estruc = new Estructura(mes, year, cont, idDepartamento, listaE);
 		this.cuadrante = new Cuadrante(mes, year, idDepartamento);		
-		this.contratosDep = this.controlador.getListaContratosDpto(this.idDepartamento);
-		this.turnosDep = this.controlador.getListaTurnosEmpleadosDpto(this.idDepartamento);
 	}
 
 	/**
@@ -61,7 +58,6 @@ public class TurnoMatic {
 	public ResultadoTurnoMatic ejecutaAlgoritmo(){	
 		//Colocamos a los empleados correspondientes a cada día
 		ListasEmpleados[][] horario = estruc.getDias();
-		//ArrayList<Trabaja>[] cu = cuadrante.getCuad();
 		ArrayList<Empleado> reser;
 		ArrayList<Empleado> dispo;
 		ArrayList<Empleado> empl;
@@ -146,7 +142,7 @@ public class TurnoMatic {
 					n++;
 				}
 			}
-			colocaNoFijos(dispoDia, reserDia, emplDia, i/*, cu*/);//se colocan para cada dia i del mes 
+			colocaNoFijos(dispoDia, reserDia, emplDia, i); 
 		}
 		
 		//controlador.insertCuadrante(cuadrante);
@@ -161,12 +157,13 @@ public class TurnoMatic {
 	 * @param reser Lista de empleados de reserva que vienen del método ejecutaAlgoritmo
 	 * @param empl Lista de empleados que vienen del método ejecutaAlgoritmo
 	 */
-	private void colocaNoFijos (ArrayList<Empleado> dispo, ArrayList<Empleado> reser, ArrayList<Empleado> empl, int dia/*, ArrayList<Trabaja>[] cuadAux*/){
-		//ordeno las 2 listas segun la felicidad de los empleados		
+	private void colocaNoFijos (ArrayList<Empleado> dispo, ArrayList<Empleado> reser, ArrayList<Empleado> empl, int dia){
+		//Se ordenan las 2 listas segun la felicidad de los empleados		
 		ArrayList<Empleado> e1=ordenarLista(dispo,1);
 		ArrayList<Empleado> e2=ordenarLista(reser,2);
+		
 		if (comprobaciones(dispo,dia))
-			vueltaAtrasMarcaje(e1,e2,0,dia/*,cuadAux*/);
+			vueltaAtrasMarcaje(e1,e2,0,dia);
 		else
 			colocarPreferidos(dispo,dia);
 	}
@@ -178,7 +175,7 @@ public class TurnoMatic {
 	 * @param dia Dia para el que se esta generando el cuadrante
 	 * @return true si es posible generar el cuadrante
 	 */
-	private boolean comprobaciones (/*ArrayList<Trabaja>[]cuadAux, */ArrayList<Empleado> dispoDia, int dia) {
+	private boolean comprobaciones (ArrayList<Empleado> dispoDia, int dia) {
 		Empleado empleado;
 		/*compruebaNumEmpleados sera false si para alguna franja horaria se necesita un minimo de 
 		empleados superior al numero de empleados de que disponemos.*/  
@@ -323,7 +320,7 @@ public class TurnoMatic {
 	 * @param k Parametro para la recursion
 	 * @param dia Dia para el que estamos generando el cuadrante
 	 */
-	private boolean vueltaAtrasMarcaje (ArrayList<Empleado> dispo, ArrayList<Empleado> reser, int k, int dia/*, ArrayList<Trabaja>[] cuadAux*/){
+	private boolean vueltaAtrasMarcaje (ArrayList<Empleado> dispo, ArrayList<Empleado> reser, int k, int dia){
 		/*fHoraria es un ArrayList con todos los turnos en los que puede trabajar el empleado situado en la 
 		 posición k de disponibles*/
 /**/	Contrato c = buscaContrato(dispo.get(k).getContratoId(), contratosDep);
@@ -346,29 +343,26 @@ public class TurnoMatic {
 		boolean hecho=false;
 		while (fHoraria.size()!=0) {
 			franjaHoraria = fHoraria.get(0);
-			ponerEmpleado (dispo.get(k), franjaHoraria.getHoraEntrada(), franjaHoraria.getHoraSalida(), franjaHoraria, /*cuadAux[*/dia/*]*/);
+			ponerEmpleado (dispo.get(k), franjaHoraria.getHoraEntrada(), franjaHoraria.getHoraSalida(), franjaHoraria, dia);
 			//si el turno en el que se incluye al empleado en el cuadrante es el que él prefiere, aumenta su felicidad
 			if (franjaHoraria.getIdTurno()==tFavorito) 
 				dispo.get(k).setFelicidad(dispo.get(k).getFelicidad()+1);
 			k=k+1;      
 			if  (k==dispo.size()) {
-				if (comprobarFranjasCompletas(/*cuadAux, */dia, fHorariasDpto))
+				if (comprobarFranjasCompletas(dia, fHorariasDpto))
 					 return true;
 			} else {
 				if (k<dispo.size()) {
-					if (vueltaAtrasMarcaje(dispo, reser,k,dia/*,cuadAux*/))
+					if (vueltaAtrasMarcaje(dispo, reser,k,dia))
 						return true;
 				}
 			}
 			k=k-1;
-			
-			//if (fHoraria.size()>1) {
-				quitarEmpleado(dispo.get(k),/*cuadAux[*/dia/*]*/);
-				/*si al recolocar a un empleado en un turno diferente, el turno del que se le quita es el que él prefiere, 
-				su felicidad queda igual que estaba antes de ejecutar el algoritmo*/
-				if (franjaHoraria.getIdTurno()==tFavorito)
-					dispo.get(k).setFelicidad(dispo.get(k).getFelicidad()-1);
-			//}
+			quitarEmpleado(dispo.get(k),dia);
+			/*si al recolocar a un empleado en un turno diferente, el turno del que se le quita es el que él prefiere, 
+			su felicidad queda igual que estaba antes de ejecutar el algoritmo*/
+			if (franjaHoraria.getIdTurno()==tFavorito)
+				dispo.get(k).setFelicidad(dispo.get(k).getFelicidad()-1);
 			fHoraria.remove(0);
 		}
 		return hecho;
@@ -396,7 +390,7 @@ public class TurnoMatic {
 				else n++;
 			}
 			Turno franjaHoraria=fHoraria.get(n);
-			ponerEmpleado (dispo.get(i), franjaHoraria.getHoraEntrada(), franjaHoraria.getHoraSalida(), franjaHoraria, /*cuadAux[*/dia/*]*/);
+			ponerEmpleado (dispo.get(i), franjaHoraria.getHoraEntrada(), franjaHoraria.getHoraSalida(), franjaHoraria, dia);
 			dispo.get(i).setFelicidad(dispo.get(i).getFelicidad()+1);
 		}
 	}
@@ -407,7 +401,7 @@ public class TurnoMatic {
 	 * @param dia Dia en el que queremos hacer la comprobacion
 	 * @param fHoraria Lista de franjas en que se divide un dia
 	 */
-	private boolean comprobarFranjasCompletas(/*ArrayList<Trabaja>[] cuadAux,*/int dia, ArrayList<Time> fHoraria){
+	private boolean comprobarFranjasCompletas(int dia, ArrayList<Time> fHoraria){
 		boolean valido=true;
 		//bucle que recorre todas las franjas horarias de este dia
 		for (int i=0;(i<(fHoraria.size()-1))&&(valido);i++){
@@ -501,7 +495,7 @@ public class TurnoMatic {
 	 * @param e Empleado a eliminar del cuadrante
 	 * @param dia Dia para el que estamos generando el cuadrante
 	 */
-	private void quitarEmpleado (Empleado e, int dia/*ArrayList<Trabaja> cuadDia*/){
+	private void quitarEmpleado (Empleado e, int dia){
 		boolean enc=false;
 		int k=0;
 		ArrayList<Trabaja> cuadDia = cuadrante.getListaTrabajaDia(dia);
@@ -521,12 +515,12 @@ public class TurnoMatic {
 	 * @param fin Fin de su turno de trabajo
 	 * @param dia Dia de su turno d trabajo
 	 */
-	private void ponerEmpleado (Empleado e, Time ini, Time fin, Turno turno, int dia/*ArrayList<Trabaja> cuadDia*/){
+	private void ponerEmpleado (Empleado e, Time ini, Time fin, Turno turno, int dia){
 		Trabaja trabaja = new Trabaja(e.getEmplId(),ini,fin,turno.getIdTurno());
 		cuadrante.setTrabajaDia(dia, trabaja);
 	}
 	
-	private boolean contiene(int dia, int IdEmpl/*, ArrayList<Trabaja>[] cuad*/) {
+	private boolean contiene(int dia, int IdEmpl) {
 		boolean encontrado = false;
 		int n = 0;
 		int e = 0;
@@ -606,68 +600,12 @@ public class TurnoMatic {
 				i++;
 			}
 			if (!t.equals("d"))
-				turnos.add(Integer.parseInt(t));
+				if (!turnos.contains(Integer.parseInt(t)))
+					turnos.add(Integer.parseInt(t));
 		}
 	}
 
 //---------------------------------------------------------------------------------
-	
-	/**
-	 * Método que se encarga de colocar a los empleados fijos
-	 * @param día Dia del mes
-	 * El arrayList disp es solo para pruebas
-	 */
-	private void colocaFijos(int dia, ArrayList<Empleado> disp, int p, int q){
-		ArrayList<Trabaja>[] cu = cuadrante.getCuad();
-		ArrayList<Empleado> disponibles;
-		ArrayList<Empleado> empleados;
-		ListasEmpleados[][] listas;
-		int numTrozos;
-		Empleado emp;
-		Turno turno;
-		Trabaja trab;
-		
-		listas = estruc.getDias();
-		numTrozos = estruc.getNumTrozos();
-		Calendario calendario = estruc.getCalendario();
-		
-		//Para evitar el deprecado usar Calendar
-		//Calendar hora = new Calendar();
-		Time hora;
-		hora = estruc.getTrozosHorario().get(q);
-		int gHora = hora.getHours();
-		int max = calendario.getMaxHora(dia,gHora);
-		
-		//Para cada franja horaria
-		for(int i=0;i<numTrozos;i++){
-			
-			disponibles = listas[dia][i].getDisponibles();
-			empleados = new ArrayList<Empleado>();
-
-			for(int j=0;j<disponibles.size();j++){
-				
-				/* Aquí se debe mirar el tipo de contrato de cada
-				 * empleado y si este es fijo habría que insertarlo 
-				 * en la estructura y en el cuadrante.
-				 */
-				emp = disponibles.get(j);
-				turno = emp.getTurnoActual();
-				
-				//comprobamos si tiene turno fijo
-				
-				//if(turno.getIdTurno() == 1){
-					empleados.add(emp);
-					Time pr1 = new Time(19,49,00);
-					Time pr2 = new Time(19,49,00);
-					trab = new Trabaja(emp.getEmplId(),pr1,pr2,turno.getIdTurno());//tenemos que meterle el turno que le corresponda
-					cu[i].add(trab);
-				//}				
-			}
-			listas[dia][i].setEmpleados(empleados);  
-			cuadrante.setCuad(cu);
-		}
-		this.estruc.setDias(listas);
-	}
 	
 	/**
 	 * Método de prueba que imprime el cuadrante
