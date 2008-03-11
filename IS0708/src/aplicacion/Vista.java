@@ -1,6 +1,7 @@
 package aplicacion;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -118,10 +119,15 @@ public class Vista {
 						else if (e.tipo.equals("TurnoContrato"))	controlador.insertTurnoPorContrato((Integer)e.o.get(0), (Integer)e.o.get(1));
 						else if (e.tipo.equals("Contrato"))			controlador.insertContrato((Contrato) e.o.get(0));
 					}
-					if(e.i==ELIMINAR)
+					else if (e.i==ELIMINAR) {
 						if      (e.tipo.equals("Contrato"))			controlador.eliminaContrato((Integer) e.o.get(0));
 						else if (e.tipo.equals("Turno"))			controlador.eliminaTurno((Integer) e.o.get(0));
 						else if (e.tipo.equals("ContratoConTurnos"))	controlador.eliminaContratoConTurnos((Integer) e.o.get(0));
+					}
+					else if(e.i==MODIFICAR) {
+						if      (e.tipo.equals("Contrato"))			controlador.modificarContrato(((Contrato)e.o.get(0)).getNumeroContrato(), ((Contrato)e.o.get(0)).getTurnoInicial(), ((Contrato)e.o.get(0)).getNombreContrato(), ((Contrato)e.o.get(0)).getPatron() , ((Contrato)e.o.get(0)).getDuracionCiclo(), ((Contrato)e.o.get(0)).getSalario(), ((Contrato)e.o.get(0)).getTipoContrato());
+						else if (e.tipo.equals("Turno"))			controlador.modificarTurno(((Turno)e.o.get(0)).getIdTurno(), ((Turno)e.o.get(0)).getDescripcion(), ((Turno)e.o.get(0)).getHoraEntrada(), ((Turno)e.o.get(0)).getHoraSalida(), ((Turno)e.o.get(0)).getHoraDescanso(), ((Turno)e.o.get(0)).getTDescanso());
+					}
 				}
 				setProgreso("", 100);
 				try {
@@ -226,6 +232,39 @@ public class Vista {
 		return true;
 	}
 
+	/**
+	 * Modifica un contrato en la base de datos
+	 * @return false si el contrato no existe
+	 */
+	public boolean modificarContrato(int idContrato, int turnoInicial, String nombre, String patron, int duracionCiclo, double salario, int tipo) {
+		Contrato c = getContrato(idContrato);
+		if (c==null) return false;
+		c.setTurnoInicial(turnoInicial);
+		c.setNombreContrato(nombre);
+		c.setPatron(patron);
+		c.setDuracionCiclo(duracionCiclo);
+		c.setSalario(salario);
+		c.set_tipoContrato(tipo);
+		modifyCache(c, "Contrato");
+		return true;
+	}
+	
+	/**
+	 * Modifica un turno de la base de datos
+	 * @return false si el turno no existe
+	 */
+	public boolean modificarTurno(int idTurno, String descripcion, Time horaEntrada, Time horaSalida, Time horaInicioDescanso, int duracion) {
+		Turno t = getTurno(idTurno);
+		if (t==null) return false;
+		t.setDescripcion(descripcion);
+		t.setHoraEntrada(new Time(horaEntrada.getTime()));
+		t.setHoraSalida(new Time(horaSalida.getTime()));
+		t.setHoraDescanso(new Time(horaInicioDescanso.getTime()));
+		t.setTDescanso(duracion);
+		modifyCache(t, "Turno");
+		return true;
+	}
+	
 	/**
 	 * Este hilo conecta con la base de datos.
 	 * 
