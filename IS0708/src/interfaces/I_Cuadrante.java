@@ -261,6 +261,10 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		return turno;
 	}
 	
+	public void setTurno(Turno t) {
+		turno = new I_Turno(t);
+	}
+	
 	/**
 	 * Configura un composite para mostrar un cuadrante.
 	 */
