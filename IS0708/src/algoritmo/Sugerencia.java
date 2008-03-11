@@ -124,10 +124,20 @@ public class Sugerencia {
 		return cadena;
 	}
 	
-	public int puntuacion(){
+	/*public int puntuacion(){
 		int resul=0;
 		resul=(horaFin.getHours()-horaIni.getHours())*60+(horaFin.getMinutes()-horaIni.getMinutes());
 		resul=resul*(faltas/minimo);
+		return resul;
+	}*/
+	
+	public double puntuacion () {
+		double resul=0;
+		double faltasD=(double)faltas;
+		double minD=(double)minimo;
+		resul=(horaFin.getHours()-horaIni.getHours())*60+(horaFin.getMinutes()-horaIni.getMinutes());
+		resul=resul/60.0; //para hacer calculos con horas
+		resul=resul*(faltasD/minD);
 		return resul;
 	}
 	
