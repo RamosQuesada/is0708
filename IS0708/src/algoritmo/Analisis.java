@@ -123,7 +123,7 @@ public class Analisis {
 	
 	
 	public ArrayList<String>[] generarResumen(){
-		ArrayList<String>[] textos = null;
+		ArrayList<String>[] textos = new ArrayList[dias];
 		for (int i=0;i<dias;i++){
 			textos[i]=new ArrayList<String>();			
 		}
