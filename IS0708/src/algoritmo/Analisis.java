@@ -22,7 +22,6 @@ public class Analisis {
 			sugerencias[i]=new ArrayList<Sugerencia>();			
 		}
 		recorrido(cuadrante,estructura);
-		
 	}
 	
 	public void recorrido (Cuadrante cuadrante, Estructura estructura){
@@ -31,10 +30,8 @@ public class Analisis {
 			for (int j=0;j<24;j++){
 				t.setHours(j);
 				
-/**/			//for (int k=-5;k<60;k=k+5){
 				for (int k=0;k<60;k=k+5){
 					t.setMinutes(k);
-					//int minimoDia=0;//buscar como se saca el minimo de trabajadores en un dia
 					int minimoDia=estructura.getCal().getMinHora(i, j);
 					Sugerencia sugAnterior=null;
 					//si ya hay alguna sugerencias del dia, se coge la ultima, si no se queda null
