@@ -705,38 +705,17 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					inicioY+((empActVistaMes)*altoFila)-(alto-(altoFila)),altoFila);
 			
 			//Util.darBrillo(display, gc, r, g, b,30);
-			//Lineas grises
-			gc.setForeground(new Color(display,210,210,210));
-			//Vertical
-			gc.drawLine(margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
-					inicioY+((empActVistaMes)*altoFila),
-					margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
-					inicioY+((empActVistaMes)*altoFila)+altoFila-1);
-			//Horizontal
-			gc.drawLine(margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
-					inicioY+((empActVistaMes)*altoFila),
-					margenIzq+margenNombres+((diaActVistaMes)*anchoDia)+anchoDia-1,
-					inicioY+((empActVistaMes)*altoFila));
-			//Lineas negras
-			gc.setForeground(new Color(display,50,50,50));
-			//Vertical
-			gc.drawLine(margenIzq+margenNombres+((diaActVistaMes)*anchoDia)+anchoDia,
-					inicioY+((empActVistaMes)*altoFila),
-					margenIzq+margenNombres+((diaActVistaMes)*anchoDia)+anchoDia,
-					inicioY+((empActVistaMes)*altoFila)+altoFila);
-			//Horizontal
-			gc.drawLine(margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
-					inicioY+((empActVistaMes)*altoFila)+altoFila,
-					margenIzq+margenNombres+((diaActVistaMes)*anchoDia)+anchoDia,
-					inicioY+((empActVistaMes)*altoFila)+altoFila);
+			dibujaBoton(gc,margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
+					inicioY+((empActVistaMes)*altoFila),anchoDia,altoFila);
 		}
 		if (turnoSeleccionado!=null) {
 			gc.setBackground(new Color(display,120,170,120));
-			gc.drawRectangle(cursor.x-anchoDia/2, cursor.y-altoFila/2, anchoDia, altoFila);
-			gc.fillRectangle(cursor.x-anchoDia/2, cursor.y-altoFila/2, anchoDia-2, altoFila-2);
+			//gc.drawRectangle(cursor.x-anchoDia/2, cursor.y-altoFila/2, anchoDia, altoFila);
+			gc.fillRectangle(cursor.x-anchoDia/2, cursor.y-altoFila/2, anchoDia, altoFila);
 			if (anchoDia>14)
 				gc.drawText(String.valueOf(turnoSeleccionado.getIdTurno()),cursor.x-anchoDia/2 + (7/2),cursor.y - altoFila/2 + 2,altoFila);
-				gc.setBackground(new Color(display,255,255,255));
+			dibujaBoton(gc,cursor.x-anchoDia/2,cursor.y-altoFila/2,anchoDia,altoFila);
+			gc.setBackground(new Color(display,255,255,255));
 		}
 	}
 	
@@ -831,6 +810,21 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			//gc.drawText(String.valueOf(iCuad[j].get(k).getTurno().getAbreviatura().charAt(0)),margenIzq + margenNombres + j*anchoDia + (7/2), margenSup + 20 + i*altoFila + 2,altoFila);
 			gc.drawText(String.valueOf(iCuad[j].get(empl).getTurno().getIdTurno()),margenIzq + margenNombres + j*anchoDia + (7/2),margenSup + 20 + i*altoFila + 2,altoFila);
 		gc.setBackground(new Color(display,255,255,255));
+	}
+	
+	public void dibujaBoton(GC gc,int iX,int iY,int ancho,int alto) {
+		//Lineas grises
+		gc.setForeground(new Color(display,210,210,210));
+		//Vertical
+		gc.drawLine(iX,iY,iX,iY+alto);
+		//Horizontal
+		gc.drawLine(iX,iY,iX+ancho,iY);
+		//Lineas negras
+		gc.setForeground(new Color(display,50,50,50));
+		//Vertical
+		gc.drawLine(iX+ancho,iY,iX+ancho,iY+alto);
+		//Horizontal
+		gc.drawLine(iX+1,iY+alto,iX+ancho-1,iY+alto);
 	}
 	
 	/**
