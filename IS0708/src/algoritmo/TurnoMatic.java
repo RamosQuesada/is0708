@@ -145,7 +145,7 @@ public class TurnoMatic {
 			colocaNoFijos(dispoDia, reserDia, emplDia, i); 
 		}
 		
-		//controlador.insertCuadrante(cuadrante);
+		controlador.insertCuadrante(cuadrante);
 		Resumen resumen = new Resumen(Util.dameDias(mes,anio), cuadrante, estruc);
 		ResultadoTurnoMatic resultado = new ResultadoTurnoMatic(cuadrante, resumen);
 		return resultado;
