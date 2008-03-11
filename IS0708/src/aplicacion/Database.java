@@ -1000,19 +1000,20 @@ public class Database extends Thread {
 	}
 	
 	/**
-	 * Borra el periodo de un mes indicado por los parámetros de entrada
+	 * Borra el periodo de un mes indicado por los parámetros de
 	 * @param mes identifica el mes del periodo a borrar
 	 * @param anio identifica el anio del periodo a borrar
+	 * @param dep identifica el departamento 
 	 * @return si se ha realizado correctamente la eliminacion
 	 */
-	public boolean borraMesTrabaja(int mes, int anio){
+	public boolean borraMesTrabaja(int mes, int anio,String dep){
 		String fechaIni = anio +"-"+ mes +"-"+ "01";
 		String fechaFin = anio +"-"+ mes +"-"+ "31";
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
 			st.executeUpdate("DELETE FROM Trabaja WHERE Fecha >='" + fechaIni + "' and Fecha <='" +
-					fechaFin +"';" );
+					fechaFin +"' and NumVendedor in (SELECT NumVendedor FROM DepartamentoUsuario D where NombreDepartamento = '"+dep +"');" );
 			correcto = true;
 		} catch (SQLException e) {
 			System.err.println("Error al Borrar el mes de La tabla trabaja");			
