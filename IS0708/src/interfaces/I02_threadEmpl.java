@@ -32,7 +32,7 @@ public class I02_threadEmpl extends Thread{
 		}}
 		corriendo=true;
 		this.cuadrante.ponRedibujar(true);
-			Date fechaActual;
+			//Date fechaActual;
 			cuadrante.ponHorasFin(new ArrayList<Float>());
 			cuadrante.ponHorasInicio(new ArrayList<Float>());
 			//cuadrante.horaFinDescanso = new ArrayList<Float>();
@@ -41,16 +41,37 @@ public class I02_threadEmpl extends Thread{
 			Date fecha=cuadrante.dameFecha();
 			if(fecha==null){
 			fecha=new Date(System.currentTimeMillis());}
+			
+			
 			GregorianCalendar calendario = new GregorianCalendar();	
 			calendario.set(GregorianCalendar.DAY_OF_MONTH, fecha.getDate());
-			calendario.set(GregorianCalendar.MONTH, fecha.getMonth());
+			calendario.set(GregorianCalendar.MONTH, convertir(fecha.getMonth()));
 			calendario.set(GregorianCalendar.YEAR, fecha.getYear());
+			
+
+			
+			
 			//System.out.println("dia "+cuadrante.fecha.getDate()+"mes "+cuadrante.fecha.getMonth()+"año "+cuadrante.fecha.getYear());
 			int numDias=0;
-			while((calendario.get(GregorianCalendar.DAY_OF_WEEK)!=6)&&(!finalizar)){
-				calendario.add(Calendar.DATE, -1);
+			int mes_inicial=calendario.get(GregorianCalendar.MONTH);
+			calendario.setFirstDayOfWeek(GregorianCalendar.SUNDAY);
+			while((calendario.get(GregorianCalendar.DAY_OF_WEEK)!=GregorianCalendar.FRIDAY)&&(!finalizar)){
+			//	calendario.add(GregorianCalendar.DATE, -1);
+				if(calendario.get(GregorianCalendar.DATE)==1){
+					calendario.roll(GregorianCalendar.MONTH, -1);
+				}
+				calendario.roll(GregorianCalendar.DATE, -1);
 				numDias++;
 			}
+
+			
+			
+			int mes_final=calendario.get(GregorianCalendar.MONTH);
+			boolean cambio=false;
+			if(mes_inicial!=mes_final){
+				cambio=true;
+			}
+			
 			cuadrante.ponAvance(4);
 			//__yo cuadrante.tiposTurno= cuadrante.vista.getControlador().getListaTurnosEmpleados();
 			//cuadrante.tiposTurno=cuadrante.vista.getTurnos();
@@ -66,14 +87,25 @@ public class I02_threadEmpl extends Thread{
 				if(cont>=5){
 					cuadrante.ponAvance(1);
 				}
-				fecha= Date.valueOf(Util.aFormatoDate(Integer.toString(
-					calendario.get(GregorianCalendar.YEAR)),
-					Integer.toString(
-						calendario.get(GregorianCalendar.MONTH)),
-					Integer.toString(
-						calendario.get(GregorianCalendar.DATE)+cont+1)
-					));
-
+				int cont2=cont;
+//				if(mes_inicial<mes_final){
+//					cont2=cont+1;
+//				}else
+//				if(mes_final>mes_inicial){
+//					cont2=cont+1;
+//				}else{
+//					cont2=cont;
+//				}
+				
+				
+		//		fecha= Date.valueOf(Util.aFormatoDate(Integer.toString(
+		//			calendario.get(GregorianCalendar.YEAR)),
+		//			Integer.toString(
+		//				calendario.get(GregorianCalendar.MONTH)),
+		//			Integer.toString(
+		//				calendario.get(GregorianCalendar.DATE))
+		//			));
+			
 				
 				//ESPERA A QUE SE CARGUE LA CACHE
 				while((!(cuadrante.dameVista()).isCacheCargada())&&(!finalizar)){
@@ -91,9 +123,14 @@ public class I02_threadEmpl extends Thread{
 				
 				ArrayList<Trabaja> lista_trabaja=new ArrayList<Trabaja>();
 				try{
-					
+					int dia=calendario.get(GregorianCalendar.DAY_OF_MONTH);
+					int ano=calendario.get(GregorianCalendar.YEAR)+1900;
+					int mes=calendario.get(GregorianCalendar.MONTH);
 				// lista_trabaja=cuadrante.vista.getListaTrabajaDia(cuadrante.fecha.getDate(), cuadrante.fecha.getMonth()+2, 2008, cuadrante.empleado.getDepartamentoId());
-					 lista_trabaja=(cuadrante.dameVista()).getListaTrabajaDia(fecha.getDate(), fecha.getMonth()+2, fecha.getYear()+1900, cuadrante.dameEmpleado().getDepartamentoId());
+				//	 lista_trabaja=(cuadrante.dameVista()).getListaTrabajaDia(fecha.getDate(), mes, ano, cuadrante.dameEmpleado().getDepartamentoId());
+					 lista_trabaja=(cuadrante.dameVista()).getListaTrabajaDia(dia, mes+1, ano, cuadrante.dameEmpleado().getDepartamentoId());
+					 
+					
 				}
 				catch(Exception e){
 			//		System.out.println("fecha "+cuadrante.fecha.getDate()+" "+cuadrante.fecha.getMonth()+" "+"2008");	
@@ -187,6 +224,8 @@ public class I02_threadEmpl extends Thread{
 				}
 			cont++;
 		}
+				
+				calendario.add(GregorianCalendar.DATE, 1);
 		}
 			corriendo=false;
 			
@@ -197,4 +236,22 @@ public class I02_threadEmpl extends Thread{
 			
 	}
 
+	public int convertir(int mes){
+		
+		int devolver=0;
+		if(mes==0){devolver= GregorianCalendar.JANUARY;}
+		if(mes==1){devolver= GregorianCalendar.FEBRUARY;}
+		if(mes==2){devolver= GregorianCalendar.MARCH;}
+		if(mes==3){devolver= GregorianCalendar.APRIL;}
+		if(mes==4){devolver= GregorianCalendar.MAY;}
+		if(mes==5){devolver= GregorianCalendar.JUNE;}
+		if(mes==6){devolver= GregorianCalendar.JULY;}
+		if(mes==7){devolver= GregorianCalendar.AUGUST;}
+		if(mes==8){devolver= GregorianCalendar.SEPTEMBER;}
+		if(mes==9){devolver= GregorianCalendar.OCTOBER;}
+		if(mes==10){devolver= GregorianCalendar.NOVEMBER;}
+		if(mes==11){devolver= GregorianCalendar.DECEMBER;}
+		
+		return devolver;
+	}
 }
