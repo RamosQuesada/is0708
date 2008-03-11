@@ -34,12 +34,12 @@ public class Analisis {
 /**/			//for (int k=-5;k<60;k=k+5){
 				for (int k=0;k<60;k=k+5){
 					t.setMinutes(k);
-					//int minimoDia=0;//TODO buscar como se saca el minimo de trabajadores en un dia
+					//int minimoDia=0;//buscar como se saca el minimo de trabajadores en un dia
 					int minimoDia=estructura.getCal().getMinHora(i, j);
 					Sugerencia sugAnterior=null;
 					//si ya hay alguna sugerencias del dia, se coge la ultima, si no se queda null
 					if (!sugerencias[i].isEmpty()){
-						sugAnterior=sugerencias[i].get(sugerencias[i].size());
+						sugAnterior=sugerencias[i].get(sugerencias[i].size()-1);
 					}
 					
 					//se comprueba cuantos trabajadores hay en un minuto concreto
@@ -57,7 +57,7 @@ public class Analisis {
 					// en caso contrario, se amplia en 5 minutos la franja de la sugerencia
 					if (contador<minimoDia){
 						if((sugAnterior!=null)&&(minimoDia-contador!=sugAnterior.getFaltas()) && (sugAnterior.getTipo()!=tipoFalta(contador,minimoDia))){		
-							Sugerencia sug=new Sugerencia(minimoDia-contador,minimoDia, t,new Time(t.getHours(),k,0),i,tipoFalta(contador,minimoDia));
+							Sugerencia sug=new Sugerencia(minimoDia-contador,minimoDia,t,new Time(t.getHours(),k,0),i,tipoFalta(contador,minimoDia));
 							sugerencias[i].add(sug);
 						}
 						else{
@@ -112,8 +112,8 @@ public class Analisis {
 	
 	public int tipoFalta(int contador, int minimo){
 		int tipo=0;
-		if (contador==minimo){tipo=2;}
-		else{if (contador*2>=minimo){tipo=1;}}
+		if (contador==0){tipo=2;}
+		else {if (contador<=minimo/2){tipo=1;}}
 		return tipo;
 	}
 	
