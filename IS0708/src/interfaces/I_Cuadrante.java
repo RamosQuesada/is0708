@@ -456,7 +456,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					cursor(0);
 					bPorMes.setSelection(false);
 					bPorDia.setSelection(true);
-					//setDia(diaActVistaMes+1);
+					setDia(diaActVistaMes+1);
 					//System.out.println("Dia "+diaActVistaMes);
 					diaValido=false;
 				}
