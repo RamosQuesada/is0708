@@ -612,8 +612,8 @@ public class I09_1_Creacion_contratos {
 							messageBox2.open();
 						} else {
 							// CAMBIAR
-							//boolean okis = vista.eliminaTurno(t.getIdTurno());
-							boolean okis = vista.getControlador().eliminaTurno(t);
+							boolean okis = vista.eliminaTurno(t.getIdTurno());
+							//boolean okis = vista.getControlador().eliminaTurno(t);
 							if (okis) {
 								int index = listaTurnosContrato
 										.getSelectionIndex();
@@ -733,13 +733,13 @@ public class I09_1_Creacion_contratos {
 							shell.dispose();
 						} else {
 							// CAMBIAR
-//							boolean okis = vista.modificarContrato(idContrato,
-//									turnoInicial, nombre, patron,
-//									longCiclo, sueldo, tipo);
-							boolean okis = vista.getControlador()
-									.modificarContrato(idContrato,
-											turnoInicial, nombre, patron,
-											longCiclo, sueldo, tipo);
+							boolean okis = vista.modificarContrato(idContrato,
+									turnoInicial, nombre, patron,
+									longCiclo, sueldo, tipo);
+//							boolean okis = vista.getControlador()
+//									.modificarContrato(idContrato,
+//											turnoInicial, nombre, patron,
+//											longCiclo, sueldo, tipo);
 							contratoModificado = new Contrato(nombre,
 									idContrato, turnoInicial, longCiclo,
 									patron, sueldo, tipo);
