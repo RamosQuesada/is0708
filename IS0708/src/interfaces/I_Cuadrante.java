@@ -485,6 +485,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				setDia(diaActVistaMes+1);
 				//System.out.println("Dia "+diaActVistaMes);
 				diaValido=false;
+				turnoSeleccionado=null;
 			};
 		};
 		mouseMoveListenerCuadrMensual = new MouseMoveListener() {
