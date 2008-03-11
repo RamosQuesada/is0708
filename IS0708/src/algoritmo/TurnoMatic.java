@@ -162,9 +162,10 @@ public class TurnoMatic {
 		ArrayList<Empleado> e1=ordenarLista(dispo,1);
 		ArrayList<Empleado> e2=ordenarLista(reser,2);
 		
-		if (comprobaciones(dispo,dia))
-			vueltaAtrasMarcaje(e1,e2,0,dia);
-		else
+		if (comprobaciones(dispo,dia)) {
+			if (!vueltaAtrasMarcaje(e1,e2,0,dia))
+				colocarPreferidos(dispo,dia);
+		} else
 			colocarPreferidos(dispo,dia);
 	}
 	
@@ -338,7 +339,6 @@ public class TurnoMatic {
 		fHoraria.remove(i+1); //elimina el turno favorito de la posicion inicial en la que estaba (i+1 porque ha quedado desplazado)
 		ArrayList<Time> fHorariasDpto = estruc.getTrozosHorario();
 		Turno franjaHoraria;
-		boolean hecho=false;
 		while (fHoraria.size()!=0) {
 			franjaHoraria = fHoraria.get(0);
 			ponerEmpleado (dispo.get(k), franjaHoraria.getHoraEntrada(), franjaHoraria.getHoraSalida(), franjaHoraria, dia);
@@ -363,7 +363,7 @@ public class TurnoMatic {
 				dispo.get(k).setFelicidad(dispo.get(k).getFelicidad()-1);
 			fHoraria.remove(0);
 		}
-		return hecho;
+		return false;
 	}
 	
 	/**
