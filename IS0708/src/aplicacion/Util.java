@@ -404,5 +404,21 @@ public class Util {
 		gc.setForeground(new Color(display,r, g, b));
 	}
 	
+	/**
+	 * Cambia el color del pincel (foreground) sin exceder los límites de Color.
+	 * Si se excede un límite, se pone a 0 o 255, respectivamente.
+	 * @param gc	El GC del que cambiar el color
+	 * @param r		Valor del componente rojo
+	 * @param g		Valor del componente verde
+	 * @param b		Valor del componente azul
+	 * @see #cambiarRelleno(GC, int, int, int)
+	 */
+	public static void darBrillo (Display display, GC gc, int r, int g, int b,int brillo) {
+		// Controlar límites de colores
+		if (r>255-brillo) r=0; else r+=brillo;
+		if (g>255-brillo) g=0; else g+=brillo;
+		if (b>255-brillo) b=0; else b+=brillo;
+		gc.setBackground(new Color(display,r, g, b));
+	}
 	
 }
