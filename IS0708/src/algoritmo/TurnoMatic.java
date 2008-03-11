@@ -146,7 +146,6 @@ public class TurnoMatic {
 					n++;
 				}
 			}
-
 			colocaNoFijos(dispoDia, reserDia, emplDia, i/*, cu*/);//se colocan para cada dia i del mes 
 		}
 		
