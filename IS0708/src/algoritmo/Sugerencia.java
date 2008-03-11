@@ -119,8 +119,8 @@ public class Sugerencia {
 			strAux2=Integer.toString(aux2);
 		
 		String cadena="El dia "+(dia+1)+", desde las "+horaIni.getHours()+":"+strAux1+" hasta las "+horaFin.getHours()+":"+strAux2+", faltan "+faltas+" empleados.";
-		if (tipo==1){cadena=cadena+"Falta mas del 50% del personal.";}
-		else{if(tipo==2){cadena=cadena+"Situación crítica. Falta todo el personal.";}}
+		if (tipo==1){cadena=cadena+" Falta mas del 50% del personal.";}
+		else{if(tipo==2){cadena=cadena+" Situación crítica. Falta todo el personal.";}}
 		return cadena;
 	}
 	
