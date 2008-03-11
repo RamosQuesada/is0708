@@ -460,6 +460,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					turnoSeleccionado = iCuad[diaActVistaMes].get(empActVistaMes-1).getTurno();
 				}
 			};
+			
 			public void mouseUp(MouseEvent e){
 				if (e.button == 1 &&(diaValido)) {
 					Turno turnoSeleccionado2=iCuad[diaActVistaMes].get(empActVistaMes-1).getTurno();
@@ -469,10 +470,11 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 						Turno.intercambiar(turnoSeleccionado, turnoSeleccionado2);
 						calcularTamano();						
 					}
-					turnoSeleccionado = null;
 				}
+				turnoSeleccionado = null;
 				canvas.redraw();
 			};
+			
 			public void mouseDoubleClick(MouseEvent e){
 				//Volver a la vista diaria con el dia seleccionado
 				diario=true;
@@ -673,7 +675,6 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		gc.drawImage(fondo, 0, 0);
 		if (diaValido){
 			int alto=39;
-			//int ancho=98;
 			//Sacamos la informacion del turno
 			int idTurno=iCuad[diaActVistaMes].get(empActVistaMes-1).getTurno().getIdTurno();
 			String idTurnoS=("Id. Turno: "+String.valueOf(idTurno));
@@ -776,27 +777,19 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				ArrayList<Empleado> empleados=vista.getEmpleados();
 				for (int i=0; i < empleados.size(); i++) {
 					aplicacion.Empleado e=empleados.get(i);
-					//if (e.getDepartamentoId()==departamento) {
 					gcFondo.drawText(e.getNombre(), margenIzq, margenSup + 20 + i*altoFila);
 					for (int j=0; j < iCuad.length; j++) {
-						//Primero se pinta el rectangulo
-						gcFondo.drawRectangle(margenIzq + margenNombres + j*anchoDia, margenSup + 20 + i*altoFila, anchoDia, altoFila);
 						//Despues calculamos el turno a visualizar
 						Boolean encontrado=false;
 						int k=0;
 						while (!encontrado && k<iCuad[j].size()) {
 							if (iCuad[j].get(k).getEmpl().getEmplId()==e.getEmplId()) {	
-								gcFondo.setBackground(new Color(display,120,170,120));
-								gcFondo.fillRectangle(margenIzq + margenNombres + j*anchoDia+2, margenSup + 20 + i*altoFila+2, anchoDia-2, altoFila-2);
-								if (anchoDia>14)
-									//gc.drawText(String.valueOf(iCuad[j].get(k).getTurno().getAbreviatura().charAt(0)),margenIzq + margenNombres + j*anchoDia + (7/2), margenSup + 20 + i*altoFila + 2,altoFila);
-									gcFondo.drawText(String.valueOf(iCuad[j].get(k).getTurno().getIdTurno()),margenIzq + margenNombres + j*anchoDia + (7/2),margenSup + 20 + i*altoFila + 2,altoFila);
-								gcFondo.setBackground(new Color(display,255,255,255));
+								
+								dibujaCasilla(gcFondo, i, j, k, new Color(display,120,170,120));
 								encontrado=true;
 							}
 							k++;
 						}
-					//}
 					}
 				}
 			}
@@ -805,6 +798,19 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		gc.drawImage(fondo,0,0);
 		
 	}
+	
+	public void dibujaCasilla(GC gc, int i, int j, int empl, Color color){
+		//Primero se pinta el rectangulo
+		gc.setForeground(new Color(display,0,0,0));
+		gc.drawRectangle(margenIzq + margenNombres + j*anchoDia, margenSup + 20 + i*altoFila, anchoDia, altoFila);
+		gc.setBackground(color);
+		gc.fillRectangle(margenIzq + margenNombres + j*anchoDia+2, margenSup + 20 + i*altoFila+2, anchoDia-2, altoFila-2);
+		if (anchoDia>14)
+			//gc.drawText(String.valueOf(iCuad[j].get(k).getTurno().getAbreviatura().charAt(0)),margenIzq + margenNombres + j*anchoDia + (7/2), margenSup + 20 + i*altoFila + 2,altoFila);
+			gc.drawText(String.valueOf(iCuad[j].get(empl).getTurno().getIdTurno()),margenIzq + margenNombres + j*anchoDia + (7/2),margenSup + 20 + i*altoFila + 2,altoFila);
+		gc.setBackground(new Color(display,255,255,255));
+	}
+	
 	/**
 	 * Dibuja un fondo distinguido para el empleado seleccionado, basado en el color del empleado
 	 * pero más pálido.
