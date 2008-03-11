@@ -690,7 +690,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					inicioY+((empActVistaMes)*altoFila)-alto+2,altoFila);
 			gc.drawText(descTurno,
 					inicioX+((diaActVistaMes)*anchoDia)+2,
-					inicioY+((empActVistaMes)*altoFila)-(alto-(altoFila+2)),altoFila);
+					inicioY+((empActVistaMes)*altoFila)-(alto-(altoFila)),altoFila);
+			
 			Util.darBrillo(display, gc, r, g, b,30);
 			
 			gc.fillRectangle(margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
