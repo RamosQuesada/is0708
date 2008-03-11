@@ -171,8 +171,8 @@ public class I09_1_1_Creacion_turnos {
 				}
 				else{
 					//CAMBIAR
-					//boolean okis=vista.modificarTurno(idTurno,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso());
-					boolean okis=vista.getControlador().modificarTurno(idTurno,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso());
+					boolean okis=vista.modificarTurno(idTurno,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso());
+					//boolean okis=vista.getControlador().modificarTurno(idTurno,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso());
 					turnoModificado = new Turno(idTurno,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso());
 					if (okis){
 						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);

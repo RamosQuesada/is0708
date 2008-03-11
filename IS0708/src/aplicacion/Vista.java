@@ -203,7 +203,7 @@ public class Vista {
 	public boolean eliminaContrato(int idContrato) {
 		Contrato c = getContrato(idContrato);
 		if (c==null) return false;
-		contratos.remove(idContrato);
+		//contratos.remove(idContrato);
 		deleteCache(idContrato, "Contrato");
 		return true;
 	}
