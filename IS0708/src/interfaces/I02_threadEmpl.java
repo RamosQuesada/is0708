@@ -33,11 +33,7 @@ public class I02_threadEmpl extends Thread{
 		corriendo=true;
 		this.cuadrante.ponRedibujar(true);
 			//Date fechaActual;
-			cuadrante.ponHorasFin(new ArrayList<Float>());
-			cuadrante.ponHorasInicio(new ArrayList<Float>());
-			//cuadrante.horaFinDescanso = new ArrayList<Float>();
-			cuadrante.ponHorasFinDescanso(new ArrayList<Float>());
-			cuadrante.ponHorasComienzoDescanso(new ArrayList<Float>());
+
 			Date fecha=cuadrante.dameFecha();
 			if(fecha==null){
 			fecha=new Date(System.currentTimeMillis());}
@@ -78,6 +74,7 @@ public class I02_threadEmpl extends Thread{
 			//esperando 3...
 			cuadrante.ponAvance(3);
 			int cont=0;
+			boolean inicializado=false;
 			while (cont < 7 && (! finalizar)){
 				//si cont > 2 esperando 2..
 				if((cont>2)&&(cont<5)){
@@ -87,7 +84,6 @@ public class I02_threadEmpl extends Thread{
 				if(cont>=5){
 					cuadrante.ponAvance(1);
 				}
-				int cont2=cont;
 //				if(mes_inicial<mes_final){
 //					cont2=cont+1;
 //				}else
@@ -119,6 +115,14 @@ public class I02_threadEmpl extends Thread{
 					}
 				}
 				if((cuadrante.dameVista()).isCacheCargada()){
+				if(inicializado==false){
+					cuadrante.ponHorasFin(new ArrayList<Float>());
+					cuadrante.ponHorasInicio(new ArrayList<Float>());
+					//cuadrante.horaFinDescanso = new ArrayList<Float>();
+					cuadrante.ponHorasFinDescanso(new ArrayList<Float>());
+					cuadrante.ponHorasComienzoDescanso(new ArrayList<Float>());
+					inicializado=true;
+				}
 	//CACHE NO QUITAR MAS UNO DE MES ARRIBA...
 				
 				ArrayList<Trabaja> lista_trabaja=new ArrayList<Trabaja>();
@@ -222,8 +226,9 @@ public class I02_threadEmpl extends Thread{
 					cuadrante.anadeHoraFinDescanso(cont, 0.0f);
 //					cuadrante.horaFinDescanso.add(cont,0.0f);
 				}
-			cont++;
+			
 		}
+				cont++;
 				
 				calendario.add(GregorianCalendar.DATE, 1);
 		}

@@ -99,7 +99,7 @@ public class I02_cuadrEmpl extends Thread{
 				}
 			});
 			try {
-				sleep(100);
+				sleep(3000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
