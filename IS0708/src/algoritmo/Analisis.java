@@ -81,14 +81,17 @@ public class Analisis {
 			/*if (calcularValorFranja(getSugerenciasDia(i),1)>=12000){cont1++;}
 			if (calcularValorFranja(getSugerenciasDia(i),2)>=15000){cont2++;}
 			if (calcularValorFranja(getSugerenciasDia(i),3)>=15000){cont3++;}*/
-			if (calcularValorFranja(getSugerenciasDia(i),1)>=5){cont1++;}
-			if (calcularValorFranja(getSugerenciasDia(i),2)>=6){cont2++;}
-			if (calcularValorFranja(getSugerenciasDia(i),3)>=6){cont3++;}
+			if (calcularValorFranja(getSugerenciasDia(i),1)>=0.5){cont1++;}
+			if (calcularValorFranja(getSugerenciasDia(i),2)>=0.5){cont2++;}
+			if (calcularValorFranja(getSugerenciasDia(i),3)>=0.5){cont3++;}
 		}
 		
-		if(cont1>=10){resul.add("Se repiten faltas en el periodo de mañana (9h a 13h). Se recomienda contratar gente.");}
+		/*if(cont1>=10){resul.add("Se repiten faltas en el periodo de mañana (9h a 13h). Se recomienda contratar gente.");}
 		if(cont2>=10){resul.add("Se repiten faltas en el periodo de mediodia (13h a 18h). Se recomienda contratar gente.");}
-		if(cont3>=10){resul.add("Se repiten faltas en el periodo de tarde (18h a 23h). Se recomienda contratar gente.");}
+		if(cont3>=10){resul.add("Se repiten faltas en el periodo de tarde (18h a 23h). Se recomienda contratar gente.");}*/
+		if(cont1>=5){resul.add("Se repiten faltas en el periodo de mañana (9h a 13h). Se recomienda contratar gente.");}
+		if(cont2>=6){resul.add("Se repiten faltas en el periodo de mediodia (13h a 18h). Se recomienda contratar gente.");}
+		if(cont3>=6){resul.add("Se repiten faltas en el periodo de tarde (18h a 23h). Se recomienda contratar gente.");}
 		
 		return resul;
 	}
