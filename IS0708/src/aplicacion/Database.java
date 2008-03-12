@@ -738,6 +738,22 @@ public class Database extends Thread {
 	}
 
 	/**
+	 * Borra un empleado de la BD
+	 * @param NumVendedor
+	 * @return
+	 */
+	public boolean borraEmpleado(int NumVendedor) {
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("DELETE FROM USUARIO WHERE NumVendedor=" + NumVendedor);
+			correcto = true;
+		} catch (SQLException e) {
+			System.err.println("Error al Borrar el turno");
+		}
+		return correcto;
+	}
+	/**
 	 * Método que inserta un mensaje en la base de datos
 	 * 
 	 * @param remitente
