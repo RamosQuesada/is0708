@@ -22,6 +22,7 @@ import java.util.ResourceBundle;
 import org.eclipse.swt.graphics.*;
 
 import aplicacion.Contrato;
+import aplicacion.Empleado;
 import aplicacion.Turno;
 import aplicacion.Vista;
 
@@ -251,12 +252,62 @@ public class I09_1_Creacion_contratos {
 		private Shell padre = null;
 
 		private Shell shell = null;
-
-		private final int longCicloDefault = 14;
+		
+		private Turno turnoElegido=null;
+		
+		//private boolean datosInterfazCargados = false;
+		
+		//private List listaTurnos;
+		
+		public Turno getTurnoElegido(){
+			return turnoElegido;
+		}
+		
+		/**
+		 * Implementa un hilo que coge los empleados del departamento del servidor.
+		 */
+//		public void run() {
+//			// boolean run = true;
+//			try {
+//				while (!vista.isCacheCargada()) {
+//					sleep(5000);
+//				}
+//			} catch (Exception e) {
+//			}			
+//			datosInterfazCargados = true;
+//			// while (run) {
+//
+//			if (listaTurnos.isDisposed()) {
+//			} // run = false;
+//			else {
+//				if (!listaTurnos.isDisposed()) {
+//					// Actualizar tabla
+//					if (!listaTurnos.isDisposed()) {
+//						listaTurnos.getDisplay().asyncExec(new Runnable() {
+//							public void run() {
+//								mostrarTurnos();
+//							}
+//						});
+//					}
+//				}
+//				try {
+//					// TODO Espera 10 segundos (¿cómo lo dejamos?)
+//					sleep(10000);
+//				} catch (Exception e) {
+//				}
+//			}
+//		}
+		
+//		private void mostrarTurnos() {
+//			if (vista.isCacheCargada() && datosInterfazCargados) {
+//				// listaTurnos.removeAll();
+//				for (int i = 0; i < vista.getTurnos().size(); i++)
+//					listaTurnos.add(vista.getTurnos().get(i).getIdTurno() + " " + vista.getTurnos().get(i).getDescripcion());
+//			}
+//		}
 
 		public ElegirTurno(final Shell padre) {
 			this.padre = padre;
-			// vista.getControlador().abrirConexionBD();
 			shell = new Shell(SWT.APPLICATION_MODAL | SWT.CLOSE);
 			shell.setLayout(new GridLayout(2, false));
 			shell.setText(bundle.getString("I09_Elegir_turno"));
@@ -279,7 +330,10 @@ public class I09_1_Creacion_contratos {
 			final List list = new List(shell, SWT.BORDER | SWT.V_SCROLL);
 			list.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2,
 					4));
-			ArrayList<Turno> turnos = vista.getTurnos();
+			//start()
+			//CAMBIAR esto por el array de turnos de la vista directamente????
+			//pensar si hacer que herede d thread
+			final ArrayList<Turno> turnos = vista.getTurnos();
 			for (int i = 0; i < turnos.size(); i++)
 				list.add(turnos.get(i).getIdTurno() + " "
 						+ turnos.get(i).getDescripcion());
@@ -306,12 +360,10 @@ public class I09_1_Creacion_contratos {
 			SelectionAdapter sabAceptar = new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
 					if (list.getSelectionIndex() > -1) {
-						/*
-						 * String aux=list.getItem(list.getSelectionIndex());
-						 * System.out.println(aux); //aqui coger el turno
-						 * correspondiente FALTA id=aux; shell.dispose();
-						 * listaTurnosContrato.add(id);
-						 */
+						//AQUI PILLAR el turno seleccionado del array turnos para añadirlo
+						//E INSERTARLO EN TURNOS insertados
+						turnoElegido=turnos.get(list.getSelectionIndex());						
+												
 					} else {
 						MessageBox messageBox = new MessageBox(shell,
 								SWT.APPLICATION_MODAL | SWT.ICON_INFORMATION
@@ -652,7 +704,15 @@ public class I09_1_Creacion_contratos {
 		// Listener para el bot�n de elegir turno
 		SelectionAdapter sabElegirTurno = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				new ElegirTurno(shell);
+				ElegirTurno iet=new ElegirTurno(shell);
+				Turno tElegido=iet.getTurnoElegido();
+				idsTurnosInsertados.add(tElegido.getIdTurno());
+				listaTurnosContrato.removeAll();
+				turnos.add(tElegido);
+				for (int i = 0; i < turnos.size(); i++)
+					listaTurnosContrato.add(turnos.get(i).getIdTurno()
+							+ " " + turnos.get(i).getDescripcion());
+				listaTurnosContrato.redraw();
 			}
 		};
 		bElegirTurno.addSelectionListener(sabElegirTurno);
