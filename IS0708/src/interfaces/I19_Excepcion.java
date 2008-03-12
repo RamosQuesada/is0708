@@ -19,6 +19,7 @@ import aplicacion.Vista;
 public class I19_Excepcion {
 	private Shell shell;
 	public I19_Excepcion(Vista v, Exception excepcion) {		
+		Random rnd = new Random();
 		final Vista vista = v;
 		shell = new Shell (vista.getDisplay(), SWT.CLOSE | SWT.RESIZE);
 		
@@ -35,10 +36,9 @@ public class I19_Excepcion {
 		final Label lMensaje	= new Label(cCuerpoMen, SWT.LEFT);
 		final Text tMensaje = new Text(cCuerpoMen,SWT.BORDER | SWT.WRAP);
 		tMensaje.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		Random rnd = new Random(5);
+		
 		String e = "Ha ocurrido una excepción";
 		int r = rnd.nextInt(8);
-		System.out.println(r);
 		switch (r) {
 		case 0:
 			e+= " y la aplicación ha hecho PUM.";
