@@ -28,7 +28,6 @@ public class I09_Tab_Contratos extends Thread {
 	final TabFolder tabFolder;
 	final Table tablaContratos;
 	final Image ico_cuadrante;
-	// ArrayList <Contrato> contratos = null;
 	private boolean datosInterfazCargados = false;
 
 	/**
@@ -189,33 +188,6 @@ public class I09_Tab_Contratos extends Thread {
 						// idc);
 					}
 					mostrarContratos();
-					// for(int
-					// i=0;i<vista.getListaContratosDepartamento().size();i++){
-					// TableItem tItem = new TableItem(tablaContratos,
-					// SWT.NONE);
-					// Contrato aux =
-					// vista.getListaContratosDepartamento().get(i);
-					// tItem.setText(0,
-					// Integer.toString(aux.getNumeroContrato()));
-					// ArrayList <Empleado> emps=vista.getEmpleados(null, null,
-					// aux.getNumeroContrato(),null, null, null, null);
-					// String empleados="";
-					// for (int j=0;j<emps.size();j++){
-					// Empleado emp=emps.get(j);
-					// empleados+=emp.getNombre()+" "+emp.getApellido1();
-					// if (j!=emps.size()-1) empleados+=",";
-					// }
-					// tItem.setText(1, empleados);
-					// tItem.setText(2,
-					// Integer.toString(aux.getTurnoInicial()));
-					// tItem.setText(3, aux.getNombreContrato());
-					// tItem.setText(4, aux.getPatron());
-					// tItem.setText(5,
-					// Integer.toString(aux.getDuracionCiclo()));
-					// tItem.setText(6, Double.toString(aux.getSalario()));
-					// tItem.setText(7,
-					// Integer.toString(aux.getTipoContrato()));
-					// }
 					tablaContratos.redraw();
 				}
 			}
@@ -299,37 +271,6 @@ public class I09_Tab_Contratos extends Thread {
 								vista.getListaContratosDepartamento().remove(
 										index);
 								mostrarContratos();
-								// for(int
-								// i=0;i<vista.getListaContratosDepartamento().size();i++){
-								// TableItem tItem = new
-								// TableItem(tablaContratos, SWT.NONE);
-								// Contrato aux =
-								// vista.getListaContratosDepartamento().get(i);
-								// tItem.setText(0,
-								// Integer.toString(aux.getNumeroContrato()));
-								// ArrayList <Empleado>
-								// emps=vista.getEmpleados(null, null,
-								// aux.getNumeroContrato(),null, null, null,
-								// null);
-								// String empleados="";
-								// for (int j=0;j<emps.size();j++){
-								// Empleado emp=emps.get(j);
-								// empleados+=emp.getNombre()+"
-								// "+emp.getApellido1();
-								// if (j!=emps.size()-1) empleados+=",";
-								// }
-								// tItem.setText(1, empleados);
-								// tItem.setText(2,
-								// Integer.toString(aux.getTurnoInicial()));
-								// tItem.setText(3, aux.getNombreContrato());
-								// tItem.setText(4, aux.getPatron());
-								// tItem.setText(5,
-								// Integer.toString(aux.getDuracionCiclo()));
-								// tItem.setText(6,
-								// Double.toString(aux.getSalario()));
-								// tItem.setText(7,
-								// Integer.toString(aux.getTipoContrato()));
-								// }
 								tablaContratos.redraw();
 								MessageBox messageBox2 = new MessageBox(
 										tabFolder.getShell(),
