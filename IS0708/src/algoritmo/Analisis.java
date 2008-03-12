@@ -15,14 +15,25 @@ public class Analisis {
 	private ArrayList<Sugerencia>[] sugerencias;
 	private int dias;
 	
-	public Analisis(int dias, Cuadrante cuadrante, Estructura estructura){
+	/**
+	 * Constructora con parámetros
+	 * @param dias Dias a analizar
+	 * @param cuadrante Cuadrante que ha sido generado
+	 * @param estructura Estructura correspondiente al mes
+	 */
+	public Analisis (int dias, Cuadrante cuadrante, Estructura estructura){
 		this.sugerencias=new ArrayList[dias];
 		this.dias=dias;
 		for (int i=0;i<dias;i++)
 			sugerencias[i]=new ArrayList<Sugerencia>();			
 		recorrido(cuadrante,estructura);
 	}
-	
+	 
+	/**
+	 * Método para ver faltas de personal del cuadrante generado
+	 * @param cuadrante Cuadrante generado
+	 * @param estructura Estructura correspondiente
+	 */
 	public void recorrido (Cuadrante cuadrante, Estructura estructura){
 		for (int i=0;i<dias;i++){
 			Time t=new Time(8,0,0);
@@ -69,6 +80,10 @@ public class Analisis {
 		}
 	}
 	
+	/**
+	 * Método para analizar las faltas de personal y generar el mensaje correspondiente
+	 * @return ArrayList de comentarios con respecto a la falta de personal
+	 */
 	public ArrayList<String> analizarFaltas(){
 		ArrayList<String> resul=new ArrayList<String>();
 		int cont1=0;
@@ -85,6 +100,12 @@ public class Analisis {
 		return resul;
 	}
 	
+	/**
+	 * Método para calcular el valor de las faltas de personal de un día
+	 * @param lista Lista de las sugerencias de un día
+	 * @param parte Parte del día para la que se calcula el valor
+	 * @return Puntuación del día
+	 */
 	public double calcularValorFranja(ArrayList<Sugerencia> lista,int parte){
 		double resul=0;
 		for (int i=0;i<lista.size();i++){
@@ -99,6 +120,13 @@ public class Analisis {
 		return resul;
 	}
 	
+	/**
+	 * Indica si una hora se encuentra incluida dentro de un perido de tiempo
+	 * @param a Hora a comprobar
+	 * @param ini Hora incial del periodo de tiempo
+	 * @param fin Hora final del periodo de tiempo
+	 * @return true si la hora está incluida dentro del periodo de tiempo
+	 */
 	public boolean compruebaHora(Time a, Time ini, Time fin){
 		boolean resultado=true;
 		if (a.before(ini)){resultado=false;}
@@ -106,6 +134,12 @@ public class Analisis {
 		return resultado;
 	}
 	
+	/**
+	 * Indica el tipo de falta dependiendo de la gente que falta durante una franja de datos
+	 * @param contador Número de personas que faltan durante una franja de tiempo
+	 * @param minimo Valor mínimo del día
+	 * @return El tipo de la falta
+	 */
 	public int tipoFalta(int contador, int minimo){
 		int tipo=0;
 		if (contador==0){tipo=2;}
@@ -113,6 +147,11 @@ public class Analisis {
 		return tipo;
 	}
 	
+	/**
+	 * Obtiene las sugerencias de un día
+	 * @param i Día del que se piden las sugerencias
+	 * @return Sugerencias del día
+	 */
 	public ArrayList<Sugerencia> getSugerenciasDia(int i){
 		return sugerencias[i];
 	}
