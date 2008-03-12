@@ -114,8 +114,7 @@ public class Vista {
 					ElementoCache e = colaEscritura.poll();
 					if (e.i==INSERTAR) {
 						if      (e.tipo.equals("Empleado" ))		insertEmpleadoBD((Empleado) e.o.get(0));
-						else if (e.tipo.equals("Cuadrante"))		controlador.insertCuadrante((Cuadrante) e.o.get(0));
-						else if (e.tipo.equals("Turno")) 			controlador.insertTurno((Turno) e.o.get(0));
+						else if (e.tipo.equals("Cuadrante"))		controlador.insertCuadrante((Cuadrante) e.o.get(0)); 			
 						else if (e.tipo.equals("TurnoContrato"))	controlador.insertTurnoPorContrato((Integer)e.o.get(0), (Integer)e.o.get(1));
 						else if (e.tipo.equals("Contrato"))			controlador.insertContrato((Contrato) e.o.get(0));
 					}
@@ -152,13 +151,15 @@ public class Vista {
 	/**
 	 * Inserta un turno en la base de datos
 	 * @param t el turno a insertar
-	 * @return false si el turno ya existe
+	 * @return el id 
 	 */
-	public boolean insertTurno(Turno t) {
-		if (getTurno(t.getIdTurno())!=null) return false;
+	public int insertTurno(Turno t) {
+		if (getTurno(t.getIdTurno())!=null) return -1;
+		int i = controlador.insertTurno(t);
+		t.setIdTurno(i);
 		turnos.add(t);
-		insertCache(t, "Turno");
-		return true;
+		return i;
+		
 	}
 	
 	/**
