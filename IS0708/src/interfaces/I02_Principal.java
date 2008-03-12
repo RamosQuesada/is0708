@@ -271,12 +271,15 @@ public class I02_Principal {
 				messageBox.setText(bundle.getString("Aviso"));
 				messageBox.setMessage(
 						bundle.getString("I02_dlg_CrearCuadrante1") 
-						+ calendario.getMonth() + "/"
+						+ calendario.getMonth()+1 + "/"
 						+ calendario.getYear() + " " +
 						bundle.getString("I02_dlg_CrearCuadrante2"));
 				if (messageBox.open()==SWT.YES) {
-					algoritmo.TurnoMatic t = new algoritmo.TurnoMatic(calendario.getMonth()+1, calendario.getYear(),vista.getControlador(), cDepartamentos.getText());
+					algoritmo.TurnoMatic t = new algoritmo.TurnoMatic(calendario.getMonth()+1, calendario.getYear(),vista, cDepartamentos.getText());
 					t.ejecutaAlgoritmo();
+					ic.setDia(calendario.getDay(), calendario.getMonth()+1,
+							calendario.getYear());
+					ic.cargarCache();
 				}
 			}
 		});
