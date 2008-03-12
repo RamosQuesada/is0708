@@ -168,7 +168,8 @@ public class Vista {
 	 * @return false si el cuadrante ya existe
 	 */
 	public boolean insertCuadrante(Cuadrante c) {
-//		if (getCuadrante(c.getMes(), c.getAnio(), c.getIdDepartamento())!=null) return false;
+		if (getCuadrante(c.getMes(), c.getAnio(), c.getIdDepartamento())!=null) 
+			cuadrantes.remove(c);
 		cuadrantes.add(c);
 		insertCache(c, "Cuadrante");
 		return true;
