@@ -275,7 +275,7 @@ public class I02_Principal {
 						+ calendario.getYear() + " " +
 						bundle.getString("I02_dlg_CrearCuadrante2"));
 				if (messageBox.open()==SWT.YES) {
-					algoritmo.TurnoMatic t = new algoritmo.TurnoMatic(calendario.getMonth(), calendario.getYear(),vista.getControlador(), cDepartamentos.getText());
+					algoritmo.TurnoMatic t = new algoritmo.TurnoMatic(calendario.getMonth()+1, calendario.getYear(),vista.getControlador(), cDepartamentos.getText());
 					t.ejecutaAlgoritmo();
 				}
 			}
