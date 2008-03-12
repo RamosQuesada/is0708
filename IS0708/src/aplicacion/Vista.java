@@ -965,4 +965,13 @@ public class Vista {
 		return numeros.contains(text);
 
 	}
+/**
+ * Función que cambia el jefe de un departamento
+ * @param text nombre del departamento
+ * @param numjefe numero del nuevo jefe
+ */
+	public void cambiarJefeDepartamento(String text, String numjefe) {
+		// TODO Auto-generated method stub by Carlos Sanchez
+		
+	}
 }

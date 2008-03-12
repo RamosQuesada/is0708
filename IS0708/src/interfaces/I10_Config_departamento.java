@@ -9,6 +9,7 @@ package interfaces;
  *******************************************************************************/
  /**draws window for to add/edid department*/
 
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -16,6 +17,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
@@ -34,7 +36,7 @@ public class I10_Config_departamento {
 	
 	private Label labName;
 	private Label labNumber;
-	private Label labBoss;
+	private Label labChooseBoss;
 	
 	private Text tName;
 	private Text tNumber;
@@ -43,7 +45,8 @@ public class I10_Config_departamento {
 	private Button butNewBoss;
 	private Button bAccept;
 	private Button bCancel;
-
+	private Button bJefe;
+	
 	private ResourceBundle bundle;
 	private I13_Elegir_empleado tNombre;
 	
@@ -96,7 +99,28 @@ public class I10_Config_departamento {
 		tName = new Text  (group, SWT.BORDER);	
 		tName.setSize(100,20);
 		tName.setText(nombre);
-		tName.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,2,1));
+		tName.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
+		
+		bJefe= new Button(group, SWT.CHECK);
+		bJefe.setText(bundle.getString("I10_cambiar_jefe"));
+		bJefe.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,2,1));
+		
+		labChooseBoss= new Label (group, SWT.NONE);
+		labChooseBoss.setText(bundle.getString("I10_elige_jefe"));
+		labChooseBoss.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,3,1));
+		
+		final Combo cmbJefes = new Combo(group, SWT.BORDER
+				| SWT.READ_ONLY);
+		cmbJefes.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+				false, 4, 1));
+		
+		ArrayList<String> array = vista.getNombreTodosJefes();
+		if (array != null) {
+			for (int i = 0; i < array.size(); i++) {
+				cmbJefes.add(array.get(i));
+			}
+		}
+		cmbJefes.select(0);
 		/*
 		labNumber = new Label (group, SWT.NONE);
 		labNumber.setText(bundle.getString("I10_lab_num"));
@@ -131,8 +155,6 @@ public class I10_Config_departamento {
 		bAccept	= new Button(shell, SWT.PUSH);
 		bAccept.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		bAccept.setText(bundle.getString("Aceptar"));
-		bAccept.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
 		
 		//CREACION DEL JEFE Y DEL DEPARTAMENTO
 		/*
@@ -172,6 +194,10 @@ public class I10_Config_departamento {
 					//cambiamos el nombre
 					System.out.println(tName.getText());
 					vista.cambiarNombreDepartamento(nombre,tName.getText());
+					if(bJefe.isEnabled()){
+						String numjefe=(cmbJefes.getText().subSequence(cmbJefes.getText().length()-8, cmbJefes.getText().length())).toString();
+						vista.cambiarJefeDepartamento(tName.getText(),numjefe);
+					}
 					shell.dispose();
 				}else{//si no se ha metido texto
 					MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
