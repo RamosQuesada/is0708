@@ -16,6 +16,7 @@ public class TurnoMatic {
 	
 	//Atributos
 	private Cuadrante cuadrante;
+	private Vista vista;
 	private Estructura estruc;
 	private int mes;
 	private int anio;
@@ -36,15 +37,16 @@ public class TurnoMatic {
 	 * @param cont Controlador de la aplicacion
 	 * El arrayList turnos es de prueba
 	 */
-	public TurnoMatic(int m, int year, Controlador cont, String idDepartamento){
-		this.controlador = cont;
+	public TurnoMatic(int m, int year, Vista vis, String idDepartamento){
+		this.vista = vis;
+		this.controlador = vista.getControlador();
 		this.idDepartamento = idDepartamento;
 		this.anio = year;
 		this.mes = m;
 	    this.listaE = this.controlador.getEmpleadosDepartamentoPruebasAlg(/*controlador.getEmpleadoActual().getEmplId(), */idDepartamento);		
 		this.contratosDep = this.controlador.getListaContratosDpto(this.idDepartamento);
 		this.turnosDep = this.controlador.getListaTurnosEmpleadosDpto(this.idDepartamento);		
-		this.estruc = new Estructura(mes, year, cont, idDepartamento, listaE);
+		this.estruc = new Estructura(mes, year, controlador, idDepartamento, listaE);
 		this.cuadrante = new Cuadrante(mes, year, idDepartamento);		
 	}
 
@@ -142,15 +144,16 @@ public class TurnoMatic {
 					n++;
 				}
 			}
-			colocaNoFijos(dispoDia, reserDia, emplDia, i); 
+			//colocaNoFijos(dispoDia, reserDia, emplDia, i); 
 		}
 		
-		controlador.insertCuadrante(cuadrante);
+		vista.insertCuadrante(cuadrante);
+		//controlador.insertCuadrante(cuadrante);
 		Resumen resumen = new Resumen(Util.dameDias(mes,anio), cuadrante, estruc);
 		ResultadoTurnoMatic resultado = new ResultadoTurnoMatic(cuadrante, resumen);
 		return resultado;
 	}
-	
+
 	/**
 	 * Método para colocar los empleados no fijos con el algoritmo vuelta atrás
 	 * @param dispo Lista de empleados disponibles que vienen del método ejecutaAlgoritmo
