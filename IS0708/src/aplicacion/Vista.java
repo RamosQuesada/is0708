@@ -149,17 +149,7 @@ public class Vista {
 		return true;
 	}
 	
-	/**
-	 * Elimina un empleado de la base de datos
-	 * @param idEmpl
-	 * @return
-	 */
-	public boolean eliminaEmpleado(int idEmpl) {
-		if (getEmpleado(idEmpl)==null) return false;
-		empleados.remove(getEmpleado(idEmpl));
-		deleteCache(idEmpl, "Empleado");
-		return true;
-	}
+	
 	/**
 	 * Inserta un turno en la base de datos
 	 * @param t el turno a insertar
@@ -229,6 +219,17 @@ public class Vista {
 		return true;
 	}
 	
+	/**
+	 * Elimina un empleado de la base de datos
+	 * @param idEmpl
+	 * @return
+	 */
+	public boolean eliminaEmpleado(int idEmpl) {
+		if (getEmpleado(idEmpl)==null) return false;
+		empleados.remove(getEmpleado(idEmpl));
+		deleteCache(idEmpl, "Empleado");
+		return true;
+	}
 	
 	/**
 	 * Elimina un turno de la base de datos
@@ -237,7 +238,7 @@ public class Vista {
 	 */
 	public boolean eliminaTurno(int idTurno) {
 		if (getTurno(idTurno)==null) return false;
-		turnos.remove(idTurno);		
+		turnos.remove(getTurno(idTurno));		
 		deleteCache(idTurno, "Turno");
 		return true;
 	}
