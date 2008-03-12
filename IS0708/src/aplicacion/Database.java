@@ -1809,9 +1809,10 @@ WHERE IdTurno IN (
 					SELECT NumVendedor FROM DepartamentoUsuario
 					WHERE NombreDepartamento = "DatosFijos"))));
 
-Otra posibilidad...
-select * from TURNOS where IdTurno in (
-	select l.IdTurno from ListaTurnosPorContrato l, CONTRATO c, USUARIO u, DepartamentoUsuario d WHERE
+Otra posibilidad, un poco menos guarra
+
+SELECT * from TURNOS WHERE IdTurno IN (
+	SELECT l.IdTurno FROM ListaTurnosPorContrato l, CONTRATO c, USUARIO u, DepartamentoUsuario d WHERE
 	l.IdContrato = c.IdContrato AND
 	c.IdContrato = u.IdContrato AND
 	u.NumVendedor = d.NumVendedor AND

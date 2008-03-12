@@ -796,7 +796,6 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 						gcFondo.drawText(String.valueOf(j+1), margenIzq + margenNombres + j*anchoDia + anchoDia/2, margenSup);
 					}
 				
-				/**********************************************************************/
 				ArrayList<Empleado> empleados=vista.getEmpleados();
 				for (int i=0; i < empleados.size(); i++) {
 					aplicacion.Empleado e=empleados.get(i);
@@ -825,7 +824,6 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	public void dibujaCasilla(GC gc, int i, int j, int empl, Color color){
 		//Primero se pinta el rectangulo
 		gc.setForeground(new Color(display,0,0,0));
-		
 		gc.drawRectangle(margenIzq + margenNombres + j*anchoDia, margenSup + 20 + i*altoFila, anchoDia, altoFila);
 		gc.setForeground(new Color(display,85,135,85));
 		if (empl!=0) {
