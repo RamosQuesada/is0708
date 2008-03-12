@@ -35,27 +35,25 @@ public class I10_Config_departamento {
 	private String nombre;
 	
 	private Label labName;
-	private Label labNumber;
 	private Label labChooseBoss;
 	
 	private Text tName;
-	private Text tNumber;
-	private Text textBoss;
 
-	private Button butNewBoss;
 	private Button bAccept;
 	private Button bCancel;
 	private Button bJefe;
 	
 	private ResourceBundle bundle;
-	private I13_Elegir_empleado tNombre;
+	
+	private Combo father;
 	
 	/** Constructor for new department */
-	public I10_Config_departamento(Shell padre, ResourceBundle bundle, Vista vista,String nombre) {
+	public I10_Config_departamento(Shell padre, ResourceBundle bundle, Vista vista,String nombre,Combo father) {
 		this.padre = padre;
 		this.bundle = bundle;
 		this.vista = vista;
 		this.nombre=nombre;
+		this.father = father;
 		createWindow();
 	}
 
@@ -192,12 +190,20 @@ public class I10_Config_departamento {
 					*/
 				if(tName.getText()!=""){
 					//cambiamos el nombre
-					System.out.println(tName.getText());
 					vista.cambiarNombreDepartamento(nombre,tName.getText());
 					if(bJefe.isEnabled()){
 						String numjefe=(cmbJefes.getText().subSequence(cmbJefes.getText().length()-8, cmbJefes.getText().length())).toString();
 						vista.cambiarJefeDepartamento(tName.getText(),numjefe);
 					}
+					father.removeAll();
+					ArrayList<String> array = vista.getNombreTodosDepartamentos();
+					if (array != null) {
+						for (int i = 0; i < array.size(); i++) {
+							father.add(array.get(i));
+						}
+					}
+					// cmbDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
+					father.select(0);
 					shell.dispose();
 				}else{//si no se ha metido texto
 					MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
