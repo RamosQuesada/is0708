@@ -437,7 +437,7 @@ public class InsertaDatosFijos {
 	public static void main(String[] args){
 		
 		//Inserta 20 nuevos departamentos para pruebas con sus datos independientes
-		InsertaDatosFijos.insertarNdepart(20);
+//		InsertaDatosFijos.insertarNdepart(20);
 		
 	}
 
