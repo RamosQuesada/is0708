@@ -156,7 +156,7 @@ public class Vista {
 	 */
 	public boolean eliminaEmpleado(int idEmpl) {
 		if (getEmpleado(idEmpl)==null) return false;
-		empleados.remove(idEmpl);
+		empleados.remove(getEmpleado(idEmpl));
 		deleteCache(idEmpl, "Empleado");
 		return true;
 	}
@@ -236,6 +236,8 @@ public class Vista {
 	 * @return false si el turno no existe
 	 */
 	public boolean eliminaTurno(int idTurno) {
+		if (getTurno(idTurno)==null) return false;
+		turnos.remove(idTurno);		
 		deleteCache(idTurno, "Turno");
 		return true;
 	}
