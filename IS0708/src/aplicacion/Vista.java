@@ -972,6 +972,9 @@ public class Vista {
  */
 	public void cambiarJefeDepartamento(String text, String numjefe) {
 		// TODO Auto-generated method stub by Carlos Sanchez
+		this.controlador.modificaDpto(text, Integer.valueOf(numjefe));
+		
+		
 		
 	}
 }
