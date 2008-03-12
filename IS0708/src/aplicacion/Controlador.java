@@ -356,8 +356,8 @@ public class Controlador {
 		return _db.insertarUsuario(empleado.getEmplId(), empleado.getNombre(),
 				empleado.getApellido1(), empleado.getApellido2(), empleado
 						.getFechaNac(), sexo, empleado.getEmail(), empleado
-						.getPassword(), grupo, Date.valueOf("0000-00-00"), Date
-						.valueOf("0000-00-00"), 0, 0, empleado.getIdioma(), 1,
+						.getPassword(), grupo, empleado.getFcontrato(), empleado
+						.getFAlta(), 0, 0, empleado.getIdioma(), 1,
 				empleado.getContratoId(), empleado.getTurnoFavorito());
 	}
 
@@ -1515,6 +1515,10 @@ public class Controlador {
 	 */
 	public boolean eliminaContratoConTurnos(int idContrato){
 		return _db.borraContratoConTurnos(idContrato);
+	}
+	
+	public boolean eliminaEmpleado(int NumVendedor){
+		return _db.borraEmpleado(NumVendedor);
 	}
 	
 	/**
