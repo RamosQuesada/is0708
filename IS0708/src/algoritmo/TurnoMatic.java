@@ -144,7 +144,7 @@ public class TurnoMatic {
 					n++;
 				}
 			}
-			//colocaNoFijos(dispoDia, reserDia, emplDia, i); 
+			colocaNoFijos(dispoDia, reserDia, emplDia, i); 
 		}
 		
 		vista.insertCuadrante(cuadrante);
