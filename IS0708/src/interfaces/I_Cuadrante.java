@@ -129,9 +129,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			this.FichIni=tr.getFichIni();
 			this.FichFin=tr.getFichFin();
 			// Aquí hay que hacer una copia del turno
-			Turno t = vista.getTurno(tr.getIdTurno());
-			if (t!=null)
-				this.turno= new I_Turno(t);
+			if (vista.getTurno(tr.getIdTurno())==null) System.out.println(tr.getIdTurno());
+			this.turno = new I_Turno(vista.getTurno(tr.getIdTurno()));
 					
 		}
 
@@ -230,13 +229,13 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		if (vista.isCacheCargada() && turno==null) {
 			vista.setProgreso("Cargando cuadrantes", 80);
 			ArrayList<Trabaja> c[] = vista.getCuadrante(mes, anio, departamento).getCuad();
+			
 			vista.setProgreso("", 100);
 			iCuad = new ArrayList[c.length];
 			for (int i=0; i<c.length; i++) {
 				iCuad[i] = new ArrayList<I_Trabaja>();
 				for (int j=0; j<c[i].size(); j++) {
-					if (c[i].get(j)!=null)
-						iCuad[i].add(new I_Trabaja(c[i].get(j)));
+					iCuad[i].add(new I_Trabaja(c[i].get(j)));
 				}
 			}
 			cacheCargada = true;
