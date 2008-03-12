@@ -786,7 +786,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 						else if ((j-dom)%7==1) gcFondo.setForeground(new Color(display,0,0,0));
 						gcFondo.drawText(String.valueOf(j+1), margenIzq + margenNombres + j*anchoDia + anchoDia/2, margenSup);
 					}
-				gcFondo.setForeground(new Color(display,0,0,0));
+				
 				/**********************************************************************/
 				ArrayList<Empleado> empleados=vista.getEmpleados();
 				for (int i=0; i < empleados.size(); i++) {
@@ -795,6 +795,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					for (int j=0; j < iCuad.length; j++) {
 						//Despues calculamos el turno a visualizar
 						Boolean encontrado=false;
+						dibujaCasilla(gcFondo, i, j, 0, new Color(display,120,170,120));
 						int k=0;
 						while (!encontrado && k<iCuad[j].size()) {
 							if (iCuad[j].get(k).getEmpl().getEmplId()==e.getEmplId()) {	
@@ -809,20 +810,23 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		}
 		if (fondo!=null)
 		gc.drawImage(fondo,0,0);
-		
 	}
 	
 	public void dibujaCasilla(GC gc, int i, int j, int empl, Color color){
 		//Primero se pinta el rectangulo
-		gc.setForeground(new Color(display,85,135,85));
-		gc.drawRectangle(margenIzq + margenNombres + j*anchoDia, margenSup + 20 + i*altoFila, anchoDia, altoFila);
-		gc.setBackground(color);
-		gc.fillRectangle(margenIzq + margenNombres + j*anchoDia+1, margenSup + 20 + i*altoFila+1, anchoDia-1, altoFila-1);
 		gc.setForeground(new Color(display,0,0,0));
-		if (anchoDia>14)
-			//gc.drawText(String.valueOf(iCuad[j].get(k).getTurno().getAbreviatura().charAt(0)),margenIzq + margenNombres + j*anchoDia + (7/2), margenSup + 20 + i*altoFila + 2,altoFila);
-			gc.drawText(String.valueOf(iCuad[j].get(empl).getTurno().getIdTurno()),margenIzq + margenNombres + j*anchoDia + (7/2),margenSup + 20 + i*altoFila + 2,altoFila);
-		gc.setBackground(new Color(display,255,255,255));
+		
+		gc.drawRectangle(margenIzq + margenNombres + j*anchoDia, margenSup + 20 + i*altoFila, anchoDia, altoFila);
+		gc.setForeground(new Color(display,85,135,85));
+		if (empl!=0) {
+			gc.setBackground(color);
+			gc.fillRectangle(margenIzq + margenNombres + j*anchoDia+1, margenSup + 20 + i*altoFila+1, anchoDia-1, altoFila-1);
+			gc.setForeground(new Color(display,0,0,0));
+			if (anchoDia>14)
+				//gc.drawText(String.valueOf(iCuad[j].get(k).getTurno().getAbreviatura().charAt(0)),margenIzq + margenNombres + j*anchoDia + (7/2), margenSup + 20 + i*altoFila + 2,altoFila);
+				gc.drawText(String.valueOf(iCuad[j].get(empl).getTurno().getIdTurno()),margenIzq + margenNombres + j*anchoDia + (7/2),margenSup + 20 + i*altoFila + 2,altoFila);
+			gc.setBackground(new Color(display,255,255,255));
+		}
 	}
 	
 	public void dibujaBoton(GC gc,int iX,int iY,int ancho,int alto) {
