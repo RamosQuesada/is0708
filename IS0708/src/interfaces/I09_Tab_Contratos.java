@@ -22,59 +22,63 @@ import aplicacion.Contrato;
 import aplicacion.Empleado;
 import aplicacion.Vista;
 
-public class I09_Tab_Contratos extends Thread{
+public class I09_Tab_Contratos extends Thread {
 	final ResourceBundle bundle;
 	final Vista vista;
 	final TabFolder tabFolder;
 	final Table tablaContratos;
 	final Image ico_cuadrante;
-	//ArrayList <Contrato> contratos = null;
+	// ArrayList <Contrato> contratos = null;
 	private boolean datosInterfazCargados = false;
-	
+
 	/**
 	 * Implementa un hilo que coge los empleados del departamento del servidor.
 	 */
 	public void run() {
-		//boolean run = true;
+		// boolean run = true;
 		try {
 			while (!vista.isCacheCargada()) {
 				sleep(5000);
 			}
-		} catch (Exception e) {}
+		} catch (Exception e) {
+		}
 		// Coge los datos de todos los contratos
-		//contratos = vista.getListaContratosDepartamento();
+		// contratos = vista.getListaContratosDepartamento();
 		datosInterfazCargados = true;
-		//while (run) {
-			
-			if (tablaContratos.isDisposed()){} //run = false;
-			else {
+		// while (run) {
+
+		if (tablaContratos.isDisposed()) {
+		} // run = false;
+		else {
+			if (!tablaContratos.isDisposed()) {
+				// Actualizar tabla
 				if (!tablaContratos.isDisposed()) {
-					// Actualizar tabla
-					if (!tablaContratos.isDisposed()) {
-						tablaContratos.getDisplay().asyncExec(new Runnable () {
-							public void run() {
-								mostrarContratos();
-							}
-						});
-					}
+					tablaContratos.getDisplay().asyncExec(new Runnable() {
+						public void run() {
+							mostrarContratos();
+						}
+					});
 				}
-				try {
-					// TODO Espera 10 segundos (¿cómo lo dejamos?)
-					sleep(10000);					
-				} catch (Exception e) {}
+			}
+			try {
+				// TODO Espera 10 segundos (¿cómo lo dejamos?)
+				sleep(10000);
+			} catch (Exception e) {
 			}
 		}
-	//}
-	
+	}
+
+	// }
+
 	private void mostrarContratos() {
 		if (vista.isCacheCargada() && datosInterfazCargados) {
-			//tablaContratos.removeAll();
-			for(int i=0;i<vista.getListaContratosDepartamento().size();i++){
+			// tablaContratos.removeAll();
+			for (int i = 0; i < vista.getListaContratosDepartamento().size(); i++) {
 				TableItem tItem = new TableItem(tablaContratos, SWT.NONE);
 				Contrato c = vista.getListaContratosDepartamento().get(i);
 				tItem.setText(0, Integer.toString(c.getNumeroContrato()));
-				ArrayList<Empleado> emp = vista.getEmpleados(null,null, c.getNumeroContrato(),
-						null, null, null, null);
+				ArrayList<Empleado> emp = vista.getEmpleados(null, null, c
+						.getNumeroContrato(), null, null, null, null);
 				String empleados = "";
 				for (int j = 0; j < emp.size(); j++) {
 					Empleado e = emp.get(j);
@@ -92,21 +96,26 @@ public class I09_Tab_Contratos extends Thread{
 			}
 		}
 	}
-	
+
 	/**
 	 * Constructor. Crea un tab con un listado de contratos
 	 * 
-	 * @param tabFolder el tabFolder donde colocarlo
-	 * @param vista la vista de la aplicación
-	 * @param bundle la herramienta de idiomas
+	 * @param tabFolder
+	 *            el tabFolder donde colocarlo
+	 * @param vista
+	 *            la vista de la aplicación
+	 * @param bundle
+	 *            la herramienta de idiomas
 	 * @author Jose Maria Martin
 	 */
-	public I09_Tab_Contratos(final TabFolder tabFolder, final Vista vista, final ResourceBundle bundle ) {
+	public I09_Tab_Contratos(final TabFolder tabFolder, final Vista vista,
+			final ResourceBundle bundle) {
 		this.bundle = bundle;
 		this.vista = vista;
 		this.tabFolder = tabFolder;
-		ico_cuadrante = new Image(tabFolder.getDisplay(), I02_Principal.class.getResourceAsStream("ico_cuadrante.gif"));
-		
+		ico_cuadrante = new Image(tabFolder.getDisplay(), I02_Principal.class
+				.getResourceAsStream("ico_cuadrante.gif"));
+
 		TabItem tabItemContratos = new TabItem(tabFolder, SWT.NONE);
 		tabItemContratos.setText(bundle.getString("Contratos"));
 		tabItemContratos.setImage(ico_cuadrante);
@@ -118,8 +127,8 @@ public class I09_Tab_Contratos extends Thread{
 				1, 1));
 		cContratos.setLayout(new GridLayout(3, false));
 
-		tablaContratos = new Table(cContratos, SWT.MULTI
-				| SWT.BORDER | SWT.FULL_SELECTION);
+		tablaContratos = new Table(cContratos, SWT.MULTI | SWT.BORDER
+				| SWT.FULL_SELECTION);
 		start();
 		tablaContratos.setLinesVisible(true);
 		tablaContratos.setHeaderVisible(true);
@@ -135,7 +144,7 @@ public class I09_Tab_Contratos extends Thread{
 			TableColumn column = new TableColumn(tablaContratos, SWT.NONE);
 			column.setText(titles[i]);
 		}
-		
+
 		for (int i = 0; i < titles.length; i++) {
 			tablaContratos.getColumn(i).pack();
 		}
@@ -158,137 +167,195 @@ public class I09_Tab_Contratos extends Thread{
 
 		bNuevoContrato.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				I09_1_Creacion_contratos i09 = new I09_1_Creacion_contratos(tabFolder.getShell(), bundle, vista, 0, -1,null);
+				I09_1_Creacion_contratos i09 = new I09_1_Creacion_contratos(
+						tabFolder.getShell(), bundle, vista, 0, -1, null);
 				while (!i09.getShell().isDisposed()) {
-			         if (!tabFolder.getShell().getDisplay().readAndDispatch()) {
-			        	 tabFolder.getShell().getDisplay().sleep();
-			         }
-			      }
-				Contrato c=i09.getContratoInsertado();
-				if (c!=null){
-					vista.getListaContratosDepartamento().add(c);	
-				tablaContratos.removeAll();
-				ArrayList <Integer> ids=i09.getTurnosInsertados();
-				int idc=c.getNumeroContrato();
-				for(int i=0;i<ids.size();i++){
-					int idt=ids.get(i);
-					if (idt!=c.getTurnoInicial()&&(idc!=-1)) 
-						//CAMBIAR cuando este actualizada la vista
-						vista.insertTurnoPorContrato(idt, idc);
-						//vista.getControlador().insertTurnoPorContrato(idt, idc);
+					if (!tabFolder.getShell().getDisplay().readAndDispatch()) {
+						tabFolder.getShell().getDisplay().sleep();
+					}
 				}
-				mostrarContratos();				
-//				for(int i=0;i<vista.getListaContratosDepartamento().size();i++){
-//					TableItem tItem = new TableItem(tablaContratos, SWT.NONE);
-//					Contrato aux = vista.getListaContratosDepartamento().get(i);
-//					tItem.setText(0, Integer.toString(aux.getNumeroContrato()));
-//					ArrayList <Empleado> emps=vista.getEmpleados(null, null, aux.getNumeroContrato(),null, null, null, null);
-//					String empleados="";
-//					for (int j=0;j<emps.size();j++){
-//						Empleado emp=emps.get(j);
-//						empleados+=emp.getNombre()+" "+emp.getApellido1();
-//						if (j!=emps.size()-1) empleados+=",";
-//					}
-//					tItem.setText(1, empleados);
-//					tItem.setText(2, Integer.toString(aux.getTurnoInicial()));
-//					tItem.setText(3, aux.getNombreContrato());
-//					tItem.setText(4, aux.getPatron());
-//					tItem.setText(5, Integer.toString(aux.getDuracionCiclo()));
-//					tItem.setText(6, Double.toString(aux.getSalario()));
-//					tItem.setText(7, Integer.toString(aux.getTipoContrato()));
-//				}
-				tablaContratos.redraw();
+				Contrato c = i09.getContratoInsertado();
+				if (c != null) {
+					vista.getListaContratosDepartamento().add(c);
+					tablaContratos.removeAll();
+					ArrayList<Integer> ids = i09.getTurnosInsertados();
+					int idc = c.getNumeroContrato();
+					for (int i = 0; i < ids.size(); i++) {
+						int idt = ids.get(i);
+						if (idt != c.getTurnoInicial() && (idc != -1))
+							// CAMBIAR cuando este actualizada la vista
+							vista.insertTurnoPorContrato(idt, idc);
+						// vista.getControlador().insertTurnoPorContrato(idt,
+						// idc);
+					}
+					mostrarContratos();
+					// for(int
+					// i=0;i<vista.getListaContratosDepartamento().size();i++){
+					// TableItem tItem = new TableItem(tablaContratos,
+					// SWT.NONE);
+					// Contrato aux =
+					// vista.getListaContratosDepartamento().get(i);
+					// tItem.setText(0,
+					// Integer.toString(aux.getNumeroContrato()));
+					// ArrayList <Empleado> emps=vista.getEmpleados(null, null,
+					// aux.getNumeroContrato(),null, null, null, null);
+					// String empleados="";
+					// for (int j=0;j<emps.size();j++){
+					// Empleado emp=emps.get(j);
+					// empleados+=emp.getNombre()+" "+emp.getApellido1();
+					// if (j!=emps.size()-1) empleados+=",";
+					// }
+					// tItem.setText(1, empleados);
+					// tItem.setText(2,
+					// Integer.toString(aux.getTurnoInicial()));
+					// tItem.setText(3, aux.getNombreContrato());
+					// tItem.setText(4, aux.getPatron());
+					// tItem.setText(5,
+					// Integer.toString(aux.getDuracionCiclo()));
+					// tItem.setText(6, Double.toString(aux.getSalario()));
+					// tItem.setText(7,
+					// Integer.toString(aux.getTipoContrato()));
+					// }
+					tablaContratos.redraw();
 				}
 			}
 		});
 
 		bModificarContrato.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				if(tablaContratos.getSelectionIndex()>-1){
-					TableItem it=tablaContratos.getItem(tablaContratos.getSelectionIndex());
-					I09_1_Creacion_contratos i09c=new I09_1_Creacion_contratos(tabFolder.getShell(), bundle, vista, 1,
-							Integer.parseInt(it.getText(0)),vista.getListaContratosDepartamento().get(tablaContratos.getSelectionIndex()));
-					int index=tablaContratos.getSelectionIndex();
+				if (tablaContratos.getSelectionIndex() > -1) {
+					TableItem it = tablaContratos.getItem(tablaContratos
+							.getSelectionIndex());
+					I09_1_Creacion_contratos i09c = new I09_1_Creacion_contratos(
+							tabFolder.getShell(), bundle, vista, 1, Integer
+									.parseInt(it.getText(0)), vista
+									.getListaContratosDepartamento().get(
+											tablaContratos.getSelectionIndex()));
+					int index = tablaContratos.getSelectionIndex();
 					while (!i09c.getShell().isDisposed()) {
-				         if (!tabFolder.getShell().getDisplay().readAndDispatch()) {
-				        	 tabFolder.getShell().getDisplay().sleep();
-				         }
-				    }
-					Contrato caux=i09c.getContratoModificado();
-					if(caux!=null){					
-						it=tablaContratos.getItem(index);
+						if (!tabFolder.getShell().getDisplay()
+								.readAndDispatch()) {
+							tabFolder.getShell().getDisplay().sleep();
+						}
+					}
+					Contrato caux = i09c.getContratoModificado();
+					if (caux != null) {
+						it = tablaContratos.getItem(index);
 						it.setText(2, Integer.toString(caux.getTurnoInicial()));
 						it.setText(3, caux.getNombreContrato());
 						it.setText(4, caux.getPatron());
-						it.setText(5, Integer.toString(caux.getDuracionCiclo()));
+						it
+								.setText(5, Integer.toString(caux
+										.getDuracionCiclo()));
 						it.setText(6, Double.toString(caux.getSalario()));
 						it.setText(7, Integer.toString(caux.getTipoContrato()));
-						
+
 					}
 				} else {
-					MessageBox messageBox = new MessageBox(tabFolder.getShell(),
-							SWT.APPLICATION_MODAL | SWT.ICON_INFORMATION
-									| SWT.OK | SWT.CANCEL);
+					MessageBox messageBox = new MessageBox(
+							tabFolder.getShell(), SWT.APPLICATION_MODAL
+									| SWT.ICON_INFORMATION | SWT.OK);
 					messageBox.setMessage(bundle
 							.getString("I09_bot_modif_contrato_no_select"));
-					messageBox.open();					
+					messageBox.open();
 				}
 			}
 		});
 
 		bEliminarContrato.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				if(tablaContratos.getSelectionIndex()>-1){
-					MessageBox messageBox = new MessageBox(tabFolder.getShell(), SWT.APPLICATION_MODAL | SWT.ICON_QUESTION | SWT.OK | SWT.CANCEL);
-					messageBox.setMessage (bundle.getString("I09_bot_elim_contrato"));
-					int response=messageBox.open();
-					if(response==SWT.OK){
-						int index=tablaContratos.getSelectionIndex();
-						TableItem tit=tablaContratos.getItem(index);
-						//CAMBIAR 
-						boolean okis=vista.eliminaContrato(Integer.valueOf(tit.getText(0)));
-						//boolean okis=vista.getControlador().eliminaContrato(Integer.valueOf(tit.getText(0)));
-						okis=okis&&vista.getControlador().eliminaContratoConTurnos(Integer.valueOf(tit.getText(0)));
-						if (okis){							
-							tablaContratos.removeAll();
-							vista.getListaContratosDepartamento().remove(index);
-							mostrarContratos();
-//							for(int i=0;i<vista.getListaContratosDepartamento().size();i++){
-//								TableItem tItem = new TableItem(tablaContratos, SWT.NONE);
-//								Contrato aux = vista.getListaContratosDepartamento().get(i);
-//								tItem.setText(0, Integer.toString(aux.getNumeroContrato()));
-//								ArrayList <Empleado> emps=vista.getEmpleados(null, null, aux.getNumeroContrato(),null, null, null, null);
-//								String empleados="";
-//								for (int j=0;j<emps.size();j++){
-//									Empleado emp=emps.get(j);
-//									empleados+=emp.getNombre()+" "+emp.getApellido1();
-//									if (j!=emps.size()-1) empleados+=",";
-//								}
-//								tItem.setText(1, empleados);
-//								tItem.setText(2, Integer.toString(aux.getTurnoInicial()));
-//								tItem.setText(3, aux.getNombreContrato());
-//								tItem.setText(4, aux.getPatron());
-//								tItem.setText(5, Integer.toString(aux.getDuracionCiclo()));
-//								tItem.setText(6, Double.toString(aux.getSalario()));
-//								tItem.setText(7, Integer.toString(aux.getTipoContrato()));
-//							}
-							tablaContratos.redraw();
-							MessageBox messageBox2 = new MessageBox(tabFolder.getShell(), SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
-							messageBox2.setText("Info");
-							messageBox2.setMessage(bundle.getString("I09_elim_Contrato"));
-							messageBox2.open();
-						}
-						else {
-							MessageBox messageBox2 = new MessageBox(tabFolder.getShell(), SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
-							messageBox2.setText(bundle.getString("Error"));
-							messageBox2.setMessage(bundle.getString("I09_err_elim_Contrato"));
-							messageBox2.open();
+				if (tablaContratos.getSelectionIndex() > -1) {
+					if (!tablaContratos.getItem(
+							tablaContratos.getSelectionIndex()).getText(1)
+							.equals("")) {
+						MessageBox messageBox = new MessageBox(tabFolder
+								.getShell(), SWT.APPLICATION_MODAL
+								| SWT.ICON_WARNING | SWT.OK);
+						messageBox.setMessage(bundle
+								.getString("I09_no_se_puede_elim_contrato"));
+						messageBox.open();
+					} else {
+						MessageBox messageBox = new MessageBox(tabFolder
+								.getShell(), SWT.APPLICATION_MODAL
+								| SWT.ICON_QUESTION | SWT.OK | SWT.CANCEL);
+						messageBox.setMessage(bundle
+								.getString("I09_bot_elim_contrato"));
+						int response = messageBox.open();
+						if (response == SWT.OK) {
+							int index = tablaContratos.getSelectionIndex();
+							TableItem tit = tablaContratos.getItem(index);
+							// CAMBIAR
+							boolean okis = vista.eliminaContrato(Integer
+									.valueOf(tit.getText(0)));
+							// boolean
+							// okis=vista.getControlador().eliminaContrato(Integer.valueOf(tit.getText(0)));
+							okis = okis
+									&& vista.getControlador()
+											.eliminaContratoConTurnos(
+													Integer.valueOf(tit
+															.getText(0)));
+							if (okis) {
+								tablaContratos.removeAll();
+								vista.getListaContratosDepartamento().remove(
+										index);
+								mostrarContratos();
+								// for(int
+								// i=0;i<vista.getListaContratosDepartamento().size();i++){
+								// TableItem tItem = new
+								// TableItem(tablaContratos, SWT.NONE);
+								// Contrato aux =
+								// vista.getListaContratosDepartamento().get(i);
+								// tItem.setText(0,
+								// Integer.toString(aux.getNumeroContrato()));
+								// ArrayList <Empleado>
+								// emps=vista.getEmpleados(null, null,
+								// aux.getNumeroContrato(),null, null, null,
+								// null);
+								// String empleados="";
+								// for (int j=0;j<emps.size();j++){
+								// Empleado emp=emps.get(j);
+								// empleados+=emp.getNombre()+"
+								// "+emp.getApellido1();
+								// if (j!=emps.size()-1) empleados+=",";
+								// }
+								// tItem.setText(1, empleados);
+								// tItem.setText(2,
+								// Integer.toString(aux.getTurnoInicial()));
+								// tItem.setText(3, aux.getNombreContrato());
+								// tItem.setText(4, aux.getPatron());
+								// tItem.setText(5,
+								// Integer.toString(aux.getDuracionCiclo()));
+								// tItem.setText(6,
+								// Double.toString(aux.getSalario()));
+								// tItem.setText(7,
+								// Integer.toString(aux.getTipoContrato()));
+								// }
+								tablaContratos.redraw();
+								MessageBox messageBox2 = new MessageBox(
+										tabFolder.getShell(),
+										SWT.APPLICATION_MODAL | SWT.OK
+												| SWT.ICON_INFORMATION);
+								messageBox2.setText("Info");
+								messageBox2.setMessage(bundle
+										.getString("I09_elim_Contrato"));
+								messageBox2.open();
+							} else {
+								MessageBox messageBox2 = new MessageBox(
+										tabFolder.getShell(),
+										SWT.APPLICATION_MODAL | SWT.OK
+												| SWT.ICON_ERROR);
+								messageBox2.setText(bundle.getString("Error"));
+								messageBox2.setMessage(bundle
+										.getString("I09_err_elim_Contrato"));
+								messageBox2.open();
+							}
 						}
 					}
 				} else {
-					MessageBox messageBox = new MessageBox(tabFolder.getShell(),
-							SWT.APPLICATION_MODAL | SWT.ICON_INFORMATION
-									| SWT.OK | SWT.CANCEL);
+					MessageBox messageBox = new MessageBox(
+							tabFolder.getShell(), SWT.APPLICATION_MODAL
+									| SWT.ICON_INFORMATION | SWT.OK
+									| SWT.CANCEL);
 					messageBox.setMessage(bundle
 							.getString("I09_bot_elim_contrato_no_select"));
 					messageBox.open();
