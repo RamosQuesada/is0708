@@ -122,6 +122,7 @@ public class Vista {
 						if      (e.tipo.equals("Contrato"))			controlador.eliminaContrato((Integer) e.o.get(0));
 						else if (e.tipo.equals("Turno"))			controlador.eliminaTurno((Integer) e.o.get(0));
 						else if (e.tipo.equals("ContratoConTurnos"))	controlador.eliminaContratoConTurnos((Integer) e.o.get(0));
+						else if (e.tipo.equals("Empleado"))			controlador.eliminaEmpleado((Integer) e.o.get(0));
 					}
 					else if(e.i==MODIFICAR) {
 						if      (e.tipo.equals("Contrato"))			controlador.modificarContrato(((Contrato)e.o.get(0)).getNumeroContrato(), ((Contrato)e.o.get(0)).getTurnoInicial(), ((Contrato)e.o.get(0)).getNombreContrato(), ((Contrato)e.o.get(0)).getPatron() , ((Contrato)e.o.get(0)).getDuracionCiclo(), ((Contrato)e.o.get(0)).getSalario(), ((Contrato)e.o.get(0)).getTipoContrato());
@@ -148,6 +149,17 @@ public class Vista {
 		return true;
 	}
 	
+	/**
+	 * Elimina un empleado de la base de datos
+	 * @param idEmpl
+	 * @return
+	 */
+	public boolean eliminaEmpleado(int idEmpl) {
+		if (getEmpleado(idEmpl)==null) return false;
+		empleados.remove(idEmpl);
+		deleteCache(idEmpl, "Empleado");
+		return true;
+	}
 	/**
 	 * Inserta un turno en la base de datos
 	 * @param t el turno a insertar
