@@ -74,7 +74,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private int dia=1;
 	private int mes=1;
 	private int anio=1990;
-	private String departamento="Ropa Viejunos";
+	private String departamento="DatosFijos";
 	private Image fondo;
 	
 	private int diaActVistaMes=0;
@@ -227,7 +227,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	}
 
 	public void cargarCache() {
-		if (turno==null) {
+		if (vista.isCacheCargada() && turno==null) {
 			vista.setProgreso("Cargando cuadrantes", 80);
 			ArrayList<Trabaja> c[] = vista.getCuadrante(mes, anio, departamento).getCuad();
 			vista.setProgreso("", 100);
@@ -607,12 +607,15 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	
 	public void setDepartamento(String departamento) {
 		this.departamento = departamento;
-		if (cacheCargada) {
+		if (vista.isCacheCargada()) {
 			cargarCache();
 			redibujar();
 		}
 	}
 	
+	/**
+	 * Calcula el tamaño de las franjas cuando se redimensiona la ventana
+	 */
 	private void calcularTamano() {
 		ancho = canvas.getClientArea().width;
 		alto = canvas.getClientArea().height;
@@ -621,7 +624,12 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			turno.recalcularFranjas(margenIzq, margenNombres, horaApertura, tamHora);
 		else if (cacheCargada && diario) {
 			for (int i = 0; i < iCuad[dia-1].size(); i++) {
-				iCuad[dia-1].get(i).getTurno().recalcularFranjas(margenIzq, margenNombres, horaApertura, tamHora);
+				if (iCuad[dia-1].get(i).getTurno()==null) 
+					System.out.println("Turno nulo dia " + dia + " posicion " + i);
+				iCuad[dia-1]
+				.get(i)
+				.getTurno()
+				.recalcularFranjas(margenIzq, margenNombres, horaApertura, tamHora);
 			}
 		}
 		fondo = null; // El fondo que hay ya no vale, hay que redibujarlo
@@ -678,7 +686,10 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			for (int i = 0; i < iCuad[dia-1].size(); i++) {
 				// Dibujar el nombre del empleado y el turno
 				String nombre = iCuad[dia-1].get(i).getEmpl().getNombre().charAt(0) + ". " + iCuad[dia-1].get(i).getEmpl().getApellido1();
-				iCuad[dia-1].get(i).getTurno().dibujar(display, nombre, gc, i, vista.getEmpleados().get(i).dameColor() ,margenIzq, margenNombres,margenSup,sep_vert_franjas,alto_franjas,tamHora, tamSubdiv, horaApertura, numSubdivisiones);
+				iCuad[dia-1].
+				get(i).
+				getTurno().
+				dibujar(display, nombre, gc, i, vista.getEmpleados().get(i).dameColor() ,margenIzq, margenNombres,margenSup,sep_vert_franjas,alto_franjas,tamHora, tamSubdiv, horaApertura, numSubdivisiones);
 			}
 		}
 	}
