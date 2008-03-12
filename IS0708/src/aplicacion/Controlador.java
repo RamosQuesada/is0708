@@ -1629,6 +1629,7 @@ public class Controlador {
 				Trabaja nuevo = new Trabaja(cuad.getInt("NumVendedor"), cuad.getTime("HoraEntrada"), cuad.getTime("HoraSalida"), cuad.getInt("IdTurno"));
 				datos.setTrabajaDia(cuad.getDate("Fecha").getDate()-1, nuevo);
 			}
+			System.out.println(datos.toString());
 			return datos;		
 		} catch (Exception e) {
 			System.err.println("Controlador :: Error en getCuadrante");

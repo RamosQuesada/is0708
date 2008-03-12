@@ -1600,7 +1600,7 @@ public class Database extends Thread {
 	public ResultSet obtenCuadrante(int mes, int anio, String departamento) {
 		ResultSet r = null;
 		try {
-			String inicio = anio + "-" + mes + "-" + "1";
+			String inicio = anio + "-" + mes + "-" + "01";
 			String fin = anio + "-" + mes + "-" + "31";
 			st = con.createStatement();
 
@@ -1614,7 +1614,6 @@ public class Database extends Thread {
 					+ "' AND Fecha<='" + fin + "' AND NumVendedor IN (" +
 							"SELECT NumVendedor FROM DepartamentoUsuario WHERE " +
 							"NombreDepartamento = '"+ departamento +"');");
-			
 		} catch (SQLException e) {
 			System.err.println("Error al realizar la consulta de cuadrantes");
 		}
