@@ -65,6 +65,7 @@ public class HoraCalendario {
 	public void setMax(int max) {
 		this.max = max;
 	}
+	
 	/**
 	 * Recupera el numero minimo de empleados simultaneos en el departamento
 	 * @return Numero minimo de empleados

@@ -12,11 +12,10 @@ import aplicacion.*;
  */
 public class Estructura {
 	
-
 	private ListasEmpleados[][] dias;
-	private ArrayList<Empleado> personal;  // Aqui estaran todos los empleados
-	private Calendario cal;				   // Calendario donde se almacena min/max perso,exp/inexp... 
-	private ArrayList<Time> trozosHorario; // Lista con el inicio de cada turno y el fin del ultimo
+	private ArrayList<Empleado> personal;  // todos los empleados
+	private Calendario cal;				   // calendario donde se almacena min/max de personal, exp/inexp... 
+	private ArrayList<Time> trozosHorario; // lista con el inicio de cada turno y el fin del ultimo
 	                                       // tamanio: nTrozos+1;
 	private int numTrozos;
 	private String idDepartamento;
@@ -27,20 +26,21 @@ public class Estructura {
 		this.controlador = cont;
 		this.personal = listaE;
 		
-		// Calcular el numero de trozos en que se divide el horario
-		// Recuperar de la base de datos la lista de todos los turnos del departamento
-		// y ver en cuantos trozos vas a partir cada dia
+		// calculamos el numero de trozos en que se divide el horario
+		/* recuperamos de la base de datos la lista de todos los turnos del departamento 
+		 * y vemos en cuantos trozos vas a partir cada dia*/
 		inicializaTrozos(); 
 		
-		int numDias = Util.dameDias(mes, anio);					//calculamos el numero de dias
+		//calculamos el numero de dias
+		int numDias = Util.dameDias(mes, anio);					
 		dias = new ListasEmpleados[numDias][numTrozos];
-		// Se podria no asignar listas a los dias que no se trabaja
+		// se podria no asignar listas a los dias que no se trabaja
 		for (int i=0; i<numDias; i++){
 			for (int j=0; j<numTrozos; j++){
 				dias[i][j] = new ListasEmpleados(idDepartamento);
 			}
 		}
-		//rellenar lista empleados
+		//rellenamos la lista de empleados
 		cal = new Calendario(mes, anio, controlador, idDepartamento);//creamos calendario
 	}
 	
@@ -49,12 +49,10 @@ public class Estructura {
 	}
 	
 	public void setDias(ListasEmpleados[][] l){
-		
 		dias = l;
 	}
 	
 	private void inicializaTrozos(){
-		//ArrayList<Turno> turnos = controlador.getListaTurnosEmpleados(); 
 		ArrayList<Turno> turnos = controlador.getListaTurnosEmpleadosDpto(this.idDepartamento);
 		ArrayList<Time> horas = new ArrayList<Time>();
 		for (int i=0; i<turnos.size(); i++){
@@ -68,7 +66,7 @@ public class Estructura {
 			if (!horas.contains(finDescanso))
 				horas.add(finDescanso);
 		}
-		// Ordenar la lista
+		// ordenar la lista
 		numTrozos = horas.size()-1;
 		trozosHorario = new ArrayList<Time>();
 		for (int i=0; i<numTrozos+1; i++){
@@ -94,10 +92,6 @@ public class Estructura {
 	public ArrayList<Time> getTrozosHorario() {
 		return trozosHorario;
 	}	
-	
-	public Calendario getCalendario(){
-		return cal;
-	}
 
 	public ArrayList<Empleado> getPersonal() {
 		return personal;
@@ -122,15 +116,7 @@ public class Estructura {
 	public void setIdDepartamento(String idDepartamento) {
 		this.idDepartamento = idDepartamento;
 	}
-/**
-	public ArrayList<Turno> getTurnos() {
-		return turnos;
-	}
 
-	public void setTurnos(ArrayList<Turno> turnos) {
-		this.turnos = turnos;
-	}
-**/
 	public void setTrozosHorario(ArrayList<Time> trozosHorario) {
 		this.trozosHorario = trozosHorario;
 	}
@@ -138,6 +124,5 @@ public class Estructura {
 	public void setNumTrozos(int numTrozos) {
 		this.numTrozos = numTrozos;
 	}
-
 	
 }

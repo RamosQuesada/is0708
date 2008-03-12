@@ -25,7 +25,6 @@ public class Resumen {
 		Analisis a=new Analisis(dias,cuadrante,estructura);
 		sugerencias=a.generarResumen();
 		informe=a.analizarFaltas();
-		
 	}
 	
 	public void add(int dia, String sugerencia){

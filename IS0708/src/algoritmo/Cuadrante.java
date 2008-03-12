@@ -12,11 +12,12 @@ public class Cuadrante {
 	
 	private int mes;
 	private int anio;
-	private int numDias;			//Numero de dias del mes
-	protected ArrayList<Trabaja> cuad[];		//Esta matriz seria la salida del algoritmo,un vector donde en cada posicion hay una lista de los empleados que trabajan
-	private String idDepartamento;	//Identificador del departamento;
+	private int numDias;			      //numero de dias del mes
+	protected ArrayList<Trabaja> cuad[];  //vector donde en cada posicion hay una lista de los empleados que trabajan
+	private String idDepartamento;	      //identificador del departamento
 	
-	public Cuadrante(int mes,int anio,String idDepartamento){//creacion de un cuadrante vacio
+	//creacion de un cuadrante vacio
+	public Cuadrante(int mes,int anio,String idDepartamento){
 		this.mes = mes;
 		this.numDias = Util.dameDias(mes,anio);
 		this.cuad = new ArrayList[numDias];
@@ -59,20 +60,10 @@ public class Cuadrante {
 		cuad[dia].add(trab);
 	}
 		
-	/**
-	 * 
-	 * @return
-	 * no nos gusta la ocultacion
-	 */
 	public ArrayList<Trabaja>[] getCuad() {
 		return cuad;
 	}
 
-	/**
-	 * 
-	 * @param cuad
-	 * no nos gusta la ocultacion
-	 */
 	public void setCuad(ArrayList<Trabaja>[] cuad) {
 		this.cuad = cuad;
 	}
