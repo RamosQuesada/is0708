@@ -241,11 +241,19 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 				new I08_1_Editar_empleado(_tabFolder.getShell(),_bundle, _vista,idVend);
 			}
 		});
+		
 		final Button bEmplBaja = new Button(cEmplDer, SWT.PUSH);
 
 		bEmplBaja.setText(bundle.getString("I02_but_Eliminar"));
 		bEmplBaja.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,1, 1));
-
-
+		bEmplBaja.setEnabled(false);
+		bEmplBaja.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent e){
+				final int idVend;
+				TableItem[] aux=tablaEmpleados.getSelection();
+				idVend = (Integer)Integer.valueOf(aux[0].getText(1));
+				_vista.eliminaEmpleado(idVend);
+			}
+		});
 	}
 }

@@ -747,6 +747,8 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 			st.executeUpdate("DELETE FROM USUARIO WHERE NumVendedor=" + NumVendedor);
+			st.executeUpdate("DELETE FROM DepartamentoUsuario WHERE NumVendedor=" + NumVendedor);
+			st.executeUpdate("DELETE FROM MENSAJE WHERE NumVendedor=" + NumVendedor);
 			correcto = true;
 		} catch (SQLException e) {
 			System.err.println("Error al Borrar el turno");
