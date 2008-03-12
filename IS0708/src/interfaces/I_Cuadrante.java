@@ -806,6 +806,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 						Boolean encontrado=false;
 						dibujaCasilla(gcFondo, i, j, 0, new Color(display,120,170,120));
 						int k=0;
+						
 						while (!encontrado && k<iCuad[j].size()) {
 							if (iCuad[j].get(k).getEmpl().getEmplId()==e.getEmplId()) {	
 								dibujaCasilla(gcFondo, i, j, k, new Color(display,120,170,120));
@@ -836,6 +837,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				gc.drawText(String.valueOf(iCuad[j].get(empl).getTurno().getIdTurno()),margenIzq + margenNombres + j*anchoDia + (7/2),margenSup + 20 + i*altoFila + 2,altoFila);
 			gc.setBackground(new Color(display,255,255,255));
 		}
+		gc.setForeground(new Color(display,0,0,0));
 	}
 	
 	public void dibujaBoton(GC gc,int iX,int iY,int ancho,int alto) {
