@@ -4,9 +4,9 @@ import aplicacion.Controlador;
 import aplicacion.Util;
 
 /**
+ * @author DavidMartin & Miguel Angel Diaz
  * Esta clase representa a un calendario donde vamos a almacenar los dias festivos, el
  * max/min numero de empleados y el numero de expertos e inexpertos
- * @author DavidMartin & Miguel Angel Diaz
  */
 public class Calendario {
 	
@@ -28,17 +28,18 @@ public class Calendario {
 	}
 	
 	/**
-	 * Constructora de un objeto Calendario
-	 * @param mes
-	 * @param anio
+	 * Constructora por parámetros
+	 * @param mes Mes para el calendario
+	 * @param anio Año para el calendario
+	 * @param cont Controlador de la aplicación
+	 * @param idDepartamento Identificador del departamento
 	 */
-	public Calendario(int mes,int anio, Controlador cont, String idDepartamento){
+	public Calendario(int mes, int anio, Controlador cont, String idDepartamento){
 		this.mes = mes;
 		this.cont = cont;
 		this.anio = anio;
 		numDias = Util.dameDias(mes,anio); 
 		this.idDepartamento = idDepartamento;
-		//el calendario tiene un numero de dias segun el mes y de 0 a 23 horas
 		cal = new HoraCalendario[numDias][24];
 		cont.getDistribucionMes(this.idDepartamento, this);
 	}
@@ -91,17 +92,25 @@ public class Calendario {
 		this.numDias = numDias;
 	}
 	
+	/**
+	 * Devuelve el calendario
+	 * @return cal
+	 */
 	public HoraCalendario[][] getCal() {
 		return cal;
 	}
 	
+	/**
+	 * Modifica el calendario
+	 * @param cal Nuevo calendario
+	 */
 	public void setCal(HoraCalendario[][] cal) {
 		this.cal = cal;
 	}
 	
 	/**
 	 * Actualiza la información de una hora concreta del calendario
-	 * @param dia
+	 * @param dia Día qie se qio
 	 * @param hora
 	 * @param max
 	 * @param min

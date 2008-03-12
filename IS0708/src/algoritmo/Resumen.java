@@ -1,6 +1,3 @@
-/**
- * 
- */
 package algoritmo;
 
 import java.util.ArrayList;
@@ -20,20 +17,41 @@ public class Resumen {
 	private ArrayList<String> informe=null;
 	private int dias;
 	
-	public Resumen(int dias,Cuadrante cuadrante,Estructura estructura){
+	/**
+	 * Constructora por parámetros
+	 * @param dias Número de días del mes
+	 * @param cuadrante Cuadrante del mes
+	 * @param estructura Estructura con la información del departamento
+	 */
+	public Resumen(int dias, Cuadrante cuadrante, Estructura estructura){
 		this.dias=dias;
 		Analisis a=new Analisis(dias,cuadrante,estructura);
-		sugerencias=a.generarResumen();
-		informe=a.analizarFaltas();
+		this.sugerencias=a.generarResumen();
+		this.informe=a.analizarFaltas();
 	}
 	
+	/**
+	 * Añade una sugerencia al ArrayList de sugerencias de un día
+	 * @param dia Día para el que añadimos la sugerencia
+	 * @param sugerencia Sugerencia a añadir
+	 */
 	public void add(int dia, String sugerencia){
 		sugerencias[dia].add(sugerencia);
 	}
 	
+	/**
+	 * Devuelve las sugerencias de un día
+	 * @param dia Día dek que queremos las sugerencias
+	 * @return Sugerencias del día 
+	 */
 	public ArrayList<String> leerDia(int dia){
 		return sugerencias[dia];
 	}
+	
+	/**
+	 * Obtiene el informe
+	 * @return Informe
+	 */
 	public ArrayList<String> getInforme(){
 		return informe;
 	}
