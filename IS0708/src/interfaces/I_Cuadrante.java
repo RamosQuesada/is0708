@@ -80,6 +80,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private int diaActVistaMes=0;
 	private int empActVistaMes=0;
 	private boolean diaValido=false;
+	private boolean turnoPulsado=false;
+	private int turnPulsX=0;
+	private int turnPulsY=0;
 	
 	private Button bPorMes;
 	private Button bPorDia;
@@ -463,6 +466,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				if (e.button == 1 &&(diaValido)) {
 					empleadoSeleccionado = iCuad[diaActVistaMes].get(empActVistaMes-1).getEmpl();
 					turnoSeleccionado = iCuad[diaActVistaMes].get(empActVistaMes-1).getTurno();
+					turnPulsX=diaActVistaMes;
+					turnPulsY=empActVistaMes;
+					turnoPulsado=true;
 				}
 			};
 			
@@ -477,6 +483,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					}
 				}
 				turnoSeleccionado = null;
+				turnoPulsado=false;
 				canvas.redraw();
 			};
 			
@@ -543,6 +550,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					cursor(0);
 					diaValido = false;
 				}
+					
 			canvas.redraw();
 			}
 		};
@@ -711,7 +719,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					inicioY+((empActVistaMes)*altoFila)-(alto-(altoFila)),altoFila);
 			
 			//Util.darBrillo(display, gc, r, g, b,30);
-			dibujaBoton(gc,margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
+			dibujaBotonPuls(gc,margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
 					inicioY+((empActVistaMes)*altoFila),anchoDia,altoFila);
 		}
 		if (turnoSeleccionado!=null) {
@@ -790,7 +798,6 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 						int k=0;
 						while (!encontrado && k<iCuad[j].size()) {
 							if (iCuad[j].get(k).getEmpl().getEmplId()==e.getEmplId()) {	
-								
 								dibujaCasilla(gcFondo, i, j, k, new Color(display,120,170,120));
 								encontrado=true;
 							}
@@ -831,6 +838,22 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		gc.drawLine(iX+ancho,iY,iX+ancho,iY+alto);
 		//Horizontal
 		gc.drawLine(iX+1,iY+alto,iX+ancho-1,iY+alto);
+	}
+	
+	public void dibujaBotonPuls(GC gc,int iX,int iY,int ancho,int alto) {
+		//Lineas grises
+		gc.setForeground(new Color(display,50,50,50));
+		//Vertical
+		gc.drawLine(iX,iY,iX,iY+alto);
+		//Horizontal
+		gc.drawLine(iX,iY,iX+ancho,iY);
+		//Lineas negras
+		gc.setForeground(new Color(display,210,210,210));
+		//Vertical
+		gc.drawLine(iX+ancho,iY,iX+ancho,iY+alto);
+		//Horizontal
+		gc.drawLine(iX,iY+alto,iX+ancho,iY+alto);
+		gc.setForeground(new Color(display,0,0,0));
 	}
 	
 	/**
