@@ -129,7 +129,6 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			this.FichIni=tr.getFichIni();
 			this.FichFin=tr.getFichFin();
 			// Aquí hay que hacer una copia del turno
-			if (vista.getTurno(tr.getIdTurno())==null) System.out.println(tr.getIdTurno());
 			this.turno = new I_Turno(vista.getTurno(tr.getIdTurno()));
 					
 		}

@@ -606,8 +606,10 @@ public class Vista {
 			i++;
 		}
 		// Si no, buscar en BD
-		//return controlador.getTurno(idTurno);
-		return null;
+		Turno t =  controlador.getTurno(idTurno);
+		if (t!=null) turnos.add(t);
+		return t;
+		
 	}
 	
 	public Contrato getContrato (int idContrato) {
