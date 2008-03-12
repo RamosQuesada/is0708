@@ -365,7 +365,7 @@ public class I02_Principal {
 						.println("I02 :: Pulsado Configuración departamentos: "
 								+ cmbDepartamentos.getText());
 				new I10_Config_departamento(shell, bundle, vista,
-						cmbDepartamentos.getText());
+						cmbDepartamentos.getText(),cmbDepartamentos);
 			}
 		});
 
