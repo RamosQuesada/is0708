@@ -2,9 +2,10 @@ package algoritmo;
 
 import java.util.ArrayList;
 import aplicacion.*;
+
 /**
- * En esta clase estan las listas que utilizamos en la clase estructura
  * @author madctol
+ * Listas utilizadas en la clase Estructura
  */
 public class ListasEmpleados {
 
@@ -13,12 +14,14 @@ public class ListasEmpleados {
     private ArrayList<Empleado> reserva;     //empleados de reserva
     private String idDepartamento;           //identificador de departamento
     
-
+    /**
+     * Constructora por parámetros
+     * @param id Identificador del departamento
+     */
     public ListasEmpleados(String id){
-    	empleados = new ArrayList<Empleado>();
-    	disponibles = new ArrayList<Empleado>();
-    	// inicializar disponibles en cada turno
-    	reserva = new ArrayList<Empleado>();
+    	this.empleados = new ArrayList<Empleado>();
+    	this.disponibles = new ArrayList<Empleado>();
+    	this.reserva = new ArrayList<Empleado>();
     	this.idDepartamento=id;
     }
 
