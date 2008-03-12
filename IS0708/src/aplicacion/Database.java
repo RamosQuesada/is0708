@@ -1505,14 +1505,18 @@ public class Database extends Thread {
 			int Rang, int Turn, int Contr) {
 	int r = 0;
 	try {
+		String Nac = Util.dateAString(FNac);
+		String Cont = Util.dateAString(FCont);
+		String Entr = Util.dateAString(Fentr);
+		
 		st = con.createStatement();
-		r = st.executeUpdate("UPDATE USUARIO SET Nombre="
-				+ nomb + ", Apellido1='" + Ape1 + "', Apellido2='"
-				+ Ape2 + "', FechaNacimiento=" + FNac
-				+ ", Sexo=" + sexo + ", Email=" + mail
-				+ ", Password=" + Passw + ", IndicadorGrupo=" + grupo
-				+ ", FechaContrato=" + FCont + ", FechaEntrada=" + Fentr
-				+ ", Felicidad=" + Felic
+		r = st.executeUpdate("UPDATE USUARIO SET Nombre='"
+				+ nomb + "', Apellido1='" + Ape1 + "', Apellido2='"
+				+ Ape2 + "', FechaNacimiento='" + Nac
+				+ "', Sexo=" + sexo + ", Email='" + mail
+				+ "', Password='" + Passw + "', IndicadorGrupo=" + grupo
+				+ ", FechaContrato='" + Cont + "', FechaEntrada='" + Entr
+				+ "', Felicidad=" + Felic
 				+ ", Idioma=" + Idiom + ", Rango=" + Rang
 				+ ", IdContrato=" + Contr + ", IdTurno=" + Turn
 				+ " WHERE NumVendedor=" + idEmp + ";");
