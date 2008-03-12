@@ -22,7 +22,6 @@ public class Sugerencia {
 	private Time horaFin;
 	private int dia;
 	
-	
 	public Sugerencia(int faltas,int minimo, Time ini, Time fin, int dia,int tipo){
 		this.faltas=faltas;
 		this.minimo=minimo;
@@ -31,7 +30,6 @@ public class Sugerencia {
 		this.dia=dia;
 		this.tipo=tipo;
 	}
-	
 	
 	public void ampliar(int horas, int minutos){
 		horaFin.setHours(horaFin.getHours()+horas);
@@ -44,55 +42,62 @@ public class Sugerencia {
 	public int getFaltas() {
 		return faltas;
 	}
+	
 	/**
 	 * @param faltas the faltas to set
 	 */
 	public void setFaltas(int faltas) {
 		this.faltas = faltas;
 	}
+	
 	/**
 	 * @return the horaFin
 	 */
 	public Time getHoraFin() {
 		return horaFin;
 	}
+	
 	/**
 	 * @param horaFin the horaFin to set
 	 */
 	public void setHoraFin(Time horaFin) {
 		this.horaFin = horaFin;
 	}
+	
 	/**
 	 * @return the horaIni
 	 */
 	public Time getHoraIni() {
 		return horaIni;
 	}
+	
 	/**
 	 * @param horaIni the horaIni to set
 	 */
 	public void setHoraIni(Time horaIni) {
 		this.horaIni = horaIni;
 	}
+	
 	/**
 	 * @return the sugerencia
 	 */
 	public String getSugerencia() {
 		return sugerencia;
 	}
+	
 	/**
 	 * @param sugerencia the sugerencia to set
 	 */
 	public void setSugerencia(String sugerencia) {
 		this.sugerencia = sugerencia;
 	}
+	
 	/**
 	 * @return the tipo
 	 */
 	public int getTipo() {
 		return tipo;
 	}
-	
 	
 	/**
 	 * @param tipo the tipo to set
@@ -109,8 +114,8 @@ public class Sugerencia {
 			strAux1=strAux1.concat(Integer.toString(aux1));
 		} else
 			strAux1=Integer.toString(aux1);
-		int aux2=horaFin.getMinutes();
 		
+		int aux2=horaFin.getMinutes();	                                                                                  
 		String strAux2=new String();
 		if (aux2<10) {
 			strAux2="0";
@@ -124,13 +129,6 @@ public class Sugerencia {
 		return cadena;
 	}
 	
-	/*public int puntuacion(){
-		int resul=0;
-		resul=(horaFin.getHours()-horaIni.getHours())*60+(horaFin.getMinutes()-horaIni.getMinutes());
-		resul=resul*(faltas/minimo);
-		return resul;
-	}*/
-	
 	public double puntuacion () {
 		double resul=0;
 		double faltasD=(double)faltas;
@@ -141,5 +139,4 @@ public class Sugerencia {
 		return resul;
 	}
 	
-
 }

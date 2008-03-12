@@ -8,16 +8,16 @@ import aplicacion.*;
  */
 public class ListasEmpleados {
 
-	private ArrayList<Empleado> empleados;//empleados que trabajan
-    private ArrayList<Empleado> disponibles;//empleados disponibles
-    private ArrayList<Empleado> reserva;//empleados de reserva
-    private String idDepartamento;//identificador de departamento
+	private ArrayList<Empleado> empleados;   //empleados que trabajan
+    private ArrayList<Empleado> disponibles; //empleados disponibles
+    private ArrayList<Empleado> reserva;     //empleados de reserva
+    private String idDepartamento;           //identificador de departamento
     
 
     public ListasEmpleados(String id){
     	empleados = new ArrayList<Empleado>();
     	disponibles = new ArrayList<Empleado>();
-    	// Inicializar disponibles en cada turno
+    	// inicializar disponibles en cada turno
     	reserva = new ArrayList<Empleado>();
     	this.idDepartamento=id;
     }
@@ -53,4 +53,5 @@ public class ListasEmpleados {
 	public void setIdDepartamento(String idDepartamento) {
 		this.idDepartamento = idDepartamento;
 	}
+	
 }

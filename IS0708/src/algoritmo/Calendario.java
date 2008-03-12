@@ -91,25 +91,13 @@ public class Calendario {
 		this.numDias = numDias;
 	}
 	
-	/**
-	 * 
-	 * @return estructura del calendario
-	 * @deprecated  "funcion guarra": se pierde la ocultacion
-	 */
 	public HoraCalendario[][] getCal() {
 		return cal;
 	}
 	
-	
-	/**
-	 * 
-	 * @param cal
-	 * @deprecated "funcion guarra": se pierde la ocultacion
-	 */
 	public void setCal(HoraCalendario[][] cal) {
 		this.cal = cal;
 	}
-	
 	
 	/**
 	 * Actualiza la información de una hora concreta del calendario
@@ -136,7 +124,7 @@ public class Calendario {
 	/**
 	 * Consulta el numero maximo de empleados para un dia y una hora del calendario
 	 * Si el dia o la hora son incorrectos devuelve "-1"
-	 * @return Numero maximo de empleados
+	 * @return numero maximo de empleados
 	 */
 	public int getMaxHora(int dia, int hora){
 		if (esCorrecto(dia, hora)){
@@ -151,7 +139,7 @@ public class Calendario {
 	/**
 	 * Consulta el numero minimo de empleados para un dia y una hora del calendario
 	 * Si el dia o la hora son incorrectos devuelve "-1"
-	 * @return Numero minimo de empleados
+	 * @return numero minimo de empleados
 	 */
 	public int getMinHora(int dia, int hora){
 		if (esCorrecto(dia, hora)){
