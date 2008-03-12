@@ -1798,24 +1798,41 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 			/**
-			 * SELECT * FROM TURNOS
-			 * WHERE IdTurno IN (
-			 * 		SELECT IdTurno FROM ListaTurnosPorContrato
-			 * 		WHERE IdContrato IN (
-			 * 			SELECT * FROM CONTRATO
-			 * 			WHERE IdContrato IN (
-			 * 				SELECT IdContrato FROM USUARIO
-			 * 				WHERE NumVendedor IN (
-			 * 					SELECT NumVendedor FROM DepartamentoUsuario
-			 * 					WHERE NombreDepartamento = "dpto"))));
+SELECT * FROM TURNOS
+WHERE IdTurno IN (
+		SELECT IdTurno FROM ListaTurnosPorContrato
+		WHERE IdContrato IN (
+			SELECT * FROM CONTRATO
+			WHERE IdContrato IN (
+				SELECT IdContrato FROM USUARIO
+				WHERE NumVendedor IN (
+					SELECT NumVendedor FROM DepartamentoUsuario
+					WHERE NombreDepartamento = "DatosFijos"))));
+
+Otra posibilidad...
+select * from TURNOS where IdTurno in (
+	select l.IdTurno from ListaTurnosPorContrato l, CONTRATO c, USUARIO u, DepartamentoUsuario d WHERE
+	l.IdContrato = c.IdContrato AND
+	c.IdContrato = u.IdContrato AND
+	u.NumVendedor = d.NumVendedor AND
+	d.NombreDepartamento = "DatosFijos"
+);
+
 			 */
 			
+//			r = st.executeQuery("SELECT * FROM TURNOS WHERE IdTurno IN ("
+//					+ "SELECT IdTurno FROM ListaTurnosPorContrato WHERE IdContrato IN ("
+//					+ "SELECT IdContrato FROM CONTRATO WHERE IdContrato IN ("
+//					+ "SELECT IdContrato FROM USUARIO WHERE NumVendedor IN ("
+//					+ "SELECT NumVendedor FROM DepartamentoUsuario WHERE "
+//					+ "NombreDepartamento = '"+ departamento +"'))));");
+
 			r = st.executeQuery("SELECT * FROM TURNOS WHERE IdTurno IN ("
-					+ "SELECT IdTurno FROM ListaTurnosPorContrato WHERE IdContrato IN ("
-					+ "SELECT IdContrato FROM CONTRATO WHERE IdContrato IN ("
-					+ "SELECT IdContrato FROM USUARIO WHERE NumVendedor IN ("
-					+ "SELECT NumVendedor FROM DepartamentoUsuario WHERE "
-					+ "NombreDepartamento = '"+ departamento +"'))));");
+					+ "SELECT l.IdTurno FROM ListaTurnosPorContrato l, CONTRATO c, USUARIO u, DepartamentoUsuario d WHERE "
+					+ "l.IdContrato = c.IdContrato AND "
+					+ "c.IdContrato = u.IdContrato AND "
+					+ "u.NumVendedor = d.NumVendedor AND "
+					+ "NombreDepartamento = '"+ departamento +"');");
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
