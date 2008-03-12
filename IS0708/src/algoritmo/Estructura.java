@@ -21,6 +21,14 @@ public class Estructura {
 	private String idDepartamento;
 	private Controlador controlador;		
 	
+	/**
+	 * Constructora con parámetros
+	 * @param mes Mes
+	 * @param anio Año
+	 * @param cont Controlador
+	 * @param idDepartamento Identificador del departamento
+	 * @param listaE Lista de empleados
+	 */
 	public Estructura(int mes, int anio, Controlador cont, String idDepartamento, ArrayList<Empleado> listaE){
 		this.idDepartamento = idDepartamento;
 		this.controlador = cont;
@@ -52,6 +60,10 @@ public class Estructura {
 		dias = l;
 	}
 	
+	/**
+	 * Método para dividir el horario de un empleado según las franjas que forman 
+	 * los turnos de los empleados y sus tiempos de descanso
+	 */
 	private void inicializaTrozos(){
 		ArrayList<Turno> turnos = controlador.getListaTurnosEmpleadosDpto(this.idDepartamento);
 		ArrayList<Time> horas = new ArrayList<Time>();
@@ -77,18 +89,10 @@ public class Estructura {
 		}
 	}
 	
-	/**
-	 * Devuelve el numero de trozos en los que se divide el dia del mes.
-	 * @return	numero de trozos/dia.
-	 */
 	public int getNumTrozos() {
 		return numTrozos;
 	}
 	
-	/**
-	 * Devuelve las franjas horarias en las que se divide el dia del mes.
-	 * @return	franjas horarias.
-	 */
 	public ArrayList<Time> getTrozosHorario() {
 		return trozosHorario;
 	}	

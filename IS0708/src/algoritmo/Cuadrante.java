@@ -16,8 +16,13 @@ public class Cuadrante {
 	protected ArrayList<Trabaja> cuad[];  //vector donde en cada posicion hay una lista de los empleados que trabajan
 	private String idDepartamento;	      //identificador del departamento
 	
-	//creacion de un cuadrante vacio
-	public Cuadrante(int mes,int anio,String idDepartamento){
+	/**
+	 * Constructora con parámetros
+	 * @param mes Mes
+	 * @param anio Año
+	 * @param idDepartamento Identificador del departamento
+	 */
+	public Cuadrante (int mes, int anio, String idDepartamento){
 		this.mes = mes;
 		this.numDias = Util.dameDias(mes,anio);
 		this.cuad = new ArrayList[numDias];

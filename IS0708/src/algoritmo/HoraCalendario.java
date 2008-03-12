@@ -24,26 +24,26 @@ public class HoraCalendario {
 	}
 	
 	/**
-	 * Constructora con parametros
-	 * @param max Numero maximo de empleados simultaneos en el departamento
-	 * @param min Numero minimo de empleados simultaneos en el departamento
-	 * @param exp Numero de empleados expertos por cada inexpert 
-	 * @param inexpert Numero de empleados principiantes simultaneos en el departamento
+	 * Constructora con parámetros
+	 * @param max Número máximo de empleados simultáneos en el departamento
+	 * @param min Número mínimo de empleados simultáneos en el departamento
+	 * @param exp Número de empleados expertos por cada inexperto 
+	 * @param inexpert Número de empleados principiantes simultáneos en el departamento
 	 */
-	public HoraCalendario(int max,int min,int exp,int inexpert){//Otra constructora
+	public HoraCalendario(int max, int min, int exp, int inexp){
 		this.max = max;
 		this.min = min;
 		this.expertos = exp;
-		this.principiantes = inexpert;	
+		this.principiantes = inexp;	
 	}
 	
 	/**
-	 * Constructora con parametros
-	 * @param max Numero maximo de empleados simultaneos en el departamento
-	 * @param min Numero minimo de empleados simultaneos en el departamento
-	 * @param patron Patron de empleados "XeYp"
+	 * Constructora con parámetros
+	 * @param max Número máximo de empleados simultáneos en el departamento
+	 * @param min Número mínimo de empleados simultáneos en el departamento
+	 * @param patron Patrón de empleados "XeYp"
 	 */
-	public HoraCalendario(int max,int min,String patron){//Otra constructora
+	public HoraCalendario(int max, int min, String patron){
 		this.max = max;
 		this.min = min;
 		expertos = Util.numExpertos(patron);
