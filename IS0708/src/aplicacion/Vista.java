@@ -110,6 +110,7 @@ public class Vista {
 				}
 				while (!colaEscritura.isEmpty()) {
 					setProgreso("Actualizando base de datos", prog);
+					System.out.println(prog);
 					prog+=frac;
 					ElementoCache e = colaEscritura.poll();
 					if (e.i==INSERTAR) {
@@ -640,6 +641,21 @@ public class Vista {
 		return c;
 	}
 	
+	public void eliminaCuadranteCache(int mes, int anio, String idDepartamento) {
+		if (!alive) return;
+		int i = 0;
+		while (i<cuadrantes.size()) {
+			if (cuadrantes.get(i).getAnio()==anio && cuadrantes.get(i).getMes()==mes && cuadrantes.get(i).getIdDepartamento().equals(idDepartamento)) {
+				cuadrantes.remove(i);
+			}
+			i++;
+		}
+	}
+	
+	public void insertCuadranteCache(Cuadrante c) {
+		cuadrantes.add(c);
+	}
+
 	public ArrayList<Trabaja> getListaTrabajaDia(int dia, int mes, int anio, String idDepartamento) {
 		Cuadrante c = getCuadrante(mes, anio, idDepartamento);
 		return c.getListaTrabajaDia(dia-1);

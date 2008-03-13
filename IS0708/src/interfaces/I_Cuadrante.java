@@ -500,6 +500,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		};
 		mouseMoveListenerCuadrMensual = new MouseMoveListener() {
 			public void mouseMove(MouseEvent e) {
+				if (cacheCargada) {
 				//Comprueba si el cursor esta situado sobre algun dia
 				cursor.x = e.x; cursor.y = e.y;
 				diaValido = false;
@@ -550,6 +551,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				}
 					
 			canvas.redraw();
+			}
 			}
 		};
 
@@ -699,9 +701,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		if (diaValido){
 			int alto=39;
 			//Sacamos la informacion del turno
-			int idTurno=iCuad[diaActVistaMes].get(empActVistaMes-1).getTurno().getIdTurno();
+			int idTurno=iCuad[diaActVistaMes].get(empActVistaMes).getTurno().getIdTurno();
 			String idTurnoS=("Id. Turno: "+String.valueOf(idTurno));
-			String descTurno=iCuad[diaActVistaMes].get(empActVistaMes-1).getTurno().getDescripcion();
+			String descTurno=iCuad[diaActVistaMes].get(empActVistaMes).getTurno().getDescripcion();
 			int ancho=Math.max(gc.textExtent(descTurno).x+15,gc.textExtent(idTurnoS).x+15);
 			//Información del color
 			Color color = new Color(display,120,170,120);
