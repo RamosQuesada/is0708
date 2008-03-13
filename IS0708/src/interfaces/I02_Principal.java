@@ -215,7 +215,7 @@ public class I02_Principal {
 				3, 6));
 
 		//TODO
-		ic = new I_Cuadrante(vista, 0, 0, "DatosFijos", 4, 9, 23);
+		ic = new I_Cuadrante(vista, 0, 0, tmDep, 4, 9, 23);
 		cDepartamentos.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				ic.setDepartamento(cDepartamentos.getText());
