@@ -9,6 +9,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
 
+import algoritmo.Cuadrante;
+import algoritmo.ResultadoTurnoMatic;
 import aplicacion.Contrato;
 import aplicacion.Empleado;
 import aplicacion.Turno;
@@ -20,7 +22,6 @@ import java.util.Locale;
 import java.sql.Date;
 
 import impresion.Imprimir;
-import interfaces.I_Cuadrante.Loader;
 import aplicacion.Vista;
 
 /**
@@ -52,6 +53,11 @@ public class I02_Principal {
 		crearVentana(vista.getEmpleadoActual().getRango());
 	}
 	
+	private class AlgoritmoRun extends Thread {
+		public void run() {
+			
+		}
+	}
 	private void crearBarraMenu() {
 		// Una barra de menús
 		Menu barra = new Menu(shell, SWT.BAR);
@@ -213,8 +219,13 @@ public class I02_Principal {
 						+ aplicacion.Util.mesAString(bundle, calendario
 								.getMonth()) + " de "
 						+ String.valueOf(calendario.getYear()));
+				vista.setCursorEspera();
+				//TODO poner bundle al string
+				vista.setProgreso("Cargando cuadrante", 50);
 				ic.setDia(calendario.getDay(), calendario.getMonth()+1,
 						calendario.getYear());
+				vista.setProgreso("",100);
+				vista.setCursorFlecha();
 			}
 		});
 		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false,
@@ -223,12 +234,6 @@ public class I02_Principal {
 				.getMonth(), calendario.getDay());
 		// ic.setDia(calendario.getDay(), calendario.getMonth(),
 		// calendario.getYear());
-		/*
-		 * e1.anadeGUI(cCuadrante,9,23,3, true); e2.anadeGUI(cCuadrante,9,23,3,
-		 * false); e3.anadeGUI(cCuadrante,9,23,3, false);
-		 * e4.anadeGUI(cCuadrante,9,23,3, false); e5.anadeGUI(cCuadrante,9,23,3,
-		 * false);
-		 */
 		//		
 		// Img = cuadrante.dameImageImprimible();
 		final Button bPorMes = new Button(cCuadrantes, SWT.RADIO);
@@ -271,15 +276,29 @@ public class I02_Principal {
 				messageBox.setText(bundle.getString("Aviso"));
 				messageBox.setMessage(
 						bundle.getString("I02_dlg_CrearCuadrante1") 
-						+ calendario.getMonth()+1 + "/"
+						+ (calendario.getMonth()+1) + "/"
 						+ calendario.getYear() + " " +
 						bundle.getString("I02_dlg_CrearCuadrante2"));
 				if (messageBox.open()==SWT.YES) {
+					vista.setProgreso("Generando cuadrante, por favor espere", 10);
+					vista.setCursorEspera();
 					algoritmo.TurnoMatic t = new algoritmo.TurnoMatic(calendario.getMonth()+1, calendario.getYear(),vista, cDepartamentos.getText());
-					t.ejecutaAlgoritmo();
+					
+					ResultadoTurnoMatic resultado = t.ejecutaAlgoritmo();
+					//quitar cuadrante de la fecha del calendario de la cache
+					// añadir t.getcuadrante a cache
+					vista.eliminaCuadranteCache(calendario.getMonth()+1, calendario.getYear(), cDepartamentos.getText());
+					vista.insertCuadranteCache(t.getCuadrante());
+//					MessageBox messageBoxResumen = new MessageBox(shell,
+//							SWT.APPLICATION_MODAL | SWT.OK );
+//					messageBox.setText(bundle.getString("Resumen"));
+//					
+					vista.setProgreso("", 100);
+					vista.setCursorFlecha();
 					ic.setDia(calendario.getDay(), calendario.getMonth()+1,
 							calendario.getYear());
 					ic.cargarCache();
+					ic.redibujar();
 				}
 			}
 		});

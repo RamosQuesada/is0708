@@ -34,8 +34,6 @@ public class Aplicacion {
 		}
 		catch (Exception e) {
 			new I19_Excepcion(v, e);
-			v.stop();
-			// TODO terminar toda la aplicación
 		}
 	}
 }
