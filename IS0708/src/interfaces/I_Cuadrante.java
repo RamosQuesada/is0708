@@ -461,7 +461,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		};
 		mouseListenerCuadrMensual = new MouseListener() {
 			public void mouseDown(MouseEvent e){
-				if (e.button == 1 &&(diaValido)) {
+				if (e.button == 1 &&(diaValido) && diaActVistaMes<iCuad.length && empActVistaMes<iCuad[diaActVistaMes].size()) {
 					empleadoSeleccionado = iCuad[diaActVistaMes].get(empActVistaMes-1).getEmpl();
 					turnoSeleccionado = iCuad[diaActVistaMes].get(empActVistaMes-1).getTurno();
 					turnPulsX=diaActVistaMes;
@@ -471,7 +471,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			};
 			
 			public void mouseUp(MouseEvent e){
-				if (e.button == 1 &&(diaValido)) {
+				if (e.button == 1 &&(diaValido) && diaActVistaMes<iCuad.length && empActVistaMes<iCuad[diaActVistaMes].size()) {
 					Turno turnoSeleccionado2=iCuad[diaActVistaMes].get(empActVistaMes-1).getTurno();
 					//Si los dos empleados tienen el mismo contrato
 					if (turnoSeleccionado!=null && empleadoSeleccionado.getContratoId() == iCuad[diaActVistaMes].get(empActVistaMes-1).getEmpl().getContratoId()) {
@@ -698,7 +698,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		if (fondo==null)
 			actualizarFondo(gc);
 		else gc.drawImage(fondo, 0, 0);
-		if (diaValido){
+		if (diaValido && diaActVistaMes<iCuad.length && empActVistaMes<iCuad[diaActVistaMes].size()){
 			int alto=39;
 			//Sacamos la informacion del turno
 			int idTurno=iCuad[diaActVistaMes].get(empActVistaMes).getTurno().getIdTurno();

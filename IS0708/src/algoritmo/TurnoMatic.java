@@ -540,6 +540,7 @@ public class TurnoMatic {
 	private void ponerEmpleado (Empleado emp, Time ini, Time fin, Turno turno, int dia){
 		Trabaja trabaja = new Trabaja(emp.getEmplId(),ini,fin,turno.getIdTurno());
 		cuadrante.setTrabajaDia(dia, trabaja);
+		vista.setProgreso("Generando cuadrante, por favor espere", dia*3);
 	}
 	
 	/**
