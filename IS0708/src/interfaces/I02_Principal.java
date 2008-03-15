@@ -1673,7 +1673,7 @@ public class I02_Principal {
 	 * si ha terminado.
 	 * 
 	 * @param i
-	 *            Un valor de 0 a 99, ó 100 para que desaparezca.
+	 *            Un valor de 0 a 99, ó >100 para que desaparezca.
 	 */
 	public void setProgreso(String mensaje, int i) {
 		final int i2 = i;
@@ -1685,7 +1685,7 @@ public class I02_Principal {
 						lEstado.setText(mens);
 						pbEstado.setVisible(true);
 						pbEstado.setSelection(i2);
-					} else if (i2 == 100) {
+					} else if (i2 > 100) {
 						lEstado.setText("Conectado");
 						pbEstado.setVisible(false);
 					}
