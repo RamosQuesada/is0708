@@ -315,6 +315,29 @@ input.button {
 	list-style-image: url(bullet.gif);
 }
 
+/* Informes */
+#main #informe h1 {
+	border-bottom: 1px solid #EFF0F1;
+	color: #1773BC;
+	margin-bottom: 10px;
+	text-align: right;
+}
+
+#main #informe h2 {
+	color: #1773BC;
+	font-size: 110%;
+	background: none;
+	border-bottom: none;
+	margin: 0px; padding: 0px;
+}
+
+#main #informe p {
+	padding: 0px;
+	padding-left: 20px;
+	margin: 0px;
+	margin-bottom: 10px;
+}
+
 .post-footer {
 	background-color: #FAFAFA;
 	padding: 5px; margin: 20px 10px 10px 10px;
