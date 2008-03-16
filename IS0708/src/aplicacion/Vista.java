@@ -99,6 +99,7 @@ public class Vista {
 	}
 	
 	private class CacheUploaderDaemon extends Thread {
+		// TODO usar batches para upload
 		public void run() {
 			this.setName("Vista.CacheUploaderDaemon");
 			int frac = 0;
@@ -325,8 +326,9 @@ public class Vista {
 	 * 
 	 * @author Daniel Dionne
 	 */
-	public class Loader implements Runnable {
+	public class Loader extends Thread {
 		public synchronized void run() {
+			this.setName("Loader");
 			// Si hay un usuario logueado
 			if (controlador.getEmpleadoActual() != null){
 				loadCache();
@@ -338,7 +340,7 @@ public class Vista {
 					try {
 						// TODO Espera 20 segundos (¿cómo lo dejamos?)
 						wait(20000);
-					} catch (Exception e) {}
+					} catch (InterruptedException e) {}
 				}
 				db.cerrarConexion();
 			}
@@ -369,99 +371,40 @@ public class Vista {
 		this.db = db;
 		controlador.setVista(this);
 
-		// Creación del display y el shell
+		// Crear display y shell
 		display = d;
 		shell = new Shell(display);
 
-		// Creación del gestor de idiomas
+		// Crear gestor de idiomas
 		l = new LanguageChanger();
 		bundle = l.getBundle();
 		locale = l.getCurrentLocale();
-		colaEscritura = new java.util.LinkedList<ElementoCache>();		
+		
+		// Instanciar cola de escritura de caché
+		colaEscritura = new java.util.LinkedList<ElementoCache>();
+		
+		// Lo normal ahora es llamar al método start().
 	}
 
 	/**
-	 * Este método realiza el login.
+	 * Intenta realizar el login e inicia la aplicación.
 	 */
 	public void start() {
-		// Login y conexión a la base de datos
-		login = new I01_Login(shell, bundle, db);
+		// Iniciar conexión a la base de datos, iniciar caché
 		conector = new Thread(new Conector());
 		loader = new Thread(new Loader());
 		cacheUploader = new CacheUploaderDaemon();
 		conector.start();
 		cacheUploader.start();
-		boolean identificado = false;
-		while (!identificado) {
-			if (db.conexionAbierta())
-				login.mostrarVentana("Conectado.");
-			else
-				login.mostrarVentana("Conectando...");
-			// Espera hasta que se cierre la ventana de login
-			while (!login.isDisposed()) {
-				if (!shell.getDisplay().readAndDispatch()) {
-					shell.getDisplay().sleep();
-				}
-			}
-			// Una vez cerrada la ventana de login
-			if (login.getBotonPulsado() == 1) {
-				// Login de administrador
-				if (login.getNumeroVendedor() == 0
-						&& login.getPassword().compareTo("admin") == 0) {
-					System.out.println("aplicacion.Vista\t::Administrador identificado");
-					controlador.setEmpleadoActual(new Empleado(0, 0,
-							"Administrador", "", "", null, 0, "", "admin", 0,
-							0, 0, null, null, null, null, null, 0, 0, 0));
-					identificado = true;
-				// Login normal
-				} else {
-					Empleado emp = getEmpleado(login.getNumeroVendedor());
-					if (emp != null) {
-						// Comprobar la clave
-						if (emp.getPassword().compareTo(login.getPassword()) == 0) {
-							controlador.setEmpleadoActual(emp);
-							identificado = true;
-							// Configurar idioma al del empleado
-							l.cambiarLocale(controlador.getEmpleadoActual()
-									.getIdioma());
-							bundle = l.getBundle();
-							locale = l.getCurrentLocale();
-							loader.start();
-						} else {
-							// Si el password no coincide
-							if (!login.detectadoLector()) {
-								MessageBox messageBox = new MessageBox(shell,
-										SWT.APPLICATION_MODAL | SWT.ICON_ERROR | SWT.OK);
-								messageBox.setText(bundle.getString("Error"));
-								messageBox.setMessage(bundle.getString("I01_err_Login2"));
-								messageBox.open();
-							} else {
-								display.beep();
-							}
-							// TODO else mostrar un aviso pero que no haya que cerrarlo
-						}
-					} else {
-						// Si el usuario no existe en la base de datos
-						MessageBox messageBox = new MessageBox(shell,
-								SWT.APPLICATION_MODAL | SWT.ICON_ERROR | SWT.OK);
-						messageBox.setText(bundle.getString("Error"));
-						messageBox.setMessage(bundle
-								.getString("I01_err_Login1"));
-						messageBox.open();
-					}
-				}
-			} else {
-				// Salir de la aplicación
-				shell.getDisplay().dispose();
-				identificado = true; // Para que salga del bucle
-				if (db.conexionAbierta()) {
-					System.out.println("Vista-start cerrando conexion. Si ves este mensaje sin venir a cuento, avísanos.");
-					db.cerrarConexion();
-				}
-			}
+
+		// Login 
+		login = new I01_Login(shell, bundle, db);
+		boolean identificadoOCancelado = false;
+		while (!identificadoOCancelado) {
+			identificadoOCancelado = login();
 		}
 
-		// Si todavía no he cerrado el display, ya he hecho login correctamente
+		// Si no he cerrado el shell, ya he hecho login correctamente
 		if (!shell.isDisposed()) {
 			i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);
 			// Este bucle mantiene la ventana abierta
@@ -470,10 +413,88 @@ public class Vista {
 					shell.getDisplay().sleep();
 				}
 			}
+			// Cierre de la aplicación
 			stop();
 		}
 	}
+	
+	private boolean login() {
+		boolean identificadoOCancelado = false;
+		if (db.conexionAbierta())
+			login.mostrarVentana("Conectado.");
+		else
+			login.mostrarVentana("Conectando...");
+		// Espera hasta que se cierre la ventana de login
+		while (!login.isDisposed()) {
+			if (!shell.getDisplay().readAndDispatch()) {
+				shell.getDisplay().sleep();
+			}
+		}
+		// Una vez cerrada la ventana de login
+		if (login.getBotonPulsado() == 1) {
+			// Login de administrador
+			if (login.getNumeroVendedor() == 0
+					&& login.getPassword().equals("admin")) {
+				System.out.println("aplicacion.Vista\t::Administrador identificado");
+				controlador.setEmpleadoActual(new Empleado(0, 0,
+						"Administrador", "", "", null, 0, "", "admin", 0,
+						0, 0, null, null, null, null, null, 0, 0, 0));
+				identificadoOCancelado = true;
+			// Login normal
+			} else {
+				Empleado emp = getEmpleado(login.getNumeroVendedor());
+				if (emp != null) {
+					// Comprobar la clave
+					// Si la clave es correcta:
+					// - asignar idioma a la aplicación
+					// - empezar a cargar los datos
+					if (emp.getPassword().equals(login.getPassword())) {
+						controlador.setEmpleadoActual(emp);
+						identificadoOCancelado = true;
+						// Configurar idioma al del empleado
+						l.cambiarLocale(controlador.getEmpleadoActual()
+								.getIdioma());
+						bundle = l.getBundle();
+						locale = l.getCurrentLocale();
+						loader.start();
+					} else {
+						// Si el password no coincide
+						if (!login.detectadoLector()) {
+							MessageBox messageBox = new MessageBox(shell,
+									SWT.APPLICATION_MODAL | SWT.ICON_ERROR | SWT.OK);
+							messageBox.setText(bundle.getString("Error"));
+							messageBox.setMessage(bundle.getString("I01_err_Login2"));
+							messageBox.open();
+						} else {
+							// TODO mostrar un aviso pero que no haya que cerrarlo
+							display.beep();
+						}
+					}
+				} else {
+					// Si el usuario no existe en la base de datos, mostrar mensaje
+					MessageBox messageBox = new MessageBox(shell,
+							SWT.APPLICATION_MODAL | SWT.ICON_ERROR | SWT.OK);
+					messageBox.setText(bundle.getString("Error"));
+					messageBox.setMessage(bundle
+							.getString("I01_err_Login1"));
+					messageBox.open();
+				}
+			}
+		} else {
+			// Se ha pulsado el botón Cancelar o cerrar, por tanto hay que salir de la aplicación
+			shell.getDisplay().dispose();
+			identificadoOCancelado = true; // Para que salga del bucle
+			if (db.conexionAbierta()) {
+				System.out.println("Vista-start cerrando conexion. Si ves este mensaje sin venir a cuento, avísanos.");
+				db.cerrarConexion();
+			}
+		}
+		return identificadoOCancelado;
+	}
 
+	/**
+	 * Cierra la aplicación
+	 */
 	public void stop() {
 		try {
 			alive = false;
@@ -483,7 +504,7 @@ public class Vista {
 			display.dispose();
 		}
 		catch(Exception e) {
-			System.err.println("Error al parar la Vista.");
+			System.err.println("Vista ::\tError al cerrar la aplicación.");
 		};
 	}
 
