@@ -171,14 +171,9 @@ public class I02_Principal {
 		});
 		helpHelpItem.setAccelerator(SWT.F1);
 		setProgreso("Cargando datos", 10);
-
 	}
 
 	private void crearTabJefeCuadrantes(TabFolder tabFolder) {
-		// TODO BD Cargar el cuadrante del departamento de empleadoActual
-		// con la fecha del calendario (definido más abajo)
-		// en la variable cuadranteActual
-
 		// Crear el item del tabFolder
 		TabItem tabItemCuadrantes = new TabItem(tabFolder, SWT.NONE);
 		tabItemCuadrantes.setText(bundle.getString("Cuadrantes"));
@@ -186,6 +181,7 @@ public class I02_Principal {
 
 		final Composite cCuadrantes = new Composite(tabFolder, SWT.NONE);
 		tabItemCuadrantes.setControl(cCuadrantes);
+		
 		// Configuración del composite
 		cCuadrantes.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true,
 				1, 1));
@@ -197,19 +193,15 @@ public class I02_Principal {
 		lDepartamentos.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
 				false, 1, 1));
 
-		cDepartamentos = new Combo(cCuadrantes, SWT.BORDER
-				| SWT.READ_ONLY);
+		cDepartamentos = new Combo(cCuadrantes, SWT.BORDER | SWT.READ_ONLY);
 		cDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1));
 		
 		// TODO coger de la cache
 		cDepartamentos.setItems(vista.getNombresDepartamentosJefe());
-//		 cDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
 		cDepartamentos.select(0);
 		tmDep = cDepartamentos.getText();
 
-		// Un canvas para albergar el gráfico de los cuadrantes
-		// NO_BACKGROUND + doble buffer para evitar parpadeo
 		final Composite cCuadrante = new Composite(cCuadrantes, SWT.BORDER);
 		cCuadrante.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
 				3, 6));
@@ -264,8 +256,7 @@ public class I02_Principal {
 		// Img = cuadrante.dameImageImprimible();
 		final Button bPorMes = new Button(cCuadrantes, SWT.RADIO);
 		bPorMes.setText(bundle.getString("I02_but_Verpormes"));
-		bPorMes.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2,
-				1));
+		bPorMes.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));
 		// Oyente para saber cuando se ha modificado la seleccion del boton
 		/** ********************************************************* */
 		bPorMes.addListener(SWT.Selection, new Listener() {
@@ -307,6 +298,7 @@ public class I02_Principal {
 							+ calendario.getYear() + " " +
 							bundle.getString("I02_dlg_CrearCuadrante2"));
 					if (messageBox.open()==SWT.YES) {
+						// TODO usar bundle
 						vista.setProgreso("Generando cuadrante, por favor espere", 0);
 						vista.setCursorEspera();
 						algRunner = new AlgoritmoRun();
@@ -1541,10 +1533,10 @@ public class I02_Principal {
 		case 2:
 			// Tabs de jefe
 			crearTabJefeCuadrantes(tabFolder);
-			crearTabMensajes(tabFolder);
-			crearTabJefeEmpleados(tabFolder);
-			crearTabJefeDepartamentos(tabFolder);
-			crearTabJefeContratos(tabFolder);
+//			crearTabMensajes(tabFolder);
+//			crearTabJefeEmpleados(tabFolder);
+//			crearTabJefeDepartamentos(tabFolder);
+//			crearTabJefeContratos(tabFolder);
 			break;
 		case 3:
 			// Tabs de gerente
@@ -1685,7 +1677,7 @@ public class I02_Principal {
 						lEstado.setText(mens);
 						pbEstado.setVisible(true);
 						pbEstado.setSelection(i2);
-					} else if (i2 > 100) {
+					} else if (i2 >= 100) {
 						lEstado.setText("Conectado");
 						pbEstado.setVisible(false);
 					}
