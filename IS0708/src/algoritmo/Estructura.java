@@ -52,10 +52,18 @@ public class Estructura {
 		cal = new Calendario(mes, anio, controlador, idDepartamento);//creamos calendario
 	}
 	
+	/**
+	 * Consulta las listas de empleados
+	 * @return Listas de Empleados 
+	 */
 	public ListasEmpleados[][] getDias(){
 		return dias;
 	}
 	
+	/**
+	 * Modifica las listas de empleados
+	 * @param Listas de Empleados
+	 */
 	public void setDias(ListasEmpleados[][] l){
 		dias = l;
 	}
