@@ -148,7 +148,7 @@ public class Analisis {
 	}
 	
 	/**
-	 * Obtiene las sugerencias de un día
+	 * Consulta las sugerencias de un día
 	 * @param i Día del que se piden las sugerencias
 	 * @return Sugerencias del día
 	 */
@@ -156,6 +156,10 @@ public class Analisis {
 		return sugerencias[i];
 	}
 	
+	/**
+	 * Genera cadenas de texto de sugerencias para cada día
+	 * @return Sugerencias para cada día
+	 */
 	public ArrayList<String>[] generarResumen(){
 		ArrayList<String>[] textos = new ArrayList[dias];
 		for (int i=0;i<dias;i++){
