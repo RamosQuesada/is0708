@@ -90,10 +90,9 @@
 				<br><br><br> -->
 <!-- Aqu� acaba un CU -->
 
-<!-- INICIO-->
 <!-- Aqu� empieza un CU -->			
 				<a name="01"></a>
-				<h1>Caso de uso 01: Autentificar al usuario</h1>
+				<h1>Caso de uso 01: Autentificar</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Acceder al sistema.</p>
 				<h2>Precondiciones</h2>
@@ -103,7 +102,7 @@
 				<h2>Postcondiciones si fallo</h2>
 				<p>Se piden de nuevo los datos.</p>
 				<h2>Actores</h2>
-				<p>Usuario.</p>
+				<p>Usuario y base de datos.</p>
 				<h2>Secuencia normal</h2>
 				<p>1- Introducir número de usuario.</p>
 				<p>2- Introducir contraseña.</p>
@@ -117,7 +116,82 @@
 
 <!-- Aqu� empieza un CU -->			
 				<a name="02"></a>
-				<h1>Caso de uso 02: Consultar mensaje</h1>
+				<h1>Caso de uso 02: Dar de alta a un empleado</h1>
+				<h2>Objetivo en contexto</h2>
+				<p>Introducir un nuevo empleado en la base de datos.</p>
+				<h2>Precondiciones</h2>
+				<p>El jefe de departamento ha accedido correctamente al sistema y ya está en su menú de opciones.</p>
+				<h2>Postcondiciones si éxito</h2>
+				<p>El empleado queda registrado.</p>
+				<h2>Postcondiciones si fallo</h2>
+				<p>Mensaje de error.</p>
+				<h2>Actores</h2>
+				<p>Jefe de departamento y base de datos.</p>
+				<h2>Secuencia normal</h2>
+				<p>1- elegir opción dar de alta.</p>
+				<p>2- Introducir datos.</p>
+				<p>3- Confirmar.</p>
+				<p>4- Se añade el nuevo empleado a la base de datos.</p>
+				<h2>Secuencias alternativas</h2>
+				<p>2a- El empleado ya está en el sistema. No es necesario darlo de alta.</p>
+				<p>2b- Datos con formato incorrecto. La aplicación permite corregir los datos erróneos marcando los campos incorrectos de alguna forma (vuelta a 2).</p>
+				<br><br><br>
+<!-- Aqu� acaba un CU -->
+
+<!-- Aqu� empieza un CU -->			
+				<a name="03"></a>
+				<h1>Caso de uso 03: Dar de baja a un empleado</h1>
+				<h2>Objetivo en contexto</h2>
+				<p>Eliminar un empleado de la base de datos.</p>
+				<h2>Precondiciones</h2>
+				<p>El jefe de departamento ha accedido correctamente al sistema y ya está en su menú de opciones.</p>
+				<h2>Postcondiciones si éxito</h2>
+				<p>El empleado queda eliminado del sistema.</p>
+				<h2>Postcondiciones si fallo</h2>
+				<p></p>
+				<h2>Actores</h2>
+				<p>Jefe de departamento y base de datos.</p>
+				<h2>Secuencia normal</h2>
+				<p>1- Elegir opción dar de baja.</p>
+				<p>2- Introducir identificador del empleado a eliminar.</p>
+				<p>3- Confirmar.</p>
+				<p>4- Se borra el nuevo empleado de la base de datos.</p>
+				<p>5- Si es necesario, se modifica el cuadrante (CU-15).</p>
+				<h2>Secuencias alternativas</h2>
+				<p>2a- El empleado no está en el sistema. No es necesario darle de baja.</p>
+				<p>2b- Identificafor incorrecto. La aplicación solicita vbolver a introducir el identificador.</p>
+				<br><br><br>
+<!-- Aqu� acaba un CU -->
+
+<!-- Aqu� empieza un CU -->			
+				<a name="04"></a>
+				<h1>Caso de uso 04: Modificar los datos de un empleado</h1>
+				<h2>Objetivo en contexto</h2>
+				<p>Tener el sistema actualizado con los nuevos datos del empleado.</p>
+				<h2>Precondiciones</h2>
+				<p>El jefe de departamento ha accedido correctamente al sistema y ya está en su menú de opciones.</p>
+				<h2>Postcondiciones si éxito</h2>
+				<p>Los datos del empleado quedan actualizados.</p>
+				<h2>Postcondiciones si fallo</h2>
+				<p></p>
+				<h2>Actores</h2>
+				<p>Jefe de departamento y base de datos.</p>
+				<h2>Secuencia normal</h2>
+				<p>1- Elegir opción de modificar.</p>
+				<p>2- Introducir los datos a modificar en lugar de los antiguos.</p>
+				<p>3- Confirmar.</p>
+				<p>4- Se actualizan los datos del empleado en la base de datos.</p>
+				<p>5- Se modifica el cuadrante si es necesario (CU-15).</p>
+				<h2>Secuencias alternativas</h2>
+				<p>2a- El empleado no está en el sistema. Comprobar que se ha escrito bien el identicador.</p>
+				<p>2b- Datos con formato incorrecto. La aplicación permite corregir los datos erróneos marcando los campos incorrectos de alguna forma (vuelta a 2).</p>
+				<p>2c- Se accede a algún dato que no se puede modificar. Modificar los datos permitidos o cancelar la operación.
+				<br><br><br>
+<!-- Aqu� acaba un CU -->
+
+<!-- Aqu� empieza un CU -->			
+				<a name="05"></a>
+				<h1>Caso de uso 05: Consultar mensaje</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Observar los mensajes recibidos.</p>
 				<h2>Precondiciones</h2>
@@ -138,8 +212,8 @@
 <!-- Aqu� acaba un CU -->
 
 <!-- Aqu� empieza un CU -->			
-				<a name="03"></a>
-				<h1>Caso de uso 03: Eliminar mensaje</h1>
+				<a name="06"></a>
+				<h1>Caso de uso 06: Eliminar mensaje</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Eliminar un mensaje de la bandeja de entrada.</p>
 				<h2>Precondiciones</h2>
@@ -159,8 +233,8 @@
 <!-- Aqu� acaba un CU -->
 
 <!-- Aqu� empieza un CU -->			
-				<a name="04"></a>
-				<h1>Caso de uso 04: Resaltar mensaje</h1>
+				<a name="07"></a>
+				<h1>Caso de uso 07: Resaltar mensaje</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Resaltar un mensaje de la bandeja de entrada.</p>
 				<h2>Precondiciones</h2>
@@ -180,8 +254,8 @@
 <!-- Aqu� acaba un CU -->
 
 <!-- Aqu� empieza un CU -->			
-				<a name="06"></a>
-				<h1>Caso de uso 06: Escribir mensaje</h1>
+				<a name="08"></a>
+				<h1>Caso de uso 08: Escribir mensaje</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Escribir un mensaje a un usuario del sistema.</p>
 				<h2>Precondiciones</h2>
@@ -247,77 +321,8 @@
 <!-- Aqu� acaba un CU -->
 
 <!-- Aqu� empieza un CU -->			
-				<a name="14"></a>
-				<h1>Caso de uso 14: Crear departamento</h1>
-				<h2>Objetivo en contexto</h2>
-				<p>Crear un departamento vacío.</p>
-				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
-				<h2>Postcondiciones si éxito</h2>
-				<p>Obtener un departamento vacío.</p>
-				<h2>Postcondiciones si fallo</h2>
-				<p>Pantalla de error.</p>
-				<h2>Actores</h2>
-				<p>Gerente y base de datos.</p>
-				<h2>Secuencia normal</h2>
-				<p>1- El usuario accede al menú de creación de departamentos.</p>
-				<p>2- El usuario rellena el formulario con los datos del departamento.</p>
-				<p>3- Mostrar mensaje de éxito.</p>
-				<h2>Secuencias alternativas</h2>
-				<p>3a- Si el departamento ya existe, mostrar un mensaje de error.</p>
-				<p>3b- Si hay un error en la conexión se muestra por pantalla.</p>
-				<br><br><br>
-<!-- Aqu� acaba un CU -->
-
-<!-- Aqu� empieza un CU -->			
-				<a name="15"></a>
-				<h1>Caso de uso 15: Modificar departamento</h1>
-				<h2>Objetivo en contexto</h2>
-				<p>Modificar los datos de un departamento en la base de datos.</p>
-				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
-				<h2>Postcondiciones si éxito</h2>
-				<p>Se actualiza la base de datos con los nuevos datos del departamento.</p>
-				<h2>Postcondiciones si fallo</h2>
-				<p>Pantalla de error.</p>
-				<h2>Actores</h2>
-				<p>Gerente, jefe y base de datos.</p>
-				<h2>Secuencia normal</h2>
-				<p>1- El usuario accede al menú de modificación de departamentos.</p>
-				<p>2- Elige de una lista de sus departamentos uno de ellos.</p>
-				<p>3- El usuario modifica los datos.</p>
-				<p>4- Confirmación.</p>
-				<h2>Secuencias alternativas</h2>
-				<p>4a- Si los datos están en formato incorrecto, mostrar error.</p>
-				<p>4b- Si hay un error en la conexión se muestra por pantalla.</p>
-				<br><br><br>
-<!-- Aqu� acaba un CU -->
-
-<!-- Aqu� empieza un CU -->			
-				<a name="16"></a>
-				<h1>Caso de uso 16: Eliminar un departamento</h1>
-				<h2>Objetivo en contexto</h2>
-				<p>Eliminar un departamento de la base de datos.</p>
-				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
-				<h2>Postcondiciones si éxito</h2>
-				<p>Actualización de la base de datos.</p>
-				<h2>Postcondiciones si fallo</h2>
-				<p>Pantalla de error.</p>
-				<h2>Actores</h2>
-				<p>Gerente, jefe y base de datos.</p>
-				<h2>Secuencia normal</h2>
-				<p>1- El usuario accede al menú de eliminación de departamentos.</p>
-				<p>2- Selecciona de una lista uno de sus departamentos para eliminar.</p>
-				<p>3- Confirmación.</p>
-				<h2>Secuencias alternativas</h2>
-				<p>3a- Si hay un error en la conexión se muestra por pantalla.</p>
-				<br><br><br>
-<!-- Aqu� acaba un CU -->
-
-<!-- Aqu� empieza un CU -->			
-				<a name="17"></a>
-				<h1>Caso de uso 17: Añadir jefe de departamento</h1>
+				<a name="11"></a>
+				<h1>Caso de uso 11: Añadir jefe de departamento</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Añadir un jefe de departamento a la base de datos.</p>
 				<h2>Precondiciones</h2>
@@ -340,8 +345,8 @@
 <!-- Aqu� acaba un CU -->
 
 <!-- Aqu� empieza un CU -->			
-				<a name="18"></a>
-				<h1>Caso de uso 18: Eliminar jefe de departamento</h1>
+				<a name="12"></a>
+				<h1>Caso de uso 12: Eliminar jefe de departamento</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Eliminar un jefe de departamento de la base de datos.</p>
 				<h2>Precondiciones</h2>
@@ -362,8 +367,8 @@
 <!-- Aqu� acaba un CU -->
 
 <!-- Aqu� empieza un CU -->			
-				<a name="19"></a>
-				<h1>Caso de uso 19: Modificar datos de jefe de departamento</h1>
+				<a name="13"></a>
+				<h1>Caso de uso 13: Modificar datos de jefe de departamento</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Modificar los datos de un jefe de departamento en la base de datos.</p>
 				<h2>Precondiciones</h2>
@@ -386,83 +391,8 @@
 <!-- Aqu� acaba un CU -->
 
 <!-- Aqu� empieza un CU -->			
-				<a name="20"></a>
-				<h1>Caso de uso 20: Dar de alta a un empleado</h1>
-				<h2>Objetivo en contexto</h2>
-				<p>Introducir un nuevo empleado en la base de datos.</p>
-				<h2>Precondiciones</h2>
-				<p>El jefe de departamento ha accedido correctamente al sistema y ya está en su menú de opciones.</p>
-				<h2>Postcondiciones si éxito</h2>
-				<p>El empleado queda registrado.</p>
-				<h2>Postcondiciones si fallo</h2>
-				<p>Mensaje de error.</p>
-				<h2>Actores</h2>
-				<p>Jefe de departamento y base de datos.</p>
-				<h2>Secuencia normal</h2>
-				<p>1- elegir opción dar de alta.</p>
-				<p>2- Introducir datos.</p>
-				<p>3- Confirmar.</p>
-				<p>4- Se añade el nuevo empleado a la base de datos.</p>
-				<h2>Secuencias alternativas</h2>
-				<p>2a- El empleado ya está en el sistema. No es necesario darlo de alta.</p>
-				<p>2b- Datos con formato incorrecto. La aplicación permite corregir los datos erróneos marcando los campos incorrectos de alguna forma (vuelta a 2).</p>
-				<br><br><br>
-<!-- Aqu� acaba un CU -->
-
-<!-- Aqu� empieza un CU -->			
-				<a name="21"></a>
-				<h1>Caso de uso 21: Dar de baja a un empleado</h1>
-				<h2>Objetivo en contexto</h2>
-				<p>Eliminar un empleado de la base de datos.</p>
-				<h2>Precondiciones</h2>
-				<p>El jefe de departamento ha accedido correctamente al sistema y ya está en su menú de opciones.</p>
-				<h2>Postcondiciones si éxito</h2>
-				<p>El empleado queda eliminado del sistema.</p>
-				<h2>Postcondiciones si fallo</h2>
-				<p></p>
-				<h2>Actores</h2>
-				<p>Jefe de departamento y base de datos.</p>
-				<h2>Secuencia normal</h2>
-				<p>1- Elegir opción dar de baja.</p>
-				<p>2- Introducir identificador del empleado a eliminar.</p>
-				<p>3- Confirmar.</p>
-				<p>4- Se borra el nuevo empleado de la base de datos.</p>
-				<p>5- Si es necesario, se modifica el cuadrante (CU-15).</p>
-				<h2>Secuencias alternativas</h2>
-				<p>2a- El empleado no está en el sistema. No es necesario darle de baja.</p>
-				<p>2b- Identificafor incorrecto. La aplicación solicita vbolver a introducir el identificador.</p>
-				<br><br><br>
-<!-- Aqu� acaba un CU -->
-
-<!-- Aqu� empieza un CU -->			
-				<a name="22"></a>
-				<h1>Caso de uso 22: Modificar los datos de un empleado</h1>
-				<h2>Objetivo en contexto</h2>
-				<p>Tener el sistema actualizado con los nuevos datos del empleado.</p>
-				<h2>Precondiciones</h2>
-				<p>El jefe de departamento ha accedido correctamente al sistema y ya está en su menú de opciones.</p>
-				<h2>Postcondiciones si éxito</h2>
-				<p>Los datos del empleado quedan actualizados.</p>
-				<h2>Postcondiciones si fallo</h2>
-				<p></p>
-				<h2>Actores</h2>
-				<p>Jefe de departamento y base de datos.</p>
-				<h2>Secuencia normal</h2>
-				<p>1- Elegir opción de modificar.</p>
-				<p>2- Introducir los datos a modificar en lugar de los antiguos.</p>
-				<p>3- Confirmar.</p>
-				<p>4- Se actualizan los datos del empleado en la base de datos.</p>
-				<p>5- Se modifica el cuadrante si es necesario (CU-15).</p>
-				<h2>Secuencias alternativas</h2>
-				<p>2a- El empleado no está en el sistema. Comprobar que se ha escrito bien el identicador.</p>
-				<p>2b- Datos con formato incorrecto. La aplicación permite corregir los datos erróneos marcando los campos incorrectos de alguna forma (vuelta a 2).</p>
-				<p>2c- Se accede a algún dato que no se puede modificar. Modificar los datos permitidos o cancelar la operación.
-				<br><br><br>
-<!-- Aqu� acaba un CU -->
-
-<!-- Aqu� empieza un CU -->			
-				<a name="26"></a>
-				<h1>Caso de uso 26: Consultar cuadrantes</h1>
+				<a name="14"></a>
+				<h1>Caso de uso 14: Consultar cuadrantes</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Visualización del cuadrante.</p>
 				<h2>Precondiciones</h2>
@@ -483,8 +413,8 @@
 <!-- Aqu� acaba un CU -->
 
 <!-- Aqu� empieza un CU -->			
-				<a name="27"></a>
-				<h1>Caso de uso 27: Crear/modificar cuadrantes</h1>
+				<a name="15"></a>
+				<h1>Caso de uso 15: Crear/modificar cuadrantes</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Creación/modificación del cuadrante (considerando la creación como la modificación de un cuadrante vacío).</p>
 				<h2>Precondiciones</h2>
@@ -510,8 +440,8 @@
 <!-- Aqu� acaba un CU -->
 
 <!-- Aqu� empieza un CU -->			
-				<a name="29"></a>
-				<h1>Caso de uso 29: Enviar mensajes de forma automática</h1>
+				<a name="16"></a>
+				<h1>Caso de uso 16: Enviar mensajes de forma automática</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Generar avisos de forma automática tras haber realizado modificaciones en el cuadrante.</p>
 				<h2>Precondiciones</h2>
@@ -533,6 +463,97 @@
 				<br><br><br>
 <!-- Aqu� acaba un CU -->
 
+<!-- Aqu� empieza un CU -->			
+				<a name="17"></a>
+				<h1>Caso de uso 17: Crear departamento</h1>
+				<h2>Objetivo en contexto</h2>
+				<p>Crear un departamento vacío.</p>
+				<h2>Precondiciones</h2>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
+				<p>Obtener un departamento vacío.</p>
+				<h2>Postcondiciones si fallo</h2>
+				<p>Pantalla de error.</p>
+				<h2>Actores</h2>
+				<p>Gerente y base de datos.</p>
+				<h2>Secuencia normal</h2>
+				<p>1- El usuario accede al menú de creación de departamentos.</p>
+				<p>2- El usuario rellena el formulario con los datos del departamento.</p>
+				<p>3- Mostrar mensaje de éxito.</p>
+				<h2>Secuencias alternativas</h2>
+				<p>3a- Si el departamento ya existe, mostrar un mensaje de error.</p>
+				<p>3b- Si hay un error en la conexión se muestra por pantalla.</p>
+				<br><br><br>
+<!-- Aqu� acaba un CU -->
+
+<!-- Aqu� empieza un CU -->			
+				<a name="18"></a>
+				<h1>Caso de uso 18: Modificar departamento</h1>
+				<h2>Objetivo en contexto</h2>
+				<p>Modificar los datos de un departamento en la base de datos.</p>
+				<h2>Precondiciones</h2>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
+				<p>Se actualiza la base de datos con los nuevos datos del departamento.</p>
+				<h2>Postcondiciones si fallo</h2>
+				<p>Pantalla de error.</p>
+				<h2>Actores</h2>
+				<p>Gerente, jefe y base de datos.</p>
+				<h2>Secuencia normal</h2>
+				<p>1- El usuario accede al menú de modificación de departamentos.</p>
+				<p>2- Elige de una lista de sus departamentos uno de ellos.</p>
+				<p>3- El usuario modifica los datos.</p>
+				<p>4- Confirmación.</p>
+				<h2>Secuencias alternativas</h2>
+				<p>4a- Si los datos están en formato incorrecto, mostrar error.</p>
+				<p>4b- Si hay un error en la conexión se muestra por pantalla.</p>
+				<br><br><br>
+<!-- Aqu� acaba un CU -->
+
+<!-- Aqu� empieza un CU -->			
+				<a name="19"></a>
+				<h1>Caso de uso 19: Eliminar un departamento</h1>
+				<h2>Objetivo en contexto</h2>
+				<p>Eliminar un departamento de la base de datos.</p>
+				<h2>Precondiciones</h2>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
+				<p>Actualización de la base de datos.</p>
+				<h2>Postcondiciones si fallo</h2>
+				<p>Pantalla de error.</p>
+				<h2>Actores</h2>
+				<p>Gerente, jefe y base de datos.</p>
+				<h2>Secuencia normal</h2>
+				<p>1- El usuario accede al menú de eliminación de departamentos.</p>
+				<p>2- Selecciona de una lista uno de sus departamentos para eliminar.</p>
+				<p>3- Confirmación.</p>
+				<h2>Secuencias alternativas</h2>
+				<p>3a- Si hay un error en la conexión se muestra por pantalla.</p>
+				<br><br><br>
+<!-- Aqu� acaba un CU -->
+
+<!-- Aqu� empieza un CU -->			
+				<a name="17"></a>
+				<h1>Caso de uso 20: Configurar la aplicación</h1>
+				<h2>Objetivo en contexto</h2>
+				<p>Alterar la configuración de la aplicación.</p>
+				<h2>Precondiciones</h2>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos y tener autorización para configurar la aplicación.</p>
+				<h2>Postcondiciones si éxito</h2>
+				<p>Guardar en un archivo local la nueva configuración.</p>
+				<h2>Postcondiciones si fallo</h2>
+				<p>Pantalla de error.</p>
+				<h2>Actores</h2>
+				<p>Usuario.</p>
+				<h2>Secuencia normal</h2>
+				<p>1- El usuario accede al menú de configuración.</p>
+				<p>2- El usuario altera la configuración.</p>
+				<p>3- Confirmación.</p>
+				<h2>Secuencias alternativas</h2>
+				<p>3a- Si algún dato está en formato incorrecto mostrar error.</p>
+				<p>3b- Si no se pueden grabar correctamente los datos mostrar error.</p>
+				<br><br><br>
+<!-- Aqu� acaba un CU -->
 
 				</div>
 				<h1>Historial de cambios</h1>
