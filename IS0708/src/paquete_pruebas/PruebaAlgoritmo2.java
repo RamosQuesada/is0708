@@ -28,9 +28,8 @@ public class PruebaAlgoritmo2 {
 		//TurnoMatic alg = new TurnoMatic(4,2008,c,"DatosFijos");
 		//TurnoMatic alg = new TurnoMatic(6,2008,c,"DatosFijos");
 		//TurnoMatic alg = new TurnoMatic(12,2007,c,"pruebaAlg");
- 		ResultadoTurnoMatic resultado = alg.ejecutaAlgoritmo();
- 		alg.imprimeEstructura();
-		alg.imprimeCuadrante(); 
+ 		//alg.imprimeEstructura();
+		//alg.imprimeCuadrante(); 
 
 	}
 }
