@@ -4,7 +4,7 @@ SetCompressor lzma
 
 # Defines
 !define REGKEY "SOFTWARE\$(^Name)"
-!define VERSION 0.10.5.7
+!define VERSION 0.10.9.9
 !define COMPANY "Turno-matic"
 !define URL "http://is0708.googlecode.com"
 
