@@ -780,13 +780,19 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				// Esto coge el primer domingo
 				boolean domingoEncontrado = false;
 				int dom = 1;
-				c.set(anio,mes,dom);
+				c.set(anio,mes,1);
 				while (!domingoEncontrado) {
-					c.roll(Calendar.DATE, true);
-					if (c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) domingoEncontrado=true;
-					else dom++;
+					//System.out.println(c.get(Calendar.DAY_OF_WEEK));
+					//System.out.println(c.get(Calendar.MONTH));
+					//Dependiendo del mes en el que se encuentre el domingo tendra un valor u otro
+					if (c.get(Calendar.DAY_OF_WEEK)==4) domingoEncontrado=true;
+					else {
+						dom++;
+						//c.roll(Calendar.DATE, true);
+						c.set(anio,mes,dom);
+					}
+					//System.out.println("DomingoPrueba: "+c.get(Calendar.));
 				}
-				//100System.out.println(dom);
 				//System.out.println(c.get(Calendar.DAY_OF_WEEK));
 				//System.out.println(c.toString());
 				int anchoMes = ancho - margenIzq - margenDer - margenNombres;
@@ -795,9 +801,10 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				// Dibujar números de los días
 				if (anchoDia>14)
 					for (int j=0; j < iCuad.length; j++) {
-						if ((j-dom)%7==0) gcFondo.setForeground(new Color(display,255,0,0));
-						else if ((j-dom)%7==1) gcFondo.setForeground(new Color(display,0,0,0));
+						if (((j+1)-dom)%7==0) gcFondo.setForeground(new Color(display,255,0,0));
+						else if (((j+1)-dom)%7==1) gcFondo.setForeground(new Color(display,0,0,0));
 						gcFondo.drawText(String.valueOf(j+1), margenIzq + margenNombres + j*anchoDia + anchoDia/2, margenSupVistaMes);
+						gcFondo.setForeground(new Color(display,0,0,0));
 					}
 				
 				ArrayList<Empleado> empleados=vista.getEmpleados();
