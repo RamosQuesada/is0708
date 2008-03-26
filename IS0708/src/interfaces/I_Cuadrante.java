@@ -93,6 +93,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private int anchoDia=0;
 	private int margenSupVistaMes;
 	
+	private int meses31[]=new int[7];
+	private int meses30[]=new int[4];
+	
 	private Point cursor = new Point(0,0);
 	
 	private int movimiento;	
@@ -210,6 +213,20 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		margenInf = 10;
 		margenNombres = 90;
 		margenSupVistaMes=margenSup+30;
+		
+		//Inicializar los arrays del calculo de los domingos
+		meses31[0]=0;
+		meses31[1]=1;
+		meses31[2]=3;
+		meses31[3]=5;
+		meses31[4]=7;
+		meses31[5]=8;
+		meses31[6]=10;
+		
+		meses30[0]=4;
+		meses30[1]=6;
+		meses30[2]=9;
+		meses30[3]=11;
 	}
 	
 	public void setMargenes(int margenIzq, int margenDer, int margenSup, int margenInf, int margenNombres) {
@@ -775,7 +792,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		} else if (fondo==null && !diario) {
 			if (cacheCargada){
 				fondo = new Image(display,ancho,alto);
-				GC gcFondo = new GC(fondo);
+				GC gcFondo = new GC(fondo);						
 				Calendar c = Calendar.getInstance();
 				// Esto coge el primer domingo
 				boolean domingoEncontrado = false;
@@ -785,7 +802,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					//System.out.println(c.get(Calendar.DAY_OF_WEEK));
 					//System.out.println(c.get(Calendar.MONTH));
 					//Dependiendo del mes en el que se encuentre el domingo tendra un valor u otro
-					if (c.get(Calendar.DAY_OF_WEEK)==4) domingoEncontrado=true;
+					if (c.get(Calendar.DAY_OF_WEEK)==4 && esMes31(c.get(Calendar.MONTH))) domingoEncontrado=true;
+					else if ((c.get(Calendar.DAY_OF_WEEK)==3 && esMes30(c.get(Calendar.MONTH)))) domingoEncontrado=true;
 					else {
 						dom++;
 						//c.roll(Calendar.DATE, true);
@@ -1012,5 +1030,24 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		}
 		return encontrado;
 	}
-
+	
+	public boolean esMes31(int mes){
+		boolean encontrado=false;
+		int i=0;
+		while (!encontrado && i<7){
+			if (mes==meses31[i]) encontrado=true;
+			else i++;
+		}
+		return encontrado;
+	}
+	
+	public boolean esMes30(int mes){
+		boolean encontrado=false;
+		int i=0;
+		while (!encontrado && i<4){
+			if (mes==meses30[i]) encontrado=true;
+			else i++;
+		}
+		return encontrado;
+	}
 }
