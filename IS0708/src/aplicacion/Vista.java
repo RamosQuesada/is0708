@@ -881,6 +881,10 @@ public class Vista {
 	 * Otros métodos
 	 */
 	
+	public void eliminaMesTrabaja(int mes, int anio, String departamento) {
+		controlador.eliminaMesTrabaja(mes, anio, departamento);
+	}
+	
 	/**
 	 * Ajusta la barra de progreso de la ventana principal al valor del
 	 * parámetro, y la hace desaparecer si ha terminado.
