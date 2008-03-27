@@ -10,9 +10,8 @@ import aplicacion.Turno;
 import aplicacion.Util;
 
 /**
- * Esta clase representa un turno.
- * Se corresponde con la representacion del turno en la tabla de la base de datos
- * @author Chema
+ * Esta clase extiende la clase turno para añadir las funcionalidades de dibujo.
+ * @author Daniel Dionne
  *
  */
 public class I_Turno extends aplicacion.Turno {
@@ -39,7 +38,7 @@ public class I_Turno extends aplicacion.Turno {
  */	
 	/** Horas y minutos que el empleado está trabajando en este turno */
 	private int horas1,minutos1,horas2,minutos2;
-	/** Estos indican si el cursor está encima de una de las dos franjas */
+	/** Valores que indican si el cursor está encima de una de las dos franjas */
 	private boolean activa1 = false;
 	private boolean activa2 = false;
 	private int anchoLados = 4;
