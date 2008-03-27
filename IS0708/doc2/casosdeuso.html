@@ -95,16 +95,6 @@
 				<div id="informe">	
 
 <!-- Aqu� empieza un CU -->			
-<!--				<a name="01"></a>
-				<h1>Caso de uso #01</h1>
-				<h2>T�tulo 1</h2>
-				<p>Texto 1.</p>
-				<h2>T�tulo 2</h2>
-				<p>Texto 2</p>
-				<br><br><br> -->
-<!-- Aqu� acaba un CU -->
-
-<!-- Aqu� empieza un CU -->			
 				<a name="01"></a>
 				<h1>Caso de uso 01: Autentificar al usuario</h1>
 				<h2>Objetivo en contexto</h2>
@@ -189,6 +179,31 @@
 				<p>2- Dar a resaltar el mensaje.</p>
 				<h2>Secuencias alternativas</h2>
 				<p>2a- Si hay un error en la conexión se muestra por pantalla.</p>
+				<br><br><br>
+<!-- Aqu� acaba un CU -->
+
+<!-- Aqu� empieza un CU -->			
+				<a name="05"></a>
+				<h1>Caso de uso 05: Responder mensaje</h1>
+				<h2>Objetivo en contexto</h2>
+				<p>Responder a un usuario del sistema que ha escrito anteriormente un mensaje.</p>
+				<h2>Precondiciones</h2>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
+				<p>Se envía el mensaje.</p>
+				<h2>Postcondiciones si fallo</h2>
+				<p>Mensaje de error.</p>
+				<h2>Actores</h2>
+				<p>Usuario.</p>
+				<h2>Secuencia normal</h2>
+				<p>1- Selección de un mensaje para responder.</p>
+				<p>2- Selección de la opción de responder un mensaje.</p>
+				<p>3- Escribir el mensaje.</p>
+				<p>4- Solicitar confirmación si es preciso.</p>
+				<p>5- Dar a enviar.</p>
+				<p>6- Se muestra mensaje de confirmación.</p>
+				<h2>Secuencias alternativas</h2>
+				<p>5a- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
 <!-- Aqu� acaba un CU -->
 
@@ -803,48 +818,6 @@
 				<br><br><br>
 <!-- Aqu� acaba un CU -->
 
-				</div>
-				<h1>Historial de cambios</h1>
-
-<!-- Aqu� empieza un cambio -->
-<!--			<h3>01/01/2008</h3>
-				<p>Se cambi� esto, esto y lo otro</p> -->
-<!-- Aqu� acaba un cambio -->
-
-				<h3>Diciembre 2007</h3>
-				<p>El caso de uso 32 (Configurar el idioma) desaparece puesto que el idioma se elige al dar de alta al usuario.</p>
-				<p>El caso de uso 31 (Configurar la aplicación) desaparece ya que no hay ninguna opción de configuración de la aplicación.</p>
-				<p>Se añade el caso de uso 5 (Responder mensaje) cambiando la numeración de los posteriores casos de uso.</p>	
-				<p>Se añade el caso de uso 32 (Imprimir).</p>
-				<p>Se añade al caso de uso 33 (Solicitar ayuda).</p>	
-				<br><br>		
-
-				<div id="informe">	
-<!-- Aqu� empieza un CU -->			
-				<a name="05"></a>
-				<h1>Caso de uso 05: Responder mensaje</h1>
-				<h2>Objetivo en contexto</h2>
-				<p>Responder a un usuario del sistema que ha escrito anteriormente un mensaje.</p>
-				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
-				<h2>Postcondiciones si éxito</h2>
-				<p>Se envía el mensaje.</p>
-				<h2>Postcondiciones si fallo</h2>
-				<p>Mensaje de error.</p>
-				<h2>Actores</h2>
-				<p>Usuario.</p>
-				<h2>Secuencia normal</h2>
-				<p>1- Selección de un mensaje para responder.</p>
-				<p>2- Selección de la opción de responder un mensaje.</p>
-				<p>3- Escribir el mensaje.</p>
-				<p>4- Solicitar confirmación si es preciso.</p>
-				<p>5- Dar a enviar.</p>
-				<p>6- Se muestra mensaje de confirmación.</p>
-				<h2>Secuencias alternativas</h2>
-				<p>5a- Si hay un error en la conexión se muestra por pantalla.</p>
-				<br><br><br>
-<!-- Aqu� acaba un CU -->
-				
 <!-- Aqu� empieza un CU -->			
 				<a name="32"></a>
 				<h1>Caso de uso 32: Imprimir</h1>
@@ -888,19 +861,7 @@
 				<p></p>
 				<br><br><br>
 <!-- Aqu� acaba un CU -->
-				</div>
 
-				<h3>Enero 2008</h3>
-				<p>En los casos de uso 07 y 08 el actor debería ser el empleado ya que se lo pide al jefe de departamento.</p>
-				<p>En los casos de uso 10 y 11 los actores serían el jefe de departamento y el gerente.</p>
-				<p>En el caso de uso 16, así como el gerente es el único que puede crear departamentos, es él el único que los puede eliminar.</p>
-				<p>En los casos de uso 21, 22 y 26 el caso de uso de modificar cuadrante al que se hace referencia es el 27 y no el 21.</p>
-				<p>En los casos de uso 23, 24 y 25, al tocar el cuadrante puede ser necesario cambiar el cuadrante.</p>
-				<p>En el caso de uso 27 cuando se hace referencia al caso de uso 23 en realidad es el caso de uso 29, y cuando se hace referencia al caso de uso 22 es el caso de uso 28.</p>
-				<p>Se ha extendido el caso de uso 01 para cuando se dispone de lector de códigos de barras añadiendo el caso de uso 34 (Autentificar al usuario con lector de códigos de barras).</p>
-				<br><br>
-	
-				<div id="informe">
 <!-- Aqu� empieza un CU -->			
 				<a name="34"></a>
 				<h1>Caso de uso 34: Autentificar al usuario con lector de códigos de barras</h1>
@@ -921,8 +882,27 @@
 				<p>2a- Si el usuario no está en el sistema da un error y se da la opción de pasar de nuevo la tarjeta.</p>
 				<br><br><br>
 <!-- Aqu� acaba un CU -->		
-				</div>	
-				 
+
+				</div>
+				<h1>Historial de cambios</h1>
+
+				<h3>Diciembre 2007</h3>
+				<p>El caso de uso 32 (Configurar el idioma) desaparece puesto que el idioma se elige al dar de alta al usuario.</p>
+				<p>El caso de uso 31 (Configurar la aplicación) desaparece ya que no hay ninguna opción de configuración de la aplicación.</p>
+				<p>Se añade el caso de uso 5 (Responder mensaje) cambiando la numeración de los posteriores casos de uso.</p>	
+				<p>Se añade el caso de uso 32 (Imprimir).</p>
+				<p>Se añade al caso de uso 33 (Solicitar ayuda).</p>	
+				<br><br>		
+
+				<h3>Enero 2008</h3>
+				<p>En los casos de uso 07 y 08 el actor debería ser el empleado ya que se lo pide al jefe de departamento.</p>
+				<p>En los casos de uso 10 y 11 los actores serían el jefe de departamento y el gerente.</p>
+				<p>En el caso de uso 16, así como el gerente es el único que puede crear departamentos, es él el único que los puede eliminar.</p>
+				<p>En los casos de uso 21, 22 y 26 el caso de uso de modificar cuadrante al que se hace referencia es el 27 y no el 21.</p>
+				<p>En los casos de uso 23, 24 y 25, al tocar el cuadrante puede ser necesario cambiar el cuadrante.</p>
+				<p>En el caso de uso 27 cuando se hace referencia al caso de uso 23 en realidad es el caso de uso 29, y cuando se hace referencia al caso de uso 22 es el caso de uso 28.</p>
+				<p>Se ha extendido el caso de uso 01 para cuando se dispone de lector de códigos de barras añadiendo el caso de uso 34 (Autentificar al usuario con lector de códigos de barras).</p>
+				<br><br>
 
 			</div>
 		
