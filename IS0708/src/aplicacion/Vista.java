@@ -1028,7 +1028,12 @@ public class Vista {
 		// TODO Auto-generated method stub by Carlos Sanchez
 		this.controlador.modificaDpto(text, Integer.valueOf(numjefe));
 		
-		
-		
-	}
+		}
+	
+
+   public String infoDpto(String dpto) {
+	   			String infojefe=this.controlador.getInfoJefedeDepartamento(dpto);
+	   			String infoempleados=this.controlador.getInfoEmpleadosDepartamento(dpto);
+	   			return infojefe + "/n" + infoempleados;
+			}
 }
