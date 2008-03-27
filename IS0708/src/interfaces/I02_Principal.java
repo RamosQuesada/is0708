@@ -197,8 +197,12 @@ public class I02_Principal {
 		cDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1));
 		
-		// TODO coger de la cache
-		cDepartamentos.setItems(vista.getNombresDepartamentosJefe());
+		// TODO hacer una vez esté la caché cargada
+		for (int i=0; i<vista.getEmpleadoActual().getDepartamentosId().size(); i++) {
+			cDepartamentos.add(vista.getDepartamento(vista.getEmpleadoActual().getDepartamentosId().get(i)).getNombreDepartamento());
+		}
+//		cDepartamentos.setItems(vista.getNombresDepartamentosJefe());
+		
 		cDepartamentos.select(0);
 		tmDep = cDepartamentos.getText();
 
@@ -1533,10 +1537,10 @@ public class I02_Principal {
 		case 2:
 			// Tabs de jefe
 			crearTabJefeCuadrantes(tabFolder);
-//			crearTabMensajes(tabFolder);
-//			crearTabJefeEmpleados(tabFolder);
-//			crearTabJefeDepartamentos(tabFolder);
-//			crearTabJefeContratos(tabFolder);
+			crearTabMensajes(tabFolder);
+			crearTabJefeEmpleados(tabFolder);
+			crearTabJefeDepartamentos(tabFolder);
+			crearTabJefeContratos(tabFolder);
 			break;
 		case 3:
 			// Tabs de gerente
