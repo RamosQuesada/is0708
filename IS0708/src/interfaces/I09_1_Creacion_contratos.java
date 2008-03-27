@@ -25,6 +25,7 @@ import aplicacion.Contrato;
 import aplicacion.Empleado;
 import aplicacion.Turno;
 import aplicacion.Vista;
+import aplicacion.Util;
 
 public class I09_1_Creacion_contratos {
 	private Shell padre = null;
@@ -759,6 +760,8 @@ public class I09_1_Creacion_contratos {
 								.getString("I09_descrip_Turno_inicial"));
 						messageBox.open();
 					} else {
+						if (Util.integerCheck(tLongCiclo.getText())&&Util.doubleCheck(tSalario.getText())
+								&&Util.integerCheck(tTipo.getText())){
 						int longCiclo = Integer.valueOf(tLongCiclo.getText());
 						double sueldo = Double.valueOf(tSalario.getText());
 						int tipo = Integer.valueOf(tTipo.getText());
@@ -832,6 +835,18 @@ public class I09_1_Creacion_contratos {
 							shell.dispose();
 						}
 					}
+						else{
+							MessageBox messageBox = new MessageBox(shell,
+									SWT.APPLICATION_MODAL | SWT.OK
+											| SWT.ICON_ERROR);
+							messageBox.setText("Error");
+							messageBox.setMessage(bundle
+									.getString("I09_error_numerico"));
+							messageBox.open();
+							
+						}
+					}
+					
 				}
 			}
 		};
