@@ -301,6 +301,46 @@ public class I08_1_Anadir_empleado {
 					tPassword.setFocus();
 					tPassword.selectAll();
 				}
+				// Comprueba que el nombre no sea vacio
+				else if (tNombre.getText().length()==0) {
+					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
+					messageBox.setText (bundle.getString("Error"));
+					messageBox.setMessage (bundle.getString("I08_err_NombreVacio"));					
+					e.doit = messageBox.open () == SWT.YES;
+					// Enfocar tNombre y seleccionar texto
+					tNombre.setFocus();
+					tNombre.selectAll();
+				}
+				// Comprueba que el apellido1 no sea vacio
+				else if (tApell1.getText().length()==0) {
+					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
+					messageBox.setText (bundle.getString("Error"));
+					messageBox.setMessage (bundle.getString("I08_err_Ape1Vacio"));					
+					e.doit = messageBox.open () == SWT.YES;
+					// Enfocar tNombre y seleccionar texto
+					tApell1.setFocus();
+					tApell1.selectAll();
+				}
+				// Comprueba que el apellido2 no sea vacio
+				else if (tApell2.getText().length()==0) {
+					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
+					messageBox.setText (bundle.getString("Error"));
+					messageBox.setMessage (bundle.getString("I08_err_Ape2Vacio"));					
+					e.doit = messageBox.open () == SWT.YES;
+					// Enfocar tNombre y seleccionar texto
+					tApell2.setFocus();
+					tApell2.selectAll();
+				}
+				// Comprueba que las fechas se han seleccionado
+				else if (tFNacimiento.getText().length()==0 || tFContrato.getText().length()==0 || tFAlta.getText().length()==0) {
+					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
+					messageBox.setText (bundle.getString("Error"));
+					messageBox.setMessage (bundle.getString("I08_err_Fecha"));					
+					e.doit = messageBox.open () == SWT.YES;
+					// Enfocar tNombre y seleccionar texto
+					//t.setFocus();
+					//tNombre.selectAll();
+				}
 				// Comprueba la dirección de email (campo no obligatorio)
 				else if (tEMail.getText().length()!=0 && !Util.comprobarEmail(tEMail.getText())) {
 					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
