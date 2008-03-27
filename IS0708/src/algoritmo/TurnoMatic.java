@@ -71,81 +71,84 @@ public class TurnoMatic {
 
 		//recorremos los dias del mes
 		for(int i=0; i<Util.dameDias(mes,anio); i++){ //FOR1
-			System.out.println(i);
-			
-			//dividimos en el numero de franjas de cada dia
-			for(int j=0; j<estruc.getNumTrozos(); j++){ //FOR2
-
-				Time inif = estruc.getTrozosHorario().get(j); 
-				System.out.println(inif);
-				System.out.println(inif.toString());
-				Time finf = estruc.getTrozosHorario().get(j+1);
-				dispo = horario[i][j].getDisponibles();
-				reser = horario[i][j].getReserva();
-				empl = horario[i][j].getEmpleados();
+			//si el dia i no abre el centro, no se calcula el cuadrante
+			if (!estruc.getCal().diaLibre(i)) {
+				System.out.println(i);
 				
-				//comprobamos la disponibilidad de cada empleado
-				for(int k=0; k<listaE.size(); k++){ //FOR3 
-					e = listaE.get(k);
-					int id = e.getContratoId();
-					contAux = buscaContrato(id, contratosDep);
+				//dividimos en el numero de franjas de cada dia
+				for(int j=0; j<estruc.getNumTrozos(); j++){ //FOR2
+		
+					Time inif = estruc.getTrozosHorario().get(j); 
+					System.out.println(inif);
+					System.out.println(inif.toString());
+					Time finf = estruc.getTrozosHorario().get(j+1);
+					dispo = horario[i][j].getDisponibles();
+					reser = horario[i][j].getReserva();
+					empl = horario[i][j].getEmpleados();
 					
-					if(e.estaDisponible(i,inif,finf,controlador,contratosDep,j,estruc.getNumTrozos(),mes,anio)){
+					//comprobamos la disponibilidad de cada empleado
+					for(int k=0; k<listaE.size(); k++){ //FOR3 
+						e = listaE.get(k);
+						int id = e.getContratoId();
+						contAux = buscaContrato(id, contratosDep);
 						
-						if(contAux.getTipoContrato()==1 || contAux.getTipoContrato()==2){
-							empl.add(e);
-							turno = e.getTurnoActual();
-							if (!contiene(i, e.getEmplId())) {
-								trab = new Trabaja(e.getEmplId(),turno.getHoraEntrada(),turno.getHoraSalida(),turno.getIdTurno());
-								cuadrante.setTrabajaDia(i, trab);
-							}
-						
+						if(e.estaDisponible(i,inif,finf,controlador,contratosDep,j,estruc.getNumTrozos(),mes,anio)){
+							
+							if(contAux.getTipoContrato()==1 || contAux.getTipoContrato()==2){
+								empl.add(e);
+								turno = e.getTurnoActual();
+								if (!contiene(i, e.getEmplId())) {
+									trab = new Trabaja(e.getEmplId(),turno.getHoraEntrada(),turno.getHoraSalida(),turno.getIdTurno());
+									cuadrante.setTrabajaDia(i, trab);
+								}
+							
+							} else
+								//(contAux.getTipoContrato()==3 || contAux.getTipoContrato()==4)
+								dispo.add(e);
+							
 						} else
-							//(contAux.getTipoContrato()==3 || contAux.getTipoContrato()==4)
-							dispo.add(e);
-						
-					} else
-						reser.add(e);
-
-				} //ENDFOR3
-						
-				horario[i][j].setEmpleados(empl);
-				horario[i][j].setDisponibles(dispo);
-				horario[i][j].setReserva(reser);
+							reser.add(e);
+		
+					} //ENDFOR3
+							
+					horario[i][j].setEmpleados(empl);
+					horario[i][j].setDisponibles(dispo);
+					horario[i][j].setReserva(reser);
+					
+				} //ENDFOR2	
 				
-			} //ENDFOR2	
-			
-			ArrayList<Empleado> reserDia = new ArrayList<Empleado>();
-			ArrayList<Empleado> dispoDia = new ArrayList<Empleado>();
-			ArrayList<Empleado> emplDia = new ArrayList<Empleado>();
-			Empleado aux;
-			
-			for(int j=0; j<estruc.getNumTrozos(); j++){
-				int n=0;
-				while (n<horario[i][j].getDisponibles().size()) {
-					aux = horario[i][j].getDisponibles().get(n);
-					if(!dispoDia.contains(aux))
-						dispoDia.add(aux);
-					n++;
-				}		
-				n=0;
-				while (n<horario[i][j].getEmpleados().size()) {
-					aux = horario[i][j].getEmpleados().get(n);
-					if(!emplDia.contains(aux))
-						emplDia.add(aux);
-					n++;
+				ArrayList<Empleado> reserDia = new ArrayList<Empleado>();
+				ArrayList<Empleado> dispoDia = new ArrayList<Empleado>();
+				ArrayList<Empleado> emplDia = new ArrayList<Empleado>();
+				Empleado aux;
+				
+				for(int j=0; j<estruc.getNumTrozos(); j++){
+					int n=0;
+					while (n<horario[i][j].getDisponibles().size()) {
+						aux = horario[i][j].getDisponibles().get(n);
+						if(!dispoDia.contains(aux))
+							dispoDia.add(aux);
+						n++;
+					}		
+					n=0;
+					while (n<horario[i][j].getEmpleados().size()) {
+						aux = horario[i][j].getEmpleados().get(n);
+						if(!emplDia.contains(aux))
+							emplDia.add(aux);
+						n++;
+					}
 				}
-			}
-			for(int j=0; j<estruc.getNumTrozos(); j++){
-				int n=0;
-				while (n<horario[i][j].getReserva().size()) {
-					aux = horario[i][j].getReserva().get(n);
-					if((!reserDia.contains(aux)) && (!emplDia.contains(aux)))
-						reserDia.add(aux);
-					n++;
+				for(int j=0; j<estruc.getNumTrozos(); j++){
+					int n=0;
+					while (n<horario[i][j].getReserva().size()) {
+						aux = horario[i][j].getReserva().get(n);
+						if((!reserDia.contains(aux)) && (!emplDia.contains(aux)))
+							reserDia.add(aux);
+						n++;
+					}
 				}
+				colocaNoFijos(dispoDia, reserDia, emplDia, i); 
 			}
-			colocaNoFijos(dispoDia, reserDia, emplDia, i); 
 		}
 		vista.insertCuadrante(cuadrante);
 		Resumen resumen = new Resumen(Util.dameDias(mes,anio), cuadrante, estruc);
