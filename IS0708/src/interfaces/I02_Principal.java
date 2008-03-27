@@ -57,24 +57,38 @@ public class I02_Principal {
 		crearVentana(vista.getEmpleadoActual().getRango());
 	}
 	
+	/**
+	 * Este hilo ejecuta el algoritmo en segundo plano
+	 * @author Daniel D
+	 *
+	 */
 	private class AlgoritmoRun extends Thread {
 		public void run() {
-			algoritmo.TurnoMatic t = new algoritmo.TurnoMatic(tmMes, tmAnio,vista, tmDep);
-			ResultadoTurnoMatic resultado = t.ejecutaAlgoritmo();
+			vista.infoDebug("I02_Principal", "Llamando al algoritmo para la fecha " + tmMes + " de " + tmAnio + ", dep. " + tmDep);
+			algoritmo.TurnoMatic t = new algoritmo.TurnoMatic(tmMes, tmAnio, vista, tmDep);
+			final ResultadoTurnoMatic resultado = t.ejecutaAlgoritmo();
 			vista.eliminaCuadranteCache(tmMes, tmAnio, tmDep);
-			vista.insertCuadranteCache(t.getCuadrante());
-			//quitar cuadrante de la fecha del calendario de la cache
+			vista.insertCuadranteCache(resultado.getCuadrante());
+			// quitar cuadrante de la fecha del calendario de la cache
 			// añadir t.getcuadrante a cache
 			display.asyncExec(new Runnable() {
 				public void run() {
-//					MessageBox messageBoxResumen = new MessageBox(shell,
-//					SWT.APPLICATION_MODAL | SWT.OK );
-//					messageBox.setText(bundle.getString("Resumen"));
+					MessageBox messageBoxResumen = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK );
+					messageBoxResumen.setText(bundle.getString("Resumen"));
+					String s = "";
+					for (int i=0; i<resultado.getResumen().getInforme().size(); i++) {
+						s+= resultado.getResumen().getInforme().get(i) +"\n";
+					}
+					//TODO bundle
+					if (s.equals("")) s="Cuadrante generado.";
+					messageBoxResumen.setMessage(s);
+					messageBoxResumen.open();
+					
 					vista.setProgreso("", 100);
 					vista.setCursorFlecha();
 					ic.setDia(calendario.getDay(), calendario.getMonth()+1,
 							calendario.getYear());
-					ic.cargarCache();
+					ic.cargarDeCache();
 					ic.redibujar();
 				}
 			});
@@ -227,14 +241,14 @@ public class I02_Principal {
 		calendario = new DateTime(cCuadrantes, SWT.CALENDAR
 				| SWT.SHORT);
 		ic.setDia(calendario.getDay(), calendario.getMonth(), calendario.getYear());
+		tmAnio = calendario.getYear();
+		tmMes = calendario.getMonth()+1;
 
+		
 		calendario.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				tmAnio = calendario.getYear();
 				tmMes = calendario.getMonth()+1;
-				// TODO BD Cargar el cuadrante con la fecha correspondiente en
-				// la variable cuadranteActual
-
 				vista.infoDebug("I02_Principal", "Fecha cambiada a "
 						+ String.valueOf(calendario.getDay())
 						+ " de "
@@ -243,7 +257,7 @@ public class I02_Principal {
 						+ String.valueOf(calendario.getYear()));
 				vista.setCursorEspera();
 				//TODO poner bundle al string
-				vista.setProgreso("Cargando cuadrante", 50);
+				vista.setProgreso(bundle.getString("I02_lab_CargandoCuads"), 50);
 				ic.setDia(calendario.getDay(), calendario.getMonth()+1,
 						calendario.getYear());
 				vista.setProgreso("",100);
@@ -286,6 +300,7 @@ public class I02_Principal {
 		
 		ic.setComposite(cCuadrante,bPorMes,bPorSemanas);
 		
+		// Botón de generación de cuadrantes
 		final Button itsMagic = new Button(cCuadrantes, SWT.PUSH);
 		itsMagic.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 2, 1));
 		itsMagic.setText(bundle.getString("I02_but_generarCuadrantes"));
@@ -302,16 +317,13 @@ public class I02_Principal {
 							+ calendario.getYear() + " " +
 							bundle.getString("I02_dlg_CrearCuadrante2"));
 					if (messageBox.open()==SWT.YES) {
-						// TODO usar bundle
-						vista.setProgreso("Generando cuadrante, por favor espere", 0);
+						vista.setProgreso(bundle.getString("I02_lab_GenerandoCuads"), 0);
 						vista.setCursorEspera();
 						algRunner = new AlgoritmoRun();
 						algRunner.start();
 					}
-				}
-				else {
-					MessageBox messageBox = new MessageBox(shell,
-							SWT.APPLICATION_MODAL | SWT.OK);
+				} else {
+					MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK);
 					messageBox.setText(bundle.getString("Aviso"));
 					messageBox.setMessage("Por favor, espere a que se carguen los datos.");
 					messageBox.open();					

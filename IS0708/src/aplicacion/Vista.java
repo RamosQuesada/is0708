@@ -103,7 +103,7 @@ public class Vista {
 		public void run() {
 			this.setName("Vista.CacheUploaderDaemon");
 			int frac = 0;
-			int prog = 0;
+			int prog = 0; // Progreso de la cola
 			while (alive) {
 				if (!colaEscritura.isEmpty()) {
 					frac = 100/colaEscritura.size();
@@ -163,7 +163,6 @@ public class Vista {
 		t.setIdTurno(i);
 		turnos.add(t);
 		return i;
-		
 	}
 	
 	/**
@@ -627,6 +626,7 @@ public class Vista {
 			}
 			i++;
 		}
+		infoDebug("Vista", "Fallo al coger el turno " + idTurno + " de caché.");
 		// Si no, buscar en BD
 		Turno t =  controlador.getTurno(idTurno);
 		if (t!=null) turnos.add(t);
@@ -917,7 +917,7 @@ public class Vista {
 	 * que se van a cargar los datos
 	 */
 	public void loadCache() {
-		int tipo = getEmpleadoActual().getRango();
+		int rango = getEmpleadoActual().getRango();
 		String dep = getEmpleadoActual().getDepartamentoId();
 		int numvendedor = getEmpleadoActual().getEmplId();
 		if (!alive) return;
@@ -927,18 +927,25 @@ public class Vista {
 		setProgreso("Cargando contratos", 50);
 		contratos = controlador.getListaContratosDpto(dep);
 		if (!alive) return;
-		if (tipo == 1) {
+		if (rango == 1) { // Si es un empleado, coger turnos de su departamento
 			setProgreso("Cargando turnos", 70);
 			turnos = controlador.getListaTurnosEmpleadosDpto(dep);
 			setProgreso("", 100);
-		} else if (tipo == 2) {
+		} else if (rango == 2) { // Si es un jefe, coger turnos de todos los departamentos
 			ArrayList<String> temp = new ArrayList<String>();
 			temp = controlador.getDepartamentosJefe(numvendedor);
 			for (int i=0; i<temp.size(); i++)
 				departamentosJefe.add(controlador.getDepartamento(temp.get(i)));
 			setProgreso("Cargando turnos", 70);
+			ArrayList<Turno> turnosDep = new ArrayList<Turno>();
 			for (int i=0; i<departamentosJefe.size(); i++) {
-				turnos = controlador.getListaTurnosEmpleadosDpto(departamentosJefe.get(i).getNombreDepartamento());
+				turnosDep = controlador.getListaTurnosEmpleadosDpto(departamentosJefe.get(i).getNombreDepartamento());
+				for (int j=0; j<turnosDep.size(); j++) {
+					turnos.add(turnosDep.get(j));
+				}				
+			}
+			for (int i=0; i<turnos.size(); i++) {
+				System.out.println(turnos.get(i).getIdTurno());
 			}
 			setProgreso("", 100);
 			
