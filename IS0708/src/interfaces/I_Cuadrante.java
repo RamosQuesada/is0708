@@ -798,16 +798,19 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				boolean domingoEncontrado = false;
 				int dom = 1;
 				c.set(anio,mes,1);
+				//System.out.println(c.get(Calendar.YEAR));
 				while (!domingoEncontrado) {
 					//System.out.println(c.get(Calendar.DAY_OF_WEEK));
 					//System.out.println(c.get(Calendar.MONTH));
 					//Dependiendo del mes en el que se encuentre el domingo tendra un valor u otro
 					if (c.get(Calendar.DAY_OF_WEEK)==4 && esMes31(c.get(Calendar.MONTH))) domingoEncontrado=true;
 					else if ((c.get(Calendar.DAY_OF_WEEK)==3 && esMes30(c.get(Calendar.MONTH)))) domingoEncontrado=true;
+					else if ((c.get(Calendar.DAY_OF_WEEK)==2 && c.get(Calendar.MONTH)==2 && c.get(Calendar.YEAR)%4==0)) domingoEncontrado=true;
+					else if ((c.get(Calendar.DAY_OF_WEEK)==1 && c.get(Calendar.MONTH)==2 && c.get(Calendar.YEAR)%4!=0)) domingoEncontrado=true;
 					else {
 						dom++;
-						//c.roll(Calendar.DATE, true);
-						c.set(anio,mes,dom);
+						c.roll(Calendar.DATE, true);
+						//c.set(anio,mes,dom);
 					}
 					//System.out.println("DomingoPrueba: "+c.get(Calendar.));
 				}
