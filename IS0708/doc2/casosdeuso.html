@@ -3,8 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 
-<meta name="Description" content="Documentaciï¿½n Turnomatic." />
-<meta name="Keywords" content="documentaciï¿½n, turnomatic, ingenerï¿½a, software, ucm" />
+<meta name="Description" content="Documentación Turnomatic." />
+<meta name="Keywords" content="documentación, turnomatic, ingenería, software, ucm" />
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="Distribution" content="Global" />
 <meta name="Author" content="IS 2007-2008. UCM Madrid, Spain" />
@@ -12,7 +12,7 @@
 
 <link rel="stylesheet" href="images/Envision.css" type="text/css" />
 
-<title>Documentaciï¿½n TurnoMatic. IS 07-08 UCM</title>
+<title>Documentación TurnoMatic. IS 07-08 UCM</title>
 	
 </head>
 <body>
@@ -23,7 +23,7 @@
 		<div id="header">			
 				
 			<h1 id="logo-text"><a href="index.html">TurnoMatic</a></h1>		
-			<p id="slogan">Documentaciï¿½n</p>		
+			<p id="slogan">Documentación</p>		
 			
 			<div id="header-links">
 			<p>
@@ -42,9 +42,9 @@
 				<li>             <a href="historias.html">Historias</a></li>
 				<li id="current"><a href="casosdeuso.html">CU</a></li>
 				<li>             <a href="riesgos.html">Riesgos</a></li>
-				<li>             <a href="tecnologias.html">Tecnologï¿½as</a></li>
-				<li>             <a href="diseno.html">Diseï¿½o</a></li>
-				<li>             <a href="planificacion.html">Planificaciï¿½n</a></li>
+				<li>             <a href="tecnologias.html">Tecnologías</a></li>
+				<li>             <a href="diseno.html">Diseño</a></li>
+				<li>             <a href="planificacion.html">Planificación</a></li>
 				<li class="last"><a href="glosario.html">Glosario</a></li>
 			</ul>
 		</div>		
@@ -52,7 +52,7 @@
 		<div id="content-wrap">
 			<!-- Menï¿½ lateral -->
 			<div id="sidebar">			
-				<h3>ï¿½ndice</h3>
+				<h3>Índice</h3>
 				<ul class="sidemenu">				
 					<li><a href="#01">CU 01 - Autentificar al usuario</a></li>
 					<li><a href="#02">CU 02 - Consultar mensaje</a></li>
@@ -94,814 +94,814 @@
 			<div id="main">
 				<div id="informe">	
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="01"></a>
 				<h1>Caso de uso 01: Autentificar al usuario</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Acceder al sistema.</p>
 				<h2>Precondiciones</h2>
-				<p>Debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
+				<p>Debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
 				<p>Se accede al sistema.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Se piden de nuevo los datos.</p>
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Introducir nÃºmero de usuario.</p>
-				<p>2- Introducir contraseÃ±a.</p>
+				<p>1- Introducir número de usuario.</p>
+				<p>2- Introducir contraseña.</p>
 				<p>3- Aceptar.</p>
 				<p>4- Acceder al sistema.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>3a- Si el usuario no estÃ¡ en el sistema da un error y se da la opciÃ³n a introducir de nuevo los datos.</p>
-				<p>3b- Si la contraseÃ±a no corresponde al usuario da un error y se da la opciÃ³n a introducir de nuevo los datos.</p>
+				<p>3a- Si el usuario no está en el sistema da un error y se da la opción a introducir de nuevo los datos.</p>
+				<p>3b- Si la contraseña no corresponde al usuario da un error y se da la opción a introducir de nuevo los datos.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="02"></a>
 				<h1>Caso de uso 02: Consultar mensaje</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Observar los mensajes recibidos.</p>
 				<h2>Precondiciones</h2>
-				<p>Estar indentificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
+				<p>Estar indentificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
 				<p>Se muestra en pantalla el mensaje seleccionado.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- SelecciÃ³n de un mensaje a leer.</p>
+				<p>1- Selección de un mensaje a leer.</p>
 				<p>2- El mensaje se muestra en pantalla.</p>
-				<p>3- Se envÃ­a una confirmaciÃ³n al remitente, si este la ha solicitado.</p>
+				<p>3- Se envía una confirmación al remitente, si este la ha solicitado.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>1a- Si hay un error en la conexiÃ³n se muestra por pantalla.</p>
+				<p>1a- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="03"></a>
 				<h1>Caso de uso 03: Eliminar mensaje</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Eliminar un mensaje de la bandeja de entrada.</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
 				<p>Se muestra en pantalla la bandeja de entrada.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- SelecciÃ³n de un mensaje a eliminar.</p>
+				<p>1- Selección de un mensaje a eliminar.</p>
 				<p>2- Dar a eliminar el mensaje.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>2a- Si hay un error en la conexiÃ³n se muestra por pantalla.</p>
+				<p>2a- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="04"></a>
 				<h1>Caso de uso 04: Resaltar mensaje</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Resaltar un mensaje de la bandeja de entrada.</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
 				<p>Se muestra en pantalla la bandeja de entrada.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- SelecciÃ³n de un mensaje a resaltar.</p>
+				<p>1- Selección de un mensaje a resaltar.</p>
 				<p>2- Dar a resaltar el mensaje.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>2a- Si hay un error en la conexiÃ³n se muestra por pantalla.</p>
+				<p>2a- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="05"></a>
 				<h1>Caso de uso 05: Responder mensaje</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Responder a un usuario del sistema que ha escrito anteriormente un mensaje.</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
-				<p>Se envÃ­a el mensaje.</p>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
+				<p>Se envía el mensaje.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- SelecciÃ³n de un mensaje para responder.</p>
-				<p>2- SelecciÃ³n de la opciÃ³n de responder un mensaje.</p>
+				<p>1- Selección de un mensaje para responder.</p>
+				<p>2- Selección de la opción de responder un mensaje.</p>
 				<p>3- Escribir el mensaje.</p>
-				<p>4- Solicitar confirmaciÃ³n si es preciso.</p>
+				<p>4- Solicitar confirmación si es preciso.</p>
 				<p>5- Dar a enviar.</p>
-				<p>6- Se muestra mensaje de confirmaciÃ³n.</p>
+				<p>6- Se muestra mensaje de confirmación.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>5a- Si hay un error en la conexiÃ³n se muestra por pantalla.</p>
+				<p>5a- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="06"></a>
 				<h1>Caso de uso 06: Escribir mensaje</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Escribir un mensaje a un usuario del sistema.</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
-				<p>Se envÃ­a el mensaje.</p>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
+				<p>Se envía el mensaje.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- SelecciÃ³n de la opciÃ³n de escribir un mensaje.</p>
+				<p>1- Selección de la opción de escribir un mensaje.</p>
 				<p>2- Escribir el mensaje.</p>
 				<p>3- Seleccionar el destinatario.</p>
-				<p>4- Solicitar confirmaciÃ³n si es preciso.</p>
+				<p>4- Solicitar confirmación si es preciso.</p>
 				<p>5- Dar a enviar.</p>
-				<p>6- Se muestra mensaje de confirmaciÃ³n.</p>
+				<p>6- Se muestra mensaje de confirmación.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>5a- Si hay un error en la conexiÃ³n se muestra por pantalla.</p>
+				<p>5a- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="07"></a>
-				<h1>Caso de uso 07: Pedir modificaciÃ³n de horario</h1>
+				<h1>Caso de uso 07: Pedir modificación de horario</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Enviar un mensaje al jefe de departamento correspondiente indicando preferencia de horario</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
-				<p>Se envÃ­a el mensaje.</p>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
+				<p>Se envía el mensaje.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- SelecciÃ³n de la opciÃ³n de escribir un mensaje de modificaciÃ³n de horario.</p>
-				<p>2- SelecciÃ³n de la fecha de inicio.</p>
-				<p>3- SelecciÃ³n de la fecha de fin.</p>
-				<p>4- SelecciÃ³n del turno.</p>
+				<p>1- Selección de la opción de escribir un mensaje de modificación de horario.</p>
+				<p>2- Selección de la fecha de inicio.</p>
+				<p>3- Selección de la fecha de fin.</p>
+				<p>4- Selección del turno.</p>
 				<p>5- Dar a enviar.</p>
-				<p>6- Se muestra mensaje de confirmaciÃ³n.</p>
+				<p>6- Se muestra mensaje de confirmación.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>5a- Si hay un error en la conexiÃ³n se muestra por pantalla.</p>
+				<p>5a- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="08"></a>
 				<h1>Caso de uso 08: Pedir baja</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Enviar un mensaje al jefe de departamento correspondiente indicando el motivo y la fecha de baja</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
-				<p>Se envÃ­a el mensaje.</p>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
+				<p>Se envía el mensaje.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- SelecciÃ³n de la opciÃ³n de escribir un mensaje de peticiÃ³n de baja.</p>
+				<p>1- Selección de la opción de escribir un mensaje de petición de baja.</p>
 				<p>2- Escribir el motivo de la baja.</p>
-				<p>3- SelecciÃ³n de la fecha.</p>
+				<p>3- Selección de la fecha.</p>
 				<p>4- Dar a enviar.</p>
-				<p>5- Se muestra mensaje de confirmaciÃ³n.</p>
+				<p>5- Se muestra mensaje de confirmación.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>5a- Si hay un error en la conexiÃ³n se muestra por pantalla.</p>
+				<p>5a- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="09"></a>
 				<h1>Caso de uso 09: Revisar horario</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Revisar el cuadrante de un departamento.</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
 				<p>Se muestra en pantalla el cuadrante del departamento seleccionado.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Seleccionar la opciÃ³n de horarios.</p>
+				<p>1- Seleccionar la opción de horarios.</p>
 				<p>2- Seleccionar el departamento del que se quiere obtener el cuadrante.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>2a- Si hay un error en la conexiÃ³n se muestra por pantalla.</p>
+				<p>2a- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="10"></a>
 				<h1>Caso de uso 10: Revisar rendimiento y ventas</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Revisar el rendimiento y las ventas de un usuario o departamento.</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
-				<p>Se muestra en pantalla los datos y el grÃ¡fico del usuario o departamento seleccionado.</p>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
+				<p>Se muestra en pantalla los datos y el gráfico del usuario o departamento seleccionado.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Seleccionar la opciÃ³n de rendimiento y ventas.</p>
-				<p>2- Seleccionar el usuario o departamento del que se quiere obtener la informaciÃ³n.</p>
+				<p>1- Seleccionar la opción de rendimiento y ventas.</p>
+				<p>2- Seleccionar el usuario o departamento del que se quiere obtener la información.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>2a- Si hay un error en la conexiÃ³n se muestra por pantalla.</p>
+				<p>2a- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="11"></a>
 				<h1>Caso de uso 11: Pedir informe de rendimiento</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Pedir el informe de rendimiento mensual.</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
 				<p>Se muestra en pantalla el informe correspondiente a un departamento.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Seleccionar la opciÃ³n de informe de rendimiento.</p>
-				<p>2- Seleccionar el departamento del que se quiere obtener la informaciÃ³n.</p>
+				<p>1- Seleccionar la opción de informe de rendimiento.</p>
+				<p>2- Seleccionar el departamento del que se quiere obtener la información.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>2a- Si hay un error en la conexiÃ³n se muestra por pantalla.</p>
+				<p>2a- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="12"></a>
 				<h1>Caso de uso 12: Escribir incidencia</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Escribir en el calendario alguna incidencia que haya provocado situaciones anormales de ventas.</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
-				<p>Se incluye la informaciÃ³n escrita.</p>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
+				<p>Se incluye la información escrita.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Seleccionar la opciÃ³n de escribir incidencia.</p>
-				<p>2- Seleccionar el dÃ­a.</p>
+				<p>1- Seleccionar la opción de escribir incidencia.</p>
+				<p>2- Seleccionar el día.</p>
 				<p>3- Escribir incidencia.</p>
 				<p>4- Dar a aceptar.</p>
-				<p>5- Se muestra mensaje de confirmaciÃ³n.</p>
+				<p>5- Se muestra mensaje de confirmación.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>4a- Si hay un error en la conexiÃ³n se muestra por pantalla.</p>
+				<p>4a- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="13"></a>
-				<h1>Caso de uso 13: Elegir el nÃºmero de empleados necesario</h1>
+				<h1>Caso de uso 13: Elegir el número de empleados necesario</h1>
 				<h2>Objetivo en contexto</h2>
-				<p>Elegir para cada tipo de dÃ­a el nÃºmero de empleados segÃºn las horas.</p>
+				<p>Elegir para cada tipo de día el número de empleados según las horas.</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
-				<p>Se incluye la informaciÃ³n escrita.</p>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
+				<p>Se incluye la información escrita.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p>Jefe de departamento.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Seleccionar la opciÃ³n de elegir nÃºmero de empleados.</p>
-				<p>2- Seleccionar el tipo de dÃ­a.</p>
+				<p>1- Seleccionar la opción de elegir número de empleados.</p>
+				<p>2- Seleccionar el tipo de día.</p>
 				<p>3- Seleccionar la hora.</p>
-				<p>4- Escribir el nÃºmero.</p>
+				<p>4- Escribir el número.</p>
 				<p>5- Dar a aceptar.</p>
-				<p>6- Se muestra mensaje de confirmaciÃ³n.</p>
+				<p>6- Se muestra mensaje de confirmación.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>5a- Si hay un error en la conexiÃ³n se muestra por pantalla.</p>
+				<p>5a- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="14"></a>
 				<h1>Caso de uso 14: Crear departamento</h1>
 				<h2>Objetivo en contexto</h2>
-				<p>Crear un departamento vacÃ­o.</p>
+				<p>Crear un departamento vacío.</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
-				<p>Obtener un departamento vacÃ­o.</p>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
+				<p>Obtener un departamento vacío.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p>Gerente.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- El usuario accede al menÃº de creaciÃ³n de departamentos.</p>
+				<p>1- El usuario accede al menú de creación de departamentos.</p>
 				<p>2- El usuario rellena el formulario con los datos del departamento.</p>
-				<p>3- Mostrar mensaje de Ã©xito.</p>
+				<p>3- Mostrar mensaje de éxito.</p>
 				<h2>Secuencias alternativas</h2>
 				<p>3a- Si el departamento ya existe, mostrar un mensaje de error.</p>
-				<p>3b- Si hay un error en la conexiÃ³n se muestra por pantalla.</p>
+				<p>3b- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="15"></a>
 				<h1>Caso de uso 15: Modificar departamento</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Modificar los datos de un departamento en la base de datos.</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
 				<p>Se actualiza la base de datos con los nuevos datos del departamento.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p>Gerente y jefe.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- El usuario accede al menÃº de modificaciÃ³n de departamentos.</p>
+				<p>1- El usuario accede al menú de modificación de departamentos.</p>
 				<p>2- Elige de una lista de sus departamentos uno de ellos.</p>
 				<p>3- El usuario modifica los datos.</p>
-				<p>4- ConfirmaciÃ³n.</p>
+				<p>4- confirmación.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>4a- Si los datos estÃ¡n en formato incorrecto, mostrar error.</p>
-				<p>4b- Si hay un error en la conexiÃ³n se muestra por pantalla.</p>
+				<p>4a- Si los datos está en formato incorrecto, mostrar error.</p>
+				<p>4b- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="16"></a>
 				<h1>Caso de uso 16: Eliminar un departamento</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Eliminar un departamento de la base de datos.</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
-				<p>ActualizaciÃ³n de la base de datos.</p>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
+				<p>Actualización de la base de datos.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p>Gerente y jefe.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- El usuario accede al menÃº de eliminaciÃ³n de departamentos.</p>
+				<p>1- El usuario accede al menú de eliminación de departamentos.</p>
 				<p>2- Selecciona de una lista uno de sus departamentos para eliminar.</p>
-				<p>3- ConfirmaciÃ³n.</p>
+				<p>3- confirmación.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>3a- Si hay un error en la conexiÃ³n se muestra por pantalla.</p>
+				<p>3a- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="17"></a>
-				<h1>Caso de uso 17: AÃ±adir jefe de departamento</h1>
+				<h1>Caso de uso 17: Añadir jefe de departamento</h1>
 				<h2>Objetivo en contexto</h2>
-				<p>AÃ±adir un jefe de departamento a la base de datos.</p>
+				<p>Añadir un jefe de departamento a la base de datos.</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
 				<p>Se actualiza la base de datos con el nuevo jefe de departamento.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p>Gerente.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opciÃ³n aÃ±adir.</p>
+				<p>1- Elegir opción añadir.</p>
 				<p>2- Introducir datos.</p>
 				<p>3- Confirmar.</p>
 				<h2>Secuencias alternativas</h2>
 				<p>3a- Si el empleado ya existe da error.</p>
-				<p>3b- Si los datos estÃ¡n en formato incorrecto da error.</p>
-				<p>3c- Si hay un error en la conexiÃ³n se muestra por pantalla.</p>
+				<p>3b- Si los datos está en formato incorrecto da error.</p>
+				<p>3c- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="18"></a>
 				<h1>Caso de uso 18: Eliminar jefe de departamento</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Eliminar un jefe de departamento de la base de datos.</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
 				<p>Se actualiza la base de datos eliminando al jefe de departamento.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p>Gerente.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opciÃ³n eliminar.</p>
+				<p>1- Elegir opción eliminar.</p>
 				<p>2- Seleccionar jefe de departamento a eliminar.</p>
 				<p>3- Confirmar.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>3a- Si hay un error en la conexiÃ³n se muestra por pantalla.</p>
+				<p>3a- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="19"></a>
 				<h1>Caso de uso 19: Modificar datos de jefe de departamento</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Modificar los datos de un jefe de departamento en la base de datos.</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
 				<p>Se actualiza la base de datos con los nuevos datos del jefe de departamento.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p>Gerente.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opciÃ³n modificar datos.</p>
+				<p>1- Elegir opción modificar datos.</p>
 				<p>2- Seleccionar jefe de departamento.</p>
 				<p>3- Modificar datos.</p>
 				<p>4- Confirmar.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>3a- Si los datos estÃ¡n en formato incorrecto da error.</p>
-				<p>3b- Si hay un error en la conexiÃ³n se muestra por pantalla.</p>
+				<p>3a- Si los datos está en formato incorrecto da error.</p>
+				<p>3b- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="20"></a>
 				<h1>Caso de uso 20: Dar de alta a un empleado</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Introducir un nuevo empleado en la base de datos.</p>
 				<h2>Precondiciones</h2>
-				<p>El jefe de departamento ha accedido correctamente al sistema y ya estÃ¡ en su menÃº de opciones.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
+				<p>El jefe de departamento ha accedido correctamente al sistema y ya está en su menú de opciones.</p>
+				<h2>Postcondiciones si éxito</h2>
 				<p>El empleado queda registrado.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p>Jefe de departamento.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opciÃ³n dar de alta.</p>
+				<p>1- Elegir opción dar de alta.</p>
 				<p>2- Introducir datos.</p>
 				<p>3- Confirmar.</p>
-				<p>4- Se aÃ±ade el nuevo empleado a la base de datos.</p>
+				<p>4- Se añade el nuevo empleado a la base de datos.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>2a- El empleado ya estÃ¡ en el sistema. No es necesario darlo de alta.</p>
-				<p>2b- Datos con formato incorrecto. La aplicaciÃ³n permite corregir los datos errÃ³neos marcando los campos incorrectos de alguna forma (vuelta a 2).</p>
+				<p>2a- El empleado ya está en el sistema. No es necesario darlo de alta.</p>
+				<p>2b- Datos con formato incorrecto. La aplicación permite corregir los datos erróneos marcando los campos incorrectos de alguna forma (vuelta a 2).</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="21"></a>
 				<h1>Caso de uso 21: Dar de baja a un empleado</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Eliminar un empleado de la base de datos.</p>
 				<h2>Precondiciones</h2>
-				<p>El jefe de departamento ha accedido correctamente al sistema y ya estÃ¡ en su menÃº de opciones.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
+				<p>El jefe de departamento ha accedido correctamente al sistema y ya está en su menú de opciones.</p>
+				<h2>Postcondiciones si éxito</h2>
 				<p>El empleado queda eliminado del sistema.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p></p>
 				<h2>Actores</h2>
 				<p>Jefe de departamento.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opciÃ³n dar de baja.</p>
+				<p>1- Elegir opción dar de baja.</p>
 				<p>2- Introducir identificador del empleado a eliminar.</p>
 				<p>3- Confirmar.</p>
 				<p>4- Se borra el nuevo empleado de la base de datos.</p>
 				<p>5- Si es necesario, se modifica el cuadrante (CU-21) y se notifica al jefe de departamento.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>2a- El empleado no estÃ¡ en el sistema. No es necesario darle de baja.</p>
-				<p>2b- Identificafor incorrecto. La aplicaciÃ³n solicita vbolver a introducir el identificador.</p>
+				<p>2a- El empleado no está en el sistema. No es necesario darle de baja.</p>
+				<p>2b- Identificafor incorrecto. La aplicación solicita vbolver a introducir el identificador.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="22"></a>
 				<h1>Caso de uso 22: Modificar los datos de un empleado</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Tener el sistema actualizado con los nuevos datos del empleado.</p>
 				<h2>Precondiciones</h2>
-				<p>El jefe de departamento ha accedido correctamente al sistema y ya estÃ¡ en su menÃº de opciones.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
+				<p>El jefe de departamento ha accedido correctamente al sistema y ya está en su menú de opciones.</p>
+				<h2>Postcondiciones si éxito</h2>
 				<p>Los datos del empleado quedan actualizados.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p></p>
 				<h2>Actores</h2>
 				<p>Jefe de departamento.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opciÃ³n de modificar.</p>
+				<p>1- Elegir opción de modificar.</p>
 				<p>2- Introducir los datos a modificar en lugar de los antiguos.</p>
 				<p>3- Confirmar.</p>
 				<p>4- Se actualizan los datos del empleado en la base de datos.</p>
 				<p>5- Se modifica el cuadrante si es necesario (CU-21) y se notifica al jefe de departamento.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>2a- El empleado no estÃ¡ en el sistema. Comprobar que se ha escrito bien el identicador.</p>
-				<p>2b- Si los datos estÃ¡n en formato incorrecto la aplicaciÃ³n permite corregir los datos errÃ³neos marcando los campos incorrectos de alguna forma (vuelta a 2).</p>
-				<p>2c- Se accede a algÃºn dato que no se puede modificar. Modificar los datos permitidos o cancelar la operaciÃ³n.</p>
+				<p>2a- El empleado no está en el sistema. Comprobar que se ha escrito bien el identicador.</p>
+				<p>2b- Si los datos está en formato incorrecto la aplicación permite corregir los datos erróneos marcando los campos incorrectos de alguna forma (vuelta a 2).</p>
+				<p>2c- Se accede a algún dato que no se puede modificar. Modificar los datos permitidos o cancelar la operación.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="23"></a>
 				<h1>Caso de uso 23: Crear contrato</h1>
 				<h2>Objetivo en contexto</h2>
-				<p>AÃ±adir un tipo de contrato a la base de datos.</p>
+				<p>Añadir un tipo de contrato a la base de datos.</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
 				<p>Se actualiza la base de datos con el tipo de contrato.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p>Gerente.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opciÃ³n de aÃ±adir.</p>
+				<p>1- Elegir opción de añadir.</p>
 				<p>2- Introducir los datos.</p>
 				<p>3- Confirmar.</p>
 				<h2>Secuencias alternativas</h2>
 				<p>3a- Si el contrato ya existe da error.</p>
-				<p>3b- Si los datos estÃ¡n en formato incorrecto da error.</p>
-				<p>3c- Si hay un error en la conexiÃ³n se muestra por pantalla.</p>
+				<p>3b- Si los datos está en formato incorrecto da error.</p>
+				<p>3c- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="24"></a>
 				<h1>Caso de uso 24: Eliminar contrato</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Eliminar un tipo de contrato de la base de datos.</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
 				<p>Se actualiza la base de datos eliminando el tipo de contrato.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p>Gerente.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opciÃ³n de eliminar.</p>
+				<p>1- Elegir opción de eliminar.</p>
 				<p>2- Seleccionar el tipo de contrato a eliminar.</p>
 				<p>3- Confirmar.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>3a- Si hay un error en la conexiÃ³n se muestra por pantalla.</p>
+				<p>3a- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="25"></a>
 				<h1>Caso de uso 25: Modificar contrato</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Modificar los datos de un tipo de contrato en la base de datos.</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
 				<p>Se actualiza la base de datos con los nuevos datos del tipo de contrato.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p>Gerente.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opciÃ³n de modificar datos.</p>
+				<p>1- Elegir opción de modificar datos.</p>
 				<p>2- Seleccionar el tipo de contrato.</p>
 				<p>3- Modificar datos.</p>
 				<p>4- Confirmar.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>3a- Si los datos estÃ¡n en formato incorrecto da error.</p>
-				<p>3b- Si hay un error en la conexiÃ³n se muestra por pantalla.</p>
+				<p>3a- Si los datos está en formato incorrecto da error.</p>
+				<p>3b- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="26"></a>
 				<h1>Caso de uso 26: Consultar cuadrantes</h1>
 				<h2>Objetivo en contexto</h2>
-				<p>VisualizaciÃ³n del cuadrante.</p>
+				<p>Visualización del cuadrante.</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
-				<p>VisualizaciÃ³n del cuadrante.</p>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
+				<p>Visualización del cuadrante.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Seleccionar la opciÃ³n cuadrante.</p>
+				<p>1- Seleccionar la opción cuadrante.</p>
 				<p>2- Visualizar.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>2a- El cuadrante elegido todavÃ­a no estÃ¡ creado, se pasa a CU-21.</p>
-				<p>2b- Si hay un error en la conexiÃ³n se muestra por pantalla.</p>
+				<p>2a- El cuadrante elegido todavía no está creado, se pasa a CU-21.</p>
+				<p>2b- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="27"></a>
 				<h1>Caso de uso 27: Crear/modificar cuadrante</h1>
 				<h2>Objetivo en contexto</h2>
-				<p>CreaciÃ³n/modificaciÃ³n del cuadrante (considerando la creaciÃ³n como la modificaciÃ³n de un cuadrante vacÃ­o).</p>
+				<p>creación/modificación del cuadrante (considerando la creación como la modificación de un cuadrante vacío).</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
 				<p>Cuadrante correcto.</p>
 				<h2>Postcondiciones si fallo</h2>
-				<p>Ninguna modificaciÃ³n.</p>
+				<p>Ninguna modificación.</p>
 				<h2>Actores</h2>
 				<p>Jefe de departamento y gerente.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Seleccionar opciÃ³n modificar cuadrante.</p>
+				<p>1- Seleccionar opción modificar cuadrante.</p>
 				<p>2- Introducir datos si es necesario.</p>
-				<p>3- La aplicaciÃ³n propone un cuadrante alternativo.</p>
-				<p>4- ConfirmaciÃ³n para creaciÃ³n de cuadrante.</p>
-				<p>5- NotificaciÃ³n del cuadrante a los usuarios afectados (CU-23).</p>
+				<p>3- La aplicación propone un cuadrante alternativo.</p>
+				<p>4- Confirmación para creación de cuadrante.</p>
+				<p>5- Notificación del cuadrante a los usuarios afectados (CU-23).</p>
 				<h2>Secuencias alternativas</h2>
-				<p>4a.1a- El usuario rechaza la propuesta, y la apliaciÃ³n vuelve al punto 3.</p>
-				<p>4a.1b- La aplicaciÃ³n no puede generar otro cuadrante, pasa a CU-22.</p>
+				<p>4a.1a- El usuario rechaza la propuesta, y la aplicación vuelve al punto 3.</p>
+				<p>4a.1b- La aplicación no puede generar otro cuadrante, pasa a CU-22.</p>
 				<p>4a.1b.1a- El usuario vuelve al principio para revisar las propuestas (vuelve al punto 3).</p>
 				<p>4a.1b.1b- El usuario cambia las condiciones iniciales para intentar generar otro cuadrante.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="28"></a>
 				<h1>Caso de uso 28: No poder crear/modificar cuadrante</h1>
 				<h2>Objetivo en contexto</h2>
-				<p>Intento de creaciÃ³n/modificaciÃ³n del cuadrante con datos que no permiten que Ã©ste sea vÃ¡lido.</p>
+				<p>Intento de creación/modificación del cuadrante con datos que no permiten que éste sea válido.</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
 				<p></p>
 				<h2>Postcondiciones si fallo</h2>
 				<p></p>
 				<h2>Actores</h2>
 				<p>Jefe de departamento y gerente.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- NotificaciÃ³n al usuario del problema encontrado y las posibles acciones que permitirÃ­an solucionarlo (contar con mÃ¡s personal en determinados turnos).</p>
+				<p>1- Notificación al usuario del problema encontrado y las posibles acciones que permitirían solucionarlo (contar con más personal en determinados turnos).</p>
 				<h2>Secuencias alternativas</h2>
 				<p></p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="29"></a>
-				<h1>Caso de uso 29: Enviar mensajes de forma automÃ¡tica</h1>
+				<h1>Caso de uso 29: Enviar mensajes de forma automática</h1>
 				<h2>Objetivo en contexto</h2>
-				<p>Generar avisos de forma automÃ¡tica tras haber realizado modificaciones en el cuadrante o en la plantilla.</p>
+				<p>Generar avisos de forma automática tras haber realizado modificaciones en el cuadrante o en la plantilla.</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<p>Haber realizado alguna modificaciÃ³n.</p>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<p>Haber realizado alguna modificación.</p>
 				<p>Tener una lista de usuarios a los que hay que avisar.</p>
 				<p>Tener un mensaje de aviso.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
+				<h2>Postcondiciones si éxito</h2>
 				<p>Entregar los avisos correspondientes a los usuarios pertinentes.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p></p>
 				<h2>Secuencia normal</h2>
-				<p>1- Enviar mensajes de forma automÃ¡tica.</p>
-				<p>2- Mostrar un mensaje indicando que el envÃ­o de mensajes se ha producido con Ã©xito.</p>
+				<p>1- Enviar mensajes de forma automática.</p>
+				<p>2- Mostrar un mensaje indicando que el envío de mensajes se ha producido con éxito.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>2a- Si hay un fallo, mostrar un mensaje indicando quiÃ©n falta por avisar y por quÃ© se ha producido el error.</p>	
+				<p>2a- Si hay un fallo, mostrar un mensaje indicando quién falta por avisar y por qué se ha producido el error.</p>	
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="30"></a>
-				<h1>Caso de uso 30: Ordenar empleados para la elecciÃ³n de vacaciones</h1>
+				<h1>Caso de uso 30: Ordenar empleados para la elección de vacaciones</h1>
 				<h2>Objetivo en contexto</h2>
-				<p>Ordenar la lista de empleados de un departamento para elegir la prioridad en la elecciÃ³n de las vacaciones.</p>
+				<p>Ordenar la lista de empleados de un departamento para elegir la prioridad en la elección de las vacaciones.</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
 				<p>Tener una lista de empleados del departamento.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
-				<p>Enviar el aviso al empleado de la primera posiciÃ³n de la lista de queya puede elegir sus vacaciones.</p>
+				<h2>Postcondiciones si éxito</h2>
+				<p>Enviar el aviso al empleado de la primera posición de la lista de queya puede elegir sus vacaciones.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p>Jefe de departamento.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opciÃ³n ordenar empleados.</p>
-				<p>2- Elegir el empleado y arrastrarlo a la posiciÃ³n elegida.</p>
+				<p>1- Elegir opción ordenar empleados.</p>
+				<p>2- Elegir el empleado y arrastrarlo a la posición elegida.</p>
 				<p>3- Repetir el paso 2 tantas veces como se desee.</p>
 				<p>4- Aceptar.</p>
 				<h2>Secuencias alternativas</h2>
 				<p></p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="31"></a>
 				<h1>Caso de uso 31: Elegir fechas de vacaciones</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Elegir el periodo de vacaciones de un empleado siguiendo el orden impuesto por el jefe de departamento.</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado, y debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<p>Tener acceso al formulario de peticiÃ³n de vacaciones.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<p>Tener acceso al formulario de petición de vacaciones.</p>
+				<h2>Postcondiciones si éxito</h2>
 				<p>Enviar el aviso al empleado siguiente en la lista.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opciÃ³n elegir vacaciones.</p>
-				<p>2- Seleccionar las fechas elegidas si Ã©stas no estÃ¡n elegidas ya por un nÃºmero determinado de empleados.</p>
+				<p>1- Elegir opción elegir vacaciones.</p>
+				<p>2- Seleccionar las fechas elegidas si éstas no está elegidas ya por un número determinado de empleados.</p>
 				<p>3- Aceptar.</p>
 				<h2>Secuencias alternativas</h2>
 				<p></p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="32"></a>
 				<h1>Caso de uso 32: Imprimir</h1>
 				<h2>Objetivo en contexto</h2>
-				<p>Imprimir la informaciÃ³n seleccionada en la vista actual de la aplicaciÃ³n.</p>
+				<p>Imprimir la información seleccionada en la vista actual de la aplicación.</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado en la aplicaciÃ³n.</p>
+				<p>Estar identificado en la aplicación.</p>
 				<p>Tener acceso a la impresora.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
+				<h2>Postcondiciones si éxito</h2>
 				<p>Imprimir documento.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
 				<p>Usuario e impresora.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opciÃ³n de imprimir.</p>
-				<p>2- Seleccionar las opciones de impresiÃ³n.</p>
+				<p>1- Elegir opción de imprimir.</p>
+				<p>2- Seleccionar las opciones de impresión.</p>
 				<p>3- Aceptar.</p>
 				<h2>Secuencias alternativas</h2>
 				<p></p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="33"></a>
 				<h1>Caso de uso 33: Ayuda</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Solicitar ayuda al sistema sobre su funcionamiento.</p>
 				<h2>Precondiciones</h2>
-				<p>Estar identificado en la aplicaciÃ³n.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
-				<p>Visualizar el menÃº de ayuda.</p>
+				<p>Estar identificado en la aplicación.</p>
+				<h2>Postcondiciones si éxito</h2>
+				<p>Visualizar el menú de ayuda.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p></p>
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opciÃ³n de ayuda.</p>
-				<p>2- Seleccionar la informaciÃ³n deseada.</p>
+				<p>1- Elegir opción de ayuda.</p>
+				<p>2- Seleccionar la información deseada.</p>
 				<h2>Secuencias alternativas</h2>
 				<p></p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->
+<!-- Aquí acaba un CU -->
 
-<!-- Aquï¿½ empieza un CU -->			
+<!-- Aquí empieza un CU -->			
 				<a name="34"></a>
-				<h1>Caso de uso 34: Autentificar al usuario con lector de cÃ³digos de barras</h1>
+				<h1>Caso de uso 34: Autentificar al usuario con lector de códigos de barras</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Acceder al sistema.</p>
 				<h2>Precondiciones</h2>
-				<p>Debe ser posible establecer la conexiÃ³n con la base de datos.</p>
-				<h2>Postcondiciones si Ã©xito</h2>
+				<p>Debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
 				<p>Se accede al sistema.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Se pide de nuevo que pase la tarjeta.</p>
 				<h2>Actores</h2>
-				<p>Usuario y lector de cÃ³digo de barras.</p>
+				<p>Usuario y lector de código de barras.</p>
 				<h2>Secuencia normal</h2>
 				<p>1- Pasar la tarjeta por el lector.</p>
 				<p>2- Acceder al sistema.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>2a- Si el usuario no estÃ¡ en el sistema da un error y se da la opciÃ³n de pasar de nuevo la tarjeta.</p>
+				<p>2a- Si el usuario no está en el sistema da un error y se da la opción de pasar de nuevo la tarjeta.</p>
 				<br><br><br>
-<!-- Aquï¿½ acaba un CU -->		
+<!-- Aquí acaba un CU -->		
 
 				</div>
 				<h1>Historial de cambios</h1>
 
 				<h3>Diciembre 2007</h3>
 				<p>El caso de uso 32 (Configurar el idioma) desaparece puesto que el idioma se elige al dar de alta al usuario.</p>
-				<p>El caso de uso 31 (Configurar la aplicaciÃ³n) desaparece ya que no hay ninguna opciÃ³n de configuraciÃ³n de la aplicaciÃ³n.</p>
-				<p>Se aÃ±ade el caso de uso 5 (Responder mensaje) cambiando la numeraciÃ³n de los posteriores casos de uso.</p>	
-				<p>Se aÃ±ade el caso de uso 32 (Imprimir).</p>
-				<p>Se aÃ±ade al caso de uso 33 (Solicitar ayuda).</p>	
+				<p>El caso de uso 31 (Configurar la aplicación) desaparece ya que no hay ninguna opción de configuración de la aplicación.</p>
+				<p>Se añade el caso de uso 5 (Responder mensaje) cambiando la numeración de los posteriores casos de uso.</p>	
+				<p>Se añade el caso de uso 32 (Imprimir).</p>
+				<p>Se añade al caso de uso 33 (Solicitar ayuda).</p>	
 				<br><br>		
 
 				<h3>Enero 2008</h3>
-				<p>En los casos de uso 07 y 08 el actor deberÃ­a ser el empleado ya que se lo pide al jefe de departamento.</p>
-				<p>En los casos de uso 10 y 11 los actores serÃ­an el jefe de departamento y el gerente.</p>
-				<p>En el caso de uso 16, asÃ­ como el gerente es el Ãºnico que puede crear departamentos, es Ã©l el Ãºnico que los puede eliminar.</p>
+				<p>En los casos de uso 07 y 08 el actor debería ser el empleado ya que se lo pide al jefe de departamento.</p>
+				<p>En los casos de uso 10 y 11 los actores serían el jefe de departamento y el gerente.</p>
+				<p>En el caso de uso 16, así como el gerente es el único que puede crear departamentos, es él el único que los puede eliminar.</p>
 				<p>En los casos de uso 21, 22 y 26 el caso de uso de modificar cuadrante al que se hace referencia es el 27 y no el 21.</p>
 				<p>En los casos de uso 23, 24 y 25, al tocar el cuadrante puede ser necesario cambiar el cuadrante.</p>
 				<p>En el caso de uso 27 cuando se hace referencia al caso de uso 23 en realidad es el caso de uso 29, y cuando se hace referencia al caso de uso 22 es el caso de uso 28.</p>
-				<p>Se ha extendido el caso de uso 01 para cuando se dispone de lector de cÃ³digos de barras aÃ±adiendo el caso de uso 34 (Autentificar al usuario con lector de cÃ³digos de barras).</p>
+				<p>Se ha extendido el caso de uso 01 para cuando se dispone de lector de códigos de barras añadiendo el caso de uso 34 (Autentificar al usuario con lector de códigos de barras).</p>
 				<br><br>
 
 			</div>
