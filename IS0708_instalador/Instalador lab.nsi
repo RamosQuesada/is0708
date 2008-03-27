@@ -73,7 +73,7 @@ Section -Main SEC0000
     File .\Tema\Icono.ico
     SetOutPath $INSTDIR
     #TODO verificar version en labs
-    CreateShortCut "$INSTDIR\Turno-matic.lnk" "c:\jdk1.6.0_03\bin\javaw.exe" "-jar $\"$INSTDIR\Turno-matic.jar$\"" "$INSTDIR\Icono.ico"
+    CreateShortCut "$INSTDIR\Turno-matic.lnk" "c:\jdk1.6.0_02\bin\javaw.exe" "-jar $\"$INSTDIR\Turno-matic.jar$\"" "$INSTDIR\Icono.ico"
     
     #Ayuda
     SetOutPath $INSTDIR\Ayuda
