@@ -74,7 +74,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private int dia=1;
 	private int mes=1;
 	private int anio=1990;
-	private String departamento="DatosFijos";
+	private String departamento;
 	private Image fondo;
 	
 	private int diaActVistaMes=0;
@@ -112,7 +112,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					while(!vista.isCacheCargada()) {
 						sleep(50);
 					}
-					cargarCache();
+					cargarDeCache();
 					redibujar();
 				}
 				catch (Exception e) {
@@ -173,11 +173,6 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	}
 
 	protected ArrayList<I_Trabaja> iCuad[];		//Esta matriz seria la salida del algoritmo,un vector donde en cada posicion hay una lista de los empleados que trabajan
-	
-	/* TODO
-	 * Las barras de tamaño cero se quedan
-	 * bug: al hacer muchas franjas pequeñitas, no se pegan bien (ver si sigue pasando)
-	 */
 
 	/**
 	 * Constructor del cuadrante.
@@ -213,6 +208,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		margenInf = 10;
 		margenNombres = 90;
 		margenSupVistaMes=margenSup+30;
+		departamento = idDepartamento;
 		
 		//Inicializar los arrays del calculo de los domingos
 		meses31[0]=0;
@@ -244,7 +240,10 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		this.numSubdivisiones = subdivisiones;	
 	}
 
-	public void cargarCache() {
+	/**
+	 * Coge los datos del cuadrante desde la cache.
+	 */
+	public void cargarDeCache() {
 		if (vista.isCacheCargada() && turno==null) {
 			vista.setProgreso("Cargando cuadrantes", 80);
 			ArrayList<Trabaja> c[] = vista.getCuadrante(mes, anio, departamento).getCuad();
@@ -267,6 +266,10 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		}
 	}
 	
+	/**
+	 * Prepara el interfaz para mostrar un solo turno.
+	 * @param cCuadrante el composite sobre el que dibujar
+	 */
 	public void setCompositeUnTurno(Composite cCuadrante) {
 		turno = new I_Turno(new Turno(0,"","12:00:00","19:00:00","13:00:00",60));
 		margenNombres=30;
@@ -609,7 +612,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	public void setDia(int dia){
 		this.dia = dia;
 		if (vista.isCacheCargada()) {
-			cargarCache();
+			cargarDeCache();
 			redibujar();			
 		}
 	};
@@ -619,7 +622,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		this.mes = mes;
 		this.anio = anio;
 		if (vista.isCacheCargada()) {
-			cargarCache();
+			cargarDeCache();
 			redibujar();			
 		}
 	}
@@ -627,7 +630,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	public void setDepartamento(String departamento) {
 		this.departamento = departamento;
 		if (vista.isCacheCargada()) {
-			cargarCache();
+			cargarDeCache();
 			redibujar();
 		}
 	}
@@ -687,10 +690,10 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		Long k = new Date().getTime();
 		dibujarTurnos(gc);
 		Long l = new Date().getTime();
-		vista.infoDebug("I_Cuadrante", "Tiempos dibujo: \n" +
-				String.valueOf(j-i) + " ms. dibujar seleccion\n" +
-				String.valueOf(k-j) + " ms. dibujar horas\n" + 
-				String.valueOf(l-k) + " ms. dibujar turnos\n");
+//		vista.infoDebug("I_Cuadrante", "Tiempos dibujo: \n" +
+//				String.valueOf(j-i) + " ms. dibujar seleccion\n" +
+//				String.valueOf(k-j) + " ms. dibujar horas\n" + 
+//				String.valueOf(l-k) + " ms. dibujar turnos\n");
 	}
 	
 	public void dibujarTurnos(GC gc) {
