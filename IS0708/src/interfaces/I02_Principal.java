@@ -46,6 +46,7 @@ public class I02_Principal {
 	//apaño de última hora para ejecutar el algoritmo en un thread
 	private int tmAnio, tmMes, tmDia;
 	private String tmDep;
+	private Button itsMagic, bGuardarCambios; 
 
 	public I02_Principal(Shell shell, Display display, ResourceBundle bundle,
 			Locale locale, Vista vista) {
@@ -57,11 +58,17 @@ public class I02_Principal {
 		crearVentana(vista.getEmpleadoActual().getRango());
 	}
 	
+	
+	/**
+	 * Este hilo espera a que cargue la caché, y luego carga el cuadrante
+	 * @author Daniel D
+	 */
 	public class CuadranteLoader extends Thread {
 		public synchronized void run() {
+			setName("CuadranteLoader");
 			try {
 				while (!vista.isCacheCargada()) {
-					sleep(5000);
+					sleep(50);
 				}
 			} catch (Exception e) {}
 			if (!display.isDisposed()) {
@@ -74,21 +81,27 @@ public class I02_Principal {
 						cDepartamentos.select(0);
 						tmDep = cDepartamentos.getText();
 						ic.setDepartamento(tmDep);
+						itsMagic.setEnabled(true);
 					}
 				});
 				ic.setDia(tmDia, tmMes, tmAnio);
 			}
-			
 		}
 	}
 	
 	/**
 	 * Este hilo ejecuta el algoritmo en segundo plano
 	 * @author Daniel D
-	 *
 	 */
 	private class AlgoritmoRun extends Thread {
 		public void run() {
+			setName("AlgorithmExec");
+			display.asyncExec(new Runnable() {
+				public void run() {
+					itsMagic.setEnabled(false);
+					cDepartamentos.setEnabled(false);
+				}
+			});
 			vista.infoDebug("I02_Principal", "Llamando al algoritmo para la fecha " + tmMes + " de " + tmAnio + ", dep. " + tmDep);
 			algoritmo.TurnoMatic t = new algoritmo.TurnoMatic(tmMes, tmAnio, vista, tmDep);
 			final ResultadoTurnoMatic resultado = t.ejecutaAlgoritmo();
@@ -113,6 +126,9 @@ public class I02_Principal {
 					ic.setDia(calendario.getDay(), calendario.getMonth()+1,	calendario.getYear());
 					ic.cargarDeCache();
 					ic.redibujar();
+					
+					itsMagic.setEnabled(true);
+					cDepartamentos.setEnabled(true);
 				}
 			});
 		}
@@ -238,8 +254,7 @@ public class I02_Principal {
 		tmDep = cDepartamentos.getText();
 
 		final Composite cCuadrante = new Composite(cCuadrantes, SWT.BORDER);
-		cCuadrante.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
-				3, 6));
+		cCuadrante.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 7));
 
 		// TODO arreglar parámetros (cogerlos del departamento)
 		ic = new I_Cuadrante(vista, 0, 0, tmDep, 4, 9, 23);
@@ -263,7 +278,6 @@ public class I02_Principal {
 		tmDia = calendario.getDay();
 
 		ic.setDia(tmDia, tmMes, tmAnio);
-
 		
 		calendario.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
@@ -314,10 +328,10 @@ public class I02_Principal {
 				2, 1));
 		bPorSemanas.setSelection(true);
 		
-		ic.setComposite(cCuadrante,bPorMes,bPorSemanas);
 		
 		// Botón de generación de cuadrantes
-		final Button itsMagic = new Button(cCuadrantes, SWT.PUSH);
+		itsMagic = new Button(cCuadrantes, SWT.PUSH);
+		itsMagic.setEnabled(false);
 		itsMagic.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 2, 1));
 		itsMagic.setText(bundle.getString("I02_but_generarCuadrantes"));
 		itsMagic.addSelectionListener(new SelectionListener() {
@@ -348,6 +362,21 @@ public class I02_Principal {
 				}
 			}
 		});
+
+		// Botón para guardar los cambios sobre un cuadrante
+		bGuardarCambios = new Button(cCuadrantes, SWT.PUSH);
+		bGuardarCambios.setEnabled(false);
+		bGuardarCambios.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 2, 1));
+		bGuardarCambios.setText(bundle.getString("I02_but_guardarCambios"));
+		bGuardarCambios.addSelectionListener(new SelectionListener() {
+			public void widgetDefaultSelected(SelectionEvent arg0) {}
+			public void widgetSelected(SelectionEvent arg0) {
+				bGuardarCambios.setEnabled(false);
+				
+				// TODO Guardar los cambios
+			}
+		});
+		ic.setComposite(cCuadrante,bPorMes,bPorSemanas, bGuardarCambios);
 	}
 
 	/**

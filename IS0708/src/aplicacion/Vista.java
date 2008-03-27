@@ -111,7 +111,6 @@ public class Vista {
 				}
 				while (!colaEscritura.isEmpty()) {
 					setProgreso("Actualizando base de datos", prog);
-					System.out.println(prog);
 					prog+=frac;
 					ElementoCache e = colaEscritura.poll();
 					if (e.i==INSERTAR) {
@@ -947,9 +946,6 @@ public class Vista {
 				for (int j=0; j<turnosDep.size(); j++) {
 					turnos.add(turnosDep.get(j));
 				}				
-			}
-			for (int i=0; i<turnos.size(); i++) {
-				System.out.println(turnos.get(i).getIdTurno());
 			}
 			setProgreso("", 100);
 			
