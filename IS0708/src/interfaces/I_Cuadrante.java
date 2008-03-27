@@ -636,7 +636,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	}
 	
 	/**
-	 * Calcula el tamaño de las franjas cuando se redimensiona la ventana
+	 * Calcula el tamaño de las franjas cuando se redimensiona la ventana.
 	 */
 	private void calcularTamano() {
 		ancho = canvas.getClientArea().width;
@@ -658,6 +658,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		
 	}
 	
+	/**
+	 * Método para repintar el cuadrante cuando se han hecho cambios.
+	 */
 	public void redibujar() {
 		// Redibuja sólo las franjas que corresponden, para evitar calculos
 		// innecesarios
@@ -696,6 +699,10 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 //				String.valueOf(l-k) + " ms. dibujar turnos\n");
 	}
 	
+	/**
+	 * Dibuja las barras que representan las franjas horarias que trabaja cada empleado.
+	 * @param gc	El GC del display sobre el que se dibujará el cuadrante.
+	 */
 	public void dibujarTurnos(GC gc) {
 		if (turno!=null) {			
 			turno.dibujar(display, "", gc, 0, null, margenIzq, margenNombres,margenSup,sep_vert_franjas,alto_franjas,tamHora, tamSubdiv, horaApertura, numSubdivisiones);
@@ -716,6 +723,12 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		}
 	}
 	
+	/**
+	 * Dibuja una caja con información sobre el turno del empleado, cuando el cursor se encuentra
+	 * encima de alguna casilla válida, pulsándola además. También dibuja un botón centrado en el
+	 * cursor cuando se ha seleccionado alguna casilla, para arrastrarlo a otro empleado.
+	 * @param gc	El GC del display sobre el que se dibujará el cuadrante.
+	 */
 	public void dibujarCuadranteMes(GC gc) {
 		if (fondo==null)
 			actualizarFondo(gc);
@@ -767,7 +780,10 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	}
 	
 	/**
-	 * Dibuja lineas verticales representando las horas y las subdivisiones del cuadrante.
+	 * Dibuja lineas verticales representando las horas y las subdivisiones del cuadrante en la
+	 * vista diaria. En la vista mensual se encarga de dibujar una red de casillas que representan
+	 * los días que trabaja cada empleado de un departamento al mes, junto con su identificador de
+	 * turno.
 	 * @param gc	El GC del display sobre el que se dibujará el cuadrante.
 	 */
 	private void actualizarFondo(GC gc) {
@@ -803,8 +819,6 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				c.set(anio,mes,1);
 				//System.out.println(c.get(Calendar.YEAR));
 				while (!domingoEncontrado) {
-					//System.out.println(c.get(Calendar.DAY_OF_WEEK));
-					//System.out.println(c.get(Calendar.MONTH));
 					//Dependiendo del mes en el que se encuentre el domingo tendra un valor u otro
 					if (c.get(Calendar.DAY_OF_WEEK)==4 && esMes31(c.get(Calendar.MONTH))) domingoEncontrado=true;
 					else if ((c.get(Calendar.DAY_OF_WEEK)==3 && esMes30(c.get(Calendar.MONTH)))) domingoEncontrado=true;
@@ -815,10 +829,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 						c.roll(Calendar.DATE, true);
 						//c.set(anio,mes,dom);
 					}
-					//System.out.println("DomingoPrueba: "+c.get(Calendar.));
 				}
-				//System.out.println(c.get(Calendar.DAY_OF_WEEK));
-				//System.out.println(c.toString());
 				int anchoMes = ancho - margenIzq - margenDer - margenNombres;
 				anchoDia = anchoMes/iCuad.length;
 				altoFila = 20;
@@ -830,7 +841,6 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 						gcFondo.drawText(String.valueOf(j+1), margenIzq + margenNombres + j*anchoDia + anchoDia/2, margenSupVistaMes);
 						gcFondo.setForeground(new Color(display,0,0,0));
 					}
-				
 				ArrayList<Empleado> empleados=vista.getEmpleados();
 				for (int i=0; i < empleados.size(); i++) {
 					aplicacion.Empleado e=empleados.get(i);
@@ -855,6 +865,16 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		gc.drawImage(fondo,0,0);
 	}
 	
+	/**
+	 * Dibuja una casilla en la posición marcada por i y j dentro de los márgenes, si es que se
+	 * trata de una casilla en blanco. Si la casilla corresponde a un empleado con un turno en ese
+	 * día, escribe también su identificador, y la rellena del color indicado por parámetro.
+	 * @param gc		Contenedor gráfico en el que se dibujará la casilla.
+	 * @param i			Contador de filas o empleados.
+	 * @param j			Contador de columnas o días.
+	 * @param empl		Entero que representa al empleado del que se obtendrá el turno a mostrar.
+	 * @param color		Color para el relleno de la casilla.
+	 */
 	public void dibujaCasilla(GC gc, int i, int j, int empl, Color color){
 		//Primero se pinta el rectangulo
 		gc.setForeground(new Color(display,0,0,0));
@@ -872,6 +892,14 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		gc.setForeground(new Color(display,0,0,0));
 	}
 	
+	/**
+	 * Dibuja un botón en la posición marcada por iX y iY, de tamaño especificado por ancho y alto.
+	 * @param gc		Contenedor gráfico en el que se dibujará el botón.
+	 * @param iX		Coordenada X.
+	 * @param iY		Coordenada Y.
+	 * @param ancho 	Ancho.
+	 * @param alto		Alto.
+	 */
 	public void dibujaBoton(GC gc,int iX,int iY,int ancho,int alto) {
 		//Lineas grises
 		gc.setForeground(new Color(display,210,210,210));
@@ -887,6 +915,15 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		gc.drawLine(iX+1,iY+alto,iX+ancho-1,iY+alto);
 	}
 	
+	/**
+	 * Dibuja un botón pulsado en la posición marcada por iX y iY, de tamaño especificado por ancho
+	 * y alto.
+	 * @param gc		Contenedor gráfico en el que se dibujará el botón.
+	 * @param iX		Coordenada X.
+	 * @param iY		Coordenada Y.
+	 * @param ancho 	Ancho.
+	 * @param alto		Alto.
+	 */
 	public void dibujaBotonPuls(GC gc,int iX,int iY,int ancho,int alto) {
 		//Lineas grises
 		gc.setForeground(new Color(display,50,50,50));
@@ -906,7 +943,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	/**
 	 * Dibuja un fondo distinguido para el empleado seleccionado, basado en el color del empleado
 	 * pero más pálido.
-	 * @param gc	El GC sobre el que resaltar el empleado
+	 * @param gc	El GC sobre el que resaltar el empleado.
 	 * @param emp	La posición del empleado a resaltar en la lista de empleados. Se considera
 	 * 				que -1 significa que no hay ningún empleado seleccionado.
 	 */
@@ -920,11 +957,12 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			gc.fillRectangle(Math.max(margenIzq-2,0),margenSup+(sep_vert_franjas+alto_franjas)*(emp+1)-5,ancho-margenIzq-margenDer,alto_franjas+11);
 		}
 	}
+	
 	/**
 	 * Pega el valor x al más cercano dentro de la rejilla. El tamaño de la rejilla está determinado
 	 * por el número de subdivisiones.
-	 * @param x		El valor a ajustar
-	 * @return		El valor ajustado a la rejilla
+	 * @param x		El valor a ajustar.
+	 * @return		El valor ajustado a la rejilla.
 	 */
 	public Posicion sticky (int x) {
 		int y = x - margenNombres - margenIzq + (tamHora/numSubdivisiones)/2;
@@ -938,11 +976,12 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			p = new Posicion(y/tamHora+horaApertura,((y%tamHora)/(tamHora/numSubdivisiones))*12/numSubdivisiones);
 		return p;
 	}
+	
 	/**
 	 * Actualiza el tamaño del cuadrante, el tamaño de las horas y las subdivisiones, y para cada
 	 * franja, actualiza sus píxeles inicial y final en función de sus valores pinicio y pfin.
-	 * @param ancho	El ancho nuevo, en píxeles
-	 * @param alto	El alto nuevo, en píxeles
+	 * @param ancho	El ancho nuevo, en píxeles.
+	 * @param alto	El alto nuevo, en píxeles.
 	 */
 	public void setTamano(int ancho, int alto) {
 		this.alto = alto;
@@ -951,6 +990,10 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		tamSubdiv = tamHora/numSubdivisiones;
 	}
 	
+	/**
+	 * Cambia la forma del cursor según el parámetro escrito.
+	 * @param i		Entero con el cursor a mostrar.
+	 */
 	private void cursor(int i) {
 		switch (i) {
 		case 1:
@@ -979,10 +1022,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	*/
 	
 	/**
-	 * Método que establece el atributo del cuadrante a diario o mensual
-	 * 
-	 * @param d
-	 * 		booleano con el valor a establecer
+	 * Establece el atributo que controla la vista a mostrar. True para la vista diaria y False para
+	 * la mensual.
+	 * @param d		booleano con el valor a establecer.
 	 */
 	public void setDiario(boolean d) {
 		diario=d;
@@ -991,10 +1033,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	}
 	
 	/**
-	 * Método que activa/desactiva las acciones del raton sobre los cuadrantes diarios
-	 * 
-	 * @param b
-	 * 		true activa, false desactiva
+	 * Activa/desactiva las acciones del raton sobre los cuadrantes diarios y mensuales.
+	 * @param b 	True activa, False desactiva.
 	 */
 	public void setMovCuadSemanal(boolean b) {
 		if (b) {
@@ -1019,12 +1059,11 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	}
 	
 	/**
-	 * Método que 
-	 * 
-	 * @param dia
-	 * 		dia en el que hay que buscar dentro de iCuad
-	 * @param idEmpl
-	 * 		empleado del que se desea saber si trabaja ese dia
+	 * Método para la vista mensual que indica si el cursor está encima de alguna casilla con un
+	 * turno activo.
+	 * @param dia		Día en el que hay que buscar dentro de iCuad.
+	 * @param idEmpl	Empleado del que se desea saber si trabaja ese día.
+	 * @return			True si el cursor se situa sobre alguna zona válida.
 	 */
 	public boolean empTrabDia(int dia,int idEmpl){
 		Boolean encontrado=false;
@@ -1037,6 +1076,11 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		return encontrado;
 	}
 	
+	/**
+	 * Comprueba si un mes tiene 31 días.
+	 * @param mes	Mes a comprobar.
+	 * @return 		True si el mes es de 31 días.
+	 */
 	public boolean esMes31(int mes){
 		boolean encontrado=false;
 		int i=0;
@@ -1047,6 +1091,11 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		return encontrado;
 	}
 	
+	/**
+	 * Comprueba si un mes tiene 30 días.
+	 * @param mes	Mes a comprobar.
+	 * @return 		True si el mes es de 30 días.
+	 */
 	public boolean esMes30(int mes){
 		boolean encontrado=false;
 		int i=0;
