@@ -1669,6 +1669,34 @@ public class Database extends Thread {
 		}
 		return r;
 	}
+	
+	/**
+	 * Método que lee los empleados un departamento concreto
+	 * 
+	 * @param departamento el identificador del departamento
+	 * @return Devuelve un ResultSet con los datos leídos de la BD
+	 * 
+	 * @author Daniel Dionne
+	 */
+	public ResultSet obtenListaEmpleadosSinJefeDepartamento(String departamento) {
+		ResultSet r = null;
+		try {
+			st = con.createStatement();
+
+			// SELECT * FROM USUARIO
+			// WHERE  NumVendedor IN (
+			//		SELECT NumVendedor FROM DepartamentoUsuario
+			//		WHERE NombreDepartamento = 'departamento');
+			
+			r = st.executeQuery("SELECT * FROM USUARIO WHERE NumVendedor IN (" +
+							"SELECT NumVendedor FROM DepartamentoUsuario WHERE " +
+							"NombreDepartamento = '"+ departamento +"');");
+			
+		} catch (SQLException e) {
+			System.err.println("Error al realizar la consulta de empleados");
+		}
+		return r;
+	}
 
 	public ResultSet obtenNombreTodosDepartamentos() {
 		ResultSet r = null;
@@ -1894,6 +1922,18 @@ SELECT * from TURNOS WHERE IdTurno IN (
 		return r;
 	}	
 	
+	
+	public ResultSet trabajaEmpleadoDia(int nv,Date d) {
+		ResultSet r = null;
+		try {
+			st = con.createStatement();
+			r = st.executeQuery("SELECT IdTurno FROM Trabaja WHERE NumVendedor='"+nv+"' AND Fecha='"+d+"';");
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println("Error al realizar la consulta del Jefe del Dpto");
+		}
+		return r;
+	}	
 	
 
 }

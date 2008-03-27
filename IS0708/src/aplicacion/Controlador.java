@@ -456,7 +456,19 @@ public class Controlador {
 	
 	}
 	
+	
+	
+	
+	/**
+	 * Método que devuelve Información sobre el jefe de un Dpto
+	 * 
+	 * @param nombreDep
+	 *            Nombre del Dpto. 
+	 * @return Info. del jefe del Dpto nombreDep
+	**/
+	
 	public String getInfoJefedeDepartamento(String nombreDep) {
+		boolean tieneturno=true;
 		String nombrejefe=null;
 		String horaentrada=null;
 		String horasalida=null;
@@ -477,11 +489,62 @@ public class Controlador {
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.err
-					.println("Error al obtener los nombres de los jefes de la base de datos");
+					.println("Error al obtener nombre del jefe de Dpto. de la base de datos");
+					tieneturno=false;
 		}
-	
+	if(tieneturno){
 	return "Jefe de Dpto:"+ nombrejefe+ ": " + horaentrada+ " - "+ horasalida;
+	}
+	
+	return "Jefe de Dpto:"+ nombrejefe+ ": Hoy no tiene turnos asignados";
 
+	}	
+	
+	
+	/**
+	 * Método que devuelve Información sobre Empleados de un Dpto
+	 * 
+	 * @param nombreDep
+	 *            Nombre del Dpto. 
+	 * @return Info. de los empleados del Dpto. nombreDep
+	**/
+	
+	public String getInfoEmpleadosDepartamento(String nombreDep) {
+	//	boolean tieneturno=true;
+		String nombreempleado=null;
+		String horaentrada=null;
+		String horasalida=null;
+		String info=null;
+		ResultSet rs = _db.obtenListaEmpleadosDepartamento(nombreDep);
+		try {
+			while (rs.next()) {
+				int nv = rs.getInt("NumVendedor");
+				if(this.trabajaEmpleadoDia(nv, this.getFechaActual())){
+			    nombreempleado =this.getEmpleado(nv).getNombreCompleto();
+			    Turno t= this.getObjetoTurnoEmpleadoDia(this.getFechaActual(), nv);
+			    Time horaentradaaux = t.getHoraEntrada();
+			    horaentrada = horaentradaaux.toString();
+			    Time horasalidaaux = t.getHoraSalida();
+			    horasalida = horasalidaaux.toString();
+			    info=info+"\n"+ nombreempleado+ ": " + horaentrada+ " - "+ horasalida;
+			}
+			
+				else{
+				   nombreempleado =this.getEmpleado(nv).getNombreCompleto();
+				    info=info+"\n"+ nombreempleado+ ": No tiene turnos asignados";
+
+					
+				}
+			
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.err
+					.println("Error al obtener empleados del Dpto. base de datos");
+				//tieneturno=false;
+		}
+		return info;
 	}	
 	
 	
@@ -1700,7 +1763,11 @@ public class Controlador {
 		return _db.insertarDistribucion(Hora, DiaSemana, Patron, NumMax,
 				NumMin, IdDepartamento);
 	}
-
+	
+	public boolean trabajaEmpleadoDia(int nv,Date d) {
+		ResultSet r =this._db.trabajaEmpleadoDia(nv, d);
+		return r==null;
+	}
 	/**
 	 * * Vacia los contenidos de la tabla especificada
 	 * 
