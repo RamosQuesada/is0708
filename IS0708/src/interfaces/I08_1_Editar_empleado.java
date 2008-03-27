@@ -32,9 +32,9 @@ import aplicacion.Vista;
 import aplicacion.Empleado;
 
 import java.util.ArrayList;
-import java.util.Date;
+//import java.util.Date;
 import java.util.ResourceBundle;
-//import java.sql.Date;
+import java.sql.Date;
 
 // TODO Mostrar elección de rangos inferiores al usuario
 public class I08_1_Editar_empleado {
@@ -267,8 +267,10 @@ public class I08_1_Editar_empleado {
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
 				if(fechaNacimiento!=null)
 					tFNacimiento.setText(String.valueOf(fechaNacimiento.getDate()) + " de " + meses[fechaNacimiento.getMonth()]+ " de " + String.valueOf(fechaNacimiento.getYear()));
-				else
+				else{
 					tFNacimiento.setText(String.valueOf(emp.getFechaNac().getDate()) + " de " + meses[emp.getFechaNac().getMonth()]+ " de " + String.valueOf(emp.getFechaNac().getYear()));
+					fechaNacimiento.setYear(fechaNacimiento.getYear()-1900);
+				}
 			}
 		};
 		bFNacimiento.addSelectionListener(sabFNacimiento);
@@ -286,9 +288,11 @@ public class I08_1_Editar_empleado {
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
 				if(fechaContrato!=null)
 					tFContrato.setText(String.valueOf(fechaContrato.getDate()) + " de " + meses[fechaContrato.getMonth()]+ " de " + String.valueOf(fechaContrato.getYear()));
-				else
+				else{
 					tFContrato.setText(String.valueOf(emp.getFcontrato().getDate()) + " de " + meses[emp.getFcontrato().getMonth()]+ " de " + String.valueOf(emp.getFcontrato().getYear()));
-			}
+					fechaContrato.setYear(fechaContrato.getYear()-1900);
+				}
+				}
 		};
 		bFContrato.addSelectionListener(sabFContrato);
 		
@@ -305,9 +309,10 @@ public class I08_1_Editar_empleado {
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
 				if(fechaAlta!=null)
 					tFAlta.setText(String.valueOf(fechaAlta.getDate()) + " de " + meses[fechaAlta.getMonth()]+ " de " + String.valueOf(fechaAlta.getYear()));
-				else
+				else{
 					tFAlta.setText(String.valueOf(emp.getFAlta().getDate()) + " de " + meses[emp.getFAlta().getMonth()]+ " de " + String.valueOf(emp.getFAlta().getYear()));
-				
+					fechaAlta.setYear(fechaAlta.getYear()-1900);
+				}
 			}
 		};
 		cambios.addSelectionListener(sabCambios);
@@ -435,9 +440,12 @@ public class I08_1_Editar_empleado {
 					int turn= emp.getTurnoFavorito();
 					
 					try {
-					java.util.Date Fnac=Util.stringADate(tFNacimiento.getText());
-					java.util.Date FContr=Util.stringADate(tFContrato.getText());
-					java.util.Date Falta= Util.stringADate(tFAlta.getText());
+					java.sql.Date Fnac=fechaNacimiento;	
+					java.sql.Date FContr=fechaContrato;
+					java.sql.Date Falta=fechaAlta;
+					//java.util.Date Fnac=Util.stringADate(tFNacimiento.getText());
+					//java.util.Date FContr=Util.stringADate(tFContrato.getText());
+					//java.util.Date Falta= Util.stringADate(tFAlta.getText());
 					int id =idVend;
 
 
