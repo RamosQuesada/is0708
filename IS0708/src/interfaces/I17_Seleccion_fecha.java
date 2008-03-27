@@ -85,6 +85,7 @@ public class I17_Seleccion_fecha {
 		//Introducimos los valores y eventos de Fecha Inicio
 		bCancelar.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
+				fecha = null;
 				shell.dispose();
 			}				
 		});
