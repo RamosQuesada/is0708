@@ -36,47 +36,50 @@ public class Analisis {
 	 */
 	public void recorrido (Cuadrante cuadrante, Estructura estructura){
 		for (int i=0;i<dias;i++){
-			Time t=new Time(8,0,0);
-			for (int j=0;j<24;j++){
-				t.setHours(j);
-				
-				for (int k=0;k<60;k=k+5){
-					t.setMinutes(k);
-					int minimoDia=estructura.getCal().getMinHora(i, j);
-					Sugerencia sugAnterior=null;
-					//si ya hay alguna sugerencias del dia, se coge la ultima, si no se queda null
-					if (!sugerencias[i].isEmpty()){
-						if (sugerencias[i].get(sugerencias[i].size()-1).getHoraFin().equals(new Time(t.getHours(),t.getMinutes(),0)))
-							sugAnterior=sugerencias[i].get(sugerencias[i].size()-1);
-					}
+			//si el dia i no abre el centro, no se calcula el cuadrante
+			if (!estructura.getCal().diaLibre(i)) {
+				Time t=new Time(8,0,0);
+				for (int j=0;j<24;j++){
+					t.setHours(j);
 					
-					//se comprueba cuantos trabajadores hay en un minuto concreto
-					//se hacen franjas de 5 minutos
-					int contador=0;
-					for (int l=0;l<cuadrante.getListaTrabajaDia(i).size();l++){
-						Trabaja trab=cuadrante.getListaTrabajaDia(i).get(l);
-						if(compruebaHora(t,trab.getFichIni(),trab.getFichFin())){
-							contador++;
+					for (int k=0;k<60;k=k+5){
+						t.setMinutes(k);
+						int minimoDia=estructura.getCal().getMinHora(i, j);
+						Sugerencia sugAnterior=null;
+						//si ya hay alguna sugerencias del dia, se coge la ultima, si no se queda null
+						if (!sugerencias[i].isEmpty()){
+							if (sugerencias[i].get(sugerencias[i].size()-1).getHoraFin().equals(new Time(t.getHours(),t.getMinutes(),0)))
+								sugAnterior=sugerencias[i].get(sugerencias[i].size()-1);
 						}
-					}
-										
-					// si el contador es menor que el minimo para ese minuto, se crea una sugerencia nueva
-					// solo si no existia una anterior con las mismas caracteristas
-					// en caso contrario, se amplia en 5 minutos la franja de la sugerencia
-					if (contador<minimoDia){
-						if ((sugAnterior!=null)&&(minimoDia-contador!=sugAnterior.getFaltas()) && (sugAnterior.getTipo()!=tipoFalta(contador,minimoDia))){		
-							Sugerencia sug=new Sugerencia(minimoDia-contador,minimoDia,new Time(t.getHours(),t.getMinutes(),0),new Time(t.getHours(),t.getMinutes()+5,0),i,tipoFalta(contador,minimoDia));
-							sugerencias[i].add(sug);
-						} else {
-							if (sugAnterior==null) {
+						
+						//se comprueba cuantos trabajadores hay en un minuto concreto
+						//se hacen franjas de 5 minutos
+						int contador=0;
+						for (int l=0;l<cuadrante.getListaTrabajaDia(i).size();l++){
+							Trabaja trab=cuadrante.getListaTrabajaDia(i).get(l);
+							if(compruebaHora(t,trab.getFichIni(),trab.getFichFin())){
+								contador++;
+							}
+						}
+											
+						// si el contador es menor que el minimo para ese minuto, se crea una sugerencia nueva
+						// solo si no existia una anterior con las mismas caracteristas
+						// en caso contrario, se amplia en 5 minutos la franja de la sugerencia
+						if (contador<minimoDia){
+							if ((sugAnterior!=null)&&(minimoDia-contador!=sugAnterior.getFaltas()) && (sugAnterior.getTipo()!=tipoFalta(contador,minimoDia))){		
 								Sugerencia sug=new Sugerencia(minimoDia-contador,minimoDia,new Time(t.getHours(),t.getMinutes(),0),new Time(t.getHours(),t.getMinutes()+5,0),i,tipoFalta(contador,minimoDia));
 								sugerencias[i].add(sug);
-							} else 
-								sugAnterior.ampliar(0,5);
-						}
-					}										
-				}					
-			}						
+							} else {
+								if (sugAnterior==null) {
+									Sugerencia sug=new Sugerencia(minimoDia-contador,minimoDia,new Time(t.getHours(),t.getMinutes(),0),new Time(t.getHours(),t.getMinutes()+5,0),i,tipoFalta(contador,minimoDia));
+									sugerencias[i].add(sug);
+								} else 
+									sugAnterior.ampliar(0,5);
+							}
+						}										
+					}					
+				}	
+			}
 		}
 	}
 	
