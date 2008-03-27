@@ -44,7 +44,7 @@ public class I02_Principal {
 	private Combo cDepartamentos;
 	private I_Cuadrante ic; 
 	//apaño de última hora para ejecutar el algoritmo en un thread
-	private int tmAnio, tmMes;
+	private int tmAnio, tmMes, tmDia;
 	private String tmDep;
 
 	public I02_Principal(Shell shell, Display display, ResourceBundle bundle,
@@ -57,6 +57,31 @@ public class I02_Principal {
 		crearVentana(vista.getEmpleadoActual().getRango());
 	}
 	
+	public class CuadranteLoader extends Thread {
+		public synchronized void run() {
+			try {
+				while (!vista.isCacheCargada()) {
+					sleep(5000);
+				}
+			} catch (Exception e) {}
+			if (!display.isDisposed()) {
+				display.asyncExec(new Runnable() {
+					public void run() {
+						for (int i=0; i<vista.getEmpleadoActual().getDepartamentosId().size(); i++) {
+							cDepartamentos.add(vista.getDepartamento(vista.getEmpleadoActual().getDepartamentosId().get(i)).getNombreDepartamento());
+						}
+						cDepartamentos.setEnabled(true);
+						cDepartamentos.select(0);
+						tmDep = cDepartamentos.getText();
+						ic.setDepartamento(tmDep);
+					}
+				});
+				ic.setDia(tmDia, tmMes, tmAnio);
+			}
+			
+		}
+	}
+	
 	/**
 	 * Este hilo ejecuta el algoritmo en segundo plano
 	 * @author Daniel D
@@ -67,10 +92,10 @@ public class I02_Principal {
 			vista.infoDebug("I02_Principal", "Llamando al algoritmo para la fecha " + tmMes + " de " + tmAnio + ", dep. " + tmDep);
 			algoritmo.TurnoMatic t = new algoritmo.TurnoMatic(tmMes, tmAnio, vista, tmDep);
 			final ResultadoTurnoMatic resultado = t.ejecutaAlgoritmo();
-			vista.eliminaCuadranteCache(tmMes, tmAnio, tmDep);
-			vista.insertCuadranteCache(resultado.getCuadrante());
 			// quitar cuadrante de la fecha del calendario de la cache
 			// añadir t.getcuadrante a cache
+			vista.eliminaCuadranteCache(tmMes, tmAnio, tmDep);
+			vista.insertCuadranteCache(resultado.getCuadrante());
 			display.asyncExec(new Runnable() {
 				public void run() {
 					MessageBox messageBoxResumen = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK );
@@ -79,22 +104,20 @@ public class I02_Principal {
 					for (int i=0; i<resultado.getResumen().getInforme().size(); i++) {
 						s+= resultado.getResumen().getInforme().get(i) +"\n";
 					}
-					//TODO bundle
-					if (s.equals("")) s="Cuadrante generado.";
+					if (s.equals("")) s=bundle.getString("Alg_CuadranteGenerado");
 					messageBoxResumen.setMessage(s);
 					messageBoxResumen.open();
 					
 					vista.setProgreso("", 100);
 					vista.setCursorFlecha();
-					ic.setDia(calendario.getDay(), calendario.getMonth()+1,
-							calendario.getYear());
+					ic.setDia(calendario.getDay(), calendario.getMonth()+1,	calendario.getYear());
 					ic.cargarDeCache();
 					ic.redibujar();
 				}
 			});
-			
 		}
 	}
+	
 	private void crearBarraMenu() {
 		// Una barra de menús
 		Menu barra = new Menu(shell, SWT.BAR);
@@ -211,21 +234,17 @@ public class I02_Principal {
 		cDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1));
 		
-		// TODO hacer una vez esté la caché cargada
-		for (int i=0; i<vista.getEmpleadoActual().getDepartamentosId().size(); i++) {
-			cDepartamentos.add(vista.getDepartamento(vista.getEmpleadoActual().getDepartamentosId().get(i)).getNombreDepartamento());
-		}
-//		cDepartamentos.setItems(vista.getNombresDepartamentosJefe());
-		
-		cDepartamentos.select(0);
+		cDepartamentos.setEnabled(false);
 		tmDep = cDepartamentos.getText();
 
 		final Composite cCuadrante = new Composite(cCuadrantes, SWT.BORDER);
 		cCuadrante.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
 				3, 6));
 
-		//TODO
+		// TODO arreglar parámetros (cogerlos del departamento)
 		ic = new I_Cuadrante(vista, 0, 0, tmDep, 4, 9, 23);
+		Thread loader = new Thread(new CuadranteLoader());
+		loader.start();
 		cDepartamentos.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				ic.setDepartamento(cDepartamentos.getText());
@@ -238,17 +257,19 @@ public class I02_Principal {
 		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
 				false, 2, 1));
 
-		calendario = new DateTime(cCuadrantes, SWT.CALENDAR
-				| SWT.SHORT);
-		ic.setDia(calendario.getDay(), calendario.getMonth(), calendario.getYear());
+		calendario = new DateTime(cCuadrantes, SWT.CALENDAR | SWT.SHORT);
 		tmAnio = calendario.getYear();
 		tmMes = calendario.getMonth()+1;
+		tmDia = calendario.getDay();
+
+		ic.setDia(tmDia, tmMes, tmAnio);
 
 		
 		calendario.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				tmAnio = calendario.getYear();
 				tmMes = calendario.getMonth()+1;
+				tmDia = calendario.getDay();
 				vista.infoDebug("I02_Principal", "Fecha cambiada a "
 						+ String.valueOf(calendario.getDay())
 						+ " de "
@@ -256,7 +277,6 @@ public class I02_Principal {
 								.getMonth()) + " de "
 						+ String.valueOf(calendario.getYear()));
 				vista.setCursorEspera();
-				//TODO poner bundle al string
 				vista.setProgreso(bundle.getString("I02_lab_CargandoCuads"), 50);
 				ic.setDia(calendario.getDay(), calendario.getMonth()+1,
 						calendario.getYear());
@@ -268,10 +288,6 @@ public class I02_Principal {
 				2, 1));
 		fechaSeleccionada = new Date(calendario.getYear(), calendario
 				.getMonth(), calendario.getDay());
-		// ic.setDia(calendario.getDay(), calendario.getMonth(),
-		// calendario.getYear());
-		//		
-		// Img = cuadrante.dameImageImprimible();
 		final Button bPorMes = new Button(cCuadrantes, SWT.RADIO);
 		bPorMes.setText(bundle.getString("I02_but_Verpormes"));
 		bPorMes.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));
@@ -317,6 +333,8 @@ public class I02_Principal {
 							+ calendario.getYear() + " " +
 							bundle.getString("I02_dlg_CrearCuadrante2"));
 					if (messageBox.open()==SWT.YES) {
+						// Borrar tabla trabaja para esa fecha y ese departamento
+						vista.eliminaMesTrabaja(tmMes, tmAnio, tmDep);
 						vista.setProgreso(bundle.getString("I02_lab_GenerandoCuads"), 0);
 						vista.setCursorEspera();
 						algRunner = new AlgoritmoRun();
@@ -1549,10 +1567,10 @@ public class I02_Principal {
 		case 2:
 			// Tabs de jefe
 			crearTabJefeCuadrantes(tabFolder);
-			crearTabMensajes(tabFolder);
-			crearTabJefeEmpleados(tabFolder);
-			crearTabJefeDepartamentos(tabFolder);
-			crearTabJefeContratos(tabFolder);
+//			crearTabMensajes(tabFolder);
+//			crearTabJefeEmpleados(tabFolder);
+//			crearTabJefeDepartamentos(tabFolder);
+//			crearTabJefeContratos(tabFolder);
 			break;
 		case 3:
 			// Tabs de gerente
