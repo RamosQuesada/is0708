@@ -1596,10 +1596,10 @@ public class I02_Principal {
 		case 2:
 			// Tabs de jefe
 			crearTabJefeCuadrantes(tabFolder);
-//			crearTabMensajes(tabFolder);
-//			crearTabJefeEmpleados(tabFolder);
-//			crearTabJefeDepartamentos(tabFolder);
-//			crearTabJefeContratos(tabFolder);
+			crearTabMensajes(tabFolder);
+			crearTabJefeEmpleados(tabFolder);
+			crearTabJefeDepartamentos(tabFolder);
+			crearTabJefeContratos(tabFolder);
 			break;
 		case 3:
 			// Tabs de gerente
