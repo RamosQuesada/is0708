@@ -428,4 +428,26 @@ public class Util {
 		gc.setBackground(new Color(display,r, g, b));
 	}
 	
+	/**check if the String text is integer*/
+	public static boolean integerCheck(String string){
+	    try {
+	    	int n = Integer.parseInt( string );
+	    	return true;
+	    } catch (Exception e) {
+	    	System.out.println("Non-integer value");
+	        return false;
+	    }
+	}
+	
+	/**check if the String text is double*/
+	public static boolean doubleCheck(String string){
+	    try {
+	    	double n = Double.parseDouble(string);
+	    	return true;
+	    } catch (Exception e) {
+	    	System.out.println("Non-double value");
+	        return false;
+	    }
+	}
+	
 }
