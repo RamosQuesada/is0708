@@ -450,4 +450,30 @@ public class Util {
 	    }
 	}
 	
+	public static String horaAString(int hora){
+	 
+		if(hora<0 || hora>23){
+			return null;
+		}
+		String Shora = Integer.toString(hora);
+		if (hora-10<0){
+			return "0"+Shora+":00";
+		}
+		return Shora+":00";
+	}
+	
+	public static String intADiaSemana(int diasemana){
+		
+		if(diasemana==0) return "Domingo";
+		if(diasemana==1) return "Lunes";
+		if(diasemana==2) return "Martes";
+		if(diasemana==3) return "Miercoles";
+		if(diasemana==4) return "Jueves";
+		if(diasemana==5) return "Viernes";
+		if(diasemana==6) return "Sabado";
+
+		return null;
+	}
+	
+	
 }

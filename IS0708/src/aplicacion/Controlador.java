@@ -1848,5 +1848,29 @@ public class Controlador {
 	
 }
 	
+public ArrayList<Integer[]> getInfoDistribucionDpto(String dpto, int diaSemana) {
+		ArrayList<Integer[]> info = new ArrayList<Integer[]>();
+		try {
+			ResultSet rs = _db.obtenDistribucion(dpto, diaSemana);
+			while (rs.next()) {
+				int hora = rs.getInt("Hora");
+				int nummin= rs.getInt("NumMin");
+				int nummax = rs.getInt("NumMax");
+				Integer[] vector=new Integer[3];
+				vector[0]=hora;
+				vector[1]=nummin;
+				vector[2]=nummax;
+				info.add(vector);
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.err
+					.println("Error al obtener Distribucion en la base de datos");
+		}
+		return info;
+	
+}	
+	
 	
 }
