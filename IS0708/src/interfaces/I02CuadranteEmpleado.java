@@ -185,18 +185,29 @@ public class I02CuadranteEmpleado {
 		// Dibujar n�meros de los d�as
 		if (anchoDia>14)
 			for (int j=0; j < ultimoDia; j++) {
-				gc.drawText(String.valueOf(j+1), margenIzq + margenNombres + j*anchoDia + anchoDia/2, margenSup);
+		//		gc.drawText(String.valueOf(j+1), margenIzq + margenNombres + j*anchoDia + anchoDia/2, margenSup);
 			}
 
 		gc.drawText(empleado.getNombre(), margenIzq, margenSup + 20 + 0*altoFila);
 		for (int j=0; j < ultimoDia; j++) {
-			gc.drawRectangle(margenIzq + margenNombres + j*anchoDia, margenSup + 20 + 0*altoFila, anchoDia, altoFila);
+		//	gc.drawRectangle(margenIzq + margenNombres + j*anchoDia, margenSup + 20 + 0*altoFila, anchoDia, altoFila);
 		}
 
 		// Esto es para un calendario normal
 		int altoMes = alto - margenSup - margenInf;
 		int numSemanas = 5;
 		int altoDia = alto/numSemanas;
+		this.dibujarDiaMes(gc, 3, 1);
+		this.dibujarDiaMes(gc, 4, 1);
+		this.dibujarDiaMes(gc, 5, 1);
+		this.dibujarDiaMes(gc, 6, 1);
+		this.dibujarDiaMes(gc, 0, 1);
+		this.dibujarDiaMes(gc, 1, 1);
+		this.dibujarDiaMes(gc, 2, 1);
+		this.dibujarDiaMes(gc, 2, 2);
+		this.dibujarDiaMes(gc, 2, 3);
+		this.dibujarDiaMes(gc, 2, 4);
+		this.dibujarDiaMes(gc, 2, 5);
 		
 	}
 	/**
@@ -306,9 +317,7 @@ public class I02CuadranteEmpleado {
 		Font fuente=gc.getFont();
 		cambiarPincel(gc, 0, 0, 0);
 		gc.setFont(new Font(display,"Times",10,SWT.BOLD));
-		//gc.drawText(String.valueOf((int)horaComienzo),x_comienzo, (y_comienzo), true);
 		gc.drawText(texto,(ancho-margenIzq-margenDer)/2-55, (alto-margenInf-margenSup)/2,true);
-		//gc.drawText((String.valueOf((int)horaFinal)),x_comienzo , y_fin-textSize2.y, true);
 		gc.getFont().dispose();
 		gc.setFont(fuente);
         
@@ -530,6 +539,21 @@ public class I02CuadranteEmpleado {
 		return posicion_absoluta;
 	}
 	
+	public void dibujarDiaMes(GC gc,int dia,int semana){
+		int m = margenIzq + margenNombres;
+		m = margenIzq;
+		int h = horaFin - horaInicio;
+		h=7;
+		int sep=(ancho - m - margenDer)/h;
+		int sep2=(alto - margenInf - margenSup)/h;
+		gc.setLineStyle(SWT.LINE_DOT);
+		cambiarPincel(gc, 0,0,0);
+		gc.setLineWidth(2);
+		
+		gc.drawRectangle(this.margenIzq+dia*sep, h+semana*sep2, sep, sep2);
+	//	gc.drawLine(this.margenIzq, convertirHora(hora), this.margenIzq+7*sep,convertirHora(hora));
+		gc.setLineStyle(SWT.LINE_SOLID);
+	}
 	/**
 	 * Metodo que dibuja una linea horizontal a una hora dada
 	 * @param gc

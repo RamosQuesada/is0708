@@ -135,15 +135,11 @@ public class I02_cuadrEmpl extends Thread{
 		semanal = true;
 		lGridCuadrante.setVisible(true);
 		cGridCuadrante.setVisible(true);
-	//	canvas.removeMouseListener(mouseListenerCuadrMensual);
-	//	canvas.removeMouseMoveListener(mouseMoveListenerCuadrMensual);
 		redibujar();}
 	public void setMensual() {
 		semanal = false;
 		lGridCuadrante.setVisible(false);
 		cGridCuadrante.setVisible(false);
-	//	canvas.addMouseListener(mouseListenerCuadrMensual);
-	//	canvas.addMouseMoveListener(mouseMoveListenerCuadrMensual);
 		redibujar();
 	}
 	/**
@@ -168,9 +164,6 @@ public class I02_cuadrEmpl extends Thread{
 		
 		
 		lCuadranteTitulo= new Label (c, SWT.LEFT);
-		//String fname = lCuadranteTitulo.getFont().getFontData()[0].getName();
-		//lCuadranteTitulo.setFont(new Font(c.getDisplay(),fname,10,0));
-		//lCuadranteTitulo.setFont(new Font(display,"Verdana",this.ancho,SWT.BOLD));
 		// TODO Esto tendr� que cambiarse por la fecha elegida en el calendario
 		if(fecha!=null){
 			lCuadranteTitulo.setText("BIENVENIDO "+empleado.getNombre().toUpperCase()+"  :"+Util.dateAString(fecha));
