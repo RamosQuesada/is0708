@@ -68,7 +68,11 @@ public class I09_Tab_Contratos extends Thread {
 	}
 
 	// }
-
+	
+	/**
+	 * Añade a la tabla tablaContratos, cada uno de los contratos disponibles del departamento del usuario registrado
+	 * 
+	 */
 	private void mostrarContratos() {
 		if (vista.isCacheCargada() && datosInterfazCargados) {
 			// tablaContratos.removeAll();
@@ -99,8 +103,8 @@ public class I09_Tab_Contratos extends Thread {
 	/**
 	 * Constructor. Crea un tab con un listado de contratos
 	 * 
-	 * @param tabFolder
-	 *            el tabFolder donde colocarlo
+	 * @param tabFolder 
+	 * 			  el tabFolder donde colocarlo
 	 * @param vista
 	 *            la vista de la aplicación
 	 * @param bundle

@@ -58,7 +58,20 @@ public class I09_1_Creacion_contratos {
 	private int turnoInicial;
 
 	private final int longCicloDefault = 14;
-
+	
+	/**
+	 * Constructor. Crea una nueva ventana para la creación/modificacion de un nuevo contrato segun indique el falg modo
+	 * @param padre ventana desde la que se realiza la llamada
+	 * @param bundle herramienta de idiomas
+	 * @param vista vista de la aplicacion
+	 * @param modo indica la funcionalidad que se le dara a la ventana,
+	 * 	<i>0</i> para la creación de un nuevo contrato
+	 * 	<i>otro</i> para la modificación de un contrato selecionado anteriormente en la ventana padre. 
+	 * @param id identificador del contrato actual que mostrara en esta ventana
+	 * 	<i>-1</i> esta ventana no contendra ningún valor, ya que es para la creacion de un nuevo contrato
+	 * 	<i>otro</i> identifica el contrato que se mostrara en la ventana para modificar 
+	 * @param cm contrato para mostrar en la ventana en caso de que <b>id</b> sea distinto de <i>-1</i>
+	 */
 	public I09_1_Creacion_contratos(Shell padre, ResourceBundle bundle,
 			Vista vista, int modo, int id, Contrato cm) {
 		this.padre = padre;
@@ -877,23 +890,43 @@ public class I09_1_Creacion_contratos {
 				+ padre.getBounds().y - shell.getSize().y / 2);
 		shell.open();
 	}
-
+	
+	/**
+	 * Devuelve la lista de los identificadores de turnos insertados para configurar el contrato
+	 * @return <i>idsTurnosInsertados</i> que contiene la lista de los identificadores de los turnos. 
+	 */
 	public ArrayList<Integer> getTurnosInsertados() {
 		return idsTurnosInsertados;
 	}
-
+	
+	/**
+	 * Devuelve la lista de los identificadores de turnos eliminados del contrato
+	 * @return <i>idsTurnosEliminados</i> que contiene la lista de los identificadores de los turnos.
+	 */
 	public ArrayList<Integer> getTurnosEliminados() {
 		return idsTurnosEliminados;
 	}
-
+	
+	/**
+	 * Devuelve el contrato creado 
+	 * @return <i>contratoInsertado</i> el nuevo contrato creado
+	 */
 	public Contrato getContratoInsertado() {
 		return contratoInsertado;
 	}
-
+	
+	/**
+	 * Devuelve el contrato modificado
+	 * @return <i>contratoModificado</i> el contrato con las modificaciones correspondientes
+	 */
 	public Contrato getContratoModificado() {
 		return contratoModificado;
 	}
-
+	
+	/**
+	 * Devuelve la ventana 
+	 * @return <i>shell</i> la ventana
+	 */
 	public Shell getShell() {
 		return shell;
 	}
