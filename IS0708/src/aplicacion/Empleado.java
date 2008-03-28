@@ -952,6 +952,13 @@ public class Empleado implements Drawable {
 		difFechas = (fechaActual.getTime()+(dia*milsDia))-(fContrato.getTime());
 		diaCiclo = (int) (difFechas/(milsDia))+1;  		
 		
+		//NO BORRAR!!!! PROBAR PARA EMPLEADOS CUYO CONTRATO NO EMPIEZA UN LUNES
+		/*
+		//diaSemanaContrato es el día de la semana en que empezó el contrato 
+		int diaSemanaContrato = fContrato.getDay()-1;
+		if (diaSemanaContrato < 0) diaSemanaContrato=7;
+		diaCiclo = diaCiclo+diaSemanaContrato;*/
+		
 		//Obtencion del contrato del empleado.
 		//contrato = cont.getContrato(this.getContratoId());
 		encontrado = false;
