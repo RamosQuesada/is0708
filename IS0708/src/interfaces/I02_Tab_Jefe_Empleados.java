@@ -1,10 +1,13 @@
 package interfaces;
 
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -17,6 +20,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
@@ -26,6 +30,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
 import aplicacion.Vista;
+import aplicacion.Empleado;
 
 public class I02_Tab_Jefe_Empleados extends Thread{
 	
@@ -35,6 +40,13 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 	final Table tablaEmpleados;
 	final Image ico_chico, ico_chica, ico_mens;
 	private boolean datosInterfazCargados = false;
+	
+	//Variables globales para objetos de la vetana
+	Text tEmplDpto;
+	Text tEmplNVend;
+	Text tEmplNombre;
+	Combo cEmplContr;
+	
 	/**
 	 * Implementa un hilo que coge los empleados del departamento del servidor.
 	 */
@@ -75,20 +87,43 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 	private void mostrarEmpleados() {
 		if (_vista.isCacheCargada() && datosInterfazCargados) {
 			tablaEmpleados.removeAll();
-			for (int i = 0; i < _vista.getEmpleados().size(); i++) {
+			ArrayList<Empleado> listaFiltrada = new ArrayList();
+			if (tEmplNombre.getText() != "") {
+				for (int i = 0; i < _vista.getEmpleados().size(); i++) {
+					if (_vista.getEmpleados().get(i).getNombre().toLowerCase().startsWith(tEmplNombre.getText().toLowerCase()))
+						listaFiltrada.add(_vista.getEmpleados().get(i));				
+				}
+			} else if (tEmplNVend.getText() != "") { 
+				for (int i = 0; i < _vista.getEmpleados().size(); i++) {
+					int nvend = _vista.getEmpleados().get(i).getEmplId(); 
+					if (Integer.toString(nvend).toLowerCase().startsWith(tEmplNVend.getText().toLowerCase()))
+						listaFiltrada.add(_vista.getEmpleados().get(i));				
+				}
+			} else if (tEmplDpto.getText() != "") { 
+				for (int i = 0; i < _vista.getEmpleados().size(); i++) {					 
+					if (_vista.getEmpleados().get(i).getDepartamentoId().toLowerCase().startsWith(tEmplDpto.getText().toLowerCase()))
+						listaFiltrada.add(_vista.getEmpleados().get(i));				
+				}
+			}
+			else {
+				listaFiltrada = _vista.getEmpleados();
+			}
+			
+			for (int i = 0; i < listaFiltrada.size(); i++) {
 				TableItem tItem = new TableItem(tablaEmpleados, SWT.NONE);
-				if (_vista.getEmpleados().get(i).getSexo()==0)
+				if (listaFiltrada.get(i).getSexo()==0)
 					tItem.setImage(ico_chica);
 				else 
 					tItem.setImage(ico_chico);
-				tItem.setText(1, String.valueOf(_vista.getEmpleados().get(i).getEmplId()));
-				tItem.setText(2, _vista.getEmpleados().get(i).getNombreCompleto());
-				tItem.setText(3, _vista.getEmpleados().get(i).getDepartamentoId());
-				aplicacion.Contrato c = _vista.getEmpleados().get(i).getContrato(_vista);
+				
+				tItem.setText(1, String.valueOf(listaFiltrada.get(i).getEmplId()));
+				tItem.setText(2, listaFiltrada.get(i).getNombreCompleto());
+				tItem.setText(3, listaFiltrada.get(i).getDepartamentoId());
+				aplicacion.Contrato c = listaFiltrada.get(i).getContrato(_vista);
 				if (c!=null) tItem.setText(4, c.getNombreContrato());
 				else         tItem.setText(4, "Error");
 				tItem.setText(5, "911234567");
-				tItem.setImage(6, ico_mens);
+				tItem.setImage(6, ico_mens);				
 			}
 		}
 		// table.setSize (table.computeSize (SWT.DEFAULT, 200));
@@ -134,7 +169,7 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 		lEmplNombre.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false,
 				false, 1, 1));
 
-		Text tEmplNombre = new Text(cEmplIzq, SWT.BORDER);
+		tEmplNombre = new Text(cEmplIzq, SWT.BORDER);
 		tEmplNombre.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
 				1, 1));
 
@@ -143,7 +178,7 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 		lEmplNVend.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false,
 				1, 1));
 
-		Text tEmplNVend = new Text(cEmplIzq, SWT.BORDER);
+		tEmplNVend = new Text(cEmplIzq, SWT.BORDER);
 		tEmplNVend.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
 				1, 1));
 
@@ -152,7 +187,7 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 		lEmplDpto.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false,
 				1, 1));
 
-		Text tEmplDpto = new Text(cEmplIzq, SWT.BORDER);
+		tEmplDpto = new Text(cEmplIzq, SWT.BORDER);
 		tEmplDpto.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
 				1, 1));
 
@@ -161,7 +196,7 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 		lEmplContr.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false,
 				1, 1));
 
-		Combo cEmplContr = new Combo(cEmplIzq, SWT.BORDER);
+		cEmplContr = new Combo(cEmplIzq, SWT.BORDER);
 		cEmplContr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
 				1, 1));
 
@@ -236,9 +271,17 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 		bEmplEditar.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent e){
 				final int idVend;
-				TableItem[] aux=tablaEmpleados.getSelection();
-				idVend = (Integer)Integer.valueOf(aux[0].getText(1));
-				new I08_1_Editar_empleado(_tabFolder.getShell(),_bundle, _vista,idVend);
+				int aux1=tablaEmpleados.getSelectionIndex();
+				if (aux1<0){
+					MessageBox messageBox = new MessageBox (_tabFolder.getShell(), SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
+					messageBox.setText ("Error");
+					messageBox.setMessage ("Para editar debe seleccionar previamente un empleado de la tabla");					
+					e.doit = messageBox.open () == SWT.YES;
+				}else{
+					TableItem[] aux=tablaEmpleados.getSelection();
+					idVend = (Integer)Integer.valueOf(aux[0].getText(1));
+					new I08_1_Editar_empleado(_tabFolder.getShell(),_bundle, _vista,idVend);
+				}
 			}
 		});
 		
@@ -255,5 +298,33 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 				_vista.eliminaEmpleado(idVend);
 			}
 		});
+						
+		
+		tEmplNombre.addKeyListener(new KeyListener(){			 
+
+			public void keyPressed(KeyEvent arg0) {				
+				
+			}
+
+			public void keyReleased(KeyEvent arg0) {
+				nombreEscrito(arg0);
+			}
+		});
+		
+		tEmplNVend.addKeyListener(new KeyListener(){			 
+
+			public void keyPressed(KeyEvent arg0) {				
+				
+			}
+
+			public void keyReleased(KeyEvent arg0) {
+				nombreEscrito(arg0);
+			}
+		});
+	
+	}
+	
+	public void nombreEscrito(KeyEvent e) {
+		mostrarEmpleados();
 	}
 }
