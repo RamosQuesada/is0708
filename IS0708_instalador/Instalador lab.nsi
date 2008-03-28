@@ -28,6 +28,8 @@ SetCompressor lzma
 !define MUI_FINISHPAGE_SHOWREADME $INSTDIR\Ayuda\ES\index.html
 !define MUI_FINISHPAGE_23
 !define MUI_UNFINISHPAGE_NOAUTOCLOSE
+!define MUI_FINISHPAGE_RUN "c:\jdk1.6.0_02\bin\javaw.exe"
+!define MUI_FINISHPAGE_RUN_PARAMETERS "-jar c:\hlocal\Turno-matic\Turno-matic.jar"
 
 # Included files
 !include Sections.nsh
@@ -40,7 +42,7 @@ ReserveFile "${NSISDIR}\Plugins\AdvSplash.dll"
 # Installer pages
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_LICENSE Licencia.txt
-!insertmacro MUI_PAGE_DIRECTORY
+#!insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
 
@@ -72,7 +74,6 @@ Section -Main SEC0000
     File ..\IS0708\Turno-matic.jar
     File .\Tema\Icono.ico
     SetOutPath $INSTDIR
-    #TODO verificar version en labs
     CreateShortCut "$INSTDIR\Turno-matic.lnk" "c:\jdk1.6.0_02\bin\javaw.exe" "-jar $\"$INSTDIR\Turno-matic.jar$\"" "$INSTDIR\Icono.ico"
     
     #Ayuda

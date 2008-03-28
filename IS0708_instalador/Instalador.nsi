@@ -118,6 +118,8 @@ Section -jar SEC0001
     WriteRegStr HKLM "${REGKEY}\Components" jar 1
     SetOutPath $INSTDIR
     CreateShortCut "$INSTDIR\Turno-matic.lnk" "$ACCESO_DIRECTO" "$ATRIBUTOS" "$INSTDIR\Icono.ico"
+    !define MUI_FINISHPAGE_RUN "$ACCESO_DIRECTO"
+    !define MUI_FINISHPAGE_RUN_PARAMETERS "$ATRIBUTOS"
 SectionEnd
 
 Section -Ayuda SEC0002
