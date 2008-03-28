@@ -249,16 +249,16 @@ public class I09_1_Creacion_contratos {
 	 * @author Jose Maria Martin
 	 * 
 	 */
-	private class ElegirTurno {
+	private class ElegirTurno extends Thread{
 		private Shell padre = null;
 
 		private Shell shell = null;
 		
 		private Turno turnoElegido=null;
 		
-		//private boolean datosInterfazCargados = false;
+		private boolean datosInterfazCargados = false;
 		
-		//private List listaTurnos;
+		private List listaTurnos;
 		
 		public Turno getTurnoElegido(){
 			return turnoElegido;
@@ -267,45 +267,45 @@ public class I09_1_Creacion_contratos {
 		/**
 		 * Implementa un hilo que coge los empleados del departamento del servidor.
 		 */
-//		public void run() {
-//			// boolean run = true;
-//			try {
-//				while (!vista.isCacheCargada()) {
-//					sleep(5000);
-//				}
-//			} catch (Exception e) {
-//			}			
-//			datosInterfazCargados = true;
-//			// while (run) {
-//
-//			if (listaTurnos.isDisposed()) {
-//			} // run = false;
-//			else {
-//				if (!listaTurnos.isDisposed()) {
-//					// Actualizar tabla
-//					if (!listaTurnos.isDisposed()) {
-//						listaTurnos.getDisplay().asyncExec(new Runnable() {
-//							public void run() {
-//								mostrarTurnos();
-//							}
-//						});
-//					}
-//				}
-//				try {
-//					// TODO Espera 10 segundos (¿cómo lo dejamos?)
-//					sleep(10000);
-//				} catch (Exception e) {
-//				}
-//			}
-//		}
+		public void run() {
+			// boolean run = true;
+			try {
+				while (!vista.isCacheCargada()) {
+					sleep(5000);
+				}
+			} catch (Exception e) {
+			}			
+			datosInterfazCargados = true;
+			// while (run) {
+
+			if (listaTurnos.isDisposed()) {
+			} // run = false;
+			else {
+				if (!listaTurnos.isDisposed()) {
+					// Actualizar tabla
+					if (!listaTurnos.isDisposed()) {
+						listaTurnos.getDisplay().asyncExec(new Runnable() {
+							public void run() {
+								mostrarTurnos();
+							}
+						});
+					}
+				}
+				try {
+					// TODO Espera 10 segundos (¿cómo lo dejamos?)
+					sleep(10000);
+				} catch (Exception e) {
+				}
+			}
+		}
 		
-//		private void mostrarTurnos() {
-//			if (vista.isCacheCargada() && datosInterfazCargados) {
-//				// listaTurnos.removeAll();
-//				for (int i = 0; i < vista.getTurnos().size(); i++)
-//					listaTurnos.add(vista.getTurnos().get(i).getIdTurno() + " " + vista.getTurnos().get(i).getDescripcion());
-//			}
-//		}
+		private void mostrarTurnos() {
+			if (vista.isCacheCargada() && datosInterfazCargados) {
+				// listaTurnos.removeAll();
+				for (int i = 0; i < vista.getTurnos().size(); i++)
+					listaTurnos.add(vista.getTurnos().get(i).getIdTurno() + " " + vista.getTurnos().get(i).getDescripcion());
+			}
+		}
 
 		public ElegirTurno(final Shell padre) {
 			this.padre = padre;
@@ -328,16 +328,17 @@ public class I09_1_Creacion_contratos {
 			lElegir.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
 					1, 1));
 			lElegir.setText(bundle.getString("I09_lab_elegir"));
-			final List list = new List(shell, SWT.BORDER | SWT.V_SCROLL);
-			list.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2,
+			//final List list = new List(shell, SWT.BORDER | SWT.V_SCROLL);
+			listaTurnos=new List(shell, SWT.BORDER | SWT.V_SCROLL);
+			listaTurnos.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2,
 					4));
-			//start()
+			start();
 			//CAMBIAR esto por el array de turnos de la vista directamente????
 			//pensar si hacer que herede d thread
-			final ArrayList<Turno> turnos = vista.getTurnos();
-			for (int i = 0; i < turnos.size(); i++)
-				list.add(turnos.get(i).getIdTurno() + " "
-						+ turnos.get(i).getDescripcion());
+			//final ArrayList<Turno> turnos = vista.getTurnos();
+			/*for (int i = 0; i < turnos.size(); i++)
+				listaTurnos.add(turnos.get(i).getIdTurno() + " "
+						+ turnos.get(i).getDescripcion());*/
 			final Composite grupo1 = new Composite(shell, SWT.NONE);
 			grupo1.setLayout(new GridLayout(2, false));
 			grupo1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
@@ -360,10 +361,11 @@ public class I09_1_Creacion_contratos {
 			// Listener para el bot�n bAceptar
 			SelectionAdapter sabAceptar = new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
-					if (list.getSelectionIndex() > -1) {
+					if (listaTurnos.getSelectionIndex() > -1) {
 						//AQUI PILLAR el turno seleccionado del array turnos para añadirlo
 						//E INSERTARLO EN TURNOS insertados
-						turnoElegido=turnos.get(list.getSelectionIndex());						
+						turnoElegido=vista.getTurnos().get(listaTurnos.getSelectionIndex());
+						System.out.println(turnoElegido.getIdTurno());
 												
 					} else {
 						MessageBox messageBox = new MessageBox(shell,
@@ -471,7 +473,7 @@ public class I09_1_Creacion_contratos {
 
 		if (turnos.isEmpty())
 			bTurnoInicial.setEnabled(false);
-		bElegirTurno.setEnabled(false);
+		//bElegirTurno.setEnabled(false);
 
 		// Grupo 3 - Ciclo
 		grupo3.setLayout(new GridLayout(4, false));
@@ -707,13 +709,15 @@ public class I09_1_Creacion_contratos {
 			public void widgetSelected(SelectionEvent e) {
 				ElegirTurno iet=new ElegirTurno(shell);
 				Turno tElegido=iet.getTurnoElegido();
-				idsTurnosInsertados.add(tElegido.getIdTurno());
-				listaTurnosContrato.removeAll();
-				turnos.add(tElegido);
-				for (int i = 0; i < turnos.size(); i++)
-					listaTurnosContrato.add(turnos.get(i).getIdTurno()
+				if (tElegido!=null){
+					idsTurnosInsertados.add(tElegido.getIdTurno());
+					listaTurnosContrato.removeAll();
+					turnos.add(tElegido);
+					for (int i = 0; i < turnos.size(); i++)
+						listaTurnosContrato.add(turnos.get(i).getIdTurno()
 							+ " " + turnos.get(i).getDescripcion());
-				listaTurnosContrato.redraw();
+					listaTurnosContrato.redraw();
+				}
 			}
 		};
 		bElegirTurno.addSelectionListener(sabElegirTurno);
