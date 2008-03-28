@@ -4,7 +4,7 @@ SetCompressor lzma
 
 # Defines
 !define REGKEY "SOFTWARE\$(^Name)"
-!define VERSION 0.10.9.9
+!define VERSION 0.11.4.7
 !define COMPANY "Turno-matic"
 !define URL "http://is0708.googlecode.com"
 
@@ -29,7 +29,7 @@ SetCompressor lzma
 !define MUI_FINISHPAGE_23
 !define MUI_UNFINISHPAGE_NOAUTOCLOSE
 !define MUI_FINISHPAGE_RUN "c:\jdk1.6.0_02\bin\javaw.exe"
-!define MUI_FINISHPAGE_RUN_PARAMETERS "-jar c:\hlocal\Turno-matic\Turno-matic.jar"
+!define MUI_FINISHPAGE_RUN_PARAMETERS "-jar $INSTDIR\Turno-matic.jar"
 
 # Included files
 !include Sections.nsh
@@ -42,7 +42,7 @@ ReserveFile "${NSISDIR}\Plugins\AdvSplash.dll"
 # Installer pages
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_LICENSE Licencia.txt
-#!insertmacro MUI_PAGE_DIRECTORY
+!insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
 

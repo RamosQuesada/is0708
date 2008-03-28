@@ -4,7 +4,7 @@ SetCompressor lzma
 
 # Defines
 !define REGKEY "SOFTWARE\$(^Name)"
-!define VERSION 0.10.9.9
+!define VERSION 0.11.4.7
 !define COMPANY "Turno-matic"
 !define URL "http://is0708.googlecode.com"
 
@@ -35,6 +35,8 @@ SetCompressor lzma
 !define MUI_STARTMENUPAGE
 !define MUI_FINISHPAGE_SHOWREADME $INSTDIR\Ayuda\ES\index.html
 !define MUI_FINISHPAGE_23
+!define MUI_FINISHPAGE_RUN "$ACCESO_DIRECTO"
+!define MUI_FINISHPAGE_RUN_PARAMETERS "$ATRIBUTOS"
 !define MUI_UNFINISHPAGE_NOAUTOCLOSE
 
 # Included files
@@ -118,8 +120,6 @@ Section -jar SEC0001
     WriteRegStr HKLM "${REGKEY}\Components" jar 1
     SetOutPath $INSTDIR
     CreateShortCut "$INSTDIR\Turno-matic.lnk" "$ACCESO_DIRECTO" "$ATRIBUTOS" "$INSTDIR\Icono.ico"
-    !define MUI_FINISHPAGE_RUN "$ACCESO_DIRECTO"
-    !define MUI_FINISHPAGE_RUN_PARAMETERS "$ATRIBUTOS"
 SectionEnd
 
 Section -Ayuda SEC0002
