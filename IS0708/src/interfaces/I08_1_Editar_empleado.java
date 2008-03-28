@@ -265,11 +265,12 @@ public class I08_1_Editar_empleado {
 				}
 				fechaNacimiento = i17.getFecha();
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
-				if(fechaNacimiento!=null)
+				if(fechaNacimiento!=null){
 					tFNacimiento.setText(String.valueOf(fechaNacimiento.getDate()) + " de " + meses[fechaNacimiento.getMonth()]+ " de " + String.valueOf(fechaNacimiento.getYear()));
-				else{
-					tFNacimiento.setText(String.valueOf(emp.getFechaNac().getDate()) + " de " + meses[emp.getFechaNac().getMonth()]+ " de " + String.valueOf(emp.getFechaNac().getYear()));
 					fechaNacimiento.setYear(fechaNacimiento.getYear()-1900);
+				}else{
+					tFNacimiento.setText(String.valueOf(emp.getFechaNac().getDate()) + " de " + meses[emp.getFechaNac().getMonth()]+ " de " + String.valueOf(emp.getFechaNac().getYear()));
+
 				}
 			}
 		};
@@ -286,11 +287,12 @@ public class I08_1_Editar_empleado {
 				}
 				fechaContrato = i17.getFecha(); 
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
-				if(fechaContrato!=null)
+				if(fechaContrato!=null){
 					tFContrato.setText(String.valueOf(fechaContrato.getDate()) + " de " + meses[fechaContrato.getMonth()]+ " de " + String.valueOf(fechaContrato.getYear()));
-				else{
-					tFContrato.setText(String.valueOf(emp.getFcontrato().getDate()) + " de " + meses[emp.getFcontrato().getMonth()]+ " de " + String.valueOf(emp.getFcontrato().getYear()));
 					fechaContrato.setYear(fechaContrato.getYear()-1900);
+				}else{
+					tFContrato.setText(String.valueOf(emp.getFcontrato().getDate()) + " de " + meses[emp.getFcontrato().getMonth()]+ " de " + String.valueOf(emp.getFcontrato().getYear()));
+				
 				}
 				}
 		};
@@ -307,11 +309,15 @@ public class I08_1_Editar_empleado {
 				}
 				fechaAlta = i17.getFecha(); 
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
-				if(fechaAlta!=null)
+				if(fechaAlta!=null){
 					tFAlta.setText(String.valueOf(fechaAlta.getDate()) + " de " + meses[fechaAlta.getMonth()]+ " de " + String.valueOf(fechaAlta.getYear()));
-				else{
-					tFAlta.setText(String.valueOf(emp.getFAlta().getDate()) + " de " + meses[emp.getFAlta().getMonth()]+ " de " + String.valueOf(emp.getFAlta().getYear()));
+					String tFAlta =String.valueOf(fechaAlta.getDate()) + "-" + fechaAlta.getMonth()+ "-" + String.valueOf(fechaAlta.getYear()-1900);
 					fechaAlta.setYear(fechaAlta.getYear()-1900);
+					int aux=1;
+				}else{
+					tFAlta.setText(String.valueOf(emp.getFAlta().getDate()) + " de " + meses[emp.getFAlta().getMonth()]+ " de " + String.valueOf(emp.getFAlta().getYear()));
+					
+					 
 				}
 			}
 		};
@@ -434,33 +440,20 @@ public class I08_1_Editar_empleado {
 					String pass=tPassword.getText();
 					int sex=cSexo.getSelectionIndex();
 
+					
 					int Fel=emp.getFelicidad();
 					int idiom= cIdioma.getSelectionIndex();
 					int ran=emp.getRango();
 					int turn= emp.getTurnoFavorito();
 					
-					try {
-					java.sql.Date Fnac=fechaNacimiento;	
-					java.sql.Date FContr=fechaContrato;
-					java.sql.Date Falta=fechaAlta;
-					//java.util.Date Fnac=Util.stringADate(tFNacimiento.getText());
-					//java.util.Date FContr=Util.stringADate(tFContrato.getText());
-					//java.util.Date Falta= Util.stringADate(tFAlta.getText());
 					int id =idVend;
 
 
 					
 					
-						vista.getControlador().cambiarEmpleado(id, nom, ap1, ap2, Fnac, sex,  mail, pass, 
-								Exp, FContr,Falta, Fel, idiom, ran, turn, indice);
-					} catch (NumberFormatException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-
+						vista.getControlador().cambiarEmpleado(id, nom, ap1, ap2, fechaNacimiento, sex,  mail, pass, 
+								Exp, fechaContrato,fechaAlta, Fel, idiom, ran, turn, indice);
+					
 					shell.dispose(); 
 				}
 			
