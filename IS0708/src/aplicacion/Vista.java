@@ -977,6 +977,7 @@ public class Vista {
 	 */
 	public ArrayList<String> getNombreTodosJefes() {
 		return this.controlador.getNombreTodosJefes();
+	
 	}
 
 
@@ -1043,4 +1044,29 @@ public class Vista {
 	   			String infoempleados=this.controlador.getInfoEmpleadosDepartamento(dpto);
 	   			return infojefe + "/n" + infoempleados;
 			}
+   
+   
+   public void infoDistribucionDpto(String dpto, int diaSemana) {
+			ArrayList<Integer[]> a = new ArrayList<Integer[]>();
+			a=this.controlador.getInfoDistribucionDpto(dpto, diaSemana);
+			for(int i=0; i<a.size();i++){
+				Integer[] vector=a.get(i);
+				int hora=vector[0];
+				int nummin=vector[1];
+				int nummax=vector[2];
+				String Shora=aplicacion.Util.horaAString(hora);
+				String SdiaSemana = aplicacion.Util.intADiaSemana(diaSemana);
+				System.out.print("Distribucion para el " + SdiaSemana);
+				System.out.println();
+				System.out.println();
+				System.out.println(Shora+" : "+nummin+" (numero minimo de empleados) / "
+						+ nummax+" (numero maximo de empleados)");
+			}
+   
+   }
+
+ 
+   
+   
+   
 }

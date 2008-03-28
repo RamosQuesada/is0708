@@ -1936,4 +1936,6 @@ SELECT * from TURNOS WHERE IdTurno IN (
 	}	
 	
 
+		
+
 }
