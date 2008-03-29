@@ -908,7 +908,7 @@ public class I09_1_Creacion_contratos {
 	}
 	
 	/**
-	 * Devuelve el contrato creado 
+	 * Devuelve el contrato creado
 	 * @return <i>contratoInsertado</i> el nuevo contrato creado
 	 */
 	public Contrato getContratoInsertado() {

@@ -102,7 +102,7 @@ public class I09_Tab_Contratos extends Thread {
 
 	/**
 	 * Constructor. Crea un tab con un listado de contratos
-	 * 
+	 *  
 	 * @param tabFolder 
 	 * 			  el tabFolder donde colocarlo
 	 * @param vista
