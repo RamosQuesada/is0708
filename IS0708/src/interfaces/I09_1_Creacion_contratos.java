@@ -54,6 +54,8 @@ public class I09_1_Creacion_contratos {
 	private ArrayList<Integer> idsTurnosInsertados;
 
 	private ArrayList<Integer> idsTurnosEliminados;
+	
+	private ArrayList<Integer> idsTurnosAñadidos;
 
 	private int turnoInicial;
 
@@ -95,6 +97,7 @@ public class I09_1_Creacion_contratos {
 			turnos = new ArrayList<Turno>();
 		idsTurnosInsertados = new ArrayList<Integer>();
 		idsTurnosEliminados = new ArrayList<Integer>();
+		idsTurnosAñadidos = new ArrayList<Integer>();
 		// contratos=vista.getControlador().getListaContratosDpto("DatosFijos");
 		crearVentana();
 
@@ -278,7 +281,7 @@ public class I09_1_Creacion_contratos {
 		}
 		
 		/**
-		 * Implementa un hilo que coge los empleados del departamento del servidor.
+		 * Implementa un hilo que coge los turnos de la vista.
 		 */
 		public void run() {
 			// boolean run = true;
@@ -375,11 +378,9 @@ public class I09_1_Creacion_contratos {
 			SelectionAdapter sabAceptar = new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
 					if (listaTurnos.getSelectionIndex() > -1) {
-						//AQUI PILLAR el turno seleccionado del array turnos para añadirlo
-						//E INSERTARLO EN TURNOS insertados
 						turnoElegido=vista.getTurnos().get(listaTurnos.getSelectionIndex());
 						System.out.println(turnoElegido.getIdTurno());
-												
+						shell.dispose();
 					} else {
 						MessageBox messageBox = new MessageBox(shell,
 								SWT.APPLICATION_MODAL | SWT.ICON_INFORMATION
@@ -400,6 +401,10 @@ public class I09_1_Creacion_contratos {
 					this.padre.getBounds().height / 2
 							+ this.padre.getBounds().y - shell.getSize().y / 2);
 			shell.open();
+		}
+
+		public Shell getShell() {
+			return shell;
 		}
 	}
 
@@ -721,9 +726,14 @@ public class I09_1_Creacion_contratos {
 		SelectionAdapter sabElegirTurno = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				ElegirTurno iet=new ElegirTurno(shell);
+				while (!iet.getShell().isDisposed()) {
+					if (!shell.getDisplay().readAndDispatch()) {
+						shell.getDisplay().sleep();
+					}
+				}
 				Turno tElegido=iet.getTurnoElegido();
 				if (tElegido!=null){
-					idsTurnosInsertados.add(tElegido.getIdTurno());
+					idsTurnosAñadidos.add(tElegido.getIdTurno());
 					listaTurnosContrato.removeAll();
 					turnos.add(tElegido);
 					for (int i = 0; i < turnos.size(); i++)
@@ -731,6 +741,8 @@ public class I09_1_Creacion_contratos {
 							+ " " + turnos.get(i).getDescripcion());
 					listaTurnosContrato.redraw();
 				}
+				if (!bTurnoInicial.isEnabled())
+					bTurnoInicial.setEnabled(true);
 			}
 		};
 		bElegirTurno.addSelectionListener(sabElegirTurno);
@@ -874,8 +886,9 @@ public class I09_1_Creacion_contratos {
 			public void widgetSelected(SelectionEvent e) {
 				turnos.clear();
 				for (int i = 0; i < idsTurnosInsertados.size(); i++) {
-					vista.getControlador().eliminaTurno(
-							idsTurnosInsertados.get(i));
+//					vista.getControlador().eliminaTurno(
+//							idsTurnosInsertados.get(i));
+					vista.eliminaTurno(idsTurnosInsertados.get(i));
 				}
 				shell.dispose();
 			}
@@ -905,6 +918,14 @@ public class I09_1_Creacion_contratos {
 	 */
 	public ArrayList<Integer> getTurnosEliminados() {
 		return idsTurnosEliminados;
+	}
+	
+	/**
+	 * Devuelve la lista de los identificadores de turnos existentes añadidos al contrato
+	 * @return <i>idsTurnosAñadidos</i> que contiene la lista de los identificadores de los turnos.
+	 */
+	public ArrayList<Integer> getTurnosAñadidos() {
+		return idsTurnosAñadidos;
 	}
 	
 	/**
