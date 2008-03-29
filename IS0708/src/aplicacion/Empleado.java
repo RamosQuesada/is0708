@@ -117,7 +117,7 @@ public class Empleado implements Drawable {
 		if (superior==null && idSuperior!=0) {
 			v.getControlador().setProgreso("Cargando empleado", 50);
 			superior= v.getControlador().getEmpleado(idSuperior);
-			v.getControlador().setProgreso("",100);
+			v.getControlador().setProgreso("Cargando empleado",100);
 		}
 	}
 	
@@ -130,7 +130,7 @@ public class Empleado implements Drawable {
 		if (contrato==null && idContrato!=0) {
 			v.getControlador().setProgreso("Cargando contrato", 50);
 			contrato= v.getControlador().getContrato(idContrato);
-			v.getControlador().setProgreso("",100);
+			v.getControlador().setProgreso("Cargando contrato",100);
 		}
 	}
 	
