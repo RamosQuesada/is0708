@@ -393,19 +393,19 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				// Si estoy moviendo una franja
 					if (dameMovimiento() == 2) {
 						movimiento = turnoActivo.moverFranja(e.x, margenIzq, margenNombres, horaApertura, horaCierre, tamHora, tamSubdiv, numSubdivisiones);
-						bGuardar.setEnabled(true);
+						if (bGuardar!=null) bGuardar.setEnabled(true);
 						canvas.redraw();
 					}
 				// Si estoy cambiando el inicio de una franja
 				else if (dameMovimiento() == 1) {
 					movimiento = turnoActivo.moverLadoIzquierdo(e.x, margenIzq, margenNombres, horaApertura, tamHora, tamSubdiv, numSubdivisiones);
-					bGuardar.setEnabled(true);
+					if (bGuardar!=null) bGuardar.setEnabled(true);
 					canvas.redraw();
 				}
 				// Si estoy cambiando el fin de una franja
 				else if (dameMovimiento() == 3) {
 					movimiento = turnoActivo.moverLadoDerecho(e.x, margenIzq, margenNombres, horaApertura, horaCierre, tamHora, tamSubdiv, numSubdivisiones);
-					bGuardar.setEnabled(true);
+					if (bGuardar!=null) bGuardar.setEnabled(true);
 					canvas.redraw();
 				}
 				// Si no estoy moviendo ninguna franja,
@@ -466,7 +466,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				// (podría mostrar un menú si hace falta)
 				if (turnoActivo!=null && e.button == 3) {
 					turnoActivo.botonSecundario(e.x, margenIzq, margenNombres, horaApertura, tamHora, tamSubdiv, numSubdivisiones);
-					bGuardar.setEnabled(true);
+					if (bGuardar!=null) bGuardar.setEnabled(true);
 					canvas.redraw();
 				} else
 				if (turnoActivo!=null && e.button == 1) {
