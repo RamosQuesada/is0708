@@ -40,6 +40,21 @@ public class I09_1_1_Creacion_turnos {
 	private Turno turnoInsertado;
 	private Vista vista;
 	private Turno turnoModificado;
+	
+	/**
+	 * Constructor. crea una nueva ventana para la creacion de un nuevo turno
+	 * @param padre ventana desde la que se realiza la llamada
+	 * @param vista vista de la aplicacion
+	 * @param bundle herramienta de idiomas
+	 * @param modo indica la funcionalidad que se le dara a la ventana,
+	 * 	<i>0</i> para la creación de un nuevo turno
+	 * 	<i>otro</i> para la modificación de un turno selecionado anteriormente en la ventana padre.
+	 * @param idTurno identificador del turno actual que mostrara en esta ventana
+	 * 	<i>-1</i> esta ventana no contendra ningún valor, ya que es para la creacion de un nuevo turno
+	 * 	<i>otro</i> identifica el turno que se mostrara en la ventana para modificar 
+	 * @param idContrato idetificador del contrato al que pertenece dicho turno
+	 * @param tm turno para mostrar en la ventana en caso de que <b>modo</b> sea distinto de <i>0</i>
+	 */
 	public I09_1_1_Creacion_turnos(Shell padre, Vista vista, ResourceBundle bundle,int modo,int idTurno, int idContrato, Turno tm) {
 		this.padre = padre;
 		this.bundle = bundle;
@@ -52,9 +67,18 @@ public class I09_1_1_Creacion_turnos {
 		mostrarVentana();
 	}
 	
+	/**
+	 * Devuelve la ventana 
+	 * @return <i>shell</i> la ventana
+	 */
 	public Shell getShell(){
 		return shell;
 	}
+	
+	/**
+	 * Crea la estructura de la ventana y la rellena con los datos pertinentes
+	 *
+	 */
 	public void mostrarVentana() {		
 		if (modo==0)	shell.setText(bundle.getString("I09_lab_NuevoTurno"));
 		else shell.setText(bundle.getString("I09_lab_ModifTurno"));
@@ -207,10 +231,18 @@ public class I09_1_1_Creacion_turnos {
 		shell.open();
 	}
 	
+	/**
+	 * Devuelve el turno creado 
+	 * @return <i>turnoInsertado</i> el nuevo turno creado
+	 */
 	public Turno getTurnoInsertado(){
 		return turnoInsertado;
 	}
 	
+	/**
+	 * Devuelve el turno modificado
+	 * @return <i>turnoModificado</i> el turno con las modificaciones correspondientes
+	 */
 	public Turno getTurnoModificado(){
 		return turnoModificado;
 	}
