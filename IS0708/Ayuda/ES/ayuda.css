@@ -1,29 +1,26 @@
 
 body {
-background-color:#EEFFEE;
+	background-color:#EEFFEE;
+	font-family:Arial;
 }
 
 h1, h2, h3, h4, h5, h6 { 
- 
-  background-color:#CCFFCC;
-  color:#228822;
-  padding-left:1em;
-  padding-right:1em;
-  text-align:left;
-  clear:both;
- }
-
-ul, li, p {
-  font-family:arial;
+	background-color:#CCFFCC;
+	color:#228822;
+	padding-left:1em;
+	padding-right:1em;
+	text-align:left;
+	clear:both;
 }
 
-ul {
-  margin:10px
-}
+h1 {font-size:20px;}
+h2 {font-size:18px;}
+h3 {font-size:16px;}
 
-a, p { 
-  font-size:15px;
- }
+
+ul {margin:10px}
+
+a, p {font-size:12px;}
 
 a {color:#005500;}
 a:visited {color:#005500;}

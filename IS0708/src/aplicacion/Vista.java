@@ -34,6 +34,9 @@ public class Vista {
 	private boolean cacheCargada = false;
 	private int num_men_hoja = 10;
 	
+	/** Lista de tareas que se están llevando a cabo para mostrar en la barra inferior */
+	private ArrayList<Tarea> tareas= new ArrayList<Tarea>();
+	
 	/**
 	 * Caché local: Lista de empleados que trabajan en el mismo departamento que
 	 * el usuario actual
@@ -80,6 +83,15 @@ public class Vista {
 			this.i=i;
 			this.tipo = tipo;
 		}
+	}
+	public class Tarea {
+		public String s;
+		public int p;
+		public Tarea(String s, int p) {
+			this.s = s;
+			this.p = p;
+		}
+		
 	}
 	
 	private void insertCache(Object o, String tipo) {
@@ -130,7 +142,7 @@ public class Vista {
 						else if (e.tipo.equals("Turno"))			controlador.modificarTurno(((Turno)e.o.get(0)).getIdTurno(), ((Turno)e.o.get(0)).getDescripcion(), ((Turno)e.o.get(0)).getHoraEntrada(), ((Turno)e.o.get(0)).getHoraSalida(), ((Turno)e.o.get(0)).getHoraDescanso(), ((Turno)e.o.get(0)).getTDescanso());
 					}
 				}
-				setProgreso("", 100);
+				setProgreso("Actualizando base de datos", 100);
 				try {
 					sleep(1000);
 				} catch (Exception e) {};
@@ -381,7 +393,10 @@ public class Vista {
 		// Instanciar cola de escritura de caché
 		colaEscritura = new java.util.LinkedList<ElementoCache>();
 		
-		// Lo normal ahora es llamar al método start().
+		// Instanciar lista de tareas
+		tareas = new ArrayList<Tarea>();
+		
+		// Lo normal ahora es llamar al método start()
 	}
 
 	/**
@@ -891,8 +906,38 @@ public class Vista {
 	 * @param i
 	 *            un valor de 0 a 99, ó 100 para que desaparezca.
 	 */
-	public void setProgreso(String s, int i) {
-		if (i02!=null) i02.setProgreso(s, i);
+	public void setProgreso(String s, int prog) {
+		// TODO ver qué pasa con esto
+		/*
+		// Si la tarea no está, se añade
+		// Si está, se actualiza su progreso
+		// El progreso mostrado es el promedio de todas
+		int p = 0;
+		boolean encontrada = false;
+		// Si hay tareas
+		if (tareas.size()>0) {
+			for (int i=0; i<tareas.size(); i++) {
+				if (tareas.get(i).s.equals(s)) {
+					tareas.get(i).p = prog;
+					encontrada = true;
+				}
+				// Si el progreso es 100, se elimina
+				if (prog>=100) tareas.remove(i);
+				// Si no, se suma su progreso para calcular la media
+				else p+= tareas.get(i).p;
+			}
+			p/=tareas.size();
+			// Si no se encuentra, y el progreso es menor que 100,
+			// se añade
+			if (!encontrada && prog<100) tareas.add(new Tarea(s,prog));
+			// Muestra la última en la lista
+			if (i02!=null) i02.setProgreso(tareas.get(tareas.size()).s, p);
+		} else {
+		// Si no hay tareas
+			if (i02!=null) i02.setProgreso("", 100);
+		}
+		*/
+		if (i02!=null) i02.setProgreso(s, prog);
 	}
 
 	/**
@@ -926,14 +971,16 @@ public class Vista {
 		if (!alive) return;
 		setProgreso("Cargando empleados", 25);
 		empleados = controlador.getEmpleadosDepartamento(getEmpleadoActual().getEmplId(),dep);
+		setProgreso("Cargando empleados", 100);
 		if (!alive) return;
 		setProgreso("Cargando contratos", 50);
 		contratos = controlador.getListaContratosDpto(dep);
+		setProgreso("Cargando contratos", 100);
 		if (!alive) return;
 		if (rango == 1) { // Si es un empleado, coger turnos de su departamento
 			setProgreso("Cargando turnos", 70);
 			turnos = controlador.getListaTurnosEmpleadosDpto(dep);
-			setProgreso("", 100);
+			setProgreso("Cargando turnos", 100);
 		} else if (rango == 2) { // Si es un jefe, coger turnos de todos los departamentos
 			ArrayList<String> temp = new ArrayList<String>();
 			temp = controlador.getDepartamentosJefe(numvendedor);
@@ -947,7 +994,7 @@ public class Vista {
 					turnos.add(turnosDep.get(j));
 				}				
 			}
-			setProgreso("", 100);
+			setProgreso("Cargando turnos", 100);
 			
 		} else {
 			System.err.println("Vista\t:: Tipo de empleado inválido para cargar la cache.");

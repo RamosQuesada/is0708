@@ -121,7 +121,7 @@ public class I02_Principal {
 					messageBoxResumen.setMessage(s);
 					messageBoxResumen.open();
 					
-					vista.setProgreso("", 100);
+					vista.setProgreso(bundle.getString("I02_lab_GenerandoCuads"), 100);
 					vista.setCursorFlecha();
 					ic.setDia(calendario.getDay(), calendario.getMonth()+1,	calendario.getYear());
 					ic.cargarDeCache();
@@ -294,7 +294,7 @@ public class I02_Principal {
 				vista.setProgreso(bundle.getString("I02_lab_CargandoCuads"), 50);
 				ic.setDia(calendario.getDay(), calendario.getMonth()+1,
 						calendario.getYear());
-				vista.setProgreso("",100);
+				vista.setProgreso(bundle.getString("I02_lab_CargandoCuads"),100);
 				vista.setCursorFlecha();
 			}
 		});
@@ -1575,8 +1575,7 @@ public class I02_Principal {
 	private void crearTabFolder(int rango) {
 		// Crear menu tabs
 		final TabFolder tabFolder = new TabFolder(shell, SWT.NONE);
-		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,
-				1));
+		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		switch (rango) {
 		case 0:

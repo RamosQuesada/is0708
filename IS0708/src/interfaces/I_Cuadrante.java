@@ -249,7 +249,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			if (vista.isCacheCargada() && turno==null) {
 				vista.setProgreso("Cargando cuadrantes", 80);
 				ArrayList<Trabaja> c[] = vista.getCuadrante(mes, anio, departamento).getCuad();
-				vista.setProgreso("", 100);
+				vista.setProgreso("Cargando cuadrantes", 100);
 				iCuad = new ArrayList[c.length];
 				for (int i=0; i<c.length; i++) {
 					iCuad[i] = new ArrayList<I_Trabaja>();
