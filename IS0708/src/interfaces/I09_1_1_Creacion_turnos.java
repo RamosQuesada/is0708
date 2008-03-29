@@ -175,7 +175,8 @@ public class I09_1_1_Creacion_turnos {
 				if (modo==0){					
 					turnoInsertado = new Turno(0,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso());
 					//CAMBIAR
-					int id=vista.getControlador().insertTurno(turnoInsertado);
+					//int id=vista.getControlador().insertTurno(turnoInsertado);
+					int id=vista.insertTurno(turnoInsertado);
 					turnoInsertado = new Turno(id,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso());
 					if (id!=-1){
 						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);

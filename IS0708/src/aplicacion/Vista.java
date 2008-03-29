@@ -227,7 +227,7 @@ public class Vista {
 		Contrato c = getContrato(idContrato);
 		if (c==null) return false;
 //		contratos.remove(idContrato);
-//		deleteCache(idContrato, "ContratoConTurnos");
+		deleteCache(idContrato, "ContratoConTurnos");
 		return true;
 	}
 	
@@ -250,7 +250,7 @@ public class Vista {
 	 */
 	public boolean eliminaTurno(int idTurno) {
 		if (getTurno(idTurno)==null) return false;
-		turnos.remove(getTurno(idTurno));		
+		//turnos.remove(getTurno(idTurno));		
 		deleteCache(idTurno, "Turno");
 		return true;
 	}

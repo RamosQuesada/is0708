@@ -29,6 +29,10 @@ public class I09_Tab_Contratos extends Thread {
 	final Table tablaContratos;
 	final Image ico_cuadrante;
 	private boolean datosInterfazCargados = false;
+	private Button bNuevoContrato;
+	private Button bModificarContrato;
+	private Button bEliminarContrato;
+	
 
 	/**
 	 * Implementa un hilo que coge los empleados del departamento del servidor.
@@ -55,6 +59,9 @@ public class I09_Tab_Contratos extends Thread {
 					tablaContratos.getDisplay().asyncExec(new Runnable() {
 						public void run() {
 							mostrarContratos();
+							bNuevoContrato.setEnabled(true);
+							bModificarContrato.setEnabled(true);
+							bEliminarContrato.setEnabled(true);
 						}
 					});
 				}
@@ -154,9 +161,12 @@ public class I09_Tab_Contratos extends Thread {
 		tablaContratos.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 				true, 3, 1));
 
-		final Button bNuevoContrato = new Button(cContratos, SWT.PUSH);
-		final Button bModificarContrato = new Button(cContratos, SWT.PUSH);
-		final Button bEliminarContrato = new Button(cContratos, SWT.PUSH);
+		bNuevoContrato = new Button(cContratos, SWT.PUSH);
+		bModificarContrato = new Button(cContratos, SWT.PUSH);
+		bEliminarContrato = new Button(cContratos, SWT.PUSH);
+		bNuevoContrato.setEnabled(false);
+		bModificarContrato.setEnabled(false);
+		bEliminarContrato.setEnabled(false);
 
 		bNuevoContrato.setText(bundle.getString("I09_lab_NuevoContrato"));
 		bModificarContrato.setText(bundle.getString("I09_Modif_contrato"));
@@ -183,6 +193,16 @@ public class I09_Tab_Contratos extends Thread {
 					tablaContratos.removeAll();
 					ArrayList<Integer> ids = i09.getTurnosInsertados();
 					int idc = c.getNumeroContrato();
+					for (int i = 0; i < ids.size(); i++) {
+						int idt = ids.get(i);
+						if (idt != c.getTurnoInicial() && (idc != -1))
+							// CAMBIAR cuando este actualizada la vista
+							vista.insertTurnoPorContrato(idt, idc);
+						// vista.getControlador().insertTurnoPorContrato(idt,
+						// idc);
+					}
+					ids.clear();
+					ids=i09.getTurnosAñadidos();
 					for (int i = 0; i < ids.size(); i++) {
 						int idt = ids.get(i);
 						if (idt != c.getTurnoInicial() && (idc != -1))
@@ -265,11 +285,12 @@ public class I09_Tab_Contratos extends Thread {
 									.valueOf(tit.getText(0)));
 							// boolean
 							// okis=vista.getControlador().eliminaContrato(Integer.valueOf(tit.getText(0)));
-							okis = okis
-									&& vista.getControlador()
-											.eliminaContratoConTurnos(
-													Integer.valueOf(tit
-															.getText(0)));
+//							okis = okis
+//									&& vista.getControlador()
+//											.eliminaContratoConTurnos(
+//													Integer.valueOf(tit
+//															.getText(0)));
+							okis = okis	&& vista.eliminaContratoConTurnos(Integer.valueOf(tit.getText(0)));
 							if (okis) {
 								tablaContratos.removeAll();
 								vista.getListaContratosDepartamento().remove(
