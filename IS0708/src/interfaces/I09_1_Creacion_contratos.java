@@ -135,6 +135,12 @@ public class I09_1_Creacion_contratos {
 					}
 				}
 			});
+			//Informacion sobre el turno inicial en uso
+			final Composite cti = new Composite(shell, SWT.NONE);
+			cti.setLayout(new GridLayout(1, false));
+			final Label lTurnoIni = new Label(shell, SWT.CENTER);
+			lTurnoIni.setText(bundle.getString("I09_info_TurnoInicial") + turnoInicial);
+			lTurnoIni.setForeground(new Color(cti.getShell().getDisplay(), 255, 0, 0));
 			// Este tipo de composite permite que la ventana pueda ser m�s
 			// estrecha
 			// que el contenido pero que se siga pudiendo ver todo
@@ -685,9 +691,9 @@ public class I09_1_Creacion_contratos {
 							messageBox2.open();
 						} else {
 							// CAMBIAR
-							boolean okis = vista.eliminaTurno(t.getIdTurno());
+							//boolean okis = vista.eliminaTurno(t.getIdTurno());
 							//boolean okis = vista.getControlador().eliminaTurno(t);
-							if (okis) {
+							if (true) {
 								int index = listaTurnosContrato
 										.getSelectionIndex();
 								idsTurnosEliminados.add(idEliminado);
