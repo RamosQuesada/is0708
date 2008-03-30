@@ -330,7 +330,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		});
 
 		// Preparar el canvas
-		canvas = new Canvas(cCuadrante, SWT.FILL | SWT.NO_BACKGROUND | SWT.V_SCROLL);
+		int opciones = SWT.FILL | SWT.NO_BACKGROUND;
+		if (turno==null) opciones = SWT.FILL | SWT.NO_BACKGROUND | SWT.V_SCROLL;
+		canvas = new Canvas(cCuadrante, opciones);
 		canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		// Inicializar algunas variables
 //		creando = false;
@@ -368,13 +370,15 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		});
 		
 		vBar = canvas.getVerticalBar();
-		vBar.addListener (SWT.Selection, new Listener () {
-			public void handleEvent (Event e) {
-				int vSelection = vBar.getSelection ();
-				origen = -vSelection;
-				canvas.redraw();
-			}
-		});
+		if (vBar!=null) {
+			vBar.addListener (SWT.Selection, new Listener () {
+				public void handleEvent (Event e) {
+					int vSelection = vBar.getSelection ();
+					origen = -vSelection;
+					canvas.redraw();
+				}
+			});
+		}
 		
 		mouseMoveListenerCuadrDiario = new MouseMoveListener() {
 			public void mouseMove(MouseEvent e) {
