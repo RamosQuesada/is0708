@@ -616,12 +616,13 @@ public class I09_1_Creacion_contratos {
 					if (!bTurnoInicial.isEnabled())
 						bTurnoInicial.setEnabled(true);
 					idsTurnosInsertados.add(t.getIdTurno());
-					listaTurnosContrato.removeAll();
+					//listaTurnosContrato.removeAll();
 					turnos.add(t);
-					for (int i = 0; i < turnos.size(); i++)
+					/*for (int i = 0; i < turnos.size(); i++)
 						listaTurnosContrato.add(turnos.get(i).getIdTurno()
 								+ " " + turnos.get(i).getDescripcion());
-					listaTurnosContrato.redraw();
+					listaTurnosContrato.redraw();*/
+					listaTurnosContrato.add(t.getIdTurno()+ " " + t.getDescripcion());
 				}
 			}
 		};
@@ -630,6 +631,13 @@ public class I09_1_Creacion_contratos {
 		// Listener para el bot�n de modificar turno
 		SelectionAdapter sabModificarTurno = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
+				MessageBox msgBox = new MessageBox(shell,
+						SWT.APPLICATION_MODAL | SWT.ICON_WARNING | SWT.OK
+								| SWT.CANCEL);
+				msgBox.setMessage(bundle.getString("I09_aviso_inconsistencias"));
+				msgBox.setText("Warning");
+				int resp = msgBox.open();
+				if (resp == SWT.OK) {
 				if (listaTurnosContrato.getSelectionIndex() > -1) {
 					int index = listaTurnosContrato.getSelectionIndex();
 					int id = turnos.get(index).getIdTurno();
@@ -657,6 +665,7 @@ public class I09_1_Creacion_contratos {
 							.getString("I09_bot_modif_turno_no_select"));
 					messageBox.open();
 				}
+				}
 			}
 		};
 		bModificarTurno.addSelectionListener(sabModificarTurno);
@@ -664,6 +673,13 @@ public class I09_1_Creacion_contratos {
 		// Listener para el bot�n de eliminar turno
 		SelectionAdapter sabEliminarTurno = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
+				MessageBox msgBox = new MessageBox(shell,
+						SWT.APPLICATION_MODAL | SWT.ICON_WARNING | SWT.OK
+								| SWT.CANCEL);
+				msgBox.setMessage(bundle.getString("I09_aviso_inconsistencias"));
+				msgBox.setText("Warning");
+				int resp = msgBox.open();
+				if (resp == SWT.OK) {
 				if (listaTurnosContrato.getSelectionIndex() > -1) {
 					MessageBox messageBox = new MessageBox(shell,
 							SWT.APPLICATION_MODAL | SWT.ICON_QUESTION | SWT.OK
@@ -690,10 +706,24 @@ public class I09_1_Creacion_contratos {
 									.getString("I09_warn_elim_Turno_ini"));
 							messageBox2.open();
 						} else {
+							ArrayList<Contrato> auxContratos=vista.getListaContratosDepartamento();
+							int apariciones=0;
+							for (int i=0;i<auxContratos.size();i++){
+								Contrato aux=auxContratos.get(i);
+								if (aux.getNumeroContrato()!=idContrato){
+									ArrayList<Turno> auxTurnos=vista.getControlador().getTurnosDeUnContrato(aux.getNumeroContrato());
+									for(int j=0;j<auxTurnos.size();j++){
+										if (idEliminado==auxTurnos.get(j).getIdTurno()) apariciones++;
+									}									
+								}
+							}
+							boolean okis;
+							if (apariciones>0) okis=true;
+							else okis = vista.eliminaTurno(t.getIdTurno());
 							// CAMBIAR
 							//boolean okis = vista.eliminaTurno(t.getIdTurno());
 							//boolean okis = vista.getControlador().eliminaTurno(t);
-							if (true) {
+							if (okis) {
 								int index = listaTurnosContrato
 										.getSelectionIndex();
 								idsTurnosEliminados.add(idEliminado);
@@ -724,6 +754,7 @@ public class I09_1_Creacion_contratos {
 					messageBox.setMessage(bundle
 							.getString("I09_bot_elim_turno_no_select"));
 					messageBox.open();
+				}
 				}
 			}
 		};
@@ -805,11 +836,11 @@ public class I09_1_Creacion_contratos {
 									turnoInicial, longCiclo, patron, sueldo,
 									tipo);
 							// CAMBIAR
-							int id = vista.getControlador().insertContrato(
-									contratoInsertado);
+							int id = vista.insertContrato(contratoInsertado);
 							contratoInsertado = new Contrato(nombre, id,
 									turnoInicial, longCiclo, patron, sueldo,
 									tipo);
+							//vista.getListaContratosDepartamento().add(contratoInsertado);
 							if (id != -1) {
 								MessageBox messageBox = new MessageBox(shell,
 										SWT.APPLICATION_MODAL | SWT.OK

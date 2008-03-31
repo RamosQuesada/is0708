@@ -136,6 +136,7 @@ public class Turno {
 		   return minutos;		
 	}
 
+	
 	public String getDescripcion() {
 		return descripcion;
 	}
