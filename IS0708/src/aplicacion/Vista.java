@@ -193,10 +193,13 @@ public class Vista {
 	 * @param c el contrato a insertar
 	 * @return false si el contrato ya existe
 	 */
-	public boolean insertContrato(Contrato c) {
-		if (getContrato(c.getNumeroContrato())!=null) return false;
-		insertCache(c, "Contrato");
-		return true;
+	public int insertContrato(Contrato c) {
+		if (getContrato(c.getNumeroContrato())!=null) return -1;
+//		insertCache(c, "Contrato");
+		int i = controlador.insertContrato(c);
+		c.setNumeroContrato(i);
+		contratos.add(c);
+		return i;
 	}
 	
 	/**
