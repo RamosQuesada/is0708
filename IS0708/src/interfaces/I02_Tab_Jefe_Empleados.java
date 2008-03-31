@@ -61,6 +61,7 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 		for (int i=0; i<_vista.getEmpleados().size(); i++) {
 			_vista.getEmpleados().get(i).getContrato(_vista);
 		}
+		
 		datosInterfazCargados = true;
 		while (run) {
 			
@@ -87,26 +88,32 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 	private void mostrarEmpleados() {
 		if (_vista.isCacheCargada() && datosInterfazCargados) {
 			tablaEmpleados.removeAll();
-			ArrayList<Empleado> listaFiltrada = new ArrayList();
+			ArrayList<Empleado> listaFiltrada = (ArrayList<Empleado>) _vista.getEmpleados().clone();
+			
 			if (tEmplNombre.getText() != "") {
-				for (int i = 0; i < _vista.getEmpleados().size(); i++) {
-					if (_vista.getEmpleados().get(i).getNombre().toLowerCase().startsWith(tEmplNombre.getText().toLowerCase()))
-						listaFiltrada.add(_vista.getEmpleados().get(i));				
-				}
-			} else if (tEmplNVend.getText() != "") { 
-				for (int i = 0; i < _vista.getEmpleados().size(); i++) {
-					int nvend = _vista.getEmpleados().get(i).getEmplId(); 
-					if (Integer.toString(nvend).toLowerCase().startsWith(tEmplNVend.getText().toLowerCase()))
-						listaFiltrada.add(_vista.getEmpleados().get(i));				
-				}
-			} else if (tEmplDpto.getText() != "") { 
-				for (int i = 0; i < _vista.getEmpleados().size(); i++) {					 
-					if (_vista.getEmpleados().get(i).getDepartamentoId().toLowerCase().startsWith(tEmplDpto.getText().toLowerCase()))
-						listaFiltrada.add(_vista.getEmpleados().get(i));				
+				for (int i = 0; i < listaFiltrada.size(); i++) {
+					if (!listaFiltrada.get(i).getNombreCompleto().toLowerCase().contains(tEmplNombre.getText().toLowerCase())) {
+						listaFiltrada.remove(i);
+						i--;
+					}
 				}
 			}
-			else {
-				listaFiltrada = _vista.getEmpleados();
+			if (tEmplNVend.getText() != "") { 
+				for (int i = 0; i < listaFiltrada.size(); i++) {
+					int nvend = listaFiltrada.get(i).getEmplId(); 
+					if (!Integer.toString(nvend).toLowerCase().contains(tEmplNVend.getText().toLowerCase())) {
+						listaFiltrada.remove(i);
+						i--;
+					}
+				}
+			}
+			if (tEmplDpto.getText() != "") { 
+				for (int i = 0; i < listaFiltrada.size(); i++) {					 
+					if (!listaFiltrada.get(i).getDepartamentoId().toLowerCase().contains(tEmplDpto.getText().toLowerCase())) {
+						listaFiltrada.remove(i);
+						i--;
+					}
+				}
 			}
 			
 			for (int i = 0; i < listaFiltrada.size(); i++) {
@@ -199,7 +206,13 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 		cEmplContr = new Combo(cEmplIzq, SWT.BORDER);
 		cEmplContr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
 				1, 1));
-
+		//cEmplContr.add("prueba");	
+		while (!_vista.isCacheCargada()) {
+		//	sleep(5000);
+		}
+		for (int i=0; i<_vista.getListaContratosDepartamento().size(); i++)
+			cEmplContr.add(_vista.getListaContratosDepartamento().get(i).getNombreContrato());
+		
 		final Composite cEmplDer = new Composite(cEmpleados, SWT.NONE);
 		cEmplDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,
 				1));
@@ -312,6 +325,17 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 		});
 		
 		tEmplNVend.addKeyListener(new KeyListener(){			 
+
+			public void keyPressed(KeyEvent arg0) {				
+				
+			}
+
+			public void keyReleased(KeyEvent arg0) {
+				nombreEscrito(arg0);
+			}
+		});
+		
+		tEmplDpto.addKeyListener(new KeyListener(){			 
 
 			public void keyPressed(KeyEvent arg0) {				
 				
