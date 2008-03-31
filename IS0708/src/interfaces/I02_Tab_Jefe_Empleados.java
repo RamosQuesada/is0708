@@ -204,13 +204,14 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 				1, 1));
 
 		cEmplContr = new Combo(cEmplIzq, SWT.BORDER);
-		cEmplContr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
+		cEmplContr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,				
 				1, 1));
+		
 		//cEmplContr.add("prueba");	
 		while (!_vista.isCacheCargada()) {
 		//	sleep(5000);
 		}
-		for (int i=0; i<_vista.getListaContratosDepartamento().size(); i++)
+		for (int i=1; i<_vista.getListaContratosDepartamento().size(); i++)
 			cEmplContr.add(_vista.getListaContratosDepartamento().get(i).getNombreContrato());
 		
 		final Composite cEmplDer = new Composite(cEmpleados, SWT.NONE);
