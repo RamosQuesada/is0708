@@ -441,7 +441,7 @@ public class I02_Principal {
 		}
 		// cmbDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
 		cmbDepartamentos.select(0);
-
+		
 
 		
 		// Composite for Buttons: "New Department" and "Configure Department"
@@ -480,7 +480,7 @@ public class I02_Principal {
 		cInfo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		final Text lContenido = new Text(cInfo, SWT.CENTER & SWT.READ_ONLY & SWT.WRAP);
 		lContenido.setEditable(false);
-		lContenido.setText("Aquí va información del departamento");
+		lContenido.setText(vista.infoDpto(cmbDepartamentos.getText()));
 		lContenido.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true,
 				true, 2, 1));
 		
