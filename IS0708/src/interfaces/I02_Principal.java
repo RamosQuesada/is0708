@@ -545,8 +545,8 @@ public class I02_Principal {
 		Composite cInfo = new Composite(cDepartamentos, SWT.BORDER);
 		cInfo.setLayout(new GridLayout(2, false));
 		cInfo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
-		final Text lContenido = new Text(cInfo, SWT.CENTER & SWT.READ_ONLY & SWT.WRAP);
-		lContenido.setText("Aquí va información del departamento");
+		final Text lContenido = new Text(cInfo, SWT.READ_ONLY | SWT.MULTI |SWT.V_SCROLL);
+		lContenido.setText(vista.infoDpto(cmbDepartamentos.getText()));
 		lContenido.setEnabled(false);
 		lContenido.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true,
 				true, 2, 1));
@@ -554,7 +554,7 @@ public class I02_Principal {
 		//listener para el combo y mostrar la info debajo
 		cmbDepartamentos.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				lContenido.setText(cmbDepartamentos.getText());
+				lContenido.setText(vista.infoDpto(cmbDepartamentos.getText()));
 			}
 		});
 
