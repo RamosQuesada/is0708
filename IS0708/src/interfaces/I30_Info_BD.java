@@ -59,7 +59,7 @@ public class I30_Info_BD {
 		GridLayout lShell = new GridLayout();
 		lShell.numColumns = 2;
 		shell.setLayout(lShell);	
-		shell.setText("Configuracion de la BD");
+		shell.setText(this._bundle.getString("I30_label_ip"));
 		shell.setImage(icono);
 		final Label IP_label = new Label(shell, SWT.LEFT);
 		final Text IP_text = new Text(shell, SWT.LEFT | SWT.BORDER);
@@ -85,6 +85,14 @@ public class I30_Info_BD {
 		data = new GridData();
 		data.widthHint = 100;
 		password_text.setLayoutData(data);
+		final Label passwordAdmin_label = new Label(shell, SWT.LEFT);		
+		final Text passwordAdmin_text = new Text(shell, SWT.LEFT | SWT.BORDER);
+		data = new GridData();
+		data.widthHint = 100;
+		passwordAdmin_label.setLayoutData(data);
+		data = new GridData();
+		data.widthHint = 100;
+		passwordAdmin_text.setLayoutData(data);
 		
 		//IP_label.setText("ServerIP");
 		//username_label.setText("ServerUsername");
@@ -116,6 +124,7 @@ public class I30_Info_BD {
 		IP_label.setText(this._bundle.getString("I30_label_ip"));
 		username_label.setText(this._bundle.getString("I30_label_username"));
 		password_label.setText(this._bundle.getString("I30_label_password"));
+		passwordAdmin_label.setText(this._bundle.getString("I30_label_passwordAdmin"));
 
 		bAceptar.setText(this._bundle.getString("Aceptar"));
 		bCancelar.setText(this._bundle.getString("Cancelar"));
@@ -128,7 +137,8 @@ public class I30_Info_BD {
 				String ip=IP_text.getText();
 				String username=username_text.getText();
 				String password=password_text.getText();
-				if ((ip=="")||(username=="")||(password=="")) {
+				String admin=passwordAdmin_text.getText();
+				if ((ip=="")||(username=="")||(password=="")||(admin=="")) {
 					/*final Shell shell2 = new Shell(shell, SWT.CLOSE | SWT.APPLICATION_MODAL);
 					GridLayout lShell2 = new GridLayout();
 					lShell2.numColumns = 1;
@@ -168,6 +178,7 @@ public class I30_Info_BD {
 						dos.writeUTF(ip);
 						dos.writeUTF(username);
 						dos.writeUTF(password);
+						dos.writeUTF(admin);
 					} catch (FileNotFoundException e1) {
 						// TODO Auto-generated catch block
 						System.out.println("No se encuentra el archivo");
