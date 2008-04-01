@@ -11,6 +11,7 @@ import org.eclipse.swt.graphics.*;
 
 import algoritmo.ResultadoTurnoMatic;
 import aplicacion.Empleado;
+import aplicacion.Departamento;
 import aplicacion.Util;
 
 import java.util.ResourceBundle;
@@ -605,7 +606,7 @@ public class I02_Principal {
 	 */
 	private void crearTabAdminNuevoGerente(TabFolder tabFolder) {
 		TabItem tabItemEmpleados = new TabItem(tabFolder, SWT.NONE);
-		tabItemEmpleados.setText("Admin:Nuevo Gerente");
+		tabItemEmpleados.setText(bundle.getString("I02_admin_gerente"));
 		tabItemEmpleados.setImage(ico_chico);
 
 		// Creamos el contenido de la pestaña cuadrantes
@@ -644,8 +645,8 @@ public class I02_Principal {
 		final Text tNombreUsuario = new Text(cNuevoGerente2, SWT.BORDER);
 		tNombreUsuario.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 0, 0));
-
-		final Button bClaveAuto = new Button(cNuevoGerente2, SWT.RADIO);
+		
+				final Button bClaveAuto = new Button(cNuevoGerente2, SWT.RADIO);
 		bClaveAuto.setText("Generacion automatica de la clave");
 		final Button bClaveManual = new Button(cNuevoGerente2, SWT.RADIO);
 		bClaveAuto.setSelection(true);
@@ -658,6 +659,24 @@ public class I02_Principal {
 				0, 0));
 		tPassword.setText(aplicacion.Util.obtenerClave());
 		tPassword.setEditable(false);
+		
+		
+		
+		final Label lDepartamento = new Label(cNuevoGerente2, SWT.LEFT);
+		lDepartamento.setText(bundle.getString("I02AdminDepartamento"));
+		final Combo cDepartamentos = new Combo(cNuevoGerente2, SWT.BORDER | SWT.READ_ONLY);
+		cDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
+				false, 0, 0));
+		ArrayList <Departamento> listDept= vista.getControlador().getTodosDepartamentos();
+		for(int i = 0; i< listDept.size();i++){
+			cDepartamentos.add(listDept.get(i).getNombreDepartamento());		
+		}
+		cDepartamentos.setEnabled(true);
+		/* meter la lista de departamentos en el combo
+		 * 
+		 */
+		
+		tmDep = cDepartamentos.getText();
 
 		bClaveAuto.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {
@@ -707,7 +726,7 @@ public class I02_Principal {
 
 		// Introducimos los textos a los botones
 		// bOClave.setText("Obtener clave");
-		bAceptar.setText("Aceptar");
+		bAceptar.setText(bundle.getString("Aceptar"));
 		bCancelar.setText(bundle.getString("Cancelar"));
 		// Introducimos los valores y eventos de Aceptar
 
