@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import aplicacion.EncriptCadena;
 import aplicacion.Vista;
 
 //import aplicacion.Vista;
@@ -94,30 +95,6 @@ public class I30_Info_BD {
 		data.widthHint = 100;
 		passwordAdmin_text.setLayoutData(data);
 		
-		//IP_label.setText("ServerIP");
-		//username_label.setText("ServerUsername");
-		//password_label.setText("ServerPassword");
-		
-		/*IP_label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		IP_text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		username_label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		username_text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		password_label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		password_text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));*/
-
-//		final Composite cAceptarCancelar = new Composite(shell, SWT.BORDER);
-//		cAceptarCancelar.setBounds(100, 100, 200,200);
-//		cAceptarCancelar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-//				true, 1, 1));
-//		GridLayout lAceptarCancelar = new GridLayout();
-//		lAceptarCancelar.numColumns = 2;
-//		lAceptarCancelar.makeColumnsEqualWidth=true;
-//		cAceptarCancelar.setLayout(lAceptarCancelar);
-//
-//		// Botones aceptar y cancelar
-//		final Button bAceptar = new Button(cAceptarCancelar, SWT.PUSH);
-//		final Button bCancelar = new Button(cAceptarCancelar, SWT.PUSH);
-		
 		final Button bAceptar = new Button(shell, SWT.PUSH);
 		final Button bCancelar = new Button(shell, SWT.PUSH);
 
@@ -139,32 +116,6 @@ public class I30_Info_BD {
 				String password=password_text.getText();
 				String admin=passwordAdmin_text.getText();
 				if ((ip=="")||(username=="")||(password=="")||(admin=="")) {
-					/*final Shell shell2 = new Shell(shell, SWT.CLOSE | SWT.APPLICATION_MODAL);
-					GridLayout lShell2 = new GridLayout();
-					lShell2.numColumns = 1;
-					shell2.setLayout(lShell2);
-					shell2.setText("Error");
-					final Label label = new Label(shell2, SWT.CENTER);
-					label.setText("No deje campos en blanco");
-					final Button bAceptar2 = new Button(shell2, SWT.PUSH);
-					bAceptar2.setText("Aceptar");
-					bAceptar2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-					bAceptar2.addSelectionListener (new SelectionAdapter () {
-						public void widgetSelected (SelectionEvent e) {
-							shell2.dispose();
-						}
-					});
-					shell2.setDefaultButton(bAceptar2);
-					// Ajustar el tama�o de la ventana al contenido
-					shell2.pack();
-					shell2.setLocation(shell.getLocation());
-					shell2.open();
-					shell2.setVisible(true);
-					while (!shell2.isDisposed()) {
-						if (!shell2.getDisplay().readAndDispatch()) {
-							shell2.getDisplay().sleep();
-						}
-					}*/
 					MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_ERROR | SWT.OK);
 					messageBox.setText ("Error");
 					messageBox.setMessage (_bundle.getString("I30_err_empty"));
@@ -177,8 +128,10 @@ public class I30_Info_BD {
 						DataOutputStream dos = new DataOutputStream(os);
 						dos.writeUTF(ip);
 						dos.writeUTF(username);
-						dos.writeUTF(password);
-						dos.writeUTF(admin);
+						String codificacionPassword=EncriptCadena.encripta(password);
+						dos.writeUTF(codificacionPassword);
+						String codificacionAdmin=EncriptCadena.encripta(admin);
+						dos.writeUTF(codificacionAdmin);
 					} catch (FileNotFoundException e1) {
 						// TODO Auto-generated catch block
 						System.out.println("No se encuentra el archivo");

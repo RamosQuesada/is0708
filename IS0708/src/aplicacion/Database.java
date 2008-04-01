@@ -1,5 +1,12 @@
 package aplicacion;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,11 +36,33 @@ public class Database extends Thread {
 	 */
 	public synchronized void abrirConexion() {
 		try {
+			/*FileInputStream is;
+			try {
+				is = new FileInputStream("src"+File.separator+"interfaces"+File.separator+"configBD");
+				DataInputStream dis = new DataInputStream(is);
+				String ip= dis.readUTF();
+				String username=dis.readUTF();
+				String contraseña=EncriptCadena.desencripta(dis.readUTF());
+				String descodificacion=EncriptCadena.desencripta(dis.readUTF());
+				System.out.println(ip);
+				System.out.println(username);
+				System.out.println(contraseña);
+				System.out.println(descodificacion);
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				System.out.println("No se encuentra el archivo");
+				e1.printStackTrace();
+			} catch (IOException e2) {
+				// TODO Auto-generated catch block
+				System.out.println("Error de entrada salida");
+				e2.printStackTrace();
+			}*/
 			String userName = "turnomat_user";
 			String password = "is0708";
 			String bd = "turnomat_bd";
 			String url = "jdbc:mysql://72.34.56.241:3306/" + bd;
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			//DriverManager.setLoginTimeout(300);
 			con = DriverManager.getConnection(url, userName, password);
 			System.out.println("aplicacion.Database.java\t:: Conexión a la BD");
 		} catch (Exception e) {
