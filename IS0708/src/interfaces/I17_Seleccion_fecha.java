@@ -27,6 +27,7 @@ public class I17_Seleccion_fecha {
 	private DateTime calendario;
 	private boolean seleccionado=false;
 	private Date fecha;
+	private Date fechaAnt;
 	private Shell shell; 
 	public I17_Seleccion_fecha(Shell padre) {
 		this.padre = padre;
@@ -39,6 +40,10 @@ public class I17_Seleccion_fecha {
 	 */
 	public Date getFecha(){
 		return fecha;
+	}
+	
+	public Date getFechaAnt(){
+		return fechaAnt;
 	}
 	public void mostrarVentana() {
 		shell = new Shell (padre, SWT.BORDER | SWT.APPLICATION_MODAL);
@@ -75,6 +80,7 @@ public class I17_Seleccion_fecha {
 			public void widgetSelected (SelectionEvent e) {
 				// TODO ¿Se puede evitar usar métodos obsoletos?
 				fecha = new Date(calendario.getYear()-1900,calendario.getMonth(),calendario.getDay());
+				fechaAnt=fecha;
 				shell.dispose();
 			}				
 		});
@@ -85,7 +91,10 @@ public class I17_Seleccion_fecha {
 		//Introducimos los valores y eventos de Fecha Inicio
 		bCancelar.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				fecha = null;
+		/*		if (fechaAnt!=null)
+					fecha=fechaAnt;
+				else*/
+					fecha = null;
 				shell.dispose();
 			}				
 		});
