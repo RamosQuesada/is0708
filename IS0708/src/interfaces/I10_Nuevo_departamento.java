@@ -179,6 +179,10 @@ public class I10_Nuevo_departamento {
 								//creamos el departamento
 								String numjefe=(cmbJefes.getText().subSequence(cmbJefes.getText().length()-8, cmbJefes.getText().length())).toString();
 								vista.crearDepartamento(tName.getText(),tNumber.getText(),Integer.parseInt(numjefe));
+								MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
+								messageBox.setText (bundle.getString("Mensaje"));
+								messageBox.setMessage (bundle.getString("I10_dep_creado"));
+								e.doit = messageBox.open () == SWT.CLOSE;
 								father.add(tName.getText());
 								shell.dispose();					
 							}
@@ -187,7 +191,7 @@ public class I10_Nuevo_departamento {
 						if(tNumber.getText()==""){
 							MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
 							messageBox.setText (bundle.getString("Mensaje"));
-							messageBox.setMessage (bundle.getString("I10_err_string_vacio"));
+							messageBox.setMessage (bundle.getString("I10_err_num_vacio"));
 							e.doit = messageBox.open () == SWT.CLOSE;
 						}else{//si no es integer
 							MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
@@ -199,7 +203,7 @@ public class I10_Nuevo_departamento {
 				}else{//si no se ha metido texto
 					MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
 					messageBox.setText (bundle.getString("Mensaje"));
-					messageBox.setMessage (bundle.getString("I10_err_string_vacio"));
+					messageBox.setMessage (bundle.getString("I10_err_nom_vacio"));
 					e.doit = messageBox.open () == SWT.CLOSE;
 				}
 			}
