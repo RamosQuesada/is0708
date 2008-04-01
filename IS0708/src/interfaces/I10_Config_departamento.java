@@ -2,7 +2,7 @@ package interfaces;
 
 /*******************************************************************************
  * INTERFACE :: ManageDepartment
- *   by Aneta Mironska
+ *   by Carlos Sánchez and a bit colaboration from Aneta
  *   
  * Management (adding and configurate) department.
  * ver 1.0
@@ -38,6 +38,8 @@ public class I10_Config_departamento {
 	private Label labChooseBoss;
 	
 	private Text tName;
+	
+	private boolean admin;
 
 	private Button bAccept;
 	private Button bCancel;
