@@ -39,7 +39,7 @@ public class I10_Config_departamento {
 	
 	private Text tName;
 	
-	private boolean admin;
+	private boolean admin;// true si es admin
 
 	private Button bAccept;
 	private Button bCancel;
@@ -50,12 +50,13 @@ public class I10_Config_departamento {
 	private Combo father;
 	
 	/** Constructor for new department */
-	public I10_Config_departamento(Shell padre, ResourceBundle bundle, Vista vista,String nombre,Combo father) {
+	public I10_Config_departamento(Shell padre, ResourceBundle bundle, Vista vista,String nombre,Combo father,boolean admin) {
 		this.padre = padre;
 		this.bundle = bundle;
 		this.vista = vista;
 		this.nombre=nombre;
 		this.father = father;
+		this.admin = admin;
 		createWindow();
 	}
 
