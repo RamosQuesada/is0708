@@ -86,8 +86,16 @@
 					<li><a href="#30">CU 30 - Ordenar empleados para la elección de vacaciones</a></li>	
 					<li><a href="#31">CU 31 - Elegir fechas de vacaciones</a></li>	
 					<li><a href="#32">CU 32 - Imprimir</a></li>					
-					<li><a href="#33">CU 33 - Ayuda</a></li>
+					<li><a href="#33">CU 33 - Solicitar ayuda</a></li>
 					<li><a href="#34">CU 34 - Autentificar al usuario con lector de códigos de barras</a></li>	
+					<li><a href="#35">CU 35 - Crear turno</a></li>
+					<li><a href="#36">CU 36 - Modificar turno</a></li>
+					<li><a href="#37">CU 37 - Eliminar turno</a></li>
+					<li><a href="#38">CU 38 - Asignar turno inicial</a></li>
+					<li><a href="#39">CU 39 - Configurar el patrón de un contrato</a></li>
+
+
+
 				</ul>
 			</div>
 			<!-- Contenido -->
@@ -619,16 +627,21 @@
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
-				<p>Gerente.</p>
+				<p>Jefe de departamento.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opción de añadir.</p>
-				<p>2- Introducir los datos.</p>
-				<p>3- Confirmar.</p>
-				<p>4- Si es necesario, se modifica el cuadrante (CU-27) y se notifica al jefe de departamento.</p>
+				<p>1- En la pestaña de "Contratos" seleccionar "Nuevo Contrato".</p>
+				<p>2- Rellenar los datos correspondientes del contrato.</p>
+				<p>3- Configurar los turnos del contrato:</p>
+				<p>	-Crear nuevos turnos (CU-35).</p>
+				<p>	-Modificar turnos (CU-36).</p>
+				<p>	-Eliminar turnos (CU-37).</p>
+				<p>	-Asignar turno inicial (CU-38).</p>
+				<p>4- Una vez configurados los turnos, configurar el patrón (CU-39).</p>
+				<p>5- Confirmar.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>3a- Si el contrato ya existe da error.</p>
-				<p>3b- Si los datos está en formato incorrecto da error.</p>
-				<p>3c- Si hay un error en la conexión se muestra por pantalla.</p>
+				<p>2a- Si los datos está en formato incorrecto da error.
+				<p>5a- Si el contrato ya existe da error.</p>
+				<p>5b- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
 <!-- Aquí acaba un CU -->
 
@@ -644,14 +657,15 @@
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
-				<p>Gerente.</p>
+				<p>Jefe de departamento.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opción de eliminar.</p>
-				<p>2- Seleccionar el tipo de contrato a eliminar.</p>
+				<p>1- Seleccionar tipo de contrato a eliminar en la lista de la pestaña "Contratos".</p>
+				<p>2- Elegir la opción "Eliminar contrato".</p>
 				<p>3- Confirmar.</p>
-				<p>4- Si es necesario, se modifica el cuadrante (CU-27) y se notifica al jefe de departamento.</p>
 				<h2>Secuencias alternativas</h2>
+				<p>1a- Si no se ha seleccionado un contrato, se informa.</p>
 				<p>3a- Si hay un error en la conexión se muestra por pantalla.</p>
+				<p>3b- Podría ser necesario volver a generar el cuadrante para evitar inconsistencias (CU-27).</p>
 				<br><br><br>
 <!-- Aquí acaba un CU -->
 
@@ -667,16 +681,17 @@
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
-				<p>Gerente.</p>
+				<p>Jefe de departamento.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opción de modificar datos.</p>
-				<p>2- Seleccionar el tipo de contrato.</p>
-				<p>3- Modificar datos.</p>
+				<p>1- Seleccionar tipo de contrato a modificar en la lista de la pestaña "Contratos".</p>
+				<p>2- Elegir la opción "Modificar contrato".</p>
+				<p>3- Modificar los campos que se desee como si se estuviese añadiendo un nuevo contrato (CU-23).</p>
 				<p>4- Confirmar.</p>
-				<p>5- Si es necesario, se modifica el cuadrante (CU-27) y se notifica al jefe de departamento.</p>
 				<h2>Secuencias alternativas</h2>
+				<p>1a- Si no se ha seleccionado un contrato, se informa.</p>
 				<p>3a- Si los datos está en formato incorrecto da error.</p>
-				<p>3b- Si hay un error en la conexión se muestra por pantalla.</p>
+				<p>4a- Si hay un error en la conexión se muestra por pantalla.</p>
+				<p>4b- Podría ser necesario volver a generar el cuadrante para evitar inconsistencias (CU-27).</p>
 				<br><br><br>
 <!-- Aquí acaba un CU -->
 
@@ -846,7 +861,7 @@
 
 <!-- Aquí empieza un CU -->			
 				<a name="33"></a>
-				<h1>Caso de uso 33: Ayuda</h1>
+				<h1>Caso de uso 33: Solicitar ayuda</h1>
 				<h2>Objetivo en contexto</h2>
 				<p>Solicitar ayuda al sistema sobre su funcionamiento.</p>
 				<h2>Precondiciones</h2>
@@ -884,7 +899,124 @@
 				<h2>Secuencias alternativas</h2>
 				<p>2a- Si el usuario no está en el sistema da un error y se da la opción de pasar de nuevo la tarjeta.</p>
 				<br><br><br>
+<!-- Aquí acaba un CU -->	
+
+<!-- Aquí empieza un CU -->			
+				<a name="35"></a>
+				<h1>Caso de uso 35: Crear turno</h1>
+				<h2>Objetivo en contexto</h2>
+				<p>Añadir un turno nuevo a la base de datos y asociarle con el contrato en curso.</p>
+				<h2>Precondiciones</h2>
+				<p>Estar identificado y debe ser posible establecer la conexión con la base de datos. A este caso de llega por medio del CU-23 o CU-25.</p>
+				<h2>Postcondiciones si éxito</h2>
+				<p>Se actualiza la base de datos y el contrato con el nuevo turno.</p>
+				<h2>Postcondiciones si fallo</h2>
+				<p>Mensaje de error.</p>
+				<h2>Actores</h2>
+				<p>Jefe de departamento.</p>
+				<h2>Secuencia normal</h2>
+				<p>1- Elegir opción "Nuevo Turno".</p>
+				<p>2- Rellenar la descripción y configurar las características con el ratón.</p>
+				<p>3- Confirmar.</p>
+				<h2>Secuencias alternativas</h2>
+				<p>2a- Si los datos están en formato incorrecto da error.</p>
+				<p>3a- Si hay un error en la conexión se muestra por pantalla.</p>
+				<br><br><br>
 <!-- Aquí acaba un CU -->		
+
+<!-- Aquí empieza un CU -->			
+				<a name="36"></a>
+				<h1>Caso de uso 36: Modificar turno</h1>
+				<h2>Objetivo en contexto</h2>
+				<p>Modificar un turno en la base de datos y asociarle con el contrato en curso.</p>
+				<h2>Precondiciones</h2>
+				<p>Estar identificado y debe ser posible establecer la conexión con la base de datos. A este caso de llega por medio del CU-23 o CU-25.</p>
+				<h2>Postcondiciones si éxito</h2>
+				<p>Se actualiza la base de datos y el contrato con el turno modificado.</p>
+				<h2>Postcondiciones si fallo</h2>
+				<p>Mensaje de error.</p>
+				<h2>Actores</h2>
+				<p>Jefe de departamento.</p>
+				<h2>Secuencia normal</h2>
+				<p>1- Seleccionar un turno de la lista de turnos del contrato.</p>
+				<p>2- Elegir opción "Modificar Turno".</p>
+				<p>3- Modificar la descripción y/o modificar las características con el ratón.</p>
+				<p>4- Confirmar.</p>
+				<h2>Secuencias alternativas</h2>
+				<p>1a- Si no se he seleccionado un turno, se informa.</p>
+				<p>3a- Si los datos están en formato incorrecto da error.</p>
+				<p>4a- Si hay un error en la conexión se muestra por pantalla.</p>
+				<p>4b- Podría ser necesario volver a generar el cuadrante para evitar inconsistencias (CU-27).</p>
+				<br><br><br>
+<!-- Aquí acaba un CU -->	
+
+<!-- Aquí empieza un CU -->			
+				<a name="37"></a>
+				<h1>Caso de uso 37: Eliminar turno</h1>
+				<h2>Objetivo en contexto</h2>
+				<p>Si el turno sólo pertenece a ese contrato se elimina de la base de datos y si no, se disocia del contrato.</p>
+				<h2>Precondiciones</h2>
+				<p>Estar identificado y debe ser posible establecer la conexión con la base de datos. A este caso de llega por medio del CU-23 o CU-25.</p>
+				<h2>Postcondiciones si éxito</h2>
+				<p>Se actualiza la base de datos y/o el contrato.</p>
+				<h2>Postcondiciones si fallo</h2>
+				<p>Mensaje de error.</p>
+				<h2>Actores</h2>
+				<p>Jefe de departamento.</p>
+				<h2>Secuencia normal</h2>
+				<p>1- Seleccionar un turno de la lista de turnos del contrato.</p>
+				<p>2- Elegir opción "Eliminar Turno".</p>
+				<p>3- Confirmar.</p>
+				<h2>Secuencias alternativas</h2>
+				<p>1a- Si no se he seleccionado un turno, se informa.</p>
+				<p>3a- Si hay un error en la conexión se muestra por pantalla.</p>
+				<p>3b- Podría ser necesario volver a generar el cuadrante para evitar inconsistencias (CU-27).</p>
+				<br><br><br>
+<!-- Aquí acaba un CU -->	
+
+<!-- Aquí empieza un CU -->			
+				<a name="38"></a>
+				<h1>Caso de uso 38: Asignar turno inicial</h1>
+				<h2>Objetivo en contexto</h2>
+				<p>Establecer el turno inicial de un contrato.</p>
+				<h2>Precondiciones</h2>
+				<p>Estar identificado y debe ser posible establecer la conexión con la base de datos. A este caso de llega por medio del CU-23 o CU-25.</p>
+				<h2>Postcondiciones si éxito</h2>
+				<p>Se actualiza la base de datos y el contrato con el turno inicial.</p>
+				<h2>Postcondiciones si fallo</h2>
+				<p></p>
+				<h2>Actores</h2>
+				<p>Jefe de departamento.</p>
+				<h2>Secuencia normal</h2>
+				<p>1- Seleccionar un turno de la lista de turnos del contrato.</p>
+				<p>2- Elegir opción "Turno Inicial".</p>
+				<h2>Secuencias alternativas</h2>
+				<p>1a- Si no se he seleccionado un turno, se informa.</p>
+				<p>2a- Si hay un error en la conexión se muestra por pantalla.</p>
+				<br><br><br>
+<!-- Aquí acaba un CU -->	
+
+<!-- Aquí empieza un CU -->			
+				<a name="39"></a>
+				<h1>Caso de uso 39: Configurar el patrón de un contrato</h1>
+				<h2>Objetivo en contexto</h2>
+				<p>Establecer el patrón de un contrato.</p>
+				<h2>Precondiciones</h2>
+				<p>Estar identificado y debe ser posible establecer la conexión con la base de datos. A este caso de llega por medio del CU-23 o CU-25.</p>
+				<h2>Postcondiciones si éxito</h2>
+				<p>Se actualiza la base de datos y el contrato con el patrón.</p>
+				<h2>Postcondiciones si fallo</h2>
+				<p></p>
+				<h2>Actores</h2>
+				<p>Jefe de departamento.</p>
+				<h2>Secuencia normal</h2>
+				<p>1- Establecer la longitud del ciclo y pulsar el botón "Configurar".</p>
+				<p>2- Marcar los días que se desea que trabaje el empleado y con qué turnos dejando en blanco los que descansa.</p>
+				<p>3- Pulsar "Aceptar".</p>
+				<h2>Secuencias alternativas</h2>
+				<p>3a- Si se pulsa "Cancelar" el patrón asignado es el último que había o si es la primera vez se asigna un String vacío.</p>
+				<br><br><br>
+<!-- Aquí acaba un CU -->	
 
 				</div>
 				<h1>Historial de cambios</h1>
@@ -906,6 +1038,17 @@
 				<p>En el caso de uso 27 cuando se hace referencia al caso de uso 23 en realidad es el caso de uso 29, y cuando se hace referencia al caso de uso 22 es el caso de uso 28.</p>
 				<p>Se ha extendido el caso de uso 01 para cuando se dispone de lector de códigos de barras añadiendo el caso de uso 34 (Autentificar al usuario con lector de códigos de barras).</p>
 				<br><br>
+
+				<h3>Marzo 2008</h3>
+				<p>En los casos de uso 23, 24 y 25 el actor es el jefe de departamento y cambia las secuencias normal y alternativa.</p>
+				<p>Se añade el caso de uso 35 (Crear turno).</p>
+				<p>Se añade el caso de uso 36 (Modificar turno).</p>
+				<p>Se añade el caso de uso 37 (Eliminar turno).</p>
+				<p>Se añade el caso de uso 38 (Asignar turno inicial).</p>
+				<p>Se añade el caso de uso 39 (Configurar el patrón de un contrato).</p>
+
+				<br><br>
+
 
 			</div>
 		
