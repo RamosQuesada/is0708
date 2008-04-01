@@ -667,15 +667,15 @@ public class I02_Principal {
 	}
 
 	/**
-	 * Crea un tab de administrador para crear nuevos gerentes
+	 * Crea un tab de administrador para crear nuevos jefes
 	 * 
 	 * @param tabFolder
 	 *            el tabFolder donde colocarlo
-	 * @author David Rodilla
+	 * @author Roberto Garcia
 	 */
 	private void crearTabAdminNuevoGerente(TabFolder tabFolder) {
 		TabItem tabItemEmpleados = new TabItem(tabFolder, SWT.NONE);
-		tabItemEmpleados.setText(bundle.getString("I02_admin_gerente"));
+		tabItemEmpleados.setText(bundle.getString("I02_admin_jefe"));
 		tabItemEmpleados.setImage(ico_chico);
 
 		// Creamos el contenido de la pestaña cuadrantes
@@ -689,7 +689,7 @@ public class I02_Principal {
 		cNuevoGerente.setLayout(lGrupo);
 
 		final Label lTitulo = new Label(cNuevoGerente, SWT.LEFT);
-		lTitulo.setText("Introduzca los datos del gerente");
+		lTitulo.setText(bundle.getString("I02_lab_etiquetaMarco"));
 		final Composite cNuevoGerente2 = new Composite(cNuevoGerente,
 				SWT.BORDER);
 		cNuevoGerente2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
@@ -698,41 +698,41 @@ public class I02_Principal {
 		lGrupo2.numColumns = 2;
 		cNuevoGerente2.setLayout(lGrupo2);
 		final Label lNombre = new Label(cNuevoGerente2, SWT.LEFT);
-		lNombre.setText(bundle.getString("I02AdminNombre"));
+		lNombre.setText(bundle.getString("I02_lab_nombre"));
 		final Text tNombre = new Text(cNuevoGerente2, SWT.BORDER);
 		tNombre.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,
 				0, 0));
 
 		final Label lApellidos = new Label(cNuevoGerente2, SWT.LEFT);
-		lApellidos.setText(bundle.getString("I02AdminApellidos"));
+		lApellidos.setText(bundle.getString("I02_lab_apellidos"));
 		final Text tApellidos = new Text(cNuevoGerente2, SWT.BORDER);
 		tApellidos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 0, 0));
 
 		final Label lNombreUsuario = new Label(cNuevoGerente2, SWT.LEFT);
-		lNombreUsuario.setText(bundle.getString("I02AdminNombreUsuario"));
+		lNombreUsuario.setText(bundle.getString("I02_lab_nombreUsuario"));
 		final Text tNombreUsuario = new Text(cNuevoGerente2, SWT.BORDER);
 		tNombreUsuario.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 0, 0));
 		
-				final Button bClaveAuto = new Button(cNuevoGerente2, SWT.RADIO);
-		bClaveAuto.setText("Generacion automatica de la clave");
+		final Button bClaveAuto = new Button(cNuevoGerente2, SWT.RADIO);
+		bClaveAuto.setText(bundle.getString("I02_lab_claveAuto"));
 		final Button bClaveManual = new Button(cNuevoGerente2, SWT.RADIO);
-		bClaveAuto.setSelection(true);
-
-		bClaveManual.setText("Seleccion manual de la clave");
+		bClaveAuto.setSelection(false);
+		bClaveManual.setText(bundle.getString("I02_lab_claveManual"));
 		final Label lContra = new Label(cNuevoGerente2, SWT.LEFT);
-		lContra.setText(bundle.getString("I02AdminClave"));
+		lContra.setText(bundle.getString("I02_lab_clave"));
 		final Text tPassword = new Text(cNuevoGerente2, SWT.BORDER);
 		tPassword.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,
 				0, 0));
-		tPassword.setText(aplicacion.Util.obtenerClave());
-		tPassword.setEditable(false);
+		//tPassword.setText(aplicacion.Util.obtenerClave());
+		bClaveManual.setSelection(true);
+		tPassword.setEditable(true);
 		
 		
 		
 		final Label lDepartamento = new Label(cNuevoGerente2, SWT.LEFT);
-		lDepartamento.setText(bundle.getString("I02AdminDepartamento"));
+		lDepartamento.setText(bundle.getString("I02_lab_departamento"));
 		final Combo cDepartamentos = new Combo(cNuevoGerente2, SWT.BORDER | SWT.READ_ONLY);
 		cDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 0, 0));
@@ -750,9 +750,6 @@ public class I02_Principal {
 		bClaveAuto.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
-				tNombreUsuario.setText("");
-				tNombre.setText("");
-				tApellidos.setText("");
 				tPassword.setEditable(false);
 				tPassword.setText(aplicacion.Util.obtenerClave());
 			}
@@ -768,9 +765,6 @@ public class I02_Principal {
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
 				tPassword.setEditable(true);
-				tNombreUsuario.setText("");
-				tNombre.setText("");
-				tApellidos.setText("");
 				tPassword.setText("");
 
 			}
@@ -806,21 +800,76 @@ public class I02_Principal {
 				MessageBox messageBox = new MessageBox(shell,
 						SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
 				messageBox.setText("CONFIRMACION");
-				messageBox.setMessage("¿Desea guardar el nuevo gerente?");
-				if (messageBox.open() == SWT.YES) {
-					tNombreUsuario.setText("");
-					tNombre.setText("");
-					tApellidos.setText("");
-					tPassword.setText(aplicacion.Util.obtenerClave());
+				messageBox.setMessage("¿Desea guardar el nuevo jefe?");
+				if (messageBox.open() == SWT.YES) {					
+					if(tNombre.getText().equals("")){
+						MessageBox message = new MessageBox(shell,
+								SWT.APPLICATION_MODAL | SWT.OK
+										| SWT.ICON_INFORMATION);
+						message.setText("Info");
+						message.setMessage(bundle
+								.getString("I02_dlg_nombre"));
+						message.open();
+					}else
+					if(tApellidos.getText().equals("")){
+						MessageBox message = new MessageBox(shell,
+								SWT.APPLICATION_MODAL | SWT.OK
+										| SWT.ICON_INFORMATION);
+						message.setText("Info");
+						message.setMessage(bundle
+								.getString("I02_dlg_apellidos"));
+						message.open();
+					}else
+					if(tNombreUsuario.getText().equals("")){
+						MessageBox message = new MessageBox(shell,
+								SWT.APPLICATION_MODAL | SWT.OK
+										| SWT.ICON_INFORMATION);
+						message.setText("Info");
+						message.setMessage(bundle
+								.getString("I02_dlg_nombreUsuario"));
+						message.open();
+					}else
+					if(tPassword.getText().equals("")){
+						MessageBox message = new MessageBox(shell,
+								SWT.APPLICATION_MODAL | SWT.OK
+										| SWT.ICON_INFORMATION);
+						message.setText("Info");
+						message.setMessage(bundle
+								.getString("I02_dlg_clave"));
+						message.open();
+					}else
+					if(cDepartamentos.getSelectionIndex()<0){
+						MessageBox message = new MessageBox(shell,
+								SWT.APPLICATION_MODAL | SWT.OK
+										| SWT.ICON_INFORMATION);
+						message.setText("Info");
+						message.setMessage(bundle
+								.getString("I02_dlg_departamento"));
+						message.open();
+					}else{
+						/*
+						 * insertamos el nuevo jefe de departamento
+						 */
+						vista.getControlador().insertDepartamentoPruebas(cDepartamentos.getItem(cDepartamentos.getSelectionIndex()), new Integer(tNombreUsuario.getText()));
+					}
+						
 				}
 			}
 		});
+		
 		// Introducimos los valores y eventos de Cancelar
 		bCancelar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true,
 				false, 1, 1));
 		bCancelar.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				shell.dispose();
+				tNombreUsuario.setText("");
+				tNombre.setText("");
+				tApellidos.setText("");
+				bClaveManual.setSelection(true);
+				bClaveAuto.setSelection(false);
+				tPassword.setText("");
+				tPassword.setEditable(true);
+				
 			}
 		});
 

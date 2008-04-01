@@ -674,6 +674,10 @@ public class Controlador {
 
 	// este metodo lo usa el programa que rellena automaticamente las tablas de
 	// la base de datos
+	/*
+	 * TAMBIEN SE USA PARA LA VENTANA DE CREAR UN JEFE DE DEPARTAMENTO
+	 */
+
 	/**
 	 * Metodo que inserta en la base de datos los valores correspondientes a un
 	 * nuevo departamento(este metodo lo usa el programa que rellena
