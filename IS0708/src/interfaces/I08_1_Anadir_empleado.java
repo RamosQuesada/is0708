@@ -366,9 +366,7 @@ public class I08_1_Anadir_empleado {
 							break;
 						}
 					}
-					fechaContrato.setYear(fechaContrato.getYear()-1900);
-					fechaNacimiento.setYear(fechaNacimiento.getYear()-1900);
-					fechaAlta.setYear(fechaAlta.getYear()-1900);
+
 					Empleado emp = new Empleado(vista.getEmpleadoActual().getEmplId(), n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, id, fechaContrato, fechaAlta, null, cDepto.getText(), null, 0, cIdioma.getSelectionIndex(),0);
 					vista.insertEmpleado(emp);
 					shell.dispose();
