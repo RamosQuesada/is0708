@@ -74,7 +74,7 @@ public class I17_Seleccion_fecha {
 		bEnviar.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
 				// TODO ¿Se puede evitar usar métodos obsoletos?
-				fecha = new Date(calendario.getYear(),calendario.getMonth(),calendario.getDay());
+				fecha = new Date(calendario.getYear()-1900,calendario.getMonth(),calendario.getDay());
 				shell.dispose();
 			}				
 		});
