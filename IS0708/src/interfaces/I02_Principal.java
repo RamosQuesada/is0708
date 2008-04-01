@@ -407,9 +407,9 @@ public class I02_Principal {
 	 * 
 	 * @param tabFolder
 	 *            el tabFolder donde colocarlo
-	 * @author Daniel Dionne
+	 * @author Daniel Dionne && Carlos Sánchez
 	 */
-	private void crearTabJefeDepartamentos(TabFolder tabFolder) {
+	private void crearTabAdminDepartamentos(TabFolder tabFolder) {
 		TabItem tabItemDepartamentos = new TabItem(tabFolder, SWT.NONE);
 		tabItemDepartamentos.setText(bundle.getString("Departamentos"));
 		tabItemDepartamentos.setImage(ico_chicos);
@@ -492,6 +492,89 @@ public class I02_Principal {
 
 	}
 
+	private void crearTabJefeDepartamentos(TabFolder tabFolder) {
+		TabItem tabItemDepartamentos = new TabItem(tabFolder, SWT.NONE);
+		tabItemDepartamentos.setText(bundle.getString("Departamentos"));
+		tabItemDepartamentos.setImage(ico_chicos);
+
+		final Composite cDepartamentos = new Composite(tabFolder, SWT.NONE);
+		tabItemDepartamentos.setControl(cDepartamentos);
+
+		cDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
+				true, 1, 1));
+		cDepartamentos.setLayout(new GridLayout(3, false));
+
+		Label lDepartamentos = new Label(cDepartamentos, SWT.LEFT);
+		lDepartamentos.setText(bundle.getString("Departamento"));
+		lDepartamentos.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
+				false, 1, 1));
+
+		final Combo cmbDepartamentos = new Combo(cDepartamentos, SWT.BORDER
+				| SWT.READ_ONLY);
+		cmbDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+				false, 1, 1));
+
+		// ArrayList<String> array = vista.getEmpleadoActual()
+		// .getDepartamentosId();
+		ArrayList<String> array = vista.getNombreTodosDepartamentos();
+		if (array != null) {
+			for (int i = 0; i < array.size(); i++) {
+				cmbDepartamentos.add(array.get(i));
+			}
+		}
+		// cmbDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
+		cmbDepartamentos.select(0);
+
+
+		
+		// Composite for Buttons: "New Department" and "Configure Department"
+		Composite cBut = new Composite(cDepartamentos, SWT.LEFT);
+		cBut.setLayout(new GridLayout(2, false));
+
+		// Button "Configure Department"
+		Button bConfig = new Button(cBut, SWT.PUSH);
+		bConfig.setText(bundle.getString("I02_but_Config_dep"));
+		bConfig.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1,
+				1));
+
+		bConfig.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				System.out
+						.println("I02 :: Pulsado Configuración departamentos: "
+								+ cmbDepartamentos.getText());
+				new I10_Config_departamento(shell, bundle, vista,
+						cmbDepartamentos.getText(),cmbDepartamentos);
+			}
+		});
+
+		// Button "New Department"
+		Button bNew = new Button(cBut, SWT.PUSH);
+		bNew.setText(bundle.getString("I02_but_Nuevo_dep"));
+		bNew.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		bNew.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				// System.out.println("I02 :: Pulsado Nuevo Departamento");
+				new I10_Nuevo_departamento(shell,bundle,vista,cmbDepartamentos);
+			}
+		});
+
+		Composite cInfo = new Composite(cDepartamentos, SWT.BORDER);
+		cInfo.setLayout(new GridLayout(2, false));
+		cInfo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
+		final Text lContenido = new Text(cInfo, SWT.CENTER & SWT.READ_ONLY & SWT.WRAP);
+		lContenido.setText("Aquí va información del departamento");
+		lContenido.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true,
+				true, 2, 1));
+		
+		//listener para el combo y mostrar la info debajo
+		cmbDepartamentos.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				lContenido.setText(cmbDepartamentos.getText());
+			}
+		});
+
+	}
+	
 	/**
 	 * Crea un tab con un listado de contratos
 	 * 
@@ -1390,7 +1473,7 @@ public class I02_Principal {
 			crearTabJefeCuadrantes(tabFolder);
 			crearTabMensajes(tabFolder);
 			crearTabJefeEmpleados(tabFolder);
-			crearTabJefeDepartamentos(tabFolder);
+			crearTabAdminDepartamentos(tabFolder);
 			crearTabJefeContratos(tabFolder);
 			crearTabGerenteEstadisticas(tabFolder);
 			crearTabEmpleadoEstadisticas(tabFolder);
