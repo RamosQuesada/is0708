@@ -276,6 +276,8 @@ public class Vista {
 		return true;
 	}
 	
+
+	
 	/**
 	 * Modifica un turno de la base de datos
 	 * @return false si el turno no existe

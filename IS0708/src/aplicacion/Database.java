@@ -1517,6 +1517,27 @@ public class Database extends Thread {
 		}
 		return true;
 	}
+	/**
+	 * Modifica un turno en la BD. Se le pasan todos los parametros aunque no
+	 * cambien excepto el de HorasExtras ya que ese no lo debemos tocar
+	 * @param idEmp
+	 * @param nomb
+	 * @param Ape1
+	 * @param Ape2
+	 * @param FNac
+	 * @param sexo
+	 * @param mail
+	 * @param Passw
+	 * @param grupo
+	 * @param FCont
+	 * @param Fentr
+	 * @param Felic
+	 * @param Idiom
+	 * @param Rang
+	 * @param Turn
+	 * @param Contr
+	 * @return Devuelve un bool que dice si todo ha ido bien.
+	 */
 	
 	public boolean cambiarEmpleado(int idEmp, String nomb, String Ape1, String Ape2, Date FNac, int sexo, 
 			String mail, String Passw, int grupo, Date FCont, Date Fentr, int Felic, int Idiom, 

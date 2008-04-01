@@ -105,7 +105,7 @@ public class I08_1_Editar_empleado {
 		final Combo  cDepto			= new Combo (grupoDer, SWT.BORDER | SWT.READ_ONLY);
 		final Button bFContrato		= new Button(grupoDer, SWT.PUSH);
 		final Text   tFContrato		= new Text  (grupoDer, SWT.BORDER | SWT.READ_ONLY);
-		final Button cambios		= new Button(grupoDer, SWT.PUSH);
+		final Button bFAlta			= new Button(grupoDer, SWT.PUSH);
 		final Text   tFAlta			= new Text  (grupoDer, SWT.BORDER | SWT.READ_ONLY);
 		final Button bColor			= new Button(grupoDer, SWT.PUSH);
 		final Label  lColor			= new Label	(grupoDer,  SWT.NONE);
@@ -126,7 +126,7 @@ public class I08_1_Editar_empleado {
 		lContrato		.setText(bundle.getString("I08_lab_TipoContrato"));
 		lExperiencia	.setText(bundle.getString("Experiencia"));
 		lDepto			.setText(bundle.getString("Departamento"));
-		cambios			.setText("I08_lab_FAlta");
+		bFAlta			.setText("I08_lab_FAlta");
 		bFContrato		.setText(bundle.getString("I08_lab_FContr"));
 		bColor			.setText(bundle.getString("I08_lab_SelColor"));
 
@@ -155,7 +155,7 @@ public class I08_1_Editar_empleado {
 		cDepto		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		bFContrato	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		tFContrato	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
-		cambios		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
+		bFAlta		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		tFAlta		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		bColor		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		lColor		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
@@ -267,7 +267,7 @@ public class I08_1_Editar_empleado {
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
 				if(fechaNacimiento!=null){
 					tFNacimiento.setText(String.valueOf(fechaNacimiento.getDate()) + " de " + meses[fechaNacimiento.getMonth()]+ " de " + String.valueOf(fechaNacimiento.getYear()));
-					fechaNacimiento.setYear(fechaNacimiento.getYear()-1900);
+	
 				}else{
 					tFNacimiento.setText(String.valueOf(emp.getFechaNac().getDate()) + " de " + meses[emp.getFechaNac().getMonth()]+ " de " + String.valueOf(emp.getFechaNac().getYear()));
 
@@ -289,7 +289,7 @@ public class I08_1_Editar_empleado {
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
 				if(fechaContrato!=null){
 					tFContrato.setText(String.valueOf(fechaContrato.getDate()) + " de " + meses[fechaContrato.getMonth()]+ " de " + String.valueOf(fechaContrato.getYear()));
-					fechaContrato.setYear(fechaContrato.getYear()-1900);
+					
 				}else{
 					tFContrato.setText(String.valueOf(emp.getFcontrato().getDate()) + " de " + meses[emp.getFcontrato().getMonth()]+ " de " + String.valueOf(emp.getFcontrato().getYear()));
 				
@@ -311,8 +311,8 @@ public class I08_1_Editar_empleado {
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
 				if(fechaAlta!=null){
 					tFAlta.setText(String.valueOf(fechaAlta.getDate()) + " de " + meses[fechaAlta.getMonth()]+ " de " + String.valueOf(fechaAlta.getYear()));
-					String tFAlta =String.valueOf(fechaAlta.getDate()) + "-" + fechaAlta.getMonth()+ "-" + String.valueOf(fechaAlta.getYear()-1900);
-					fechaAlta.setYear(fechaAlta.getYear()-1900);
+					//String tFAlta =String.valueOf(fechaAlta.getDate()) + "-" + fechaAlta.getMonth()+ "-" + String.valueOf(fechaAlta.getYear());
+		
 					int aux=1;
 				}else{
 					tFAlta.setText(String.valueOf(emp.getFAlta().getDate()) + " de " + meses[emp.getFAlta().getMonth()]+ " de " + String.valueOf(emp.getFAlta().getYear()));
@@ -321,7 +321,7 @@ public class I08_1_Editar_empleado {
 				}
 			}
 		};
-		cambios.addSelectionListener(sabCambios);
+		bFAlta.addSelectionListener(sabCambios);
 		
 		// Listener para el selector de color
 		SelectionAdapter sabColor = new SelectionAdapter() {
@@ -409,29 +409,8 @@ public class I08_1_Editar_empleado {
 					tEMail.setFocus();
 					tEMail.selectAll();
 				}
-				// Si se han modificado los campos de datos laborables mostrar mensaje de necesidad de
-				// actualizacion de cuadrante
-				int j=0;
-				for (int i=0; i<contratos.size();i++){
-					String p1=contratos.get(i).getNombreContrato();
-					String p2=cContrato.getItem(cContrato.getSelectionIndex());
-					if (contratos.get(i).getNombreContrato().equals(cContrato.getItem(cContrato.getSelectionIndex()))){
-						j=i;
-					}
-				}
-				int indice = ids.get(j);
-				int Exp=cExperiencia.getSelectionIndex();
-				if(emp.getContratoId()!=ids.get(j)|| emp.getGrupo()!=cExperiencia.getSelectionIndex()){
-					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
-					messageBox.setText ("Aviso");
-					messageBox.setMessage ("Para que algunos de estos cambios sean efectivos debe recalcular el cuadrante");
-					e.doit = messageBox.open () == SWT.YES;
-				 }
-				// Si todo está bien, modifica el empleado
-			
-		
-					Database dat=null;
-					
+
+				// Si todo está bien, modifica el empleado					
 
 					String nom=tNombre.getText();
 					String ap1=tApell1.getText();
@@ -447,13 +426,31 @@ public class I08_1_Editar_empleado {
 					int turn= emp.getTurnoFavorito();
 					
 					int id =idVend;
-
+					int j=0;
+					for (int i=0; i<contratos.size();i++){
+						String p1=contratos.get(i).getNombreContrato();
+						String p2=cContrato.getItem(cContrato.getSelectionIndex());
+						if (contratos.get(i).getNombreContrato().equals(cContrato.getItem(cContrato.getSelectionIndex()))){
+							j=i;
+						}
+					}
+					int indice = ids.get(j);
+					int Exp=cExperiencia.getSelectionIndex();
 
 					
 					
-						vista.getControlador().cambiarEmpleado(id, nom, ap1, ap2, fechaNacimiento, sex,  mail, pass, 
+					vista.getControlador().cambiarEmpleado(id, nom, ap1, ap2, fechaNacimiento, sex,  mail, pass, 
 								Exp, fechaContrato,fechaAlta, Fel, idiom, ran, turn, indice);
 					
+					// Si se han modificado los campos de datos laborables mostrar mensaje de necesidad de
+					// actualizacion de cuadrante
+					if(emp.getContratoId()!=ids.get(j)|| emp.getGrupo()!=cExperiencia.getSelectionIndex()){
+						MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
+						messageBox.setText ("Aviso");
+						messageBox.setMessage ("Para que algunos de estos cambios sean efectivos debe recalcular el cuadrante");
+						e.doit = messageBox.open () == SWT.YES;
+					 }
+
 					shell.dispose(); 
 				}
 			
