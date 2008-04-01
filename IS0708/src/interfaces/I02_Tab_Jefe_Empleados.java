@@ -208,9 +208,9 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 				1, 1));
 		
 		//cEmplContr.add("prueba");	
-		//while (!_vista.isCacheCargada()) {
+		while (!_vista.isCacheCargada() && _vista.getEmpleadoActual().getEmplId() != 00000000) {
 		//	sleep(5000);
-		//}
+		}
 		for (int i=1; i<_vista.getListaContratosDepartamento().size(); i++)
 			cEmplContr.add(_vista.getListaContratosDepartamento().get(i).getNombreContrato());
 		
