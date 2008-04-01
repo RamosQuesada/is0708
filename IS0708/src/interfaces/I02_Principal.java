@@ -514,7 +514,6 @@ public class I02_Principal {
 				| SWT.READ_ONLY);
 		cmbDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 1, 1));
-
 		ArrayList<String> array = vista.getNombreTodosDepartamentos();
 		if (array != null) {
 			for (int i = 0; i < array.size(); i++) {
@@ -577,7 +576,7 @@ public class I02_Principal {
 	 * 
 	 * @param tabFolder
 	 *            el tabFolder donde colocarlo
-	 * @author David Rodilla & Jose Maria Martin
+	 * @author Roberto Garcia & Jose Maria Martin
 	 */
 	private void crearTabAdminInicio(TabFolder tabFolder) {
 		TabItem tabItemAdminInicio = new TabItem(tabFolder, SWT.NONE);
@@ -631,7 +630,14 @@ public class I02_Principal {
 			}
 
 			public void widgetSelected(SelectionEvent arg0) {
-				I30_Info_BD ventana = new I30_Info_BD(shell, bundle, vista);
+				MessageBox messageBox = new MessageBox(shell,
+						SWT.APPLICATION_MODAL | SWT.ICON_QUESTION | SWT.OK
+								| SWT.CANCEL);
+				messageBox.setText("Reset BD");
+				messageBox.setMessage(bundle.getString("I30_confirm_config"));
+				if(messageBox.open()==SWT.OK){
+					new I30_Info_BD(shell, bundle, vista);
+				}
 			}
 		});
 
@@ -736,6 +742,7 @@ public class I02_Principal {
 		final Combo cDepartamentos = new Combo(cNuevoGerente2, SWT.BORDER | SWT.READ_ONLY);
 		cDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 0, 0));
+		
 		ArrayList <Departamento> listDept= vista.getControlador().getTodosDepartamentos();
 		for(int i = 0; i< listDept.size();i++){
 			cDepartamentos.add(listDept.get(i).getNombreDepartamento());		
@@ -1502,6 +1509,7 @@ public class I02_Principal {
 		switch (rango) {
 		case 0:
 			// Tabs de administrador
+			//vista.getControlador().abrirConexionBD();
 			crearTabAdminInicio(tabFolder);
 			crearTabAdminNuevoGerente(tabFolder);
 			crearTabAdminEliminaGerente(tabFolder);
@@ -1513,6 +1521,7 @@ public class I02_Principal {
 			crearTabGerenteEstadisticas(tabFolder);
 			crearTabEmpleadoEstadisticas(tabFolder);
 			crearTabEmpleadoCuadrantes(tabFolder);
+			//vista.getControlador().cerrarConexionBD();
 			break;
 		case 2:
 			// Tabs de jefe
