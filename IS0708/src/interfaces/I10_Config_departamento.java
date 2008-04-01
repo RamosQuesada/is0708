@@ -2,7 +2,7 @@ package interfaces;
 
 /*******************************************************************************
  * INTERFACE :: ManageDepartment
- *   by Carlos Sánchez and a bit colaboration from Aneta
+ *   by Carlos Sánchez and a little collaboration from Aneta
  *   
  * Management (adding and configurate) department.
  * ver 1.0
@@ -84,98 +84,98 @@ public class I10_Config_departamento {
 	
 	/**add components into window*/
 	private void addComponents(){
+		if(admin){
+			final Group group = new Group(shell, SWT.NONE);
+			group.setText(bundle.getString("Departamento"));
+			group.setLayout(new GridLayout(1,false));
+			group.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,2,1));
 
-		final Group group = new Group(shell, SWT.NONE);
-		group.setText(bundle.getString("Departamento"));
-		group.setLayout(new GridLayout(1,false));
-		group.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,2,1));
+			group.setLayout(new GridLayout(3,false));
+			group.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,2,1));
 
-		group.setLayout(new GridLayout(3,false));
-		group.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,2,1));
+			labName = new Label (group, SWT.NONE);
+			labName.setText(bundle.getString("Nombre"));
+			labName.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));	
 
-		labName = new Label (group, SWT.NONE);
-		labName.setText(bundle.getString("Nombre"));
-		labName.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));	
-		
-		tName = new Text  (group, SWT.BORDER);	
-		tName.setSize(100,20);
-		tName.setText(nombre);
-		tName.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
-		
-		bJefe= new Button(group, SWT.CHECK);
-		bJefe.setText(bundle.getString("I10_cambiar_jefe"));
-		bJefe.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,2,1));
-		
-		labChooseBoss= new Label (group, SWT.NONE);
-		labChooseBoss.setText(bundle.getString("I10_elige_jefe"));
-		labChooseBoss.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,3,1));
-		
-		final Combo cmbJefes = new Combo(group, SWT.BORDER
-				| SWT.READ_ONLY);
-		cmbJefes.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-				false, 4, 1));
-		
-		ArrayList<String> array = vista.getNombreTodosJefes();
-		if (array != null) {
-			for (int i = 0; i < array.size(); i++) {
-				cmbJefes.add(array.get(i));
+			tName = new Text  (group, SWT.BORDER);	
+			tName.setSize(100,20);
+			tName.setText(nombre);
+			tName.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
+
+			bJefe= new Button(group, SWT.CHECK);
+			bJefe.setText(bundle.getString("I10_cambiar_jefe"));
+			bJefe.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,2,1));
+
+			labChooseBoss= new Label (group, SWT.NONE);
+			labChooseBoss.setText(bundle.getString("I10_elige_jefe"));
+			labChooseBoss.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,3,1));
+
+			final Combo cmbJefes = new Combo(group, SWT.BORDER
+					| SWT.READ_ONLY);
+			cmbJefes.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+					false, 4, 1));
+
+			ArrayList<String> array = vista.getNombreTodosJefes();
+			if (array != null) {
+				for (int i = 0; i < array.size(); i++) {
+					cmbJefes.add(array.get(i));
+				}
 			}
-		}
-		cmbJefes.select(0);
-		/*
+			cmbJefes.select(0);
+			/*
 		labNumber = new Label (group, SWT.NONE);
 		labNumber.setText(bundle.getString("I10_lab_num"));
 		labNumber.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));	
-	
+
 		tNumber = new Text (group, SWT.BORDER);	
 		tNumber.setLayoutData (new GridData(SWT.FILL,SWT.CENTER,true,true,2,1));
-		
+
 		labBoss = new Label (group, SWT.NONE);
 		labBoss.setText(bundle.getString("I10_lab_jefe"));
 		labBoss.setLayoutData (new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));*/	
-		
-		//textBoss = new Text (group, SWT.BORDER );
-		//textBoss.setLayoutData (new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
-		//tNombre = new I13_Elegir_empleado(group,vista, bundle);
-		//Button bSelect = new Button(group, SWT.NONE);
-		//bSelect.setText(bundle.getString("I10_but_seleccionar"));
-		//bSelect.setLayoutData(new GridData(SWT.LEFT,SWT.CENTER,true,true,1,1))	;	
-		//SelectionAdapter bossSelectionListener = new SelectionAdapter(){
-		//	public void widgetSelected(SelectionEvent e) {
-				// TODO
-		//		 new I08_1_Anadir_empleado(shell, bundle, vista);
-		//	}
-		//};
-		//bSelect.addSelectionListener(bossSelectionListener);
-		//butNewBoss = new Button(group, SWT.PUSH);
-		//butNewBoss.setText(bundle.getString("I10_but_nuevo_jefe"));
-		//butNewBoss.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
-		
-		//Buttons "Accept" and "Cancel"
-		
-		bAccept	= new Button(shell, SWT.PUSH);
-		bAccept.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		bAccept.setText(bundle.getString("Aceptar"));
-		
-		//CREACION DEL JEFE Y DEL DEPARTAMENTO
-		/*
+
+			//textBoss = new Text (group, SWT.BORDER );
+			//textBoss.setLayoutData (new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
+			//tNombre = new I13_Elegir_empleado(group,vista, bundle);
+			//Button bSelect = new Button(group, SWT.NONE);
+			//bSelect.setText(bundle.getString("I10_but_seleccionar"));
+			//bSelect.setLayoutData(new GridData(SWT.LEFT,SWT.CENTER,true,true,1,1))	;	
+			//SelectionAdapter bossSelectionListener = new SelectionAdapter(){
+			//	public void widgetSelected(SelectionEvent e) {
+			// TODO
+			//		 new I08_1_Anadir_empleado(shell, bundle, vista);
+			//	}
+			//};
+			//bSelect.addSelectionListener(bossSelectionListener);
+			//butNewBoss = new Button(group, SWT.PUSH);
+			//butNewBoss.setText(bundle.getString("I10_but_nuevo_jefe"));
+			//butNewBoss.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+
+			//Buttons "Accept" and "Cancel"
+
+			bAccept	= new Button(shell, SWT.PUSH);
+			bAccept.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+			bAccept.setText(bundle.getString("Aceptar"));
+
+			//CREACION DEL JEFE Y DEL DEPARTAMENTO
+			/*
 		String nombreJefe = textBoss.getText();
 		//TODO separar nombres y apellidos y ¿coger primer empleado?
 		// volver a poner
 		int numeroDepartamento = Integer.valueOf(tNumber.getText());
 		Empleado jefe=listaCoincidencias.get(textBoss.getSelectionIndex());
 		String nombreDepartamento = tName.getText();
-		
+
 		Departamento departamento = new Departamento(nombreDepartamento,
 				numeroDepartamento, jefe);
-		
-		this.vista.insertDepartamento(departamento);*/
-		
 
-		bAccept.addSelectionListener (
-				new SelectionAdapter () {
-			public void widgetSelected (SelectionEvent e) {
-				/*if(integerCheck(tNumber.getText())==true){
+		this.vista.insertDepartamento(departamento);*/
+
+
+			bAccept.addSelectionListener (
+					new SelectionAdapter () {
+						public void widgetSelected (SelectionEvent e) {
+							/*if(integerCheck(tNumber.getText())==true){
 					// TODO Asignar jefe departamento
 					//Empleado jefe = vista.getEmpleado(tNombre.getIdEmpl());
 					//Departamento departamento = new Departamento(tName.getText(),Integer.parseInt(tNumber.getText()),jefe);
@@ -190,43 +190,106 @@ public class I10_Config_departamento {
 					e.doit = messageBox.open () == SWT.CLOSE;
 					System.out.println("Non-integer value in Number field: "+tNumber.getText());
 				}		
-					*/
-				if(tName.getText()!=""){
-					//cambiamos el nombre
-					vista.cambiarNombreDepartamento(nombre,tName.getText());
-					if(bJefe.isEnabled()){
-						String numjefe=(cmbJefes.getText().subSequence(cmbJefes.getText().length()-8, cmbJefes.getText().length())).toString();
-						vista.cambiarJefeDepartamento(tName.getText(),numjefe);
-					}
-					father.removeAll();
-					ArrayList<String> array = vista.getNombreTodosDepartamentos();
-					if (array != null) {
-						for (int i = 0; i < array.size(); i++) {
-							father.add(array.get(i));
+							 */
+							if(tName.getText()!=""){
+								//cambiamos el nombre
+								vista.cambiarNombreDepartamento(nombre,tName.getText());
+								if(bJefe.isEnabled()){
+									String numjefe=(cmbJefes.getText().subSequence(cmbJefes.getText().length()-8, cmbJefes.getText().length())).toString();
+									vista.cambiarJefeDepartamento(tName.getText(),numjefe);
+								}
+								father.removeAll();
+								ArrayList<String> array = vista.getNombreTodosDepartamentos();
+								if (array != null) {
+									for (int i = 0; i < array.size(); i++) {
+										father.add(array.get(i));
+									}
+								}
+								// cmbDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
+								father.select(0);
+								shell.dispose();
+							}else{//si no se ha metido texto
+								MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
+								messageBox.setText (bundle.getString("Mensaje"));
+								messageBox.setMessage (bundle.getString("I10_err_string_vacio"));
+								e.doit = messageBox.open () == SWT.CLOSE;
+							}
 						}
-					}
-					// cmbDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
-					father.select(0);
-					shell.dispose();
-				}else{//si no se ha metido texto
-					MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
-					messageBox.setText (bundle.getString("Mensaje"));
-					messageBox.setMessage (bundle.getString("I10_err_string_vacio"));
-					e.doit = messageBox.open () == SWT.CLOSE;
-				}
-			}
-		});
+					});
 
-		bCancel		= new Button(shell, SWT.PUSH);		
-		bCancel	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		bCancel	.setText(bundle.getString("Cancelar"));
-		bCancel	.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		bCancel.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
+			bCancel		= new Button(shell, SWT.PUSH);		
+			bCancel	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+			bCancel	.setText(bundle.getString("Cancelar"));
+			bCancel	.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+			bCancel.addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent e) {
 					shell.dispose();	
-			}
-		});
+				}
+			});
+		}else{//si es jefe de departamento
+			final Group group = new Group(shell, SWT.NONE);
+			group.setText(bundle.getString("Departamento"));
+			group.setLayout(new GridLayout(1,false));
+			group.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,2,1));
+
+			group.setLayout(new GridLayout(3,false));
+			group.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,2,1));
+
+			labName = new Label (group, SWT.NONE);
+			labName.setText(bundle.getString("Nombre"));
+			labName.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));	
+
+			tName = new Text  (group, SWT.BORDER);	
+			tName.setSize(100,20);
+			tName.setText(nombre);
+			tName.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
+
+			//Buttons "Accept" and "Cancel"
+
+			bAccept	= new Button(shell, SWT.PUSH);
+			bAccept.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+			bAccept.setText(bundle.getString("Aceptar"));
+
+
+
+
+			bAccept.addSelectionListener (
+					new SelectionAdapter () {
+						public void widgetSelected (SelectionEvent e) {
+							if(tName.getText()!=""){
+								//cambiamos el nombre
+								vista.cambiarNombreDepartamento(nombre,tName.getText());
+								father.removeAll();
+								ArrayList<String> array = vista.getNombreTodosDepartamentos();
+								if (array != null) {
+									for (int i = 0; i < array.size(); i++) {
+										father.add(array.get(i));
+									}
+								}
+								// cmbDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
+								father.select(0);
+								shell.dispose();
+							}else{//si no se ha metido texto
+								MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
+								messageBox.setText (bundle.getString("Mensaje"));
+								messageBox.setMessage (bundle.getString("I10_err_string_vacio"));
+								e.doit = messageBox.open () == SWT.CLOSE;
+							}
+						}
+					});
+
+			bCancel		= new Button(shell, SWT.PUSH);		
+			bCancel	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+			bCancel	.setText(bundle.getString("Cancelar"));
+			bCancel	.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+			bCancel.addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent e) {
+					shell.dispose();	
+				}
+			});
+		}
 	}
 
 	/**check if the String text is interger*/
