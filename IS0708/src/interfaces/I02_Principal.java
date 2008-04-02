@@ -522,7 +522,6 @@ public class I02_Principal {
 			}
 		}
 		cmbDepartamentos.select(0);
-		cmbDepartamentos.setEnabled(false);
 
 		// Composite for Buttons: "New Department" and "Configure Department"
 		Composite cBut = new Composite(cDepartamentos, SWT.LEFT);
