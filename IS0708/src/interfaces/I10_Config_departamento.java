@@ -109,6 +109,7 @@ public class I10_Config_departamento {
 			labChooseBoss= new Label (group, SWT.NONE);
 			labChooseBoss.setText(bundle.getString("I10_elige_jefe"));
 			labChooseBoss.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,3,1));
+			
 
 			final Combo cmbJefes = new Combo(group, SWT.BORDER
 					| SWT.READ_ONLY);
@@ -122,6 +123,7 @@ public class I10_Config_departamento {
 				}
 			}
 			cmbJefes.select(0);
+			cmbJefes.setEnabled(false);
 			/*
 		labNumber = new Label (group, SWT.NONE);
 		labNumber.setText(bundle.getString("I10_lab_num"));
@@ -170,7 +172,17 @@ public class I10_Config_departamento {
 				numeroDepartamento, jefe);
 
 		this.vista.insertDepartamento(departamento);*/
-
+			bJefe.addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent e) {
+					if(bJefe.getSelection()){
+						System.out.println("Estaaaaaaaaaa a trueee");
+						cmbJefes.setEnabled(true);
+					}else{
+						System.out.println("Estaaaaaaaaaa a falso");
+						cmbJefes.setEnabled(false);
+					}
+				}
+			});
 
 			bAccept.addSelectionListener (
 					new SelectionAdapter () {
@@ -194,7 +206,7 @@ public class I10_Config_departamento {
 							if(tName.getText()!=""){
 								//cambiamos el nombre
 								vista.cambiarNombreDepartamento(nombre,tName.getText());
-								if(bJefe.isEnabled()){
+								if(bJefe.getSelection()){
 									String numjefe=(cmbJefes.getText().subSequence(cmbJefes.getText().length()-8, cmbJefes.getText().length())).toString();
 									vista.cambiarJefeDepartamento(tName.getText(),numjefe);
 								}
