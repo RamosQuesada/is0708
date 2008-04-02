@@ -1,7 +1,8 @@
 package algoritmo;
 
 import java.util.ArrayList;
-import aplicacion.Util;
+
+import aplicacion.utilidades.Util;
 
 /**
  * Esta clase corresponde con la salida del algoritmo,un arraylist de objetos de la clase Trabaja

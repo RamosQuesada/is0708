@@ -1,12 +1,16 @@
-package aplicacion;
+package aplicacion.datos;
 
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.*;
+
+import aplicacion.Controlador;
+import aplicacion.Vista;
+import aplicacion.utilidades.Code128;
+import aplicacion.utilidades.Drawable;
+import aplicacion.utilidades.Util;
 
 import java.sql.Date;
 import java.sql.Time;

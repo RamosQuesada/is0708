@@ -1,4 +1,4 @@
-package aplicacion;
+package aplicacion.utilidades;
 import java.util.ResourceBundle;
 
 import org.eclipse.swt.graphics.*;

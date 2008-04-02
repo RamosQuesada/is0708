@@ -5,11 +5,11 @@ import java.sql.Time;
 
 import aplicacion.Controlador;
 import aplicacion.Database;
-import aplicacion.Empleado;
-import aplicacion.Turno;
-import aplicacion.Contrato;
-import aplicacion.Departamento;
-import aplicacion.Util;
+import aplicacion.datos.Contrato;
+import aplicacion.datos.Departamento;
+import aplicacion.datos.Empleado;
+import aplicacion.datos.Turno;
+import aplicacion.utilidades.Util;
 
 import java.util.ArrayList;
 import java.util.Random;

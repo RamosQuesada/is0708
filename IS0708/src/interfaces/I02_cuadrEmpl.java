@@ -22,9 +22,9 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.events.*;
 
-import aplicacion.Empleado;
-import aplicacion.Util;
 import aplicacion.Vista;
+import aplicacion.datos.Empleado;
+import aplicacion.utilidades.Util;
 
 
 /**

@@ -1,4 +1,4 @@
-package aplicacion;
+package aplicacion.mensajeria;
 
 import java.sql.Date;
 

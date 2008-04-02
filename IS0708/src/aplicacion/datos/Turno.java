@@ -1,4 +1,4 @@
-package aplicacion;
+package aplicacion.datos;
 
 import java.sql.Time;
 
@@ -6,7 +6,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.widgets.*;
 
-import aplicacion.Util;
+import aplicacion.utilidades.Util;
 
 /**
  * Esta clase representa un turno.

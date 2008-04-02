@@ -10,6 +10,12 @@ import org.eclipse.swt.graphics.Color;
 import algoritmo.Calendario;
 import algoritmo.Cuadrante;
 import algoritmo.Trabaja;
+import aplicacion.datos.Contrato;
+import aplicacion.datos.Departamento;
+import aplicacion.datos.Empleado;
+import aplicacion.datos.Turno;
+import aplicacion.mensajeria.Mensaje;
+import aplicacion.utilidades.Util;
 
 /**
  * Esta clase conecta el modelo (la base de datos) con la vista (los interfaces)
@@ -443,7 +449,7 @@ public class Controlador {
 				String ap2 = rs.getString("Apellido2");
 				int nv = rs.getInt("NumVendedor");
 				String numvendedoraux = String.valueOf(nv);
-				String numvendedor = aplicacion.Util.completaNumVendedor(numvendedoraux);
+				String numvendedor = aplicacion.utilidades.Util.completaNumVendedor(numvendedoraux);
 				jefes.add(nombrejefe+" "+ap1+" "+ap2 + "  Nº: "+ numvendedor );
 			}
 		} catch (Exception e) {
@@ -1346,7 +1352,7 @@ public class Controlador {
 				Time HoraS = rs.getTime("HoraSalida");
 				Time HoraI = rs.getTime("HoraInicioDescanso");
 				Time duracion = rs.getTime("DuracionDescanso");
-				int descanso = aplicacion.Util.dameMinutos(duracion);
+				int descanso = aplicacion.utilidades.Util.dameMinutos(duracion);
 				Turno t = new Turno(idTurn, descr, HoraE, HoraS, HoraI,
 						descanso);
 				turnos.add(t);
@@ -1379,7 +1385,7 @@ public class Controlador {
 					Time HoraS = rs2.getTime("HoraSalida");
 					Time HoraI = rs2.getTime("HoraInicioDescanso");
 					Time duracion = rs2.getTime("DuracionDescanso");
-					int descanso = aplicacion.Util.dameMinutos(duracion);
+					int descanso = aplicacion.utilidades.Util.dameMinutos(duracion);
 					Turno t = new Turno(idTurn, descr, HoraE, HoraS, HoraI,
 							descanso);
 					turnos.add(t);
@@ -1413,7 +1419,7 @@ public class Controlador {
 					Time HoraS = rs2.getTime("HoraSalida");
 					Time HoraI = rs2.getTime("HoraInicioDescanso");
 					Time duracion = rs2.getTime("DuracionDescanso");
-					int descanso = aplicacion.Util.dameMinutos(duracion);
+					int descanso = aplicacion.utilidades.Util.dameMinutos(duracion);
 					Turno t = new Turno(idTurn, descr, HoraE, HoraS, HoraI,
 							descanso);
 					turnos.add(t);
@@ -1531,7 +1537,7 @@ public class Controlador {
 				Time hSalida = rs.getTime("HoraSalida");
 				Time hInicioDescanso = rs.getTime("HoraInicioDescanso");
 				Time duracion = rs.getTime("DuracionDescanso");
-				int descanso = aplicacion.Util.dameMinutos(duracion);
+				int descanso = aplicacion.utilidades.Util.dameMinutos(duracion);
 				Turno t = new Turno(idTurno, descr, hEntrada, hSalida,
 						hInicioDescanso, descanso);
 				turnos.add(t);
@@ -1603,7 +1609,7 @@ public class Controlador {
 				Time HoraS = rs2.getTime("HoraSalida");
 				Time HoraI = rs2.getTime("HoraInicioDescanso");
 				Time duracion = rs2.getTime("DuracionDescanso");
-				int descanso = aplicacion.Util.dameMinutos(duracion);
+				int descanso = aplicacion.utilidades.Util.dameMinutos(duracion);
 				t = new Turno(id, descr, HoraE, HoraS, HoraI,
 						descanso);
 			}

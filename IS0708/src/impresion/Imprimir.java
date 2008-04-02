@@ -63,7 +63,7 @@ public class Imprimir {
 		else return new Rectangle(0,0,0,0);
 	}
 
-	public void imprimirImage(aplicacion.Drawable object, ResourceBundle bundle){
+	public void imprimirImage(aplicacion.utilidades.Drawable object, ResourceBundle bundle){
 		try{printDialog.setText("PrintDialog");
 		printDialog.setScope(PrinterData.ALL_PAGES);
 		//printDialog.setPrintToFile(true);

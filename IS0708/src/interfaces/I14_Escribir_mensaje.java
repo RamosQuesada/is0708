@@ -15,9 +15,9 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import aplicacion.Mensajeria;
-import aplicacion.Mensaje;
 import aplicacion.Vista;
+import aplicacion.mensajeria.Mensaje;
+import aplicacion.mensajeria.Mensajeria;
 
 import java.util.ResourceBundle;
 

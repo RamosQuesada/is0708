@@ -1,4 +1,4 @@
-package aplicacion;
+package aplicacion.utilidades;
 
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;

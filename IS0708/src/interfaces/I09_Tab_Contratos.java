@@ -18,10 +18,10 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
-import aplicacion.Contrato;
-import aplicacion.Empleado;
-import aplicacion.Turno;
 import aplicacion.Vista;
+import aplicacion.datos.Contrato;
+import aplicacion.datos.Empleado;
+import aplicacion.datos.Turno;
 
 public class I09_Tab_Contratos extends Thread {
 	final ResourceBundle bundle;

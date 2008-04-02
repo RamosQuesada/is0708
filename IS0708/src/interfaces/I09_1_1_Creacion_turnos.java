@@ -23,16 +23,16 @@ import java.util.ResourceBundle;
 import java.util.ArrayList;
 import org.eclipse.swt.graphics.*;
 
-import aplicacion.Empleado;
-import aplicacion.Posicion;
-import aplicacion.Turno;
 import aplicacion.Vista;
+import aplicacion.datos.Empleado;
+import aplicacion.datos.Turno;
+import aplicacion.utilidades.Posicion;
 
 public class I09_1_1_Creacion_turnos {
 	private Shell padre = null;
 	private Shell shell = null;
 	private ResourceBundle bundle;
-	private aplicacion.Turno turno;
+	private aplicacion.datos.Turno turno;
 	private int modo;
 	private int alto, ancho;
 	private int idTurno;

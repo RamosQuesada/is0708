@@ -16,8 +16,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 
-import aplicacion.Empleado;
 import aplicacion.Vista;
+import aplicacion.datos.Empleado;
 
 public class I13_Elegir_empleado extends Thread {
 	private Composite padre;

@@ -2,6 +2,7 @@ package algoritmo;
 
 import java.util.ArrayList;
 import aplicacion.*;
+import aplicacion.datos.Empleado;
 
 /**
  * @author madctol

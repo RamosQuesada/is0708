@@ -24,8 +24,8 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import aplicacion.EncriptCadena;
 import aplicacion.Vista;
+import aplicacion.utilidades.EncriptCadena;
 
 //import aplicacion.Vista;
 
