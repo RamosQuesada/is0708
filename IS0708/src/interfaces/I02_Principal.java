@@ -104,8 +104,7 @@ public class I02_Principal {
 				}
 			});
 			vista.infoDebug("I02_Principal", "Llamando al algoritmo para la fecha " + tmMes + " de " + tmAnio + ", dep. " + tmDep);
-			//se ha añadido el día para que el algoritmo se pueda ejecutar a partir de cualquier dia del mes
-			algoritmo.TurnoMatic t = new algoritmo.TurnoMatic(1, tmMes, tmAnio, vista, tmDep);
+			algoritmo.TurnoMatic t = new algoritmo.TurnoMatic(tmMes, tmAnio, vista, tmDep);
 			final ResultadoTurnoMatic resultado = t.ejecutaAlgoritmo();
 			// quitar cuadrante de la fecha del calendario de la cache
 			// añadir t.getcuadrante a cache
