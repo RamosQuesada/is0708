@@ -1,7 +1,7 @@
 package algoritmo;
 
 import aplicacion.Controlador;
-import aplicacion.Util;
+import aplicacion.utilidades.Util;
 
 /**
  * @author DavidMartin & Miguel Angel Diaz

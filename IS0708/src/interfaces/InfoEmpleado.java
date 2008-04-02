@@ -6,7 +6,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.events.*;
 
-import aplicacion.Empleado;
+import aplicacion.datos.Empleado;
 
 public class InfoEmpleado {
 	private Shell shell;

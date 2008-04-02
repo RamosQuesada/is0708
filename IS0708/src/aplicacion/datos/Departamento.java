@@ -1,6 +1,7 @@
-package aplicacion;
+package aplicacion.datos;
 
 import java.util.ArrayList;
+
 
 /**
  * Clase que representa un departamento

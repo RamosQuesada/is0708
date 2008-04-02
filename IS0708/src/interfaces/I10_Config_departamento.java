@@ -25,9 +25,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import aplicacion.Departamento;
-import aplicacion.Empleado;
 import aplicacion.Vista;
+import aplicacion.datos.Departamento;
+import aplicacion.datos.Empleado;
 public class I10_Config_departamento {
 	private Shell padre;
 	private Shell shell;

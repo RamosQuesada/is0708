@@ -1,4 +1,4 @@
-package aplicacion;
+package aplicacion.datos;
 
 /**
  * Clase que representa un contrato

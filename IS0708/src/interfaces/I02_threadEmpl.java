@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import algoritmo.Trabaja;
-import aplicacion.Turno;
-import aplicacion.Util;
+import aplicacion.datos.Turno;
+import aplicacion.utilidades.Util;
 
 public class I02_threadEmpl extends Thread{
 	

@@ -2,10 +2,10 @@ package paquete_pruebas;
 
 import java.sql.Date;
 
-import aplicacion.Contrato;
 import aplicacion.Controlador;
 import aplicacion.Database;
-import aplicacion.Turno;
+import aplicacion.datos.Contrato;
+import aplicacion.datos.Turno;
 
 /**
  * Inserta datos fijos para pruebas

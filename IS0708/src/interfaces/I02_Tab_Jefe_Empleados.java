@@ -30,7 +30,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
 import aplicacion.Vista;
-import aplicacion.Empleado;
+import aplicacion.datos.Empleado;
 
 public class I02_Tab_Jefe_Empleados extends Thread{
 	
@@ -126,7 +126,7 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 				tItem.setText(1, String.valueOf(listaFiltrada.get(i).getEmplId()));
 				tItem.setText(2, listaFiltrada.get(i).getNombreCompleto());
 				tItem.setText(3, listaFiltrada.get(i).getDepartamentoId());
-				aplicacion.Contrato c = listaFiltrada.get(i).getContrato(_vista);
+				aplicacion.datos.Contrato c = listaFiltrada.get(i).getContrato(_vista);
 				if (c!=null) tItem.setText(4, c.getNombreContrato());
 				else         tItem.setText(4, "Error");
 				tItem.setText(5, "911234567");

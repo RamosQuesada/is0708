@@ -16,9 +16,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import aplicacion.Departamento;
-import aplicacion.Empleado;
 import aplicacion.Vista;
+import aplicacion.datos.Departamento;
+import aplicacion.datos.Empleado;
 
 /**
  * Interfaz creación nuevo departamento

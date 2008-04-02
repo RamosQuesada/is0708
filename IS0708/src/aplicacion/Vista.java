@@ -14,6 +14,11 @@ import org.eclipse.swt.widgets.Shell;
 
 import algoritmo.Cuadrante;
 import algoritmo.Trabaja;
+import aplicacion.datos.Contrato;
+import aplicacion.datos.Departamento;
+import aplicacion.datos.Empleado;
+import aplicacion.datos.Turno;
+import aplicacion.mensajeria.Mensaje;
 
 import idiomas.LanguageChanger;
 import interfaces.*;
@@ -1107,8 +1112,8 @@ public class Vista {
 				int hora=vector[0];
 				int nummin=vector[1];
 				int nummax=vector[2];
-				String Shora=aplicacion.Util.horaAString(hora);
-				String SdiaSemana = aplicacion.Util.intADiaSemana(diaSemana);
+				String Shora=aplicacion.utilidades.Util.horaAString(hora);
+				String SdiaSemana = aplicacion.utilidades.Util.intADiaSemana(diaSemana);
 				System.out.print("Distribucion para el " + SdiaSemana);
 				System.out.println();
 				System.out.println();

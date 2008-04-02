@@ -7,12 +7,12 @@ import java.util.*;
 import algoritmo.Calendario;
 import algoritmo.Cuadrante;
 import algoritmo.Trabaja;
-import aplicacion.Contrato;
 import aplicacion.Controlador;
 import aplicacion.Database;
-import aplicacion.Mensaje;
-import aplicacion.Turno;
-import aplicacion.Util;
+import aplicacion.datos.Contrato;
+import aplicacion.datos.Turno;
+import aplicacion.mensajeria.Mensaje;
+import aplicacion.utilidades.Util;
 
 
 public class PruebasBaseDatos {

@@ -1,4 +1,4 @@
-package aplicacion;
+package aplicacion.utilidades;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

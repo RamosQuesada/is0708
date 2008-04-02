@@ -1,9 +1,9 @@
-package aplicacion;
+package aplicacion.mensajeria;
 import java.util.Date;
 
 /**
- * Representación de posibles incidencias de los trabajadores
- * @author Agustín Daniel Delgado Muñoz
+ * Representaciï¿½n de posibles incidencias de los trabajadores
+ * @author Agustï¿½n Daniel Delgado Muï¿½oz
  */
 public class Incidencia {
 	

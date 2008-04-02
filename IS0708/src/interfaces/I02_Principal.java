@@ -10,9 +10,6 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
 
 import algoritmo.ResultadoTurnoMatic;
-import aplicacion.Empleado;
-import aplicacion.Departamento;
-import aplicacion.Util;
 
 import java.util.ResourceBundle;
 import java.util.Locale;
@@ -21,6 +18,9 @@ import java.sql.Date;
 
 import impresion.Imprimir;
 import aplicacion.Vista;
+import aplicacion.datos.Departamento;
+import aplicacion.datos.Empleado;
+import aplicacion.utilidades.Util;
 
 /**
  * Interfaz de usuario I-02 :: Ventana principal - Jefe
@@ -288,7 +288,7 @@ public class I02_Principal {
 				vista.infoDebug("I02_Principal", "Fecha cambiada a "
 						+ String.valueOf(calendario.getDay())
 						+ " de "
-						+ aplicacion.Util.mesAString(bundle, calendario
+						+ aplicacion.utilidades.Util.mesAString(bundle, calendario
 								.getMonth()) + " de "
 						+ String.valueOf(calendario.getYear()));
 				vista.setCursorEspera();
@@ -758,7 +758,7 @@ public class I02_Principal {
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
 				tPassword.setEditable(false);
-				tPassword.setText(aplicacion.Util.obtenerClave());
+				tPassword.setText(aplicacion.utilidades.Util.obtenerClave());
 			}
 
 			public void focusLost(FocusEvent e) {

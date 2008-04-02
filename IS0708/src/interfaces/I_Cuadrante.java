@@ -33,12 +33,12 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ScrollBar;
 
 import algoritmo.Trabaja;
-import aplicacion.Empleado;
-import aplicacion.Posicion;
-import aplicacion.Turno;
-import aplicacion.Util;
 import aplicacion.Vista;
 //De dónde coger javadoc: http://javashoplm.sun.com/ECom/docs/Welcome.jsp?StoreId=22&PartDetailId=jdk-6u3-oth-JPR&SiteId=JSC&TransactionId=noreg
+import aplicacion.datos.Empleado;
+import aplicacion.datos.Turno;
+import aplicacion.utilidades.Posicion;
+import aplicacion.utilidades.Util;
 
 /**
  * Esta clase extiende la clase cuadrante para que se pueda:
@@ -706,7 +706,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			display.asyncExec(new Runnable() {
 				public void run() {
 					canvas.redraw();
-					if (turno==null) lCuadranteTitulo.setText(String.valueOf(dia) + " de " + aplicacion.Util.mesAString(vista.getBundle(), mes-1) + " de " + String.valueOf(anio));
+					if (turno==null) lCuadranteTitulo.setText(String.valueOf(dia) + " de " + aplicacion.utilidades.Util.mesAString(vista.getBundle(), mes-1) + " de " + String.valueOf(anio));
 				}
 			});
 		}
@@ -877,7 +877,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					}
 				ArrayList<Empleado> empleados=vista.getEmpleados();
 				for (int i=0; i < empleados.size(); i++) {
-					aplicacion.Empleado e=empleados.get(i);
+					aplicacion.datos.Empleado e=empleados.get(i);
 					gcFondo.drawText(e.getNombre(), margenIzq, margenSupVistaMes + 20 + i*altoFila);
 					for (int j=0; j < iCuad.length; j++) {
 						//Despues calculamos el turno a visualizar

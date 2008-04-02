@@ -29,8 +29,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ColorDialog;
 
-import aplicacion.Empleado;
-import aplicacion.Util;
+import aplicacion.datos.Empleado;
+import aplicacion.utilidades.Util;
 import impresion.Imprimir;
 
 import java.util.Calendar;

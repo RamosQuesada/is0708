@@ -21,11 +21,11 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import org.eclipse.swt.graphics.*;
 
-import aplicacion.Contrato;
-import aplicacion.Empleado;
-import aplicacion.Turno;
 import aplicacion.Vista;
-import aplicacion.Util;
+import aplicacion.datos.Contrato;
+import aplicacion.datos.Empleado;
+import aplicacion.datos.Turno;
+import aplicacion.utilidades.Util;
 
 public class I09_1_Creacion_contratos {
 	private Shell padre = null;

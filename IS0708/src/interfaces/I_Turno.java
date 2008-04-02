@@ -6,15 +6,15 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.widgets.*;
 
-import aplicacion.Turno;
-import aplicacion.Util;
+import aplicacion.datos.Turno;
+import aplicacion.utilidades.Util;
 
 /**
  * Esta clase extiende la clase turno para añadir las funcionalidades de dibujo.
  * @author Daniel Dionne
  *
  */
-public class I_Turno extends aplicacion.Turno {
+public class I_Turno extends aplicacion.datos.Turno {
 
 	/**
 	 * Crea una instancia nueva a partir de un turno dado

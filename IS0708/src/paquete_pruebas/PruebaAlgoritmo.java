@@ -3,9 +3,10 @@ package paquete_pruebas;
 import algoritmo.*;
 import aplicacion.Controlador;
 import aplicacion.Database;
-import aplicacion.Util;
-import aplicacion.Empleado;
-import aplicacion.Turno; // Utilizamos la clase turno de nuestro "gran paquete"
+import aplicacion.datos.Empleado;
+import aplicacion.datos.Turno;
+import aplicacion.utilidades.Util;
+
 import java.util.ArrayList;
 import java.sql.Time;
 

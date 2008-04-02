@@ -25,9 +25,9 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.TabFolder;
 import java.util.ResourceBundle;
 
-import aplicacion.Mensaje;
-import aplicacion.Util;
 import aplicacion.Vista;
+import aplicacion.mensajeria.Mensaje;
+import aplicacion.utilidades.Util;
 
 public class I02_Tab_Mensajeria extends Thread{
 	private final Vista vista;

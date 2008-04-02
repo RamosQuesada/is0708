@@ -25,11 +25,11 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ColorDialog;
 
-import aplicacion.Contrato;
 import aplicacion.Database;
-import aplicacion.Util;
 import aplicacion.Vista;
-import aplicacion.Empleado;
+import aplicacion.datos.Contrato;
+import aplicacion.datos.Empleado;
+import aplicacion.utilidades.Util;
 
 import java.util.ArrayList;
 //import java.util.Date;

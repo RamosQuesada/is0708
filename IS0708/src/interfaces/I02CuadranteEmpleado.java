@@ -11,8 +11,8 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
-import aplicacion.Empleado;
 import aplicacion.Vista;
+import aplicacion.datos.Empleado;
 
 public class I02CuadranteEmpleado {
 	
