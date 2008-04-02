@@ -525,9 +525,10 @@ public class Controlador {
 		try {
 			while (rs.next()) {
 				int nv = rs.getInt("NumVendedor");
-				int idturno=rs.getInt("IdTurno");
-				if(this.trabajaEmpleadoDia(nv, this.getFechaActual())){
 			    nombreempleado =this.getEmpleado(nv).getNombreCompleto();
+				//int idturno=rs.getInt("IdTurno");
+				int idturno=this.getTurnoEmpleadoDia(this.getFechaActual(), nv);
+				if(this.trabajaEmpleadoDia(nv, this.getFechaActual())){
 			   /* Turno t= this.getObjetoTurnoEmpleadoDia(this.getFechaActual(), nv);
 			    Time horaentradaaux = t.getHoraEntrada();
 			    horaentrada = horaentradaaux.toString();
@@ -543,8 +544,7 @@ public class Controlador {
 				    horasalida=horasalida2;
 			    }
 		
-			    System.out.println(horaentrada);
-			    System.out.println(horasalida);
+			    System.out.println(nombreempleado+": ("+nv+") " +horaentrada+"-"+horasalida);
 
 			  if(horaentrada!=null || horasalida!=null){
 				    
@@ -556,6 +556,9 @@ public class Controlador {
 				    } 
 			    
 			}
+				  else{
+				      info=info+"\n"+ nombreempleado+ ": No tiene turnos asignados";
+				    } 
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -1789,7 +1792,20 @@ public class Controlador {
 	
 	public boolean trabajaEmpleadoDia(int nv,Date d) {
 		ResultSet r =this._db.trabajaEmpleadoDia(nv, d);
-		return r!=null;
+		String s=null;
+		try{
+		while(r.next()){
+		int t= r.getInt("IdTurno");
+	    s = Integer.toString(t);
+		System.out.println(t);
+		}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.err
+					.println("Error en Controlador.trabaaEmpleadoDia");
+				//tieneturno=false;
+		}
+		return s!=null;
 	}
 	/**
 	 * * Vacia los contenidos de la tabla especificada
