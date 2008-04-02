@@ -514,7 +514,13 @@ public class I02_Principal {
 				| SWT.READ_ONLY);
 		cmbDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 1, 1));
-				cmbDepartamentos.add(vista.getNombreDepartamento(vista.getEmpleadoActual()));
+		
+		ArrayList<String> array = vista.getNombreDepartamento(vista.getEmpleadoActual());
+		if (array != null) {
+			for (int i = 0; i < array.size(); i++) {
+				cmbDepartamentos.add(array.get(i));
+			}
+		}
 		cmbDepartamentos.select(0);
 		cmbDepartamentos.setEnabled(false);
 
