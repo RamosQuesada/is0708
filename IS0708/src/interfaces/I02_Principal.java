@@ -1135,10 +1135,10 @@ public class I02_Principal {
 			// Seleccionado por mes
 			public void handleEvent(Event e) {
 				if (bPorMes.getSelection()) {
-					cuadrante.setMensual();
+				//	cuadrante.setMensual();
 					//crear ventana informando
 					
-				/*	MessageBox messageBox = new MessageBox(shell,
+					MessageBox messageBox = new MessageBox(shell,
 							SWT.APPLICATION_MODAL | SWT.OK
 									| SWT.ICON_INFORMATION);
 					messageBox.setText(bundle.getString("Mensaje"));
@@ -1148,7 +1148,7 @@ public class I02_Principal {
 						
 						bPorSemanas.setFocus();
 					}
-				*/	
+				
 					
 					
 				} else{
