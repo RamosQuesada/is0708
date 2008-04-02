@@ -33,6 +33,14 @@ public class I10_Nuevo_departamento {
 	private Label labName;
 	private Label labNumber;
 	private Label labBoss;
+	private Label lhoraInicio;
+	private Label lhoraCierre;
+	private Label ldosPuntos;
+	
+	private Text thorIn;
+	private Text tminIn;
+	private Text thorCi;
+	private Text tminCi;
 	
 	private Text tName;
 	private Text tNumber;
@@ -119,6 +127,24 @@ public class I10_Nuevo_departamento {
 			}
 		}
 		cmbJefes.select(0);
+		
+		//Horas de incio y cierre
+		lhoraInicio = new Label (group, SWT.NONE);
+		lhoraInicio.setText(bundle.getString("I10_hora_incio"));
+		lhoraInicio.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,2,1));
+		
+		thorIn=new Text (group, SWT.BORDER);	
+		thorIn.setLayoutData (new GridData(SWT.LEFT ,SWT.CENTER,true,true,2,1));
+		thorIn.setTextLimit(2);
+		
+		ldosPuntos=new Label (group, SWT.NONE);
+		ldosPuntos.setText(":");
+		ldosPuntos.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,true,true,1,1));
+		ldosPuntos.setBounds(1, 1, 1, 1);
+		
+		tminIn=new Text (group, SWT.BORDER);	
+		tminIn.setLayoutData (new GridData(SWT.LEFT ,SWT.CENTER,true,true,2,1));
+		tminIn.setTextLimit(2);
 		
 		//Buttons "Accept" and "Cancel"
 		

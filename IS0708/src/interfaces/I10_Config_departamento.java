@@ -124,34 +124,7 @@ public class I10_Config_departamento {
 			}
 			cmbJefes.select(0);
 			cmbJefes.setEnabled(false);
-			/*
-		labNumber = new Label (group, SWT.NONE);
-		labNumber.setText(bundle.getString("I10_lab_num"));
-		labNumber.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));	
-
-		tNumber = new Text (group, SWT.BORDER);	
-		tNumber.setLayoutData (new GridData(SWT.FILL,SWT.CENTER,true,true,2,1));
-
-		labBoss = new Label (group, SWT.NONE);
-		labBoss.setText(bundle.getString("I10_lab_jefe"));
-		labBoss.setLayoutData (new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));*/	
-
-			//textBoss = new Text (group, SWT.BORDER );
-			//textBoss.setLayoutData (new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
-			//tNombre = new I13_Elegir_empleado(group,vista, bundle);
-			//Button bSelect = new Button(group, SWT.NONE);
-			//bSelect.setText(bundle.getString("I10_but_seleccionar"));
-			//bSelect.setLayoutData(new GridData(SWT.LEFT,SWT.CENTER,true,true,1,1))	;	
-			//SelectionAdapter bossSelectionListener = new SelectionAdapter(){
-			//	public void widgetSelected(SelectionEvent e) {
-			// TODO
-			//		 new I08_1_Anadir_empleado(shell, bundle, vista);
-			//	}
-			//};
-			//bSelect.addSelectionListener(bossSelectionListener);
-			//butNewBoss = new Button(group, SWT.PUSH);
-			//butNewBoss.setText(bundle.getString("I10_but_nuevo_jefe"));
-			//butNewBoss.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+			
 
 			//Buttons "Accept" and "Cancel"
 
@@ -159,19 +132,7 @@ public class I10_Config_departamento {
 			bAccept.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 			bAccept.setText(bundle.getString("Aceptar"));
 
-			//CREACION DEL JEFE Y DEL DEPARTAMENTO
-			/*
-		String nombreJefe = textBoss.getText();
-		//TODO separar nombres y apellidos y ¿coger primer empleado?
-		// volver a poner
-		int numeroDepartamento = Integer.valueOf(tNumber.getText());
-		Empleado jefe=listaCoincidencias.get(textBoss.getSelectionIndex());
-		String nombreDepartamento = tName.getText();
-
-		Departamento departamento = new Departamento(nombreDepartamento,
-				numeroDepartamento, jefe);
-
-		this.vista.insertDepartamento(departamento);*/
+			
 			bJefe.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
 					if(bJefe.getSelection())
