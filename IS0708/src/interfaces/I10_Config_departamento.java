@@ -174,13 +174,10 @@ public class I10_Config_departamento {
 		this.vista.insertDepartamento(departamento);*/
 			bJefe.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
-					if(bJefe.getSelection()){
-						System.out.println("Estaaaaaaaaaa a trueee");
+					if(bJefe.getSelection())
 						cmbJefes.setEnabled(true);
-					}else{
-						System.out.println("Estaaaaaaaaaa a falso");
-						cmbJefes.setEnabled(false);
-					}
+					else
+						cmbJefes.setEnabled(false);	
 				}
 			});
 

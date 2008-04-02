@@ -119,22 +119,6 @@ public class I10_Nuevo_departamento {
 			}
 		}
 		cmbJefes.select(0);
-		//textBoss = new Text (group, SWT.BORDER );
-		//textBoss.setLayoutData (new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
-		//tNombre = new I13_Elegir_empleado(group,vista, bundle);
-		//Button bSelect = new Button(group, SWT.NONE);
-		//bSelect.setText(bundle.getString("I10_but_seleccionar"));
-		//bSelect.setLayoutData(new GridData(SWT.LEFT,SWT.CENTER,true,true,1,1))	;	
-		//SelectionAdapter bossSelectionListener = new SelectionAdapter(){
-		//	public void widgetSelected(SelectionEvent e) {
-				// TODO
-		//		 new I08_1_Anadir_empleado(shell, bundle, vista);
-		//	}
-		//};
-		//bSelect.addSelectionListener(bossSelectionListener);
-		//butNewBoss = new Button(group, SWT.PUSH);
-		//butNewBoss.setText(bundle.getString("I10_but_nuevo_jefe"));
-		//butNewBoss.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
 		//Buttons "Accept" and "Cancel"
 		
