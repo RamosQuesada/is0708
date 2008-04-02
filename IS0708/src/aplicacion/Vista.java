@@ -1020,7 +1020,9 @@ public class Vista {
 		this.controlador.cambiaNombreNumerosDEPARTAMENTOs(NombreAntiguo, NombreNuevo);
 	}
 	
-	
+	/**
+	 * @return Nombres de todos los departamentos
+	 */
 	public ArrayList<String> getNombreTodosDepartamentos() {
 		return this.controlador.getNombreTodosDepartamentos();
 	}
@@ -1038,7 +1040,9 @@ public class Vista {
 	
 	}
 
-
+	/**
+	 * @return numero de vendedores de todos los jefes
+	 */
 	public ArrayList<Integer> getNumVendedorTodosJefes() {
 		return this.controlador.getNumVendedorTodosJefes();
 	}
@@ -1095,14 +1099,25 @@ public class Vista {
 		this.controlador.modificaDpto(text, Integer.valueOf(numjefe));
 		
 		}
-	
+	/**
+	 * Función que devuelve Info de un Dpto. (empleados y horario del dia actual)
+	 * @param dpto nombre del departamento
+	 * @return Info de "dpto" (empleados y horario del dia actual)
+	 */	
 
    public String infoDpto(String dpto) {
 	   			String infojefe=this.controlador.getInfoJefedeDepartamento(dpto);
 	   			String infoempleados=this.controlador.getInfoEmpleadosDepartamento(dpto);
 	   			return infojefe + "/n" + infoempleados;
 			}
-   
+	/**
+	 * Función que devuelve Info de la distribucion de un Dpto dado un dia de la semana
+	 * @param dpto nombre del departamento
+	 * @param diaSemana entero que representa dia de la semana
+	 * 		0->Domingo, 1->Lunes,...,6->Sabado
+	 * @return Info de la distribucion de "dpto" (numeros
+	 * 	meximos y minimos de empleados por franjas horarias) en "diaSemana"
+	 */	
    
    public void infoDistribucionDpto(String dpto, int diaSemana) {
 			ArrayList<Integer[]> a = new ArrayList<Integer[]>();
@@ -1127,9 +1142,11 @@ public class Vista {
  * @param empleadoActual
  * @return
  */
-public String getNombreDepartamento(Empleado empleadoActual) {
+public ArrayList<String> getNombreDepartamento(Empleado empleadoActual) {
 	// TODO Auto-generated method stub
-	return null;
+	int nv=empleadoActual.getEmplId();
+	ArrayList<String> dptos=this.controlador.getDepartamentosJefe(nv);
+	return dptos;
 }
 
  
