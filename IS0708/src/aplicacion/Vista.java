@@ -1122,6 +1122,15 @@ public class Vista {
 			}
    
    }
+/**
+ * Funcion que dado un objeto empleado te devuelve de que departamento es jefe
+ * @param empleadoActual
+ * @return
+ */
+public String getNombreDepartamento(Empleado empleadoActual) {
+	// TODO Auto-generated method stub
+	return null;
+}
 
  
    

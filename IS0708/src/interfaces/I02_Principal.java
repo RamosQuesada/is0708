@@ -514,13 +514,9 @@ public class I02_Principal {
 				| SWT.READ_ONLY);
 		cmbDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 1, 1));
-		ArrayList<String> array = vista.getNombreTodosDepartamentos();
-		if (array != null) {
-			for (int i = 0; i < array.size(); i++) {
-				cmbDepartamentos.add(array.get(i));
-			}
-		}
+				cmbDepartamentos.add(vista.getNombreDepartamento(vista.getEmpleadoActual()));
 		cmbDepartamentos.select(0);
+		cmbDepartamentos.setEnabled(false);
 
 		// Composite for Buttons: "New Department" and "Configure Department"
 		Composite cBut = new Composite(cDepartamentos, SWT.LEFT);
