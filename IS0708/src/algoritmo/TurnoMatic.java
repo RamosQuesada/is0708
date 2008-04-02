@@ -21,6 +21,7 @@ public class TurnoMatic {
 	private Cuadrante cuadrante;
 	private Vista vista;
 	private Estructura estruc;
+	//private int diaIni;
 	private int mes;
 	private int anio;
 	private String idDepartamento;
@@ -38,17 +39,19 @@ public class TurnoMatic {
 	/**
 	 * Constructora del algoritmo, se encarga de crear la estructura
 	 * el cuadrante y recibe el controlador del programa
+	 * @param d Dia inicial a partir del cual se realiza el cuadrante
 	 * @param m Mes para el que se realiza el cuadrante
 	 * @param year Año al que pertenece el mes
 	 * @param vis Cache de la aplicacion
 	 * @param idDepartamento Departamento para el que se genera el cuadrante
 	 */
-	public TurnoMatic(int m, int year, Vista vis, String idDepartamento){
+	public TurnoMatic(/*int d, */int m, int year, Vista vis, String idDepartamento){
 		this.vista = vis;
 		this.controlador = vista.getControlador();
 		this.idDepartamento = idDepartamento;
 		this.anio = year;
 		this.mes = m;
+		//this.diaIni = d;
 	    this.listaE = this.vista.getEmpleadosDepartamento(idDepartamento);
 	    //this.listaE = this.controlador.getEmpleadosDepartamentoPruebasAlg(idDepartamento);		
 		this.contratosDep = this.controlador.getListaContratosDpto(this.idDepartamento);
@@ -75,7 +78,7 @@ public class TurnoMatic {
 		Empleado e;
 
 		//recorremos los dias del mes
-		for(int i=0; i<Util.dameDias(mes,anio); i++){ //FOR1
+		for(int i=0/*diaIni-1*/; i<Util.dameDias(mes,anio); i++){ //FOR1
 			//si el dia i no abre el centro, no se calcula el cuadrante
 			if (!estruc.getCal().diaLibre(i)) {
 				System.out.println(i);
