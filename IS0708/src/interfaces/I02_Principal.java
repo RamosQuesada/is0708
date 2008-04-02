@@ -1513,14 +1513,7 @@ public class I02_Principal {
 			crearTabAdminInicio(tabFolder);
 			crearTabAdminNuevoGerente(tabFolder);
 			crearTabAdminEliminaGerente(tabFolder);
-			crearTabJefeCuadrantes(tabFolder);
-			crearTabMensajes(tabFolder);
-			crearTabJefeEmpleados(tabFolder);
 			crearTabAdminDepartamentos(tabFolder);
-			crearTabJefeContratos(tabFolder);
-			crearTabGerenteEstadisticas(tabFolder);
-			crearTabEmpleadoEstadisticas(tabFolder);
-			crearTabEmpleadoCuadrantes(tabFolder);
 			//vista.getControlador().cerrarConexionBD();
 			break;
 		case 2:
@@ -1588,18 +1581,13 @@ public class I02_Principal {
 
 		// Crear una barra de estado
 		Composite estado = new Composite(shell, SWT.BORDER);
-		estado
-				.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1,
-						1));
+		estado.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1,1));
 		estado.setLayout(new GridLayout(2, true));
 		lEstado = new Label(estado, SWT.LEFT);
 		pbEstado = new ProgressBar(estado, SWT.RIGHT);
 		lEstado.setText("Conectado.");
-		lEstado
-				.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,
-						1));
-		pbEstado.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,
-				1));
+		lEstado.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,1));
+		pbEstado.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,1));
 		pbEstado.setVisible(false);
 
 		// Ajustar el tamaño de la ventana
@@ -1607,9 +1595,8 @@ public class I02_Principal {
 
 		// Mostrar ventana centrada en la pantalla
 		shell.setLocation(
-				display.getBounds().width / 2 - shell.getSize().x / 2, display
-						.getBounds().height
-						/ 2 - shell.getSize().y / 2);
+				display.getBounds().width / 2 - shell.getSize().x / 2, 
+				display.getBounds().height/ 2 - shell.getSize().y / 2);
 		shell.open();
 
 		// Preguntar antes de salir
