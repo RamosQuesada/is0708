@@ -525,22 +525,30 @@ public class Controlador {
 		try {
 			while (rs.next()) {
 				int nv = rs.getInt("NumVendedor");
-				if(this.trabajaEmpleadoDia(nv, this.getFechaActual())){
+				int idturno=rs.getInt("IdTurno");
+			//	if(this.trabajaEmpleadoDia(nv, this.getFechaActual())){
 			    nombreempleado =this.getEmpleado(nv).getNombreCompleto();
-			    Turno t= this.getObjetoTurnoEmpleadoDia(this.getFechaActual(), nv);
+			   /* Turno t= this.getObjetoTurnoEmpleadoDia(this.getFechaActual(), nv);
 			    Time horaentradaaux = t.getHoraEntrada();
 			    horaentrada = horaentradaaux.toString();
 			    Time horasalidaaux = t.getHoraSalida();
-			    horasalida = horasalidaaux.toString();
+			    horasalida = horasalidaaux.toString();*/
+			    ResultSet rs2=_db.obtenHorasTrabajoEmpleadoDia(nv, idturno, this.getFechaActual());
+			    while(rs2.next()){
+			    	Time horaentradaaux=rs2.getTime("HoraEntrada");
+			    	Time horasalidaaux=rs2.getTime("HoraSalida");
+			    	horaentrada=horaentradaaux.toString();
+			    	horasalida=horasalidaaux.toString();
+			    }
 			    info=info+"\n"+ nombreempleado+ ": " + horaentrada+ " - "+ horasalida;
-			}
+	//		}
 			
-				else{
-				   nombreempleado =this.getEmpleado(nv).getNombreCompleto();
-				    info=info+"\n"+ nombreempleado+ ": No tiene turnos asignados";
+		//		else{
+			//	   nombreempleado =this.getEmpleado(nv).getNombreCompleto();
+				//    info=info+"\n"+ nombreempleado+ ": No tiene turnos asignados";
 
 					
-				}
+			//	}
 			
 			}
 			

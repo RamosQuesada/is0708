@@ -1986,7 +1986,17 @@ SELECT * from TURNOS WHERE IdTurno IN (
 		return r;
 	}	
 	
-
+	public ResultSet obtenHorasTrabajoEmpleadoDia(int nv,int idturno,Date d) {
+		ResultSet r = null;
+		try {
+			st = con.createStatement();
+			r = st.executeQuery("SELECT HoraEntrada, HoraSalida FROM Trabaja WHERE NumVendedor='"+nv+"' AND Fecha='"+d+"' AND IdTurno='"+idturno+"';");
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println("Error al realizar la consulta del Jefe del Dpto");
+		}
+		return r;
+	}	
 		
 
 }
