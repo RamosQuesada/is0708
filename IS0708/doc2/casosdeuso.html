@@ -80,8 +80,8 @@
 					<li><a href="#24">CU 24 - Eliminar contrato</a></li>	
 					<li><a href="#25">CU 25 - Modificar contrato</a></li>	
 					<li><a href="#26">CU 26 - Consultar cuadrantes</a></li>	
-					<li><a href="#27">CU 27 - Crear/modificar cuadrante</a></li>	
-					<li><a href="#28">CU 28 - No poder crear/modificar cuadrante</a></li>	
+					<li><a href="#27">CU 27 - Generar cuadrante</a></li>	
+					<li><a href="#28">CU 28 - Sugerir más personal según el cuadrante generado</a></li>	
 					<li><a href="#29">CU 29 - Enviar mensajes de forma automática</a></li>
 					<li><a href="#30">CU 30 - Ordenar empleados para la elección de vacaciones</a></li>	
 					<li><a href="#31">CU 31 - Elegir fechas de vacaciones</a></li>	
@@ -118,7 +118,7 @@
 				<h2>Secuencia normal</h2>
 				<p>1- Introducir número de usuario.</p>
 				<p>2- Introducir contraseña.</p>
-				<p>3- Aceptar.</p>
+				<p>3- Confirmar.</p>
 				<p>4- Acceder al sistema.</p>
 				<h2>Secuencias alternativas</h2>
 				<p>3a- Si el usuario no está en el sistema da un error y se da la opción a introducir de nuevo los datos.</p>
@@ -140,7 +140,7 @@
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Selección de un mensaje a leer.</p>
+				<p>1- Seleccionar un mensaje a leer.</p>
 				<p>2- El mensaje se muestra en pantalla.</p>
 				<p>3- Se envía una confirmación al remitente, si este la ha solicitado.</p>
 				<h2>Secuencias alternativas</h2>
@@ -162,8 +162,8 @@
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Selección de un mensaje a eliminar.</p>
-				<p>2- Dar a eliminar el mensaje.</p>
+				<p>1- Seleccionar un mensaje a eliminar.</p>
+				<p>2- Pulsar "Eliminar el mensaje".</p>
 				<h2>Secuencias alternativas</h2>
 				<p>2a- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
@@ -183,8 +183,8 @@
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Selección de un mensaje a resaltar.</p>
-				<p>2- Dar a resaltar el mensaje.</p>
+				<p>1- Seleccionar un mensaje a resaltar.</p>
+				<p>2- Pulsar "Resaltar el mensaje".</p>
 				<h2>Secuencias alternativas</h2>
 				<p>2a- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
@@ -204,11 +204,11 @@
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Selección de un mensaje para responder.</p>
-				<p>2- Selección de la opción de responder un mensaje.</p>
+				<p>1- Seleccionar un mensaje para responder.</p>
+				<p>2- Seleccionar la opción de "Responder un mensaje".</p>
 				<p>3- Escribir el mensaje.</p>
 				<p>4- Solicitar confirmación si es preciso.</p>
-				<p>5- Dar a enviar.</p>
+				<p>5- Pulsar "Enviar".</p>
 				<p>6- Se muestra mensaje de confirmación.</p>
 				<h2>Secuencias alternativas</h2>
 				<p>5a- Si hay un error en la conexión se muestra por pantalla.</p>
@@ -229,11 +229,11 @@
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Selección de la opción de escribir un mensaje.</p>
+				<p>1- Seleccionar la opción de "Escribir un mensaje".</p>
 				<p>2- Escribir el mensaje.</p>
 				<p>3- Seleccionar el destinatario.</p>
 				<p>4- Solicitar confirmación si es preciso.</p>
-				<p>5- Dar a enviar.</p>
+				<p>5- Pulsar "Enviar".</p>
 				<p>6- Se muestra mensaje de confirmación.</p>
 				<h2>Secuencias alternativas</h2>
 				<p>5a- Si hay un error en la conexión se muestra por pantalla.</p>
@@ -254,11 +254,11 @@
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Selección de la opción de escribir un mensaje de modificación de horario.</p>
-				<p>2- Selección de la fecha de inicio.</p>
-				<p>3- Selección de la fecha de fin.</p>
-				<p>4- Selección del turno.</p>
-				<p>5- Dar a enviar.</p>
+				<p>1- Seleccionar la opción de "Escribir un mensaje de modificación de horario".</p>
+				<p>2- Seleccionar la fecha de inicio.</p>
+				<p>3- Seleccionar la fecha de fin.</p>
+				<p>4- Seleccionar el turno.</p>
+				<p>5- Pulsar "Enviar".</p>
 				<p>6- Se muestra mensaje de confirmación.</p>
 				<h2>Secuencias alternativas</h2>
 				<p>5a- Si hay un error en la conexión se muestra por pantalla.</p>
@@ -279,10 +279,10 @@
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Selección de la opción de escribir un mensaje de petición de baja.</p>
+				<p>1- Seleccionar la opción de "Escribir un mensaje de petición de baja".</p>
 				<p>2- Escribir el motivo de la baja.</p>
-				<p>3- Selección de la fecha.</p>
-				<p>4- Dar a enviar.</p>
+				<p>3- Seleccionar la fecha.</p>
+				<p>4- Pulsar "Enviar".</p>
 				<p>5- Se muestra mensaje de confirmación.</p>
 				<h2>Secuencias alternativas</h2>
 				<p>5a- Si hay un error en la conexión se muestra por pantalla.</p>
@@ -303,7 +303,7 @@
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Seleccionar la opción de horarios.</p>
+				<p>1- Seleccionar la opción de "Horarios".</p>
 				<p>2- Seleccionar el departamento del que se quiere obtener el cuadrante.</p>
 				<h2>Secuencias alternativas</h2>
 				<p>2a- Si hay un error en la conexión se muestra por pantalla.</p>
@@ -324,7 +324,7 @@
 				<h2>Actores</h2>
 				<p>Gerente y jefe de departamento.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Seleccionar la opción de rendimiento y ventas.</p>
+				<p>1- Seleccionar la opción de "Rendimiento y ventas".</p>
 				<p>2- Seleccionar el usuario o departamento del que se quiere obtener la información.</p>
 				<h2>Secuencias alternativas</h2>
 				<p>2a- Si hay un error en la conexión se muestra por pantalla.</p>
@@ -345,7 +345,7 @@
 				<h2>Actores</h2>
 				<p>Gerente y jefe de departamento.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Seleccionar la opción de informe de rendimiento.</p>
+				<p>1- Seleccionar la opción de "Informe de rendimiento".</p>
 				<p>2- Seleccionar el departamento del que se quiere obtener la información.</p>
 				<h2>Secuencias alternativas</h2>
 				<p>2a- Si hay un error en la conexión se muestra por pantalla.</p>
@@ -366,10 +366,10 @@
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Seleccionar la opción de escribir incidencia.</p>
+				<p>1- Seleccionar la opción de "Escribir incidencia".</p>
 				<p>2- Seleccionar el día.</p>
 				<p>3- Escribir incidencia.</p>
-				<p>4- Dar a aceptar.</p>
+				<p>4- Confirmar.</p>
 				<p>5- Se muestra mensaje de confirmación.</p>
 				<h2>Secuencias alternativas</h2>
 				<p>4a- Si hay un error en la conexión se muestra por pantalla.</p>
@@ -390,11 +390,11 @@
 				<h2>Actores</h2>
 				<p>Jefe de departamento.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Seleccionar la opción de elegir número de empleados.</p>
+				<p>1- Seleccionar la opción de "Elegir número de empleados".</p>
 				<p>2- Seleccionar el tipo de día.</p>
 				<p>3- Seleccionar la hora.</p>
 				<p>4- Escribir el número.</p>
-				<p>5- Dar a aceptar.</p>
+				<p>5- Confirmar.</p>
 				<p>6- Se muestra mensaje de confirmación.</p>
 				<h2>Secuencias alternativas</h2>
 				<p>5a- Si hay un error en la conexión se muestra por pantalla.</p>
@@ -415,8 +415,8 @@
 				<h2>Actores</h2>
 				<p>Gerente.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- El usuario accede al menú de creación de departamentos.</p>
-				<p>2- El usuario rellena el formulario con los datos del departamento.</p>
+				<p>1- Acceder al menú "Creación de departamentos".</p>
+				<p>2- Rellenar el formulario con los datos del departamento.</p>
 				<p>3- Mostrar mensaje de éxito.</p>
 				<h2>Secuencias alternativas</h2>
 				<p>3a- Si el departamento ya existe, mostrar un mensaje de error.</p>
@@ -438,10 +438,10 @@
 				<h2>Actores</h2>
 				<p>Gerente y jefe.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- El usuario accede al menú de modificación de departamentos.</p>
-				<p>2- Elige de una lista de sus departamentos uno de ellos.</p>
-				<p>3- El usuario modifica los datos.</p>
-				<p>4- confirmación.</p>
+				<p>1- Acceder al menú "Modificación de departamentos".</p>
+				<p>2- Elegir de una lista de sus departamentos uno de ellos.</p>
+				<p>3- Modificar los datos.</p>
+				<p>4- Confirmar.</p>
 				<h2>Secuencias alternativas</h2>
 				<p>4a- Si los datos está en formato incorrecto, mostrar error.</p>
 				<p>4b- Si hay un error en la conexión se muestra por pantalla.</p>
@@ -462,9 +462,9 @@
 				<h2>Actores</h2>
 				<p>Gerente.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- El usuario accede al menú de eliminación de departamentos.</p>
-				<p>2- Selecciona de una lista uno de sus departamentos para eliminar.</p>
-				<p>3- confirmación.</p>
+				<p>1- Acceder al menú "Eliminación de departamentos".</p>
+				<p>2- Seleccionar de una lista uno de sus departamentos para eliminar.</p>
+				<p>3- Confirmar.</p>
 				<h2>Secuencias alternativas</h2>
 				<p>3a- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
@@ -484,7 +484,7 @@
 				<h2>Actores</h2>
 				<p>Gerente.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opción añadir.</p>
+				<p>1- Elegir opción "Añadir".</p>
 				<p>2- Introducir datos.</p>
 				<p>3- Confirmar.</p>
 				<h2>Secuencias alternativas</h2>
@@ -508,7 +508,7 @@
 				<h2>Actores</h2>
 				<p>Gerente.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opción eliminar.</p>
+				<p>1- Elegir opción "Eliminar".</p>
 				<p>2- Seleccionar jefe de departamento a eliminar.</p>
 				<p>3- Confirmar.</p>
 				<h2>Secuencias alternativas</h2>
@@ -530,7 +530,7 @@
 				<h2>Actores</h2>
 				<p>Gerente.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opción modificar datos.</p>
+				<p>1- Elegir opción "Modificar datos".</p>
 				<p>2- Seleccionar jefe de departamento.</p>
 				<p>3- Modificar datos.</p>
 				<p>4- Confirmar.</p>
@@ -554,7 +554,7 @@
 				<h2>Actores</h2>
 				<p>Jefe de departamento.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opción dar de alta.</p>
+				<p>1- Elegir opción "Dar de alta".</p>
 				<p>2- Introducir datos.</p>
 				<p>3- Confirmar.</p>
 				<p>4- Se añade el nuevo empleado a la base de datos.</p>
@@ -578,7 +578,7 @@
 				<h2>Actores</h2>
 				<p>Jefe de departamento.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opción dar de baja.</p>
+				<p>1- Elegir opción "Dar de baja".</p>
 				<p>2- Introducir identificador del empleado a eliminar.</p>
 				<p>3- Confirmar.</p>
 				<p>4- Se borra el nuevo empleado de la base de datos.</p>
@@ -603,7 +603,7 @@
 				<h2>Actores</h2>
 				<p>Jefe de departamento.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opción de modificar.</p>
+				<p>1- Elegir opción "Modificar datos".</p>
 				<p>2- Introducir los datos a modificar en lugar de los antiguos.</p>
 				<p>3- Confirmar.</p>
 				<p>4- Se actualizan los datos del empleado en la base de datos.</p>
@@ -632,10 +632,10 @@
 				<p>1- En la pestaña de "Contratos" seleccionar "Nuevo Contrato".</p>
 				<p>2- Rellenar los datos correspondientes del contrato.</p>
 				<p>3- Configurar los turnos del contrato:</p>
-				<p>	-Crear nuevos turnos (CU-35).</p>
-				<p>	-Modificar turnos (CU-36).</p>
-				<p>	-Eliminar turnos (CU-37).</p>
-				<p>	-Asignar turno inicial (CU-38).</p>
+				<p>3.1- Crear nuevos turnos (CU-35).</p>
+				<p>3.2- Modificar turnos (CU-36).</p>
+				<p>3.3- Eliminar turnos (CU-37).</p>
+				<p>3.4- Asignar turno inicial (CU-38).</p>
 				<p>4- Una vez configurados los turnos, configurar el patrón (CU-39).</p>
 				<p>5- Confirmar.</p>
 				<h2>Secuencias alternativas</h2>
@@ -710,7 +710,7 @@
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Seleccionar la opción cuadrante.</p>
+				<p>1- Seleccionar la opción "Cuadrante".</p>
 				<p>2- Visualizar.</p>
 				<h2>Secuencias alternativas</h2>
 				<p>2a- El cuadrante elegido todavía no está creado, se pasa a CU-27.</p>
@@ -720,36 +720,31 @@
 
 <!-- Aquí empieza un CU -->			
 				<a name="27"></a>
-				<h1>Caso de uso 27: Crear/modificar cuadrante</h1>
+				<h1>Caso de uso 27: Generar cuadrante</h1>
 				<h2>Objetivo en contexto</h2>
-				<p>creación/modificación del cuadrante (considerando la creación como la modificación de un cuadrante vacío).</p>
+				<p>Generación del cuadrante.</p>
 				<h2>Precondiciones</h2>
 				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
 				<h2>Postcondiciones si éxito</h2>
-				<p>Cuadrante correcto.</p>
+				<p>Cuadrante.</p>
 				<h2>Postcondiciones si fallo</h2>
-				<p>Ninguna modificación.</p>
+				<p></p>
 				<h2>Actores</h2>
 				<p>Jefe de departamento y gerente.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Seleccionar opción modificar cuadrante.</p>
+				<p>1- Seleccionar opción "Generar cuadrante".</p>
 				<p>2- Introducir datos si es necesario.</p>
-				<p>3- La aplicación propone un cuadrante alternativo.</p>
-				<p>4- Confirmación para creación de cuadrante.</p>
-				<p>5- Notificación del cuadrante a los usuarios afectados (CU-29).</p>
+				<p>3- La aplicación genera un cuadrante.</p>
+				<p>4- Notificación del cuadrante a los usuarios afectados (CU-29).</p>
 				<h2>Secuencias alternativas</h2>
-				<p>4a.1a- El usuario rechaza la propuesta, y la aplicación vuelve al punto 3.</p>
-				<p>4a.1b- La aplicación no puede generar otro cuadrante, pasa a CU-28.</p>
-				<p>4a.1b.1a- El usuario vuelve al principio para revisar las propuestas (vuelve al punto 3).</p>
-				<p>4a.1b.1b- El usuario cambia las condiciones iniciales para intentar generar otro cuadrante.</p>
 				<br><br><br>
 <!-- Aquí acaba un CU -->
 
 <!-- Aquí empieza un CU -->			
 				<a name="28"></a>
-				<h1>Caso de uso 28: No poder crear/modificar cuadrante</h1>
+				<h1>Caso de uso 28: Sugerir más personal según el cuadrante generado</h1>
 				<h2>Objetivo en contexto</h2>
-				<p>Intento de creación/modificación del cuadrante con datos que no permiten que éste sea válido.</p>
+				<p>Se indica al usuario que ha generado el cuadrante si se necesita más personal en algún día del mes, o bien en general para el mes entero.</p>
 				<h2>Precondiciones</h2>
 				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
 				<h2>Postcondiciones si éxito</h2>
@@ -804,7 +799,7 @@
 				<h2>Actores</h2>
 				<p>Jefe de departamento.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opción ordenar empleados.</p>
+				<p>1- Elegir opción "Ordenar empleados".</p>
 				<p>2- Elegir el empleado y arrastrarlo a la posición elegida.</p>
 				<p>3- Repetir el paso 2 tantas veces como se desee.</p>
 				<p>4- Aceptar.</p>
@@ -828,9 +823,9 @@
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opción elegir vacaciones.</p>
+				<p>1- Elegir opción "Elegir vacaciones".</p>
 				<p>2- Seleccionar las fechas elegidas si éstas no está elegidas ya por un número determinado de empleados.</p>
-				<p>3- Aceptar.</p>
+				<p>3- Confirmar.</p>
 				<h2>Secuencias alternativas</h2>
 				<p></p>
 				<br><br><br>
@@ -851,9 +846,9 @@
 				<h2>Actores</h2>
 				<p>Usuario e impresora.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opción de imprimir.</p>
+				<p>1- Elegir opción "Imprimir".</p>
 				<p>2- Seleccionar las opciones de impresión.</p>
-				<p>3- Aceptar.</p>
+				<p>3- Confirmar.</p>
 				<h2>Secuencias alternativas</h2>
 				<p></p>
 				<br><br><br>
@@ -873,7 +868,7 @@
 				<h2>Actores</h2>
 				<p>Usuario.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opción de ayuda.</p>
+				<p>1- Elegir opción "Ayuda".</p>
 				<p>2- Seleccionar la información deseada.</p>
 				<h2>Secuencias alternativas</h2>
 				<p></p>
@@ -1041,12 +1036,14 @@
 
 				<h3>Marzo 2008</h3>
 				<p>En los casos de uso 23, 24 y 25 el actor es el jefe de departamento y cambia las secuencias normal y alternativa.</p>
+				<p>Se modifica el caso de uso 27, que pasa a llamarse Generar cuadrante.</p>
+				<p>Se modifica el caso de uso 28 ya que ahora no es posible que no se genere un cuadrante. Ahora el caso de uso 28,  Sugerir más personal según el cuadrante generado, se refiere al caso en que un cuadrante se genera con falta de personal.</p>
 				<p>Se añade el caso de uso 35 (Crear turno).</p>
 				<p>Se añade el caso de uso 36 (Modificar turno).</p>
 				<p>Se añade el caso de uso 37 (Eliminar turno).</p>
 				<p>Se añade el caso de uso 38 (Asignar turno inicial).</p>
 				<p>Se añade el caso de uso 39 (Configurar el patrón de un contrato).</p>
-
+			
 				<br><br>
 
 
