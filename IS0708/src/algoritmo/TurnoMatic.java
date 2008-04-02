@@ -45,7 +45,8 @@ public class TurnoMatic {
 		this.idDepartamento = idDepartamento;
 		this.anio = year;
 		this.mes = m;
-	    this.listaE = this.controlador.getEmpleadosDepartamentoPruebasAlg(idDepartamento);		
+	    this.listaE = this.vista.getEmpleadosDepartamento(idDepartamento);
+	    //this.listaE = this.controlador.getEmpleadosDepartamentoPruebasAlg(idDepartamento);		
 		this.contratosDep = this.controlador.getListaContratosDpto(this.idDepartamento);
 		this.turnosDep = this.controlador.getListaTurnosEmpleadosDpto(this.idDepartamento);		
 		this.estruc = new Estructura(mes, year, controlador, idDepartamento, listaE);
@@ -612,9 +613,7 @@ public class TurnoMatic {
 	private ArrayList<Integer> obtenerTurnosContrato(String p){
 		
 		ArrayList<Integer> turnos = new ArrayList<Integer>();
-		String tiempo;
 		String tipo;
-		int k = 0;
 		
 		for (int i=0; i<p.length(); i++) {
 			tipo = "";
