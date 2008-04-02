@@ -1108,7 +1108,7 @@ public class Vista {
    public String infoDpto(String dpto) {
 	   			String infojefe=this.controlador.getInfoJefedeDepartamento(dpto);
 	   			String infoempleados=this.controlador.getInfoEmpleadosDepartamento(dpto);
-	   			return infojefe + "/n" + infoempleados;
+	   			return infoempleados;
 			}
 	/**
 	 * Función que devuelve Info de la distribucion de un Dpto dado un dia de la semana
