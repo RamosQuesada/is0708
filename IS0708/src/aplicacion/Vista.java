@@ -1106,7 +1106,7 @@ public class Vista {
 	 */	
 
    public String infoDpto(String dpto) {
-	   			String infojefe=this.controlador.getInfoJefedeDepartamento(dpto);
+	   		//	String infojefe=this.controlador.getInfoJefedeDepartamento(dpto);
 	   			String infoempleados=this.controlador.getInfoEmpleadosDepartamento(dpto);
 	   			return infoempleados;
 			}
