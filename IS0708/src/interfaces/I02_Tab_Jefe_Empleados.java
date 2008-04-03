@@ -86,6 +86,7 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 	}
 	
 	private void mostrarEmpleados() {
+		int x = tablaEmpleados.getSelectionIndex();
 		if (_vista.isCacheCargada() && datosInterfazCargados) {
 			tablaEmpleados.removeAll();
 			ArrayList<Empleado> listaFiltrada = (ArrayList<Empleado>) _vista.getEmpleados().clone();
@@ -118,6 +119,7 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 			
 			for (int i = 0; i < listaFiltrada.size(); i++) {
 				TableItem tItem = new TableItem(tablaEmpleados, SWT.NONE);
+				
 				if (listaFiltrada.get(i).getSexo()==0)
 					tItem.setImage(ico_chica);
 				else 
@@ -134,6 +136,7 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 			}
 		}
 		// table.setSize (table.computeSize (SWT.DEFAULT, 200));
+		tablaEmpleados.setSelection(x);
 	}
 	
 	/**
