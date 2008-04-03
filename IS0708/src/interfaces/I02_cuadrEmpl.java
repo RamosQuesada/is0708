@@ -34,26 +34,73 @@ import aplicacion.utilidades.Util;
  *
  */
 public class I02_cuadrEmpl extends Thread{
-	/* TODO
-	 * Las barras de tama�o cero se quedan
-	 * bug: al hacer muchas franjas peque�itas, no se pegan bien (ver si sigue pasando)
+
+
+	/**
+	 * Canvas gráfico donde se dibuja el horario del empleado
 	 */
 	private Canvas canvas;
-	//public boolean redibujar;
-	private int alto, ancho;
+	
+	/**
+	 * Display donde vamos a dibujar 
+	 */
 	private Display display;
+	/**
+	 * Alto del cuadrado donde vamos a dibujar.
+	 */
+	private int alto;
+	
+	/**
+	 * Ancho del cuadrado donde vamos a dibujar
+	 */
+	private int ancho;
+	
+	/**
+	 * Bundle necesario para la traduccion de los textos
+	 */
 	private ResourceBundle _bundle;
-	//private int despl; // Este es para cuando movemos una barra, para saber de d�nde la
-				// he cogido
-	//private Boolean creando, terminadoDeCrear;
-	// La variable terminadoDeCrear sirve para que una franja nueva no desaparezca al crearla
-	private Boolean semanal; // 1: muestra cuadrante diario, 0: muestra cuadrante mensual
+
+	/**
+	 * Booleando que indica si la seleccion actual es la de verlo por meses o por semanas
+	 * (false == meses) (true == semanas)
+	 */
+	private Boolean semanal; 
+	
+	/**
+	 * Entero que tiene el numero de empleado que tiene actualmente la sesion abierta
+	 */
 	private int empleadoActivo;
-	private int horaInicio, horaFin; // Definen de qu� hora a qu� hora es el
-								// cuadrante
+	
+	
+	/**
+	 * Definen la hora de Inicio y la hora de Fin
+	 */
+	private int horaInicio, horaFin; 
+	
+	/**
+	 * Contiene el empleado actual
+	 */
 	private Empleado empleado;
 
-	private int margenIzq, margenDer, margenSup, margenInf; // M�rgenes del cuadrante
+	/**
+	 * Margen izquierdo de la zona de dibujo
+	 */
+	private int margenIzq;
+	/**
+	 * Margen derecho de la zona de dibujo
+	 */
+	private int margenDer;
+	/**
+	 * Margen superior de la zona de dibujo
+	 */
+	private int margenSup;
+	/**
+	 * Margen inferior de la zona de dibujo
+	 */
+	private int margenInf;
+	/**
+	 * 
+	 */
 	private int margenNombres; // Un margen para pintar los nombres a la izquierda
 	private int movimiento;
 	private final Label lGridCuadrante;
@@ -206,7 +253,7 @@ public class I02_cuadrEmpl extends Thread{
 		margenDer = 20;
 		margenSup = 1;
 		margenInf = 10;
-		margenNombres = 90;
+		margenNombres = 0;
 		empleadoActivo = -1;
 		horaInicio = 9;
 		horaFin = 23;
