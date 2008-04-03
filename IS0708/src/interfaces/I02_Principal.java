@@ -481,7 +481,9 @@ public class I02_Principal {
 		bDel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		bDel.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				// System.out.println("I02 :: Pulsado Nuevo Departamento");
+				if(vista.tieneEmpleados(cmbDepartamentos.getText())){
+					
+				}
 			}
 		});
 
