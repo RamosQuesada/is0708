@@ -79,7 +79,7 @@ public class I30_Info_BD {
 		data.widthHint = 100;
 		username_text.setLayoutData(data);
 		final Label password_label = new Label(shell, SWT.LEFT);		
-		final Text password_text = new Text(shell, SWT.LEFT | SWT.BORDER);
+		final Text password_text = new Text(shell, SWT.LEFT | SWT.BORDER | SWT.PASSWORD);
 		data = new GridData();
 		data.widthHint = 100;
 		password_label.setLayoutData(data);
@@ -87,7 +87,7 @@ public class I30_Info_BD {
 		data.widthHint = 100;
 		password_text.setLayoutData(data);
 		final Label passwordAdmin_label = new Label(shell, SWT.LEFT);		
-		final Text passwordAdmin_text = new Text(shell, SWT.LEFT | SWT.BORDER);
+		final Text passwordAdmin_text = new Text(shell, SWT.LEFT | SWT.BORDER | SWT.PASSWORD);
 		data = new GridData();
 		data.widthHint = 100;
 		passwordAdmin_label.setLayoutData(data);

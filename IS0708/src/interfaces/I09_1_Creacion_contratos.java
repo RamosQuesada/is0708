@@ -808,7 +808,7 @@ public class I09_1_Creacion_contratos {
 			public void widgetSelected(SelectionEvent e) {
 				// modo = 0 es nuevo turno y modo =1 es modificar
 				String nombre = tContrato.getText();
-				if (nombre.equals("") || (turnos.size() == 0)) {
+				if (nombre.equals("") || (turnos.size() == 0) || (patron=="")) {
 					MessageBox messageBox = new MessageBox(shell,
 							SWT.APPLICATION_MODAL | SWT.OK
 									| SWT.ICON_INFORMATION);
@@ -826,8 +826,8 @@ public class I09_1_Creacion_contratos {
 								.getString("I09_descrip_Turno_inicial"));
 						messageBox.open();
 					} else {
-						if (Util.integerCheck(tLongCiclo.getText())&&Util.doubleCheck(tSalario.getText())
-								&&Util.integerCheck(tTipo.getText())){
+						if (Util.naturalCheck(tLongCiclo.getText())&&Util.doubleCheck(tSalario.getText())
+								&&Util.naturalCheck(tTipo.getText())){
 						int longCiclo = Integer.valueOf(tLongCiclo.getText());
 						double sueldo = Double.valueOf(tSalario.getText());
 						int tipo = Integer.valueOf(tTipo.getText());
