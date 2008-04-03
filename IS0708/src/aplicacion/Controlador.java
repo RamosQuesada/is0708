@@ -1931,5 +1931,28 @@ public ArrayList<Integer[]> getInfoDistribucionDpto(String dpto, int diaSemana) 
 	
 }	
 	
-	
+public ArrayList<String> getHorarioDpto(String dpto) {
+	ArrayList<String> horas = new ArrayList<String>();
+	try {
+		ResultSet rs = _db.obtenHorarioDpto(dpto);
+		while (rs.next()) {
+			Time ThoraApertura=rs.getTime("HoraApertura");
+			Time ThoraCierre=rs.getTime("HoraCierre");
+			String horaApertura=ThoraApertura.toString();
+			String horaCierre=ThoraCierre.toString();
+			horas.add(horaApertura);
+			horas.add(horaCierre);
+		}
+
+	} catch (Exception e) {
+		// TODO: handle exception
+		System.err
+				.println("Error al obtener Lista de Turnos en la base de datos");
+	}
+	return horas;
+
+}
+
+
+
 }

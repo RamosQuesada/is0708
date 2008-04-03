@@ -1170,7 +1170,19 @@ public void eliminaDepartamento(String text) {
 }
 
  
-   
+/**
+ * Funcion que dado un Dpto, te devuelve 
+ * un ArrayList de dos componentes en la que
+ * la primera es la hora de apertura
+ * y la segunda la hora de cierre
+ * @param dpto: Id del Dpto.
+ * @return
+ */
+public ArrayList<String> getHorarioDpto(String dpto) {
+	// TODO Auto-generated method stub
+	ArrayList<String> horas = this.controlador.getHorarioDpto(dpto);
+	return horas;
+}
    
    
 }

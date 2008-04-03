@@ -1997,6 +1997,17 @@ SELECT * from TURNOS WHERE IdTurno IN (
 		}
 		return r;
 	}	
-		
+
+	public ResultSet obtenHorarioDpto(String dpto) {
+		ResultSet r = null;
+		try {
+			st = con.createStatement();
+			r = st.executeQuery("SELECT HoraApertura, HoraCierre FROM DEPARTAMENTO WHERE Nombre='"+dpto+"';");
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println("Error al realizar la consulta del horario de un Dpto");
+		}
+		return r;
+	}	
 
 }
