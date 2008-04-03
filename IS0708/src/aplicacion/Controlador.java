@@ -544,7 +544,7 @@ public class Controlador {
 				    horasalida=horasalida2;
 			    }*/
 		
-			    System.out.println(nombreempleado+": ("+nv+") " +horaentrada+"-"+horasalida);
+		//	    System.out.println(nombreempleado+": ("+nv+") " +horaentrada+"-"+horasalida);
 
 			  if(horaentrada!=null || horasalida!=null){
 				    
@@ -1797,7 +1797,7 @@ public class Controlador {
 		while(r.next()){
 		int t= r.getInt("IdTurno");
 	    s = Integer.toString(t);
-		System.out.println(t);
+	//	System.out.println(t);
 		}
 		} catch (Exception e) {
 			// TODO: handle exception
