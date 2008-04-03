@@ -950,8 +950,10 @@ public class Empleado implements Drawable {
 		//java.sql.Date fechaActual = new java.sql.Date(anio,mes,0);
 		java.sql.Date fechaActual = new java.sql.Date(anio-1900,mes-1,1);
 		
-		//COMPROBAR SI ESTA DE VACACIONES, HA ACABADO SU CONTRATO
 		/*
+		 * AMPLIACIONES:
+		 * VACACIONES
+		 * FIN DE CONTRATO CONTRATO
 		 * if ((fechaActual pertenece a vacaciones) || (fechaActual>fechaFinContrato)) {}
 		 * else {
 		 * 		CODIGO RESTANTE
