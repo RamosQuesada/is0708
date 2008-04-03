@@ -1155,7 +1155,7 @@ public ArrayList<String> getNombreDepartamento(Empleado empleadoActual) {
  */
 public boolean tieneEmpleados(String text) {
 	// TODO Auto-generated method stub
-	return false;
+	return this.getEmpleadosDepartamento(text).size()>=1;
 }
 
  
