@@ -949,6 +949,15 @@ public class Empleado implements Drawable {
 		//java.sql.Date fechaActual = new java.sql.Date(today.getTime());
 		//java.sql.Date fechaActual = new java.sql.Date(anio,mes,0);
 		java.sql.Date fechaActual = new java.sql.Date(anio-1900,mes-1,1);
+		
+		//COMPROBAR SI ESTA DE VACACIONES, HA ACABADO SU CONTRATO
+		/*
+		 * if ((fechaActual pertenece a vacaciones) || (fechaActual>fechaFinContrato)) {}
+		 * else {
+		 * 		CODIGO RESTANTE
+		 * }
+		 */
+		
 		if(fContrato == null)
 			fContrato = new Date(fechaActual.getTime());
 		
@@ -998,10 +1007,7 @@ public class Empleado implements Drawable {
 		else
 			if ((contrato.getTipoContrato()==3) || (contrato.getTipoContrato()==4))
 				return true;
-		
-		//COMPROBAR SI ESTA DE VACACIONES ETC
-		//...
-		
+			
 		//Obtencion del turno a partir de la base de datos.
 		if (turnoE == null)
 		{
