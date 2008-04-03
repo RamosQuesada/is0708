@@ -9,6 +9,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
@@ -65,7 +66,7 @@ public class I10_Nuevo_departamento {
 
 	private void createWindow() {
 		shell = new Shell(padre, SWT.CLOSE | SWT.CLOSE | SWT.APPLICATION_MODAL );
-		shell.setText(bundle.getString("I10_config_dep"));
+		shell.setText(bundle.getString("I10_nuevo_dep"));
 		shell.setLayout(new GridLayout(2,true));
 		
 		// Permite cerrar la ventana pulsando ESC
@@ -90,8 +91,6 @@ public class I10_Nuevo_departamento {
 
 		final Group group = new Group(shell, SWT.NONE);
 		group.setText(bundle.getString("Departamento"));
-		group.setLayout(new GridLayout(1,false));
-		group.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,2,1));
 
 		group.setLayout(new GridLayout(3,false));
 		group.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,2,1));
@@ -118,7 +117,7 @@ public class I10_Nuevo_departamento {
 		final Combo cmbJefes = new Combo(group, SWT.BORDER
 				| SWT.READ_ONLY);
 		cmbJefes.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-				false, 1, 1));
+				false, 2, 1));
 		
 		ArrayList<String> array = vista.getNombreTodosJefes();
 		if (array != null) {
@@ -129,22 +128,31 @@ public class I10_Nuevo_departamento {
 		cmbJefes.select(0);
 		
 		//Horas de incio y cierre
-		lhoraInicio = new Label (group, SWT.NONE);
-		lhoraInicio.setText(bundle.getString("I10_hora_incio"));
-		lhoraInicio.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,2,1));
+		final Composite grouphoras = new Composite(group, SWT.NONE);
+
+		grouphoras.setLayout(new GridLayout(4,false));
+		grouphoras.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,3,1));
 		
-		thorIn=new Text (group, SWT.BORDER);	
-		thorIn.setLayoutData (new GridData(SWT.LEFT ,SWT.CENTER,true,true,2,1));
+		lhoraInicio = new Label (grouphoras, SWT.NONE);
+		lhoraInicio.setText(bundle.getString("I10_hora_incio"));
+		lhoraInicio.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,4,1));
+		
+		thorIn=new Text (grouphoras, SWT.BORDER);	
+		thorIn.setLayoutData (new GridData(SWT.LEFT ,SWT.CENTER,false,true,1,1));
 		thorIn.setTextLimit(2);
 		
-		ldosPuntos=new Label (group, SWT.NONE);
+		ldosPuntos=new Label (grouphoras, SWT.NONE);
 		ldosPuntos.setText(":");
-		ldosPuntos.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,true,true,1,1));
+		ldosPuntos.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,false,true,1,1));
 		ldosPuntos.setBounds(1, 1, 1, 1);
+	
 		
-		tminIn=new Text (group, SWT.BORDER);	
-		tminIn.setLayoutData (new GridData(SWT.LEFT ,SWT.CENTER,true,true,2,1));
+		tminIn=new Text (grouphoras, SWT.BORDER);	
+		tminIn.setLayoutData (new GridData(SWT.LEFT ,SWT.CENTER,false,true,1,1));
 		tminIn.setTextLimit(2);
+		
+		Label hueco=new Label (grouphoras, SWT.NONE);
+		hueco.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
 		
 		//Buttons "Accept" and "Cancel"
 		

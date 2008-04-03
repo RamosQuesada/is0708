@@ -503,7 +503,7 @@ public class I02_Principal {
 		final Text lContenido = new Text(cInfo,SWT.READ_ONLY | SWT.MULTI |SWT.V_SCROLL);
 		lContenido.setEditable(false);
 		lContenido.setText(vista.infoDpto(cmbDepartamentos.getText()));
-		lContenido.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true,
+		lContenido.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 				true, 2, 1));
 		
 		//listener para el combo y mostrar la info debajo
