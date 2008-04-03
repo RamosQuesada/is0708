@@ -37,6 +37,7 @@ public class Database extends Thread {
 	 */
 	public synchronized void abrirConexion() {
 		try {
+			//para desencriptar
 			/*FileInputStream is;
 			try {
 				is = new FileInputStream("src"+File.separator+"interfaces"+File.separator+"configBD");
@@ -58,19 +59,16 @@ public class Database extends Thread {
 				System.out.println("Error de entrada salida");
 				e2.printStackTrace();
 			}*/
-			//String userName = "turnomat_user";
-			//String password = "is0708";
-			String userName = "root";
-			String password = "";
+			String userName = "turnomat_user";
+			String password = "is0708";			
 			String bd = "turnomat_bd";
-			//String url = "jdbc:mysql://72.34.56.241:3306/" + bd;
-			String url="jdbc:mysql://localhost/"+bd;
+			String url = "jdbc:mysql://72.34.56.241:3306/" + bd;
 
 // Descomentar este trozo para usar la base de datos local
-/*			userName = "root";
-			password = "";
-			url = "jdbc:mysql://localhost/" + bd;
-*/
+//			userName = "root";
+//			password = "";
+//			url = "jdbc:mysql://localhost/" + bd;
+
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			//DriverManager.setLoginTimeout(300);
 			con = DriverManager.getConnection(url, userName, password);
