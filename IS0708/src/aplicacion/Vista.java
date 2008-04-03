@@ -1173,8 +1173,8 @@ public void eliminaDepartamento(String text) {
 /**
  * Funcion que dado un Dpto, te devuelve 
  * un ArrayList de dos componentes en la que
- * la primera es la hora de apertura
- * y la segunda la hora de cierre
+ * la primera(horas.get(0)) es la hora de apertura
+ * y la segunda(horas.get(1)) la hora de cierre
  * @param dpto: Id del Dpto.
  * @return
  */
