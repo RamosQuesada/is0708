@@ -147,10 +147,17 @@ label {
 }
 input {
 	padding:2px;
-	border:1px solid #eee;
+/*	border:1px solid #eee;*/
+	border:1px solid #555;
 	font: normal 1em Verdana, sans-serif;
-	color:#777;
+	color:#555; 
 }
+input.text {
+	background: #000000;
+	border:1px solid #000000;
+	color: #000000;
+}
+
 textarea {
 	width:400px;
 	padding:2px;
@@ -202,6 +209,14 @@ input.button {
 	margin: 0 auto;
 	text-align: left;
 }
+
+#wrap100 {
+	width: 820px;
+	background: #CCC url(content2.jpg) repeat-y center top;
+	margin: 0 auto;
+	text-align: left;
+}
+
 #content-wrap {
 	clear: both;
 	width: 760px;
@@ -313,6 +328,14 @@ input.button {
 
 #main ul li {
 	list-style-image: url(bullet.gif);
+}
+
+/* Main 100% */
+#main100 {
+	float: left;
+	width: 100%;
+	padding: 0; margin: 5px 0 0 5px;
+	display: inline;
 }
 
 /* Informes */
