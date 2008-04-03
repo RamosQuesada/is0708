@@ -486,6 +486,13 @@ public class I02_Principal {
 					messageBox.setText (bundle.getString("Mensaje"));
 					messageBox.setMessage (bundle.getString("I02_err_elim"));
 					e.doit = messageBox.open () == SWT.CLOSE;
+				}else{//si no tiene ningun empleado
+					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.CANCEL | SWT.ICON_INFORMATION);
+					messageBox.setText (bundle.getString("Mensaje"));
+					messageBox.setMessage (bundle.getString("I02_confirm_elim_dep"));
+					if(messageBox.open () == SWT.OK){
+						vista.eliminaDepartamento(cmbDepartamentos.getText());
+					}
 				}
 			}
 		});

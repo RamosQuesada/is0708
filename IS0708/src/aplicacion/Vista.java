@@ -1149,13 +1149,21 @@ public ArrayList<String> getNombreDepartamento(Empleado empleadoActual) {
 	return dptos;
 }
 /**
- * Funcion q devuelve true si tiene algun empleado el departamento
+ * Funcion que devuelve true si tiene algun empleado el departamento
  * @param text
  * @return
  */
 public boolean tieneEmpleados(String text) {
 	// TODO Auto-generated method stub
 	return this.getEmpleadosDepartamento(text).size()>=1;
+}
+/**
+ * Función que elimina un departamento
+ * @param text Nombre del departamento
+ */
+public void eliminaDepartamento(String text) {
+	// TODO Auto-generated method stub
+	
 }
 
  
