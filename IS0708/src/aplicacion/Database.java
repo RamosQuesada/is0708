@@ -518,6 +518,37 @@ public class Database extends Thread {
 		return correcto;
 	}
 
+	
+	public boolean borraDepartamentoUsuario(String nombre) {
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("DELETE FROM DepartamentoUsuario WHERE NombreDepartamento='" + nombre
+					+ "'");
+			System.out
+					.println("aplicacion.Database.java\t::Departamento Borrado");
+			correcto = true;
+		} catch (SQLException e) {
+			System.err.println("Error al Borrar el departamento");
+		}
+		return correcto;
+	}
+	
+	public boolean borraNumerosDepartamentos(String nombre) {
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("DELETE FROM NumerosDEPARTAMENTOs WHERE Nombre='" + nombre
+					+ "'");
+			System.out
+					.println("aplicacion.Database.java\t::Departamento Borrado");
+			correcto = true;
+		} catch (SQLException e) {
+			System.err.println("Error al Borrar el departamento");
+		}
+		return correcto;
+	}
+
 	/**
 	 * M�todo que inserta en la tabla NumerosDEPARTAMENTOS los valores
 	 * correspondientes
@@ -2010,4 +2041,7 @@ SELECT * from TURNOS WHERE IdTurno IN (
 		return r;
 	}	
 
+
+	
+	
 }

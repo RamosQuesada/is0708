@@ -1142,6 +1142,21 @@ public class Controlador {
 		return _db.borraMensaje(mensaje.getIdmensaje());
 
 	}
+	
+	
+	/**
+	 * Elimina un departamento en la base de datos.
+	 * 
+	 * @param nombre
+	 *            dpto a borrar
+	 * @return <i>true</i> si dpto se ha eliminado correctamente
+	 */
+	public boolean eliminaDepartamento(String nombre) {
+		return this._db.borraDepartamento(nombre) && 
+			this._db.borraDepartamentoUsuario(nombre)
+			&& this._db.borraNumerosDepartamentos(nombre);
+
+	}
 
 	/**
 	 * Marca un mensaje en la base de datos.
