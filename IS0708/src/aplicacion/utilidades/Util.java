@@ -429,10 +429,11 @@ public class Util {
 	}
 	
 	/**check if the String text is integer*/
-	public static boolean integerCheck(String string){
+	public static boolean naturalCheck(String string){
 	    try {
 	    	int n = Integer.parseInt( string );
-	    	return true;
+	    	if (n>=0) return true;
+	    	else return false;
 	    } catch (Exception e) {
 	    	System.out.println("Non-integer value");
 	        return false;
