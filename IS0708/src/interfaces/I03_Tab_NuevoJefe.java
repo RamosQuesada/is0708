@@ -1,5 +1,6 @@
 package interfaces;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -37,7 +38,10 @@ public class I03_Tab_NuevoJefe {
 	private TabFolder tabFolder;
 	private String tmDep;
 	private Shell shellPadre;
-	ArrayList<Contrato> contratos;
+	private ArrayList<Contrato> contratos;
+	private Date fechaContrato;
+	private Date fechaAlta;
+	private Date fechaNacimiento;
 	
 	  
 	public I03_Tab_NuevoJefe(TabFolder tabF,ResourceBundle b,Vista v,Shell s){
@@ -175,14 +179,15 @@ public class I03_Tab_NuevoJefe {
 		cSexo		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		lIdioma		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
 		cIdioma		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		
 		lContrato	.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
-		cContrato	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		cContrato	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,false,1,1));
 		lExperiencia.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
 		cExperiencia.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		lDepto		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
 		cDepto		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		bFContrato	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,0,0));
-		tFContrato	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,0,0));
+		bFContrato	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
+		tFContrato	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		bFAlta		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		tFAlta		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		bColor		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
@@ -388,6 +393,81 @@ public class I03_Tab_NuevoJefe {
 				
 			}
 		});*/
+		// Listener para el selector de sexo
+		/*SelectionAdapter sacSexo = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e){
+				if (cSexo.getSelectionIndex()==0)
+					tabFolder.setImage(ico_chica);
+				else
+					tabFolder.setImage(ico_chico);
+			}
+		};
+		cSexo.addSelectionListener(sacSexo);
+		*/
+		// Listener para el selector de fecha de nacimiento
+		SelectionAdapter sabFNacimiento = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e){
+				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shellPadre);
+				while (!i17.isDisposed()) {
+					if (!tabFolder.getDisplay().readAndDispatch()) {
+						tabFolder.getDisplay().sleep();
+					}
+				}
+				fechaNacimiento = i17.getFecha();
+				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
+				if (fechaNacimiento!=null)
+				tFNacimiento.setText(String.valueOf(fechaNacimiento.getDate()) + " de " + meses[fechaNacimiento.getMonth()]+ " de " + String.valueOf(fechaNacimiento.getYear()));
+			}
+		};
+		bFNacimiento.addSelectionListener(sabFNacimiento);
+
+		// Listener para el selector de fecha de contrato
+		SelectionAdapter sabFContrato = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e){
+				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shellPadre);
+				while (!i17.isDisposed()) {
+					if (!tabFolder.getDisplay().readAndDispatch()) {
+						tabFolder.getDisplay().sleep();
+					}
+				}
+				fechaContrato = i17.getFecha(); 				
+				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
+				if (fechaContrato != null)
+					tFContrato.setText(String.valueOf(fechaContrato.getDate()) + " de " + meses[fechaContrato.getMonth()]+ " de " + String.valueOf(fechaContrato.getYear()));				
+			}
+		};
+		bFContrato.addSelectionListener(sabFContrato);
+		
+		// Listener para el selector de fecha de alta
+		SelectionAdapter sabFAlta = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e){
+				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shellPadre);
+				while (!i17.isDisposed()) {
+					if (!tabFolder.getDisplay().readAndDispatch()) {
+						tabFolder.getDisplay().sleep();
+					}
+				}
+				fechaAlta = i17.getFecha(); 
+				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
+				if (fechaAlta != null)
+				tFAlta.setText(String.valueOf(fechaAlta.getDate()) + " de " + meses[fechaAlta.getMonth()]+ " de " + String.valueOf(fechaAlta.getYear()));
+			}
+		};
+		bFAlta.addSelectionListener(sabFAlta);
+		
+		// Listener para el selector de color
+		SelectionAdapter sabColor = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e){
+				ColorDialog cd = new ColorDialog(shellPadre);
+				cd.setText(bundle.getString("I08_lab_SelColor"));
+				cd.setRGB(new RGB(255, 255, 255));
+				RGB newColor = cd.open();
+				if (newColor != null) {
+					lColor.setBackground(new Color(shellPadre.getDisplay(), newColor));
+				}
+			}
+		};
+		bColor.addSelectionListener(sabColor);
 	}
 	
 	/*public void mostrarVentana() {		
