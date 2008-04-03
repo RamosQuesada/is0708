@@ -612,8 +612,8 @@ public class I02_Principal {
 	 *            el tabFolder donde colocarlo
 	 * @author Roberto Garcia
 	 */
-	private void crearTabAdminNuevoGerente(TabFolder tabFolder) {
-		new I03_Tab_NuevoJefe(tabFolder,bundle,vista,shell);
+	private void crearTabAdminNuevoJefe(TabFolder tabFolder) {
+		new I03_Tab_NuevoJefe(tabFolder,bundle,vista);
 
 	}
 
@@ -1247,7 +1247,7 @@ public class I02_Principal {
 			// Tabs de administrador
 			vista.getControlador().abrirConexionBD();
 			crearTabAdminInicio(tabFolder);
-			crearTabAdminNuevoGerente(tabFolder);
+			crearTabAdminNuevoJefe(tabFolder);
 			crearTabAdminEliminaGerente(tabFolder);
 			crearTabAdminDepartamentos(tabFolder);
 			vista.getControlador().cerrarConexionBD();
