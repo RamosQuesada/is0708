@@ -77,7 +77,7 @@ public class I03_Tab_NuevoJefe {
 		
 		//creamos la nueva pestaña
 		final TabItem tabItemEmpleados = new TabItem(tabFolder, SWT.NONE);
-		tabItemEmpleados.setText(bundle.getString("I02_admin_jefe"));
+		tabItemEmpleados.setText(bundle.getString("I03_admin_jefe"));
 		tabItemEmpleados.setImage(ico_chico);
 
 		// Creamos el contenido de la pestaña cuadrantes
@@ -91,7 +91,7 @@ public class I03_Tab_NuevoJefe {
 		cNuevoJefe.setLayout(lGrupo);
 
 		final Label lTitulo = new Label(cNuevoJefe, SWT.LEFT);
-		lTitulo.setText(bundle.getString("I02_lab_etiquetaMarco"));
+		lTitulo.setText(bundle.getString("I03_lab_etiquetaMarco"));
 		final Composite cNuevoJefe2 = new Composite(cNuevoJefe,
 				SWT.BORDER);
 		cNuevoJefe2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
@@ -113,8 +113,8 @@ public class I03_Tab_NuevoJefe {
 
 		final Group grupoIzq = new Group(cNuevoJefe2, SWT.NONE);
 		final Group grupoDer = new Group(cNuevoJefe2, SWT.NONE);
-		grupoIzq.setText(bundle.getString("I08_lab_DatosPersonales"));
-		grupoDer.setText(bundle.getString("I08_lab_DatosLaborales"));
+		grupoIzq.setText(bundle.getString("I03_lab_DatosPersonales"));
+		grupoDer.setText(bundle.getString("I03_lab_DatosLaborales"));
 
 		grupoIzq.setLayout(new GridLayout(2,false));
 		grupoDer.setLayout(new GridLayout(2,false));
@@ -170,22 +170,22 @@ public class I03_Tab_NuevoJefe {
 		final Button bCancelar = new Button(cAceptarCancelar, SWT.PUSH);
 		
 		lNVend			.setText(bundle.getString("Vendedor"));
-		bClaveAuto		.setText(bundle.getString("I02_lab_claveAuto"));
-		bClaveManual	.setText(bundle.getString("I02_lab_claveManual"));
-		lContra			.setText(bundle.getString("I02_lab_clave"));
-		lEMail			.setText(bundle.getString("EMail"));
+		bClaveAuto		.setText(bundle.getString("I03_lab_claveAuto"));
+		bClaveManual	.setText(bundle.getString("I03_lab_claveManual"));
+		lContra			.setText(bundle.getString("I03_lab_clave"));
+		lEMail			.setText(bundle.getString("I03_lab_Email"));
 		lNombre			.setText(bundle.getString("Nombre"));
-		lApell1			.setText(bundle.getString("I08_lab_Apellido1"));
-		lApell2			.setText(bundle.getString("I08_lab_Apellido2"));
-		bFNacimiento	.setText(bundle.getString("I08_lab_FNacimiento"));
+		lApell1			.setText(bundle.getString("I03_lab_apellido1"));
+		lApell2			.setText(bundle.getString("I03_lab_apellido2"));
+		bFNacimiento	.setText(bundle.getString("I03_lab_FNacimiento"));
 		lSexo			.setText(bundle.getString("Sexo"));
 		lIdioma			.setText(bundle.getString("Idioma"));
-		lContrato		.setText(bundle.getString("I08_lab_TipoContrato"));
+		lContrato		.setText(bundle.getString("I03_lab_TipoContrato"));
 		lExperiencia	.setText(bundle.getString("Experiencia"));
 		lDepto			.setText(bundle.getString("Departamento"));
-		bFAlta			.setText(bundle.getString("I08_lab_FAlta"));
-		bFContrato		.setText(bundle.getString("I08_lab_FContr"));
-		bColor			.setText(bundle.getString("I08_lab_SelColor"));
+		bFAlta			.setText(bundle.getString("I03_lab_FAlta"));
+		bFContrato		.setText(bundle.getString("I03_lab_FContr"));
+		bColor			.setText(bundle.getString("I03_lab_SelColor"));
 
 		lNVend		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
 		tNVend		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,false,1,1));
@@ -272,7 +272,7 @@ public class I03_Tab_NuevoJefe {
 									| SWT.ICON_INFORMATION);
 					message.setText("Info");
 					message.setMessage(bundle
-							.getString("I02_dlg_nombre"));
+							.getString("I03_err_numero"));
 					message.open();
 				}else
 					
@@ -283,7 +283,7 @@ public class I03_Tab_NuevoJefe {
 									| SWT.ICON_INFORMATION);
 					message.setText("Info");
 					message.setMessage(bundle
-							.getString("I02_dlg_nombre"));
+							.getString("I03_err_numeroFormato"));
 					message.open();
 				}else	
 				
@@ -294,7 +294,7 @@ public class I03_Tab_NuevoJefe {
 									| SWT.ICON_INFORMATION);
 					message.setText("Info");
 					message.setMessage(bundle
-							.getString("I02_dlg_apellidos"));
+							.getString("I03_err_clave"));
 					message.open();
 				}else
 					
@@ -305,7 +305,7 @@ public class I03_Tab_NuevoJefe {
 									| SWT.ICON_INFORMATION);
 					message.setText("Info");
 					message.setMessage(bundle
-							.getString("I02_dlg_nombreUsuario"));
+							.getString("I03_err_nombre"));
 					message.open();
 				}else
 					
@@ -316,7 +316,7 @@ public class I03_Tab_NuevoJefe {
 									| SWT.ICON_INFORMATION);
 					message.setText("Info");
 					message.setMessage(bundle
-							.getString("I02_dlg_clave"));
+							.getString("I03_err_apellido1"));
 					message.open();
 				}else
 					
@@ -327,7 +327,7 @@ public class I03_Tab_NuevoJefe {
 									| SWT.ICON_INFORMATION);
 					message.setText("Info");
 					message.setMessage(bundle
-							.getString("I02_dlg_departamento"));
+							.getString("I03_err_apellido2"));
 					message.open();
 				}else
 					
@@ -338,7 +338,7 @@ public class I03_Tab_NuevoJefe {
 									| SWT.ICON_INFORMATION);
 					message.setText("Info");
 					message.setMessage(bundle
-							.getString("I02_dlg_departamento"));
+							.getString("I03_err_email"));
 					message.open();
 				}else
 				
@@ -349,40 +349,40 @@ public class I03_Tab_NuevoJefe {
 									| SWT.ICON_INFORMATION);
 					message.setText("Info");
 					message.setMessage(bundle
-							.getString("I02_dlg_departamento"));
+							.getString("I03_err_emailFormato"));
 					message.open();
 				}else
 					
-				//comprobamos si ha seleccionado una fecha
+				//comprobamos si ha seleccionado una fecha de nacimiento
 				if(tFNacimiento.getText().equals("")){
 					MessageBox message = new MessageBox(shellPadre,
 							SWT.APPLICATION_MODAL | SWT.OK
 									| SWT.ICON_INFORMATION);
 					message.setText("Info");
 					message.setMessage(bundle
-							.getString("I02_dlg_departamento"));
+							.getString("I03_err_fechaNac"));
 					message.open();
 				}else
 					
-				//comrpobamos si ha seleccionado una fecha
+				//comrpobamos si ha seleccionado una fecha de inicio de contrato
 				if(tFContrato.getText().equals("")){
 					MessageBox message = new MessageBox(shellPadre,
 							SWT.APPLICATION_MODAL | SWT.OK
 									| SWT.ICON_INFORMATION);
 					message.setText("Info");
 					message.setMessage(bundle
-							.getString("I02_dlg_departamento"));
+							.getString("I03_err_fechaInicioCont"));
 					message.open();
 				}else
 					
-				//comprobamos si ha seleccionado una fecha
+				//comprobamos si ha seleccionado una fecha de alta en el departamento
 				if(tFAlta.getText().equals("")){
 					MessageBox message = new MessageBox(shellPadre,
 							SWT.APPLICATION_MODAL | SWT.OK
 									| SWT.ICON_INFORMATION);
 					message.setText("Info");
 					message.setMessage(bundle
-							.getString("I02_dlg_departamento"));
+							.getString("I03_err_fechaAltaDept"));
 					message.open();
 				}else
 				
@@ -393,7 +393,7 @@ public class I03_Tab_NuevoJefe {
 									| SWT.ICON_INFORMATION);
 					message.setText("Info");
 					message.setMessage(bundle
-							.getString("I02_dlg_departamento"));
+							.getString("I03_err_color"));
 					message.open();
 				}else{
 					
@@ -401,8 +401,9 @@ public class I03_Tab_NuevoJefe {
 					//muestra un mensaje de confirmación de creación
 					MessageBox messageBox = new MessageBox(shellPadre,
 							SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
-					messageBox.setText("CONFIRMACION");
-					messageBox.setMessage("¿Desea guardar el nuevo jefe?");
+					messageBox.setText(bundle
+							.getString("I03_dlg_confirmacion"));
+					messageBox.setMessage("I03_dlg_pregunta");
 					if (messageBox.open() == SWT.YES) {	
 						//insertamos el nuevo jefe en la base de datos
 						//vista.getControlador().insertDepartamentoPruebas(cDepartamentos.getItem(cDepartamentos.getSelectionIndex()), new Integer(tNombreUsuario.getText()));
@@ -412,9 +413,8 @@ public class I03_Tab_NuevoJefe {
 		});
 		
 		
+		
 		// Introducimos los valores y eventos de Cancelar
-		//bCancelar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true,
-			//	false, 1, 1));
 		bCancelar.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				tNVend.setText("");
@@ -433,6 +433,7 @@ public class I03_Tab_NuevoJefe {
 			}
 		});
 		
+		
 		// Listener de el radio buttom clave manual
 		bClaveAuto.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {
@@ -440,29 +441,26 @@ public class I03_Tab_NuevoJefe {
 				tPassword.setEditable(false);
 				tPassword.setText(aplicacion.utilidades.Util.obtenerClave());
 			}
-
 			public void focusLost(FocusEvent e) {
 				// TODO Auto-generated method stub
-
 			}
 		});
 		
+		
+		
 		// Listener de el radio buttom clave manual
 		bClaveManual.addFocusListener(new FocusListener() {
-
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
 				tPassword.setEditable(true);
 				tPassword.setText("");
-
 			}
-
 			public void focusLost(FocusEvent e) {
 				// TODO Auto-generated method stub
-
 			}
 		});
 		 
+		
 		// Listener para el selector de sexo
 		SelectionAdapter sacSexo = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
@@ -473,6 +471,7 @@ public class I03_Tab_NuevoJefe {
 			}
 		};
 		cSexo.addSelectionListener(sacSexo);
+		
 		
 		// Listener para el selector de fecha de nacimiento
 		SelectionAdapter sabFNacimiento = new SelectionAdapter() {
@@ -491,6 +490,8 @@ public class I03_Tab_NuevoJefe {
 		};
 		bFNacimiento.addSelectionListener(sabFNacimiento);
 
+		
+		
 		// Listener para el selector de fecha de contrato
 		SelectionAdapter sabFContrato = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
@@ -508,6 +509,8 @@ public class I03_Tab_NuevoJefe {
 		};
 		bFContrato.addSelectionListener(sabFContrato);
 		
+		
+		
 		// Listener para el selector de fecha de alta
 		SelectionAdapter sabFAlta = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
@@ -518,18 +521,23 @@ public class I03_Tab_NuevoJefe {
 					}
 				}
 				fechaAlta = i17.getFecha(); 
-				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
+				String [] meses = {bundle.getString("enero"),bundle.getString("febrero"),bundle.getString("marzo"),
+						bundle.getString("abril"),bundle.getString("mayo"),bundle.getString("junio"),
+						bundle.getString("julio"),bundle.getString("agosto"),bundle.getString("septiembre"),
+						bundle.getString("octubre"),bundle.getString("noviembre"),bundle.getString("diciembre")};
 				if (fechaAlta != null)
 				tFAlta.setText(String.valueOf(fechaAlta.getDate()) + " de " + meses[fechaAlta.getMonth()]+ " de " + String.valueOf(fechaAlta.getYear()));
 			}
 		};
 		bFAlta.addSelectionListener(sabFAlta);
 		
+		
+		
 		// Listener para el selector de color
 		SelectionAdapter sabColor = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
 				ColorDialog cd = new ColorDialog(shellPadre);
-				cd.setText(bundle.getString("I08_lab_SelColor"));
+				cd.setText(bundle.getString("I03_lab_SelColor"));
 				cd.setRGB(new RGB(255, 255, 255));
 				RGB newColor = cd.open();
 				if (newColor != null) {
@@ -540,6 +548,7 @@ public class I03_Tab_NuevoJefe {
 		};
 		bColor.addSelectionListener(sabColor);
 	}
+	
 	
 	/*public void mostrarVentana() {		
 		
