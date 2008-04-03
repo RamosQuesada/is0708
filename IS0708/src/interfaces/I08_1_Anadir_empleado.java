@@ -219,7 +219,7 @@ public class I08_1_Anadir_empleado {
 				fechaNacimiento = i17.getFecha();
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
 				if (fechaNacimiento!=null)
-				tFNacimiento.setText(String.valueOf(fechaNacimiento.getDate()) + " de " + meses[fechaNacimiento.getMonth()]+ " de " + String.valueOf(fechaNacimiento.getYear()));
+				tFNacimiento.setText(String.valueOf(fechaNacimiento.getDate()) + " de " + meses[fechaNacimiento.getMonth()]+ " de " + String.valueOf(fechaNacimiento.getYear()+1900));
 			}
 		};
 		bFNacimiento.addSelectionListener(sabFNacimiento);
@@ -236,7 +236,7 @@ public class I08_1_Anadir_empleado {
 				fechaContrato = i17.getFecha(); 				
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
 				if (fechaContrato != null)
-					tFContrato.setText(String.valueOf(fechaContrato.getDate()) + " de " + meses[fechaContrato.getMonth()]+ " de " + String.valueOf(fechaContrato.getYear()));				
+					tFContrato.setText(String.valueOf(fechaContrato.getDate()) + " de " + meses[fechaContrato.getMonth()]+ " de " + String.valueOf(fechaContrato.getYear()+1900));				
 			}
 		};
 		bFContrato.addSelectionListener(sabFContrato);
@@ -253,7 +253,7 @@ public class I08_1_Anadir_empleado {
 				fechaAlta = i17.getFecha(); 
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
 				if (fechaAlta != null)
-				tFAlta.setText(String.valueOf(fechaAlta.getDate()) + " de " + meses[fechaAlta.getMonth()]+ " de " + String.valueOf(fechaAlta.getYear()));
+				tFAlta.setText(String.valueOf(fechaAlta.getDate()) + " de " + meses[fechaAlta.getMonth()]+ " de " + (String.valueOf(fechaAlta.getYear()+1900)));
 			}
 		};
 		bFAlta.addSelectionListener(sabFAlta);
