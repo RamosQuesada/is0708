@@ -474,6 +474,16 @@ public class I02_Principal {
 				new I10_Nuevo_departamento(shell,bundle,vista,cmbDepartamentos);
 			}
 		});
+		
+		// Button "Delete Department"
+		Button bDel = new Button(cBut, SWT.PUSH);
+		bDel.setText(bundle.getString("I02_but_Del_dep"));
+		bDel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		bDel.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				// System.out.println("I02 :: Pulsado Nuevo Departamento");
+			}
+		});
 
 		Composite cInfo = new Composite(cDepartamentos, SWT.BORDER);
 		cInfo.setLayout(new GridLayout(2, false));
