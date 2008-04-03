@@ -43,8 +43,6 @@ public class I03_Tab_NuevoJefe {
 	
 	private String tmDep;
 	
-	private Shell shellPadre;
-	
 	private ArrayList<Contrato> contratos;
 	
 	private Date fechaContrato,fechaAlta,fechaNacimiento;
@@ -54,19 +52,21 @@ public class I03_Tab_NuevoJefe {
 	
 	
 	/**
-	 * Constructor.
+	 * Constructor. Crea un TabItem para la creación de un nuevo jefe de departamento
+	 * 
 	 * @param tabFolder
-	 * @param b
-	 * @param v
-	 * @param s
+	 * 				el tabFolder donde colocarlo
+	 * @param bundle
+	 * 				la herramienta de idiomas
+	 * @param vista
+	 * 				la vista de la aplicación
 	 */  
-	public I03_Tab_NuevoJefe(TabFolder tabF,ResourceBundle b,Vista v,Shell s){
+	public I03_Tab_NuevoJefe(final TabFolder tabFolder,final ResourceBundle bundle,Vista vista){
 		
 		//inicializamos las variables de la clase
-		this.bundle = b;
-		this.vista = v;
-		this.tabFolder = tabF;
-		this.shellPadre = s;
+		this.bundle = bundle;
+		this.vista = vista;
+		this.tabFolder = tabFolder;
 		this.colorSeleccionado = false;
 		
 		//cargamos las imagenes
@@ -268,7 +268,7 @@ public class I03_Tab_NuevoJefe {
 								
 				//comprobamos si el campo numero de vendedor esta rellenado
 				if(tNVend.getText().equals("")){
-					MessageBox message = new MessageBox(shellPadre,
+					MessageBox message = new MessageBox(tabFolder.getShell(),
 							SWT.APPLICATION_MODAL | SWT.OK
 									| SWT.ICON_INFORMATION);
 					message.setText("Info");
@@ -279,7 +279,7 @@ public class I03_Tab_NuevoJefe {
 					
 				//comprobamos si el campo numero de vendedor es correcto	
 				if(Util.convertirNVend(tNVend.getText())<0){
-					MessageBox message = new MessageBox(shellPadre,
+					MessageBox message = new MessageBox(tabFolder.getShell(),
 							SWT.APPLICATION_MODAL | SWT.OK
 									| SWT.ICON_INFORMATION);
 					message.setText("Info");
@@ -290,7 +290,7 @@ public class I03_Tab_NuevoJefe {
 				
 				//comprobamos si el campo de la contraseña es correcta
 				if(tPassword.getText().equals("")){
-					MessageBox message = new MessageBox(shellPadre,
+					MessageBox message = new MessageBox(tabFolder.getShell(),
 							SWT.APPLICATION_MODAL | SWT.OK
 									| SWT.ICON_INFORMATION);
 					message.setText("Info");
@@ -301,7 +301,7 @@ public class I03_Tab_NuevoJefe {
 					
 				//Comprobamos si campo nombre esta rellenado
 				if(tNombre.getText().equals("")){
-					MessageBox message = new MessageBox(shellPadre,
+					MessageBox message = new MessageBox(tabFolder.getShell(),
 							SWT.APPLICATION_MODAL | SWT.OK
 									| SWT.ICON_INFORMATION);
 					message.setText("Info");
@@ -312,7 +312,7 @@ public class I03_Tab_NuevoJefe {
 					
 				//comprobamos si el campo apellido1 esta relleno
 				if(tApell1.getText().equals("")){
-					MessageBox message = new MessageBox(shellPadre,
+					MessageBox message = new MessageBox(tabFolder.getShell(),
 							SWT.APPLICATION_MODAL | SWT.OK
 									| SWT.ICON_INFORMATION);
 					message.setText("Info");
@@ -323,7 +323,7 @@ public class I03_Tab_NuevoJefe {
 					
 				//comprobamos si el campo apellido2 esta relleno
 				if(tApell2.getText().equals("")){
-					MessageBox message = new MessageBox(shellPadre,
+					MessageBox message = new MessageBox(tabFolder.getShell(),
 							SWT.APPLICATION_MODAL | SWT.OK
 									| SWT.ICON_INFORMATION);
 					message.setText("Info");
@@ -334,7 +334,7 @@ public class I03_Tab_NuevoJefe {
 					
 				//comprobamos si el campo Email esta relleno
 				if(tEMail.getText().equals("")){
-					MessageBox message = new MessageBox(shellPadre,
+					MessageBox message = new MessageBox(tabFolder.getShell(),
 							SWT.APPLICATION_MODAL | SWT.OK
 									| SWT.ICON_INFORMATION);
 					message.setText("Info");
@@ -345,7 +345,7 @@ public class I03_Tab_NuevoJefe {
 				
 				//Comprobamos si el campo Email esta bien estructurado
 				if(tEMail.getText().indexOf("@")<0||tEMail.getText().indexOf(".")<0||tEMail.getText().indexOf("@")>tEMail.getText().indexOf(".")){
-					MessageBox message = new MessageBox(shellPadre,
+					MessageBox message = new MessageBox(tabFolder.getShell(),
 							SWT.APPLICATION_MODAL | SWT.OK
 									| SWT.ICON_INFORMATION);
 					message.setText("Info");
@@ -356,7 +356,7 @@ public class I03_Tab_NuevoJefe {
 					
 				//comprobamos si ha seleccionado una fecha de nacimiento
 				if(tFNacimiento.getText().equals("")){
-					MessageBox message = new MessageBox(shellPadre,
+					MessageBox message = new MessageBox(tabFolder.getShell(),
 							SWT.APPLICATION_MODAL | SWT.OK
 									| SWT.ICON_INFORMATION);
 					message.setText("Info");
@@ -367,7 +367,7 @@ public class I03_Tab_NuevoJefe {
 					
 				//comrpobamos si ha seleccionado una fecha de inicio de contrato
 				if(tFContrato.getText().equals("")){
-					MessageBox message = new MessageBox(shellPadre,
+					MessageBox message = new MessageBox(tabFolder.getShell(),
 							SWT.APPLICATION_MODAL | SWT.OK
 									| SWT.ICON_INFORMATION);
 					message.setText("Info");
@@ -378,7 +378,7 @@ public class I03_Tab_NuevoJefe {
 					
 				//comprobamos si ha seleccionado una fecha de alta en el departamento
 				if(tFAlta.getText().equals("")){
-					MessageBox message = new MessageBox(shellPadre,
+					MessageBox message = new MessageBox(tabFolder.getShell(),
 							SWT.APPLICATION_MODAL | SWT.OK
 									| SWT.ICON_INFORMATION);
 					message.setText("Info");
@@ -389,7 +389,7 @@ public class I03_Tab_NuevoJefe {
 				
 				//Comrpobamos si ha seleccionado algún color
 				if(colorSeleccionado == false){
-					MessageBox message = new MessageBox(shellPadre,
+					MessageBox message = new MessageBox(tabFolder.getShell(),
 							SWT.APPLICATION_MODAL | SWT.OK
 									| SWT.ICON_INFORMATION);
 					message.setText("Info");
@@ -400,7 +400,7 @@ public class I03_Tab_NuevoJefe {
 					
 					//Se han rellenado todos los datos correctamente
 					//muestra un mensaje de confirmación de creación
-					MessageBox messageBox = new MessageBox(shellPadre,
+					MessageBox messageBox = new MessageBox(tabFolder.getShell(),
 							SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
 					messageBox.setText(bundle
 							.getString("I03_dlg_confirmacion"));
@@ -477,7 +477,7 @@ public class I03_Tab_NuevoJefe {
 		// Listener para el selector de fecha de nacimiento
 		SelectionAdapter sabFNacimiento = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
-				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shellPadre);
+				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(tabFolder.getShell());
 				while (!i17.isDisposed()) {
 					if (!tabFolder.getDisplay().readAndDispatch()) {
 						tabFolder.getDisplay().sleep();
@@ -496,7 +496,7 @@ public class I03_Tab_NuevoJefe {
 		// Listener para el selector de fecha de contrato
 		SelectionAdapter sabFContrato = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
-				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shellPadre);
+				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(tabFolder.getShell());
 				while (!i17.isDisposed()) {
 					if (!tabFolder.getDisplay().readAndDispatch()) {
 						tabFolder.getDisplay().sleep();
@@ -515,7 +515,7 @@ public class I03_Tab_NuevoJefe {
 		// Listener para el selector de fecha de alta
 		SelectionAdapter sabFAlta = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
-				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shellPadre);
+				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(tabFolder.getShell());
 				while (!i17.isDisposed()) {
 					if (!tabFolder.getDisplay().readAndDispatch()) {
 						tabFolder.getDisplay().sleep();
@@ -537,13 +537,13 @@ public class I03_Tab_NuevoJefe {
 		// Listener para el selector de color
 		SelectionAdapter sabColor = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
-				ColorDialog cd = new ColorDialog(shellPadre);
+				ColorDialog cd = new ColorDialog(tabFolder.getShell());
 				cd.setText(bundle.getString("I03_lab_SelColor"));
 				cd.setRGB(new RGB(255, 255, 255));
 				RGB newColor = cd.open();
 				if (newColor != null) {
 					colorSeleccionado = true;
-					lColor.setBackground(new Color(shellPadre.getDisplay(), newColor));
+					lColor.setBackground(new Color(tabFolder.getShell().getDisplay(), newColor));
 				}
 			}
 		};
