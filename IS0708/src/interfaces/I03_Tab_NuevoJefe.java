@@ -55,7 +55,7 @@ public class I03_Tab_NuevoJefe {
 	
 	/**
 	 * Constructor.
-	 * @param tabF
+	 * @param tabFolder
 	 * @param b
 	 * @param v
 	 * @param s
@@ -81,7 +81,7 @@ public class I03_Tab_NuevoJefe {
 		tabItemEmpleados.setImage(ico_chico);
 
 		// Creamos el contenido de la pestaña cuadrantes
-		final Composite cNuevoJefe = new Composite(tabFolder, SWT.BORDER);
+		final Composite cNuevoJefe = new Composite(tabFolder, SWT.NONE);
 		tabItemEmpleados.setControl(cNuevoJefe);
 
 		cNuevoJefe.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true,
@@ -93,7 +93,7 @@ public class I03_Tab_NuevoJefe {
 		final Label lTitulo = new Label(cNuevoJefe, SWT.LEFT);
 		lTitulo.setText(bundle.getString("I03_lab_etiquetaMarco"));
 		final Composite cNuevoJefe2 = new Composite(cNuevoJefe,
-				SWT.BORDER);
+				SWT.NONE);
 		cNuevoJefe2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 				true, 0, 0));
 		GridLayout lGrupo2 = new GridLayout();
@@ -126,8 +126,6 @@ public class I03_Tab_NuevoJefe {
 		final Button bClaveManual   = new Button(grupoIzq, SWT.RADIO);
 		final Label lContra         = new Label(grupoIzq, SWT.LEFT);
 		final Text tPassword        = new Text(grupoIzq, SWT.BORDER);
-		//tPassword.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,
-		//		0, 0));
 		final Label  lNombre		= new Label (grupoIzq, SWT.LEFT);
 		final Text   tNombre		= new Text  (grupoIzq, SWT.BORDER);
 		final Label  lApell1		= new Label (grupoIzq, SWT.LEFT);
@@ -158,7 +156,7 @@ public class I03_Tab_NuevoJefe {
 		final Label  lColor			= new Label	(grupoDer,  SWT.NONE);
 		
 		final Composite cAceptarCancelar = new Composite(cNuevoJefe,
-				SWT.BORDER);
+				SWT.NONE);
 		cAceptarCancelar.setLayoutData(new GridData(SWT.CENTER, SWT.DOWN,
 				false, false, 1, 1));
 		GridLayout lAceptarCancelar = new GridLayout();
@@ -237,9 +235,13 @@ public class I03_Tab_NuevoJefe {
 		cExperiencia.setItems (new String [] {	bundle.getString("Principiante"),
 												bundle.getString("Experto")});
 		
+		// Cogemos los contratos
+		
 		/*for (int i=1; i<contratos.size(); i++)
 			cContrato.add(contratos.get(i).getNombreContrato());
+		*//*
 		
+		// Cogemos los departamentos
 		ArrayList<String> departamentos = vista.getEmpleadoActual().getDepartamentosId();
 		for (int i=0; i<departamentos.size(); i++) {
 			cDepto.add(departamentos.get(i));
@@ -253,7 +255,6 @@ public class I03_Tab_NuevoJefe {
 		cIdioma.select(0); //español por defecto
 				
 		// Introducimos los textos a los botones
-		// bOClave.setText("Obtener clave");
 		bAceptar.setText(bundle.getString("Aceptar"));
 		bCancelar.setText(bundle.getString("Cancelar"));
 		// Introducimos los valores y eventos de Aceptar
@@ -549,158 +550,5 @@ public class I03_Tab_NuevoJefe {
 		bColor.addSelectionListener(sabColor);
 	}
 	
-	
-	/*public void mostrarVentana() {		
-		
-		
-		tNVend.setTextLimit(8);
-		cSexo.setItems (new String [] {	bundle.getString("Femenino"),
-										bundle.getString("Masculino")});
-		cIdioma.setItems (new String [] {	bundle.getString("esp"),
-											bundle.getString("eng"),
-											bundle.getString("pol")});
-		
-		cExperiencia.setItems (new String [] {	bundle.getString("Principiante"),
-												bundle.getString("Experto")});
-		
-		for (int i=1; i<contratos.size(); i++)
-			cContrato.add(contratos.get(i).getNombreContrato());
-		
-		ArrayList<String> departamentos = vista.getEmpleadoActual().getDepartamentosId();
-		for (int i=0; i<departamentos.size(); i++) {
-			cDepto.add(departamentos.get(i));
-		}
-		cSexo.select(0);
-		cContrato.select(0);
-		cExperiencia.select(0);
-		cDepto.select(0);
-		cIdioma.select(0);
-		
-		shell.setImage(ico_chico);
-		shell.setImage(ico_chica);
-		
-		shell.setText(bundle.getString("I08_but_NuevoEmpleado"));
-		shell.setLayout(layout);
-		
-		bAceptar.setText(bundle.getString("Aceptar"));
-		bAceptar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
-		
-		bCancelar.setText(bundle.getString("Cancelar"));
-		bCancelar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 
-		
-
-		
-		// Listener con lo que hace el botón bCancelar
-		SelectionAdapter sabCancelar = new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-					shell.dispose();	
-			}
-		};
-
-		// Listener con lo que hace el botón bAceptar
-		SelectionAdapter sabAceptar = new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				// Comprueba el número de vendedor (campo obligatorio)
-				int n = Util.convertirNVend(tNVend.getText());
-				if (n<0) {
-					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
-					messageBox.setText (bundle.getString("Error"));
-					messageBox.setMessage (bundle.getString("I01_err_NumVendedor1"));
-					e.doit = messageBox.open () == SWT.YES;
-					// Enfocar tNVend y seleccionar texto
-					tNVend.setFocus();
-					tNVend.selectAll();
-				}
-				// Comprueba que la contraseña no es vacía (campo obligatorio)
-				else if (tPassword.getText().length()==0) {
-					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
-					messageBox.setText (bundle.getString("Error"));
-					messageBox.setMessage (bundle.getString("I01_err_Password"));					
-					e.doit = messageBox.open () == SWT.YES;
-					// Enfocar tPassword y seleccionar texto
-					tPassword.setFocus();
-					tPassword.selectAll();
-				}
-				// Comprueba que el nombre no sea vacio
-				else if (tNombre.getText().length()==0) {
-					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
-					messageBox.setText (bundle.getString("Error"));
-					messageBox.setMessage (bundle.getString("I08_err_NombreVacio"));					
-					e.doit = messageBox.open () == SWT.YES;
-					// Enfocar tNombre y seleccionar texto
-					tNombre.setFocus();
-					tNombre.selectAll();
-				}
-				// Comprueba que el apellido1 no sea vacio
-				else if (tApell1.getText().length()==0) {
-					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
-					messageBox.setText (bundle.getString("Error"));
-					messageBox.setMessage (bundle.getString("I08_err_Ape1Vacio"));					
-					e.doit = messageBox.open () == SWT.YES;
-					// Enfocar tNombre y seleccionar texto
-					tApell1.setFocus();
-					tApell1.selectAll();
-				}
-				// Comprueba que el apellido2 no sea vacio
-				else if (tApell2.getText().length()==0) {
-					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
-					messageBox.setText (bundle.getString("Error"));
-					messageBox.setMessage (bundle.getString("I08_err_Ape2Vacio"));					
-					e.doit = messageBox.open () == SWT.YES;
-					// Enfocar tNombre y seleccionar texto
-					tApell2.setFocus();
-					tApell2.selectAll();
-				}
-				// Comprueba que las fechas se han seleccionado
-				else if (tFNacimiento.getText().length()==0 || tFContrato.getText().length()==0 || tFAlta.getText().length()==0) {
-					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
-					messageBox.setText (bundle.getString("Error"));
-					messageBox.setMessage (bundle.getString("I08_err_Fecha"));					
-					e.doit = messageBox.open () == SWT.YES;
-					// Enfocar tNombre y seleccionar texto
-					//t.setFocus();
-					//tNombre.selectAll();
-				}
-				// Comprueba la dirección de email (campo no obligatorio)
-				else if (tEMail.getText().length()!=0 && !Util.comprobarEmail(tEMail.getText())) {
-					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
-					messageBox.setText (bundle.getString("Error"));
-					messageBox.setMessage (bundle.getString("I08_err_EmailNoValido"));
-					e.doit = messageBox.open () == SWT.YES;
-					// Enfocar tEMail y seleccionar texto
-					tEMail.setFocus();
-					tEMail.selectAll();
-				}
-				// Si todo está bien, inserta el empleado
-				else {
-					String cont = cContrato.getText();
-					int id=0;
-					
-					for (int i=0; i<contratos.size(); i++) {
-						String nombre = contratos.get(i).getNombreContrato();
-						if (cont.equals(nombre)) {
-							id = contratos.get(i).getNumeroContrato();
-							break;
-						}
-					}
-
-					Empleado emp = new Empleado(vista.getEmpleadoActual().getEmplId(), n, tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, id, fechaContrato, fechaAlta, null, cDepto.getText(), null, 0, cIdioma.getSelectionIndex(),0);
-					vista.insertEmpleado(emp);
-					shell.dispose();
-				}
-			}
-		};
-		
-		bCancelar.addSelectionListener(sabCancelar);
-		bAceptar.addSelectionListener(sabAceptar);
-
-		// Botón por defecto bAceptar
-		shell.setDefaultButton(bAceptar);
-		// Ajustar el tama�o de la ventana al contenido
-		shell.pack();
-		// Mostrar ventana centrada sobre el padre
-		shell.setLocation(padre.getBounds().width/2 + padre.getBounds().x - shell.getSize().x/2, padre.getBounds().height/2 + padre.getBounds().y - shell.getSize().y/2);
-		shell.open();
-	}*/
 }
