@@ -32,18 +32,34 @@ import aplicacion.datos.Empleado;
 import aplicacion.utilidades.Util;
 
 public class I03_Tab_NuevoJefe {
-	private Image ico_chico;
-	private ResourceBundle bundle;
-	private Vista vista;
-	private TabFolder tabFolder;
-	private String tmDep;
-	private Shell shellPadre;
-	private ArrayList<Contrato> contratos;
-	private Date fechaContrato;
-	private Date fechaAlta;
-	private Date fechaNacimiento;
 	
-	  
+	private Image ico_chico,ico_chica;	
+	
+	private ResourceBundle bundle;	
+	
+	private Vista vista;	
+	
+	private TabFolder tabFolder;	
+	
+	private String tmDep;
+	
+	private Shell shellPadre;
+	
+	private ArrayList<Contrato> contratos;
+	
+	private Date fechaContrato,fechaAlta,fechaNacimiento;
+	
+	private boolean colorSeleccionado;
+	
+	
+	
+	/**
+	 * Constructor.
+	 * @param tabF
+	 * @param b
+	 * @param v
+	 * @param s
+	 */  
 	public I03_Tab_NuevoJefe(TabFolder tabF,ResourceBundle b,Vista v,Shell s){
 		
 		//inicializamos las variables de la clase
@@ -51,14 +67,16 @@ public class I03_Tab_NuevoJefe {
 		this.vista = v;
 		this.tabFolder = tabF;
 		this.shellPadre = s;
+		this.colorSeleccionado = false;
 		
 		//cargamos las imagenes
 		ico_chico = new Image(tabFolder.getDisplay(), 
 				I03_Tab_NuevoJefe.class.getResourceAsStream("ico_chico.gif"));
+		ico_chica = new Image(tabFolder.getDisplay(), 
+				I03_Tab_NuevoJefe.class.getResourceAsStream("ico_chica.gif"));
 		
-		
-		//creamos la ventana
-		TabItem tabItemEmpleados = new TabItem(tabFolder, SWT.NONE);
+		//creamos la nueva pestaña
+		final TabItem tabItemEmpleados = new TabItem(tabFolder, SWT.NONE);
 		tabItemEmpleados.setText(bundle.getString("I02_admin_jefe"));
 		tabItemEmpleados.setImage(ico_chico);
 
@@ -104,8 +122,12 @@ public class I03_Tab_NuevoJefe {
 		
 		final Label  lNVend			= new Label (grupoIzq, SWT.LEFT);
 		final Text   tNVend			= new Text  (grupoIzq, SWT.BORDER);
-		final Label  lPassword		= new Label (grupoIzq, SWT.LEFT);
-		final Text   tPassword		= new Text  (grupoIzq, SWT.BORDER);
+		final Button bClaveAuto     = new Button(grupoIzq, SWT.RADIO);
+		final Button bClaveManual   = new Button(grupoIzq, SWT.RADIO);
+		final Label lContra         = new Label(grupoIzq, SWT.LEFT);
+		final Text tPassword        = new Text(grupoIzq, SWT.BORDER);
+		//tPassword.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,
+		//		0, 0));
 		final Label  lNombre		= new Label (grupoIzq, SWT.LEFT);
 		final Text   tNombre		= new Text  (grupoIzq, SWT.BORDER);
 		final Label  lApell1		= new Label (grupoIzq, SWT.LEFT);
@@ -120,6 +142,8 @@ public class I03_Tab_NuevoJefe {
 		final Combo  cSexo			= new Combo (grupoIzq, SWT.BORDER | SWT.READ_ONLY);
 		final Label  lIdioma		= new Label (grupoIzq, SWT.LEFT);
 		final Combo  cIdioma		= new Combo (grupoIzq, SWT.BORDER | SWT.READ_ONLY);
+		
+		
 		final Label  lContrato		= new Label (grupoDer, SWT.LEFT);
 		final Combo  cContrato		= new Combo (grupoDer, SWT.BORDER | SWT.READ_ONLY);
 		final Label  lExperiencia	= new Label (grupoDer, SWT.LEFT);
@@ -146,7 +170,9 @@ public class I03_Tab_NuevoJefe {
 		final Button bCancelar = new Button(cAceptarCancelar, SWT.PUSH);
 		
 		lNVend			.setText(bundle.getString("Vendedor"));
-		lPassword		.setText(bundle.getString("Contrasena"));
+		bClaveAuto		.setText(bundle.getString("I02_lab_claveAuto"));
+		bClaveManual	.setText(bundle.getString("I02_lab_claveManual"));
+		lContra			.setText(bundle.getString("I02_lab_clave"));
 		lEMail			.setText(bundle.getString("EMail"));
 		lNombre			.setText(bundle.getString("Nombre"));
 		lApell1			.setText(bundle.getString("I08_lab_Apellido1"));
@@ -163,7 +189,6 @@ public class I03_Tab_NuevoJefe {
 
 		lNVend		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
 		tNVend		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,false,1,1));
-		lPassword	.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
 		tPassword	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		lEMail		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
 		tEMail		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
@@ -193,8 +218,14 @@ public class I03_Tab_NuevoJefe {
 		bColor		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		lColor		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		
+		
+		
 		grupoIzq.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
 		grupoDer.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
+		
+		bClaveManual.setSelection(true);
+		bClaveAuto.setSelection(false);
+		tPassword.setEditable(true);
 		
 		tNVend.setTextLimit(8);
 		cSexo.setItems (new String [] {	bundle.getString("Femenino"),
@@ -213,66 +244,196 @@ public class I03_Tab_NuevoJefe {
 		for (int i=0; i<departamentos.size(); i++) {
 			cDepto.add(departamentos.get(i));
 		}*/
-		cSexo.select(0);
+		
+		
+		cSexo.select(1); //sexo masculino por defecto
 		cContrato.select(0);
 		cExperiencia.select(0);
 		cDepto.select(0);
-		cIdioma.select(0);
-		
-		//shell.setImage(ico_chico);
-		//shell.setImage(ico_chica);
-		
-		/*
+		cIdioma.select(0); //español por defecto
 				
-		final Label lNombre = new Label(cNuevoGerente2, SWT.LEFT);
-		lNombre.setText(bundle.getString("I02_lab_nombre"));
-		final Text tNombre = new Text(cNuevoGerente2, SWT.BORDER);
-		tNombre.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,
-				0, 0));
+		// Introducimos los textos a los botones
+		// bOClave.setText("Obtener clave");
+		bAceptar.setText(bundle.getString("Aceptar"));
+		bCancelar.setText(bundle.getString("Cancelar"));
+		// Introducimos los valores y eventos de Aceptar
 
-		final Label lApellidos = new Label(cNuevoGerente2, SWT.LEFT);
-		lApellidos.setText(bundle.getString("I02_lab_apellidos"));
-		final Text tApellidos = new Text(cNuevoGerente2, SWT.BORDER);
-		tApellidos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-				false, 0, 0));
-
-		final Label lNombreUsuario = new Label(cNuevoGerente2, SWT.LEFT);
-		lNombreUsuario.setText(bundle.getString("I02_lab_nombreUsuario"));
-		final Text tNombreUsuario = new Text(cNuevoGerente2, SWT.BORDER);
-		tNombreUsuario.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-				false, 0, 0));
-		
-		final Button bClaveAuto = new Button(cNuevoGerente2, SWT.RADIO);
-		bClaveAuto.setText(bundle.getString("I02_lab_claveAuto"));
-		final Button bClaveManual = new Button(cNuevoGerente2, SWT.RADIO);
-		bClaveAuto.setSelection(false);
-		bClaveManual.setText(bundle.getString("I02_lab_claveManual"));
-		final Label lContra = new Label(cNuevoGerente2, SWT.LEFT);
-		lContra.setText(bundle.getString("I02_lab_clave"));
-		final Text tPassword = new Text(cNuevoGerente2, SWT.BORDER);
-		tPassword.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,
-				0, 0));
-		//tPassword.setText(aplicacion.Util.obtenerClave());
-		bClaveManual.setSelection(true);
-		tPassword.setEditable(true);
+		bAceptar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true,
+				false, 1, 1));
 		
 		
+		bAceptar.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+								
+				//comprobamos si el campo numero de vendedor esta rellenado
+				if(tNVend.getText().equals("")){
+					MessageBox message = new MessageBox(shellPadre,
+							SWT.APPLICATION_MODAL | SWT.OK
+									| SWT.ICON_INFORMATION);
+					message.setText("Info");
+					message.setMessage(bundle
+							.getString("I02_dlg_nombre"));
+					message.open();
+				}else
+					
+				//comprobamos si el campo numero de vendedor es correcto	
+				if(Util.convertirNVend(tNVend.getText())<0){
+					MessageBox message = new MessageBox(shellPadre,
+							SWT.APPLICATION_MODAL | SWT.OK
+									| SWT.ICON_INFORMATION);
+					message.setText("Info");
+					message.setMessage(bundle
+							.getString("I02_dlg_nombre"));
+					message.open();
+				}else	
+				
+				//comprobamos si el campo de la contraseña es correcta
+				if(tPassword.getText().equals("")){
+					MessageBox message = new MessageBox(shellPadre,
+							SWT.APPLICATION_MODAL | SWT.OK
+									| SWT.ICON_INFORMATION);
+					message.setText("Info");
+					message.setMessage(bundle
+							.getString("I02_dlg_apellidos"));
+					message.open();
+				}else
+					
+				//Comprobamos si campo nombre esta rellenado
+				if(tNombre.getText().equals("")){
+					MessageBox message = new MessageBox(shellPadre,
+							SWT.APPLICATION_MODAL | SWT.OK
+									| SWT.ICON_INFORMATION);
+					message.setText("Info");
+					message.setMessage(bundle
+							.getString("I02_dlg_nombreUsuario"));
+					message.open();
+				}else
+					
+				//comprobamos si el campo apellido1 esta relleno
+				if(tApell1.getText().equals("")){
+					MessageBox message = new MessageBox(shellPadre,
+							SWT.APPLICATION_MODAL | SWT.OK
+									| SWT.ICON_INFORMATION);
+					message.setText("Info");
+					message.setMessage(bundle
+							.getString("I02_dlg_clave"));
+					message.open();
+				}else
+					
+				//comprobamos si el campo apellido2 esta relleno
+				if(tApell2.getText().equals("")){
+					MessageBox message = new MessageBox(shellPadre,
+							SWT.APPLICATION_MODAL | SWT.OK
+									| SWT.ICON_INFORMATION);
+					message.setText("Info");
+					message.setMessage(bundle
+							.getString("I02_dlg_departamento"));
+					message.open();
+				}else
+					
+				//comprobamos si el campo Email esta relleno
+				if(tEMail.getText().equals("")){
+					MessageBox message = new MessageBox(shellPadre,
+							SWT.APPLICATION_MODAL | SWT.OK
+									| SWT.ICON_INFORMATION);
+					message.setText("Info");
+					message.setMessage(bundle
+							.getString("I02_dlg_departamento"));
+					message.open();
+				}else
+				
+				//Comprobamos si el campo Email esta bien estructurado
+				if(tEMail.getText().indexOf("@")<0||tEMail.getText().indexOf(".")<0||tEMail.getText().indexOf("@")>tEMail.getText().indexOf(".")){
+					MessageBox message = new MessageBox(shellPadre,
+							SWT.APPLICATION_MODAL | SWT.OK
+									| SWT.ICON_INFORMATION);
+					message.setText("Info");
+					message.setMessage(bundle
+							.getString("I02_dlg_departamento"));
+					message.open();
+				}else
+					
+				//comprobamos si ha seleccionado una fecha
+				if(tFNacimiento.getText().equals("")){
+					MessageBox message = new MessageBox(shellPadre,
+							SWT.APPLICATION_MODAL | SWT.OK
+									| SWT.ICON_INFORMATION);
+					message.setText("Info");
+					message.setMessage(bundle
+							.getString("I02_dlg_departamento"));
+					message.open();
+				}else
+					
+				//comrpobamos si ha seleccionado una fecha
+				if(tFContrato.getText().equals("")){
+					MessageBox message = new MessageBox(shellPadre,
+							SWT.APPLICATION_MODAL | SWT.OK
+									| SWT.ICON_INFORMATION);
+					message.setText("Info");
+					message.setMessage(bundle
+							.getString("I02_dlg_departamento"));
+					message.open();
+				}else
+					
+				//comprobamos si ha seleccionado una fecha
+				if(tFAlta.getText().equals("")){
+					MessageBox message = new MessageBox(shellPadre,
+							SWT.APPLICATION_MODAL | SWT.OK
+									| SWT.ICON_INFORMATION);
+					message.setText("Info");
+					message.setMessage(bundle
+							.getString("I02_dlg_departamento"));
+					message.open();
+				}else
+				
+				//Comrpobamos si ha seleccionado algún color
+				if(colorSeleccionado == false){
+					MessageBox message = new MessageBox(shellPadre,
+							SWT.APPLICATION_MODAL | SWT.OK
+									| SWT.ICON_INFORMATION);
+					message.setText("Info");
+					message.setMessage(bundle
+							.getString("I02_dlg_departamento"));
+					message.open();
+				}else{
+					
+					//Se han rellenado todos los datos correctamente
+					//muestra un mensaje de confirmación de creación
+					MessageBox messageBox = new MessageBox(shellPadre,
+							SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
+					messageBox.setText("CONFIRMACION");
+					messageBox.setMessage("¿Desea guardar el nuevo jefe?");
+					if (messageBox.open() == SWT.YES) {	
+						//insertamos el nuevo jefe en la base de datos
+						//vista.getControlador().insertDepartamentoPruebas(cDepartamentos.getItem(cDepartamentos.getSelectionIndex()), new Integer(tNombreUsuario.getText()));
+					}
+				}
+			}
+		});
 		
-		final Label lDepartamento = new Label(cNuevoGerente2, SWT.LEFT);
-		lDepartamento.setText(bundle.getString("I02_lab_departamento"));
-		final Combo cDepartamentos = new Combo(cNuevoGerente2, SWT.BORDER | SWT.READ_ONLY);
-		cDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
-				false, 0, 0));
 		
-		ArrayList <Departamento> listDept= vista.getControlador().getTodosDepartamentos();
-		for(int i = 0; i< listDept.size();i++){
-			cDepartamentos.add(listDept.get(i).getNombreDepartamento());		
-		}
-		cDepartamentos.setEnabled(true);
+		// Introducimos los valores y eventos de Cancelar
+		//bCancelar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true,
+			//	false, 1, 1));
+		bCancelar.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				tNVend.setText("");
+				tPassword.setText("");
+				tNombre.setText("");
+				tApell1.setText("");
+				tApell2.setText("");
+				tEMail.setText("");
+				tFNacimiento.setText("");
+				tFContrato.setText("");
+				tFAlta.setText("");
+				bClaveManual.setSelection(true);
+				bClaveAuto.setSelection(false);				
+				tPassword.setEditable(true);
+				
+			}
+		});
 		
-		
-		tmDep = cDepartamentos.getText();
-
+		// Listener de el radio buttom clave manual
 		bClaveAuto.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
@@ -285,7 +446,8 @@ public class I03_Tab_NuevoJefe {
 
 			}
 		});
-
+		
+		// Listener de el radio buttom clave manual
 		bClaveManual.addFocusListener(new FocusListener() {
 
 			public void focusGained(FocusEvent e) {
@@ -301,109 +463,17 @@ public class I03_Tab_NuevoJefe {
 			}
 		});
 		 
-		
-		*/
-		
-
-		
-
-		// Introducimos los textos a los botones
-		// bOClave.setText("Obtener clave");
-		bAceptar.setText(bundle.getString("Aceptar"));
-		bCancelar.setText(bundle.getString("Cancelar"));
-		// Introducimos los valores y eventos de Aceptar
-
-		bAceptar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true,
-				false, 1, 1));
-		
-		
-		/*bAceptar.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				MessageBox messageBox = new MessageBox(shell,
-						SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
-				messageBox.setText("CONFIRMACION");
-				messageBox.setMessage("¿Desea guardar el nuevo jefe?");
-				if (messageBox.open() == SWT.YES) {					
-					if(tNombre.getText().equals("")){
-						MessageBox message = new MessageBox(shell,
-								SWT.APPLICATION_MODAL | SWT.OK
-										| SWT.ICON_INFORMATION);
-						message.setText("Info");
-						message.setMessage(bundle
-								.getString("I02_dlg_nombre"));
-						message.open();
-					}else
-					if(tApellidos.getText().equals("")){
-						MessageBox message = new MessageBox(shell,
-								SWT.APPLICATION_MODAL | SWT.OK
-										| SWT.ICON_INFORMATION);
-						message.setText("Info");
-						message.setMessage(bundle
-								.getString("I02_dlg_apellidos"));
-						message.open();
-					}else
-					if(tNombreUsuario.getText().equals("")){
-						MessageBox message = new MessageBox(shell,
-								SWT.APPLICATION_MODAL | SWT.OK
-										| SWT.ICON_INFORMATION);
-						message.setText("Info");
-						message.setMessage(bundle
-								.getString("I02_dlg_nombreUsuario"));
-						message.open();
-					}else
-					if(tPassword.getText().equals("")){
-						MessageBox message = new MessageBox(shell,
-								SWT.APPLICATION_MODAL | SWT.OK
-										| SWT.ICON_INFORMATION);
-						message.setText("Info");
-						message.setMessage(bundle
-								.getString("I02_dlg_clave"));
-						message.open();
-					}else
-					if(cDepartamentos.getSelectionIndex()<0){
-						MessageBox message = new MessageBox(shell,
-								SWT.APPLICATION_MODAL | SWT.OK
-										| SWT.ICON_INFORMATION);
-						message.setText("Info");
-						message.setMessage(bundle
-								.getString("I02_dlg_departamento"));
-						message.open();
-					}else{
-						
-						vista.getControlador().insertDepartamentoPruebas(cDepartamentos.getItem(cDepartamentos.getSelectionIndex()), new Integer(tNombreUsuario.getText()));
-					}
-						
-				}
-			}
-		});*/
-		
-		
-		// Introducimos los valores y eventos de Cancelar
-		/*bCancelar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true,
-				false, 1, 1));
-		/*bCancelar.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				tNombreUsuario.setText("");
-				tNombre.setText("");
-				tApellidos.setText("");
-				bClaveManual.setSelection(true);
-				bClaveAuto.setSelection(false);
-				tPassword.setText("");
-				tPassword.setEditable(true);
-				
-			}
-		});*/
 		// Listener para el selector de sexo
-		/*SelectionAdapter sacSexo = new SelectionAdapter() {
+		SelectionAdapter sacSexo = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
 				if (cSexo.getSelectionIndex()==0)
-					tabFolder.setImage(ico_chica);
+					tabItemEmpleados.setImage(ico_chica);
 				else
-					tabFolder.setImage(ico_chico);
+					tabItemEmpleados.setImage(ico_chico);
 			}
 		};
 		cSexo.addSelectionListener(sacSexo);
-		*/
+		
 		// Listener para el selector de fecha de nacimiento
 		SelectionAdapter sabFNacimiento = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
@@ -463,6 +533,7 @@ public class I03_Tab_NuevoJefe {
 				cd.setRGB(new RGB(255, 255, 255));
 				RGB newColor = cd.open();
 				if (newColor != null) {
+					colorSeleccionado = true;
 					lColor.setBackground(new Color(shellPadre.getDisplay(), newColor));
 				}
 			}
@@ -471,111 +542,7 @@ public class I03_Tab_NuevoJefe {
 	}
 	
 	/*public void mostrarVentana() {		
-		final Shell shell = new Shell (Padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
-
-		final Image ico_chico = new Image(padre.getDisplay(), I08_1_Anadir_empleado.class.getResourceAsStream("ico_chico.gif"));
-		final Image ico_chica = new Image(padre.getDisplay(), I08_1_Anadir_empleado.class.getResourceAsStream("ico_chica.gif"));
 		
-		final Image ico_esp = new Image(padre.getDisplay(), I08_1_Anadir_empleado.class.getResourceAsStream("ico_esp.gif"));
-		final Image ico_usa = new Image(padre.getDisplay(), I08_1_Anadir_empleado.class.getResourceAsStream("ico_usa.gif"));
-		final Image ico_pol = new Image(padre.getDisplay(), I08_1_Anadir_empleado.class.getResourceAsStream("ico_pol.gif"));
-
-		GridLayout layout = new GridLayout(2,false);
-
-		final Group grupoIzq = new Group(shell, SWT.NONE);
-		final Group grupoDer = new Group(shell, SWT.NONE);
-		grupoIzq.setText(bundle.getString("I08_lab_DatosPersonales"));
-		grupoDer.setText(bundle.getString("I08_lab_DatosLaborales"));
-
-		grupoIzq.setLayout(new GridLayout(2,false));
-		grupoDer.setLayout(new GridLayout(2,false));
-		
-		final Label  lNVend			= new Label (grupoIzq, SWT.LEFT);
-		final Text   tNVend			= new Text  (grupoIzq, SWT.BORDER);
-		final Label  lPassword		= new Label (grupoIzq, SWT.LEFT);
-		final Text   tPassword		= new Text  (grupoIzq, SWT.BORDER);
-		final Label  lNombre		= new Label (grupoIzq, SWT.LEFT);
-		final Text   tNombre		= new Text  (grupoIzq, SWT.BORDER);
-		final Label  lApell1		= new Label (grupoIzq, SWT.LEFT);
-		final Text   tApell1		= new Text  (grupoIzq, SWT.BORDER);
-		final Label  lApell2		= new Label (grupoIzq, SWT.LEFT);
-		final Text   tApell2		= new Text  (grupoIzq, SWT.BORDER);
-		final Label  lEMail			= new Label (grupoIzq, SWT.LEFT);
-		final Text   tEMail			= new Text  (grupoIzq, SWT.BORDER);
-		final Button bFNacimiento	= new Button(grupoIzq, SWT.PUSH);
-		final Text   tFNacimiento	= new Text  (grupoIzq, SWT.BORDER | SWT.READ_ONLY);
-		final Label  lSexo			= new Label (grupoIzq, SWT.LEFT);
-		final Combo  cSexo			= new Combo (grupoIzq, SWT.BORDER | SWT.READ_ONLY);
-		final Label  lIdioma		= new Label (grupoIzq, SWT.LEFT);
-		final Combo  cIdioma		= new Combo (grupoIzq, SWT.BORDER | SWT.READ_ONLY);
-		final Label  lContrato		= new Label (grupoDer, SWT.LEFT);
-		final Combo  cContrato		= new Combo (grupoDer, SWT.BORDER | SWT.READ_ONLY);
-		final Label  lExperiencia	= new Label (grupoDer, SWT.LEFT);
-		final Combo  cExperiencia	= new Combo (grupoDer, SWT.BORDER | SWT.READ_ONLY);
-		final Label  lDepto			= new Label (grupoDer, SWT.LEFT);
-		final Combo  cDepto			= new Combo (grupoDer, SWT.BORDER | SWT.READ_ONLY);
-		final Button bFContrato		= new Button(grupoDer, SWT.PUSH);
-		final Text   tFContrato		= new Text  (grupoDer, SWT.BORDER | SWT.READ_ONLY);
-		final Button bFAlta			= new Button(grupoDer, SWT.PUSH);
-		final Text   tFAlta			= new Text  (grupoDer, SWT.BORDER | SWT.READ_ONLY);
-		final Button bColor			= new Button(grupoDer, SWT.PUSH);
-		final Label  lColor			= new Label	(grupoDer,  SWT.NONE);
-		
-		final Button bAceptar		= new Button(shell, SWT.PUSH);
-		final Button bCancelar		= new Button(shell, SWT.PUSH);
-		
-		lNVend			.setText(bundle.getString("Vendedor"));
-		lPassword		.setText(bundle.getString("Contrasena"));
-		lEMail			.setText(bundle.getString("EMail"));
-		lNombre			.setText(bundle.getString("Nombre"));
-		lApell1			.setText(bundle.getString("I08_lab_Apellido1"));
-		lApell2			.setText(bundle.getString("I08_lab_Apellido2"));
-		bFNacimiento	.setText(bundle.getString("I08_lab_FNacimiento"));
-		lSexo			.setText(bundle.getString("Sexo"));
-		lIdioma			.setText(bundle.getString("Idioma"));
-		lContrato		.setText(bundle.getString("I08_lab_TipoContrato"));
-		lExperiencia	.setText(bundle.getString("Experiencia"));
-		lDepto			.setText(bundle.getString("Departamento"));
-		bFAlta			.setText(bundle.getString("I08_lab_FAlta"));
-		bFContrato		.setText(bundle.getString("I08_lab_FContr"));
-		bColor			.setText(bundle.getString("I08_lab_SelColor"));
-
-		lNVend		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
-		tNVend		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,false,1,1));
-		lPassword	.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
-		tPassword	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		lEMail		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
-		tEMail		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		lNombre		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
-		tNombre		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		lApell1		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
-		tApell1		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		lApell2		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
-		tApell2		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		bFNacimiento.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
-		tFNacimiento.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
-		lSexo		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
-		cSexo		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		lIdioma		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
-		cIdioma		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		lContrato	.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
-		cContrato	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		lExperiencia.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
-		cExperiencia.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		lDepto		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
-		cDepto		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		bFContrato	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
-		tFContrato	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
-		bFAlta		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
-		tFAlta		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
-		bColor		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
-		lColor		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
-		
-		bAceptar	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		bCancelar	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-
-		grupoIzq.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
-		grupoDer.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
 		
 		tNVend.setTextLimit(8);
 		cSexo.setItems (new String [] {	bundle.getString("Femenino"),
@@ -612,81 +579,7 @@ public class I03_Tab_NuevoJefe {
 		bCancelar.setText(bundle.getString("Cancelar"));
 		bCancelar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 
-		// Listener para el selector de sexo
-		SelectionAdapter sacSexo = new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e){
-				if (cSexo.getSelectionIndex()==0)
-					shell.setImage(ico_chica);
-				else
-					shell.setImage(ico_chico);
-			}
-		};
-		cSexo.addSelectionListener(sacSexo);
 		
-		// Listener para el selector de fecha de nacimiento
-		SelectionAdapter sabFNacimiento = new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e){
-				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shell);
-				while (!i17.isDisposed()) {
-					if (!shell.getDisplay().readAndDispatch()) {
-						shell.getDisplay().sleep();
-					}
-				}
-				fechaNacimiento = i17.getFecha();
-				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
-				if (fechaNacimiento!=null)
-				tFNacimiento.setText(String.valueOf(fechaNacimiento.getDate()) + " de " + meses[fechaNacimiento.getMonth()]+ " de " + String.valueOf(fechaNacimiento.getYear()));
-			}
-		};
-		bFNacimiento.addSelectionListener(sabFNacimiento);
-
-		// Listener para el selector de fecha de contrato
-		SelectionAdapter sabFContrato = new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e){
-				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shell);
-				while (!i17.isDisposed()) {
-					if (!shell.getDisplay().readAndDispatch()) {
-						shell.getDisplay().sleep();
-					}
-				}
-				fechaContrato = i17.getFecha(); 				
-				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
-				if (fechaContrato != null)
-					tFContrato.setText(String.valueOf(fechaContrato.getDate()) + " de " + meses[fechaContrato.getMonth()]+ " de " + String.valueOf(fechaContrato.getYear()));				
-			}
-		};
-		bFContrato.addSelectionListener(sabFContrato);
-		
-		// Listener para el selector de fecha de alta
-		SelectionAdapter sabFAlta = new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e){
-				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shell);
-				while (!i17.isDisposed()) {
-					if (!shell.getDisplay().readAndDispatch()) {
-						shell.getDisplay().sleep();
-					}
-				}
-				fechaAlta = i17.getFecha(); 
-				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
-				if (fechaAlta != null)
-				tFAlta.setText(String.valueOf(fechaAlta.getDate()) + " de " + meses[fechaAlta.getMonth()]+ " de " + String.valueOf(fechaAlta.getYear()));
-			}
-		};
-		bFAlta.addSelectionListener(sabFAlta);
-		
-		// Listener para el selector de color
-		SelectionAdapter sabColor = new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e){
-				ColorDialog cd = new ColorDialog(shell);
-				cd.setText(bundle.getString("I08_lab_SelColor"));
-				cd.setRGB(new RGB(255, 255, 255));
-				RGB newColor = cd.open();
-				if (newColor != null) {
-					lColor.setBackground(new Color(shell.getDisplay(), newColor));
-				}
-			}
-		};
-		bColor.addSelectionListener(sabColor);
 
 		
 		// Listener con lo que hace el botón bCancelar
