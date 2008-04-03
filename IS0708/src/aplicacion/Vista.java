@@ -1148,6 +1148,15 @@ public ArrayList<String> getNombreDepartamento(Empleado empleadoActual) {
 	ArrayList<String> dptos=this.controlador.getDepartamentosJefe(nv);
 	return dptos;
 }
+/**
+ * Funcion q devuelve true si tiene algun empleado el departamento
+ * @param text
+ * @return
+ */
+public boolean tieneEmpleados(String text) {
+	// TODO Auto-generated method stub
+	return false;
+}
 
  
    
