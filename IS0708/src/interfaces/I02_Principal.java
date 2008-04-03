@@ -602,97 +602,98 @@ public class I02_Principal {
 	 * @author Roberto Garcia & Jose Maria Martin
 	 */
 	private void crearTabAdminInicio(TabFolder tabFolder) {
-		TabItem tabItemAdminInicio = new TabItem(tabFolder, SWT.NONE);
-		tabItemAdminInicio.setText(bundle.getString("I02_admin_inicio"));
-		tabItemAdminInicio.setImage(ico_cuadrante);
-
-		// Creamos el contenido de la pestaña cuadrantes
-
-		Composite cInicio = new Composite(tabFolder, SWT.NONE);
-		tabItemAdminInicio.setControl(cInicio);
-
-		Image _fondo_turnomatic;
-		_fondo_turnomatic = new Image(display, I02_Principal.class
-				.getResourceAsStream("admin_fondo.jpg"));
-
-		cInicio
-				.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,
-						1));
-
-		// Le añadimos un layout
-		GridLayout lInicio = new GridLayout();
-		lInicio.numColumns = 2;
-		cInicio.setLayout(lInicio);
-
-		final Label bienvenido = new Label(cInicio, SWT.None);
-		bienvenido.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, true,
-				2, 1));
-		bienvenido.setText(bundle.getString("I02_bienvenido"));
-		//Color color = new Color(display,0, 0, 0);
-		//bienvenido.setBackground(color);
-
-		Image logo = new Image(display, I02_Principal.class
-				.getResourceAsStream("LogoTM.jpg"));
-		final Label lLogo = new Label(cInicio, SWT.None);
-		lLogo.setImage(logo);
-		lLogo
-				.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, true, 2,
-						1));
-
-		final Label lConfig = new Label(cInicio, SWT.None);
-		lConfig.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, false, 1,
-				1));
-		lConfig.setText(bundle.getString("I02_configBD"));
-
-		final Button configBD = new Button(cInicio, SWT.PUSH);
-		configBD
-				.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, true, 1, 1));
-		configBD.setText("CONFIG BD");
-		configBD.addSelectionListener(new SelectionListener() {
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-			}
-
-			public void widgetSelected(SelectionEvent arg0) {
-				MessageBox messageBox = new MessageBox(shell,
-						SWT.APPLICATION_MODAL | SWT.ICON_QUESTION | SWT.OK
-								| SWT.CANCEL);
-				messageBox.setText("Reset BD");
-				messageBox.setMessage(bundle.getString("I30_confirm_config"));
-				if(messageBox.open()==SWT.OK){
-					new I30_Info_BD(shell, bundle, vista);
-				}
-			}
-		});
-
-		final Label lReset = new Label(cInicio, SWT.None);
-		lReset.setLayoutData(new GridData(SWT.CENTER, SWT.BOTTOM, false, false,
-				1, 1));
-		lReset.setText(bundle.getString("I02_resetBD"));
-
-		final Button resetBD = new Button(cInicio, SWT.PUSH);
-		resetBD.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, true, false,
-				1, 1));
-		resetBD.setText("RESET BD");
-		resetBD.addSelectionListener(new SelectionListener() {
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-			}
-
-			public void widgetSelected(SelectionEvent arg0) {
-				MessageBox messageBox = new MessageBox(shell,
-						SWT.APPLICATION_MODAL | SWT.ICON_QUESTION | SWT.OK
-								| SWT.CANCEL);
-				messageBox.setText("Reset BD");
-				messageBox.setMessage(bundle.getString("I02_confirm_reset"));
-				int response = messageBox.open();
-				if (response == SWT.OK) {
-					System.out.println("BBDD reiniciada");
-					// paquete_pruebas.GeneraDatos.reset();
-					paquete_pruebas.InsertaDatosFijos.insertar();
-				}
-			}
-		});
-
-		cInicio.setBackgroundImage(_fondo_turnomatic);
+		new I04_Tab_AdminInicio(bundle,vista,tabFolder);
+//		TabItem tabItemAdminInicio = new TabItem(tabFolder, SWT.NONE);
+//		tabItemAdminInicio.setText(bundle.getString("I02_admin_inicio"));
+//		tabItemAdminInicio.setImage(ico_cuadrante);
+//
+//		// Creamos el contenido de la pestaña cuadrantes
+//
+//		Composite cInicio = new Composite(tabFolder, SWT.NONE);
+//		tabItemAdminInicio.setControl(cInicio);
+//
+//		Image _fondo_turnomatic;
+//		_fondo_turnomatic = new Image(display, I02_Principal.class
+//				.getResourceAsStream("admin_fondo.jpg"));
+//
+//		cInicio
+//				.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,
+//						1));
+//
+//		// Le añadimos un layout
+//		GridLayout lInicio = new GridLayout();
+//		lInicio.numColumns = 2;
+//		cInicio.setLayout(lInicio);
+//
+//		final Label bienvenido = new Label(cInicio, SWT.None);
+//		bienvenido.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, true,
+//				2, 1));
+//		bienvenido.setText(bundle.getString("I02_bienvenido"));
+//		//Color color = new Color(display,0, 0, 0);
+//		//bienvenido.setBackground(color);
+//
+//		Image logo = new Image(display, I02_Principal.class
+//				.getResourceAsStream("LogoTM.jpg"));
+//		final Label lLogo = new Label(cInicio, SWT.None);
+//		lLogo.setImage(logo);
+//		lLogo
+//				.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, true, 2,
+//						1));
+//
+//		final Label lConfig = new Label(cInicio, SWT.None);
+//		lConfig.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, false, 1,
+//				1));
+//		lConfig.setText(bundle.getString("I02_configBD"));
+//
+//		final Button configBD = new Button(cInicio, SWT.PUSH);
+//		configBD
+//				.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, true, 1, 1));
+//		configBD.setText("CONFIG BD");
+//		configBD.addSelectionListener(new SelectionListener() {
+//			public void widgetDefaultSelected(SelectionEvent arg0) {
+//			}
+//
+//			public void widgetSelected(SelectionEvent arg0) {
+//				MessageBox messageBox = new MessageBox(shell,
+//						SWT.APPLICATION_MODAL | SWT.ICON_QUESTION | SWT.OK
+//								| SWT.CANCEL);
+//				messageBox.setText("Reset BD");
+//				messageBox.setMessage(bundle.getString("I30_confirm_config"));
+//				if(messageBox.open()==SWT.OK){
+//					new I30_Info_BD(shell, bundle, vista);
+//				}
+//			}
+//		});
+//
+//		final Label lReset = new Label(cInicio, SWT.None);
+//		lReset.setLayoutData(new GridData(SWT.CENTER, SWT.BOTTOM, false, false,
+//				1, 1));
+//		lReset.setText(bundle.getString("I02_resetBD"));
+//
+//		final Button resetBD = new Button(cInicio, SWT.PUSH);
+//		resetBD.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, true, false,
+//				1, 1));
+//		resetBD.setText("RESET BD");
+//		resetBD.addSelectionListener(new SelectionListener() {
+//			public void widgetDefaultSelected(SelectionEvent arg0) {
+//			}
+//
+//			public void widgetSelected(SelectionEvent arg0) {
+//				MessageBox messageBox = new MessageBox(shell,
+//						SWT.APPLICATION_MODAL | SWT.ICON_QUESTION | SWT.OK
+//								| SWT.CANCEL);
+//				messageBox.setText("Reset BD");
+//				messageBox.setMessage(bundle.getString("I02_confirm_reset"));
+//				int response = messageBox.open();
+//				if (response == SWT.OK) {
+//					System.out.println("BBDD reiniciada");
+//					// paquete_pruebas.GeneraDatos.reset();
+//					paquete_pruebas.InsertaDatosFijos.insertar();
+//				}
+//			}
+//		});
+//
+//		cInicio.setBackgroundImage(_fondo_turnomatic);
 	}
 
 	/**
