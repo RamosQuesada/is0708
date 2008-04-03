@@ -17,6 +17,11 @@ import org.eclipse.swt.widgets.TabItem;
 
 import aplicacion.Vista;
 
+/**
+ * Clase que implementa la interfaz del tab de inicio y configuracion 
+ * de la base de datos del menu de administrador
+ * @author Jose Maria Martin
+ */
 public class I04_Tab_AdminInicio {
 	private ResourceBundle bundle;
 

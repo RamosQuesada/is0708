@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -169,7 +171,28 @@ public class I09_Tab_Contratos extends Thread {
 		}
 		tablaContratos.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 				true, 3, 1));
+		tablaContratos.addControlListener(new ControlListener() {
+			public void controlResized(ControlEvent e) {
+//				// Configurar tamaño de las columnas
+//				int ancho = tablaContratos.getSize().x ;
+//				tablaContratos.getColumn(0).setWidth(ancho/5*2);
+//				tablaContratos.getColumn(1).setWidth(ancho/3*2);	
+			int ancho = tablaContratos.getSize().x ;
+			tablaContratos.getColumn(0).setWidth(ancho/40*3);				
+			tablaContratos.getColumn(1).setWidth(ancho/8*2);		
+			tablaContratos.getColumn(2).setWidth(ancho/40*3);		
+			tablaContratos.getColumn(3).setWidth(ancho/17*3);	
+			tablaContratos.getColumn(4).setWidth(ancho/20*3);	
+			tablaContratos.getColumn(5).setWidth(ancho/30*3);		
+			tablaContratos.getColumn(6).setWidth(ancho/40*3);	
+			tablaContratos.getColumn(7).setWidth(ancho/30*3);			
+			}
+			
 
+			public void controlMoved(ControlEvent arg0) {}
+						
+		});
+		
 		bNuevoContrato = new Button(cContratos, SWT.PUSH);
 		bModificarContrato = new Button(cContratos, SWT.PUSH);
 		bEliminarContrato = new Button(cContratos, SWT.PUSH);
