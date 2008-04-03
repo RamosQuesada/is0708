@@ -1,100 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//ES" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
 <?php 
 session_start();
 
-if (!$_SESSION['codigo'])
-{
-header("Location:identificarse.php");
+if (!$_SESSION['codigo']) {
+	header("Location:identificarse.php");
 }
 $men=$_GET['mensaje'];
 $re=$_GET['remitente'];
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
 <head>
-<title>Documento sin t&iacute;tulo</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<meta name="Description" content="Servicio Web Turnomatic." />
+<meta name="Keywords" content="documentaci�n, turnomatic, ingener�a, software, ucm" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="Distribution" content="Global" />
+<meta name="Author" content="IS 2007-2008. UCM Madrid, Spain" />
+<meta name="Robots" content="index,follow" />
+
+<link rel="stylesheet" href="images/Envision.css" type="text/css" />
+
+<title>Servicio Web Turnomatic. IS 07-08 UCM</title>
+	
 </head>
-
 <body>
-<?
-@ $db=new mysqli('localhost','root','','test');
-if (mysqli_connect_errno())
-{
-echo 'no te has connectado a la bd'; 
-}
-else
-{
-$sql="select * from  mensaje where IdMensaje=".$men;
-$registros=$db->query($sql);
+<!-- wrap starts here -->
+<div id="wrap">
+		
+		<!--header -->
+		<div id="header"></div>
 
-$reg=$registros->fetch_assoc();
-$m=$reg['IdMensaje'];
-$r=$reg['Remitente'];
-$a=$reg['Asunto'];
-$f=$reg['Fecha'];
-$t=$reg['Texto'];
-echo "<center><table align=center border=2><tr><td colspan=2 bgcolor=red>Respuesta al mensaje con la siguiente informacion</td></tr>";
-echo "<tr><td>Idmensaje</td><td>".$m."</td></tr>";
-echo "<tr><td>Remitente</td><td>".$r."</td></tr>";
-echo "<tr><td>Asunto</td><td>".$a."</td></tr>";
-echo "<tr><td>Fecha</td><td>".$f."</td></tr>";
-echo "<tr><td>Texto</td><td>".$t."</td></tr>";
-echo "<tr><td colspan=2><a href=menu.php>Ir al menu</a></tr></td>";
-echo "</center></table>";
-$registros->free();
-}
+		<div id="content-wrap">
+			<div id="sidebar">
+				<h3>Consultar mensajes</h3>
+				<ul class="sidemenu">
+					<li><a href="nuevomensaje.php">Nuevo mensaje</a></li>
+					<li><a href="mensajes.php?cod=1">Ver todos</a></li>
+					<li><a href="mensajes.php?cod=2">Mensajes no le&iacute;dos</a></li>
+					<li><a href="mensajesenviados.php">Mensajes enviados</a></li>
+				</ul>
+				<h3>Consultar horarios</h3>
+				<ul class="sidemenu">
+					<li>Toda la semana</li>
+					<li>Todo el mes</li>
+				</ul>
+			</div>
 
-$db->close();
-?>
+			<div id="main">
 
-<table border="2" align="center">
+			<?php
+				@ $db=new mysqli('localhost','root','','turnomat_bd');
+				if (mysqli_connect_errno()) {
+					echo 'No se puede conectar con la base de datos'; 
+				} else {
+					$sql="select * from  mensaje where IdMensaje=".$men;
+					$registros = $db->query($sql);
 
-<form action="crearnuevomensaje.php" method="post">
-<input type="hidden" name="remitente" value=<?php echo $_SESSION['codigo']; ?>>
-<?
-@$db=new mysqli('localhost','root','','test');
-if (mysqli_connect_errno())
-echo "no te puedes conectar a la base de datos";
-else
-{
-$sql="select numvendedor,nombre,apellido1,apellido2 from usuario";
-$registro=$db->query($sql);
-$nreg=$registro->num_rows;
-if($nreg == 0)
-{
-echo " no hay usuarios";
-}
-else
-{
-echo "<tr align=left><td>Destinatario</td><td><select name=destinatario width=50>";
+					$reg=$registros->fetch_assoc();
+					$m=$reg['IdMensaje'];
+					$r=$reg['Remitente'];
+					$a=$reg['Asunto'];
+					$f=$reg['Fecha'];
+					$t=$reg['Texto'];
+					$registros->free();
+				}
 
-for ($i=0;$i<$nreg;$i++)
-{
-$reg=$registro->fetch_assoc();
-if (htmlspecialchars(stripslashes($reg['numvendedor']))==$re)
-{
-echo "<option selected value=".$reg['numvendedor'].">".$reg['numvendedor']." - ".$reg['nombre']." ".$reg['apellido1']." ".$reg['apellido2']."</option>";
-}
-else
-{
-echo "<option value=".$reg['numvendedor'].">".$reg['numvendedor']." - ".$reg['nombre']." ".$reg['apellido1']." ".$reg['apellido2']."</option>";
-}
-}
-echo "</select></td></tr>";
-}
-$registro->free();
-$db->close();
+				$db->close();
+			?>
+			<h1>Responder mensaje</h1>
+			<table align="center">
 
-}
-?>
-<tr align="left"><td>Asunto</td><td><input name="asunto" type="text" value="asunto" size=50></td></tr>
-<tr align="left" valign="top"><td>Texto</td><td><textarea name="texto" cols="50" rows="25">Texto del mensaje</textarea></td></tr>
-<tr><td><input type="reset" value="borrar"></td><td><input type="submit" value="enviar mensaje a destinatarios"></td></tr>
-</form>
-<tr><td colspan=2 align="center"><a href=menu.php>Ir al menu</a></tr></td></table></center>
+			<form action="crearnuevomensaje.php" method="post">
+				<input type="hidden" name="remitente" value=<?php echo $_SESSION['codigo']; ?>>
+				<?php
+					@$db=new mysqli('localhost','root','','turnomat_bd');
+					if (mysqli_connect_errno())
+						echo "No se puede conectar con la base de datos";
+					else {
+						$sql="select numvendedor,nombre,apellido1,apellido2 from usuario";
+						$registro=$db->query($sql);
+						$nreg=$registro->num_rows;
+						if($nreg == 0) {
+							echo " no hay usuarios";
+						} else {
+							echo "<tr align=left><td>Destinatario</td><td>".$r;
+							echo "</select></td></tr>";
+						}
+					$registro->free();
+					$db->close();
+				}
+				echo "<tr align=left><td>Asunto</td><td><input name=\"asunto\" type=\"text\" value=\"Re: ".$a."\" size=50></td></tr>";
+				echo "<tr align=left valign=top><td>Texto</td><td><textarea name=\"texto\" cols=50 rows=25>\n\n\n\n--- Mensaje original ---\n".$t."</textarea></td></tr>";
+				echo "<tr><td align=right colspan=2><input type=\"reset\" value=\"Borrar\"> <input type=\"submit\" value=\"Enviar mensaje\"></td></tr>";
+				?>
+				
+			</form>
+			<tr><td colspan=2 align="center"><a href=menu.php>Ir al menu</a></tr></td></table></center>
 
-
-
-
+			</div>
+		
+		<!-- content-wrap ends here -->	
+		</div>
+					
+		<!--footer starts here-->
+		<div id="footer">
+			
+			<p>
+			<strong>IS 2007-2008</strong> | 
+			Design by: <a href="http://www.styleshout.com/">styleshout</a> | 
+			Valid <a href="http://validator.w3.org/check?uri=referer">XHTML</a> | 
+			<a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a>
+			
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			
+		<a href="contacto.html">Contacto</a> 
+   		</p>
+		</div>
+</div>
 </body>
 </html>
