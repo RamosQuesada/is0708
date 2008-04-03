@@ -702,7 +702,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		// c.redraw(0, margenSup+(sep_vert_franjas+alto_franjas)*(posV+1),
 		// ancho, 18, false);
 		// c.redraw(0, 0, ancho, alto, false);
-		if (!display.isDisposed()) {
+		if (display!=null && !display.isDisposed()) {
 			display.asyncExec(new Runnable() {
 				public void run() {
 					canvas.redraw();
