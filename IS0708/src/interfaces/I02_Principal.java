@@ -482,7 +482,10 @@ public class I02_Principal {
 		bDel.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				if(vista.tieneEmpleados(cmbDepartamentos.getText())){
-					
+					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
+					messageBox.setText (bundle.getString("Mensaje"));
+					messageBox.setMessage (bundle.getString("I02_err_elim"));
+					e.doit = messageBox.open () == SWT.CLOSE;
 				}
 			}
 		});
