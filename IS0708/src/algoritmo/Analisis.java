@@ -37,6 +37,8 @@ public class Analisis {
 	public void recorrido (Cuadrante cuadrante, Estructura estructura){
 		for (int i=0;i<dias;i++){
 			//si el dia i no abre el centro, no se calcula el cuadrante
+			//AMPLIACION PARA QUE SE EMPIECE EL DIA i A CALCULAR
+			//METER LA COMPROBACION: (cuadrante.getListaTrabajaDia(i).size()!=0)
 			if (!estructura.getCal().diaLibre(i)) {
 				Time t=new Time(8,0,0);
 				for (int j=0;j<24;j++){
