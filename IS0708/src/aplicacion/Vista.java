@@ -1155,7 +1155,10 @@ public ArrayList<String> getNombreDepartamento(Empleado empleadoActual) {
  */
 public boolean tieneEmpleados(String text) {
 	// TODO Auto-generated method stub
-	return this.getEmpleadosDepartamento(text).size()>=1;
+	//Se usa para ver cuando se puede eliminar un Dpto.
+	//esto es, cuando solo queda su jefe (que siempre
+	//está ahí)
+	return this.getEmpleadosDepartamento(text).size()>1;
 }
 /**
  * Función que elimina un departamento
