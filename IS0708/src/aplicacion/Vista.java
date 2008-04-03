@@ -1161,12 +1161,15 @@ public boolean tieneEmpleados(String text) {
 	return this.getEmpleadosDepartamento(text).size()>1;
 }
 /**
- * Función que elimina un departamento
+ * Función que elimina un departamento de las
+ * 3 tablas de departamentos
  * @param text Nombre del departamento
  */
 public void eliminaDepartamento(String text) {
 	// TODO Auto-generated method stub
-	
+	if (!this.tieneEmpleados(text)){
+	this.controlador.eliminaDepartamento(text);
+	}
 }
 
  
