@@ -286,6 +286,10 @@ public class Empleado implements Drawable {
 		this.turnoFavorito = turnoFavorito;
 	}
 	*/
+	/**
+	 * Constructor por defecto
+	 */
+	public Empleado(){}
 	
 	public String toString() {
 		return String.valueOf(idEmpl) + getNombreCompleto();
