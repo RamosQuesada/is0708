@@ -329,6 +329,22 @@ public class Util {
 		if (texto.length()>x) {
 			s = texto.substring(0, x-3) + "...";
 		}		
+		
+		//String espacio = " ";
+		char espacio2[] = s.toCharArray();
+		
+		for (int i=0; i<s.length(); i++)
+		{
+			if (s.charAt(i) == '\n') 
+			{
+				//s.replace('\n', espacio2);
+				espacio2[i] = ' ';
+				
+				//s.replaceAll("\n", " ");
+			}
+		}
+		
+		s = espacio2.toString();
 		return s;
 	}
 	/**
