@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.ScrollBar;
 
 import algoritmo.Trabaja;
@@ -523,10 +524,30 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				if (e.button == 1 &&(diaValido)) { //&& diaActVistaMes<iCuad.length && empActVistaMes<iCuad[diaActVistaMes].size()) {
 					Turno turnoSeleccionado2=iCuad[diaActVistaMes].get(indiceEmpAct).getTurno();
 					//Si los dos empleados tienen el mismo contrato
-					if (turnoSeleccionado!=null && empleadoSeleccionado.getContratoId() == iCuad[diaActVistaMes].get(indiceEmpAct).getEmpl().getContratoId()) {
-						// Intercambiar turnos
-						Turno.intercambiar(turnoSeleccionado, turnoSeleccionado2);
-						calcularTamano();						
+					if(turnoSeleccionado.getIdTurno()!=turnoSeleccionado2.getIdTurno()) {
+						if (turnoSeleccionado!=null && 
+								empleadoSeleccionado.getContratoId()==iCuad[diaActVistaMes].get(indiceEmpAct).getEmpl().getContratoId()) {
+							MessageBox messageBox = new MessageBox(canvas.getShell(),
+									SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
+							messageBox.setText("Atencion");
+							String nombre1 = empleadoSeleccionado.getNombre();
+							String nombre2 = iCuad[diaActVistaMes].get(indiceEmpAct).getEmpl().getNombre();
+							messageBox.setMessage("¿Desea intercambiar el turno del empleado "+nombre1+" por el turno " +
+									"del empleado "+nombre2+"?");
+							if (messageBox.open()==SWT.YES) {
+								// Intercambiar turnos
+								Turno.intercambiar(turnoSeleccionado, turnoSeleccionado2);
+								calcularTamano();				
+							}
+						}
+						else {
+							MessageBox messageBox = new MessageBox(canvas.getShell(),
+									SWT.APPLICATION_MODAL | SWT.OK );
+							messageBox.setText("Error");
+							messageBox.setMessage("No se pueden intercambiar los turnos de empleados " +
+									"con distinto contrato.");
+							messageBox.open();
+						}
 					}
 				}
 				turnoSeleccionado = null;
