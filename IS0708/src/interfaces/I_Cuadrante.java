@@ -770,6 +770,13 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		if (fondo==null)
 			actualizarFondo(gc);
 		else gc.drawImage(fondo, 0, 0);
+		int inicioY=margenSupVistaMes+altoFila;
+		
+		if (turnoSeleccionado!=null) {
+			dibujaBotonPuls(gc,margenIzq+margenNombres+((turnPulsX)*anchoDia),
+					inicioY+((turnPulsY)*altoFila),anchoDia,altoFila);
+		}
+		
 		if (diaValido) { //&& diaActVistaMes<iCuad.length && empActVistaMes<iCuad[diaActVistaMes].size()){
 			//Alto de la caja
 			int alto=39;
@@ -786,7 +793,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			int b = color.getBlue();
 			//Pintamos segun turno
 			int inicioX=margenIzq+margenNombres+10-(ancho/2);
-			int inicioY=margenSupVistaMes+altoFila;
+			
 			Util.cambiarRelleno(display, gc, r-50,g-50,b-50);
 			gc.fillRectangle(inicioX+((diaActVistaMes)*anchoDia),
 					inicioY+((empActVistaMes)*altoFila)-alto,ancho,alto);
@@ -808,8 +815,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					inicioY+((empActVistaMes)*altoFila),anchoDia,altoFila);
 			//System.out.println("Act. Dia: "+diaActVistaMes+" Long. dia: "+iCuad[diaActVistaMes].size()+" Empleado: "+iCuad[diaActVistaMes].get(empActVistaMes).getEmpl().getNombre());
 		}
+		
 		if (turnoSeleccionado!=null) {
-			int inicioY=margenSupVistaMes+altoFila;
 			gc.setBackground(new Color(display,120,170,120));
 			//gc.drawRectangle(cursor.x-anchoDia/2, cursor.y-altoFila/2, anchoDia, altoFila);
 			gc.fillRectangle(cursor.x-anchoDia/2, cursor.y-altoFila/2, anchoDia, altoFila);
@@ -817,9 +824,6 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				gc.drawText(String.valueOf(turnoSeleccionado.getIdTurno()),cursor.x-anchoDia/2 + (7/2),cursor.y - altoFila/2 + 2,altoFila);
 			dibujaBoton(gc,cursor.x-anchoDia/2,cursor.y-altoFila/2,anchoDia,altoFila);
 			gc.setBackground(new Color(display,255,255,255));
-			
-			dibujaBotonPuls(gc,margenIzq+margenNombres+((turnPulsX)*anchoDia),
-					inicioY+((turnPulsY)*altoFila),anchoDia,altoFila);
 		}
 	}
 	
