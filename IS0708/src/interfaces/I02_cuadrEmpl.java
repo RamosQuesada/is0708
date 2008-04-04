@@ -13,6 +13,7 @@
 package interfaces;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import org.eclipse.swt.*;
@@ -30,7 +31,6 @@ import aplicacion.utilidades.Util;
 /**
  * Dada una instancia de Canvas, que se le pasa como par�metro al constructor,
  * crea un cuadrante sobre la misma.
- * @author Daniel
  *
  */
 public class I02_cuadrEmpl extends Thread{
@@ -59,6 +59,8 @@ public class I02_cuadrEmpl extends Thread{
 	 * Bundle necesario para la traduccion de los textos
 	 */
 	private ResourceBundle _bundle;
+	
+	private MouseMoveListener mouseMoveListenerCuadrMensual;
 
 	/**
 	 * Booleando que indica si la seleccion actual es la de verlo por meses o por semanas
@@ -102,10 +104,10 @@ public class I02_cuadrEmpl extends Thread{
 	 * 
 	 */
 	private int margenNombres; // Un margen para pintar los nombres a la izquierda
-	private int movimiento;
+//	private int movimiento;
 	private final Label lGridCuadrante;
 	private final Combo cGridCuadrante;
-	private Date fecha;
+//	private Date fecha;
 	private Label lCuadranteTitulo;
 	private I02CuadranteEmpleado cuadrante;
 	private GC gc2;
@@ -120,10 +122,16 @@ public class I02_cuadrEmpl extends Thread{
 
 
 
+	/**
+	 * metodo que redibuja la ventana
+	 */
 	public void redibujar() {
 		canvas.redraw();
 	}
 
+	/**
+	 * Método que inicia el thread del cuadrante del empleado
+	 */
 	public void run(){
 		boolean run=true;
 		while(run){
@@ -132,23 +140,14 @@ public class I02_cuadrEmpl extends Thread{
 			display.asyncExec(new Runnable () {
 				public void run() {
 					if(cuadrante.dameRedibujar()){
-						
-						
 						redibujar();
 						cuadrante.ponRedibujar(false);
-					}
-					else{
-					//	System.out.println("Esperando"+cuadrante.avance);
-					//	redibujar();
-						//cuadrante.
-						
 					}
 				}
 			});
 			try {
-				sleep(1000);
+				sleep(100);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -161,7 +160,6 @@ public class I02_cuadrEmpl extends Thread{
 		if (ancho != 0 && alto != 0) {
 			Image bufferImage = new Image(display, ancho, alto);
 			gc2 = new GC(bufferImage);
-			// TODO Probar la siguiente linea en el laboratorio
 			try {
 				gc2.setAntialias(SWT.ON);
 			}
@@ -174,21 +172,32 @@ public class I02_cuadrEmpl extends Thread{
 			
 		}
 	}
+	
 	private void setSubdivisiones(int i) {
 		cuadrante.ponSubdivisiones(i);
 		redibujar();
 	}
+	
+	/**
+	 * Funcion que hace que se fije el dibujado, por semanas
+	 */
 	public void setSemanal()  {
 		semanal = true;
 		lGridCuadrante.setVisible(true);
 		cGridCuadrante.setVisible(true);
-		redibujar();}
+		redibujar();
+	}
+	
+	/**
+	 * Funcion que hace que se fije el dibujado, por meses
+	 */
 	public void setMensual() {
 		semanal = false;
 		lGridCuadrante.setVisible(false);
 		cGridCuadrante.setVisible(false);
 		redibujar();
 	}
+	
 	/**
 	 * Constructora que recibe como par�metro el Composite donde colocar los botones
 	 * y el cuadrante.
@@ -199,25 +208,16 @@ public class I02_cuadrEmpl extends Thread{
 		this.semanal = diario;
 		this.vista=vista;
 		this._bundle = bundle;
-		this.fecha= fecha;
+	//	this.fecha= fecha;
 		this.empleado=empleado;
-		
-		
-		
-		
+			
 		//a partir de aqui hay q suprimir
 		final GridLayout l = new GridLayout(3,false);
 		c.setLayout(l);
 		
-		
 		lCuadranteTitulo= new Label (c, SWT.LEFT);
-		// TODO Esto tendr� que cambiarse por la fecha elegida en el calendario
-		if(fecha!=null){
-			lCuadranteTitulo.setText("BIENVENIDO "+empleado.getNombre().toUpperCase()+"  :"+Util.dateAString(fecha));
-		}
-		else{
-			lCuadranteTitulo.setText("BIENVENIDO "+empleado.getNombre().toUpperCase()+"  :"+Util.dateAString(new Date(System.currentTimeMillis())));
-		}
+		if(fecha!=null){lCuadranteTitulo.setText("BIENVENIDO "+empleado.getNombre().toUpperCase()+"  :"+Util.dateAString(fecha));}
+		else{lCuadranteTitulo.setText("BIENVENIDO "+empleado.getNombre().toUpperCase()+"  :"+Util.dateAString(new Date(System.currentTimeMillis())));}
 		
 		lCuadranteTitulo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		
@@ -234,7 +234,6 @@ public class I02_cuadrEmpl extends Thread{
 		cGridCuadrante.addListener(SWT.Selection, new Listener () {
 			public void handleEvent (Event e){
 				switch (cGridCuadrante.getSelectionIndex()) {
-				//case 0 : setSubdivisiones(12); break;
 				case 0 : setSubdivisiones(4); break;
 				case 1 : setSubdivisiones(2); break;
 				case 2 : setSubdivisiones(1);
@@ -245,10 +244,8 @@ public class I02_cuadrEmpl extends Thread{
 		
 		this.canvas = new Canvas(c, SWT.FILL | SWT.NO_BACKGROUND);
 		canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
-	//	creando = false;
-	//	terminadoDeCrear = true;
 
-		movimiento = 0;
+	//	movimiento = 0;
 		margenIzq = 15;
 		margenDer = 20;
 		margenSup = 1;
@@ -260,9 +257,8 @@ public class I02_cuadrEmpl extends Thread{
 		display = canvas.getDisplay();
 		cuadrante = new I02CuadranteEmpleado(display, 1, horaInicio, horaFin, margenIzq, margenDer, margenSup, margenInf, margenNombres,_bundle,
 				empleado,fecha,vista,this);
+		
 		calcularTamano();
-		
-		
 		
 		canvas.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent event) {
@@ -274,7 +270,9 @@ public class I02_cuadrEmpl extends Thread{
 			public void controlResized(ControlEvent e) {
 				calcularTamano();
 			}
-		});			
+		});		
+		
+		
 		
 		if (diario) setSemanal(); else setMensual();
 		start();
@@ -294,15 +292,13 @@ public class I02_cuadrEmpl extends Thread{
 		return b;
 	}
 	
-	public void actualizaFecha(Date fecha){
-		
-		this.fecha=fecha;
-		//"BIENVENIDO "+empleado.getNombre().toUpperCase()+"  :"+Util.dateAString(new Date(System.currentTimeMillis()))
 
-		//lCuadranteTitulo.setFont(new Font(display,"Verdana",this.ancho/10,SWT.BOLD));
+	public void actualizaFecha(Date fecha){
+	//	this.fecha=fecha;
 		lCuadranteTitulo.setText("BIENVENIDO "+empleado.getNombre().toUpperCase()+Util.dateAString(fecha));
 		this.cuadrante.actualizarFecha(fecha,gc2);
 		this.redibujar();
 	}
+
 
 }
