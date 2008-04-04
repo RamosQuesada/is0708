@@ -145,6 +145,7 @@ public class Vista {
 					else if(e.i==MODIFICAR) {
 						if      (e.tipo.equals("Contrato"))			controlador.modificarContrato(((Contrato)e.o.get(0)).getNumeroContrato(), ((Contrato)e.o.get(0)).getTurnoInicial(), ((Contrato)e.o.get(0)).getNombreContrato(), ((Contrato)e.o.get(0)).getPatron() , ((Contrato)e.o.get(0)).getDuracionCiclo(), ((Contrato)e.o.get(0)).getSalario(), ((Contrato)e.o.get(0)).getTipoContrato());
 						else if (e.tipo.equals("Turno"))			controlador.modificarTurno(((Turno)e.o.get(0)).getIdTurno(), ((Turno)e.o.get(0)).getDescripcion(), ((Turno)e.o.get(0)).getHoraEntrada(), ((Turno)e.o.get(0)).getHoraSalida(), ((Turno)e.o.get(0)).getHoraDescanso(), ((Turno)e.o.get(0)).getTDescanso());
+						else if (e.tipo.equals("Empleado"))			controlador.cambiarEmpleado(((Empleado)e.o.get(0)).getEmplId(), ((Empleado)e.o.get(0)).getNombre(), ((Empleado)e.o.get(0)).getApellido1(), ((Empleado)e.o.get(0)).getApellido2(), ((Empleado)e.o.get(0)).getFechaNac(), ((Empleado)e.o.get(0)).getSexo(), ((Empleado)e.o.get(0)).getEmail(), ((Empleado)e.o.get(0)).getPassword(), ((Empleado)e.o.get(0)).getGrupo(), ((Empleado)e.o.get(0)).getFcontrato(), ((Empleado)e.o.get(0)).getFAlta(), ((Empleado)e.o.get(0)).getFelicidad(), ((Empleado)e.o.get(0)).getIdioma(), ((Empleado)e.o.get(0)).getRango(), ((Empleado)e.o.get(0)).getTurnoFavorito(), ((Empleado)e.o.get(0)).getContratoId());						
 					}
 				}
 				setProgreso("Actualizando base de datos", 100);
@@ -281,7 +282,32 @@ public class Vista {
 		return true;
 	}
 	
-
+	public boolean modificarEmpleado(int idEmp, String nomb, String Ape1, String Ape2, Date FNac, int sexo, 
+			String mail, String Passw, int grupo, Date FCont, Date Fentr, int Felic, int Idiom, 
+			int Rang, int Turn, int Contr) {
+		Empleado e = getEmpleado(idEmp);
+		Contrato c = getContrato(Contr);
+		
+		if (e==null) return false;
+		e.setNombre(nomb);
+		e.setApellido1(Ape1);
+		e.setApellido2(Ape2);
+		e.setFechaNac(FNac);
+		e.setSexo(sexo);
+		e.setEmail(mail);
+		e.setPassword(Passw);
+		e.setGrupo(grupo);
+		e.setFcontrato(FCont);
+		e.setFAlta(Fentr);
+		e.setFelicidad(Felic);
+		e.setIdioma(Idiom);
+		e.setRango(Rang);
+		e.setTurnoFavorito(Turn);
+		e.setContrato(c);
+		
+		modifyCache(e, "Empleado");
+		return true;
+	}
 	
 	/**
 	 * Modifica un turno de la base de datos
