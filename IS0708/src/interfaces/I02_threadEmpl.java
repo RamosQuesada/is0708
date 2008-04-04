@@ -50,7 +50,7 @@ public class I02_threadEmpl extends Thread{
 		 */
 		while(corriendo){
 			try {
-				wait(100);
+				wait(1000);
 			} 
 			catch (InterruptedException e) {
 				e.printStackTrace();
@@ -120,16 +120,23 @@ public class I02_threadEmpl extends Thread{
 			if(cont>=5){
 				cuadrante.ponAvance(1);
 			}
-				
+			boolean redibujar=true;
+
 			/* Mantenerse esperando hasta que Esperar a que se cargue la cache */
 			while((!(cuadrante.dameVista()).isCacheCargada())&&(!finalizar)){
-				cuadrante.ponAvance(-1);
+				if(redibujar){
+					cuadrante.ponAvance(-1);
+					cuadrante.ponRedibujar(true);
+					redibujar=false;
+				}
 				try {
 					 sleep(100);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
+			
+			
 			if((cuadrante.dameVista()).isCacheCargada()){
 				
 			ArrayList<Trabaja> lista_trabaja=new ArrayList<Trabaja>();
