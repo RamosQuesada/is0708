@@ -126,7 +126,7 @@ public class I08_1_Editar_empleado {
 		lContrato		.setText(bundle.getString("I08_lab_TipoContrato"));
 		lExperiencia	.setText(bundle.getString("Experiencia"));
 		lDepto			.setText(bundle.getString("Departamento"));
-		bFAlta			.setText("I08_lab_FAlta");
+		bFAlta			.setText(bundle.getString("I08_lab_FAlta"));
 		bFContrato		.setText(bundle.getString("I08_lab_FContr"));
 		bColor			.setText(bundle.getString("I08_lab_SelColor"));
 
@@ -263,13 +263,14 @@ public class I08_1_Editar_empleado {
 						shell.getDisplay().sleep();
 					}
 				}
-				fechaNacimiento = i17.getFecha();
+				Date fecha = i17.getFecha();
+				
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
-				if(fechaNacimiento!=null){
-					tFNacimiento.setText(String.valueOf(fechaNacimiento.getDate()) + " de " + meses[fechaNacimiento.getMonth()]+ " de " + String.valueOf(fechaNacimiento.getYear()+1900));
-	
+				if(fecha!=null){
+					tFNacimiento.setText(String.valueOf(fecha.getDate()) + " de " + meses[fecha.getMonth()]+ " de " + String.valueOf(fecha.getYear()+1900));
+					fechaNacimiento = fecha;
 				}else{
-					tFNacimiento.setText(String.valueOf(emp.getFechaNac().getDate()) + " de " + meses[emp.getFechaNac().getMonth()]+ " de " + String.valueOf(emp.getFechaNac().getYear()));
+					//tFNacimiento.setText(String.valueOf(emp.getFechaNac().getDate()) + " de " + meses[emp.getFechaNac().getMonth()]+ " de " + String.valueOf(emp.getFechaNac().getYear()+1900));
 
 				}
 			}
@@ -285,13 +286,15 @@ public class I08_1_Editar_empleado {
 						shell.getDisplay().sleep();
 					}
 				}
-				fechaContrato = i17.getFecha(); 
+				
+				Date fecha = i17.getFecha();
+				 
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
-				if(fechaContrato!=null){
-					tFContrato.setText(String.valueOf(fechaContrato.getDate()) + " de " + meses[fechaContrato.getMonth()]+ " de " + String.valueOf(fechaContrato.getYear()+1900));
-					
+				if(fecha!=null){
+					tFContrato.setText(String.valueOf(fecha.getDate()) + " de " + meses[fecha.getMonth()]+ " de " + String.valueOf(fecha.getYear()+1900));
+					fechaContrato = fecha;
 				}else{
-					tFContrato.setText(String.valueOf(emp.getFcontrato().getDate()) + " de " + meses[emp.getFcontrato().getMonth()]+ " de " + String.valueOf(emp.getFcontrato().getYear()));
+					//tFContrato.setText(String.valueOf(emp.getFcontrato().getDate()) + " de " + meses[emp.getFcontrato().getMonth()]+ " de " + String.valueOf(emp.getFcontrato().getYear()+1900));
 				
 				}
 				}
@@ -307,15 +310,16 @@ public class I08_1_Editar_empleado {
 						shell.getDisplay().sleep();
 					}
 				}
-				fechaAlta = i17.getFecha(); 
+				Date fecha = i17.getFecha();
+				
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
-				if(fechaAlta!=null){
-					tFAlta.setText(String.valueOf(fechaAlta.getDate()) + " de " + meses[fechaAlta.getMonth()]+ " de " + String.valueOf(fechaAlta.getYear()+1900));
+				if(fecha!=null){
+					tFAlta.setText(String.valueOf(fecha.getDate()) + " de " + meses[fecha.getMonth()]+ " de " + String.valueOf(fecha.getYear()+1900));
 					//String tFAlta =String.valueOf(fechaAlta.getDate()) + "-" + fechaAlta.getMonth()+ "-" + String.valueOf(fechaAlta.getYear());
-		
+					fechaAlta =  fecha;
 					int aux=1;
 				}else{
-					tFAlta.setText(String.valueOf(emp.getFAlta().getDate()) + " de " + meses[emp.getFAlta().getMonth()]+ " de " + String.valueOf(emp.getFAlta().getYear()));
+					//tFAlta.setText(String.valueOf(emp.getFAlta().getDate()) + " de " + meses[emp.getFAlta().getMonth()]+ " de " + String.valueOf(emp.getFAlta().getYear()+1900));
 					
 					 
 				}
