@@ -1116,6 +1116,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			lCuadranteTitulo.setVisible(true);
 			lGridCuadrante.setVisible(true);
 			cGridCuadrante.setVisible(true);
+			this.calcularTamano();
 		}
 		else {
 			canvas.removeMouseMoveListener(mouseMoveListenerCuadrDiario);
