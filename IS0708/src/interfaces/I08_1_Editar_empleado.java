@@ -443,7 +443,7 @@ public class I08_1_Editar_empleado {
 
 					
 					
-					vista.getControlador().cambiarEmpleado(id, nom, ap1, ap2, fechaNacimiento, sex,  mail, pass, 
+					vista.modificarEmpleado(id, nom, ap1, ap2, fechaNacimiento, sex,  mail, pass, 
 								Exp, fechaContrato,fechaAlta, Fel, idiom, ran, turn, indice);
 					
 					// Si se han modificado los campos de datos laborables mostrar mensaje de necesidad de
