@@ -353,6 +353,10 @@ public class Empleado implements Drawable {
 		return fContrato;
 	}
 	
+	public void setFcontrato(Date f){
+		fContrato = f;
+	}
+	
 	/**
 	 * Intenta asignar un número de vendedor a un empleado, que debe ser un número de 8
 	 * cifras mayor que 0. Si no es correcto, no se produce ningún cambio.
@@ -601,6 +605,14 @@ public class Empleado implements Drawable {
 	}
 	
 	/**
+	 * Cambia el rango
+	 * @param r
+	 */
+	public void setRango(int r) {
+		rango=r;
+	}
+	
+	/**
 	 * Asigna un identificador de contrato al empleado.
 	 * @param id el identificador del contrato
 	 */
@@ -663,6 +675,14 @@ public class Empleado implements Drawable {
 	}
 	public Date getFAlta(){
 		return fAlta;
+	}
+	
+	/**
+	 * Cambia la Fecha de Alta
+	 * @param f
+	 */
+	public void setFAlta(Date f){
+		fAlta = f;
 	}
 	/**
 	 * Asigna un valor de felicidad al empleado.
