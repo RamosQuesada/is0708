@@ -98,6 +98,14 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private int meses31[]=new int[7];
 	private int meses30[]=new int[4];
 	
+	private Color colorJefe = new Color(display,120,170,120);
+	private Color color7M = new Color(display,110,110,200);
+	private Color color7T = new Color(display,110,110,160);
+	private Color color4M = new Color(display,110,200,110);
+	private Color color4T = new Color(display,110,160,110);
+	private Color colorSM = new Color(display,180,80,80);
+	private Color colorST = new Color(display,140,80,80);
+	
 	private Point cursor = new Point(0,0);
 	
 	private int movimiento;
@@ -903,7 +911,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				anchoDia = anchoMes/iCuad.length;
 				altoFila = 20;
 				// Dibujar números de los días
-				if (anchoDia>14)
+				if (anchoDia>18)
 					for (int j=0; j < iCuad.length; j++) {
 						if (((j+1)-dom)%7==0) gcFondo.setForeground(new Color(display,255,0,0));
 						else if (((j+1)-dom)%7==1) gcFondo.setForeground(new Color(display,0,0,0));
@@ -917,7 +925,6 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					for (int j=0; j < iCuad.length; j++) {
 						//Despues calculamos el turno a visualizar
 						Boolean encontrado=false;
-						dibujaCasilla(gcFondo, i, j, -1, new Color(display,120,170,120));
 						int k=0;
 						while (!encontrado && k<iCuad[j].size()) {
 							if (iCuad[j].get(k).getEmpl().getEmplId()==e.getEmplId()) {	
@@ -926,6 +933,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 							}
 							k++;
 						}
+						if (!encontrado)
+							dibujaCasillaVacia(gcFondo, i, j);
 						//System.out.println("Dia: "+j+" Long. dia: "+iCuad[j].size());
 					}
 				}
@@ -933,6 +942,17 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		}
 		if (fondo!=null)
 		gc.drawImage(fondo,0,0);
+	}
+	
+	/**
+	 * Dibuja una casilla vacia en la posición marcada por i y j dentro de los márgenes.
+	 * @param gc		Contenedor gráfico en el que se dibujará la casilla.
+	 * @param i			Contador de filas o empleados.
+	 * @param j			Contador de columnas o días.
+	 */
+	public void dibujaCasillaVacia(GC gc, int i, int j){
+		gc.setForeground(new Color(display,0,0,0));
+		gc.drawRectangle(margenIzq + margenNombres + j*anchoDia, margenSupVistaMes + 20 + i*altoFila, anchoDia, altoFila);
 	}
 	
 	/**
@@ -946,20 +966,22 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	 * @param color		Color para el relleno de la casilla.
 	 */
 	public void dibujaCasilla(GC gc, int i, int j, int empl, Color color){
+		//Obtenemos el identificador de turno del empleado que le toca ese día
+		int idTurno = iCuad[j].get(empl).getTurno().getIdTurno();
+		//Obtenemos el color de relleno a partir de él
+		Color colorTurno=obtenColor(idTurno);
 		//Primero se pinta el rectangulo
-		gc.setForeground(new Color(display,0,0,0));
+		gc.setForeground(new Color(display,20,70,20));
 		gc.drawRectangle(margenIzq + margenNombres + j*anchoDia, margenSupVistaMes + 20 + i*altoFila, anchoDia, altoFila);
-		gc.setForeground(new Color(display,85,135,85));
-		if (empl!=-1) {
-			gc.setBackground(color);
-			gc.fillRectangle(margenIzq + margenNombres + j*anchoDia+1, margenSupVistaMes + 20 + i*altoFila+1, anchoDia-1, altoFila-1);
-			gc.setForeground(new Color(display,0,0,0));
-			if (anchoDia>14)
-				//gc.drawText(String.valueOf(iCuad[j].get(k).getTurno().getAbreviatura().charAt(0)),margenIzq + margenNombres + j*anchoDia + (7/2), margenSup + 20 + i*altoFila + 2,altoFila);
-				gc.drawText(String.valueOf(iCuad[j].get(empl).getTurno().getIdTurno()),margenIzq + margenNombres + j*anchoDia + (7/2),margenSupVistaMes + 20 + i*altoFila + 2,altoFila);
+		
+		gc.setBackground(color);
+		gc.fillRectangle(margenIzq + margenNombres + j*anchoDia+1, margenSupVistaMes + 20 + i*altoFila+1, anchoDia-1, altoFila-1);
+		//gc.setForeground(new Color(display,0,0,0));
+		if (anchoDia>18)
+			//gc.drawText(String.valueOf(iCuad[j].get(k).getTurno().getAbreviatura().charAt(0)),margenIzq + margenNombres + j*anchoDia + (7/2), margenSup + 20 + i*altoFila + 2,altoFila);
+			gc.drawText(String.valueOf(idTurno),margenIzq + margenNombres + j*anchoDia + (7/2),margenSupVistaMes + 20 + i*altoFila + 2,altoFila);
 				
-			gc.setBackground(new Color(display,255,255,255));
-		}
+		gc.setBackground(new Color(display,255,255,255));
 		gc.setForeground(new Color(display,0,0,0));
 	}
 	
@@ -1178,5 +1200,25 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			else i++;
 		}
 		return encontrado;
+	}
+	
+	/**
+	 * Devuelve el color perteneciente al turno seleccionado.
+	 * @param idTurno	Turno a comprobar.
+	 * @return 			Color del turno.
+	 */
+	public Color obtenColor(int idTurno){
+		Color result;
+		switch (idTurno) {
+			case 120: result=colorJefe; break;
+			case 121: result=color7M; break;
+			case 122: result=color7T; break;
+			case 123: result=color4M; break;
+			case 124: result=color4T; break;
+			case 125: result=colorSM; break;
+			case 126: result=colorST; break;
+			default: result=colorJefe; break;
+		}
+		return result;
 	}
 }
