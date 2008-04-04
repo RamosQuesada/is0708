@@ -2,19 +2,15 @@ package aplicacion.datos;
 
 import java.util.ArrayList;
 
+import algoritmo.Calendario;
 
 /**
  * Clase que representa un departamento
  * @author David Rodilla Rodríguez
  */
 public class Departamento {
-	/** @deprecated */
-	// TODO quitar esta clase
-	private class Calendario {
-		
-	};
-	
-	/** Nombre del departamento */
+
+/** Nombre del departamento */
 	private String _nombreDepartamento;
 	/** Numero asociado del departamento */
 	private ArrayList<Integer> _numerosDepartamento;
@@ -103,6 +99,22 @@ public class Departamento {
 	 */
 	public void addNumeroDepartamento(int num){
 		_numerosDepartamento.add(num);
+	}
+
+	/**
+	 * Gtter del calendario
+	 * @return Calendario
+	 */
+	public Calendario getCalendario() {
+		return _calendario;
+	}
+
+	/**
+	 * Setter del calendario
+	 * @param calendario the Calendario to set
+	 */
+	public void setCalendario(Calendario calendario) {
+		this._calendario = calendario;
 	}
 
 }

@@ -166,15 +166,15 @@ public class InsertaDatosFijos {
 		// Empleados contrato "7 horas": 3 de mañana y 3 de tarde
 		c.insertUsuario(10000200, "7hM1", "ape1", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
 				inicio, inicio, 0, 0, 0, 1, c7hM.getNumeroContrato(), t7hM.getIdTurno());
-		c.insertUsuario(10000201, "7hM2", "ape1", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
+		c.insertUsuario(10000201, "7hM2", "ape2", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
 				inicio, inicio, 0, 0, 0, 1, c7hM.getNumeroContrato(), t7hM.getIdTurno());
-		c.insertUsuario(10000202, "7hM3", "ape1", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
+		c.insertUsuario(10000202, "7hM3", "ape3", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
 				inicio, inicio, 0, 0, 0, 1, c7hM.getNumeroContrato(), t7hM.getIdTurno());
-		c.insertUsuario(10000300, "7hT1", "ape1", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
+		c.insertUsuario(10000300, "7hT1", "ape4", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
 				inicio, inicio, 0, 0, 0, 1, c7hT.getNumeroContrato(), t7hT.getIdTurno());
-		c.insertUsuario(10000301, "7hT2", "ape1", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
+		c.insertUsuario(10000301, "7hT2", "ape5", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
 				inicio, inicio, 0, 0, 0, 1, c7hT.getNumeroContrato(), t7hT.getIdTurno());
-		c.insertUsuario(10000302, "7hT3", "ape1", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
+		c.insertUsuario(10000302, "7hT3", "ape6", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
 				inicio, inicio, 0, 0, 0, 1, c7hT.getNumeroContrato(), t7hT.getIdTurno());
 		c.insertDepartamentoUsuario(10000200, depart);
 		c.insertDepartamentoUsuario(10000201, depart);
@@ -184,13 +184,13 @@ public class InsertaDatosFijos {
 		c.insertDepartamentoUsuario(10000302, depart);
 		
 		// Empleados contrato "4 horas": 2 de mañana y 2 de tarde
-		c.insertUsuario(10000400, "4hM1", "ape1", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
+		c.insertUsuario(10000400, "4hM1", "ape7", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
 				inicio, inicio, 0, 0, 0, 1, c4hM.getNumeroContrato(), t4hM.getIdTurno());
-		c.insertUsuario(10000401, "4hM2", "ape1", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
+		c.insertUsuario(10000401, "4hM2", "ape8", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
 				inicio, inicio, 0, 0, 0, 1, c4hM.getNumeroContrato(), t4hM.getIdTurno());
-		c.insertUsuario(10000500, "4hT1", "ape1", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
+		c.insertUsuario(10000500, "4hT1", "ape9", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
 				inicio, inicio, 0, 0, 0, 1, c4hT.getNumeroContrato(), t4hT.getIdTurno());
-		c.insertUsuario(10000501, "4hT2", "ape1", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
+		c.insertUsuario(10000501, "4hT2", "ape10", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
 				inicio, inicio, 0, 0, 0, 1, c4hT.getNumeroContrato(), t4hT.getIdTurno());
 		c.insertDepartamentoUsuario(10000400, depart);
 		c.insertDepartamentoUsuario(10000401, depart);
@@ -198,17 +198,17 @@ public class InsertaDatosFijos {
 		c.insertDepartamentoUsuario(10000501, depart);
 		
 		// Empleados contrato "Sabaderos": 3 de mañana y 3 de tarde
-		c.insertUsuario(10000600, "SabM1", "ape1", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
+		c.insertUsuario(10000600, "SabM1", "ape11", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
 				inicio, inicio, 0, 0, 0, 1, cSabM.getNumeroContrato(), tSabM.getIdTurno());
-		c.insertUsuario(10000601, "SabM2", "ape1", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
+		c.insertUsuario(10000601, "SabM2", "ape12", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
 				inicio, inicio, 0, 0, 0, 1, cSabM.getNumeroContrato(), tSabM.getIdTurno());
-		c.insertUsuario(10000602, "SabM3", "ape1", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
+		c.insertUsuario(10000602, "SabM3", "ape13", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
 				inicio, inicio, 0, 0, 0, 1, cSabM.getNumeroContrato(), tSabM.getIdTurno());
-		c.insertUsuario(10000700, "SabT1", "ape1", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
+		c.insertUsuario(10000700, "SabT1", "ape14", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
 				inicio, inicio, 0, 0, 0, 1, cSabT.getNumeroContrato(), tSabT.getIdTurno());
-		c.insertUsuario(10000701, "SabT2", "ape1", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
+		c.insertUsuario(10000701, "SabT2", "ape15", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
 				inicio, inicio, 0, 0, 0, 1, cSabT.getNumeroContrato(), tSabT.getIdTurno());
-		c.insertUsuario(10000702, "SabT3", "ape1", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
+		c.insertUsuario(10000702, "SabT3", "ape16", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
 				inicio, inicio, 0, 0, 0, 1, cSabT.getNumeroContrato(), tSabT.getIdTurno());
 		c.insertDepartamentoUsuario(10000600, depart);
 		c.insertDepartamentoUsuario(10000601, depart);
@@ -377,15 +377,15 @@ public class InsertaDatosFijos {
 			// Empleados contrato "7 horas": 3 de mañana y 3 de tarde
 			c.insertUsuario(10000200+nd*1000, "7hM1", "ape1", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
 					inicio, inicio, 0, 0, 0, 1, c7hM.getNumeroContrato(), t7hM.getIdTurno());
-			c.insertUsuario(10000201+nd*1000, "7hM2", "ape1", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
+			c.insertUsuario(10000201+nd*1000, "7hM2", "ape2", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
 					inicio, inicio, 0, 0, 0, 1, c7hM.getNumeroContrato(), t7hM.getIdTurno());
-			c.insertUsuario(10000202+nd*1000, "7hM3", "ape1", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
+			c.insertUsuario(10000202+nd*1000, "7hM3", "ape3", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
 					inicio, inicio, 0, 0, 0, 1, c7hM.getNumeroContrato(), t7hM.getIdTurno());
-			c.insertUsuario(10000300+nd*1000, "7hT1", "ape1", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
+			c.insertUsuario(10000300+nd*1000, "7hT1", "ape4", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
 					inicio, inicio, 0, 0, 0, 1, c7hT.getNumeroContrato(), t7hT.getIdTurno());
-			c.insertUsuario(10000301+nd*1000, "7hT2", "ape1", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
+			c.insertUsuario(10000301+nd*1000, "7hT2", "ape5", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
 					inicio, inicio, 0, 0, 0, 1, c7hT.getNumeroContrato(), t7hT.getIdTurno());
-			c.insertUsuario(10000302+nd*1000, "7hT3", "ape1", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
+			c.insertUsuario(10000302+nd*1000, "7hT3", "ape6", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
 					inicio, inicio, 0, 0, 0, 1, c7hT.getNumeroContrato(), t7hT.getIdTurno());
 			c.insertDepartamentoUsuario(10000200+nd*1000, depart);
 			c.insertDepartamentoUsuario(10000201+nd*1000, depart);
@@ -395,13 +395,13 @@ public class InsertaDatosFijos {
 			c.insertDepartamentoUsuario(10000302+nd*1000, depart);
 			
 			// Empleados contrato "4 horas": 2 de mañana y 2 de tarde
-			c.insertUsuario(10000400+nd*1000, "4hM1", "ape1", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
+			c.insertUsuario(10000400+nd*1000, "4hM1", "ape7", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
 					inicio, inicio, 0, 0, 0, 1, c4hM.getNumeroContrato(), t4hM.getIdTurno());
-			c.insertUsuario(10000401+nd*1000, "4hM2", "ape1", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
+			c.insertUsuario(10000401+nd*1000, "4hM2", "ape8", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
 					inicio, inicio, 0, 0, 0, 1, c4hM.getNumeroContrato(), t4hM.getIdTurno());
-			c.insertUsuario(10000500+nd*1000, "4hT1", "ape1", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
+			c.insertUsuario(10000500+nd*1000, "4hT1", "ape9", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
 					inicio, inicio, 0, 0, 0, 1, c4hT.getNumeroContrato(), t4hT.getIdTurno());
-			c.insertUsuario(10000501+nd*1000, "4hT2", "ape1", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
+			c.insertUsuario(10000501+nd*1000, "4hT2", "ape10", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
 					inicio, inicio, 0, 0, 0, 1, c4hT.getNumeroContrato(), t4hT.getIdTurno());
 			c.insertDepartamentoUsuario(10000400+nd*1000, depart);
 			c.insertDepartamentoUsuario(10000401+nd*1000, depart);
@@ -409,17 +409,17 @@ public class InsertaDatosFijos {
 			c.insertDepartamentoUsuario(10000501+nd*1000, depart);
 			
 			// Empleados contrato "Sabaderos": 3 de mañana y 3 de tarde
-			c.insertUsuario(10000600+nd*1000, "SabM1", "ape1", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
+			c.insertUsuario(10000600+nd*1000, "SabM1", "ape11", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
 					inicio, inicio, 0, 0, 0, 1, cSabM.getNumeroContrato(), tSabM.getIdTurno());
-			c.insertUsuario(10000601+nd*1000, "SabM2", "ape1", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
+			c.insertUsuario(10000601+nd*1000, "SabM2", "ape12", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
 					inicio, inicio, 0, 0, 0, 1, cSabM.getNumeroContrato(), tSabM.getIdTurno());
-			c.insertUsuario(10000602+nd*1000, "SabM3", "ape1", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
+			c.insertUsuario(10000602+nd*1000, "SabM3", "ape13", "ape2", nacimiento, 0, "email@email.es", "1234", 1,
 					inicio, inicio, 0, 0, 0, 1, cSabM.getNumeroContrato(), tSabM.getIdTurno());
-			c.insertUsuario(10000700+nd*1000, "SabT1", "ape1", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
+			c.insertUsuario(10000700+nd*1000, "SabT1", "ape14", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
 					inicio, inicio, 0, 0, 0, 1, cSabT.getNumeroContrato(), tSabT.getIdTurno());
-			c.insertUsuario(10000701+nd*1000, "SabT2", "ape1", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
+			c.insertUsuario(10000701+nd*1000, "SabT2", "ape15", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
 					inicio, inicio, 0, 0, 0, 1, cSabT.getNumeroContrato(), tSabT.getIdTurno());
-			c.insertUsuario(10000702+nd*1000, "SabT3", "ape1", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
+			c.insertUsuario(10000702+nd*1000, "SabT3", "ape16", "ape2", nacimiento, 1, "email@email.es", "1234", 1,
 					inicio, inicio, 0, 0, 0, 1, cSabT.getNumeroContrato(), tSabT.getIdTurno());
 			c.insertDepartamentoUsuario(10000600+nd*1000, depart);
 			c.insertDepartamentoUsuario(10000601+nd*1000, depart);
