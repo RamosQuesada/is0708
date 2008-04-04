@@ -79,6 +79,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	
 	private int diaActVistaMes=0;
 	private int empActVistaMes=0;
+	private int indiceEmpAct=0;
 	private boolean diaValido=false;
 	private boolean turnoPulsado=false;
 	private int turnPulsX=0;
@@ -507,27 +508,29 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		
 		mouseListenerCuadrMensual = new MouseListener() {
 			public void mouseDown(MouseEvent e){
-				if (e.button == 1 &&(diaValido) && diaActVistaMes<iCuad.length && empActVistaMes<iCuad[diaActVistaMes].size()) {
-					empleadoSeleccionado = iCuad[diaActVistaMes].get(empActVistaMes).getEmpl();
-					turnoSeleccionado = iCuad[diaActVistaMes].get(empActVistaMes).getTurno();
-					turnPulsX=diaActVistaMes;
-					turnPulsY=empActVistaMes;
-					turnoPulsado=true;
+				if (e.button == 1 &&(diaValido)) {//&& diaActVistaMes<iCuad.length && empActVistaMes<iCuad[diaActVistaMes].size()) {
+					if (turnoSeleccionado==null) {	
+						turnPulsX=diaActVistaMes;
+						turnPulsY=empActVistaMes;
+						//turnoPulsado=true;
+					}
+					empleadoSeleccionado = iCuad[diaActVistaMes].get(indiceEmpAct).getEmpl();
+					turnoSeleccionado = iCuad[diaActVistaMes].get(indiceEmpAct).getTurno();
 				}
 			};
 			
 			public void mouseUp(MouseEvent e){
-				if (e.button == 1 &&(diaValido) && diaActVistaMes<iCuad.length && empActVistaMes<iCuad[diaActVistaMes].size()) {
-					Turno turnoSeleccionado2=iCuad[diaActVistaMes].get(empActVistaMes).getTurno();
+				if (e.button == 1 &&(diaValido)) { //&& diaActVistaMes<iCuad.length && empActVistaMes<iCuad[diaActVistaMes].size()) {
+					Turno turnoSeleccionado2=iCuad[diaActVistaMes].get(indiceEmpAct).getTurno();
 					//Si los dos empleados tienen el mismo contrato
-					if (turnoSeleccionado!=null && empleadoSeleccionado.getContratoId() == iCuad[diaActVistaMes].get(empActVistaMes).getEmpl().getContratoId()) {
+					if (turnoSeleccionado!=null && empleadoSeleccionado.getContratoId() == iCuad[diaActVistaMes].get(indiceEmpAct).getEmpl().getContratoId()) {
 						// Intercambiar turnos
 						Turno.intercambiar(turnoSeleccionado, turnoSeleccionado2);
 						calcularTamano();						
 					}
 				}
 				turnoSeleccionado = null;
-				turnoPulsado=false;
+				//turnoPulsado=false;
 				canvas.redraw();
 			};
 			
@@ -767,12 +770,14 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		if (fondo==null)
 			actualizarFondo(gc);
 		else gc.drawImage(fondo, 0, 0);
-		if (diaValido && diaActVistaMes<iCuad.length && empActVistaMes<iCuad[diaActVistaMes].size()){
+		if (diaValido) { //&& diaActVistaMes<iCuad.length && empActVistaMes<iCuad[diaActVistaMes].size()){
+			//Alto de la caja
 			int alto=39;
 			//Sacamos la informacion del turno
-			int idTurno=iCuad[diaActVistaMes].get(empActVistaMes).getTurno().getIdTurno();
+			
+			int idTurno=iCuad[diaActVistaMes].get(indiceEmpAct).getTurno().getIdTurno();
 			String idTurnoS=("Id. Turno: "+String.valueOf(idTurno));
-			String descTurno=iCuad[diaActVistaMes].get(empActVistaMes).getTurno().getDescripcion();
+			String descTurno=iCuad[diaActVistaMes].get(indiceEmpAct).getTurno().getDescripcion();
 			int ancho=Math.max(gc.textExtent(descTurno).x+15,gc.textExtent(idTurnoS).x+15);
 			//Información del color
 			Color color = new Color(display,120,170,120);
@@ -801,8 +806,10 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			//Util.darBrillo(display, gc, r, g, b,30);
 			dibujaBotonPuls(gc,margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
 					inicioY+((empActVistaMes)*altoFila),anchoDia,altoFila);
+			//System.out.println("Act. Dia: "+diaActVistaMes+" Long. dia: "+iCuad[diaActVistaMes].size()+" Empleado: "+iCuad[diaActVistaMes].get(empActVistaMes).getEmpl().getNombre());
 		}
 		if (turnoSeleccionado!=null) {
+			int inicioY=margenSupVistaMes+altoFila;
 			gc.setBackground(new Color(display,120,170,120));
 			//gc.drawRectangle(cursor.x-anchoDia/2, cursor.y-altoFila/2, anchoDia, altoFila);
 			gc.fillRectangle(cursor.x-anchoDia/2, cursor.y-altoFila/2, anchoDia, altoFila);
@@ -810,6 +817,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				gc.drawText(String.valueOf(turnoSeleccionado.getIdTurno()),cursor.x-anchoDia/2 + (7/2),cursor.y - altoFila/2 + 2,altoFila);
 			dibujaBoton(gc,cursor.x-anchoDia/2,cursor.y-altoFila/2,anchoDia,altoFila);
 			gc.setBackground(new Color(display,255,255,255));
+			
+			dibujaBotonPuls(gc,margenIzq+margenNombres+((turnPulsX)*anchoDia),
+					inicioY+((turnPulsY)*altoFila),anchoDia,altoFila);
 		}
 	}
 	
@@ -891,6 +901,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 							}
 							k++;
 						}
+						//System.out.println("Dia: "+j+" Long. dia: "+iCuad[j].size());
 					}
 				}
 			}
@@ -921,6 +932,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			if (anchoDia>14)
 				//gc.drawText(String.valueOf(iCuad[j].get(k).getTurno().getAbreviatura().charAt(0)),margenIzq + margenNombres + j*anchoDia + (7/2), margenSup + 20 + i*altoFila + 2,altoFila);
 				gc.drawText(String.valueOf(iCuad[j].get(empl).getTurno().getIdTurno()),margenIzq + margenNombres + j*anchoDia + (7/2),margenSupVistaMes + 20 + i*altoFila + 2,altoFila);
+				
 			gc.setBackground(new Color(display,255,255,255));
 		}
 		gc.setForeground(new Color(display,0,0,0));
@@ -1103,8 +1115,10 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		Boolean encontrado=false;
 		int i=0;
 		while (!encontrado && i<iCuad[dia].size()){
-			if (iCuad[dia].get(i).getEmpl().getEmplId()==idEmpl)
+			if (iCuad[dia].get(i).getEmpl().getEmplId()==idEmpl) {
 				encontrado=true;
+				indiceEmpAct=i;
+			}
 			i++;
 		}
 		return encontrado;
