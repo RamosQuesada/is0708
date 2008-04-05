@@ -98,13 +98,13 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private int meses31[]=new int[7];
 	private int meses30[]=new int[4];
 	
-	private Color colorJefe = new Color(display,120,170,120);
+	private Color colorJefe = new Color(display,110,240,240);
 	private Color color7M = new Color(display,110,110,200);
 	private Color color7T = new Color(display,110,110,160);
 	private Color color4M = new Color(display,110,200,110);
 	private Color color4T = new Color(display,110,160,110);
-	private Color colorSM = new Color(display,180,80,80);
-	private Color colorST = new Color(display,140,80,80);
+	private Color colorSM = new Color(display,200,110,110);
+	private Color colorST = new Color(display,160,110,110);
 	
 	private Point cursor = new Point(0,0);
 	
@@ -799,7 +799,12 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		if (fondo==null)
 			actualizarFondo(gc);
 		else gc.drawImage(fondo, 0, 0);
+		
 		int inicioY=margenSupVistaMes+altoFila;
+		//Sacamos la informacion del turno
+		int idTurno=iCuad[diaActVistaMes].get(indiceEmpAct).getTurno().getIdTurno();
+		//Obtenemos el color de relleno a partir de él
+		Color colorTurno=obtenColor(idTurno);
 		
 		if (turnoSeleccionado!=null) {
 			dibujaBotonPuls(gc,margenIzq+margenNombres+((turnPulsX)*anchoDia),
@@ -811,15 +816,15 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			int alto=39;
 			//Sacamos la informacion del turno
 			
-			int idTurno=iCuad[diaActVistaMes].get(indiceEmpAct).getTurno().getIdTurno();
+			//Obtenemos las cadenas a mostrar
 			String idTurnoS=("Id. Turno: "+String.valueOf(idTurno));
 			String descTurno=iCuad[diaActVistaMes].get(indiceEmpAct).getTurno().getDescripcion();
 			int ancho=Math.max(gc.textExtent(descTurno).x+15,gc.textExtent(idTurnoS).x+15);
 			//Información del color
-			Color color = new Color(display,120,170,120);
-			int r = color.getRed();
-			int g = color.getGreen();
-			int b = color.getBlue();
+			//Color color = new Color(display,120,170,120);
+			int r = colorTurno.getRed();
+			int g = colorTurno.getGreen();
+			int b = colorTurno.getBlue();
 			//Pintamos segun turno
 			int inicioX=margenIzq+margenNombres+10-(ancho/2);
 			
@@ -846,7 +851,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		}
 		
 		if (turnoSeleccionado!=null) {
-			gc.setBackground(new Color(display,120,170,120));
+			
+			gc.setBackground(colorTurno);
+			gc.setForeground(new Color(display,colorTurno.getRed()-100,colorTurno.getGreen()-100,colorTurno.getBlue()-100));
 			//gc.drawRectangle(cursor.x-anchoDia/2, cursor.y-altoFila/2, anchoDia, altoFila);
 			gc.fillRectangle(cursor.x-anchoDia/2, cursor.y-altoFila/2, anchoDia, altoFila);
 			if (anchoDia>14)
@@ -971,10 +978,11 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		//Obtenemos el color de relleno a partir de él
 		Color colorTurno=obtenColor(idTurno);
 		//Primero se pinta el rectangulo
-		gc.setForeground(new Color(display,20,70,20));
-		gc.drawRectangle(margenIzq + margenNombres + j*anchoDia, margenSupVistaMes + 20 + i*altoFila, anchoDia, altoFila);
 		
-		gc.setBackground(color);
+		gc.setForeground(new Color(display,colorTurno.getRed()-100,colorTurno.getGreen()-100,colorTurno.getBlue()-100));
+		gc.drawRectangle(margenIzq + margenNombres + j*anchoDia, margenSupVistaMes + 20 + i*altoFila, anchoDia, altoFila);
+
+		gc.setBackground(colorTurno);
 		gc.fillRectangle(margenIzq + margenNombres + j*anchoDia+1, margenSupVistaMes + 20 + i*altoFila+1, anchoDia-1, altoFila-1);
 		//gc.setForeground(new Color(display,0,0,0));
 		if (anchoDia>18)
