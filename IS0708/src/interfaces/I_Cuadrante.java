@@ -564,16 +564,18 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			};
 			
 			public void mouseDoubleClick(MouseEvent e){
-				//Volver a la vista diaria con el dia seleccionado
-				diario=true;
-				setMovCuadSemanal(true);
-				cursor(0);
-				bPorMes.setSelection(false);
-				bPorDia.setSelection(true);
-				setDia(diaActVistaMes+1);
-				//System.out.println("Dia "+diaActVistaMes);
-				diaValido=false;
-				turnoSeleccionado=null;
+				if (e.button == 1 &&(diaValido)) {
+					//Volver a la vista diaria con el dia seleccionado
+					diario=true;
+					setMovCuadSemanal(true);
+					cursor(0);
+					bPorMes.setSelection(false);
+					bPorDia.setSelection(true);
+					setDia(diaActVistaMes+1);
+					//System.out.println("Dia "+diaActVistaMes);
+					diaValido=false;
+					turnoSeleccionado=null;
+				}
 			};
 		};
 		mouseMoveListenerCuadrMensual = new MouseMoveListener() {
@@ -921,7 +923,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				anchoDia = anchoMes/iCuad.length;
 				altoFila = 20;
 				// Dibujar números de los días
-				if (anchoDia>18)
+				if (anchoDia>14)
 					for (int j=0; j < iCuad.length; j++) {
 						if (((j+1)-dom)%7==0) gcFondo.setForeground(new Color(display,255,0,0));
 						else if (((j+1)-dom)%7==1) gcFondo.setForeground(new Color(display,0,0,0));
@@ -988,7 +990,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		gc.setBackground(colorTurno);
 		gc.fillRectangle(margenIzq + margenNombres + j*anchoDia+1, margenSupVistaMes + 20 + i*altoFila+1, anchoDia-1, altoFila-1);
 		//gc.setForeground(new Color(display,0,0,0));
-		if (anchoDia>18)
+		if (anchoDia>19)
 			//gc.drawText(String.valueOf(iCuad[j].get(k).getTurno().getAbreviatura().charAt(0)),margenIzq + margenNombres + j*anchoDia + (7/2), margenSup + 20 + i*altoFila + 2,altoFila);
 			gc.drawText(String.valueOf(idTurno),margenIzq + margenNombres + j*anchoDia + (7/2),margenSupVistaMes + 20 + i*altoFila + 2,altoFila);
 				
