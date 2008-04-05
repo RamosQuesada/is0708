@@ -802,9 +802,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		
 		int inicioY=margenSupVistaMes+altoFila;
 		//Sacamos la informacion del turno
-		int idTurno=iCuad[diaActVistaMes].get(indiceEmpAct).getTurno().getIdTurno();
-		//Obtenemos el color de relleno a partir de él
-		Color colorTurno=obtenColor(idTurno);
+		
 		
 		if (turnoSeleccionado!=null) {
 			dibujaBotonPuls(gc,margenIzq+margenNombres+((turnPulsX)*anchoDia),
@@ -815,7 +813,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			//Alto de la caja
 			int alto=39;
 			//Sacamos la informacion del turno
-			
+			int idTurno=iCuad[diaActVistaMes].get(indiceEmpAct).getTurno().getIdTurno();
+			//Obtenemos el color de relleno a partir de él
+			Color colorTurno=obtenColor(idTurno);
 			//Obtenemos las cadenas a mostrar
 			String idTurnoS=("Id. Turno: "+String.valueOf(idTurno));
 			String descTurno=iCuad[diaActVistaMes].get(indiceEmpAct).getTurno().getDescripcion();
@@ -851,13 +851,16 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		}
 		
 		if (turnoSeleccionado!=null) {
-			
+			//Sacamos la informacion del turno
+			int idTurno=turnoSeleccionado.getIdTurno();
+			//Obtenemos el color de relleno a partir de él
+			Color colorTurno=obtenColor(idTurno);
 			gc.setBackground(colorTurno);
 			gc.setForeground(new Color(display,colorTurno.getRed()-100,colorTurno.getGreen()-100,colorTurno.getBlue()-100));
 			//gc.drawRectangle(cursor.x-anchoDia/2, cursor.y-altoFila/2, anchoDia, altoFila);
 			gc.fillRectangle(cursor.x-anchoDia/2, cursor.y-altoFila/2, anchoDia, altoFila);
 			if (anchoDia>14)
-				gc.drawText(String.valueOf(turnoSeleccionado.getIdTurno()),cursor.x-anchoDia/2 + (7/2),cursor.y - altoFila/2 + 2,altoFila);
+				gc.drawText(String.valueOf(idTurno),cursor.x-anchoDia/2 + (7/2),cursor.y - altoFila/2 + 2,altoFila);
 			dibujaBoton(gc,cursor.x-anchoDia/2,cursor.y-altoFila/2,anchoDia,altoFila);
 			gc.setBackground(new Color(display,255,255,255));
 		}
