@@ -326,26 +326,25 @@ public class Util {
 	 */
 	public static String recortarTexto(String texto, int x) {
 		String s = texto;
+		String salida;
+		String aux;
 		if (texto.length()>x) {
 			s = texto.substring(0, x-3) + "...";
 		}		
 		
-		//String espacio = " ";
-		char espacio2[] = s.toCharArray();
+		salida = new String();
 		
 		for (int i=0; i<s.length(); i++)
 		{
+			aux = s.substring(i, i+1);
 			if (s.charAt(i) == '\n') 
 			{
-				//s.replace('\n', espacio2);
-				espacio2[i] = ' ';
-				
-				//s.replaceAll("\n", " ");
+				aux = " ";
 			}
+			salida = salida.concat(aux);
 		}
 		
-		s = espacio2.toString();
-		return s;
+		return salida;
 	}
 	/**
 	 * Devuelve el nombre del mes i en el idioma del bundle.
