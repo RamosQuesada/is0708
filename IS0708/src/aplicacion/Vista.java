@@ -1120,9 +1120,9 @@ public class Vista {
  * @param text nombre del departamento
  * @param numjefe numero del nuevo jefe
  */
-	public void cambiarJefeDepartamento(String text, String numjefe) {
+	public boolean cambiarJefeDepartamento(String text, String numjefe) {
 		// TODO Auto-generated method stub by Carlos Sanchez
-		this.controlador.modificaDpto(text, Integer.valueOf(numjefe));
+		return this.controlador.modificaDpto(text, Integer.valueOf(numjefe));
 		
 		}
 	/**

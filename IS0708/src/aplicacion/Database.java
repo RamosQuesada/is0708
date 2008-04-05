@@ -525,22 +525,54 @@ public class Database extends Thread {
 		return correcto;
 	}
 
-	
-	public boolean borraDepartamentoUsuario(String nombre) {
+	/**
+	 * Metodo que elimina de la base de datos la fila de la tabla DepartamentoUsuario
+	 * cuyo nombre de departamento coincide con el que se pasa por parametro
+	 * @param nombre Nombre del departamento
+	 * @return	Informa sobre si se ha podido realizar el borrado o no
+	 */
+	public boolean borraNombreDepartamentoUsuario(String nombre) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
 			st.executeUpdate("DELETE FROM DepartamentoUsuario WHERE NombreDepartamento='" + nombre
 					+ "'");
 			System.out
-					.println("aplicacion.Database.java\t::Departamento Borrado");
+					.println("aplicacion.Database.java\t::DepartamentoUsuario Borrado");
 			correcto = true;
 		} catch (SQLException e) {
-			System.err.println("Error al Borrar el departamento");
+			System.err.println("Error al Borrar en DepartamentoUsuario");
 		}
 		return correcto;
 	}
 	
+	/**
+	 * Metodo que elimina de la base de datos la fila de la tabla DepartamentoUsuario
+	 * cuyo numero de vendedor coincide con el que se pasa por parametro
+	 * @param nv Numero de vendedor
+	 * @return	Informa sobre si se ha podido realizar el borrado o no
+	 */
+	public boolean borraUsuarioDepartamentoUsuario(int nv) {
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("DELETE FROM DepartamentoUsuario WHERE NumVendedor='" + nv
+					+ "'");
+			System.out
+					.println("aplicacion.Database.java\t::DepartamentoUsuario Borrado");
+			correcto = true;
+		} catch (SQLException e) {
+			System.err.println("Error al Borrar en DepartamentoUsuario");
+		}
+		return correcto;
+	}
+	
+	/**
+	 * Metodo que elimina de la base de datos la fila de la tabla NumerosDEPARTAMENTOs
+	 * cuyo nombre de departamento coincide con el que se pasa por parametro
+	 * @param nombre Nombre del departamento
+	 * @return	Informa sobre si se ha podido realizar el borrado o no
+	 */
 	public boolean borraNumerosDepartamentos(String nombre) {
 		boolean correcto = false;
 		try {
@@ -816,10 +848,10 @@ public class Database extends Thread {
 			st = con.createStatement();
 			st.executeUpdate("DELETE FROM USUARIO WHERE NumVendedor=" + NumVendedor);
 			st.executeUpdate("DELETE FROM DepartamentoUsuario WHERE NumVendedor=" + NumVendedor);
-			st.executeUpdate("DELETE FROM MENSAJE WHERE NumVendedor=" + NumVendedor);
+			st.executeUpdate("DELETE FROM MENSAJE WHERE Remitente=" + NumVendedor);
 			correcto = true;
 		} catch (SQLException e) {
-			System.err.println("Error al Borrar el turno");
+			System.err.println("Error al Borrar el empleado");
 		}
 		return correcto;
 	}

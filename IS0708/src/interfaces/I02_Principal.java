@@ -624,145 +624,8 @@ public class I02_Principal {
 	 *            el tabFolder donde colocarlo
 	 * @author David Rodilla
 	 */
-	private void crearTabAdminEliminaGerente(TabFolder tabFolder) {
+	private void crearTabAdminEliminaJefe(TabFolder tabFolder) {
 		new I05_Tab_EliminaJefe(bundle,vista,tabFolder);
-//		TabItem tabItemEmpleados = new TabItem(tabFolder, SWT.NONE);
-//		tabItemEmpleados.setText("Admin:Elimina Gerente");
-//		tabItemEmpleados.setImage(ico_chico);
-//
-//		// Creamos un composite para la pestaña de mensajes
-//		final Composite cEliminaGerente = new Composite(tabFolder, SWT.NONE);
-//		tabItemEmpleados.setControl(cEliminaGerente);
-//
-//		cEliminaGerente.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-//				true, 1, 1));
-//		GridLayout lTJ = new GridLayout();
-//		lTJ.numColumns = 1;
-//		lTJ.makeColumnsEqualWidth = true;
-//		cEliminaGerente.setLayout(lTJ);
-//		// 1º elegimos el gerente que queremos eliminar
-//		final Label nombreGerente = new Label(cEliminaGerente, SWT.None);
-//		nombreGerente.setText("Escoja el gerente a eliminar:");
-//		final Combo comboGerenteElim = new Combo(cEliminaGerente, SWT.BORDER
-//				| SWT.READ_ONLY);
-//		final String[] textoListaGerentes = new String[] { "GERENTE1",
-//				"GERENTE2", "GERENTE3" };
-//		comboGerenteElim.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-//				true, 0, 0));
-//		comboGerenteElim.setItems(textoListaGerentes);
-//		comboGerenteElim.select(0);
-//
-//		final Label opcionJefes = new Label(cEliminaGerente, SWT.None);
-//		opcionJefes
-//				.setText("¿Que desea hacer con los empleados del gerente seleccionado?:");
-//
-//		final Button bDejarSinAsignar = new Button(cEliminaGerente, SWT.RADIO);
-//		bDejarSinAsignar.setText("Dejar sin asignar:");
-//		bDejarSinAsignar.setSelection(true);
-//		final Button bAsignarAUnGerente = new Button(cEliminaGerente, SWT.RADIO);
-//		bAsignarAUnGerente.setText("Asignar a otro gerente:");
-//
-//		final Combo comboGerenteSust = new Combo(cEliminaGerente, SWT.BORDER
-//				| SWT.READ_ONLY);
-//		comboGerenteSust.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-//				true, 0, 0));
-//		comboGerenteSust.setItems(textoListaGerentes);
-//		comboGerenteSust.select(0);
-//
-//		final Button bAsignarAGerentes = new Button(cEliminaGerente, SWT.RADIO);
-//		bAsignarAGerentes.setText("Seleccionar asignacion uno a uno:");
-//		// Introducimos manualmente unos mensajes por defecto
-//		final Composite cEliminaGerente2 = new Composite(cEliminaGerente,
-//				SWT.BORDER);
-//
-//		cEliminaGerente2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false,
-//				true, 1, 1));
-//		GridLayout lTJ2 = new GridLayout();
-//		lTJ2.numColumns = 4;
-//		lTJ2.makeColumnsEqualWidth = true;
-//		cEliminaGerente2.setLayout(lTJ2);
-//		cEliminaGerente2.setEnabled(false);
-//		cEliminaGerente2.setVisible(false);
-//		comboGerenteSust.setEnabled(false);
-//
-//		bDejarSinAsignar.addFocusListener(new FocusListener() {
-//
-//			public void focusGained(FocusEvent e) {
-//				// TODO Auto-generated method stub
-//				cEliminaGerente2.setEnabled(false);
-//				cEliminaGerente2.setVisible(false);
-//				comboGerenteSust.setEnabled(false);
-//			}
-//
-//			public void focusLost(FocusEvent e) {
-//				// TODO Auto-generated method stub
-//
-//			}
-//		});
-//
-//		bAsignarAUnGerente.addFocusListener(new FocusListener() {
-//
-//			public void focusGained(FocusEvent e) {
-//				// TODO Auto-generated method stub
-//				cEliminaGerente2.setEnabled(false);
-//				cEliminaGerente2.setVisible(false);
-//				comboGerenteSust.setEnabled(true);
-//			}
-//
-//			public void focusLost(FocusEvent e) {
-//				// TODO Auto-generated method stub
-//
-//			}
-//		});
-//
-//		bAsignarAGerentes.addFocusListener(new FocusListener() {
-//
-//			public void focusGained(FocusEvent e) {
-//				// TODO Auto-generated method stub
-//				cEliminaGerente2.setEnabled(true);
-//				cEliminaGerente2.setVisible(true);
-//				comboGerenteSust.setEnabled(false);
-//			}
-//
-//			public void focusLost(FocusEvent e) {
-//				// TODO Auto-generated method stub
-//
-//			}
-//		});
-//
-//		for (int i = 0; i < 3; i++) {
-//			/*
-//			 * TableItem tItem = new TableItem (tablaJefes, SWT.NONE);
-//			 * tItem.setText (0, "Nombre"); tItem.setText (1, "Apellidos");
-//			 * tItem.setText (2, "Departamento");
-//			 */
-//			final Label nombreJefe = new Label(cEliminaGerente2, SWT.None);
-//			nombreJefe.setText("nombre Jefe");
-//			final Label apellidosJefe = new Label(cEliminaGerente2, SWT.None);
-//			apellidosJefe.setText("apellidos Jefe");
-//			final Label departamentoJefe = new Label(cEliminaGerente2, SWT.None);
-//			departamentoJefe.setText("departamento Jefe");
-//			final Combo combo = new Combo(cEliminaGerente2, SWT.BORDER
-//					| SWT.READ_ONLY);
-//			final String[] texto = new String[] { "GERENTE1", "GERENTE2",
-//					"GERENTE3" };
-//			combo.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true,
-//					0, 0));
-//			combo.setItems(texto);
-//			combo.select(0);
-//		}
-//
-//		// Creamos los distintos botones
-//		final Button bEliminar = new Button(cEliminaGerente, SWT.PUSH);
-//		bEliminar.setText("Eliminar");
-//		bEliminar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
-//				1, 1));
-//		// Creamos un oyente
-//		bEliminar.addSelectionListener(new SelectionAdapter() {
-//			public void widgetSelected(SelectionEvent e) {
-//
-//			}
-//		});
 	}
 
 	/**
@@ -1248,9 +1111,8 @@ public class I02_Principal {
 			vista.getControlador().abrirConexionBD();
 			crearTabAdminInicio(tabFolder);
 			crearTabAdminNuevoJefe(tabFolder);
-			crearTabAdminEliminaGerente(tabFolder);
-			crearTabAdminDepartamentos(tabFolder);
-			vista.getControlador().cerrarConexionBD();
+			crearTabAdminEliminaJefe(tabFolder);
+			crearTabAdminDepartamentos(tabFolder);			
 			break;
 		case 2:
 			// Tabs de jefe
@@ -1348,6 +1210,7 @@ public class I02_Principal {
 				if (messageBox.open() == SWT.YES) {
 					e.doit = true;
 					vista.stop();
+					vista.getControlador().cerrarConexionBD();
 				}
 				else e.doit = false;
 			}
