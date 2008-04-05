@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import algoritmo.*;
 import aplicacion.*;
+import aplicacion.utilidades.*;
 
 public class PruebaAlgoritmo2 {
 
@@ -29,7 +30,8 @@ public class PruebaAlgoritmo2 {
 		//TurnoMatic alg = new TurnoMatic(6,2008,c,"DatosFijos");
 		//TurnoMatic alg = new TurnoMatic(12,2007,c,"pruebaAlg");
  		//alg.imprimeEstructura();
-		//alg.imprimeCuadrante(); 
-
+		//alg.imprimeCuadrante();
+		
+ 
 	}
 }
