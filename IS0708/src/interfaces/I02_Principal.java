@@ -377,7 +377,7 @@ public class I02_Principal {
 				// TODO Guardar los cambios
 			}
 		});
-		ic.setComposite(cCuadrante,bPorMes,bPorSemanas, bGuardarCambios);
+		ic.setComposite(cCuadrante,bPorMes,bPorSemanas, bGuardarCambios, calendario);
 	}
 
 	/**
