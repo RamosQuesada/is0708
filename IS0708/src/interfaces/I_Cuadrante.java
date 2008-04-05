@@ -32,6 +32,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.ScrollBar;
+import org.eclipse.swt.widgets.DateTime;
 
 import algoritmo.Trabaja;
 import aplicacion.Vista;
@@ -287,7 +288,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	public void setCompositeUnTurno(Composite cCuadrante) {
 		turno = new I_Turno(new Turno(0,"","12:00:00","19:00:00","13:00:00",60));
 		margenNombres=30;
-		setComposite(cCuadrante, null, null, null);
+		setComposite(cCuadrante, null, null, null, null);
 	}
 	
 	/**
@@ -306,7 +307,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	/**
 	 * Configura un composite para mostrar un cuadrante.
 	 */
-	public void setComposite(Composite cCuadrante, Button bPM, Button bPD, Button botonGuardar) {
+	public void setComposite(Composite cCuadrante, Button bPM, Button bPD, Button botonGuardar,final DateTime calendario) {
 		bPorMes=bPM;
 		bPorDia=bPD;
 		bGuardar = botonGuardar;
@@ -573,6 +574,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					bPorDia.setSelection(true);
 					setDia(diaActVistaMes+1);
 					//System.out.println("Dia "+diaActVistaMes);
+					calendario.setDay(diaActVistaMes+1);
 					diaValido=false;
 					turnoSeleccionado=null;
 				}
