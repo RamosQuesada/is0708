@@ -106,6 +106,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private Color color4T = new Color(display,110,160,110);
 	private Color colorSM = new Color(display,200,110,110);
 	private Color colorST = new Color(display,160,110,110);
+	private Color blanco = new Color(display,255,255,255);
+	private Color negro = new Color(display,0,0,0);
 	
 	private Point cursor = new Point(0,0);
 	
@@ -933,6 +935,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 						gcFondo.setForeground(new Color(display,0,0,0));
 					}
 				ArrayList<Empleado> empleados=vista.getEmpleados();
+				int limI=0;
 				for (int i=0; i < empleados.size(); i++) {
 					aplicacion.datos.Empleado e=empleados.get(i);
 					gcFondo.drawText(e.getNombre(), margenIzq, margenSupVistaMes + 20 + i*altoFila);
@@ -948,9 +951,54 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 							k++;
 						}
 						if (!encontrado)
-							dibujaCasillaVacia(gcFondo, i, j);
+							dibujaCasillaVacia(gcFondo, i, j, blanco,anchoDia,altoFila);
 						//System.out.println("Dia: "+j+" Long. dia: "+iCuad[j].size());
 					}
+					limI=i+1;
+				}
+				//Leyenda de los colores
+				if (anchoDia>12 && altoFila>12) {
+					int despX=margenIzq;
+					String j="Jefe";
+					gcFondo.drawText(j,despX,margenSupVistaMes + 20 + (limI+1)*altoFila);
+					despX+=(gcFondo.textExtent(j).x+4);
+					gcFondo.setBackground(colorJefe);
+					gcFondo.fillRectangle(despX, margenSupVistaMes + 20 + (limI+1)*altoFila, anchoDia-5,altoFila-5);
+					despX+=(anchoDia-5+15);
+					gcFondo.setBackground(blanco);
+					
+					String m7="7h Mañana";
+					gcFondo.drawText(m7,despX,margenSupVistaMes + 20 + (limI+1)*altoFila);
+					gcFondo.drawText("7h Tarde",despX,margenSupVistaMes + 23 + (limI+2)*altoFila);
+					despX+=(gcFondo.textExtent(m7).x+4);
+					gcFondo.setBackground(color7M);
+					gcFondo.fillRectangle(despX, margenSupVistaMes + 20 + (limI+1)*altoFila, anchoDia-5,altoFila-5);
+					gcFondo.setBackground(color7T);
+					gcFondo.fillRectangle(despX, margenSupVistaMes + 23 + (limI+2)*altoFila, anchoDia-5,altoFila-5);
+					despX+=(anchoDia-5+15);
+					gcFondo.setBackground(blanco);
+					
+					String m4="4h Mañana";
+					gcFondo.drawText(m4,despX,margenSupVistaMes + 20 + (limI+1)*altoFila);
+					gcFondo.drawText("4h Tarde",despX,margenSupVistaMes + 23 + (limI+2)*altoFila);
+					despX+=(gcFondo.textExtent(m4).x+4);
+					gcFondo.setBackground(color4M);
+					gcFondo.fillRectangle(despX, margenSupVistaMes + 20 + (limI+1)*altoFila, anchoDia-5,altoFila-5);
+					gcFondo.setBackground(color4T);
+					gcFondo.fillRectangle(despX, margenSupVistaMes + 23 + (limI+2)*altoFila, anchoDia-5,altoFila-5);
+					despX+=(anchoDia-5+15);
+					gcFondo.setBackground(blanco);
+					
+					String mS="Sábado Mañana";
+					gcFondo.drawText(mS,despX,margenSupVistaMes + 20 + (limI+1)*altoFila);
+					gcFondo.drawText("Sábado Tarde",despX,margenSupVistaMes + 23 + (limI+2)*altoFila);
+					despX+=(gcFondo.textExtent(mS).x+4);
+					gcFondo.setBackground(colorSM);
+					gcFondo.fillRectangle(despX, margenSupVistaMes + 20 + (limI+1)*altoFila, anchoDia-5,altoFila-5);
+					gcFondo.setBackground(colorST);
+					gcFondo.fillRectangle(despX, margenSupVistaMes + 23 + (limI+2)*altoFila, anchoDia-5,altoFila-5);
+					despX+=(anchoDia-5+15);
+					gcFondo.setBackground(blanco);
 				}
 			}
 		}
@@ -963,10 +1011,14 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	 * @param gc		Contenedor gráfico en el que se dibujará la casilla.
 	 * @param i			Contador de filas o empleados.
 	 * @param j			Contador de columnas o días.
+	 * @param color		Color para el relleno de la casilla.
 	 */
-	public void dibujaCasillaVacia(GC gc, int i, int j){
-		gc.setForeground(new Color(display,0,0,0));
-		gc.drawRectangle(margenIzq + margenNombres + j*anchoDia, margenSupVistaMes + 20 + i*altoFila, anchoDia, altoFila);
+	public void dibujaCasillaVacia(GC gc, int i, int j, Color color,int ancho,int alto){
+		gc.setBackground(color);
+		gc.setForeground(negro);
+		gc.drawRectangle(margenIzq + margenNombres + j*anchoDia, margenSupVistaMes + 20 + i*altoFila, ancho, alto);
+		gc.fillRectangle(margenIzq + margenNombres + j*anchoDia+1, margenSupVistaMes + 20 + i*altoFila+1,ancho-1,alto-1);
+		gc.setBackground(blanco);
 	}
 	
 	/**
