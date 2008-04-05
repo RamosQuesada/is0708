@@ -719,8 +719,7 @@ public class Controlador {
 	
 	/**
 	 * Metodo que inserta en la base de datos los valores correspondientes a un
-	 * nuevo departamento(este metodo lo usa el programa que rellena
-	 * automaticamente las tablas de la base de datos)
+	 * nuevo departamento
 	 * 
 	 * @param nombre
 	 *            Nombre representativo de las actividades llevadas a cabo
@@ -730,8 +729,8 @@ public class Controlador {
 	 * @return Informa sobre si se ha podido realizar la inserci�n o no
 	 */
 	
-	public void modificaDpto(String Nombre, int jefe) {
-		 _db.modificaDepartamento(Nombre, jefe);
+	public boolean modificaDpto(String Nombre, int jefe) {
+		 return _db.modificaDepartamento(Nombre, jefe);
 	}
 	public void cambiaNombreDpto(String NombreAntiguo, String NombreNuevo) {
 		 _db.cambiaNombreDepartamento(NombreAntiguo, NombreNuevo);
@@ -1153,7 +1152,7 @@ public class Controlador {
 	 */
 	public boolean eliminaDepartamento(String nombre) {
 		return this._db.borraDepartamento(nombre) && 
-			this._db.borraDepartamentoUsuario(nombre)
+			this._db.borraNombreDepartamentoUsuario(nombre)
 			&& this._db.borraNumerosDepartamentos(nombre);
 
 	}
@@ -1870,7 +1869,17 @@ public class Controlador {
 	
 	public void cambiaNombreDepartamentoUsuario(String NombreAntiguo, String NombreNuevo) {
 		this._db.cambiaNombreDepartamentoUsuario(NombreAntiguo, NombreNuevo);
-	}		
+	}	
+	
+	/**
+	 * Metodo que elimina de la base de datos la relacion de departamento y ususario
+	 * cuyo numero de vendedor coincide con el que se pasa por parametro
+	 * @param nv Numero de vendedor
+	 * @return	Informa sobre si se ha podido realizar el borrado o no
+	 */
+	public boolean eliminaUsuarioDeDepartamentoUsuario(int nv){
+		return _db.borraUsuarioDepartamentoUsuario(nv);
+	}
 	
 	public void cambiaNombreNumerosDEPARTAMENTOs(String NombreAntiguo, String NombreNuevo) {
 		
