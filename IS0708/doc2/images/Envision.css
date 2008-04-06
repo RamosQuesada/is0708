@@ -231,6 +231,15 @@ input.button {
 	padding: 0;	
 	color: #FFF;	
 }
+#headerDoc {
+	width: 820px;
+	position: relative;
+	height: 103px;
+	background: #CCC url(header_doc.jpg) no-repeat center top;
+	padding: 0;	
+	color: #FFF;	
+}
+
 #header h1#logo-text a {
 	position: absolute;
 	margin: 0; padding: 0;
