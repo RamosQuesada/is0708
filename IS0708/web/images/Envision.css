@@ -147,7 +147,7 @@ label {
 }
 input {
 	padding:2px;
-	border:1px solid #eee;
+	border:1px solid #555;
 	font: normal 1em Verdana, sans-serif;
 	color:#777;
 }
@@ -352,6 +352,11 @@ input.button {
 	padding-left: 20px;
 	margin: 0px;
 	margin-bottom: 10px;
+}
+
+#main #clearimg img {
+	background: #FFFFFF;
+    border: 0px;
 }
 
 .post-footer {
