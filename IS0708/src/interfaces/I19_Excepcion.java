@@ -21,7 +21,9 @@ public class I19_Excepcion {
 	public I19_Excepcion(Vista v, Exception excepcion) {		
 		Random rnd = new Random();
 		final Vista vista = v;
-		shell = new Shell (vista.getDisplay(), SWT.CLOSE | SWT.RESIZE);
+		v.getDisplay().dispose();
+		Display d = new Display();
+		shell = new Shell (d, SWT.CLOSE | SWT.RESIZE);
 		
 		//Layout del shell
 		GridLayout lShell = new GridLayout();
@@ -119,11 +121,11 @@ public class I19_Excepcion {
 		shell.pack();
 		shell.setSize(shell.getSize().x,shell.getSize().y+300);
 		// Mostrar ventana centrada
-		shell.setLocation(vista.getDisplay().getClientArea().width/2 - shell.getSize().x/2, vista.getDisplay().getClientArea().height/2 - shell.getSize().y/2);
+		shell.setLocation(d.getClientArea().width/2 - shell.getSize().x/2, d.getClientArea().height/2 - shell.getSize().y/2);
 		shell.open();
 		while (!shell.isDisposed()) {
-			if (!shell.getDisplay().readAndDispatch()) {
-				shell.getDisplay().sleep();
+			if (d.readAndDispatch()) {
+				d.sleep();
 			}
 		}
 	}

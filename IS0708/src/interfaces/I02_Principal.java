@@ -48,7 +48,9 @@ public class I02_Principal {
 	private int tmAnio, tmMes, tmDia;
 	private String tmDep;
 	private Button itsMagic, bGuardarCambios; 
-
+	private TabFolder tabFolder;
+	private Composite estado; 
+	
 	public I02_Principal(Shell shell, Display display, ResourceBundle bundle,
 			Locale locale, Vista vista) {
 		this.shell = shell;
@@ -195,6 +197,20 @@ public class I02_Principal {
 		itemImprimir.setAccelerator(SWT.MOD1
 				+ bundle.getString("I02_men_itm_imprimiracc").charAt(0));
 
+		// Item Cerrar sesión
+		MenuItem itemCerrarSesion = new MenuItem(submenu, SWT.PUSH);
+		itemCerrarSesion.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+//				vista.login();
+			}
+		});
+		// Texto del item de menú
+		itemCerrarSesion.setText(bundle.getString("I02_men_itm_CerrarSes") + "\tCtrl+"
+				+ bundle.getString("I02_men_itm_cerrarSesacc"));
+		// Acceso rápido (ctrl+c)
+		itemCerrarSesion.setAccelerator(SWT.MOD1 + bundle.getString("I02_men_itm_cerrarSesacc").charAt(0));
+		itemCerrarSesion.setEnabled(false);
+		
 		// Item Salir
 		MenuItem itemSalir = new MenuItem(submenu, SWT.PUSH);
 		itemSalir.addListener(SWT.Selection, new Listener() {
@@ -208,7 +224,8 @@ public class I02_Principal {
 		// Acceso rápido (ctrl+s)
 		itemSalir.setAccelerator(SWT.MOD1
 				+ bundle.getString("I02_men_itm_saliracc").charAt(0));
-
+		
+		
 		// Ayuda
 		MenuItem helpMenuHeader = new MenuItem(barra, SWT.CASCADE);
 		helpMenuHeader.setText(bundle.getString("I02_men_Ayuda"));
@@ -1100,9 +1117,7 @@ public class I02_Principal {
 	 * Crea un tabFolder. TODO que haga los tabs dependiendo del usuario
 	 * autentificado
 	 */
-	private void crearTabFolder(int rango) {
-		// Crear menu tabs
-		final TabFolder tabFolder = new TabFolder(shell, SWT.NONE);
+	public void crearTabFolder(int rango) {
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		switch (rango) {
@@ -1174,11 +1189,13 @@ public class I02_Principal {
 		GridLayout lShell = new GridLayout(1, false);
 		shell.setLayout(lShell);
 
+		// Crear menu tabs
+		tabFolder = new TabFolder(shell, SWT.NONE);
 		// Poblar ventana: 0 administrador, 1 empleado, 2 jefe, 3 gerente
 		crearTabFolder(rango);
-
+		
 		// Crear una barra de estado
-		Composite estado = new Composite(shell, SWT.BORDER);
+		estado = new Composite(shell, SWT.BORDER);
 		estado.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1,1));
 		estado.setLayout(new GridLayout(2, true));
 		lEstado = new Label(estado, SWT.LEFT);
@@ -1201,8 +1218,7 @@ public class I02_Principal {
 		shell.addListener(SWT.Close, new Listener() {
 			public void handleEvent(Event e) {
 				MessageBox messageBox = new MessageBox(shell,
-						SWT.APPLICATION_MODAL | SWT.YES | SWT.NO
-								| SWT.ICON_WARNING);
+						SWT.APPLICATION_MODAL | SWT.YES | SWT.NO | SWT.ICON_WARNING);
 				messageBox.setText(bundle.getString("Mensaje"));
 				// Diferentes iconos:
 				// http://www.developer.com/java/other/article.php/10936_3330861_2
@@ -1217,6 +1233,10 @@ public class I02_Principal {
 		});
 	}
 
+	public Shell getShell() {
+		return shell;
+	}
+	
 	public void dispose() {
 		icoGr.dispose();
 		icoPq.dispose();
@@ -1226,6 +1246,8 @@ public class I02_Principal {
 		ico_chico.dispose();
 		ico_chica.dispose();
 		ico_chicos.dispose();
+		tabFolder.dispose();
+		estado.dispose();
 		// tray.getItem(0).dispose();
 	}
 
