@@ -8,7 +8,7 @@ session_start();
 <head>
 
 <meta name="Description" content="Servicio Web Turnomatic." />
-<meta name="Keywords" content="documentación, turnomatic, ingenería, software, ucm" />
+<meta name="Keywords" content="documentaciï¿½n, turnomatic, ingenerï¿½a, software, ucm" />
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="Distribution" content="Global" />
 <meta name="Author" content="IS 2007-2008. UCM Madrid, Spain" />
@@ -36,7 +36,7 @@ if (!($_POST))
 
 				<table align="center">
 					<tr>
-						<td colspan="2">Por favor, identifíquese:</td>
+						<td colspan="2">Por favor, identifï¿½quese:</td>
 					</tr>
 					<form action="identificarse.php" method="post">
 						<tr>
@@ -44,7 +44,7 @@ if (!($_POST))
 							<td> <input type="text" name="codigo" maxlength="8"></td>
 						</tr>
 						<tr>
-							<td>Contraseña</td>
+							<td>Contraseï¿½a</td>
 							<td> <input type="text" name="password"></td>
 						</tr>
 						<tr>
@@ -55,9 +55,7 @@ if (!($_POST))
 				</table>
 
 <?php 
-}
-else 
-{
+} else {
 	$cod=trim($_POST['codigo']);
 	$pas=trim($_POST['password']);
 
@@ -77,8 +75,8 @@ else
 
 		if($nreg == 0)
 		{
-			echo "Los datos introducidos no se corresponden con los de ningún usuario.";
-			echo "<br>Intente volver a <a href=identificarse.php>identificarse</a>.";
+			echo "<p>Los datos introducidos no se corresponden con los de ningï¿½n usuario.</p>";
+			echo "<p>Intente volver a <a href=identificarse.php>identificarse</a>.</p>";
 		}
 		else
 		{

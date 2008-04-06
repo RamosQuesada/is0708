@@ -42,8 +42,10 @@ session_start();
 				</ul>
 			</div>
 			<div id="main">
-				<h1>Bienvenido/a <?php echo $_SESSION['nombre'] ." ".$_SESSION['apellido1']." ".$_SESSION['apellido2'];?>
-				</h1>
+				<h1>Bienvenido/a <?php echo $_SESSION['nombre'] ." ".$_SESSION['apellido1']." ".$_SESSION['apellido2'];?></h1>
+				<div id="clearimg">
+					<center><a href="mensajes.php?cod=1"><img src="images/email.png"></a></center>
+				</div>
 			</div>
 		
 		<!-- content-wrap ends here -->	
