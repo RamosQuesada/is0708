@@ -58,7 +58,7 @@ public class I02_Principal {
 		this.bundle = bundle;
 		this.locale = locale;
 		this.vista = vista;
-		crearVentana(vista.getEmpleadoActual().getRango());
+		if (vista.getEmpleadoActual()!=null)crearVentana(vista.getEmpleadoActual().getRango());
 	}
 	
 	
@@ -237,7 +237,8 @@ public class I02_Principal {
 		// display
 		helpHelpItem.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				new I12_Ayuda(display, locale, bundle);
+				String helppath = "/Ayuda/" + locale.getCountry() + "/index.html";
+				new I12_Ayuda(display, locale, bundle, helppath);
 			}
 		});
 		helpHelpItem.setAccelerator(SWT.F1);
@@ -608,7 +609,18 @@ public class I02_Principal {
 	 * @author Jose Maria Martin
 	 */
 	private void crearTabJefeContratos(TabFolder tabFolder) {
-		new I09_Tab_Contratos(tabFolder,vista,bundle);
+		new I09_Tab_Contratos(tabFolder,vista,bundle,locale);
+	}
+	
+	/**
+	 * Crea un tab con un listado de contratos para el menú de administrador
+	 * 
+	 * @param tabFolder
+	 *            el tabFolder donde colocarlo
+	 * @author Jose Maria Martin
+	 */
+	private void crearTabAdminContratos(TabFolder tabFolder) {
+		new I06_Tab_Contratos_Admin(tabFolder,vista,bundle,locale);
 	}
 
 	/**
@@ -1127,7 +1139,8 @@ public class I02_Principal {
 			crearTabAdminInicio(tabFolder);
 			crearTabAdminNuevoJefe(tabFolder);
 			crearTabAdminEliminaJefe(tabFolder);
-			crearTabAdminDepartamentos(tabFolder);			
+			crearTabAdminDepartamentos(tabFolder);	
+			crearTabAdminContratos(tabFolder);
 			break;
 		case 2:
 			// Tabs de jefe

@@ -26,7 +26,7 @@ import aplicacion.datos.Contrato;
 import aplicacion.datos.Empleado;
 import aplicacion.datos.Turno;
 
-public class I09_Tab_Contratos extends Thread {
+public class I06_Tab_Contratos_Admin extends Thread {
 	final ResourceBundle bundle;
 
 	final Vista vista;
@@ -52,66 +52,97 @@ public class I09_Tab_Contratos extends Thread {
 	/**
 	 * Implementa un hilo que coge los empleados del departamento del servidor.
 	 */
-	public void run() {
-		// boolean run = true;
-		try {
-			while (!vista.isCacheCargada()) {
-				sleep(5000);
-			}
-		} catch (Exception e) {
-		}
-		// Coge los datos de todos los contratos
-		// contratos = vista.getListaContratosDepartamento();
-		datosInterfazCargados = true;
-		// while (run) {
-
-		if (tablaContratos.isDisposed()) {
-		} // run = false;
-		else {
-			if (!tablaContratos.isDisposed()) {
-				// Actualizar tabla
-				if (!tablaContratos.isDisposed()) {
-					tablaContratos.getDisplay().asyncExec(new Runnable() {
-						public void run() {
-							mostrarContratos();
-							bNuevoContrato.setEnabled(true);
-							bModificarContrato.setEnabled(true);
-							bEliminarContrato.setEnabled(true);
-						}
-					});
-				}
-			}
-			try {
-				// Espera 10 segundos (¿cómo lo dejamos?)
-				sleep(10000);
-			} catch (Exception e) {
-			}
-		}
-	}
-
-	// }
-
-	/**
-	 * Añade a la tabla tablaContratos, cada uno de los contratos disponibles
-	 * del departamento del usuario registrado
-	 * 
-	 */
+//	public void run() {
+//		// boolean run = true;
+//		try {
+//			while (!vista.isCacheCargada()) {
+//				sleep(5000);
+//			}
+//		} catch (Exception e) {
+//		}
+//		// Coge los datos de todos los contratos
+//		// contratos = vista.getListaContratosDepartamento();
+//		datosInterfazCargados = true;
+//		// while (run) {
+//
+//		if (tablaContratos.isDisposed()) {
+//		} // run = false;
+//		else {
+//			if (!tablaContratos.isDisposed()) {
+//				// Actualizar tabla
+//				if (!tablaContratos.isDisposed()) {
+//					tablaContratos.getDisplay().asyncExec(new Runnable() {
+//						public void run() {
+//							mostrarContratos();
+//							bNuevoContrato.setEnabled(true);
+//							bModificarContrato.setEnabled(true);
+//							bEliminarContrato.setEnabled(true);
+//						}
+//					});
+//				}
+//			}
+//			try {
+//				// Espera 10 segundos (¿cómo lo dejamos?)
+//				sleep(10000);
+//			} catch (Exception e) {
+//			}
+//		}
+//	}
+//
+//	// }
+//
+//	/**
+//	 * Añade a la tabla tablaContratos, cada uno de los contratos disponibles
+//	 * del departamento del usuario registrado
+//	 * 
+//	 */
+//	private void mostrarContratos() {
+//		if (vista.isCacheCargada() && datosInterfazCargados) {
+//			tablaContratos.removeAll();
+//			for (int i = 0; i < vista.getListaContratosDepartamento().size(); i++) {
+//				TableItem tItem = new TableItem(tablaContratos, SWT.NONE);
+//				Contrato c = vista.getListaContratosDepartamento().get(i);
+//				tItem.setText(0, Integer.toString(c.getNumeroContrato()));
+//				ArrayList<Empleado> emp = vista.getEmpleados(null, null, c
+//						.getNumeroContrato(), null, null, null, null);
+//				if (indiceJefe == -1) {
+//					for (int j = 0; j < emp.size(); j++) {
+//						Empleado aux = emp.get(j);
+//						if (aux.getRango() == 2)
+//							indiceJefe = i;
+//					}
+//				}
+//				String empleados = "";
+//				for (int j = 0; j < emp.size(); j++) {
+//					Empleado e = emp.get(j);
+//					empleados += e.getNombre() + " " + e.getApellido1();
+//					if (j != emp.size() - 1)
+//						empleados += ",";
+//				}
+//				tItem.setText(1, empleados);
+//				tItem.setText(2, Integer.toString(c.getTurnoInicial()));
+//				tItem.setText(3, c.getNombreContrato());
+//				tItem.setText(4, c.getPatron());
+//				tItem.setText(5, Integer.toString(c.getDuracionCiclo()));
+//				tItem.setText(6, Double.toString(c.getSalario()));
+//				tItem.setText(7, Integer.toString(c.getTipoContrato()));
+//			}
+//		}
+//	}
+	
 	private void mostrarContratos() {
-		if (vista.isCacheCargada() && datosInterfazCargados) {
+			ArrayList <Empleado> jefes=vista.getEmpleados(null, null, null, null, null, null, 2);
+			ArrayList <Contrato> contratosJefes=new ArrayList();
+			for (int j=0;j<jefes.size();j++){
+				contratosJefes.add(jefes.get(j).getContrato(vista));
+			}
 			tablaContratos.removeAll();
-			for (int i = 0; i < vista.getListaContratosDepartamento().size(); i++) {
+			for (int i = 0; i < contratosJefes.size(); i++) {
 				TableItem tItem = new TableItem(tablaContratos, SWT.NONE);
-				Contrato c = vista.getListaContratosDepartamento().get(i);
+				Contrato c = contratosJefes.get(i);
 				tItem.setText(0, Integer.toString(c.getNumeroContrato()));
 				ArrayList<Empleado> emp = vista.getEmpleados(null, null, c
 						.getNumeroContrato(), null, null, null, null);
-				if (indiceJefe == -1) {
-					for (int j = 0; j < emp.size(); j++) {
-						Empleado aux = emp.get(j);
-						if (aux.getRango() == 2)
-							indiceJefe = i;
-					}
-				}
 				String empleados = "";
 				for (int j = 0; j < emp.size(); j++) {
 					Empleado e = emp.get(j);
@@ -127,7 +158,7 @@ public class I09_Tab_Contratos extends Thread {
 				tItem.setText(6, Double.toString(c.getSalario()));
 				tItem.setText(7, Integer.toString(c.getTipoContrato()));
 			}
-		}
+		
 	}
 
 	/**
@@ -141,7 +172,7 @@ public class I09_Tab_Contratos extends Thread {
 	 *            la herramienta de idiomas
 	 * @author Jose Maria Martin
 	 */
-	public I09_Tab_Contratos(final TabFolder tabFolder, final Vista vista,
+	public I06_Tab_Contratos_Admin(final TabFolder tabFolder, final Vista vista,
 			final ResourceBundle bundle, final Locale locale) {
 		this.bundle = bundle;
 		this.vista = vista;
@@ -168,7 +199,7 @@ public class I09_Tab_Contratos extends Thread {
 		tablaContratos.setLinesVisible(true);
 		tablaContratos.setHeaderVisible(true);
 		String[] titles = { bundle.getString("Contrato"),
-				bundle.getString("Empleados"),
+				bundle.getString("I05_nombre_jefe"),
 				bundle.getString("I09_turno_inicial"),
 				bundle.getString("I09_lab_NombreContrato"),
 				bundle.getString("Patron"),
@@ -188,9 +219,6 @@ public class I09_Tab_Contratos extends Thread {
 		tablaContratos.addControlListener(new ControlListener() {
 			public void controlResized(ControlEvent e) {
 				// // Configurar tamaño de las columnas
-				// int ancho = tablaContratos.getSize().x ;
-				// tablaContratos.getColumn(0).setWidth(ancho/5*2);
-				// tablaContratos.getColumn(1).setWidth(ancho/3*2);
 				int ancho = tablaContratos.getSize().x;
 				tablaContratos.getColumn(0).setWidth(ancho / 40 * 3);
 				tablaContratos.getColumn(1).setWidth(ancho / 8 * 2);
@@ -206,13 +234,13 @@ public class I09_Tab_Contratos extends Thread {
 			}
 
 		});
-
+		mostrarContratos();
 		bNuevoContrato = new Button(cContratos, SWT.PUSH);
 		bModificarContrato = new Button(cContratos, SWT.PUSH);
 		bEliminarContrato = new Button(cContratos, SWT.PUSH);
-		bNuevoContrato.setEnabled(false);
-		bModificarContrato.setEnabled(false);
-		bEliminarContrato.setEnabled(false);
+		//bNuevoContrato.setEnabled(false);
+		//bModificarContrato.setEnabled(false);
+		//bEliminarContrato.setEnabled(false);
 
 		bNuevoContrato.setText(bundle.getString("I09_lab_NuevoContrato"));
 		bModificarContrato.setText(bundle.getString("I09_Modif_contrato"));

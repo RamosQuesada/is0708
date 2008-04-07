@@ -40,6 +40,7 @@ public class Contrato {
  * @param duracionCiclo Duracion del ciclo
  * @param patron Patron de turnos dentro del ciclo
  * @param salario Salario del contrato
+ * @param tipoContrato tipo de contrato
  */
 	public Contrato(String nombreContrato,int numeroContrato,int turnoInicial,
 			int duracionCiclo,String patron,double salario, int tipoContrato){

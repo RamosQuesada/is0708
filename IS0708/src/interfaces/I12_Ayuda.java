@@ -57,10 +57,10 @@ public class I12_Ayuda {
 	 * @param _display
 	 *            class uses main window display atribut to show help window
 	 */
-	public I12_Ayuda(Display d, Locale locale, ResourceBundle bundle) {
+	public I12_Ayuda(Display d, Locale locale, ResourceBundle bundle, String hpath) {
 
 		display = d;
-		shell = new Shell(display);
+		shell = new Shell(display, SWT.CLOSE | SWT.MAX |SWT.MIN | SWT.APPLICATION_MODAL);
 		icoPq = new Image(display, I12_Ayuda.class.getResourceAsStream("icoPq.gif"));
 
 		htmlDefault = "<html> \n <head> \n " + "</head>"
@@ -74,7 +74,8 @@ public class I12_Ayuda {
 
 		localpath = (new File("").getAbsolutePath());
 
-		helppath = "/Ayuda/" + locale.getCountry() + "/index.html";
+		//helppath = "/Ayuda/" + locale.getCountry() + "/index.html";
+		this.helppath=hpath;
 		localpath = localpath.replaceAll("\\\\", "/");
 		filePath = localpath + helppath;
 		localpath = localpath.replaceAll(" ", "%20");
