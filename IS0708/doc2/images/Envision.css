@@ -204,14 +204,14 @@ input.button {
    LAYOUT
 ********************************************/ 
 #wrap {
-	width: 820px;
+	width: 1020px;
 	background: #CCC url(content.jpg) repeat-y center top;
 	margin: 0 auto;
 	text-align: left;
 }
 
 #wrap100 {
-	width: 820px;
+	width: 1020px;
 	background: #CCC url(content2.jpg) repeat-y center top;
 	margin: 0 auto;
 	text-align: left;
@@ -219,12 +219,12 @@ input.button {
 
 #content-wrap {
 	clear: both;
-	width: 760px;
+	width: 960px;
 	padding: 0; 
 	margin: 10px auto;
 }
 #header {
-	width: 820px;
+	width: 1020px;
 	position: relative;
 	height: 103px;
 	background: #CCC url(header.jpg) no-repeat center top;
@@ -232,7 +232,7 @@ input.button {
 	color: #FFF;	
 }
 #headerDoc {
-	width: 820px;
+	width: 1020px;
 	position: relative;
 	height: 103px;
 	background: #CCC url(header_doc.jpg) no-repeat center top;
@@ -286,7 +286,7 @@ input.button {
 	background: url(menu.jpg) repeat-x 0 0;	
 	font: bold 12px/37px Verdana, Arial, Tahoma, Sans-serif;
 	height: 37px;
-	width: 780px;	
+	width: 980px;	
 }
 #menu ul {
 	float: right;
@@ -436,7 +436,7 @@ input.button {
 	color: #C6DDEE;
 	background: #CCC url(footer.jpg) no-repeat center top;
 	clear: both;
-	width: 820px;
+	width: 1020px;
 	height: 65px;
 	text-align: center;	
 	font-size: 92%;	
