@@ -840,7 +840,8 @@ public class Database extends Thread {
 	/**
 	 * Borra un empleado de la BD
 	 * @param NumVendedor
-	 * @return
+	 * @return True si todo va bien, false si algo ha fallado
+	 * 
 	 */
 	public boolean borraEmpleado(int NumVendedor) {
 		boolean correcto = false;
@@ -849,6 +850,11 @@ public class Database extends Thread {
 			st.executeUpdate("DELETE FROM USUARIO WHERE NumVendedor=" + NumVendedor);
 			st.executeUpdate("DELETE FROM DepartamentoUsuario WHERE NumVendedor=" + NumVendedor);
 			st.executeUpdate("DELETE FROM MENSAJE WHERE Remitente=" + NumVendedor);
+			st.executeUpdate("DELETE FROM DESTINATARIO WHERE NumVendedor=" + NumVendedor);
+			st.executeUpdate("DELETE FROM TieneIncidencia WHERE NumVendedor=" + NumVendedor);
+			st.executeUpdate("DELETE FROM Trabaja WHERE NumVendedor=" + NumVendedor);
+			st.executeUpdate("DELETE FROM VENTAS WHERE NumVendedor=" + NumVendedor);
+			
 			correcto = true;
 		} catch (SQLException e) {
 			System.err.println("Error al Borrar el empleado");
