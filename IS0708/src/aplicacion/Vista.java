@@ -146,8 +146,9 @@ public class Vista {
 					else if(e.i==MODIFICAR) {
 						if      (e.tipo.equals("Contrato"))			controlador.modificarContrato(((Contrato)e.o.get(0)).getNumeroContrato(), ((Contrato)e.o.get(0)).getTurnoInicial(), ((Contrato)e.o.get(0)).getNombreContrato(), ((Contrato)e.o.get(0)).getPatron() , ((Contrato)e.o.get(0)).getDuracionCiclo(), ((Contrato)e.o.get(0)).getSalario(), ((Contrato)e.o.get(0)).getTipoContrato());
 						else if (e.tipo.equals("Turno"))			controlador.modificarTurno(((Turno)e.o.get(0)).getIdTurno(), ((Turno)e.o.get(0)).getDescripcion(), ((Turno)e.o.get(0)).getHoraEntrada(), ((Turno)e.o.get(0)).getHoraSalida(), ((Turno)e.o.get(0)).getHoraDescanso(), ((Turno)e.o.get(0)).getTDescanso());
-						else if (e.tipo.equals("Empleado"))			controlador.cambiarEmpleado(((Empleado)e.o.get(0)).getEmplId(), ((Empleado)e.o.get(0)).getNombre(), ((Empleado)e.o.get(0)).getApellido1(), ((Empleado)e.o.get(0)).getApellido2(), ((Empleado)e.o.get(0)).getFechaNac(), ((Empleado)e.o.get(0)).getSexo(), ((Empleado)e.o.get(0)).getEmail(), ((Empleado)e.o.get(0)).getPassword(), ((Empleado)e.o.get(0)).getGrupo(), ((Empleado)e.o.get(0)).getFcontrato(), ((Empleado)e.o.get(0)).getFAlta(), ((Empleado)e.o.get(0)).getFelicidad(), ((Empleado)e.o.get(0)).getIdioma(), ((Empleado)e.o.get(0)).getRango(), ((Empleado)e.o.get(0)).getTurnoFavorito(), ((Empleado)e.o.get(0)).getContratoId());						
-						//else if (e.tipo.equals("JefeDepartamento"))	controlador.modificaDpto(((Departamento)e.o.get(0)).getNombreDepartamento(), ((Departamento)e.o.get(0)).getJefeDepartamento().getEmplId()); comprobar si el num de jefe es su id
+						else if (e.tipo.equals("Empleado"))			controlador.cambiarEmpleado(((Empleado)e.o.get(0)).getEmplId(), ((Empleado)e.o.get(0)).getNombre(), ((Empleado)e.o.get(0)).getApellido1(), ((Empleado)e.o.get(0)).getApellido2(), ((Empleado)e.o.get(0)).getFechaNac(), ((Empleado)e.o.get(0)).getSexo(), ((Empleado)e.o.get(0)).getEmail(), ((Empleado)e.o.get(0)).getPassword(), ((Empleado)e.o.get(0)).getGrupo(), ((Empleado)e.o.get(0)).getFcontrato(), ((Empleado)e.o.get(0)).getFAlta(), ((Empleado)e.o.get(0)).getFelicidad(), ((Empleado)e.o.get(0)).getIdioma(), ((Empleado)e.o.get(0)).getRango(), ((Empleado)e.o.get(0)).getTurnoFavorito(), ((Empleado)e.o.get(0)).getContratoId());
+						else if (e.tipo.equals("Mensaje"))			controlador.marcarMensaje((Mensaje)e.o.get(0));
+						//else if (e.tipo.equals("Departamento"))	controlador.modificaDpto(((Departamento)e.o.get(0)).getNombreDepartamento(), ((Departamento)e.o.get(0)).getJefeDepartamento().getEmplId()); comprobar si el num de jefe es su id
 					}
 				}
 				setProgreso("Actualizando base de datos", 100);
@@ -921,14 +922,16 @@ public class Vista {
 	}
 
 	/**
-	 * Marca un mensaje
+	 * Invierte el marcado del mensaje
 	 * 
 	 * @param mensaje
-	 *            el mensaje a marcar
-	 * @return
+	 *            el mensaje a marcar/desmarcar
+	 * @return <i>true</i> si el marcado del mensaje se ha invertido correctamente
 	 */
 	public boolean marcarMensaje(Mensaje mensaje) {
-		return controlador.marcarMensaje(mensaje);
+		//return controlador.marcarMensaje(mensaje);
+		modifyCache(mensaje, "Mensaje");
+		return true;
 	}
 
 
