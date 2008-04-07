@@ -638,6 +638,10 @@ public class Empleado implements Drawable {
 		return idContrato;
 	}
 	
+	public String getNombreContrato() {
+		return contrato.getNombreContrato();
+	}
+	
 	/**
 	 * Devuelve el contrato asignado al empleado.
 	 * @param c el controlador de la aplicación
