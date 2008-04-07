@@ -257,6 +257,7 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 		bEmplNuevo.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				new I08_1_Anadir_empleado(_tabFolder.getShell(), _bundle, _vista);
+				mostrarEmpleados();
 			}
 		});
 
@@ -306,13 +307,26 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 
 		bEmplBaja.setText(bundle.getString("I02_but_Eliminar"));
 		bEmplBaja.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,1, 1));
-		bEmplBaja.setEnabled(false);
+		//bEmplBaja.setEnabled(false);
 		bEmplBaja.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent e){
 				final int idVend;
-				TableItem[] aux=tablaEmpleados.getSelection();
-				idVend = (Integer)Integer.valueOf(aux[0].getText(1));
-				_vista.eliminaEmpleado(idVend);
+				int aux1=tablaEmpleados.getSelectionIndex();
+				if (aux1<0){
+					MessageBox messageBox = new MessageBox (_tabFolder.getShell(), SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
+					messageBox.setText ("Error");
+					messageBox.setMessage ("Para Dar de Baja a un empleado debe seleccionar previamente un empleado de la tabla");					
+					e.doit = messageBox.open () == SWT.YES;
+				}else{
+					MessageBox messageBox = new MessageBox (_tabFolder.getShell(), SWT.APPLICATION_MODAL | SWT.OK | SWT.CANCEL | SWT.ICON_WARNING);
+					messageBox.setText ("¡ATENCION!");
+					messageBox.setMessage ("Se dispone a borrar un empleado de la Base de Datos, ¿Desea Continuar?");					
+					if (e.doit = messageBox.open () == SWT.OK) {					
+						TableItem[] aux=tablaEmpleados.getSelection();
+						idVend = (Integer)Integer.valueOf(aux[0].getText(1));
+						_vista.eliminaEmpleado(idVend);
+					}
+				}
 			}
 		});
 						
