@@ -532,7 +532,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			};
 			
 			public void mouseUp(MouseEvent e){
-				if (e.button == 1 &&(diaValido)) { //&& diaActVistaMes<iCuad.length && empActVistaMes<iCuad[diaActVistaMes].size()) {
+				if (e.button == 1 && diaValido && turnoSeleccionado!=null) { //&& diaActVistaMes<iCuad.length && empActVistaMes<iCuad[diaActVistaMes].size()) {
 					Turno turnoSeleccionado2=iCuad[diaActVistaMes].get(indiceEmpAct).getTurno();
 					//Si los dos empleados tienen el mismo contrato
 					if(turnoSeleccionado.getIdTurno()!=turnoSeleccionado2.getIdTurno()) {
@@ -560,10 +560,10 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 							messageBox.open();
 						}
 					}
+					turnoSeleccionado = null;
+					//turnoPulsado=false;
+					canvas.redraw();
 				}
-				turnoSeleccionado = null;
-				//turnoPulsado=false;
-				canvas.redraw();
 			};
 			
 			public void mouseDoubleClick(MouseEvent e){
