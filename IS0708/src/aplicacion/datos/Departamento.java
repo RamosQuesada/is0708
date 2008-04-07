@@ -37,7 +37,10 @@ public class Departamento {
 		this._listaEmpleados=listaEmpleados;
 		this._calendario=calendario;
 	}	
-	
+	 public void set_JefeDepartamento(Integer id){//consultar con miguel
+		 _jefeDepartamento.setEmplId(id);
+		 
+	 }
 	/**
 	 * Constructor en el que no importan los empleados, se usa cuando se crea un 
 	 * departamento

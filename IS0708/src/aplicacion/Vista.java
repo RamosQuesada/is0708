@@ -148,7 +148,11 @@ public class Vista {
 						else if (e.tipo.equals("Turno"))			controlador.modificarTurno(((Turno)e.o.get(0)).getIdTurno(), ((Turno)e.o.get(0)).getDescripcion(), ((Turno)e.o.get(0)).getHoraEntrada(), ((Turno)e.o.get(0)).getHoraSalida(), ((Turno)e.o.get(0)).getHoraDescanso(), ((Turno)e.o.get(0)).getTDescanso());
 						else if (e.tipo.equals("Empleado"))			controlador.cambiarEmpleado(((Empleado)e.o.get(0)).getEmplId(), ((Empleado)e.o.get(0)).getNombre(), ((Empleado)e.o.get(0)).getApellido1(), ((Empleado)e.o.get(0)).getApellido2(), ((Empleado)e.o.get(0)).getFechaNac(), ((Empleado)e.o.get(0)).getSexo(), ((Empleado)e.o.get(0)).getEmail(), ((Empleado)e.o.get(0)).getPassword(), ((Empleado)e.o.get(0)).getGrupo(), ((Empleado)e.o.get(0)).getFcontrato(), ((Empleado)e.o.get(0)).getFAlta(), ((Empleado)e.o.get(0)).getFelicidad(), ((Empleado)e.o.get(0)).getIdioma(), ((Empleado)e.o.get(0)).getRango(), ((Empleado)e.o.get(0)).getTurnoFavorito(), ((Empleado)e.o.get(0)).getContratoId());
 						else if (e.tipo.equals("Mensaje"))			controlador.marcarMensaje((Mensaje)e.o.get(0));
-						//else if (e.tipo.equals("Departamento"))	controlador.modificaDpto(((Departamento)e.o.get(0)).getNombreDepartamento(), ((Departamento)e.o.get(0)).getJefeDepartamento().getEmplId()); comprobar si el num de jefe es su id
+						//else if (e.tipo.equals("JefeDepartamento"))	controlador.modificaDpto(((Departamento)e.o.get(0)).getNombreDepartamento(), ((Departamento)e.o.get(0)).getJefeDepartamento().getEmplId()); 
+						/*else if (e.tipo.equals("NombreDepartamento")){	controlador.cambiaNombreDpto(e.o.get(0).toString(),e.o.get(1).toString());//nombre antiguo,nombrenuevo
+																		controlador.cambiaNombreDepartamentoUsuario(e.o.get(0).toString(),e.o.get(1).toString());
+																		controlador.cambiaNombreNumerosDEPARTAMENTOs(e.o.get(0).toString(),e.o.get(1).toString());
+																		} */
 					}
 				}
 				setProgreso("Actualizando base de datos", 100);
@@ -1054,6 +1058,10 @@ public class Vista {
 		this.controlador.cambiaNombreDpto(NombreAntiguo, NombreNuevo);
 		this.controlador.cambiaNombreDepartamentoUsuario(NombreAntiguo, NombreNuevo);
 		this.controlador.cambiaNombreNumerosDEPARTAMENTOs(NombreAntiguo, NombreNuevo);
+		ArrayList <String> aux=new ArrayList<String>();//Aqui meto los dos nombres que necesito, de esta forma no hace falta 
+		aux.add(NombreAntiguo);
+		aux.add(NombreNuevo);
+		modifyCache(aux,"NombreDepartamento");
 	}
 	
 	/**
@@ -1133,8 +1141,10 @@ public class Vista {
 	public boolean cambiarJefeDepartamento(String text, String numjefe) {
 		// TODO Auto-generated method stub by Carlos Sanchez
 		return this.controlador.modificaDpto(text, Integer.valueOf(numjefe));
-		//modifyCache(text,"JefeDepartamento");tenemos que meter el objeto a modificar, no se muy bien como
-		
+		/*Departamento d=this.getDepartamento(text);
+		d.set_JefeDepartamento(Integer.valueOf(numjefe));//modifico el jefe del departamento,()
+		modifyCache(d,"JefeDepartamento");
+		return true;*/ //poner la funcion a void
 		}
 	/**
 	 * Función que devuelve Info de un Dpto. (empleados y horario del dia actual)
