@@ -1160,11 +1160,11 @@ public class Controlador {
 	/**
 	 * Marca un mensaje en la base de datos.
 	 * 
-	 * @param mensaje
+	 * @param mensaje Mensaje a marcar
 	 * @return <i>true</i> si el mensaje se ha marcado correctamente
 	 */
 	public boolean marcarMensaje(Mensaje mensaje) {
-		return _db.marcaMensaje(true, mensaje.getIdmensaje());
+		return _db.marcaMensaje(!mensaje.isMarcado(), mensaje.getIdmensaje());
 	}
 
 	/***************************************************************************
