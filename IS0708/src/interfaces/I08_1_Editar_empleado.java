@@ -50,9 +50,9 @@ public class I08_1_Editar_empleado {
 		this.padre = padre;
 		this.bundle = bundle;
 		this.vista = vista;
-		fechaContrato = new Date(0);
-		fechaAlta = new Date(0);
-		fechaNacimiento = new Date(0);
+		fechaContrato = vista.getEmpleado(idVend).getFcontrato();
+		fechaAlta = vista.getEmpleado(idVend).getFAlta();
+		fechaNacimiento = vista.getEmpleado(idVend).getFechaNac();
 		this.idVend = idVend;
 		mostrarVentana();
 	}
