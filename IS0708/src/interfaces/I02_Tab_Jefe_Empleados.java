@@ -8,6 +8,8 @@ import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -86,6 +88,7 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 	}
 	
 	private void mostrarEmpleados() {
+		
 		int x = tablaEmpleados.getSelectionIndex();
 		if (_vista.isCacheCargada() && datosInterfazCargados) {
 			tablaEmpleados.removeAll();
@@ -111,6 +114,15 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 			if (tEmplDpto.getText() != "") { 
 				for (int i = 0; i < listaFiltrada.size(); i++) {					 
 					if (!listaFiltrada.get(i).getDepartamentoId().toLowerCase().contains(tEmplDpto.getText().toLowerCase())) {
+						listaFiltrada.remove(i);
+						i--;
+					}
+				}
+			}
+			
+			if (cEmplContr.getSelectionIndex() != 0) { 
+				for (int i = 0; i < listaFiltrada.size(); i++) {					 
+					if (!listaFiltrada.get(i).getNombreContrato().toLowerCase().contains(cEmplContr.getText().toLowerCase())) {
 						listaFiltrada.remove(i);
 						i--;
 					}
@@ -206,7 +218,7 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 		lEmplContr.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false,
 				1, 1));
 
-		cEmplContr = new Combo(cEmplIzq, SWT.BORDER);
+		cEmplContr = new Combo(cEmplIzq, SWT.BORDER | SWT.READ_ONLY);
 		cEmplContr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,				
 				1, 1));
 		
@@ -214,9 +226,11 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 		while (!_vista.isCacheCargada() && _vista.getEmpleadoActual().getEmplId() != 00000000) {
 		//	sleep(5000);
 		}
+		cEmplContr.add("Todos");
 		for (int i=1; i<_vista.getListaContratosDepartamento().size(); i++)
 			cEmplContr.add(_vista.getListaContratosDepartamento().get(i).getNombreContrato());
 		
+		cEmplContr.select(0);
 		final Composite cEmplDer = new Composite(cEmpleados, SWT.NONE);
 		cEmplDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,
 				1));
@@ -330,6 +344,11 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 			}
 		});
 						
+		cEmplContr.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {				
+				comboCambiado(arg0);
+			}
+		});
 		
 		tEmplNombre.addKeyListener(new KeyListener(){			 
 
@@ -367,6 +386,10 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 	}
 	
 	public void nombreEscrito(KeyEvent e) {
+		mostrarEmpleados();
+	}
+	
+	public void comboCambiado(ModifyEvent e) {
 		mostrarEmpleados();
 	}
 }
