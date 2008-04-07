@@ -559,11 +559,11 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 									"con distinto contrato.");
 							messageBox.open();
 						}
-					}
-					turnoSeleccionado = null;
-					//turnoPulsado=false;
-					canvas.redraw();
+					}					
 				}
+				turnoSeleccionado = null;
+				//turnoPulsado=false;
+				canvas.redraw();
 			};
 			
 			public void mouseDoubleClick(MouseEvent e){
