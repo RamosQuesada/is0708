@@ -1,6 +1,7 @@
 package aplicacion;
 
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -1120,11 +1121,11 @@ public class Vista {
 		return numeros.contains(text);
 
 	}
-/**
- * Función que cambia el jefe de un departamento
- * @param text nombre del departamento
- * @param numjefe numero del nuevo jefe
- */
+	/**
+	 * Función que cambia el jefe de un departamento
+	 * @param text nombre del departamento
+	 * @param numjefe numero del nuevo jefe
+	 */
 	public boolean cambiarJefeDepartamento(String text, String numjefe) {
 		// TODO Auto-generated method stub by Carlos Sanchez
 		return this.controlador.modificaDpto(text, Integer.valueOf(numjefe));
@@ -1135,19 +1136,51 @@ public class Vista {
 	 * @param dpto nombre del departamento
 	 * @return Info de "dpto" (empleados y horario del dia actual)
 	 */	
-
-   public String infoDpto(String dpto) {
-	   		//	String infojefe=this.controlador.getInfoJefedeDepartamento(dpto);
-	   			String infoempleados=this.controlador.getInfoEmpleadosDepartamento(dpto);
-	   			return infoempleados;
+	public String infoDpto(String dpto) {
+		String info = "Horarios Empleados:"+"\n";
+		for (int i=0; i<empleados.size(); i++){
+			Turno t = trabajaEmpleadoDia(empleados.get(i).getEmplId(), getFechaActual());
+			String nombreempleado = empleados.get(i).getNombreCompleto();
+			if (t != null){
+				String horaentrada = t.getHoraEntrada().toString();
+				String horasalida = t.getHoraSalida().toString();
+				if (horaentrada!=null || horasalida!=null)
+					info += "\n"+ nombreempleado+ ": " + horaentrada+ " - "+ horasalida;
+				else
+				    info += "\n"+ nombreempleado+ ": No tiene turnos asignados";
 			}
+			else
+				info += "\n"+ nombreempleado+ ": No tiene turnos asignados";
+		}
+		return info;
+	}
+	
+	/**
+	 * Funcion que mira si un empleado trabaja un determinado dia.
+	 * @param nv Numero de vendedor.
+	 * @param d Dia
+	 * @return Turno que trabaja, si no trabaja, null.
+	 */
+	public Turno trabajaEmpleadoDia(int nv, Date d) {
+		Cuadrante cuad = getCuadrante(d.getMonth()+1, d.getYear()+1900, getEmpleadoActual().getDepartamentoId());
+		if (cuad != null){
+			ArrayList<Trabaja> dia = cuad.getListaTrabajaDia(d.getDate());
+			for (int j=0; j<dia.size(); j++){
+				if (dia.get(j).getIdEmpl() == nv){
+					return getTurno(dia.get(j).getIdTurno());
+				}
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 * Función que devuelve Info de la distribucion de un Dpto dado un dia de la semana
 	 * @param dpto nombre del departamento
 	 * @param diaSemana entero que representa dia de la semana
 	 * 		0->Domingo, 1->Lunes,...,6->Sabado
 	 * @return Info de la distribucion de "dpto" (numeros
-	 * 	meximos y minimos de empleados por franjas horarias) en "diaSemana"
+	 * 	maximos y minimos de empleados por franjas horarias) en "diaSemana"
 	 */	
    
    public void infoDistribucionDpto(String dpto, int diaSemana) {
