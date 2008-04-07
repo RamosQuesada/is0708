@@ -245,7 +245,7 @@
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
-				<p>Usuario.</p>
+				<p>Empleado.</p>
 				<h2>Secuencia normal</h2>
 				<p>1- Seleccionar la opción de "Escribir un mensaje de modificación de horario".</p>
 				<p>2- Seleccionar la fecha de inicio.</p>
@@ -270,7 +270,7 @@
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
-				<p>Usuario.</p>
+				<p>Empleado.</p>
 				<h2>Secuencia normal</h2>
 				<p>1- Seleccionar la opción de "Escribir un mensaje de petición de baja".</p>
 				<p>2- Escribir el motivo de la baja.</p>
@@ -286,20 +286,19 @@
 				<a name="09"></a>
 				<h1>Caso de uso 09: Revisar horario</h1>
 				<h2>Objetivo en contexto</h2>
-				<p>Revisar el cuadrante de un departamento.</p>
+				<p>Revisar el personal de un empleado.</p>
 				<h2>Precondiciones</h2>
 				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
 				<h2>Postcondiciones si éxito</h2>
-				<p>Se muestra en pantalla el cuadrante del departamento seleccionado.</p>
+				<p>Se muestra en pantalla el horario del empleado identificado.</p>
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
-				<p>Usuario.</p>
+				<p>Empleado.</p>
 				<h2>Secuencia normal</h2>
 				<p>1- Seleccionar la opción de "Horarios".</p>
-				<p>2- Seleccionar el departamento del que se quiere obtener el cuadrante.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>2a- Si hay un error en la conexión se muestra por pantalla.</p>
+				<p>1a- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
 <!-- Aquí acaba un CU -->
 
@@ -1029,6 +1028,7 @@
 				<br><br>
 
 				<h3>Marzo 2008</h3>
+				<p>Se modifica el caso de uso 09, que pasa a ser específico para un empleado.</p>
 				<p>En los casos de uso 23, 24 y 25 el actor es el jefe de departamento y cambia las secuencias normal y alternativa.</p>
 				<p>Se modifica el caso de uso 27, que pasa a llamarse Generar cuadrante.</p>
 				<p>Se modifica el caso de uso 28 ya que ahora no es posible que no se genere un cuadrante. Ahora el caso de uso 28,  Generar sugerencias, se refiere al caso en que un cuadrante se genera con falta de personal.</p>
