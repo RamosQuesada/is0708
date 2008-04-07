@@ -91,6 +91,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	
 	private Turno turnoSeleccionado = null;
 	private Empleado empleadoSeleccionado = null;
+	private I_Trabaja casillaSeleccionada = null;
 	private int altoFila=0;
 	private int anchoDia=0;
 	private int origen=0; // El origen del dibujo (para desplazarlo verticalmente)
@@ -528,16 +529,18 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					}
 					empleadoSeleccionado = iCuad[diaActVistaMes].get(indiceEmpAct).getEmpl();
 					turnoSeleccionado = iCuad[diaActVistaMes].get(indiceEmpAct).getTurno();
+					casillaSeleccionada = iCuad[diaActVistaMes].get(indiceEmpAct);
 				}
 			};
 			
 			public void mouseUp(MouseEvent e){
 				if (e.button == 1 && diaValido && turnoSeleccionado!=null) { //&& diaActVistaMes<iCuad.length && empActVistaMes<iCuad[diaActVistaMes].size()) {
 					Turno turnoSeleccionado2=iCuad[diaActVistaMes].get(indiceEmpAct).getTurno();
-					//Si los dos empleados tienen el mismo contrato
+					//Si los turnos a intercambiar son distintos
 					if(turnoSeleccionado.getIdTurno()!=turnoSeleccionado2.getIdTurno()) {
-						if (turnoSeleccionado!=null && 
-								empleadoSeleccionado.getContratoId()==iCuad[diaActVistaMes].get(indiceEmpAct).getEmpl().getContratoId()) {
+						//Si los dos empleados tienen el mismo contrato
+						if (empleadoSeleccionado.getContratoId() ==
+							iCuad[diaActVistaMes].get(indiceEmpAct).getEmpl().getContratoId()) {
 							MessageBox messageBox = new MessageBox(canvas.getShell(),
 									SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
 							messageBox.setText("Atencion");
@@ -560,6 +563,35 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 							messageBox.open();
 						}
 					}					
+				}
+				if (e.button == 1 && !diaValido && turnoSeleccionado!=null) {
+					ArrayList<Empleado> empleados = vista.getEmpleados();
+					aplicacion.datos.Empleado emp2=empleados.get(empActVistaMes);
+					//Comprobamos que los empleados tengan el mismo contrato
+					if (empleadoSeleccionado.getContratoId() == emp2.getContratoId()){
+						MessageBox messageBox = new MessageBox(canvas.getShell(),
+								SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
+						messageBox.setText("Atencion");
+						String nombre1 = empleadoSeleccionado.getNombre();
+						String nombre2 = emp2.getNombre();
+						messageBox.setMessage("¿Desea intercambiar el día del empleado "+nombre1+" por el día libre " +
+								"del empleado "+nombre2+"?");
+						if (messageBox.open()==SWT.YES) {
+							// Intercambiar turnos
+							iCuad[turnPulsX].remove(casillaSeleccionada);
+							casillaSeleccionada.setIdEmpl(emp2);
+							iCuad[diaActVistaMes].add(casillaSeleccionada);
+							calcularTamano();				
+						}
+					}
+					else {
+						MessageBox messageBox = new MessageBox(canvas.getShell(),
+								SWT.APPLICATION_MODAL | SWT.OK );
+						messageBox.setText("Error");
+						messageBox.setMessage("No se pueden intercambiar los dias de empleados " +
+								"con distinto contrato.");
+						messageBox.open();
+					}
 				}
 				turnoSeleccionado = null;
 				//turnoPulsado=false;
