@@ -18,6 +18,7 @@ import org.eclipse.swt.custom.ScrolledComposite;
 
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import org.eclipse.swt.graphics.*;
 
@@ -33,6 +34,8 @@ public class I09_1_Creacion_contratos {
 	private Shell shell = null;
 
 	private ResourceBundle bundle;
+	
+	private Locale locale;
 
 	private Vista vista;
 
@@ -74,12 +77,13 @@ public class I09_1_Creacion_contratos {
 	 * 	<i>otro</i> identifica el contrato que se mostrara en la ventana para modificar 
 	 * @param cm contrato para mostrar en la ventana en caso de que <b>id</b> sea distinto de <i>-1</i>
 	 */
-	public I09_1_Creacion_contratos(Shell padre, ResourceBundle bundle,
+	public I09_1_Creacion_contratos(Shell padre, ResourceBundle bundle,Locale locale,
 			Vista vista, int modo, int id, Contrato cm) {
 		this.padre = padre;
 		this.bundle = bundle;
 		this.vista = vista;
 		this.modo = modo;
+		this.locale = locale;
 		this.idContrato = id;
 		if (modo == 0) {
 			patron = "";
@@ -600,6 +604,15 @@ public class I09_1_Creacion_contratos {
 			}
 		};
 		bLCCambiar.addSelectionListener(sabLCCambiar);
+		
+//		 Listener para el bot�n de ayuda
+		SelectionAdapter sabAyuda = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				String helppath = "/Ayuda/" + locale.getCountry() + "/contratos.html";
+				new I12_Ayuda(shell.getDisplay(), locale, bundle, helppath);				
+			}
+		};
+		bAyuda.addSelectionListener(sabAyuda);
 
 		// Listener para el bot�n de nuevo turno
 		SelectionAdapter sabNuevoTurno = new SelectionAdapter() {

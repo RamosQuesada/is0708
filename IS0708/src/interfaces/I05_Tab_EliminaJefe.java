@@ -255,20 +255,20 @@ public class I05_Tab_EliminaJefe {
 							emp.setEmplId(Integer.valueOf(numElim));
 							ArrayList<String> arrayDepts = vista
 									.getNombreDepartamento(emp);
-							for (int j = 0; j < arrayDepts.size(); j++) {
-								String d = arrayDepts.get(j);
-								System.out.println(d);
-								okis = vista
-										.cambiarJefeDepartamento(d, numSust);
-								okis = okis
-										&& vista
+							if (arrayDepts.size()>0){
+								for (int j = 0; j < arrayDepts.size(); j++) {
+									String d = arrayDepts.get(j);
+									System.out.println(d);
+									okis = vista.cambiarJefeDepartamento(d, numSust);
+									okis = okis
+											&& vista
 												.getControlador()
 												.insertDepartamentoUsuario(
 														Integer
 																.valueOf(numSust),
 														d);
+								}
 							}
-							// okis=okis&&vista.getControlador().eliminaUsuarioDeDepartamentoUsuario(Integer.valueOf(numElim));
 							okis = okis
 									&& vista.getControlador().eliminaEmpleado(
 											Integer.valueOf(numElim));
@@ -294,7 +294,7 @@ public class I05_Tab_EliminaJefe {
 										.getText(1);
 								tablaJefes.remove(seleccionado);
 								TableItem tItem = tablaJefes.getItem(indSust);
-								tItem.setText(1, tItem.getText(1) + ", "
+								if (!depts.equals("")) tItem.setText(1, tItem.getText(1) + ", "
 										+ depts);
 								seleccionado = -1;
 							} else {
