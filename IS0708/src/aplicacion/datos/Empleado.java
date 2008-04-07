@@ -430,7 +430,7 @@ public class Empleado implements Drawable {
 	 * @param nombre	el String a asignar al segundo apellido del empleado.
 	 */
 	public void setApellido2(String apellido2) {
-		this.apellido1 = apellido2;
+		this.apellido2 = apellido2;
 	}
 	
 	/**
