@@ -1058,10 +1058,10 @@ public class Vista {
 		this.controlador.cambiaNombreDpto(NombreAntiguo, NombreNuevo);
 		this.controlador.cambiaNombreDepartamentoUsuario(NombreAntiguo, NombreNuevo);
 		this.controlador.cambiaNombreNumerosDEPARTAMENTOs(NombreAntiguo, NombreNuevo);
-		ArrayList <String> aux=new ArrayList<String>();//Aqui meto los dos nombres que necesito, de esta forma no hace falta 
+		/*ArrayList <String> aux=new ArrayList<String>();//Aqui meto los dos nombres que necesito, de esta forma no hace falta 
 		aux.add(NombreAntiguo);
 		aux.add(NombreNuevo);
-		modifyCache(aux,"NombreDepartamento");
+		modifyCache(aux,"NombreDepartamento");*/
 	}
 	
 	/**
