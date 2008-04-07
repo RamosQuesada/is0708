@@ -61,7 +61,7 @@ public class I03_Tab_NuevoJefe {
 	 * @param vista
 	 * 				la vista de la aplicación
 	 */  
-	public I03_Tab_NuevoJefe(final TabFolder tabFolder,final ResourceBundle bundle,Vista vista){
+	public I03_Tab_NuevoJefe(final TabFolder tabFolder,final ResourceBundle bundle,final Vista vista){
 		
 		//inicializamos las variables de la clase
 		this.bundle = bundle;
@@ -236,20 +236,18 @@ public class I03_Tab_NuevoJefe {
 												bundle.getString("Experto")});
 		
 		// Cogemos los contratos
+		ArrayList <Empleado> jefes=vista.getEmpleados(null, null, null, null, null, null, 2);
+		final ArrayList <Contrato> contratosJefes=new ArrayList();
+		for (int j=0;j<jefes.size();j++){
+			contratosJefes.add(jefes.get(j).getContrato(vista));
+		}
+		for (int i=1; i<contratosJefes.size(); i++)
+			cContrato.add(contratosJefes.get(i).getNombreContrato());
 		
-		/*for (int i=1; i<contratos.size(); i++)
-			cContrato.add(contratos.get(i).getNombreContrato());
-		*//*
-		
-		// Cogemos los departamentos
-		ArrayList<String> departamentos = vista.getEmpleadoActual().getDepartamentosId();
-		for (int i=0; i<departamentos.size(); i++) {
-			cDepto.add(departamentos.get(i));
-		}*/
 		
 		
 		cSexo.select(1); //sexo masculino por defecto
-		cContrato.select(0);
+		//cContrato.select(0);
 		cExperiencia.select(0);
 		cDepto.select(0);
 		cIdioma.select(0); //español por defecto
@@ -355,6 +353,17 @@ public class I03_Tab_NuevoJefe {
 				}else
 					
 				//comprobamos si ha seleccionado una fecha de nacimiento
+				if(cContrato.getSelectionIndex()<0){
+					MessageBox message = new MessageBox(tabFolder.getShell(),
+							SWT.APPLICATION_MODAL | SWT.OK
+									| SWT.ICON_INFORMATION);
+					message.setText("Info");
+					message.setMessage(bundle
+							.getString("I03_err_contrato"));
+					message.open();
+				}else
+					
+				//comprobamos si ha seleccionado un contrato
 				if(tFNacimiento.getText().equals("")){
 					MessageBox message = new MessageBox(tabFolder.getShell(),
 							SWT.APPLICATION_MODAL | SWT.OK
@@ -363,8 +372,7 @@ public class I03_Tab_NuevoJefe {
 					message.setMessage(bundle
 							.getString("I03_err_fechaNac"));
 					message.open();
-				}else
-					
+				}else	
 				//comrpobamos si ha seleccionado una fecha de inicio de contrato
 				if(tFContrato.getText().equals("")){
 					MessageBox message = new MessageBox(tabFolder.getShell(),
@@ -387,7 +395,7 @@ public class I03_Tab_NuevoJefe {
 					message.open();
 				}else
 				
-				//Comrpobamos si ha seleccionado algún color
+				//Comprobamos si ha seleccionado algún color
 				if(colorSeleccionado == false){
 					MessageBox message = new MessageBox(tabFolder.getShell(),
 							SWT.APPLICATION_MODAL | SWT.OK
@@ -404,10 +412,15 @@ public class I03_Tab_NuevoJefe {
 							SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
 					messageBox.setText(bundle
 							.getString("I03_dlg_confirmacion"));
-					messageBox.setMessage("I03_dlg_pregunta");
+					messageBox.setMessage(bundle
+							.getString("I03_dlg_pregunta"));
 					if (messageBox.open() == SWT.YES) {	
+						
+						int id = contratosJefes.get(cContrato.getSelectionIndex()).getNumeroContrato();
 						//insertamos el nuevo jefe en la base de datos
-						//vista.getControlador().insertDepartamentoPruebas(cDepartamentos.getItem(cDepartamentos.getSelectionIndex()), new Integer(tNombreUsuario.getText()));
+						//vista.getEmpleadoActual().getEmplId()
+						Empleado emp = new Empleado(null, Util.convertirNVend(tNVend.getText()), tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, 1-cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 2, id, fechaContrato, fechaAlta, null, cDepto.getText(), null, 0, cIdioma.getSelectionIndex(),-1);
+						vista.getControlador().insertEmpleado(emp);
 					}
 				}
 			}
@@ -484,7 +497,10 @@ public class I03_Tab_NuevoJefe {
 					}
 				}
 				fechaNacimiento = i17.getFecha();
-				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
+				String [] meses = {bundle.getString("enero"),bundle.getString("febrero"),bundle.getString("marzo"),
+						bundle.getString("abril"),bundle.getString("mayo"),bundle.getString("junio"),
+						bundle.getString("julio"),bundle.getString("agosto"),bundle.getString("septiembre"),
+						bundle.getString("octubre"),bundle.getString("noviembre"),bundle.getString("diciembre")};
 				if (fechaNacimiento!=null)
 				tFNacimiento.setText(String.valueOf(fechaNacimiento.getDate()) + " de " + meses[fechaNacimiento.getMonth()]+ " de " + String.valueOf(fechaNacimiento.getYear()));
 			}
@@ -503,7 +519,10 @@ public class I03_Tab_NuevoJefe {
 					}
 				}
 				fechaContrato = i17.getFecha(); 				
-				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
+				String [] meses = {bundle.getString("enero"),bundle.getString("febrero"),bundle.getString("marzo"),
+						bundle.getString("abril"),bundle.getString("mayo"),bundle.getString("junio"),
+						bundle.getString("julio"),bundle.getString("agosto"),bundle.getString("septiembre"),
+						bundle.getString("octubre"),bundle.getString("noviembre"),bundle.getString("diciembre")};
 				if (fechaContrato != null)
 					tFContrato.setText(String.valueOf(fechaContrato.getDate()) + " de " + meses[fechaContrato.getMonth()]+ " de " + String.valueOf(fechaContrato.getYear()));				
 			}
