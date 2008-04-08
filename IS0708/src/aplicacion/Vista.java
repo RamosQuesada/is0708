@@ -891,6 +891,11 @@ public class Vista {
 	 * @return <i>true</i> si el departamento ha sido guardado
 	 */
 	public boolean insertDepartamento(Departamento departamento) {
+		//insertamos en la cache, si no esta ya metido
+		/*if (!departamentosJefe.contains(departamento)){
+			departamentosJefe.add(departamento);
+		}
+		insertCache(departamento,"Departamento");*/
 		return controlador.insertDepartamento(departamento);
 	}
 
