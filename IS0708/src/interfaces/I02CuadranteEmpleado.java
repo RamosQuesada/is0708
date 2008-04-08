@@ -151,8 +151,8 @@ public class I02CuadranteEmpleado {
 		this.horaComienzoDescanso =  new ArrayList<Float>();
 		this.margenIzq  = margenIzq;
 		this.margenDer  = margenDer;
-		this.margenSup  = margenSup+10;
-		this.margenInf  = margenInf;
+		this.margenSup  = margenSup+20;
+		this.margenInf  = margenInf+10;
 		this.margenNombres  = margenNombres;
 		this.horaInicio = horaInicio;
 		this.horaFin = horaFin;
@@ -225,18 +225,25 @@ public class I02CuadranteEmpleado {
 		tamanoFila=(alto)/15;
 		cambiarPincel(gc, 0,143,65);
 		this.cambiarRelleno(gc, 180,230,180);
+		
 		int inferior=((int)((alto-margenInf-(tamanoFila+this.margenSup))
 				/(horaFin-horaInicio)))*(horaFin-horaInicio);
+
 		gc.fillGradientRectangle(m,tamanoFila+this.margenSup,7*sep,inferior,false);
 		int inferior_total=tamanoFila+margenSup+inferior;
 		this.cambiarPincel(gc, 10, 160, 90);
 		this.cambiarRelleno(gc, 0, 143, 65);
 		gc.fillGradientRectangle(m,this.margenSup,7*sep,tamanoFila,true);
+
 		
 		cambiarPincel(gc, 0,0,0);
+		gc.setLineWidth(3);
+		gc.drawRectangle(m,tamanoFila+this.margenSup,7*sep,inferior);
+		gc.setLineWidth(3);
 		gc.drawLine(m, this.margenSup, m+7*sep, this.margenSup);
 		gc.drawLine(m, tamanoFila+this.margenSup, m+7*sep, tamanoFila+this.margenSup);
 		gc.drawLine(m, inferior_total, m+7*sep, inferior_total);
+		gc.setLineWidth(3);
 		gc.drawRoundRectangle(m,this.margenSup,7*sep,tamanoFila,8,8);
 		gc.drawRectangle(m, this.margenSup, 7*sep, tamanoFila);
 		gc.setLineWidth(2);
@@ -248,13 +255,7 @@ public class I02CuadranteEmpleado {
 			if (i!=h)
 			{	cambiarPincel(gc, 150,250,150);
 				final String[] diasSemana={
-					_bundle.getString("lunes"),
-					_bundle.getString("martes"),
-					_bundle.getString("miercoles"),
-					_bundle.getString("jueves"),
-					_bundle.getString("viernes"),
-					_bundle.getString("sabado"),
-					_bundle.getString("domingo")
+						"L","M","X","J","V","S","D"
 					};
 				int tamano1= sep/10;
 				int tamano2= tamanoFila/2;
@@ -339,12 +340,13 @@ public class I02CuadranteEmpleado {
 				gc.setFont(new Font(display,"Verdana",tamano+5,SWT.BOLD|SWT.ITALIC));
 				int tamano2= (int) ((-horasInicio.get(cont)+horaComienzoDescanso.get(cont))*10);
 				if(tamano2>40){tamano2=40;}
-				String horaUno = convertirString(horasInicio.get(cont),tamano2,1)+convertirString(horaComienzoDescanso.get(cont),tamano2,2);
-				dibujarTurno(gc,cont,this.horasInicio.get(cont),this.horaComienzoDescanso.get(cont),horaUno,tamano2);
 				tamano2= (int) ((-horaFinDescanso.get(cont)+horasFin.get(cont))*10);
 				if(tamano2>40){tamano2=40;}
+				String horaUno = convertirString(horasInicio.get(cont),tamano2,1)+convertirString(horaComienzoDescanso.get(cont),tamano2,2);
 				String horaDos = convertirString(horaFinDescanso.get(cont),tamano2,1)+convertirString(horasFin.get(cont),tamano2,2);
-				dibujarTurno(gc,cont,this.horaFinDescanso.get(cont),this.horasFin.get(cont),horaDos,tamano2);
+				String hora = horaUno + '\n'+"-----" +'\n'+'\n' +horaDos;
+				dibujarTurno(gc,cont,this.horasInicio.get(cont),this.horaComienzoDescanso.get(cont),
+						this.horaFinDescanso.get(cont),this.horasFin.get(cont),hora,tamano2);
 				gc.getFont().dispose();
 				gc.setFont(fuente);
 			}
@@ -363,22 +365,30 @@ public class I02CuadranteEmpleado {
 		int ihora= (int) (hora);
 		int iminutos = (int)(DMinutos);
 		String sminutos;
+		String shora;
 		if(iminutos<10){
 			sminutos="0"+iminutos;
 			}
 		else{
 			sminutos=""+iminutos;
 			}
+		if(ihora<10){
+			shora="0"+ihora;
+			}
+		else{
+			shora=""+ihora;
+			}
 		
 		String devolver;
 		if(tamano2>tamano+15){
 			devolver= ihora+":"+sminutos+'\n';
 		}
-		else if(posicion==1){
-			devolver= ihora+":"+sminutos+'-';
+		else 
+		if(posicion==1){
+			devolver= shora+":"+sminutos+'-';
 		}
 		else{
-			devolver= ihora+":"+sminutos;
+			devolver= shora+":"+sminutos;
 		}
 		return devolver;
 	}
@@ -467,27 +477,39 @@ public class I02CuadranteEmpleado {
 	 * @param dia dia de la semana del que vamos a dibujar el turno
 	 * @param horaComienzo hora del comienzo del turno
 	 * @param horaFinal	hora del fin del turno
+	 * @param float2 
+	 * @param float1 
 	 * @param Departamento	Nombre del departamento en el que va a trabajar
 	 * @param tamano2 
 	 */
-	public void dibujarTurno(GC gc,int dia,float horaComienzo,float horaFinal,String Departamento, int tamano2){
+	public void dibujarTurno(GC gc,int dia,float horaComienzo,float horaDescanso,float horaFinDescanso, float horaFinal, String Departamento, int tamano2){
 		if (gc!=null) {
 			int x_comienzo=convertirDia(dia);
 			int y_comienzo=convertirHora(horaComienzo);
 			int x_fin=convertirDia(dia+1);
 			int y_fin=convertirHora(horaFinal);
+			int x_com_des=convertirDia(dia);
+			int y_com_des=convertirHora(horaDescanso);
+			int x_fin_des=convertirDia(dia+1);
+			int y_fin_des=convertirHora(horaFinDescanso);
 			int m = margenIzq + margenNombres;
 			m=margenIzq;
 			int h = horaFin - horaInicio;
 			h=7;
-			this.cambiarPincel(gc, 150, 255, 150);
-			this.cambiarRelleno(gc, 100, 200, 100);
+			cambiarPincel(gc, 100, 200, 100);
+			cambiarRelleno(gc, 130, 200, 130);
 			int x_comienzo_c=x_comienzo;
 			int x_comienzo_t = (x_comienzo + x_fin)/2;
 			int longitud = (int)((x_fin-x_comienzo_c));
 			
 			gc.fillGradientRectangle(x_comienzo_c,y_comienzo,longitud,y_fin-y_comienzo,true);
+			this.cambiarPincel(gc, 50, 150, 100);
+			this.cambiarRelleno(gc, 00, 150, 000);
+			gc.fillGradientRectangle(x_com_des, y_com_des, longitud, y_fin_des-y_com_des, true);
 			this.cambiarPincel(gc, 0, 0, 0);
+			gc.setLineStyle(SWT.LINE_CUSTOM);
+			gc.drawRoundRectangle(x_com_des,y_com_des,longitud,y_fin_des-y_com_des,8,8);
+
 			gc.drawRoundRectangle(x_comienzo_c,y_comienzo,longitud,y_fin-y_comienzo,8,8);
 			int sep=(ancho - m - margenDer)/h;
 			float tamanox= sep/12;
@@ -501,7 +523,7 @@ public class I02CuadranteEmpleado {
 			}
 			
 			Font fuente=gc.getFont();
-			gc.setFont(new Font(display,"Verdana",tamano+tamano2/10,SWT.BOLD));
+			gc.setFont(new Font(display,"Verdana",tamano+tamano2/15,SWT.BOLD));
 			//gc.drawText(String.valueOf((int)horaComienzo),x_comienzo, (y_comienzo), true);
 			String text = Departamento;
 	        Point textSize = gc.textExtent(text);
