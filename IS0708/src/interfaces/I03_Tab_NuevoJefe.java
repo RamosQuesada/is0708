@@ -226,6 +226,11 @@ public class I03_Tab_NuevoJefe {
 		tPassword.setEditable(true);
 		
 		tNVend.setTextLimit(8);
+		tNombre.setTextLimit(20);
+		tApell1.setTextLimit(20);
+		tApell2.setTextLimit(20);
+		tEMail.setTextLimit(30);
+		
 		cSexo.setItems (new String [] {	bundle.getString("Femenino"),
 										bundle.getString("Masculino")});
 		cIdioma.setItems (new String [] {	bundle.getString("esp"),
