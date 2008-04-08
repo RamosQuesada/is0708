@@ -110,6 +110,7 @@ public class I04_Tab_AdminInicio {
 		resetBD.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, true, false,
 				1, 1));
 		resetBD.setText("RESET BD");
+		resetBD.setEnabled(false);
 		resetBD.addSelectionListener(new SelectionListener() {
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 			}
