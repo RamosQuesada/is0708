@@ -1156,7 +1156,9 @@ public class Vista {
 		this.controlador.insertNumerosDepartamento(n, nombredep); //tabla NumerosDEPARTAMENTOs
 		this.controlador.insertDepartamentoPruebas(nombredep, nvJefe); //tabla DEPARTAMENTO
 		//insertamos en la cache
-		
+		//Departamento d=new Departamento(nombredep,Integer.parseInt(num),getEmpleado(nvJefe),null,null);
+		//departamentosJefe.add(d);
+		//yo lo dejaria asi
 	}
 	/**
 	 * Función que nos dice si ya existe ese nombre de departament
