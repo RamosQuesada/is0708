@@ -70,18 +70,18 @@ public class I03_Tab_NuevoJefe {
 		this.colorSeleccionado = false;
 		
 		//cargamos las imagenes
-		ico_chico = new Image(tabFolder.getDisplay(), 
+		ico_chico = new Image(this.tabFolder.getDisplay(), 
 				I03_Tab_NuevoJefe.class.getResourceAsStream("ico_chico.gif"));
-		ico_chica = new Image(tabFolder.getDisplay(), 
+		ico_chica = new Image(this.tabFolder.getDisplay(), 
 				I03_Tab_NuevoJefe.class.getResourceAsStream("ico_chica.gif"));
 		
 		//creamos la nueva pestaña
-		final TabItem tabItemEmpleados = new TabItem(tabFolder, SWT.NONE);
+		final TabItem tabItemEmpleados = new TabItem(this.tabFolder, SWT.NONE);
 		tabItemEmpleados.setText(bundle.getString("I03_admin_jefe"));
 		tabItemEmpleados.setImage(ico_chico);
 
 		// Creamos el contenido de la pestaña cuadrantes
-		final Composite cNuevoJefe = new Composite(tabFolder, SWT.NONE);
+		final Composite cNuevoJefe = new Composite(this.tabFolder, SWT.NONE);
 		tabItemEmpleados.setControl(cNuevoJefe);
 
 		cNuevoJefe.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true,
@@ -105,12 +105,7 @@ public class I03_Tab_NuevoJefe {
 		final Image ico_chico = new Image(tabFolder.getDisplay(), I08_1_Anadir_empleado.class.getResourceAsStream("ico_chico.gif"));
 		final Image ico_chica = new Image(tabFolder.getDisplay(), I08_1_Anadir_empleado.class.getResourceAsStream("ico_chica.gif"));
 		
-		final Image ico_esp = new Image(tabFolder.getDisplay(), I08_1_Anadir_empleado.class.getResourceAsStream("ico_esp.gif"));
-		final Image ico_usa = new Image(tabFolder.getDisplay(), I08_1_Anadir_empleado.class.getResourceAsStream("ico_usa.gif"));
-		final Image ico_pol = new Image(tabFolder.getDisplay(), I08_1_Anadir_empleado.class.getResourceAsStream("ico_pol.gif"));
-
-		GridLayout layout = new GridLayout(2,false);
-
+		
 		final Group grupoIzq = new Group(cNuevoJefe2, SWT.NONE);
 		final Group grupoDer = new Group(cNuevoJefe2, SWT.NONE);
 		grupoIzq.setText(bundle.getString("I03_lab_DatosPersonales"));
@@ -230,6 +225,7 @@ public class I03_Tab_NuevoJefe {
 		tApell1.setTextLimit(20);
 		tApell2.setTextLimit(20);
 		tEMail.setTextLimit(30);
+		tPassword.setTextLimit(10);
 		
 		cSexo.setItems (new String [] {	bundle.getString("Femenino"),
 										bundle.getString("Masculino")});
@@ -242,7 +238,7 @@ public class I03_Tab_NuevoJefe {
 		
 		// Cogemos los contratos
 		ArrayList <Empleado> jefes=vista.getEmpleados(null, null, null, null, null, null, 2);
-		final ArrayList <Contrato> contratosJefes=new ArrayList();
+		final ArrayList <Contrato> contratosJefes=new ArrayList<Contrato>();
 		for (int j=0;j<jefes.size();j++){
 			contratosJefes.add(jefes.get(j).getContrato(vista));
 		}
@@ -423,8 +419,7 @@ public class I03_Tab_NuevoJefe {
 						
 						int id = contratosJefes.get(cContrato.getSelectionIndex()).getNumeroContrato();
 						//insertamos el nuevo jefe en la base de datos
-						//vista.getEmpleadoActual().getEmplId()
-						Empleado emp = new Empleado(null, Util.convertirNVend(tNVend.getText()), tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, 1-cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 2, id, fechaContrato, fechaAlta, null, cDepto.getText(), null, 0, cIdioma.getSelectionIndex(),-1);
+						Empleado emp = new Empleado(null, Util.convertirNVend(tNVend.getText()), tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 2, id, fechaContrato, fechaAlta, null, cDepto.getText(), null, 0, cIdioma.getSelectionIndex(),-1);
 						vista.getControlador().insertEmpleado(emp);
 					}
 				}
