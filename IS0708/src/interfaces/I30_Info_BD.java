@@ -1,8 +1,10 @@
 package interfaces;
 import idiomas.LanguageChanger;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -102,7 +104,33 @@ public class I30_Info_BD {
 		username_label.setText(this._bundle.getString("I30_label_username"));
 		password_label.setText(this._bundle.getString("I30_label_password"));
 		passwordAdmin_label.setText(this._bundle.getString("I30_label_passwordAdmin"));
-
+		
+		FileInputStream is;
+		try {
+			is = new FileInputStream("src"+File.separator+"interfaces"+File.separator+"configBD");
+			DataInputStream dis = new DataInputStream(is);
+			String ip= dis.readUTF();
+			String username=dis.readUTF();
+			String contraseña=EncriptCadena.desencripta(dis.readUTF());
+			String descodificacion=EncriptCadena.desencripta(dis.readUTF());
+			System.out.println(ip);
+			System.out.println(username);
+			System.out.println(contraseña);
+			System.out.println(descodificacion);
+			IP_text.setText(ip);
+			username_text.setText(username);
+			password_text.setText(contraseña);
+			passwordAdmin_text.setText(descodificacion);
+			
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			System.out.println("No se encuentra el archivo");
+			e1.printStackTrace();
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			System.out.println("Error de entrada salida");
+			e2.printStackTrace();
+		}
 		bAceptar.setText(this._bundle.getString("Aceptar"));
 		bCancelar.setText(this._bundle.getString("Cancelar"));
 		
