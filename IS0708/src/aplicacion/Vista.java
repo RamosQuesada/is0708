@@ -155,6 +155,8 @@ public class Vista {
 						else if (e.tipo.equals("Turno"))			controlador.eliminaTurno((Integer) e.o.get(0));
 						else if (e.tipo.equals("ContratoConTurnos"))	controlador.eliminaContratoConTurnos((Integer) e.o.get(0));
 						else if (e.tipo.equals("Empleado"))			controlador.eliminaEmpleado((Integer) e.o.get(0));
+						/*else if (e.tipo.equals("eliminaMesTrabaja")) {controlador.eliminaMesTrabaja((Integer))e.o.get(0),(Integer)e.o.get(1),e.o.get(2).toString());
+						}*/
 					}
 					else if(e.i==MODIFICAR) {
 						if      (e.tipo.equals("Contrato"))			controlador.modificarContrato(((Contrato)e.o.get(0)).getNumeroContrato(), ((Contrato)e.o.get(0)).getTurnoInicial(), ((Contrato)e.o.get(0)).getNombreContrato(), ((Contrato)e.o.get(0)).getPatron() , ((Contrato)e.o.get(0)).getDuracionCiclo(), ((Contrato)e.o.get(0)).getSalario(), ((Contrato)e.o.get(0)).getTipoContrato());
@@ -1006,6 +1008,20 @@ public class Vista {
 	
 	public void eliminaMesTrabaja(int mes, int anio, String departamento) {
 		controlador.eliminaMesTrabaja(mes, anio, departamento);
+		//borramos de la cache
+		/*boolean encontrado=false;
+		int i=0;
+		while(i<cuadrantes.size()&&!encontrado){
+			if(cuadrantes.get(i).getIdDepartamento().equals(departamento)){
+				cuadrantes.remove(i);
+				encontrado=true;
+			}
+		}
+		ArrayList<Object> aux=new ArrayList<Object>();
+		aux.add(mes);
+		aux.add(anio);
+		aux.add(departamento);
+		deleteCache(aux,"eliminaMesTrabaja");*/
 	}
 	
 	/**
