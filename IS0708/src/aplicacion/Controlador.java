@@ -169,7 +169,7 @@ public class Controlador {
 		ResultSet rs = this._db.obtenTodosNumVendedoresJefes();
 		int nv = 0;
 		try {
-			if (rs.next()) {
+			while (rs.next()) {
 				nv = rs.getInt("NumVendedor");
 				numvendedores.add(nv);
 			}

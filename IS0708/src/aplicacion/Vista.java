@@ -1,7 +1,6 @@
 package aplicacion;
 
 import java.sql.Date;
-import java.sql.ResultSet;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -58,11 +57,17 @@ public class Vista {
 	/** Caché local: Lista de turnos en los contratos de este departamento */
 	private ArrayList<Turno> turnos = new ArrayList<Turno>();
 
-	/** Caché local: Lista de departamentos de un jefe*/
+	/** Caché local: Lista de departamentos de un jefe */
 	private ArrayList<Departamento> departamentosJefe = new ArrayList<Departamento>();
 	
 	/** Caché local: Cuadrantes del departamento actual */
 	private ArrayList<Cuadrante> cuadrantes = new ArrayList<Cuadrante>();
+	
+	/** Caché local: Lista de nombres de jefes de departamento */
+	private ArrayList<String> nombreJefesDepartamento = new ArrayList<String>();
+	
+	/** Caché local: Lista de números de jefes de departamento */
+	private ArrayList<Integer> numeroJefesDepartamento = new ArrayList<Integer>();
 	
 	/**
 	 * cola FIFO de inserciones/actualizaciones a realizar en la BD
@@ -840,12 +845,29 @@ public class Vista {
 		return b;
 	}
 
-
-	
 	public ArrayList<Empleado> getEmpleadosDepartamento(String idDept) {
 		return controlador.getEmpleadosDepartamento(getEmpleadoActual().getEmplId(),idDept);
 	}
-
+	
+	/**
+	 * Funcion que mira si un empleado trabaja un determinado dia.
+	 * @param nv Numero de vendedor.
+	 * @param d Dia
+	 * @return Turno que trabaja, si no trabaja, null.
+	 */
+	public Turno trabajaEmpleadoDia(int nv, Date d) {
+		Cuadrante cuad = getCuadrante(d.getMonth()+1, d.getYear()+1900, getEmpleadoActual().getDepartamentoId());
+		if (cuad != null){
+			ArrayList<Trabaja> dia = cuad.getListaTrabajaDia(d.getDate());
+			for (int j=0; j<dia.size(); j++){
+				if (dia.get(j).getIdEmpl() == nv){
+					return getTurno(dia.get(j).getIdTurno());
+				}
+			}
+		}
+		return null;
+	}
+	
 	/***************************************************************************
 	 * Métodos relacionados con departamentos
 	 */
@@ -1038,6 +1060,9 @@ public class Vista {
 			temp = controlador.getDepartamentosJefe(numvendedor);
 			for (int i=0; i<temp.size(); i++)
 				departamentosJefe.add(controlador.getDepartamento(temp.get(i)));
+			setProgreso("Cargando jefes de departamento", 60);
+			numeroJefesDepartamento = controlador.getNumVendedorTodosJefes();
+			nombreJefesDepartamento = controlador.getNombreTodosJefes();
 			setProgreso("Cargando turnos", 70);
 			ArrayList<Turno> turnosDep = new ArrayList<Turno>();
 			for (int i=0; i<departamentosJefe.size(); i++) {
@@ -1099,7 +1124,7 @@ public class Vista {
 	 */
 	public ArrayList<String> getNombreTodosJefes() {
 		return this.controlador.getNombreTodosJefes();
-	
+//		return nombreJefesDepartamento;
 	}
 
 	/**
@@ -1107,6 +1132,7 @@ public class Vista {
 	 */
 	public ArrayList<Integer> getNumVendedorTodosJefes() {
 		return this.controlador.getNumVendedorTodosJefes();
+//		return numeroJefesDepartamento;
 	}
 	
 	
@@ -1232,25 +1258,6 @@ public class Vista {
 	}
 	
 	/**
-	 * Funcion que mira si un empleado trabaja un determinado dia.
-	 * @param nv Numero de vendedor.
-	 * @param d Dia
-	 * @return Turno que trabaja, si no trabaja, null.
-	 */
-	public Turno trabajaEmpleadoDia(int nv, Date d) {
-		Cuadrante cuad = getCuadrante(d.getMonth()+1, d.getYear()+1900, getEmpleadoActual().getDepartamentoId());
-		if (cuad != null){
-			ArrayList<Trabaja> dia = cuad.getListaTrabajaDia(d.getDate());
-			for (int j=0; j<dia.size(); j++){
-				if (dia.get(j).getIdEmpl() == nv){
-					return getTurno(dia.get(j).getIdTurno());
-				}
-			}
-		}
-		return null;
-	}
-	
-	/**
 	 * Función que devuelve Info de la distribucion de un Dpto dado un dia de la semana
 	 * @param dpto nombre del departamento
 	 * @param diaSemana entero que representa dia de la semana
@@ -1258,8 +1265,8 @@ public class Vista {
 	 * @return Info de la distribucion de "dpto" (numeros
 	 * 	maximos y minimos de empleados por franjas horarias) en "diaSemana"
 	 */	
-   
-   public void infoDistribucionDpto(String dpto, int diaSemana) {
+    /* TODO no se usa. Solo imprime por pantalla!!! */
+	public void infoDistribucionDpto(String dpto, int diaSemana) {
 			ArrayList<Integer[]> a = new ArrayList<Integer[]>();
 			a=this.controlador.getInfoDistribucionDpto(dpto, diaSemana);
 			for(int i=0; i<a.size();i++){
