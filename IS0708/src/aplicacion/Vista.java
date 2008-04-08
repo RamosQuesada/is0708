@@ -136,6 +136,7 @@ public class Vista {
 						else if (e.tipo.equals("Cuadrante"))		controlador.insertCuadrante((Cuadrante) e.o.get(0)); 			
 						else if (e.tipo.equals("TurnoContrato"))	controlador.insertTurnoPorContrato((Integer)e.o.get(0), (Integer)e.o.get(1));
 						else if (e.tipo.equals("Contrato"))			controlador.insertContrato((Contrato) e.o.get(0));
+					  //else if (e.tipo.equals("Departamento"))		controlador.insertDepartamento((Departamento)e.o.get(0));
 					}
 					else if (e.i==ELIMINAR) {
 						if      (e.tipo.equals("Contrato"))			controlador.eliminaContrato((Integer) e.o.get(0));
@@ -149,7 +150,7 @@ public class Vista {
 						else if (e.tipo.equals("Empleado"))			controlador.cambiarEmpleado(((Empleado)e.o.get(0)).getEmplId(), ((Empleado)e.o.get(0)).getNombre(), ((Empleado)e.o.get(0)).getApellido1(), ((Empleado)e.o.get(0)).getApellido2(), ((Empleado)e.o.get(0)).getFechaNac(), ((Empleado)e.o.get(0)).getSexo(), ((Empleado)e.o.get(0)).getEmail(), ((Empleado)e.o.get(0)).getPassword(), ((Empleado)e.o.get(0)).getGrupo(), ((Empleado)e.o.get(0)).getFcontrato(), ((Empleado)e.o.get(0)).getFAlta(), ((Empleado)e.o.get(0)).getFelicidad(), ((Empleado)e.o.get(0)).getIdioma(), ((Empleado)e.o.get(0)).getRango(), ((Empleado)e.o.get(0)).getTurnoFavorito(), ((Empleado)e.o.get(0)).getContratoId());
 						else if (e.tipo.equals("Mensaje"))			controlador.marcarMensaje((Mensaje)e.o.get(0));
 						//else if (e.tipo.equals("JefeDepartamento"))	controlador.modificaDpto(((Departamento)e.o.get(0)).getNombreDepartamento(), ((Departamento)e.o.get(0)).getJefeDepartamento().getEmplId()); 
-						/*else if (e.tipo.equals("NombreDepartamento")){	controlador.cambiaNombreDpto(e.o.get(0).toString(),e.o.get(1).toString());//nombre antiguo,nombrenuevo
+						/*else if (e.tipo.equals("NombreDepartamento")){controlador.cambiaNombreDpto(e.o.get(0).toString(),e.o.get(1).toString());//nombre antiguo,nombrenuevo
 																		controlador.cambiaNombreDepartamentoUsuario(e.o.get(0).toString(),e.o.get(1).toString());
 																		controlador.cambiaNombreNumerosDEPARTAMENTOs(e.o.get(0).toString(),e.o.get(1).toString());
 																		} */
@@ -1055,13 +1056,30 @@ public class Vista {
 	public void cambiarNombreDepartamento(String NombreAntiguo, String NombreNuevo) {
 		// TODO Auto-generated method stub
 //se modifica el nombre del Dpto. en las 3 tablas de Departamentos
+		
 		this.controlador.cambiaNombreDpto(NombreAntiguo, NombreNuevo);
 		this.controlador.cambiaNombreDepartamentoUsuario(NombreAntiguo, NombreNuevo);
 		this.controlador.cambiaNombreNumerosDEPARTAMENTOs(NombreAntiguo, NombreNuevo);
-		/*ArrayList <String> aux=new ArrayList<String>();//Aqui meto los dos nombres que necesito, de esta forma no hace falta 
+		/*boolean esta=false;
+		 * ArrayList <String> aux=new ArrayList<String>();//Aqui meto los dos nombres que necesito, de esta forma no hace falta 
 		aux.add(NombreAntiguo);
 		aux.add(NombreNuevo);
-		modifyCache(aux,"NombreDepartamento");*/
+		int i=0;
+		while(i<departamentosJefe.size()&&!esta){
+			if(departamentosJefe.get(i).getNombreDepartamento()==NombreAntiguo){
+				departamentosJefe.get(i).setNombreDepartamento(NombreNuevo);
+				modifyCache(aux,"NombreDepartamento");
+				esta=true;
+			}
+			i++;
+		}
+		if(!esta){
+			Departamento d=getDepartamento(NombreAntiguo);
+			d.setNombreDepartamento(NombreNuevo);
+			departamentosJefe.add(d);
+			modifyCache(aux,"NombreDepartamento");
+		}*/
+		
 	}
 	
 	/**
@@ -1111,6 +1129,8 @@ public class Vista {
 		this.controlador.insertDepartamentoUsuario(nvJefe, nombredep); //tabla DepartamentoUsuario
 		this.controlador.insertNumerosDepartamento(n, nombredep); //tabla NumerosDEPARTAMENTOs
 		this.controlador.insertDepartamentoPruebas(nombredep, nvJefe); //tabla DEPARTAMENTO
+		//insertamos en la cache
+		
 	}
 	/**
 	 * Función que nos dice si ya existe ese nombre de departament
@@ -1121,6 +1141,19 @@ public class Vista {
 		// TODO Auto-generated method stub by Carlos Sánchez
 		ArrayList<String> departamentos = this.getNombreTodosDepartamentos();
 		return departamentos.contains(text);
+		//miramos en la cache
+		/*int i = 0;
+		while (i<departamentosJefe.size()) {
+			if(departamentosJefe.get(i).getNombreDepartamento()==text){
+				return true;
+			}
+		}
+		//si no esta miramos en la BD y actualizamos la cache
+		Departamento d=this.getDepartamento(text);
+		departamentosJefe.add(d);//lo añado a la cache
+		//miro en controlador
+		ArrayList<String> numeros = this.controlador.getTodosNumerosDEPARTAMENTOs();
+		return numeros.contains(text);*/
 	}
 	/**
 	 * Función que nos dice si ya existe ese número de departamento
@@ -1129,8 +1162,25 @@ public class Vista {
 	 */
 	public boolean existeNumDepartamento(String text) {
 		// TODO Auto-generated method stub by Carlos Sánchez
+		
 		ArrayList<String> numeros = this.controlador.getTodosNumerosDEPARTAMENTOs();
 		return numeros.contains(text);
+		/*
+		//miramos en la cache
+		int i = 0;
+		while (i<departamentosJefe.size()) {
+			for(int j=0;j<departamentosJefe.get(i).getNumerosDepartamento().size();j++){
+				if(departamentosJefe.get(i).getNumerosDepartamento().get(j).toString()==text){
+					return true;
+				}
+			}
+		}
+		//si no esta miramos en la BD y actualizamos la cache
+		Departamento d=this.getDepartamento(text);//no esta bien, ya que nos dan su num departamento y no su nombre que es la clave
+		departamentosJefe.add(d);
+		//miro en controlador
+		ArrayList<String> numeros = this.controlador.getTodosNumerosDEPARTAMENTOs();
+		return numeros.contains(text);*/
 
 	}
 	/**
@@ -1141,10 +1191,21 @@ public class Vista {
 	public boolean cambiarJefeDepartamento(String text, String numjefe) {
 		// TODO Auto-generated method stub by Carlos Sanchez
 		return this.controlador.modificaDpto(text, Integer.valueOf(numjefe));
+		//buscamos en la cache
 		/*Departamento d=this.getDepartamento(text);
+		for(int i=0;i<departamentosJefe.size();i++){
+			if(departamentosJefe.get(i).getNombreDepartamento()==text){
+				departamentosJefe.get(i).set_JefeDepartamento(Integer.valueOf(numjefe));
+				d.set_JefeDepartamento(Integer.valueOf(numjefe));
+				modifyCache(d,"JefeDepartamento");
+				return true;
+			}
+		}
+		//si no esta
 		d.set_JefeDepartamento(Integer.valueOf(numjefe));//modifico el jefe del departamento,()
+		departamentosJefe.add(d);
 		modifyCache(d,"JefeDepartamento");
-		return true;*/ //poner la funcion a void
+		return true; //poner la funcion a void*/
 		}
 	/**
 	 * Función que devuelve Info de un Dpto. (empleados y horario del dia actual)
