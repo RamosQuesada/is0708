@@ -50,6 +50,9 @@ public class Vista {
 
 	/** Caché local: Lista de mensajes entrantes del usuario actual */
 	private ArrayList<Mensaje> mensajesEntrantes = new ArrayList<Mensaje>();
+	
+	/** Caché local: Lista de mensajes salientes del usuario actual */
+	private ArrayList<Mensaje> mensajesSalientes = new ArrayList<Mensaje>();
 
 	/** Caché local: Lista de contratos disponibles para este departamento */
 	private ArrayList<Contrato> contratos = new ArrayList<Contrato>();
@@ -141,7 +144,11 @@ public class Vista {
 						else if (e.tipo.equals("Cuadrante"))		controlador.insertCuadrante((Cuadrante) e.o.get(0)); 			
 						else if (e.tipo.equals("TurnoContrato"))	controlador.insertTurnoPorContrato((Integer)e.o.get(0), (Integer)e.o.get(1));
 						else if (e.tipo.equals("Contrato"))			controlador.insertContrato((Contrato) e.o.get(0));
-					  //else if (e.tipo.equals("Departamento"))		controlador.insertDepartamento((Departamento)e.o.get(0));
+						/*else if (e.tipo.equals("Departamento"))		controlador.insertDepartamento((Departamento)e.o.get(0));
+						else if (e.tipo.equals("CrearDepartamento")){ 	controlador.insertDepartamentoUsuario((Integer)e.o.get(2),e.o.get(0).toString()); //tabla DepartamentoUsuario
+																		controlador.insertNumerosDepartamento((Integer)e.o.get(1),e.o.get(0).toString()); //tabla NumerosDEPARTAMENTOs
+																		controlador.insertDepartamentoPruebas(e.o.get(0).toString(),(Integer)e.o.get(2)); //tabla DEPARTAMENTO
+						}*/
 					}
 					else if (e.i==ELIMINAR) {
 						if      (e.tipo.equals("Contrato"))			controlador.eliminaContrato((Integer) e.o.get(0));
@@ -911,6 +918,11 @@ public class Vista {
         String[] array=new String[dpts.size()];
         dpts.toArray(array);
         return array;
+    	/*String[] array=new String[departamentosJefe.size()];
+        for(int i=0;i<departamentosJefe.size();i++){
+        	array[i]=departamentosJefe.get(i).getNombreDepartamento();
+        }
+        return array;*/
     }
 	
 	/***************************************************************************
@@ -932,9 +944,18 @@ public class Vista {
 	public ArrayList<Mensaje> getMensajesEntrantes(int idEmpl, int a, int b) {
 		// Esto no funciona, y no sé por qué
 		// setProgreso("Cargando mensajes", 50);
-		ArrayList<Mensaje> array = controlador.getMensajesEntrantes(idEmpl, a,
-				b);
+		ArrayList<Mensaje> array = controlador.getMensajesEntrantes(idEmpl,a,b);
 		return array;
+		/*if(mensajesEntrantes.size()==0){//si esta vacio, rellenamos cache
+			ArrayList<Mensaje> array = controlador.getMensajesEntrantes(idEmpl,a,b);
+			for(int i=0;i<array.size();i++){
+				mensajesEntrantes.add(array.get(i));
+			}
+			return mensajesEntrantes;
+		}else{
+			return mensajesEntrantes;
+		}*/
+		
 	}
 
 	/**
@@ -951,6 +972,15 @@ public class Vista {
 	 */
 	public ArrayList<Mensaje> getMensajesSalientes(int idEmpl, int a, int b) {
 		return controlador.getMensajesSalientes(idEmpl, a, b);
+		/*if(mensajesSalientes.size()==0){//si esta vacio, rellenamos cache
+			ArrayList<Mensaje> array = controlador.getMensajesSalientes(idEmpl, a, b);
+			for(int i=0;i<array.size();i++){
+				mensajesEntrantes.add(array.get(i));
+			}
+			return mensajesEntrantes;
+		}else{
+			return mensajesEntrantes;
+		}*/ //no se si estara bien asi
 	}
 
 	/**
@@ -1117,7 +1147,7 @@ public class Vista {
 	 */
 	public ArrayList<String> getNombreTodosDepartamentos() {
 		return this.controlador.getNombreTodosDepartamentos();
-		/*leemos la cache, preguntar si leer los que tenemos en cache o 
+		/*leemos la cache, preguntar si leer los que tenemos en cache o miramos por otro lado
 		 * ArrayList <String> aux=new ArrayList<String>();
 		for(int i=0;i<departamentosJefe.size();i++){//no se si mirar en departamento jefe o meter otro arraylist
 			aux.add(departamentosJefe.get(i).getNombreDepartamento());		
@@ -1169,7 +1199,11 @@ public class Vista {
 		//insertamos en la cache
 		//Departamento d=new Departamento(nombredep,Integer.parseInt(num),getEmpleado(nvJefe),null,null);
 		//departamentosJefe.add(d);
-		//yo lo dejaria asi
+		/*ArrayList<Object> aux=new ArrayList<Object>();
+		aux.add(nombredep);
+		aux.add(n);
+		aux.add(nvJefe);
+		insertCache(aux,"crearDepartamento");*///no quitar el parseInt
 	}
 	/**
 	 * Función que nos dice si ya existe ese nombre de departament
