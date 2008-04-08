@@ -1117,6 +1117,12 @@ public class Vista {
 	 */
 	public ArrayList<String> getNombreTodosDepartamentos() {
 		return this.controlador.getNombreTodosDepartamentos();
+		/*leemos la cache, preguntar si leer los que tenemos en cache o 
+		 * ArrayList <String> aux=new ArrayList<String>();
+		for(int i=0;i<departamentosJefe.size();i++){//no se si mirar en departamento jefe o meter otro arraylist
+			aux.add(departamentosJefe.get(i).getNombreDepartamento());		
+		}
+		return aux;*/
 	}
 
 	public ArrayList<Contrato> getListaContratosDepartamento() {
