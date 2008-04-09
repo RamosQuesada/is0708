@@ -4,7 +4,7 @@ SetCompressor lzma
 
 # Defines
 !define REGKEY "SOFTWARE\$(^Name)"
-!define VERSION 0.12.0.7
+!define VERSION 0.13.3.2
 !define COMPANY "Turno-matic"
 !define URL "http://is0708.googlecode.com"
 
@@ -126,6 +126,9 @@ Section -Ayuda SEC0002
     SetOutPath $INSTDIR\Ayuda
     SetOverwrite on
     File /r ..\IS0708\Ayuda\*
+    RmDir /r $INSTDIR\Ayuda\.svn
+    RmDir /r $INSTDIR\Ayuda\ES\.svn
+    RmDir /r $INSTDIR\Ayuda\Imagenes\.svn
     SetOutPath $INSTDIR
     CreateShortcut $INSTDIR\Ayuda.lnk $INSTDIR\Ayuda\ES\index.html
     WriteRegStr HKLM "${REGKEY}\Components" Ayuda 1
@@ -274,8 +277,8 @@ Function DetectarJava
         GetFullPathName /SHORT $JAVA_HOME "$0"
         StrCpy $0 $JAVA_VER 1 0
         StrCpy $1 $JAVA_VER 1 2
-        StrCpy $JAVA_VER "$0$1"
-        IntCmp 16 $JAVA_VER FoundCorrectJavaVer FoundCorrectJavaVer JavaVerNotCorrect
+        StrCpy $JAVA_VER "$0.$1"
+        IntCmp 1.6 $JAVA_VER FoundCorrectJavaVer FoundCorrectJavaVer JavaVerNotCorrect
 
     FoundCorrectJavaVer:
         IfFileExists "$JAVA_HOME\bin\javaw.exe" 0 JavaNotPresent
