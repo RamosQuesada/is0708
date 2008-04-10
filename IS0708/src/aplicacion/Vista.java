@@ -533,6 +533,7 @@ public class Vista {
 							locale = l.getCurrentLocale();
 							if (!loader.isAlive())
 								loader.start();
+							i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);
 						} else {
 							// Si el password no coincide
 							// Se muestra un mensaje en caso de que no se haya detectado el lector
@@ -557,8 +558,8 @@ public class Vista {
 						messageBox.open();
 					}
 				}
-				if (i02!=null) i02.dispose();
-				i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);
+//				if (i02!=null) i02.dispose();
+//				i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);
 			} else {
 				// Se ha pulsado el botón Cancelar o cerrar, por tanto hay que salir de la aplicación
 				shell.getDisplay().dispose();

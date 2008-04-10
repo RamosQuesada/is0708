@@ -271,6 +271,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 						iCuad[i].add(new I_Trabaja(c[i].get(j)));
 					}
 				}
+				//ordenarICuad();
 				cacheCargada = true;
 				if (!display.isDisposed()) {
 					display.asyncExec(new Runnable() {
@@ -282,6 +283,36 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			}
 		}
 		catch (Exception e) {};
+	}
+	
+	private void ordenarICuad() {
+		// Para cada día
+		for (int i=0; i<iCuad.length; i++) {
+			// Ordenar el arraylist por inserción
+			for (int j=1; j<iCuad[i].size(); j++) {
+				int k=j;
+				boolean colocado = false;
+				while (!colocado && k<iCuad[i].size()) {
+					// Si el seleccionado es menor que el que estoy mirando
+					if ((	iCuad[i].get(j).getEmpl().getApellido1() +
+							iCuad[i].get(j).getEmpl().getApellido2() +
+							iCuad[i].get(j).getEmpl().getNombre()
+							).compareTo(
+									iCuad[i].get(k).getEmpl().getApellido1() +
+									iCuad[i].get(k).getEmpl().getApellido2() +
+									iCuad[i].get(k).getEmpl().getNombre()
+									)==-1) {
+						// Colocarlo ahí
+						iCuad[i].add(j, iCuad[i].get(k));
+						iCuad[i].remove(k+1);
+						colocado = true;
+						System.out.println("movido");
+					}
+					k++;
+							
+				}
+			}
+		}
 	}
 	
 	/**
@@ -345,6 +376,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 
 		// Preparar el canvas
 		int opciones = SWT.FILL | SWT.NO_BACKGROUND;
+		//TODO poner barra de scroll
 		if (turno==null) opciones = SWT.FILL | SWT.NO_BACKGROUND | SWT.V_SCROLL;
 		canvas = new Canvas(cCuadrante, opciones);
 		canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
@@ -824,6 +856,18 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				getTurno().
 				dibujar(display, nombre, gc, i, vista.getEmpleados().get(i).dameColor() ,margenIzq, margenNombres,margenSup,sep_vert_franjas,alto_franjas,tamHora, tamSubdiv, horaApertura, numSubdivisiones);
 			}
+
+/*			for ( int i=0; i<vista.getEmpleados().size(); i++) {
+			// Dibujar el nombre del empleado y el turno
+				String nombre = vista.getEmpleados().get(i).getNombre().charAt(0) + ". " + vista.getEmpleados().get(i).getApellido1();			
+		
+				for (int j = 0; j < iCuad[dia-1].size(); j++) {
+					if (vista.getEmpleados().get(i).getEmplId() == iCuad[dia-1].get(j).getEmpl().getEmplId())
+					iCuad[dia-1].get(j).getTurno().dibujar(display, nombre, gc, i, vista.getEmpleados().get(j).dameColor() ,margenIzq, margenNombres,margenSup,sep_vert_franjas,alto_franjas,tamHora, tamSubdiv, horaApertura, numSubdivisiones);
+				}
+			}
+*/
+
 		}
 	}
 	
