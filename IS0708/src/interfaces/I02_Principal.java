@@ -58,7 +58,7 @@ public class I02_Principal {
 		this.bundle = bundle;
 		this.locale = locale;
 		this.vista = vista;
-		if (vista.getEmpleadoActual()!=null)crearVentana(vista.getEmpleadoActual().getRango());
+		if (vista.getEmpleadoActual()!=null) crearVentana(vista.getEmpleadoActual().getRango());
 	}
 	
 	
@@ -1138,10 +1138,10 @@ public class I02_Principal {
 			// Tabs de administrador
 			vista.getControlador().abrirConexionBD();
 			crearTabAdminInicio(tabFolder);
-			crearTabAdminNuevoJefe(tabFolder);
-			crearTabAdminEliminaJefe(tabFolder);
-			crearTabAdminDepartamentos(tabFolder);	
-			crearTabAdminContratos(tabFolder);
+//			crearTabAdminNuevoJefe(tabFolder);
+//			crearTabAdminEliminaJefe(tabFolder);
+//			crearTabAdminDepartamentos(tabFolder);	
+//			crearTabAdminContratos(tabFolder);
 			break;
 		case 2:
 			// Tabs de jefe

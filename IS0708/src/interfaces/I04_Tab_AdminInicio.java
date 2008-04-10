@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -32,7 +33,7 @@ public class I04_Tab_AdminInicio {
 	private Image ico_cuadrante;
 
 	public I04_Tab_AdminInicio(final ResourceBundle bundle, final Vista vista,
-			final TabFolder tabFolder) {
+		final TabFolder tabFolder) {
 		this.bundle = bundle;
 		this.vista = vista;
 		this.tabFolder = tabFolder;
@@ -48,42 +49,42 @@ public class I04_Tab_AdminInicio {
 		Composite cInicio = new Composite(tabFolder, SWT.NONE);
 		tabItemAdminInicio.setControl(cInicio);
 
-		Image _fondo_turnomatic;
-		_fondo_turnomatic = new Image(tabFolder.getDisplay(), I04_Tab_AdminInicio.class
-				.getResourceAsStream("admin_fondo.jpg"));
+		Image fondo = new Image(tabFolder.getDisplay(), I04_Tab_AdminInicio.class.getResourceAsStream("admin.png"));
 
-		cInicio
-				.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,
-						1));
+		cInicio.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		// Le añadimos un layout
-		GridLayout lInicio = new GridLayout();
-		lInicio.numColumns = 2;
-		cInicio.setLayout(lInicio);
+		GridLayout l = new GridLayout(2, false);
+		l.verticalSpacing = 0;
+		l.marginLeft=0;
+		l.marginBottom=0;
+		l.marginRight=0;
+		l.marginTop=0;
+		cInicio.setLayout(l);
 
-		final Label bienvenido = new Label(cInicio, SWT.None);
-		bienvenido.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, true,
-				2, 1));
+		final Label lFondo = new Label(cInicio, SWT.NONE);
+		lFondo.setImage(fondo);
+		lFondo.setLayoutData(new GridData(SWT.FILL, SWT.TOP , false, false, 1,1));
+		lFondo.setBackground(new Color(vista.getDisplay(), 210, 165, 62));
+
+		Composite compDer = new Composite(cInicio, SWT.NONE);
+		compDer.setLayout(new GridLayout(2, false));
+		compDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1,2));
+
+		final Label lFondo2 = new Label(cInicio, SWT.NONE);
+		lFondo2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1,1));
+		lFondo2.setBackground(new Color(vista.getDisplay(), 210, 165, 62));
+
+		final Label bienvenido = new Label(compDer, SWT.WRAP);
+		bienvenido.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 2, 1));
 		bienvenido.setText(bundle.getString("I02_bienvenido"));
-		//Color color = new Color(display,0, 0, 0);
-		//bienvenido.setBackground(color);
 
-		Image logo = new Image(tabFolder.getDisplay(), I02_Principal.class
-				.getResourceAsStream("LogoTM.jpg"));
-		final Label lLogo = new Label(cInicio, SWT.None);
-		lLogo.setImage(logo);
-		lLogo
-				.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, true, 2,
-						1));
-
-		final Label lConfig = new Label(cInicio, SWT.None);
-		lConfig.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, false, 1,
-				1));
+		final Label lConfig = new Label(compDer, SWT.WRAP);
+		lConfig.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, false, 1, 1));
 		lConfig.setText(bundle.getString("I02_configBD"));
 
-		final Button configBD = new Button(cInicio, SWT.PUSH);
-		configBD
-				.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, true, 1, 1));
+		final Button configBD = new Button(compDer, SWT.PUSH);
+		configBD.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		configBD.setText("CONFIG BD");
 		configBD.addSelectionListener(new SelectionListener() {
 			public void widgetDefaultSelected(SelectionEvent arg0) {
@@ -101,14 +102,12 @@ public class I04_Tab_AdminInicio {
 			}
 		});
 
-		final Label lReset = new Label(cInicio, SWT.None);
-		lReset.setLayoutData(new GridData(SWT.CENTER, SWT.BOTTOM, false, false,
-				1, 1));
+		final Label lReset = new Label(compDer, SWT.WRAP);
+		lReset.setLayoutData(new GridData(SWT.CENTER, SWT.BOTTOM, true, false, 1, 1));
 		lReset.setText(bundle.getString("I02_resetBD"));
 
-		final Button resetBD = new Button(cInicio, SWT.PUSH);
-		resetBD.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, true, false,
-				1, 1));
+		final Button resetBD = new Button(compDer, SWT.PUSH);
+		resetBD.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1));
 		resetBD.setText("RESET BD");
 		resetBD.setEnabled(false);
 		resetBD.addSelectionListener(new SelectionListener() {
@@ -129,10 +128,5 @@ public class I04_Tab_AdminInicio {
 				}
 			}
 		});
-
-		cInicio.setBackgroundImage(_fondo_turnomatic);
 	}
-	
-	
-	
 }
