@@ -1,7 +1,5 @@
 package interfaces;
 
-import java.util.Random;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -18,70 +16,62 @@ import aplicacion.Vista;
 
 public class I19_Excepcion {
 	private Shell shell;
-	public I19_Excepcion(Vista v, Exception excepcion) {		
-		Random rnd = new Random();
+	public I19_Excepcion(Vista v, Exception excepcion) {
 		final Vista vista = v;
-		v.getDisplay().dispose();
-		Display d = new Display();
+		Display d;
+		if (excepcion != null) {
+			v.getDisplay().dispose();
+			d = new Display();
+		}
+		else {
+			d = v.getDisplay();
+		}
 		shell = new Shell (d, SWT.CLOSE | SWT.RESIZE);
 		
 		//Layout del shell
 		GridLayout lShell = new GridLayout();
-		lShell.numColumns = 1;		
 		shell.setLayout(lShell);
-		if (excepcion!=null)shell.setText("¡Excepcioooooooooon!");
-		else shell.setText("Informe de errores");
+		shell.setText("Informe");
 
 		final Composite cCuerpoMen = new Composite (shell, SWT.BORDER);
-		cCuerpoMen.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		cCuerpoMen.setLayout(new GridLayout(1, false));
-		final Label lMensaje	= new Label(cCuerpoMen, SWT.LEFT);
-		final Text tMensaje = new Text(cCuerpoMen,SWT.BORDER | SWT.WRAP);
-		tMensaje.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		cCuerpoMen.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		cCuerpoMen.setLayout(new GridLayout(2, false));
 		
-		String e = "Ha ocurrido una excepción";
-		int r = rnd.nextInt(8);
-		switch (r) {
-		case 0:
-			e+= " y la aplicación ha hecho PUM.";
-			break;
-		case 1:
-			e+= " y la aplicación se ha ido a tomar por culo.";
-			break;
-		case 2:
-			e+= " y ya estoy hasta los huevetes.";
-			break;
-		case 3:
-			e+= ". Se notificará a Gervás de forma automática.";
-			break;
-		case 4:
-			e+= " del copón. Mira, mira:";
-			break;
-		case 5:
-			e+= ". Cómo no.";
-			break;
-		case 6:
-			e+= ". A depurar tocan.";
-			break;
-		case 7:
-			e+= ". TOMA TOMA Y TOMAAAAAAA.";
-			break;
+		final Label lNombre = new Label(cCuerpoMen, SWT.LEFT);
+		lNombre.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		lNombre.setText("Nombre");
+		final Text tNombre = new Text(cCuerpoMen,SWT.BORDER);
+		tNombre.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		
+		final Label lGrupo = new Label(cCuerpoMen, SWT.LEFT);
+		lGrupo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		lGrupo.setText("Grupo");
+		final Text tGrupo = new Text(cCuerpoMen,SWT.BORDER);
+		tGrupo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		
+		
+		final Label lPuesto = new Label(cCuerpoMen, SWT.LEFT);
+		lPuesto.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		lPuesto.setText("Puesto");
+		final Text tPuesto = new Text(cCuerpoMen,SWT.BORDER);
+		tPuesto.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		}
+		final Label lMensaje	= new Label(cCuerpoMen, SWT.LEFT);
+		lMensaje.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		lMensaje.setText("Aquí puedes escribir un informe o avisarnos de un error:");
+		final Text tMensaje = new Text(cCuerpoMen,SWT.BORDER | SWT.WRAP);
+		tMensaje.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		
+		String e = "";
 		if (excepcion==null) e="";
 		else {
 			e += "\n\n" + excepcion.toString() + "\n";
 			for (int i=0; i < excepcion.getStackTrace().length; i++) {
 				e+= "\tat " + excepcion.getStackTrace()[i].toString() + "\n";
 			}
-			excepcion.printStackTrace();
 		}
-		lMensaje.setText(e);
-		if (excepcion!=null)
-			tMensaje.setText("Por favor, explica breve pero detalladamente cómo ha ocurrido este error.");
-		else
-			tMensaje.setText("Por favor, explica breve pero detalladamente el fallo que has visto.");
 		
+
 		final Composite cEnviarCancelar = new Composite (shell, SWT.BORDER);
 		cEnviarCancelar.setLayoutData(new GridData(SWT.FILL, SWT.DOWN, true, false, 1, 1));
 		GridLayout lEnviarCancelar = new GridLayout();
@@ -96,7 +86,11 @@ public class I19_Excepcion {
 			public void widgetDefaultSelected(SelectionEvent arg0) {}
 
 			public void widgetSelected(SelectionEvent arg0) {
-				vista.getControlador().insertIssue(tMensaje.getText() + "\nTraza:\n" + traza);
+				vista.getControlador().insertIssue(
+						"Nombre: " + tNombre.getText() + "\n" + 
+						"Grupo : " + tGrupo.getText()  + "\n" +
+						"Puesto: " + tPuesto.getText() + "\n" + 
+						"Mensaje: " + tMensaje.getText() + "\nTraza:\n" + traza);
 				shell.close();
 			}
 			
@@ -114,7 +108,7 @@ public class I19_Excepcion {
 			}
 			
 		});
-		tMensaje.setFocus();
+		tNombre.setFocus();
 		tMensaje.selectAll();
 				
 		// Ajustar el tamaño de la ventana al contenido
