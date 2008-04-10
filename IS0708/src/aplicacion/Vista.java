@@ -515,7 +515,6 @@ public class Vista {
 							"Administrador", "", "", null, 0, "", "admin", 0,
 							0, 0, null, null, null, null, null, 0, 0, 0));
 					identificadoOCancelado = true;
-					i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);
 				// Login normal
 				} else {
 					emp = getEmpleado(login.getNumeroVendedor());
@@ -532,9 +531,10 @@ public class Vista {
 									.getIdioma());
 							bundle = l.getBundle();
 							locale = l.getCurrentLocale();
-							i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);
+
 							if (!loader.isAlive())
 								loader.start();
+//							i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);
 							
 						} else {
 							// Si el password no coincide
@@ -561,7 +561,7 @@ public class Vista {
 					}
 				}
 //				if (i02!=null) i02.dispose();
-//				i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);
+				i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);
 			} else {
 				// Se ha pulsado el botón Cancelar o cerrar, por tanto hay que salir de la aplicación
 				shell.getDisplay().dispose();
