@@ -215,6 +215,7 @@ public class I02CuadranteEmpleado {
 		int altoDia = alto/numSemanas;
 		int diaSemana=this.primerDiaMes;
 		int semana=1;
+		if(horaInicioMes!=null){
 		for(int cont=0;cont<this.horaInicioMes.size();cont++){
 			dibujarDiaMes(gc,diaSemana-1,semana,horaInicioMes.get(cont),this.horaFinMes.get(cont));
 			diaSemana++;
@@ -222,6 +223,7 @@ public class I02CuadranteEmpleado {
 				diaSemana=1;
 				semana++;
 			}
+		}
 		}
 		/*
 		this.dibujarDiaMes(gc, 3, 1);

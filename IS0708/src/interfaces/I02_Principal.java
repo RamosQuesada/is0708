@@ -763,6 +763,7 @@ public class I02_Principal {
 			// Seleccionado por mes
 			public void handleEvent(Event e) {
 				if (bPorMes.getSelection()) {
+				
 					cuadrante.setMensual();
 					//crear ventana informando
 					/*
