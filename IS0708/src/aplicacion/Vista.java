@@ -515,6 +515,7 @@ public class Vista {
 							"Administrador", "", "", null, 0, "", "admin", 0,
 							0, 0, null, null, null, null, null, 0, 0, 0));
 					identificadoOCancelado = true;
+					i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);
 				// Login normal
 				} else {
 					emp = getEmpleado(login.getNumeroVendedor());
@@ -531,9 +532,10 @@ public class Vista {
 									.getIdioma());
 							bundle = l.getBundle();
 							locale = l.getCurrentLocale();
+							i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);
 							if (!loader.isAlive())
 								loader.start();
-							i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);
+							
 						} else {
 							// Si el password no coincide
 							// Se muestra un mensaje en caso de que no se haya detectado el lector
