@@ -905,7 +905,9 @@ public class Vista {
 		/*if (!departamentosJefe.contains(departamento)){
 			departamentosJefe.add(departamento);
 		}
-		insertCache(departamento,"Departamento");*/
+		insertCache(departamento,"Departamento");
+		return true;
+		*/
 		return controlador.insertDepartamento(departamento);
 	}
 
@@ -1012,8 +1014,8 @@ public class Vista {
 		//borramos de la cache
 		/*boolean encontrado=false;
 		int i=0;
-		while(i<cuadrantes.size()&&!encontrado){
-			if(cuadrantes.get(i).getIdDepartamento().equals(departamento)){
+		while(i<cuadrantes.size()&& !encontrado){
+			if(cuadrantes.get(i).getIdDepartamento().equals(departamento) && cuadrantes.get(i).getMes()==mes && cuadrantes.get(i).getAnio()==anio){
 				cuadrantes.remove(i);
 				encontrado=true;
 			}
