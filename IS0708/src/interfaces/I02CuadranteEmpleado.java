@@ -1,6 +1,7 @@
 package interfaces;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ResourceBundle;
@@ -13,6 +14,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
 import aplicacion.Vista;
 import aplicacion.datos.Empleado;
+import aplicacion.datos.Turno;
 
 public class I02CuadranteEmpleado {
 	
@@ -41,6 +43,21 @@ public class I02CuadranteEmpleado {
 	private ArrayList<Float> horasFin;
 	private ArrayList<Float> horaComienzoDescanso;
 	private ArrayList<Float> horaFinDescanso;
+	private ArrayList<Time> horaInicioMes;
+	private ArrayList<Time> horaFinMes;
+	private int primerDiaMes;
+	
+	public void ponPrimerDiaMes(int dia){
+		this.primerDiaMes=dia;
+	}
+	public void ponHoraInicioMes(ArrayList<Time> inicio){
+		this.horaInicioMes=inicio;
+	}
+	
+	public void ponHoraFinMes(ArrayList<Time> fin){
+		this.horaFinMes=fin;
+	}
+	
 	//private ArrayList<Turno> tiposTurno;
 	private I02_threadEmpl thread;
 	//private I02_cuadrEmpl superior;
@@ -188,15 +205,25 @@ public class I02CuadranteEmpleado {
 		//		gc.drawText(String.valueOf(j+1), margenIzq + margenNombres + j*anchoDia + anchoDia/2, margenSup);
 			}
 
-		gc.drawText(empleado.getNombre(), margenIzq, margenSup + 20 + 0*altoFila);
-		for (int j=0; j < ultimoDia; j++) {
+		//gc.drawText(empleado.getNombre(), margenIzq, margenSup + 20 + 0*altoFila);
+		//for (int j=0; j < ultimoDia; j++) {
 		//	gc.drawRectangle(margenIzq + margenNombres + j*anchoDia, margenSup + 20 + 0*altoFila, anchoDia, altoFila);
-		}
 
 		// Esto es para un calendario normal
 		int altoMes = alto - margenSup - margenInf;
 		int numSemanas = 5;
 		int altoDia = alto/numSemanas;
+		int diaSemana=this.primerDiaMes;
+		int semana=1;
+		for(int cont=0;cont<this.horaInicioMes.size();cont++){
+			dibujarDiaMes(gc,diaSemana-1,semana,horaInicioMes.get(cont),this.horaFinMes.get(cont));
+			diaSemana++;
+			if(diaSemana==8){
+				diaSemana=1;
+				semana++;
+			}
+		}
+		/*
 		this.dibujarDiaMes(gc, 3, 1);
 		this.dibujarDiaMes(gc, 4, 1);
 		this.dibujarDiaMes(gc, 5, 1);
@@ -207,7 +234,7 @@ public class I02CuadranteEmpleado {
 		this.dibujarDiaMes(gc, 2, 2);
 		this.dibujarDiaMes(gc, 2, 3);
 		this.dibujarDiaMes(gc, 2, 4);
-		this.dibujarDiaMes(gc, 2, 5);
+		this.dibujarDiaMes(gc, 2, 5);*/
 		
 	}
 	/**
@@ -561,17 +588,25 @@ public class I02CuadranteEmpleado {
 		return posicion_absoluta;
 	}
 	
-	public void dibujarDiaMes(GC gc,int dia,int semana){
+	public void dibujarDiaMes(GC gc,int dia,int semana,Time entrada, Time Fin){
 		int m = margenIzq + margenNombres;
 		m = margenIzq;
 		int h = horaFin - horaInicio;
 		h=7;
 		int sep=(ancho - m - margenDer)/h;
 		int sep2=(alto - margenInf - margenSup)/h;
-		gc.setLineStyle(SWT.LINE_DOT);
-		cambiarPincel(gc, 0,0,0);
+		gc.setLineStyle(SWT.LINE_SOLID);
+		cambiarPincel(gc, 100,200,100);
+		this.cambiarRelleno(gc, 100, 200, 100);
 		gc.setLineWidth(2);
+		gc.fillGradientRectangle(this.margenIzq+dia*sep, h+semana*sep2, sep, sep2,true);
+		cambiarPincel(gc, 0,0,0);
 		
+		if((entrada!=null)&&(Fin!=null)){
+			String inicio =entrada.getHours()+":"+entrada.getMinutes();
+			String fin =Fin.getHours()+":"+Fin.getMinutes();
+			gc.drawText(inicio+"-"+fin, margenIzq+dia*sep, h+semana*sep2+sep2/2,false);
+		}
 		gc.drawRectangle(this.margenIzq+dia*sep, h+semana*sep2, sep, sep2);
 	//	gc.drawLine(this.margenIzq, convertirHora(hora), this.margenIzq+7*sep,convertirHora(hora));
 		gc.setLineStyle(SWT.LINE_SOLID);

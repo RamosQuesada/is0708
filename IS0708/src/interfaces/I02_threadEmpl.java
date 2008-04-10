@@ -15,6 +15,14 @@ import aplicacion.utilidades.Util;
  */
 public class I02_threadEmpl extends Thread{
 	
+	public static int Lunes =1;
+	public static int Martes =2;
+	public static int Miercoles =3;
+	public static int Jueves =4;
+	public static int Viernes =5;
+	public static int Sabado =6;
+	public static int Domingo =7;
+	
 	/**
 	 * indica si debemos finalizar la ejecucion del thread lo antes posible
 	 */
@@ -84,7 +92,30 @@ public class I02_threadEmpl extends Thread{
 		calendario.set(GregorianCalendar.DAY_OF_MONTH, fecha.getDate());
 		calendario.set(GregorianCalendar.MONTH, convertir(fecha.getMonth()));
 		calendario.set(GregorianCalendar.YEAR, fecha.getYear());
-			
+
+		GregorianCalendar calendario2 = new GregorianCalendar();	
+		calendario2.set(GregorianCalendar.DAY_OF_MONTH, fecha.getDate());
+		calendario2.set(GregorianCalendar.MONTH, convertir(fecha.getMonth()));
+		calendario2.set(GregorianCalendar.YEAR, fecha.getYear());
+		while((calendario2.get(GregorianCalendar.DAY_OF_MONTH)!=1)&&(!finalizar)){
+			calendario2.roll(GregorianCalendar.DATE, -1);
+		}		
+		
+
+		//System.out.println("primer dia mes "+(GregorianCalendar.FRIDAY-calendario2.get(GregorianCalendar.DAY_OF_WEEK)));
+		int lunes = GregorianCalendar.FRIDAY;
+		int hoy = calendario2.get(GregorianCalendar.DAY_OF_WEEK);
+		int primer_dia=0;
+		if(hoy<lunes){
+			primer_dia=hoy+7-lunes+1;
+		}
+		else{
+			primer_dia=hoy-lunes+1;
+		}
+		
+		this.cuadrante.ponPrimerDiaMes(primer_dia);
+		
+		
 		int numDias=0;
 		int mes_inicial=calendario.get(GregorianCalendar.MONTH);
 		calendario.setFirstDayOfWeek(GregorianCalendar.SUNDAY);
@@ -95,7 +126,6 @@ public class I02_threadEmpl extends Thread{
 			calendario.roll(GregorianCalendar.DATE, -1);
 			numDias++;
 		}
-
 		int mes_final=calendario.get(GregorianCalendar.MONTH);
 		boolean cambio=false;
 		if(mes_inicial!=mes_final){
@@ -136,14 +166,19 @@ public class I02_threadEmpl extends Thread{
 				}
 			}
 			
+			//dar los turnos
+
+			
 			
 			if((cuadrante.dameVista()).isCacheCargada()){
 				
 			ArrayList<Trabaja> lista_trabaja=new ArrayList<Trabaja>();
+			
 			try{
 				int dia=calendario.get(GregorianCalendar.DAY_OF_MONTH);
 				int ano=calendario.get(GregorianCalendar.YEAR)+1900;
 				int mes=calendario.get(GregorianCalendar.MONTH);
+				//Turno tturno= this.dameTurno(dia,mes,ano);
 				lista_trabaja=(cuadrante.dameVista()).getListaTrabajaDia(dia, mes+1, ano, cuadrante.dameEmpleado().getDepartamentoId());
 			}
 			catch(Exception e){
@@ -170,7 +205,7 @@ public class I02_threadEmpl extends Thread{
 			
 
 			Turno tturno= (cuadrante.dameVista()).getTurno(turno);
-				
+			
 			//__fin boss
 			Time horaEntrada,horaSalida,horaDescanso;
 			int duracionDescanso;
@@ -178,7 +213,7 @@ public class I02_threadEmpl extends Thread{
 			Float horaSalidaFloat=0.0f;
 			Float horaDescansoFloat = 0.0f;
 			Float finHoraDescansoFloat = 0.0f;
-			if((turno!=0)&&(!finalizar)){
+			if((tturno!=null)&&(!finalizar)){
 				int actual=0;
 					
 				horaEntrada=tturno.getHoraEntrada();
@@ -209,6 +244,42 @@ public class I02_threadEmpl extends Thread{
 				
 				calendario.add(GregorianCalendar.DATE, 1);
 		}
+		
+		//ArrayList<String> turnos= new ArrayList<String>();
+		if(!finalizar){
+		boolean recorrido_mes=false;
+		ArrayList<Time> lista_inicio_mes=new ArrayList<Time>();
+		ArrayList<Time> lista_fin_mes=new ArrayList<Time>();
+		//Trabaja trabaja_mes;
+		Turno turno;
+		while(!recorrido_mes){
+	//	System.out.println("dia"+calendario2.get(GregorianCalendar.DAY_OF_WEEK));
+	//	System.out.println("dia"+calendario2.get(GregorianCalendar.DAY_OF_MONTH));
+		try{
+			turno=this.dameTurno(calendario2.get(GregorianCalendar.DAY_OF_MONTH),
+					calendario2.get(GregorianCalendar.MONTH), calendario2.get(GregorianCalendar.YEAR));
+			if(turno!=null){
+				lista_inicio_mes.add((turno.getHoraEntrada()));
+				lista_fin_mes.add((turno.getHoraSalida()));
+			}
+			else{
+				lista_inicio_mes.add(null);
+				lista_fin_mes.add(null);
+			}
+			
+			calendario2.roll(GregorianCalendar.DATE, 1);
+			if(calendario2.get(GregorianCalendar.DAY_OF_MONTH)==1){
+				recorrido_mes=true;
+			}
+
+		}
+		catch(Exception e){
+			
+		}
+		this.cuadrante.ponHoraInicioMes(lista_inicio_mes);
+		this.cuadrante.ponHoraFinMes(lista_fin_mes);
+		}
+		}
 			corriendo=false;
 			
 			if(!finalizar){
@@ -220,6 +291,43 @@ public class I02_threadEmpl extends Thread{
 				cuadrante.ponRedibujar(true);
 			}
 			
+	}
+	
+	public Turno dameTurno(int fdia,int fmes,int fano){
+		ArrayList<Trabaja> lista_trabaja=new ArrayList<Trabaja>();
+		try{
+			int dia=fdia;
+			int ano=fano+1900;
+			int mes=fmes;
+			lista_trabaja=(cuadrante.dameVista()).getListaTrabajaDia(dia, mes+1, ano, cuadrante.dameEmpleado().getDepartamentoId());
+		}
+		catch(Exception e){
+				
+		}
+			
+		Trabaja trabaja=null;	
+		int contador=0;
+		boolean fin=false;
+		while((!fin)&&(contador<lista_trabaja.size())){
+			if((lista_trabaja.get(contador).getIdEmpl()==cuadrante.dameEmpleado().getEmplId())){
+				trabaja=lista_trabaja.get(contador);
+				fin=true;
+			}
+			contador++;
+			}
+			
+		int turno=0;
+		
+		/* si el turno no es vacio, vemos que id tiene */
+		if(trabaja!=null){
+			turno= trabaja.getIdTurno();	
+		}
+		
+
+		
+		Turno tturno= (cuadrante.dameVista()).getTurno(turno);
+		if(turno==0){tturno=null;}
+		return tturno;
 	}
 
 	/**
