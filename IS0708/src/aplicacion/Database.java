@@ -491,7 +491,7 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 			st.executeUpdate("INSERT INTO DEPARTAMENTO values ('" + nombre
-					+ "', '" + jefe + "')");
+					+ "', '" + jefe + "', '" + "9:00:00" + "', '" + "23:00:00" + "')");
 			System.out
 					.println("aplicacion.Database.java\t::Departamento insertado");
 			correcto = true;
