@@ -1,10 +1,10 @@
 #Fat Jar Configuration File
-#Thu Apr 10 03:54:40 CEST 2008
+#Fri Apr 11 00:27:57 CEST 2008
 onejar.license.required=true
 manifest.classpath=
 manifest.removesigners=true
 onejar.checkbox=false
-jarname=Turno-matic_linux.jar
+jarname=Turno-matic.jar
 manifest.mergeall=true
 manifest.mainclass=aplicacion.Aplicacion
 manifest.file=<createnew>
