@@ -75,6 +75,12 @@ public class Empleado implements Drawable {
 	private ArrayList<Departamento> departamentos;
 	private Turno turnoActual;	//No lo borreis golfos. (19-Dic)
 	private int turnoFavorito;
+	// Estas ultimas variables tienen datos temporales para
+	// probar los cambios en la BD sin tener que cambiar el constructor	
+	private String telefono = "666";
+	private String ssid = "0";
+	private boolean HaEntrado = false;
+	private Date UltimoAcceso = new Date(0);
 	
 	//Optimizacion Algoritmo (reducción llamadas a BBDD)
 	private ArrayList<Turno> turnoE;
@@ -451,6 +457,11 @@ public class Empleado implements Drawable {
 	 */
 	public Color getColor() {
 		return color;
+		
+	}
+	
+	public String getNombreColor() {
+		return color.toString();
 	}
 	
 	/**
@@ -889,6 +900,23 @@ public class Empleado implements Drawable {
 		// TODO
 		return null;
 	}
+	
+	public String getTelefono() {
+		return telefono;
+	}
+	
+	public String getSsid() {
+		return ssid;
+	}
+	
+	public boolean getHaEntrado() {
+		return HaEntrado;
+	}
+	
+	public Date getUltimoAcceso() {
+		return UltimoAcceso;
+	}
+		
 	
 	public ImageData getPrintableImage(Device device, ResourceBundle bundle, Rectangle size, boolean bn) {
 		int w = size.width/2;

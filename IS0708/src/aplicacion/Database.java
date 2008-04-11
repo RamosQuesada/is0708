@@ -619,7 +619,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO DEPARTAMENTO values ('" + nombre
+			st.executeUpdate("INSERT INTO " + tablaDepartamentos + " values ('" + nombre
 					+ "', '" + jefe + "', '" + "9:00:00" + "', '" + "23:00:00" + "')");
 			System.out
 					.println("aplicacion.Database.java\t::Departamento insertado");
@@ -645,7 +645,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO DepartamentoUsuario values ('"
+			st.executeUpdate("INSERT INTO " + tablaUsuariosPorDepartamento + " values ('"
 					+ nvend + "', '" + nombre + "')");
 			System.out
 					.println("aplicacion.Database.java\t::Departamento insertado");
@@ -690,7 +690,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO DISTRIBUCION values ('" + Hora
+			st.executeUpdate("INSERT INTO " + tablaDistribucionHorarios + "values ('" + Hora
 					+ "', '" + DiaSemana + "', '" + Patron + "', '" + NumMax
 					+ "', '" + NumMin + "', '" + IdDepartamento + "')");
 			System.out
@@ -738,7 +738,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO FESTIVOS values ('" + Hora + "', '"
+			st.executeUpdate("INSERT INTO " + tablaFestivos + " values ('" + Hora + "', '"
 					+ FechaInicio + "', '" + FechaFin + "', '" + Patron
 					+ "', '" + NumMax + "', '" + NumMin + "', '"
 					+ IdDepartamento + "')");
@@ -763,7 +763,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO INCIDENCIAS values (" + 0 + ", '"
+			st.executeUpdate("INSERT INTO " + tablaIncidencias + " values (" + 0 + ", '"
 					+ descripcion + "');");
 			System.out
 					.println("aplicacion.Database.java\t::Incidencia insertada");
@@ -778,7 +778,7 @@ public class Database extends Thread {
 		try {
 			abrirConexion();
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO ISSUES (text) values ( '" + texto + "');");
+			st.executeUpdate("INSERT INTO " + tablaIssues + " (text) values ( '" + texto + "');");
 //			System.out.println("aplicacion.Database.java\t::Issue insertado");
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -799,7 +799,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO DESTINATARIO values (" + numVendedor
+			st.executeUpdate("INSERT INTO " + tablaDestinatariosMensaje + " values (" + numVendedor
 					+ ", " + idMensaje + ");");
 			System.out
 					.println("aplicacion.Database.java\t::Destinatario insertado");
@@ -835,7 +835,7 @@ public class Database extends Thread {
 		ResultSet r = null;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO MENSAJE (Remitente, Fecha, Asunto, Texto, Marcado) values ( "
+			st.executeUpdate("INSERT INTO " + tablaMensajes + " (Remitente, Fecha, Asunto, Texto, Marcado) values ( "
 							+ remitente
 							+ ", '"
 							+ fecha
@@ -870,7 +870,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO NumerosDEPARTAMENTOs values ('"
+			st.executeUpdate("INSERT INTO " + tablaNumerosPorDepartamento + " values ('"
 					+ nombre + "', '" + numero + "')");
 			System.out
 					.println("aplicacion.Database.java\t::Departamento insertado");
@@ -900,7 +900,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO TieneIncidencia values ("
+			st.executeUpdate("INSERT INTO " + tablaIncidenciasPorUsuario + " values ("
 					+ idIncidencia + ", " + numVendedor + ", '" + fechaInicio
 					+ "','" + fechaFin + "');");
 			System.out
@@ -933,7 +933,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.addBatch("INSERT INTO Trabaja values (" + numVendedor
+			st.addBatch("INSERT INTO " + tablaTrabaja + " values (" + numVendedor
 					+ ", " + idTurno + ", '" + fecha + "', '" + horaEntrada
 					+ "', '" + horaSalida + "');");
 			System.out.println("aplicacion.Database.java\t::Insertado en la tabla trabaja a toda ostia");
@@ -984,7 +984,7 @@ public class Database extends Thread {
 			tdesc.setHours(0);
 			st = con.createStatement();
 			st
-					.executeUpdate("INSERT INTO TURNOS (Descripcion, HoraEntrada, HoraSalida, HoraInicioDescanso, DuracionDescanso) VALUES ('"
+					.executeUpdate("INSERT INTO " + tablaTurnos + " (Descripcion, HoraEntrada, HoraSalida, HoraInicioDescanso, DuracionDescanso) VALUES ('"
 							+ Descripcion
 							+ "', '"
 							+ HoraEntrada
@@ -1021,7 +1021,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO ListaTurnosPorContrato values ("
+			st.executeUpdate("INSERT INTO " + tablaTurnosPorContrato + " values ("
 					+ idTurno + ", " + idContrato + ");");
 			System.out
 					.println("aplicacion.Database.java\t::turnoPorContrato insertado");
@@ -1084,17 +1084,19 @@ public class Database extends Thread {
 			String apellido2, Date fechaNac, int sexo, String email,
 			String password, int indicadorGrupo, Date fechaContrato,
 			Date fechaEntrada, int horasExtras, int felicidad, int idioma,
-			int rango, int idContrato, int idTurno) {
+			int rango, int idContrato, int idTurno, String Color, String Telefono,
+			String Ssid, boolean HaEntrado, Date UltimoAcceso) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
 			st.executeUpdate("INSERT INTO " + tablaUsuarios + " values (" + id + ", '"
 					+ nombre + "', '" + apellido1 + "' ,'" + apellido2 + "','"
-					+ fechaNac + "','" + sexo + "','" + email + "','"
-					+ password + "','" + indicadorGrupo + "','" + fechaContrato
-					+ "','" + fechaEntrada + "','" + horasExtras + "','"
-					+ felicidad + "','" + idioma + "','" + rango + "','"
-					+ idContrato + "','" + idTurno + "', 0)");
+					+ fechaNac + "'," + sexo + ",'" + email + "','"
+					+ password + "'," + indicadorGrupo + ",'" + fechaContrato
+					+ "','" + fechaEntrada + "'," + horasExtras + ","
+					+ felicidad + "," + idioma + "," + rango + ","
+					+ idContrato + "," + idTurno + ",'" + Color + "','"
+					+ Telefono + "','" + Ssid + "'," + HaEntrado + ",'" + UltimoAcceso + "', 0)");
 //			System.out.println("aplicacion.Database.java\t::Usuario insertado");
 			correcto = true;
 		} catch (SQLException e) {
@@ -1125,7 +1127,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO VENTAS values ('" + Fecha + "', '"
+			st.executeUpdate("INSERT INTO " + tablaVentas + " values ('" + Fecha + "', '"
 					+ numVentas + "', '" + idUsuario + "')");
 //			System.out.println("aplicacion.Database.java\t::Ventas insertada");
 			correcto = true;
@@ -2265,8 +2267,7 @@ public class Database extends Thread {
 					"Idioma int," +
 					"Rango int NOT NULL," +
 					"IdContrato Int NOT NULL," +
-					"IdTurno Int NOT NULL," +
-					"Login tinyint," +
+					"IdTurno Int NOT NULL," +					
 					"Color varchar(6)," +
 					"Telefono varchar(12)," +
 					"Ssid varchar(20)," +
@@ -2322,7 +2323,7 @@ public class Database extends Thread {
 			st.addBatch("Alter table DESTINATARIO add Foreign Key (IdMensaje) references MENSAJE (IdMensaje) on delete cascade on update cascade;");
 
 			st.addBatch("Alter table DepartamentoUsuario add Index IX_Relationship12 (NumVendedor);");
-			st.addBatch("Alter table DepartamentoUsuario add Foreign Key (NumVendedor) references Usuario (NumVendedor) on delete cascade on update cascade;");
+			//st.addBatch("Alter table DepartamentoUsuario add Foreign Key (NumVendedor) references Usuario (NumVendedor) on delete cascade on update cascade;");
 			st.addBatch("Alter table DepartamentoUsuario add Index IX_Relationship13 (NombreDepartamento);");
 			st.addBatch("Alter table DepartamentoUsuario add Foreign Key (NombreDepartamento) references DEPARTAMENTO (Nombre) on delete restrict on update cascade;");
 
