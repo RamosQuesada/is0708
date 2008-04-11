@@ -104,7 +104,6 @@ public class I02_cuadrEmpl extends Thread{
 	 * 
 	 */
 	private int margenNombres; // Un margen para pintar los nombres a la izquierda
-//	private int movimiento;
 	private final Label lGridCuadrante;
 	private final Combo cGridCuadrante;
 	private Label lCuadranteTitulo;
