@@ -12,6 +12,27 @@ import aplicacion.utilidades.Util;
  * 
  */
 public class Database extends Thread {
+
+	public static final String tablaContratos					= "contrato";
+	public static final String tablaContratosPorDepartamento	= "contratodepartamento";
+	public static final String tablaDepartamentos				= "departamento";
+	public static final String tablaUsuariosPorDepartamento		= "departamentousuario";
+	public static final String tablaDestinatariosMensaje		= "destinatario";
+	public static final String tablaDistribucionHorarios		= "distribucion";
+	public static final String tablaFestivos					= "festivos";
+	public static final String tablaIncidencias					= "incidencias";
+	public static final String tablaIssues						= "issues";
+	public static final String tablaTurnosPorContrato			= "listaturnosporcontrato";
+	public static final String tablaMensajes					= "mensaje";
+	public static final String tablaNumerosPorDepartamento		= "numerosdepartamentos";
+	public static final String tablaOpiniones					= "opinion";
+	public static final String tablaPermisos					= "permisos";
+	public static final String tablaIncidenciasPorUsuario		= "tieneincidencia";
+	public static final String tablaTrabaja						= "trabaja";
+	public static final String tablaTurnos						= "turnos";
+	public static final String tablaUsuarios					= "usuario";
+	public static final String tablaVentas						= "ventas";
+
 	Connection con;
 	Statement st;
 	ResultSet rs;
@@ -25,7 +46,7 @@ public class Database extends Thread {
 		try {
 			//para desencriptar
 			/*FileInputStream is;
-			try {
+		try {
 				is = new FileInputStream("src"+File.separator+"interfaces"+File.separator+"configBD");
 				DataInputStream dis = new DataInputStream(is);
 				String ip= dis.readUTF();
@@ -51,9 +72,9 @@ public class Database extends Thread {
 			String url = "jdbc:mysql://72.34.56.241:3306/" + bd;
 
 // Descomentar este trozo para usar la base de datos local
-//			userName = "root";
-//			password = "";
-//			url = "jdbc:mysql://localhost/" + bd;
+			userName = "root";
+			password = "";
+			url = "jdbc:mysql://localhost/" + bd;
 
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			//DriverManager.setLoginTimeout(300);
@@ -76,7 +97,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("DELETE FROM CONTRATO WHERE IdContrato=" + id);
+			st.executeUpdate("DELETE FROM " + tablaContratos + " WHERE IdContrato=" + id);
 //			System.out.println("aplicacion.Database.java\t::Contrato Borrado");
 			correcto = true;
 		} catch (SQLException e) {
@@ -94,7 +115,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("DELETE FROM ListaTurnosPorContrato WHERE IdContrato=" + idContrato);
+			st.executeUpdate("DELETE FROM " + tablaTurnosPorContrato + " WHERE IdContrato=" + idContrato);
 			correcto = true;
 		} catch (SQLException e) {
 			System.err.println("Error al Borrar el contrato y sus turnos de ListaTurnosPorContrato");
@@ -114,7 +135,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("DELETE FROM DEPARTAMENTO WHERE Nombre='" + nombre
+			st.executeUpdate("DELETE FROM " + tablaDepartamentos + " WHERE Nombre='" + nombre
 					+ "'");
 			System.out
 					.println("aplicacion.Database.java\t::Departamento Borrado");
@@ -135,13 +156,13 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("DELETE FROM USUARIO WHERE NumVendedor=" + NumVendedor);
-			st.executeUpdate("DELETE FROM DepartamentoUsuario WHERE NumVendedor=" + NumVendedor);
-			st.executeUpdate("DELETE FROM MENSAJE WHERE Remitente=" + NumVendedor);
-			st.executeUpdate("DELETE FROM DESTINATARIO WHERE NumVendedor=" + NumVendedor);
-			st.executeUpdate("DELETE FROM TieneIncidencia WHERE NumVendedor=" + NumVendedor);
-			st.executeUpdate("DELETE FROM Trabaja WHERE NumVendedor=" + NumVendedor);
-			st.executeUpdate("DELETE FROM VENTAS WHERE NumVendedor=" + NumVendedor);
+			st.executeUpdate("DELETE FROM " + tablaUsuarios + " WHERE NumVendedor=" + NumVendedor);
+			st.executeUpdate("DELETE FROM " + tablaUsuariosPorDepartamento + " WHERE NumVendedor=" + NumVendedor);
+			st.executeUpdate("DELETE FROM " + tablaMensajes + " WHERE Remitente=" + NumVendedor);
+			st.executeUpdate("DELETE FROM " + tablaDestinatariosMensaje + " WHERE NumVendedor=" + NumVendedor);
+			st.executeUpdate("DELETE FROM " + tablaIncidenciasPorUsuario + " WHERE NumVendedor=" + NumVendedor);
+			st.executeUpdate("DELETE FROM " + tablaTrabaja + " WHERE NumVendedor=" + NumVendedor);
+			st.executeUpdate("DELETE FROM " + tablaVentas + " WHERE NumVendedor=" + NumVendedor);
 			
 			correcto = true;
 		} catch (SQLException e) {
@@ -161,7 +182,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("DELETE FROM MENSAJE WHERE IdMensaje=" + id);
+			st.executeUpdate("DELETE FROM " + tablaMensajes + " WHERE IdMensaje=" + id);
 //			System.out.println("aplicacion.Database.java\t::Mensaje Borrado");
 			correcto = true;
 		} catch (SQLException e) {
@@ -183,8 +204,8 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("DELETE FROM Trabaja WHERE Fecha >='" + fechaIni + "' and Fecha <='" +
-					fechaFin +"' and NumVendedor in (SELECT NumVendedor FROM DepartamentoUsuario D where NombreDepartamento = '"+dep +"');" );
+			st.executeUpdate("DELETE FROM " + tablaTrabaja + " WHERE Fecha >='" + fechaIni + "' and Fecha <='" +
+					fechaFin +"' and NumVendedor in (SELECT NumVendedor FROM " + tablaUsuariosPorDepartamento + " D where NombreDepartamento = '"+dep +"');" );
 			correcto = true;
 		} catch (SQLException e) {
 			System.err.println("Error al Borrar el mes de La tabla trabaja");			
@@ -203,7 +224,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("DELETE FROM DepartamentoUsuario WHERE NombreDepartamento='" + nombre
+			st.executeUpdate("DELETE FROM " + tablaUsuariosPorDepartamento + " WHERE NombreDepartamento='" + nombre
 					+ "'");
 			System.out
 					.println("aplicacion.Database.java\t::DepartamentoUsuario Borrado");
@@ -224,7 +245,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("DELETE FROM NumerosDEPARTAMENTOs WHERE Nombre='" + nombre
+			st.executeUpdate("DELETE FROM " + tablaNumerosPorDepartamento + " WHERE Nombre='" + nombre
 					+ "'");
 			System.out
 					.println("aplicacion.Database.java\t::Departamento Borrado");
@@ -246,7 +267,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("DELETE FROM TURNOS WHERE IdTurno=" + id);
+			st.executeUpdate("DELETE FROM " + tablaTurnos + " WHERE IdTurno=" + id);
 //			System.out.println("aplicacion.Database.java\t::Turno Borrado");
 			correcto = true;
 		} catch (SQLException e) {
@@ -264,7 +285,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("DELETE FROM ListaTurnosPorContrato WHERE IdTurno=" + idTurno 
+			st.executeUpdate("DELETE FROM " + tablaTurnosPorContrato + " WHERE IdTurno=" + idTurno 
 							 + " and IdContrato= "+ idContrato);
 			correcto = true;
 		} catch (SQLException e) {
@@ -285,7 +306,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("DELETE FROM USUARIOS WHERE NumVendedor=" + id);
+			st.executeUpdate("DELETE FROM " + tablaUsuarios + " WHERE NumVendedor=" + id);
 //			System.out.println("aplicacion.Database.java\t::Usuario Borrado");
 			correcto = true;
 		} catch (SQLException e) {
@@ -304,7 +325,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("DELETE FROM DepartamentoUsuario WHERE NumVendedor='" + nv
+			st.executeUpdate("DELETE FROM " + tablaUsuariosPorDepartamento + " WHERE NumVendedor='" + nv
 					+ "'");
 			System.out
 					.println("aplicacion.Database.java\t::DepartamentoUsuario Borrado");
@@ -319,7 +340,7 @@ public class Database extends Thread {
 		int r = 0;
 		try {
 			st = con.createStatement();
-			r = st.executeUpdate("UPDATE DEPARTAMENTO SET Nombre='"
+			r = st.executeUpdate("UPDATE " + tablaDepartamentos + " SET Nombre='"
 					+ NombreNuevo + "'" + " WHERE Nombre='" + NombreAntiguo + "';");
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -334,7 +355,7 @@ public class Database extends Thread {
 		int r = 0;
 		try {
 			st = con.createStatement();
-			r = st.executeUpdate("UPDATE DepartamentoUsuario SET NombreDepartamento='"
+			r = st.executeUpdate("UPDATE " + tablaUsuariosPorDepartamento + " SET NombreDepartamento='"
 					+ NombreNuevo + "'" + " WHERE NombreDepartamento='" + NombreAntiguo + "';");
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -349,7 +370,7 @@ public class Database extends Thread {
 		int r = 0;
 		try {
 			st = con.createStatement();
-			r = st.executeUpdate("UPDATE NumerosDEPARTAMENTOs SET Nombre='"
+			r = st.executeUpdate("UPDATE " + tablaNumerosPorDepartamento + " SET Nombre='"
 					+ NombreNuevo + "'" + " WHERE Nombre='" + NombreAntiguo + "';");
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -379,7 +400,7 @@ public class Database extends Thread {
 		int r = 0;
 		try {
 			st = con.createStatement();
-			r = st.executeUpdate("UPDATE CONTRATO SET TurnoInicial="
+			r = st.executeUpdate("UPDATE " + tablaContratos + " SET TurnoInicial="
 					+ TurnoInicial + ", Nombre='" + Nombre + "', Patron='"
 					+ Patron + "', DuracionCiclo=" + DuracionCiclo
 					+ ", Salario=" + Salario + ", Tipo=" + Tipo
@@ -425,7 +446,7 @@ public class Database extends Thread {
 		String Entr = Util.dateAString(Fentr);
 		
 		st = con.createStatement();
-		r = st.executeUpdate("UPDATE USUARIO SET Nombre='"
+		r = st.executeUpdate("UPDATE " + tablaUsuarios + " SET Nombre='"
 				+ nomb + "', Apellido1='" + Ape1 + "', Apellido2='"
 				+ Ape2 + "', FechaNacimiento='" + Nac
 				+ "', Sexo=" + sexo + ", Email='" + mail
@@ -465,7 +486,7 @@ public class Database extends Thread {
 			tdesc.setMinutes(Duracion);
 			tdesc.setHours(0);
 			st = con.createStatement();
-			r = st.executeUpdate("UPDATE TURNOS SET Descripcion='"
+			r = st.executeUpdate("UPDATE " + tablaTurnos + " SET Descripcion='"
 					+ Descripcion + "', HoraEntrada='" + HoraEntrada
 					+ "', HoraSalida='" + HoraSalida
 					+ "', HoraInicioDescanso='" + HoraInicioDescanso
@@ -521,7 +542,7 @@ public class Database extends Thread {
 		ResultSet r = null;
 		try {
 			st = con.createStatement();
-			r = st.executeQuery("SELECT * FROM USUARIO WHERE NumVendedor = "
+			r = st.executeQuery("SELECT * FROM " + tablaUsuarios + " WHERE NumVendedor = "
 					+ nvend);
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -555,7 +576,7 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 			st
-					.executeUpdate("INSERT INTO CONTRATO (TurnoInicial,Nombre,Patron,DuracionCiclo,Salario,Tipo) values ("
+					.executeUpdate("INSERT INTO " + tablaContratos + " (TurnoInicial,Nombre,Patron,DuracionCiclo,Salario,Tipo) values ("
 							+ turnoInicial
 							+ ", '"
 							+ nombre
@@ -814,8 +835,7 @@ public class Database extends Thread {
 		ResultSet r = null;
 		try {
 			st = con.createStatement();
-			st
-					.executeUpdate("INSERT INTO MENSAJE (Remitente, Fecha, Asunto, Texto, Marcado) values ( "
+			st.executeUpdate("INSERT INTO MENSAJE (Remitente, Fecha, Asunto, Texto, Marcado) values ( "
 							+ remitente
 							+ ", '"
 							+ fecha
@@ -1068,7 +1088,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO USUARIO values (" + id + ", '"
+			st.executeUpdate("INSERT INTO " + tablaUsuarios + " values (" + id + ", '"
 					+ nombre + "', '" + apellido1 + "' ,'" + apellido2 + "','"
 					+ fechaNac + "','" + sexo + "','" + email + "','"
 					+ password + "','" + indicadorGrupo + "','" + fechaContrato
@@ -1128,7 +1148,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("UPDATE MENSAJE SET Marcado= " + marca
+			st.executeUpdate("UPDATE " + tablaMensajes + " SET Marcado= " + marca
 					+ " WHERE IdMensaje=" + id);
 //			System.out.println("aplicacion.Database.java\t::Mensaje Marcado");
 			correcto = true;
@@ -1142,7 +1162,7 @@ public class Database extends Thread {
 		int r = 0;
 		try {
 			st = con.createStatement();
-			r = st.executeUpdate("UPDATE DEPARTAMENTO SET JefeDepartamento='"
+			r = st.executeUpdate("UPDATE " + tablaDepartamentos + " SET JefeDepartamento='"
 					+ nvend + "'" + "WHERE Nombre='" + Nombre + "';");
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -1164,7 +1184,7 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 			result = st
-					.executeQuery("SELECT * FROM CONTRATO WHERE IdContrato = "
+					.executeQuery("SELECT * FROM " + tablaContratos + " WHERE IdContrato = "
 							+ idContrato + ";");
 		} catch (SQLException e) {
 			System.err.println("Error de lectura de Contrato");
@@ -1182,15 +1202,8 @@ public class Database extends Thread {
 		ResultSet r = null;
 		try {
 			st = con.createStatement();
-			/**
-			 * SELECT * FROM CONTRATO
-			 * WHERE IdContrato IN (
-			 * 		SELECT u.IdContrato FROM USUARIO u, DepartamentoUsuario d
-			 * 		WHERE u.NumVendedor=d.NumVendedor AND d.NombreDepartamento = "dpto");
-			 */
-			
-			r = st.executeQuery("SELECT * FROM CONTRATO WHERE IdContrato IN ("
-					+ "SELECT IdContrato FROM USUARIO u, DepartamentoUsuario d "
+			r = st.executeQuery("SELECT * FROM " + tablaContratos + " WHERE IdContrato IN ("
+					+ "SELECT IdContrato FROM " + tablaUsuarios + " u, DepartamentoUsuario d "
 					+ "WHERE u.NumVendedor=d.NumVendedor AND "
 					+ "d.NombreDepartamento = '"+ departamento +"');");
 			
@@ -1215,7 +1228,7 @@ public class Database extends Thread {
 			String inicio = anio + "-" + mes + "-" + "1";
 			String fin = anio + "-" + mes + "-" + "31";
 			st = con.createStatement();
-			r = st.executeQuery("SELECT * FROM Trabaja WHERE Fecha>='" + inicio
+			r = st.executeQuery("SELECT * FROM " + tablaTrabaja + " WHERE Fecha>='" + inicio
 					+ "' AND Fecha<='" + fin + "';");
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -1249,9 +1262,9 @@ public class Database extends Thread {
 			//		SELECT NumVendedor FROM DepartamentoUsuario
 			//		WHERE NombreDepartamento = 'departamento');
 			
-			r = st.executeQuery("SELECT * FROM Trabaja WHERE Fecha>='" + inicio
+			r = st.executeQuery("SELECT * FROM " + tablaTrabaja + " WHERE Fecha>='" + inicio
 					+ "' AND Fecha<='" + fin + "' AND NumVendedor IN (" +
-							"SELECT NumVendedor FROM DepartamentoUsuario WHERE " +
+							"SELECT NumVendedor FROM " + tablaUsuariosPorDepartamento + " WHERE " +
 							"NombreDepartamento = '"+ departamento +"');");
 		} catch (SQLException e) {
 			System.err.println("Error al realizar la consulta de cuadrantes");
@@ -1270,7 +1283,7 @@ public class Database extends Thread {
 
 		try {
 			st = con.createStatement();
-			r = st.executeQuery("SELECT * FROM DEPARTAMENTO WHERE Nombre='"
+			r = st.executeQuery("SELECT * FROM " + tablaDepartamentos + " WHERE Nombre='"
 					+ nombre + "'");
 		}
 
@@ -1293,8 +1306,7 @@ public class Database extends Thread {
 		ResultSet r = null;
 		try {
 			st = con.createStatement();
-			r = st.executeQuery("SELECT Nombre FROM DEPARTAMENTO "
-					+ "WHERE JefeDepartamento = " + nvend);
+			r = st.executeQuery("SELECT Nombre FROM " + tablaDepartamentos + " WHERE JefeDepartamento = " + nvend);
 		} catch (SQLException e) {
 			// TODO: handle exception
 			System.err
@@ -1315,7 +1327,7 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 			result = st
-					.executeQuery("SELECT IdMensaje from DESTINATARIO WHERE NumVendedor = "
+					.executeQuery("SELECT IdMensaje from " + tablaDestinatariosMensaje + " WHERE NumVendedor = "
 							+ idUsuario + ";");
 		} catch (SQLException e) {
 			System.err.println("Error obtenDestinatarios");
@@ -1738,7 +1750,7 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 			result = st
-					.executeQuery("SELECT * FROM DESTINATARIO JOIN MENSAJE WHERE DESTINATARIO.NumVendedor="
+					.executeQuery("SELECT * FROM " + tablaDestinatariosMensaje + " JOIN MENSAJE WHERE DESTINATARIO.NumVendedor="
 							+ vendedor
 							+ " AND DESTINATARIO.IdMensaje=MENSAJE.IdMensaje LIMIT "
 							+ inicio + "," + (inicio + desp) + ";");
@@ -1766,7 +1778,7 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 			r = st
-					.executeQuery("SELECT * FROM MENSAJE WHERE Remitente=" + id
+					.executeQuery("SELECT * FROM " + tablaMensajes + " WHERE Remitente=" + id
 							+ " ORDER BY Fecha LIMIT " + inicio + ","
 							+ (inicio + desp));
 
@@ -1784,7 +1796,7 @@ public class Database extends Thread {
 		ResultSet r = null;
 		try {
 			st = con.createStatement();
-			r = st.executeQuery("SELECT Nombre FROM DEPARTAMENTO");
+			r = st.executeQuery("SELECT Nombre FROM " + tablaDepartamentos);
 		}
 		catch (SQLException e) {
 			// TODO: handle exception
@@ -1804,9 +1816,9 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 			r = st
-					.executeQuery("SELECT JefeDepartamento FROM DepartamentoUsuario,DEPARTAMENTO WHERE NumVendedor = "
+					.executeQuery("SELECT JefeDepartamento FROM " + tablaUsuariosPorDepartamento + "," + tablaDepartamentos + " WHERE NumVendedor = "
 							+ nvend
-							+ " and DEPARTAMENTO.Nombre=NombreDepartamento");
+							+ " and " + tablaDepartamentos + ".Nombre=NombreDepartamento");
 		} catch (SQLException e) {
 			// TODO: handle exception
 			System.err.println("Error al obtener el superior del empleado ");
@@ -1824,7 +1836,7 @@ public class Database extends Thread {
 		ResultSet r = null;
 		try {
 			st = con.createStatement();
-			r = st.executeQuery("SELECT * FROM CONTRATO");
+			r = st.executeQuery("SELECT * FROM " + tablaContratos);
 		} catch (SQLException e) {
 			// TODO: handle exception
 			System.err.println("Error al realizar la consulta en CONTRATO ");
@@ -1839,7 +1851,7 @@ public class Database extends Thread {
 		ResultSet r = null;
 		try {
 			st = con.createStatement();
-			r = st.executeQuery("SELECT * FROM DEPARTAMENTO");
+			r = st.executeQuery("SELECT * FROM " + tablaDepartamentos);
 		} catch (SQLException e) {
 			// TODO: handle exception
 			System.err
@@ -1857,7 +1869,7 @@ public class Database extends Thread {
 		ResultSet r = null;
 		try {
 			st = con.createStatement();
-			r = st.executeQuery("SELECT Nombre, Apellido1, Apellido2, NumVendedor FROM USUARIO WHERE Rango='"+2+"';");
+			r = st.executeQuery("SELECT Nombre, Apellido1, Apellido2, NumVendedor FROM " + tablaUsuarios + " WHERE Rango='"+2+"';");
 		} catch (SQLException e) {
 			// TODO: handle exception
 			System.err.println("Error al realizar la consulta de nombres de (posibles) jefes de departamento ");
@@ -1870,7 +1882,7 @@ public class Database extends Thread {
 		ResultSet r = null;
 		try {
 			st = con.createStatement();
-			r = st.executeQuery("SELECT Numero FROM NumerosDEPARTAMENTOs ';");
+			r = st.executeQuery("SELECT Numero FROM " + tablaNumerosPorDepartamento + " ';");
 		} catch (SQLException e) {
 			// TODO: handle exception
 			System.err.println("Error al realizar la consulta del Jefe del Dpto");
@@ -1884,7 +1896,7 @@ public class Database extends Thread {
 		ResultSet r = null;
 		try {
 			st = con.createStatement();
-			r = st.executeQuery("SELECT NumVendedor FROM USUARIO WHERE Rango='"+2+"';");
+			r = st.executeQuery("SELECT NumVendedor FROM " + tablaUsuarios + " WHERE Rango='"+2+"';");
 		} catch (SQLException e) {
 			// TODO: handle exception
 			System.err.println("Error al realizar la consulta de nombres de (posibles) jefes de departamento ");
@@ -1900,7 +1912,7 @@ public class Database extends Thread {
 		ResultSet r = null;
 		try {
 			st = con.createStatement();
-			r = st.executeQuery("SELECT * FROM TURNOS");
+			r = st.executeQuery("SELECT * FROM " + tablaTurnos);
 		} catch (SQLException e) {
 			// TODO: handle exception
 			System.err.println("Error al realizar la consulta en TURNOS ");
@@ -1919,7 +1931,7 @@ public class Database extends Thread {
 		ResultSet result = null;
 		try {
 			st = con.createStatement();
-			result = st.executeQuery("SELECT * FROM TURNOS WHERE IdTurno="
+			result = st.executeQuery("SELECT * FROM " + tablaTurnos + " WHERE IdTurno="
 					+ turno + ";");
 		} catch (SQLException e) {
 			System.err.println("Error obtenTurno ");
@@ -1942,7 +1954,7 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 			r = st
-					.executeQuery("SELECT IdTurno FROM Trabaja WHERE NumVendedor = "
+					.executeQuery("SELECT IdTurno FROM " + tablaTrabaja + " WHERE NumVendedor = "
 							+ idEmpleado + " and Fecha ='" + dia + "'");
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -1962,7 +1974,7 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 			r = st
-					.executeQuery("SELECT IdTurno FROM USUARIO WHERE NumVendedor="
+					.executeQuery("SELECT IdTurno FROM " + tablaUsuarios + " WHERE NumVendedor="
 							+ nvend + ";");
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -1983,26 +1995,15 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 			/**
-SELECT * FROM TURNOS
-WHERE IdTurno IN (
-		SELECT IdTurno FROM ListaTurnosPorContrato
-		WHERE IdContrato IN (
-			SELECT * FROM CONTRATO
-			WHERE IdContrato IN (
-				SELECT IdContrato FROM USUARIO
-				WHERE NumVendedor IN (
-					SELECT NumVendedor FROM DepartamentoUsuario
-					WHERE NombreDepartamento = "DatosFijos"))));
-
-Otra posibilidad, un poco menos guarra
-
-SELECT * from TURNOS WHERE IdTurno IN (
-	SELECT l.IdTurno FROM ListaTurnosPorContrato l, CONTRATO c, USUARIO u, DepartamentoUsuario d WHERE
-	l.IdContrato = c.IdContrato AND
-	c.IdContrato = u.IdContrato AND
-	u.NumVendedor = d.NumVendedor AND
-	d.NombreDepartamento = "DatosFijos"
-);
+			Otra posibilidad, un poco menos guarra
+			
+			SELECT * from TURNOS WHERE IdTurno IN (
+				SELECT l.IdTurno FROM ListaTurnosPorContrato l, CONTRATO c, USUARIO u, DepartamentoUsuario d WHERE
+				l.IdContrato = c.IdContrato AND
+				c.IdContrato = u.IdContrato AND
+				u.NumVendedor = d.NumVendedor AND
+				d.NombreDepartamento = "DatosFijos"
+			);
 
 			 */
 			
@@ -2013,8 +2014,8 @@ SELECT * from TURNOS WHERE IdTurno IN (
 //					+ "SELECT NumVendedor FROM DepartamentoUsuario WHERE "
 //					+ "NombreDepartamento = '"+ departamento +"'))));");
 
-			r = st.executeQuery("SELECT * FROM TURNOS WHERE IdTurno IN ("
-					+ "SELECT l.IdTurno FROM ListaTurnosPorContrato l, CONTRATO c, USUARIO u, DepartamentoUsuario d WHERE "
+			r = st.executeQuery("SELECT * FROM " + tablaTurnos + " WHERE IdTurno IN ("
+					+ "SELECT l.IdTurno FROM " + tablaTurnosPorContrato + " l, " + tablaContratos + " c, " + tablaUsuarios + " u, " + tablaUsuariosPorDepartamento + " d WHERE "
 					+ "l.IdContrato = c.IdContrato AND "
 					+ "c.IdContrato = u.IdContrato AND "
 					+ "u.NumVendedor = d.NumVendedor AND "
@@ -2038,7 +2039,7 @@ SELECT * from TURNOS WHERE IdTurno IN (
 		try {
 			st = con.createStatement();
 			r = st
-					.executeQuery("SELECT IdTurno FROM ListaTurnosPorContrato WHERE IdContrato="
+					.executeQuery("SELECT IdTurno FROM " + tablaTurnosPorContrato + " WHERE IdContrato="
 							+ idContrato + ";");
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -2057,7 +2058,7 @@ SELECT * from TURNOS WHERE IdTurno IN (
 		ResultSet r = null;
 		try {
 			st = con.createStatement();
-			r = st.executeQuery("SELECT IdTurno FROM Trabaja WHERE NumVendedor='"+nv+"' AND Fecha='"+d+"';");
+			r = st.executeQuery("SELECT IdTurno FROM " + tablaTrabaja + " WHERE NumVendedor='"+nv+"' AND Fecha='"+d+"';");
 		} catch (SQLException e) {
 			// TODO: handle exception
 			System.err.println("Error al realizar la consulta del Jefe del Dpto");
@@ -2086,7 +2087,258 @@ SELECT * from TURNOS WHERE IdTurno IN (
 		return true;
 	}	
 
+	public void eliminarTodasLasTablas() {
+		try {
+			st = con.createStatement();
+			st.addBatch("DROP TABLE " + tablaContratosPorDepartamento + ";");
+			st.addBatch("DROP TABLE " + tablaDestinatariosMensaje + ";");
+			st.addBatch("DROP TABLE " + tablaDistribucionHorarios + ";");
+			st.addBatch("DROP TABLE " + tablaFestivos + ";");
+			st.addBatch("DROP TABLE " + tablaIncidenciasPorUsuario + ";");
+			st.addBatch("DROP TABLE " + tablaIssues + ";");
+			st.addBatch("DROP TABLE " + tablaMensajes + ";");
+			st.addBatch("DROP TABLE " + tablaOpiniones + ";");
+			st.addBatch("DROP TABLE " + tablaTrabaja + ";");
+			st.addBatch("DROP TABLE " + tablaTurnosPorContrato + ";");
+			st.addBatch("DROP TABLE " + tablaUsuariosPorDepartamento + ";");
+			st.addBatch("DROP TABLE " + tablaVentas + ";");
+			st.addBatch("DROP TABLE " + tablaDepartamentos + ";");
+			st.addBatch("DROP TABLE " + tablaUsuarios + ";");
+			st.addBatch("DROP TABLE " + tablaPermisos + ";");
+			st.addBatch("DROP TABLE " + tablaContratos + ";");
+			st.addBatch("DROP TABLE " + tablaTurnos + ";");
+			st.addBatch("DROP TABLE " + tablaNumerosPorDepartamento + ";");
+			st.addBatch("DROP TABLE " + tablaIncidencias + ";");
+			st.executeBatch();
+			System.out.println("aplicacion.Database.java\t:: Estructura de tablas y dependencias eliminadas correctamente.");
 
+		} catch (SQLException e) {
+			System.err.println("Error al borrar las tablas - ¿Quizá estén ya vacías?");
+		}
+	}
+
+	public void crearTablas() {
+		try {
+			st = con.createStatement();
+			st.addBatch("Create table contrato (" +
+					"IdContrato Int NOT NULL AUTO_INCREMENT," +
+					"TurnoInicial Int NOT NULL," +
+					"Nombre Varchar(20) ," +
+					"Patron Varchar(30) ," +
+					"DuracionCiclo Int ," +
+					"Salario Decimal(8,2) ," +
+					"Tipo tinyint(1)," +
+					"UNIQUE (Nombre)," +
+					"Primary Key (IdContrato)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+
+			st.addBatch("Create table contratodepartamento(" +
+					"NombreDept varchar(20)," +
+					"IdContrato Int NOT NULL," +
+					"Primary Key (NombreDept,IdContrato)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+			
+			st.addBatch("Create table departamento (" +
+					"Nombre Varchar(20) ," +
+					"JefeDepartamento Int NOT NULL," +
+					"HoraApertura time," +
+					"HoraCierre time," +
+					"Primary Key (nombre)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+
+			st.addBatch("Create table departamentousuario (" +
+					"NumVendedor  int not null," +
+					"NombreDepartamento Varchar(20)  not null," +
+					"Primary Key (NumVendedor,NombreDepartamento)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+
+
+			st.addBatch("Create table destinatario (" +
+					"NumVendedor Int NOT NULL," +
+					"IdMensaje Int NOT NULL," +
+					"Primary Key (NumVendedor,IdMensaje)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+					
+			st.addBatch("Create table distribucion (" +
+					"Hora Int NOT NULL," +
+					"DiaSemana int(12) NOT NULL," +
+					"Patron Varchar(20) ," +
+					"NumMax Int ," +
+					"NumMin Int ," +
+					"NombreDept varchar(20) NOT NULL," +
+					"Primary Key (Hora,DiaSemana,NombreDept)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+
+			st.addBatch("Create table festivos (" +
+					"Hora Int NOT NULL," +
+					"FechaInicio Date NOT NULL," +
+					"FechaFin Date ," +
+					"Patron Varchar(20) ," +
+					"NumMax Int ," +
+					"NumMin Int ," +
+					"NombreDept varchar(20) NOT NULL," +
+					"Primary Key (Hora,FechaInicio,Nombredept))" +
+					" ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+
+
+			st.addBatch("Create table incidencias (" +
+					"IdIncidencia Int NOT NULL AUTO_INCREMENT," +
+					"Descripcion Varchar(40)  not null," +
+					"Primary Key (IdIncidencia)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+
+			st.addBatch("Create table issues (" +
+					"Id Int not null," +
+					"Text longtext not null," +
+					"Primary Key (Id)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+
+			st.addBatch("Create table listaturnosporcontrato(" +
+					"IdTurno Int NOT NULL," +
+					"IdContrato Int NOT NULL," +
+					"Primary Key (IdTurno,IdContrato)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+
+			st.addBatch("Create table mensaje (" +
+					"IdMensaje Int NOT NULL AUTO_INCREMENT," +
+					"Remitente Int NOT NULL," +
+					"Fecha Datetime ," +
+					"Asunto Varchar(100) ," +
+					"Texto Text ," +
+					"Marcado tinyint(1)," +
+					"visto tinyint(1)," +
+					"Primary Key (IdMensaje)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+
+			st.addBatch("Create table numerosdepartamentos (" +
+					"Nombre Varchar(20) ," +
+					"Numero Int NOT NULL," +
+					"Primary Key (nombre,numero)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+
+			st.addBatch("Create table opinion (" +
+					"Id Int NOT NULL AUTO_INCREMENT," +
+					"NombreApellidos varchar(30) not null," +
+					"Grupo varchar(20) ," +
+					"Respuesta1 longtext," +
+					"Respuesta2 longtext," +
+					"Respuesta3 longtext," +
+					"Respuesta4 longtext," +
+					"Respuesta5 longtext," +
+					"Primary Key (Id)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+
+			st.addBatch("Create table permisos (" +
+					"Rango int not null," +
+					"OPCIONESPORDEFINIR Char(20) ," +
+					"Primary Key (Rango)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+
+			st.addBatch("Create table tieneincidencia (" +
+					"IdIncidencia Int NOT NULL," +
+					"NumVendedor Int NOT NULL," +
+					"FechaInicio Date NOT NULL," +
+					"FechaFin Date ," +
+					"check(fechainicio<fechafin)," +
+					"Primary Key (IdIncidencia,NumVendedor,FechaInicio)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+
+			st.addBatch("Create table trabaja (" +
+					"NumVendedor Int NOT NULL," +
+					"IdTurno Int NOT NULL," +
+					"Fecha Date NOT NULL," +
+					"HoraEntrada Time ," +
+					"HoraSalida Time ," +
+					"check(horaentrada<horasalida)," +
+					"Primary Key (NumVendedor,IdTurno,Fecha)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+
+			st.addBatch("Create table turnos (" +
+					"IdTurno Int NOT NULL AUTO_INCREMENT," +
+					"Descripcion Varchar(40) ," +
+					"HoraEntrada Time ," +
+					"HoraSalida Time ," +
+					"HoraInicioDescanso time ," +
+					"DuracionDescanso time," +
+					"check (horaentrada<horasalida)," +
+					"Primary Key (IdTurno)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+
+			st.addBatch("Create table usuario (" +
+					"NumVendedor Int NOT NULL," +
+					"Nombre Varchar(20) ," +
+					"Apellido1 Varchar(20) ," +
+					"Apellido2 Varchar(20) ," +
+					"FechaNacimiento Date ," +
+					"Sexo int ," +
+					"Email Varchar(30) ," +
+					"Password Varchar(10) ," +
+					"IndicadorGrupo int ," +
+					"FechaContrato Date ," +
+					"FechaEntrada Date ," +
+					"HorasExtras Int ," +
+					"Felicidad int," +
+					"Idioma int," +
+					"Rango int NOT NULL," +
+					"IdContrato Int NOT NULL," +
+					"IdTurno Int NOT NULL," +
+					"Login tinyint," +
+					"Color varchar(6)," +
+					"Telefono varchar(12)," +
+					"Ssid varchar(20)," +
+					"HaEntrado bool," +
+					"UltimoAcceso Datetime," +
+					"Posicion int," +
+					"check (length(numvendedor)=3)," +
+					"check (sexo in(0,1))," +
+					"check(idioma in(0,1,2))," +
+					"check(indicadorgrupo in(0,1))," +
+					"Primary Key (NumVendedor)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+
+			st.addBatch("Create table ventas (" +
+					"NumVendedor Int," +
+					"Fecha Datetime ," +
+					"Importe Decimal(10,2) ," +
+					"Primary Key (NumVendedor,fecha)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+			st.executeBatch();
+			
+			st.addBatch("Alter table TieneIncidencia add Index IX_TieneIncidencia (IdIncidencia);");
+			st.addBatch("Alter table TieneIncidencia add Foreign Key (IdIncidencia) references INCIDENCIAS (IdIncidencia) on delete cascade on update cascade;");
+			st.addBatch("Alter table VENTAS add Index IX_vende (NumVendedor);");
+			st.addBatch("Alter table VENTAS add Foreign Key (NumVendedor) references USUARIO (NumVendedor) on delete restrict on update cascade;");
+			st.addBatch("Alter table TieneIncidencia add Index IX_TieneIncidencia2 (NumVendedor);");
+			st.addBatch("Alter table TieneIncidencia add Foreign Key (NumVendedor) references USUARIO (NumVendedor) on delete cascade on update cascade;");
+			st.addBatch("Alter table Trabaja add Index IX_Trabaja1 (NumVendedor);");
+			st.addBatch("Alter table Trabaja add Foreign Key (NumVendedor) references USUARIO (NumVendedor) on delete restrict on update restrict;");
+			st.addBatch("Alter table DESTINATARIO add Index IX_Recibe1 (NumVendedor)");
+			st.addBatch("Alter table DESTINATARIO add Foreign Key (NumVendedor) references USUARIO (NumVendedor) on delete restrict on update cascade;");
+			st.addBatch("Alter table DEPARTAMENTO add Index IX_jefedepartamento (JefeDepartamento);");
+			st.addBatch("Alter table DEPARTAMENTO add Foreign Key (JefeDepartamento) references USUARIO (NumVendedor) on delete restrict on update cascade;");
+			st.addBatch("Alter table MENSAJE add Index IX_envia (Remitente);");
+			st.addBatch("Alter table MENSAJE add Foreign Key (Remitente) references USUARIO (NumVendedor) on delete restrict on update cascade;");
+			st.addBatch("Alter table ListaTurnosPorContrato add Index IX_TurnosPorContrato (IdContrato);");
+			st.addBatch("Alter table ListaTurnosPorContrato add Foreign Key (IdContrato) references CONTRATO (IdContrato) on delete cascade on update cascade;");
+			st.addBatch("Alter table USUARIO add Index IX_TieneContrato (IdContrato);");
+			st.addBatch("Alter table USUARIO add Foreign Key (IdContrato) references CONTRATO (IdContrato) on delete restrict on update cascade;");
+			st.addBatch("Alter table ListaTurnosPorContrato add Index IX_TurnosPorContratos (IdTurno);");
+			st.addBatch("Alter table ListaTurnosPorContrato add Foreign Key (IdTurno) references TURNOS (IdTurno) on delete cascade on update cascade;");
+			st.addBatch("Alter table Trabaja add Index IX_Trabaja2 (IdTurno);");
+			st.addBatch("Alter table Trabaja add Foreign Key (IdTurno) references TURNOS (IdTurno) on delete restrict on update cascade;");
+			st.addBatch("Alter table CONTRATO add Index IX_TurnoInicial (TurnoInicial);");
+			st.addBatch("Alter table CONTRATO add Foreign Key (TurnoInicial) references TURNOS (IdTurno) on delete restrict on update cascade;");
+			st.addBatch("Alter table USUARIO add Index IX_Prefiere (IdTurno);");
+			st.addBatch("Alter table USUARIO add Foreign Key (IdTurno) references TURNOS (IdTurno) on delete restrict on update cascade;");
+			st.addBatch("Alter table USUARIO add Index IX_TienePermiso (Rango);");
+			st.addBatch("Alter table USUARIO add Foreign Key (Rango) references PERMISOS (Rango) on delete restrict on update cascade;");
+			st.addBatch("Alter table DISTRIBUCION add Index IX_Relationship10 (NombreDept);");
+			st.addBatch("Alter table DISTRIBUCION add Foreign Key (NombreDept) references DEPARTAMENTO (Nombre) on delete cascade on update cascade;");
+			st.addBatch("Alter table FESTIVOS add Index IX_Relationship11 (NombreDept);");
+			st.addBatch("Alter table FESTIVOS add Foreign Key (NombreDept) references DEPARTAMENTO (Nombre) on delete cascade on update cascade;");
+			st.addBatch("Alter table DESTINATARIO add Index IX_Recibe2 (IdMensaje);");
+			st.addBatch("Alter table DESTINATARIO add Foreign Key (IdMensaje) references MENSAJE (IdMensaje) on delete cascade on update cascade;");
+
+			st.addBatch("Alter table DepartamentoUsuario add Index IX_Relationship12 (NumVendedor);");
+			st.addBatch("Alter table DepartamentoUsuario add Foreign Key (NumVendedor) references Usuario (NumVendedor) on delete cascade on update cascade;");
+			st.addBatch("Alter table DepartamentoUsuario add Index IX_Relationship13 (NombreDepartamento);");
+			st.addBatch("Alter table DepartamentoUsuario add Foreign Key (NombreDepartamento) references DEPARTAMENTO (Nombre) on delete restrict on update cascade;");
+
+			st.addBatch("Alter table CONTRATODepartamento add Index IX_Relationship19 (NombreDept);");
+			st.addBatch("Alter table CONTRATODepartamento add Foreign Key (NombreDept) references DEPARTAMENTO (Nombre) on delete cascade on update cascade;");
+
+			st.addBatch("Alter table CONTRATODepartamento add Index IX_Relationship17 (IdContrato);");
+			st.addBatch("Alter table CONTRATODepartamento add Foreign Key (IdContrato) references CONTRATO (IdContrato) on delete restrict on update cascade;");
+			
+			st.executeBatch();
+			System.out.println("aplicacion.Database.java\t:: Estructura de tablas y dependencias generadas correctamente.");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	
 }
