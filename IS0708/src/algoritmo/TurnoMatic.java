@@ -100,7 +100,7 @@ public class TurnoMatic {
 						int id = e.getContratoId();
 						contAux = buscaContrato(id, contratosDep);
 						
-						if(e.estaDisponible(i,inif,finf,controlador,contratosDep,j,estruc.getNumTrozos(),mes,anio)){
+						if(e.getRango()==1 && e.estaDisponible(i,inif,finf,controlador,contratosDep,j,estruc.getNumTrozos(),mes,anio)){
 							
 							if(contAux.getTipoContrato()==1 || contAux.getTipoContrato()==2){
 								empl.add(e);
