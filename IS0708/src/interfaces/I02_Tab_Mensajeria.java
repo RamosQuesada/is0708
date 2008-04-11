@@ -176,19 +176,12 @@ public class I02_Tab_Mensajeria extends Thread{
 				if (tablaMensajes.getSelectionIndex()!=-1) {
 					Mensaje m = vista.getMensajesEntrantes().get(tablaMensajes.getSelectionIndex());
 					estaMarcado = m.isMarcado(); 
-				/*	TableItem seleccion = tablaMensajes.getItem(tablaMensajes.getSelectionCount());	
-					FontData[] fd = tablaMensajes.getFont().getFontData();
-					fd[0].setStyle(SWT.NORMAL);
-					Font fNormal = new Font(tablaMensajes.getDisplay(),fd);					
-					fd[0].setStyle(SWT.BOLD);
-					Font fNegrita = new Font(tablaMensajes.getDisplay(),fd);*/
+
 					if (estaMarcado){
 						bMensMarcar.setText(bundle.getString("I02_but_Desmarcar"));
-				//		seleccion.setFont(fNegrita);		
 					}
 					else{
 						bMensMarcar.setText(bundle.getString("I02_but_Marcar"));
-				//		seleccion.setFont(fNormal);
 					}
 					bMensMarcar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
 					1, 1));		
@@ -247,16 +240,33 @@ public class I02_Tab_Mensajeria extends Thread{
 			bMensMarcar.setText(bundle.getString("I02_but_Desmarcar"));
 		else
 			bMensMarcar.setText(bundle.getString("I02_but_Marcar"));
+		
 		bMensMarcar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
 		1, 1));
 
 		bMensMarcar.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				if (tablaMensajes.getSelectionIndex()>=0) {
-					if (!estaMarcado)
+					
+					FontData[] fd = tablaMensajes.getFont().getFontData();
+					fd[0].setStyle(SWT.NORMAL);
+					Font fNormal = new Font(tablaMensajes.getDisplay(),fd);					
+					fd[0].setStyle(SWT.BOLD);
+					Font fNegrita = new Font(tablaMensajes.getDisplay(),fd);
+					
+					if (!estaMarcado){
 						bMensMarcar.setText(bundle.getString("I02_but_Desmarcar"));
-					else
+						tablaMensajes.getItem(tablaMensajes.getSelectionIndex()).setFont(fNegrita);
+						TableItem item = tablaMensajes.getItem(tablaMensajes.getSelectionIndex());
+						int x = 0;
+					}
+					else{				
 						bMensMarcar.setText(bundle.getString("I02_but_Marcar"));
+						tablaMensajes.getItem(tablaMensajes.getSelectionIndex()).setFont(fNormal);
+						TableItem item = tablaMensajes.getItem(tablaMensajes.getSelectionIndex());
+							int x = 0;
+					}
+					
 					vista.marcarMensaje(vista.getMensajesEntrantes().get(tablaMensajes.getSelectionIndex()));
 					desplazarVentanaMensajes(0);
 				}
