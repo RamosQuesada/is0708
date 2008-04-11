@@ -609,6 +609,9 @@ public class I02CuadranteEmpleado {
 			String fin =Fin.getHours()+":"+Fin.getMinutes();
 			gc.drawText(inicio+"-"+fin, margenIzq+dia*sep, h+semana*sep2+sep2/2,false);
 		}
+		else{
+			gc.drawText("", margenIzq+dia*sep, h+semana*sep2+sep2/2,false);
+		}
 		gc.drawRectangle(this.margenIzq+dia*sep, h+semana*sep2, sep, sep2);
 	//	gc.drawLine(this.margenIzq, convertirHora(hora), this.margenIzq+7*sep,convertirHora(hora));
 		gc.setLineStyle(SWT.LINE_SOLID);

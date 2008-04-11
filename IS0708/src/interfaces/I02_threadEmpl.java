@@ -246,10 +246,11 @@ public class I02_threadEmpl extends Thread{
 		}
 		
 		//ArrayList<String> turnos= new ArrayList<String>();
-		if(!finalizar){
-		boolean recorrido_mes=false;
 		ArrayList<Time> lista_inicio_mes=new ArrayList<Time>();
 		ArrayList<Time> lista_fin_mes=new ArrayList<Time>();
+		if(!finalizar){
+		boolean recorrido_mes=false;
+
 		//Trabaja trabaja_mes;
 		Turno turno;
 		while(!recorrido_mes){
@@ -276,13 +277,14 @@ public class I02_threadEmpl extends Thread{
 		catch(Exception e){
 			
 		}
-		this.cuadrante.ponHoraInicioMes(lista_inicio_mes);
-		this.cuadrante.ponHoraFinMes(lista_fin_mes);
+
 		}
 		}
 			corriendo=false;
 			
 			if(!finalizar){
+				this.cuadrante.ponHoraInicioMes(lista_inicio_mes);
+				this.cuadrante.ponHoraFinMes(lista_fin_mes);
 				cuadrante.ponAvance(0);
 				cuadrante.ponHorasComienzoDescanso(HorasComienzoDescansoAux);
 				cuadrante.ponHorasFin(HorasFinAux);
