@@ -340,9 +340,13 @@ public class I08_1_Anadir_empleado {
 					messageBox.setText (bundle.getString("Error"));
 					messageBox.setMessage (bundle.getString("I08_err_Fecha"));					
 					e.doit = messageBox.open () == SWT.YES;
-					// Enfocar tNombre y seleccionar texto
-					//t.setFocus();
-					//tNombre.selectAll();
+					// Enfocar tFNacimiento ,Fcontrato,Falta y seleccionar texto
+					tFNacimiento.setFocus();
+					tFNacimiento.selectAll();
+					tFContrato.setFocus();
+					tFContrato.selectAll();
+					tFAlta.setFocus();
+					tFAlta.selectAll();
 				}
 				// Comprueba la dirección de email (campo no obligatorio)
 				else if (tEMail.getText().length()!=0 && !Util.comprobarEmail(tEMail.getText())) {
