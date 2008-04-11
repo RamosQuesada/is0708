@@ -107,7 +107,6 @@ public class I02_cuadrEmpl extends Thread{
 //	private int movimiento;
 	private final Label lGridCuadrante;
 	private final Combo cGridCuadrante;
-//	private Date fecha;
 	private Label lCuadranteTitulo;
 	private I02CuadranteEmpleado cuadrante;
 	private GC gc2;
