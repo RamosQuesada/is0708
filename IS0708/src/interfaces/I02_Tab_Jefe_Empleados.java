@@ -143,11 +143,11 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 				aplicacion.datos.Contrato c = listaFiltrada.get(i).getContrato(_vista);
 				if (c!=null) tItem.setText(4, c.getNombreContrato());
 				else         tItem.setText(4, "Error");
-				tItem.setText(5, "911234567");
-				tItem.setImage(6, ico_mens);				
+				//tItem.setText(5, "911234567");
+				tItem.setImage(5, ico_mens);				
 			}
 		}
-		// table.setSize (table.computeSize (SWT.DEFAULT, 200));
+
 		tablaEmpleados.setSelection(x);
 	}
 	
@@ -242,7 +242,7 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 		tablaEmpleados.setHeaderVisible(true);
 		String[] titles2 = { " ", bundle.getString("I02_lab_NVend"),
 				bundle.getString("Nombre"), bundle.getString("Departamento"),
-				bundle.getString("Contrato"), bundle.getString("Telefono"), "" };
+				bundle.getString("Contrato"), ""};
 		for (int i = 0; i < titles2.length; i++) {
 			TableColumn column = new TableColumn(tablaEmpleados, SWT.NONE);
 			column.setText(titles2[i]);
@@ -256,10 +256,10 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 				tablaEmpleados.getColumn(0).setWidth(20);				// ico			x
 				tablaEmpleados.getColumn(1).setWidth(ancho/20*3);		// nvend		15
 				tablaEmpleados.getColumn(2).setWidth(ancho/5*2);		// nombre		40
-				tablaEmpleados.getColumn(3).setWidth(ancho/20*3-20);	// departamento	15
-				tablaEmpleados.getColumn(4).setWidth(ancho/20*3-20);	// contrato		15
-				tablaEmpleados.getColumn(5).setWidth(ancho/20*3);		// teléfono		15
-				tablaEmpleados.getColumn(6).setWidth(20);				// mensaje		x
+				tablaEmpleados.getColumn(3).setWidth(ancho/20*4);		// departamento	15
+				tablaEmpleados.getColumn(4).setWidth(ancho/20*5+8);		// contrato		15
+				//tablaEmpleados.getColumn(5).setWidth(ancho/20*3);		// teléfono		15
+				tablaEmpleados.getColumn(5).setWidth(20);				// mensaje		x
 			}
 			public void controlMoved(ControlEvent e) {};
 		});
@@ -274,27 +274,6 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 				mostrarEmpleados();
 			}
 		});
-
-		/*final Button bEmplVer = new Button(cEmplDer, SWT.PUSH);
-		bEmplVer.setText(bundle.getString("I02_but_Ver"));
-		bEmplVer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1,
-				1));
-			
-		bEmplVer.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				// TODO BD Coger empleado seleccionado de la BD y mostrarlo en
-				// la ventana
-
-				// employee created for tests
-				Color col = new Color(_tabFolder.getDisplay(), 10, 0, 50);
-
-				// Empleado emp = new Empleado(1, 12345678, "phil", "colins",
-				// "-", new Date("12/12/09"), 1, "phil.colins@gmail.com", "", 1,
-				// 1, 1,1, new Date("12/12/09"),new Date("12/12/09"), col,null,
-				// null);
-				// new I08_2_Consultar_empleado(shell, emp, bundle);
-			}
-		});*/
 
 		final Button bEmplEditar = new Button(cEmplDer, SWT.PUSH);
 		bEmplEditar.setText(bundle.getString("Editar"));
@@ -321,7 +300,6 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 
 		bEmplBaja.setText(bundle.getString("I02_but_Eliminar"));
 		bEmplBaja.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,1, 1));
-		//bEmplBaja.setEnabled(false);
 		bEmplBaja.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent e){
 				final int idVend;

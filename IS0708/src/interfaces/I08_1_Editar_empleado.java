@@ -399,9 +399,13 @@ public class I08_1_Editar_empleado {
 					messageBox.setText (bundle.getString("Error"));
 					messageBox.setMessage (bundle.getString("I08_err_Fecha"));					
 					e.doit = messageBox.open () == SWT.YES;
-					// Enfocar tNombre y seleccionar texto
-					//t.setFocus();
-					//tNombre.selectAll();
+					// Enfocar tFNacimiento ,Fcontrato,Falta y seleccionar texto
+					tFNacimiento.setFocus();
+					tFNacimiento.selectAll();
+					tFContrato.setFocus();
+					tFContrato.selectAll();
+					tFAlta.setFocus();
+					tFAlta.selectAll();
 				}
 				// Comprueba la dirección de email (campo no obligatorio)
 				else if (tEMail.getText().length()!=0 && !Util.comprobarEmail(tEMail.getText())) {
@@ -440,22 +444,34 @@ public class I08_1_Editar_empleado {
 					}
 					int indice = ids.get(j);
 					int Exp=cExperiencia.getSelectionIndex();
-
-					
-					
-					vista.modificarEmpleado(id, nom, ap1, ap2, fechaNacimiento, sex,  mail, pass, 
-								Exp, fechaContrato,fechaAlta, Fel, idiom, ran, turn, indice);
 					
 					// Si se han modificado los campos de datos laborables mostrar mensaje de necesidad de
 					// actualizacion de cuadrante
 					if(emp.getContratoId()!=ids.get(j)|| emp.getGrupo()!=cExperiencia.getSelectionIndex()){
-						MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
-						messageBox.setText ("Aviso");
-						messageBox.setMessage ("Para que algunos de estos cambios sean efectivos debe recalcular el cuadrante");
-						e.doit = messageBox.open () == SWT.YES;
-					 }
+						
+						
+						
+						MessageBox msgBox = new MessageBox(shell,
+								SWT.APPLICATION_MODAL | SWT.ICON_WARNING | SWT.OK
+										| SWT.CANCEL);
+						msgBox.setMessage(bundle.getString("I09_aviso_inconsistencias"));
+						msgBox.setText("Warning");
+						int resp = msgBox.open();
+						if (resp == SWT.OK) {
+							
+							// modificacion del empleado.
+							vista.modificarEmpleado(id, nom, ap1, ap2, fechaNacimiento, sex,  mail, pass, 
+								Exp, fechaContrato,fechaAlta, Fel, idiom, ran, turn, indice);
+							shell.dispose();
+						}
+							
+						}
+					
 
-					shell.dispose(); 
+						
+					 
+
+					
 				}
 			
 		};
