@@ -999,7 +999,7 @@ public class Empleado implements Drawable {
 		/*
 		//diaSemanaContrato es el día de la semana en que empezó el contrato 
 		int diaSemanaContrato = fContrato.getDay()-1;
-		if (diaSemanaContrato < 0) diaSemanaContrato=7;
+		if (diaSemanaContrato < 0) diaSemanaContrato=6;
 		diaCiclo = diaCiclo+diaSemanaContrato;*/
 		
 		//Obtencion del contrato del empleado.
