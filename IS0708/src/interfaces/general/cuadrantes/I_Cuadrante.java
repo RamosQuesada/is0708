@@ -1,4 +1,6 @@
-package interfaces;
+package interfaces.general.cuadrantes;
+
+
 
 import java.sql.Time;
 import java.util.ArrayList;

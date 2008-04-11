@@ -1,4 +1,5 @@
-package interfaces;
+package interfaces.admin;
+
 
 import java.util.ResourceBundle;
 
@@ -25,31 +26,24 @@ import aplicacion.Vista;
  */
 public class I04_Tab_AdminInicio {
 	private ResourceBundle bundle;
-
 	private Vista vista;
-
 	private TabFolder tabFolder;
-	
-	private Image ico_cuadrante;
 
 	public I04_Tab_AdminInicio(final ResourceBundle bundle, final Vista vista,
 		final TabFolder tabFolder) {
 		this.bundle = bundle;
 		this.vista = vista;
 		this.tabFolder = tabFolder;
-		ico_cuadrante = new Image(tabFolder.getDisplay(), I04_Tab_AdminInicio.class
-				.getResourceAsStream("ico_cuadrante.gif"));
 		
 		TabItem tabItemAdminInicio = new TabItem(tabFolder, SWT.NONE);
 		tabItemAdminInicio.setText(bundle.getString("I02_admin_inicio"));
-		tabItemAdminInicio.setImage(ico_cuadrante);
+		tabItemAdminInicio.setImage(vista.getImagenes().getIco_cuadrante());
 
 		// Creamos el contenido de la pestaña cuadrantes
 
 		Composite cInicio = new Composite(tabFolder, SWT.NONE);
 		tabItemAdminInicio.setControl(cInicio);
 
-		Image fondo = new Image(tabFolder.getDisplay(), I04_Tab_AdminInicio.class.getResourceAsStream("admin.png"));
 
 		cInicio.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
@@ -63,7 +57,7 @@ public class I04_Tab_AdminInicio {
 		cInicio.setLayout(l);
 
 		final Label lFondo = new Label(cInicio, SWT.NONE);
-		lFondo.setImage(fondo);
+		lFondo.setImage(vista.getImagenes().getFondoAdmin());
 		lFondo.setLayoutData(new GridData(SWT.FILL, SWT.TOP , false, false, 1,1));
 		lFondo.setBackground(new Color(vista.getDisplay(), 210, 165, 62));
 

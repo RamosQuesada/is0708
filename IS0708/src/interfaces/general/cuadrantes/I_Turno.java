@@ -1,4 +1,4 @@
-package interfaces;
+package interfaces.general.cuadrantes;
 
 import java.sql.Time;
 

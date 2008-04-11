@@ -1,4 +1,7 @@
-package interfaces;
+package interfaces.general.mensajeria;
+
+import interfaces.general.I02_Principal;
+import interfaces.imagenes.CargadorImagenes;
 
 import java.util.ArrayList;
 
@@ -36,7 +39,6 @@ public class I02_Tab_Mensajeria extends Thread{
 	private ArrayList<String> remitentes; 
 	private Table tablaMensajes;
 	private Label lMensajes;
-	private final Image ico_mens, ico_mens_l;
 	private boolean estaMarcado;
 	private Button bMensMarcar;
 	// Los caracteres a previsualizar de un mensaje
@@ -57,10 +59,6 @@ public class I02_Tab_Mensajeria extends Thread{
 		this.bundle = bundle;
 		this.tabFolder = tabFolder;
 		this.estaMarcado = false;
-		ico_mens_l = new Image(tabFolder.getDisplay(), 
-				I02_Tab_Mensajeria.class.getResourceAsStream("ico_mens1_v.gif"));
-		ico_mens = new Image(tabFolder.getDisplay(),
-				I02_Principal.class.getResourceAsStream("ico_mens2_v.gif"));
 		crearTab();
 	}
 	
@@ -143,7 +141,7 @@ public class I02_Tab_Mensajeria extends Thread{
 		// Crear tab
 		TabItem tabItemMensajes = new TabItem(tabFolder, SWT.NONE);
 		tabItemMensajes.setText(bundle.getString("Mensajes"));
-		tabItemMensajes.setImage(ico_mens_l);
+		tabItemMensajes.setImage(vista.getImagenes().getIco_mens_l());
 		
 		final Composite cMensajes = new Composite(tabFolder, SWT.NONE);
 		tabItemMensajes.setControl(cMensajes);

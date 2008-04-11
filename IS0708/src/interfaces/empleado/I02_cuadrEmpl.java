@@ -10,7 +10,8 @@
  *******************************************************************************/
 
 // TODO Hacer que reduzca la resoluci�n del grid en funci�n del tama�o de la pantalla
-package interfaces;
+package interfaces.empleado;
+
 
 import java.sql.Date;
 import java.util.ArrayList;

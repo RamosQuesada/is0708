@@ -1,4 +1,4 @@
-package interfaces;
+package interfaces.jefe;
 /*******************************************************************************
  * INTERFAZ I-09.1 :: Creaci�n de un turno
  *   por Daniel Dionne
@@ -17,6 +17,8 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
+
+import interfaces.general.cuadrantes.I_Cuadrante;
 
 import java.sql.Time;
 import java.util.ResourceBundle;

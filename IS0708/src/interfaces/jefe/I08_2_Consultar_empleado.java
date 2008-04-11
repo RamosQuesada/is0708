@@ -1,4 +1,4 @@
-package interfaces;
+package interfaces.jefe;
 /*******************************************************************************
  * INTERFAZ I-08.2 :: Ver de empleado
  *   por Jakub Chudzinski
@@ -29,9 +29,11 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ColorDialog;
 
+import aplicacion.Vista;
 import aplicacion.datos.Empleado;
 import aplicacion.utilidades.Util;
 import impresion.Imprimir;
+import interfaces.general.I01_Login;
 
 import java.util.Calendar;
 import java.util.ResourceBundle;
@@ -40,17 +42,17 @@ public class I08_2_Consultar_empleado {
 	private Shell padre = null;
 	private Empleado empleado;
 	private ResourceBundle bundle;
-	public I08_2_Consultar_empleado(Shell padre, Empleado empleado, ResourceBundle bundle) {
+	private Vista vista;
+	public I08_2_Consultar_empleado(Shell padre, Empleado empleado, Vista vista, ResourceBundle bundle) {
 		this.padre = padre;
 		this.empleado = empleado;
 		this.bundle = bundle;
+		this.vista = vista;
 		mostrarVentana();
 	}
 	
 	public void mostrarVentana() {
 		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
-		final Image ico_chico = new Image(padre.getDisplay(), I01_Login.class.getResourceAsStream("ico_chico.gif"));
-		final Image ico_chica = new Image(padre.getDisplay(), I01_Login.class.getResourceAsStream("ico_chica.gif"));
 		
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 2;
@@ -181,10 +183,10 @@ public class I08_2_Consultar_empleado {
 		String s; 
 		if(empleado.getSexo()==0){
 			s="femenino"; 
-			shell.setImage(ico_chica);
+			shell.setImage(vista.getImagenes().getIco_chica());
 		}else {
 			s="masculino" ;
-			shell.setImage(ico_chico);
+			shell.setImage(vista.getImagenes().getIco_chico());
 		}
 		tSexo.setText(s);
 		String e; 

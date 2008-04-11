@@ -1,4 +1,4 @@
-package interfaces;
+package interfaces.general;
 
 import java.awt.image.*;
 
