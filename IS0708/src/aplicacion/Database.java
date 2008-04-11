@@ -916,8 +916,7 @@ public class Database extends Thread {
 			st.addBatch("INSERT INTO Trabaja values (" + numVendedor
 					+ ", " + idTurno + ", '" + fecha + "', '" + horaEntrada
 					+ "', '" + horaSalida + "');");
-			System.out
-					.println("aplicacion.Database.java\t::Insertado en la tabla trabaja");
+			System.out.println("aplicacion.Database.java\t::Insertado en la tabla trabaja a toda ostia");
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
