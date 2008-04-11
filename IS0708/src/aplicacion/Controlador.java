@@ -364,8 +364,11 @@ public class Controlador {
 						.getFechaNac(), sexo, empleado.getEmail(), empleado
 						.getPassword(), grupo, empleado.getFcontrato(), empleado
 						.getFAlta(), 0, 0, empleado.getIdioma(), 1,
-				empleado.getContratoId(), empleado.getTurnoFavorito());
+				empleado.getContratoId(), empleado.getTurnoFavorito(),
+				empleado.getNombreColor(), empleado.getTelefono(), empleado.getSsid(),
+				empleado.getHaEntrado(), empleado.getUltimoAcceso());
 	}
+	
 
 	// este metodo lo usa el programa que rellena automaticamente las tablas de
 	// la base de datos
@@ -421,11 +424,13 @@ public class Controlador {
 			String apellido2, Date fechaNac, int sexo, String email,
 			String password, int indicadorGrupo, Date fechaContrato,
 			Date fechaEntrada, int horasExtras, int felicidad, int idioma,
-			int rango, int idContrato, int idTurno) {
+			int rango, int idContrato, int idTurno, String Color, String Telefono,
+			String Ssid, boolean HaEntrado, Date UltimoAcceso) {
 		return _db.insertarUsuario(id, nombre, apellido1, apellido2, fechaNac,
 				sexo, email, password, indicadorGrupo, fechaContrato,
 				fechaEntrada, horasExtras, felicidad, idioma, rango,
-				idContrato, idTurno);
+				idContrato, idTurno, Color, Telefono,
+				Ssid, HaEntrado, UltimoAcceso);
 	}
 
 	
