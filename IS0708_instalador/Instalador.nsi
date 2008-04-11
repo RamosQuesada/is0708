@@ -33,7 +33,7 @@ SetCompressor lzma
 !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME StartMenuGroup
 !define MUI_STARTMENUPAGE_DEFAULTFOLDER Turno-matic
 !define MUI_STARTMENUPAGE
-!define MUI_FINISHPAGE_SHOWREADME $INSTDIR\Ayuda\ES\index.html
+!define MUI_FINISHPAGE_SHOWREADME $INSTDIR\Datos\Ayuda\ES\index.html
 !define MUI_FINISHPAGE_23
 !define MUI_FINISHPAGE_RUN "$ACCESO_DIRECTO"
 !define MUI_FINISHPAGE_RUN_PARAMETERS "$ATRIBUTOS"
@@ -113,7 +113,7 @@ Section "-Java 6" SEC0000
 SectionEnd
 
 Section -jar SEC0001
-    SetOutPath $INSTDIR
+    SetOutPath $INSTDIR\Datos
     SetOverwrite on
     File ..\IS0708\Turno-matic.jar
     File .\Tema\Icono.ico
@@ -123,14 +123,14 @@ Section -jar SEC0001
 SectionEnd
 
 Section -Ayuda SEC0002
-    SetOutPath $INSTDIR\Ayuda
+    SetOutPath $INSTDIR\\Datos\Ayuda
     SetOverwrite on
     File /r ..\IS0708\Ayuda\*
     RmDir /r $INSTDIR\Ayuda\.svn
     RmDir /r $INSTDIR\Ayuda\ES\.svn
     RmDir /r $INSTDIR\Ayuda\Imagenes\.svn
     SetOutPath $INSTDIR
-    CreateShortcut $INSTDIR\Ayuda.lnk $INSTDIR\Ayuda\ES\index.html
+    CreateShortcut $INSTDIR\Ayuda.lnk $INSTDIR\Datod\Ayuda\ES\index.html
     WriteRegStr HKLM "${REGKEY}\Components" Ayuda 1
 SectionEnd
 
@@ -142,11 +142,11 @@ Section -post SEC0003
         SetOutPath $SMPROGRAMS\$StartMenuGroup
         CreateShortcut "$SMPROGRAMS\$StartMenuGroup\$(^UninstallLink).lnk" "$INSTDIR\Desinstalar Turno-matic.exe"
         SetOutPath $SMPROGRAMS\$StartMenuGroup
-        CreateShortcut "$SMPROGRAMS\$StartMenuGroup\Ayuda.lnk "$INSTDIR\Ayuda\ES\index.html
+        CreateShortcut "$SMPROGRAMS\$StartMenuGroup\Ayuda.lnk "$INSTDIR\Datos\Ayuda\ES\index.html
         SetOutPath $SMPROGRAMS\$StartMenuGroup
-        CreateShortCut "$SMPROGRAMS\$StartMenuGroup\Turno-matic.lnk" "$ACCESO_DIRECTO" "$ATRIBUTOS" "$INSTDIR\Icono.ico"
+        CreateShortCut "$SMPROGRAMS\$StartMenuGroup\Turno-matic.lnk" "$ACCESO_DIRECTO" "$ATRIBUTOS" "$INSTDIR\Datos\Icono.ico"
         SetOutPath $DESKTOP
-        CreateShortCut "$DESKTOP\Turno-matic.lnk" "$ACCESO_DIRECTO" "$ATRIBUTOS" "$INSTDIR\Icono.ico"
+        CreateShortCut "$DESKTOP\Turno-matic.lnk" "$ACCESO_DIRECTO" "$ATRIBUTOS" "$INSTDIR\Datos\Icono.ico"
     !insertmacro MUI_STARTMENU_WRITE_END
     WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayName "$(^Name)"
     WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayVersion "${VERSION}"
@@ -172,14 +172,14 @@ done${UNSECTION_ID}:
 # Uninstaller sections
 Section /o -un.Ayuda UNSEC0002
     Delete /REBOOTOK $INSTDIR\Ayuda.lnk
-    RmDir /r /REBOOTOK $INSTDIR\Ayuda
+    RmDir /r /REBOOTOK $INSTDIR\Datos\Ayuda
     DeleteRegValue HKLM "${REGKEY}\Components" Ayuda
     Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\Ayuda.lnk"
 SectionEnd
 
 Section /o -un.jar UNSEC0001
-    Delete /REBOOTOK $INSTDIR\Turno-matic.jar
-    Delete /REBOOTOK $INSTDIR\Icono.ico
+    Delete /REBOOTOK $INSTDIR\Datos\Turno-matic.jar
+    Delete /REBOOTOK $INSTDIR\Datos\Icono.ico
     DeleteRegValue HKLM "${REGKEY}\Components" jar
     Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\Turno-matic.lnk"
     Delete /REBOOTOK "$INSTDIR\Turno-matic.lnk"
@@ -200,6 +200,7 @@ Section -un.post UNSEC0003
     DeleteRegKey /IfEmpty HKLM "${REGKEY}\Components"
     DeleteRegKey /IfEmpty HKLM "${REGKEY}"
     RmDir /REBOOTOK $SMPROGRAMS\$StartMenuGroup
+    RmDir /REBOOTOK $INSTDIR\Datos
     RmDir /REBOOTOK $INSTDIR
     Push $R0
     StrCpy $R0 $StartMenuGroup 1
@@ -290,7 +291,7 @@ Function DetectarJava
         StrCmp $2 error +2
         StrCpy $0 $1
         StrCpy $ACCESO_DIRECTO "$0"
-        StrCpy $ATRIBUTOS "-jar $\"$INSTDIR\Turno-matic.jar$\""
+        StrCpy $ATRIBUTOS "-jar $\"$INSTDIR\Datos\Turno-matic.jar$\""
         
         IntOp $JAVA 1 + 0
         Goto Done
