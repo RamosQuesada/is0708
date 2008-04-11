@@ -1717,6 +1717,7 @@ public class Controlador {
 				_db.insertarTrabaja(trabaja.getIdEmpl(), trabaja.getIdTurno(),
 						fecha, trabaja.getFichIni(), trabaja.getFichFin());
 			}
+			_db.executeBatch();
 		}
 	}
 	
