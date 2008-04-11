@@ -25,11 +25,11 @@ SetCompressor lzma
 
 !define MUI_FINISHPAGE_NOAUTOCLOSE
 !define MUI_LICENSEPAGE_RADIOBUTTONS
-!define MUI_FINISHPAGE_SHOWREADME $INSTDIR\Ayuda\ES\index.html
+!define MUI_FINISHPAGE_SHOWREADME $INSTDIR\Datos\Ayuda\ES\index.html
 !define MUI_FINISHPAGE_23
 !define MUI_UNFINISHPAGE_NOAUTOCLOSE
 !define MUI_FINISHPAGE_RUN "c:\jdk1.6.0_02\bin\javaw.exe"
-!define MUI_FINISHPAGE_RUN_PARAMETERS "-jar $INSTDIR\Turno-matic.jar"
+!define MUI_FINISHPAGE_RUN_PARAMETERS "-jar $INSTDIR\Datos\Turno-matic.jar"
 
 # Included files
 !include Sections.nsh
@@ -69,22 +69,22 @@ VIAddVersionKey /LANG=${LANG_SPANISH} LegalCopyright ""
 # Installer sections
 Section -Main SEC0000
     #jar
-    SetOutPath $INSTDIR
+    SetOutPath $INSTDIR\Datos
     SetOverwrite on
     File ..\IS0708\Turno-matic.jar
     File .\Tema\Icono.ico
     SetOutPath $INSTDIR
-    CreateShortCut "$INSTDIR\Turno-matic.lnk" "c:\jdk1.6.0_02\bin\javaw.exe" "-jar $\"$INSTDIR\Turno-matic.jar$\"" "$INSTDIR\Icono.ico"
+    CreateShortCut "$INSTDIR\Turno-matic.lnk" "c:\jdk1.6.0_02\bin\javaw.exe" "-jar $\"$INSTDIR\Datos\Turno-matic.jar$\"" "$INSTDIR\Datos\Icono.ico"
     
     #Ayuda
-    SetOutPath $INSTDIR\Ayuda
+    SetOutPath $INSTDIR\Datos\Ayuda
     SetOverwrite on
     File /r ..\IS0708\Ayuda\*
     RmDir /r $INSTDIR\Ayuda\.svn
     RmDir /r $INSTDIR\Ayuda\ES\.svn
     RmDir /r $INSTDIR\Ayuda\Imagenes\.svn
     SetOutPath $INSTDIR
-    CreateShortcut $INSTDIR\Ayuda.lnk $INSTDIR\Ayuda\ES\index.html
+    CreateShortcut $INSTDIR\Ayuda.lnk $INSTDIR\Datos\Ayuda\ES\index.html
 SectionEnd
 
 # Installer functions
