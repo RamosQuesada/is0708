@@ -1,10 +1,10 @@
-package interfaces;
+package interfaces.jefe;
 /*******************************************************************************
- * INTERFAZ I-08.2 :: Edición de empleado
- *   por Dulce
+ * INTERFAZ I-08.1 :: Creación de empleado
+ *   por Daniel Dionne
  *   
- * Interfaz para dar de editar un empleado existente.
- * ver 0.2
+ * Interfaz para dar de alta un empleado nuevo.
+ * ver 0.1
  *******************************************************************************/
 
 import org.eclipse.swt.SWT;
@@ -21,51 +21,43 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ColorDialog;
 
-import aplicacion.Database;
 import aplicacion.Vista;
 import aplicacion.datos.Contrato;
 import aplicacion.datos.Empleado;
 import aplicacion.utilidades.Util;
 
+import interfaces.general.I17_Seleccion_fecha;
+
 import java.util.ArrayList;
-//import java.util.Date;
 import java.util.ResourceBundle;
 import java.sql.Date;
 
 // TODO Mostrar elección de rangos inferiores al usuario
-public class I08_1_Editar_empleado {
+public class I08_1_Anadir_empleado {
 	private Shell padre = null;
 	private ResourceBundle bundle;
 	private Vista vista;
 	private Date fechaContrato;
 	private Date fechaAlta;
 	private Date fechaNacimiento;
-	private int idVend;
+	private ArrayList<Contrato> contratos;
 	//http://java.sun.com/j2se/1.4.2/docs/api/java/util/GregorianCalendar.html 
-	public I08_1_Editar_empleado(Shell padre, ResourceBundle bundle, Vista vista, int idVend) {
+	public I08_1_Anadir_empleado(Shell padre, ResourceBundle bundle, Vista vista) {
 		this.padre = padre;
 		this.bundle = bundle;
 		this.vista = vista;
-		fechaContrato = vista.getEmpleado(idVend).getFcontrato();
-		fechaAlta = vista.getEmpleado(idVend).getFAlta();
-		fechaNacimiento = vista.getEmpleado(idVend).getFechaNac();
-		this.idVend = idVend;
+		fechaContrato = new Date(0);
+		fechaAlta = new Date(0);
+		fechaNacimiento = new Date(0);
+		contratos = vista.getListaContratosDepartamento();
 		mostrarVentana();
 	}
 	
 	public void mostrarVentana() {		
 		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
-
-		final Image ico_chico = new Image(padre.getDisplay(), I08_1_Editar_empleado.class.getResourceAsStream("ico_chico.gif"));
-		final Image ico_chica = new Image(padre.getDisplay(), I08_1_Editar_empleado.class.getResourceAsStream("ico_chica.gif"));
-		
-		final Image ico_esp = new Image(padre.getDisplay(), I08_1_Editar_empleado.class.getResourceAsStream("ico_esp.gif"));
-		final Image ico_usa = new Image(padre.getDisplay(), I08_1_Editar_empleado.class.getResourceAsStream("ico_usa.gif"));
-		final Image ico_pol = new Image(padre.getDisplay(), I08_1_Editar_empleado.class.getResourceAsStream("ico_pol.gif"));
 
 		GridLayout layout = new GridLayout(2,false);
 
@@ -78,9 +70,7 @@ public class I08_1_Editar_empleado {
 		grupoDer.setLayout(new GridLayout(2,false));
 		
 		final Label  lNVend			= new Label (grupoIzq, SWT.LEFT);
-		//cambiar por un label
-		
-		final Label  llNVend		= new Label (grupoIzq, SWT.LEFT);
+		final Text   tNVend			= new Text  (grupoIzq, SWT.BORDER);
 		final Label  lPassword		= new Label (grupoIzq, SWT.LEFT);
 		final Text   tPassword		= new Text  (grupoIzq, SWT.BORDER);
 		final Label  lNombre		= new Label (grupoIzq, SWT.LEFT);
@@ -110,11 +100,10 @@ public class I08_1_Editar_empleado {
 		final Button bColor			= new Button(grupoDer, SWT.PUSH);
 		final Label  lColor			= new Label	(grupoDer,  SWT.NONE);
 		
-		final Button bGuardar		= new Button(shell, SWT.PUSH);
+		final Button bAceptar		= new Button(shell, SWT.PUSH);
 		final Button bCancelar		= new Button(shell, SWT.PUSH);
-		String aux = String.valueOf(idVend);
+		
 		lNVend			.setText(bundle.getString("Vendedor"));
-		llNVend			.setText(aux); 
 		lPassword		.setText(bundle.getString("Contrasena"));
 		lEMail			.setText(bundle.getString("EMail"));
 		lNombre			.setText(bundle.getString("Nombre"));
@@ -131,6 +120,7 @@ public class I08_1_Editar_empleado {
 		bColor			.setText(bundle.getString("I08_lab_SelColor"));
 
 		lNVend		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
+		tNVend		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,false,1,1));
 		lPassword	.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
 		tPassword	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		lEMail		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
@@ -160,85 +150,41 @@ public class I08_1_Editar_empleado {
 		bColor		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		lColor		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		
-		bGuardar	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		bAceptar	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		bCancelar	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 
 		grupoIzq.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
 		grupoDer.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
 		
-		// INICIO DE RELLENO DE DATOS
-		
-		final Empleado emp=vista.getEmpleado(idVend);		
-		tPassword.setText(emp.getPassword());	
-		tEMail.setText(emp.getEmail());		
-		tNombre.setText(emp.getNombre());		
-		tApell1.setText(emp.getApellido1());
-		tApell2.setText(emp.getApellido2());
-		
-		String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
-		tFAlta.setText(String.valueOf(emp.getFAlta().getDate()) + " de " + meses[emp.getFAlta().getMonth()]+ " de " + String.valueOf(emp.getFAlta().getYear()+1900));
-		tFNacimiento.setText(String.valueOf(emp.getFechaNac().getDate()) + " de " + meses[emp.getFechaNac().getMonth()]+ " de " + String.valueOf(emp.getFechaNac().getYear()+1900));
-		tFContrato.setText(String.valueOf(emp.getFcontrato().getDate()) + " de " + meses[emp.getFcontrato().getMonth()]+ " de " + String.valueOf(emp.getFcontrato().getYear()+1900));
-			
-		
-		
-		
+		tNVend.setTextLimit(8);
 		cSexo.setItems (new String [] {	bundle.getString("Femenino"),
 										bundle.getString("Masculino")});
-	
 		cIdioma.setItems (new String [] {	bundle.getString("esp"),
 											bundle.getString("eng"),
 											bundle.getString("pol")});
-			cExperiencia.setItems (new String [] {	bundle.getString("Principiante"),
+		
+		cExperiencia.setItems (new String [] {	bundle.getString("Principiante"),
 												bundle.getString("Experto")});
 		
-		ArrayList<String> departamentos = vista.getEmpleadoActual().getDepartamentosId();
-		int jj=0;
-		boolean cumple=true;
+		for (int i=1; i<contratos.size(); i++)
+			cContrato.add(contratos.get(i).getNombreContrato());
 		
+		ArrayList<String> departamentos = vista.getEmpleadoActual().getDepartamentosId();
 		for (int i=0; i<departamentos.size(); i++) {
 			cDepto.add(departamentos.get(i));
-
-			if (!emp.getDepartamentoId().equals(departamentos.get(i))&& cumple){
-				jj=i;
-			}
-			else
-				cumple=false;
 		}
+		cSexo.select(0);
+		cContrato.select(0);
+		cExperiencia.select(0);
+		cDepto.select(0);
+		cIdioma.select(0);
 		
-		final ArrayList<Contrato> contratos = vista.getListaContratosDepartamento();
-		final ArrayList<Integer> ids = new ArrayList();
-		int j=0;
-		cumple=true;
-		for(int i=0; i<contratos.size();i++){
-			String nombre =contratos.get(i).getNombreContrato();
-			int num =contratos.get(i).getNumeroContrato();
-			int emp1 = emp.getContratoId();
-			cContrato.add(contratos.get(i).getNombreContrato());
-			ids.add(contratos.get(i).getNumeroContrato());
-			if (emp.getContratoId() == num && cumple){
-				j=i;
-				cumple=false;
-			}
-
-		}
 		
-	
-		cSexo.select(emp.getSexo());
-		cContrato.select(j);
-
-		cExperiencia.select(emp.getGrupo());
-		cDepto.select(jj);
-		cIdioma.select(emp.getIdioma());
-		
-		shell.setImage(ico_chico);
-		shell.setImage(ico_chica);
-		
-		shell.setText("Editar empleado");
+		shell.setText(bundle.getString("I08_but_NuevoEmpleado"));
 		shell.setLayout(layout);
 		
-		bGuardar.setText("Guardar");
-		bGuardar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
+		bAceptar.setText(bundle.getString("Aceptar"));
+		bAceptar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		
 		bCancelar.setText(bundle.getString("Cancelar"));
 		bCancelar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
@@ -247,9 +193,9 @@ public class I08_1_Editar_empleado {
 		SelectionAdapter sacSexo = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
 				if (cSexo.getSelectionIndex()==0)
-					shell.setImage(ico_chica);
+					shell.setImage(vista.getImagenes().getIco_chica());
 				else
-					shell.setImage(ico_chico);
+					shell.setImage(vista.getImagenes().getIco_chico());
 			}
 		};
 		cSexo.addSelectionListener(sacSexo);
@@ -263,16 +209,10 @@ public class I08_1_Editar_empleado {
 						shell.getDisplay().sleep();
 					}
 				}
-				Date fecha = i17.getFecha();
-				
+				fechaNacimiento = i17.getFecha();
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
-				if(fecha!=null){
-					tFNacimiento.setText(String.valueOf(fecha.getDate()) + " de " + meses[fecha.getMonth()]+ " de " + String.valueOf(fecha.getYear()+1900));
-					fechaNacimiento = fecha;
-				}else{
-					//tFNacimiento.setText(String.valueOf(emp.getFechaNac().getDate()) + " de " + meses[emp.getFechaNac().getMonth()]+ " de " + String.valueOf(emp.getFechaNac().getYear()+1900));
-
-				}
+				if (fechaNacimiento!=null)
+				tFNacimiento.setText(String.valueOf(fechaNacimiento.getDate()) + " de " + meses[fechaNacimiento.getMonth()]+ " de " + String.valueOf(fechaNacimiento.getYear()+1900));
 			}
 		};
 		bFNacimiento.addSelectionListener(sabFNacimiento);
@@ -286,23 +226,16 @@ public class I08_1_Editar_empleado {
 						shell.getDisplay().sleep();
 					}
 				}
-				
-				Date fecha = i17.getFecha();
-				 
+				fechaContrato = i17.getFecha(); 				
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
-				if(fecha!=null){
-					tFContrato.setText(String.valueOf(fecha.getDate()) + " de " + meses[fecha.getMonth()]+ " de " + String.valueOf(fecha.getYear()+1900));
-					fechaContrato = fecha;
-				}else{
-					//tFContrato.setText(String.valueOf(emp.getFcontrato().getDate()) + " de " + meses[emp.getFcontrato().getMonth()]+ " de " + String.valueOf(emp.getFcontrato().getYear()+1900));
-				
-				}
-				}
+				if (fechaContrato != null)
+					tFContrato.setText(String.valueOf(fechaContrato.getDate()) + " de " + meses[fechaContrato.getMonth()]+ " de " + String.valueOf(fechaContrato.getYear()+1900));				
+			}
 		};
 		bFContrato.addSelectionListener(sabFContrato);
 		
 		// Listener para el selector de fecha de alta
-		SelectionAdapter sabCambios = new SelectionAdapter() {
+		SelectionAdapter sabFAlta = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
 				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shell);
 				while (!i17.isDisposed()) {
@@ -310,22 +243,13 @@ public class I08_1_Editar_empleado {
 						shell.getDisplay().sleep();
 					}
 				}
-				Date fecha = i17.getFecha();
-				
+				fechaAlta = i17.getFecha(); 
 				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
-				if(fecha!=null){
-					tFAlta.setText(String.valueOf(fecha.getDate()) + " de " + meses[fecha.getMonth()]+ " de " + String.valueOf(fecha.getYear()+1900));
-					//String tFAlta =String.valueOf(fechaAlta.getDate()) + "-" + fechaAlta.getMonth()+ "-" + String.valueOf(fechaAlta.getYear());
-					fechaAlta =  fecha;
-					int aux=1;
-				}else{
-					//tFAlta.setText(String.valueOf(emp.getFAlta().getDate()) + " de " + meses[emp.getFAlta().getMonth()]+ " de " + String.valueOf(emp.getFAlta().getYear()+1900));
-					
-					 
-				}
+				if (fechaAlta != null)
+				tFAlta.setText(String.valueOf(fechaAlta.getDate()) + " de " + meses[fechaAlta.getMonth()]+ " de " + (String.valueOf(fechaAlta.getYear()+1900)));
 			}
 		};
-		bFAlta.addSelectionListener(sabCambios);
+		bFAlta.addSelectionListener(sabFAlta);
 		
 		// Listener para el selector de color
 		SelectionAdapter sabColor = new SelectionAdapter() {
@@ -350,11 +274,21 @@ public class I08_1_Editar_empleado {
 		};
 
 		// Listener con lo que hace el botón bAceptar
-		SelectionAdapter sabGuardar = new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {			
-				
+		SelectionAdapter sabAceptar = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				// Comprueba el número de vendedor (campo obligatorio)
+				int n = Util.convertirNVend(tNVend.getText());
+				if (n<0) {
+					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
+					messageBox.setText (bundle.getString("Error"));
+					messageBox.setMessage (bundle.getString("I01_err_NumVendedor1"));
+					e.doit = messageBox.open () == SWT.YES;
+					// Enfocar tNVend y seleccionar texto
+					tNVend.setFocus();
+					tNVend.selectAll();
+				}
 				// Comprueba que la contraseña no es vacía (campo obligatorio)
-				if (tPassword.getText().length()==0) {
+				else if (tPassword.getText().length()==0) {
 					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
 					messageBox.setText (bundle.getString("Error"));
 					messageBox.setMessage (bundle.getString("I01_err_Password"));					
@@ -417,77 +351,36 @@ public class I08_1_Editar_empleado {
 					tEMail.setFocus();
 					tEMail.selectAll();
 				}
-
-				// Si todo está bien, modifica el empleado					
-
-					String nom=tNombre.getText();
-					String ap1=tApell1.getText();
-					String ap2=tApell2.getText();
-					String mail =tEMail.getText();
-					String pass=tPassword.getText();
-					int sex=cSexo.getSelectionIndex();
-
+				// Si todo está bien, inserta el empleado
+				else {
+					String cont = cContrato.getText();
+					int id=0;
 					
-					int Fel=emp.getFelicidad();
-					int idiom= cIdioma.getSelectionIndex();
-					int ran=emp.getRango();
-					int turn= emp.getTurnoFavorito();
-					
-					int id =idVend;
-					int j=0;
-					for (int i=0; i<contratos.size();i++){
-						String p1=contratos.get(i).getNombreContrato();
-						String p2=cContrato.getItem(cContrato.getSelectionIndex());
-						if (contratos.get(i).getNombreContrato().equals(cContrato.getItem(cContrato.getSelectionIndex()))){
-							j=i;
+					for (int i=0; i<contratos.size(); i++) {
+						String nombre = contratos.get(i).getNombreContrato();
+						if (cont.equals(nombre)) {
+							id = contratos.get(i).getNumeroContrato();
+							break;
 						}
 					}
-					int indice = ids.get(j);
-					int Exp=cExperiencia.getSelectionIndex();
-					
-					// Si se han modificado los campos de datos laborables mostrar mensaje de necesidad de
-					// actualizacion de cuadrante
-					if(emp.getContratoId()!=ids.get(j)|| emp.getGrupo()!=cExperiencia.getSelectionIndex()){
-						
-						
-						
-						MessageBox msgBox = new MessageBox(shell,
-								SWT.APPLICATION_MODAL | SWT.ICON_WARNING | SWT.OK
-										| SWT.CANCEL);
-						msgBox.setMessage(bundle.getString("I09_aviso_inconsistencias"));
-						msgBox.setText("Warning");
-						int resp = msgBox.open();
-						if (resp == SWT.OK) {
-							
-							// modificacion del empleado.
-							vista.modificarEmpleado(id, nom, ap1, ap2, fechaNacimiento, sex,  mail, pass, 
-								Exp, fechaContrato,fechaAlta, Fel, idiom, ran, turn, indice);
-							shell.dispose();
-						}
-							
-						}
-					
 
-						
-					 
+					Empleado emp = new Empleado(vista.getEmpleadoActual().getEmplId(), Util.convertirNVend(tNVend.getText()), tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, id, fechaContrato, fechaAlta, null, cDepto.getText(), null, 0, cIdioma.getSelectionIndex(),0);
+					vista.insertEmpleado(emp);
 
-					
+					shell.dispose();
 				}
-			
+			}
 		};
 		
-
 		bCancelar.addSelectionListener(sabCancelar);
-		bGuardar.addSelectionListener(sabGuardar);
-
+		bAceptar.addSelectionListener(sabAceptar);
 
 		// Botón por defecto bAceptar
-		shell.setDefaultButton(bGuardar);
+		shell.setDefaultButton(bAceptar);
 		// Ajustar el tama�o de la ventana al contenido
 		shell.pack();
 		// Mostrar ventana centrada sobre el padre
 		shell.setLocation(padre.getBounds().width/2 + padre.getBounds().x - shell.getSize().x/2, padre.getBounds().height/2 + padre.getBounds().y - shell.getSize().y/2);
 		shell.open();
 	}
-	
 }

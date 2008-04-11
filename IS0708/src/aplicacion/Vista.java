@@ -21,7 +21,9 @@ import aplicacion.datos.Turno;
 import aplicacion.mensajeria.Mensaje;
 
 import idiomas.LanguageChanger;
-import interfaces.*;
+import interfaces.general.I01_Login;
+import interfaces.general.I02_Principal;
+import interfaces.imagenes.CargadorImagenes;
 
 public class Vista {
 	private Controlador controlador;
@@ -38,6 +40,7 @@ public class Vista {
 	private Thread conector, loader, cacheUploader;
 	private boolean cacheCargada = false;
 	private int num_men_hoja = 10;
+	CargadorImagenes imagenes;
 	
 	/** Lista de tareas que se están llevando a cabo para mostrar en la barra inferior */
 	private ArrayList<Tarea> tareas= new ArrayList<Tarea>();
@@ -444,6 +447,9 @@ public class Vista {
 		display = d;
 		shell = new Shell(display);
 
+		// Cargar imágenes de la aplicación
+		imagenes = new CargadorImagenes(d);
+
 		// Crear gestor de idiomas
 		l = new LanguageChanger();
 		bundle = l.getBundle();
@@ -492,7 +498,7 @@ public class Vista {
 		// Si la ventana de aplicación está abierta, ocultarla
 		if (i02!=null && !i02.getShell().isDisposed()) i02.getShell().setVisible(false);
 		
-		login = new I01_Login(shell, bundle, db);
+		login = new I01_Login(shell, bundle, db, imagenes);
 		boolean identificadoOCancelado = false;
 		Empleado emp = null;
 		// Intenta identificar al usuario hasta que lo consigue o hasta que se pulsa el botón cancelar
@@ -596,7 +602,11 @@ public class Vista {
 	public Display getDisplay() {
 		return display;
 	}
-
+	
+	public CargadorImagenes getImagenes() {
+		return imagenes;
+	}
+	
 	/**
 	 * Devuelve si la caché ha terminado de cargarse.
 	 * 
@@ -1352,55 +1362,55 @@ public class Vista {
 			}
    
    }
-/**
- * Funcion que dado un objeto empleado te devuelve de que departamento es jefe
- * @param empleadoActual
- * @return
- */
-public ArrayList<String> getNombreDepartamento(Empleado empleadoActual) {
-	// TODO Auto-generated method stub
-	int nv=empleadoActual.getEmplId();
-	ArrayList<String> dptos=this.controlador.getDepartamentosJefe(nv);
-	return dptos;
-}
-/**
- * Funcion que devuelve true si tiene algun empleado el departamento
- * @param text
- * @return
- */
-public boolean tieneEmpleados(String text) {
-	// TODO Auto-generated method stub
-	//Se usa para ver cuando se puede eliminar un Dpto.
-	//esto es, cuando solo queda su jefe (que siempre
-	//está ahí)
-	return this.getEmpleadosDepartamento(text).size()>1;
-}
-/**
- * Función que elimina un departamento de las
- * 3 tablas de departamentos
- * @param text Nombre del departamento
- */
-public void eliminaDepartamento(String text) {
-	// TODO Auto-generated method stub
-	if (!this.tieneEmpleados(text)){
-	this.controlador.eliminaDepartamento(text);
+	/**
+	 * Funcion que dado un objeto empleado te devuelve de que departamento es jefe
+	 * @param empleadoActual
+	 * @return
+	 */
+	public ArrayList<String> getNombreDepartamento(Empleado empleadoActual) {
+		// TODO Auto-generated method stub
+		int nv=empleadoActual.getEmplId();
+		ArrayList<String> dptos=this.controlador.getDepartamentosJefe(nv);
+		return dptos;
 	}
-}
-
- 
-/**
- * Funcion que dado un Dpto, te devuelve 
- * un ArrayList de dos componentes en la que
- * la primera(horas.get(0)) es la hora de apertura
- * y la segunda(horas.get(1)) la hora de cierre
- * @param dpto: Id del Dpto.
- * @return
- */
-public ArrayList<String> getHorarioDpto(String dpto) {
-	// TODO Auto-generated method stub
-	ArrayList<String> horas = this.controlador.getHorarioDpto(dpto);
-	return horas;
-}
-   
-   
+	/**
+	 * Funcion que devuelve true si tiene algun empleado el departamento
+	 * @param text
+	 * @return
+	 */
+	public boolean tieneEmpleados(String text) {
+		// TODO Auto-generated method stub
+		//Se usa para ver cuando se puede eliminar un Dpto.
+		//esto es, cuando solo queda su jefe (que siempre
+		//está ahí)
+		return this.getEmpleadosDepartamento(text).size()>1;
+	}
+	/**
+	 * Función que elimina un departamento de las
+	 * 3 tablas de departamentos
+	 * @param text Nombre del departamento
+	 */
+	public void eliminaDepartamento(String text) {
+		// TODO Auto-generated method stub
+		if (!this.tieneEmpleados(text)){
+		this.controlador.eliminaDepartamento(text);
+		}
+	}
+	
+	 
+	/**
+	 * Funcion que dado un Dpto, te devuelve 
+	 * un ArrayList de dos componentes en la que
+	 * la primera(horas.get(0)) es la hora de apertura
+	 * y la segunda(horas.get(1)) la hora de cierre
+	 * @param dpto: Id del Dpto.
+	 * @return
+	 */
+	public ArrayList<String> getHorarioDpto(String dpto) {
+		// TODO Auto-generated method stub
+		ArrayList<String> horas = this.controlador.getHorarioDpto(dpto);
+		return horas;
+	}
+	   
+	   
 }

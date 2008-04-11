@@ -1,4 +1,7 @@
-package interfaces;
+package interfaces.admin;
+
+import interfaces.general.I17_Seleccion_fecha;
+import interfaces.jefe.I08_1_Anadir_empleado;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -33,23 +36,13 @@ import aplicacion.utilidades.Util;
 
 public class I03_Tab_NuevoJefe {
 	
-	private Image ico_chico,ico_chica;	
-	
 	private ResourceBundle bundle;	
-	
 	private Vista vista;	
-	
 	private TabFolder tabFolder;	
-	
 	private String tmDep;
-	
 	private ArrayList<Contrato> contratos;
-	
 	private Date fechaContrato,fechaAlta,fechaNacimiento;
-	
 	private boolean colorSeleccionado;
-	
-	
 	
 	/**
 	 * Constructor. Crea un TabItem para la creación de un nuevo jefe de departamento
@@ -69,16 +62,10 @@ public class I03_Tab_NuevoJefe {
 		this.tabFolder = tabFolder;
 		this.colorSeleccionado = false;
 		
-		//cargamos las imagenes
-		ico_chico = new Image(this.tabFolder.getDisplay(), 
-				I03_Tab_NuevoJefe.class.getResourceAsStream("ico_chico.gif"));
-		ico_chica = new Image(this.tabFolder.getDisplay(), 
-				I03_Tab_NuevoJefe.class.getResourceAsStream("ico_chica.gif"));
-		
 		//creamos la nueva pestaña
 		final TabItem tabItemEmpleados = new TabItem(this.tabFolder, SWT.NONE);
 		tabItemEmpleados.setText(bundle.getString("I03_admin_jefe"));
-		tabItemEmpleados.setImage(ico_chico);
+		tabItemEmpleados.setImage(vista.getImagenes().getIco_chico());
 
 		// Creamos el contenido de la pestaña cuadrantes
 		final Composite cNuevoJefe = new Composite(this.tabFolder, SWT.NONE);
@@ -102,10 +89,6 @@ public class I03_Tab_NuevoJefe {
 		
 		
 		//creamos el contenido del layout para rellenar los datos
-		final Image ico_chico = new Image(tabFolder.getDisplay(), I08_1_Anadir_empleado.class.getResourceAsStream("ico_chico.gif"));
-		final Image ico_chica = new Image(tabFolder.getDisplay(), I08_1_Anadir_empleado.class.getResourceAsStream("ico_chica.gif"));
-		
-		
 		final Group grupoIzq = new Group(cNuevoJefe2, SWT.NONE);
 		final Group grupoDer = new Group(cNuevoJefe2, SWT.NONE);
 		grupoIzq.setText(bundle.getString("I03_lab_DatosPersonales"));
@@ -479,9 +462,9 @@ public class I03_Tab_NuevoJefe {
 		SelectionAdapter sacSexo = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
 				if (cSexo.getSelectionIndex()==0)
-					tabItemEmpleados.setImage(ico_chica);
+					tabItemEmpleados.setImage(vista.getImagenes().getIco_chica());
 				else
-					tabItemEmpleados.setImage(ico_chico);
+					tabItemEmpleados.setImage(vista.getImagenes().getIco_chico());
 			}
 		};
 		cSexo.addSelectionListener(sacSexo);

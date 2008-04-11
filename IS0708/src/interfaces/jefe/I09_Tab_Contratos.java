@@ -1,4 +1,6 @@
-package interfaces;
+package interfaces.jefe;
+
+import interfaces.general.I02_Principal;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -28,25 +30,14 @@ import aplicacion.datos.Turno;
 
 public class I09_Tab_Contratos extends Thread {
 	final ResourceBundle bundle;
-
 	final Vista vista;
-
 	final TabFolder tabFolder;
-
 	final Table tablaContratos;
-
-	final Image ico_cuadrante;
-
 	private boolean datosInterfazCargados = false;
-
 	private Button bNuevoContrato;
-
 	private Button bModificarContrato;
-
 	private Button bEliminarContrato;
-
 	private int indiceJefe;
-	
 	private Locale locale;
 
 	/**
@@ -148,12 +139,10 @@ public class I09_Tab_Contratos extends Thread {
 		this.tabFolder = tabFolder;
 		this.locale = locale;
 		this.indiceJefe = -1;
-		ico_cuadrante = new Image(tabFolder.getDisplay(), I02_Principal.class
-				.getResourceAsStream("ico_cuadrante.gif"));
 
 		TabItem tabItemContratos = new TabItem(tabFolder, SWT.NONE);
 		tabItemContratos.setText(bundle.getString("Contratos"));
-		tabItemContratos.setImage(ico_cuadrante);
+		tabItemContratos.setImage(vista.getImagenes().getIco_cuadrante());
 
 		final Composite cContratos = new Composite(tabFolder, SWT.NONE);
 		tabItemContratos.setControl(cContratos);

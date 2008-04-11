@@ -1,5 +1,7 @@
 package interfaces;
 
+import interfaces.general.I13_Elegir_empleado;
+
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import org.eclipse.swt.SWT;

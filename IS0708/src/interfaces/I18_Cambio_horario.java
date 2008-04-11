@@ -1,5 +1,7 @@
 package interfaces;
 
+import interfaces.general.I17_Seleccion_fecha;
+
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.sql.Date;
@@ -51,14 +53,13 @@ public class I18_Cambio_horario {
 	public void mostrarVentana() {
 		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 
-		final Image ico_mens_l = new Image(padre.getDisplay(), Vista.class.getResourceAsStream("ico_mens1_v.gif"));
 		
 		//Establecemos el layout del shell
 		GridLayout lShell = new GridLayout();
 		lShell.numColumns = 1;		
 		shell.setLayout(lShell);
 		shell.setText(_bundle.getString("I18_tit_peticion"));
-		shell.setImage(ico_mens_l);
+//		shell.setImage(ico_mens_l);
 		
 		/*    */
 

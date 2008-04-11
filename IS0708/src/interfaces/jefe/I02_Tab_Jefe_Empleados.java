@@ -1,4 +1,5 @@
-package interfaces;
+package interfaces.jefe;
+
 
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -40,7 +41,6 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 	final Vista _vista;
 	final TabFolder _tabFolder;
 	final Table tablaEmpleados;
-	final Image ico_chico, ico_chica, ico_mens;
 	private boolean datosInterfazCargados = false;
 	
 	//Variables globales para objetos de la vetana
@@ -133,9 +133,9 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 				TableItem tItem = new TableItem(tablaEmpleados, SWT.NONE);
 				
 				if (listaFiltrada.get(i).getSexo()==0)
-					tItem.setImage(ico_chica);
+					tItem.setImage(_vista.getImagenes().getIco_chica());
 				else 
-					tItem.setImage(ico_chico);
+					tItem.setImage(_vista.getImagenes().getIco_chico());
 				
 				tItem.setText(1, String.valueOf(listaFiltrada.get(i).getEmplId()));
 				tItem.setText(2, listaFiltrada.get(i).getNombreCompleto());
@@ -144,7 +144,7 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 				if (c!=null) tItem.setText(4, c.getNombreContrato());
 				else         tItem.setText(4, "Error");
 				//tItem.setText(5, "911234567");
-				tItem.setImage(5, ico_mens);				
+				tItem.setImage(5, _vista.getImagenes().getIco_mens());				
 			}
 		}
 
@@ -161,13 +161,10 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 		_bundle = bundle;
 		_vista = vista;
 		_tabFolder = tabFolder;
-		ico_chico = new Image(tabFolder.getDisplay(), I02_Tab_Jefe_Empleados.class.getResourceAsStream("ico_chico.gif"));
-		ico_chica = new Image(tabFolder.getDisplay(), I02_Tab_Jefe_Empleados.class.getResourceAsStream("ico_chica.gif"));
-		ico_mens = new Image(tabFolder.getDisplay(), I02_Tab_Jefe_Empleados.class.getResourceAsStream("ico_mens1_v.gif"));
 		
 		TabItem tabItemEmpleados = new TabItem(tabFolder, SWT.NONE);
 		tabItemEmpleados.setText(bundle.getString("Empleados"));
-		tabItemEmpleados.setImage(ico_chico);
+		tabItemEmpleados.setImage(_vista.getImagenes().getIco_chico());
 
 		final Composite cEmpleados = new Composite(tabFolder, SWT.NONE);
 		tabItemEmpleados.setControl(cEmpleados);

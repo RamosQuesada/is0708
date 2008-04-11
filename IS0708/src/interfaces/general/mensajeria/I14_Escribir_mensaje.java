@@ -1,4 +1,4 @@
-package interfaces;
+package interfaces.general.mensajeria;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -18,6 +18,8 @@ import org.eclipse.swt.widgets.Text;
 import aplicacion.Vista;
 import aplicacion.mensajeria.Mensaje;
 import aplicacion.mensajeria.Mensajeria;
+
+import interfaces.general.I13_Elegir_empleado;
 
 import java.util.ResourceBundle;
 
@@ -40,13 +42,12 @@ public class I14_Escribir_mensaje {
 		final Mensaje mensaje = mens;
 		final int idEmpl = idEmpleado;
 		shell = new Shell (_padre, SWT.CLOSE | SWT.RESIZE | SWT.APPLICATION_MODAL);
-		final Image ico_mens_l = new Image(_padre.getDisplay(), I14_Escribir_mensaje.class.getResourceAsStream("ico_mens1_v.gif"));
 		
 		//Establecemos el layout del shell
 		GridLayout lShell = new GridLayout();
 		lShell.numColumns = 1;		
 		shell.setLayout(lShell);
-		shell.setImage(ico_mens_l);
+		shell.setImage(_vista.getImagenes().getIco_mens_l());
 		if (mensaje==null)
 			shell.setText(_bundle.getString("I14_tit_escribirMensaje"));
 		else

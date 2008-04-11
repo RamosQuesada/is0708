@@ -1,4 +1,7 @@
-package interfaces;
+package interfaces.general.mensajeria;
+
+import interfaces.I16_Peticion_baja;
+import interfaces.I18_Cambio_horario;
 
 import java.util.ResourceBundle;
 
@@ -62,14 +65,13 @@ public class I15_Mensaje_nuevo {
 	public void mostrarVentana() {
 		final Shell shell = new Shell (_padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 
-		final Image ico_mens_l = new Image(_padre.getDisplay(), I15_Mensaje_nuevo.class.getResourceAsStream("ico_mens1_v.gif"));
 		
 		//Establecemos el layout del shell
 		GridLayout lShell = new GridLayout();
 		lShell.numColumns = 1;		
 		shell.setLayout(lShell);
 		shell.setText("Tipo de mensaje :");
-		shell.setImage(ico_mens_l);
+		shell.setImage(_vista.getImagenes().getIco_mens_l());
 		
 		/*  a continuacion 3 radio butons para la eleccion del tipo de mensaje  */
 		

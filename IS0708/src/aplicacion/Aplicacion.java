@@ -1,7 +1,8 @@
 package aplicacion;
 
 import org.eclipse.swt.widgets.Display;
-import interfaces.I19_Excepcion;
+
+import interfaces.general.I19_Excepcion;
 
 /**
  * Esta es la clase principal de la aplicación. Desde aquí se crean el modelo,

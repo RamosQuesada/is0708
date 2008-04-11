@@ -1,4 +1,4 @@
-package interfaces;
+package interfaces.general;
 
 import java.util.ArrayList;
 
@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
 
 import algoritmo.ResultadoTurnoMatic;
+import interfaces.imagenes.CargadorImagenes;
 
 import java.util.ResourceBundle;
 import java.util.Locale;
@@ -17,6 +18,17 @@ import java.util.Locale;
 import java.sql.Date;
 
 import impresion.Imprimir;
+import interfaces.I10_Config_departamento;
+import interfaces.I10_Nuevo_departamento;
+import interfaces.admin.I03_Tab_NuevoJefe;
+import interfaces.admin.I04_Tab_AdminInicio;
+import interfaces.admin.I05_Tab_EliminaJefe;
+import interfaces.admin.I06_Tab_Contratos_Admin;
+import interfaces.empleado.I02_cuadrEmpl;
+import interfaces.general.cuadrantes.I_Cuadrante;
+import interfaces.general.mensajeria.I02_Tab_Mensajeria;
+import interfaces.jefe.I02_Tab_Jefe_Empleados;
+import interfaces.jefe.I09_Tab_Contratos;
 import aplicacion.Vista;
 import aplicacion.datos.Departamento;
 import aplicacion.datos.Empleado;
@@ -34,8 +46,7 @@ public class I02_Principal {
 	private Display display;
 	private ResourceBundle bundle;
 	private Locale locale;
-	private Image icoGr, icoPq, ico_imprimir, ico_cuadrante, ico_chico,
-			ico_chica, ico_chicos;
+	
 	private Label lEstado;
 	private ProgressBar pbEstado;
 	private Date fechaSeleccionada;
@@ -49,7 +60,7 @@ public class I02_Principal {
 	private String tmDep;
 	private Button itsMagic, bGuardarCambios; 
 	private TabFolder tabFolder;
-	private Composite estado; 
+	private Composite estado;
 	
 	public I02_Principal(Shell shell, Display display, ResourceBundle bundle,
 			Locale locale, Vista vista) {
@@ -191,7 +202,7 @@ public class I02_Principal {
 				}
 			}
 		});
-		itemImprimir.setImage(ico_imprimir);
+		itemImprimir.setImage(vista.getImagenes().getIco_imprimir());
 		itemImprimir.setText(bundle.getString("I02_men_itm_Imprimir")
 				+ "\tCtrl+" + bundle.getString("I02_men_itm_imprimiracc"));
 		itemImprimir.setAccelerator(SWT.MOD1
@@ -249,7 +260,7 @@ public class I02_Principal {
 		// Crear el item del tabFolder
 		TabItem tabItemCuadrantes = new TabItem(tabFolder, SWT.NONE);
 		tabItemCuadrantes.setText(bundle.getString("Cuadrantes"));
-		tabItemCuadrantes.setImage(ico_cuadrante);
+		tabItemCuadrantes.setImage(vista.getImagenes().getIco_cuadrante());
 
 		final Composite cCuadrantes = new Composite(tabFolder, SWT.NONE);
 		tabItemCuadrantes.setControl(cCuadrantes);
@@ -430,7 +441,7 @@ public class I02_Principal {
 	private void crearTabAdminDepartamentos(TabFolder tabFolder) {
 		TabItem tabItemDepartamentos = new TabItem(tabFolder, SWT.NONE);
 		tabItemDepartamentos.setText(bundle.getString("Departamentos"));
-		tabItemDepartamentos.setImage(ico_chicos);
+		tabItemDepartamentos.setImage(vista.getImagenes().getIco_chicos());
 
 		final Composite cDepartamentos = new Composite(tabFolder, SWT.NONE);
 		tabItemDepartamentos.setControl(cDepartamentos);
@@ -536,7 +547,7 @@ public class I02_Principal {
 	private void crearTabJefeDepartamentos(TabFolder tabFolder) {
 		TabItem tabItemDepartamentos = new TabItem(tabFolder, SWT.NONE);
 		tabItemDepartamentos.setText(bundle.getString("Departamentos"));
-		tabItemDepartamentos.setImage(ico_chicos);
+		tabItemDepartamentos.setImage(vista.getImagenes().getIco_chicos());
 
 		final Composite cDepartamentos = new Composite(tabFolder, SWT.NONE);
 		tabItemDepartamentos.setControl(cDepartamentos);
@@ -665,7 +676,7 @@ public class I02_Principal {
 	private void crearTabEmpleadoCuadrantes(TabFolder tabFolder) {
 		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
 		tabItem.setText("Empleado:Cuadrantes");
-		tabItem.setImage(ico_chico);
+		tabItem.setImage(vista.getImagenes().getIco_chico());
 
 		// Creamos el contenido de la pestaña cuadrantes
 		Composite cCuadrantes = new Composite(tabFolder, SWT.NONE);
@@ -711,20 +722,9 @@ public class I02_Principal {
 		final DateTime calendario = new DateTime(cBotones, SWT.CALENDAR);
 		calendario.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				String[] meses = { "enero", "febrero", "marzo", "abril",
-						"mayo", "junio", "julio", "agosto", "septiembre",
-						"octubre", "noviembre", "diciembre" };
 				int day = calendario.getDay();
 				int month = calendario.getMonth();
 				int year = calendario.getYear();
-				// System.out
-				// .println("Fecha cambiada a " + String.valueOf(day)
-				// + " de " + meses[month] + " de "
-				// + String.valueOf(year));
-				/*
-				 * System.out.println(Util.aFormatoDate( Integer.toString(year),
-				 * Integer.toString(month), Integer.toString(day)) );
-				 */
 				fechaSeleccionada = Date.valueOf(Util.aFormatoDate(Integer
 						.toString(year), Integer.toString(month + 1), Integer
 						.toString(day)));
@@ -792,7 +792,7 @@ public class I02_Principal {
 	private void crearTabEmpleadoEstadisticas(TabFolder tabFolder) {
 		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
 		tabItem.setText("Empleado:Estadisticas");
-		tabItem.setImage(ico_chico);
+		tabItem.setImage(vista.getImagenes().getIco_chico());
 
 		// Creamos el contenido de la pestaña estadisticas
 		final Composite cEstadisticas = new Composite(tabFolder, SWT.NONE);
@@ -963,7 +963,7 @@ public class I02_Principal {
 	private void crearTabGerenteEstadisticas(TabFolder tabFolder) {
 		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
 		tabItem.setText("Gerente:Estadisticas");
-		tabItem.setImage(ico_chico);
+		tabItem.setImage(vista.getImagenes().getIco_chico());
 
 		// Creamos el contenido de la pestaña estadisticas
 		final Composite cEstadisticas = new Composite(tabFolder, SWT.NONE);
@@ -1171,32 +1171,16 @@ public class I02_Principal {
 		// Crear la ventana
 		shell.setText(bundle.getString("Turno-matic"));// idiomas igual siempre
 
-		// Cargar iconos
-		icoGr = new Image(display, I02_Principal.class
-				.getResourceAsStream("icoGr.gif"));
-		icoPq = new Image(display, I02_Principal.class
-				.getResourceAsStream("icoPq.gif"));
-		ico_imprimir = new Image(display, I02_Principal.class
-				.getResourceAsStream("ico_imprimir.gif"));
-		ico_cuadrante = new Image(display, I02_Principal.class
-				.getResourceAsStream("ico_cuadrante.gif"));
-		ico_chico = new Image(display, I02_Principal.class
-				.getResourceAsStream("ico_chico.gif"));
-		ico_chica = new Image(display, I02_Principal.class
-				.getResourceAsStream("ico_chica.gif"));
-		ico_chicos = new Image(display, I02_Principal.class
-				.getResourceAsStream("ico_chicos.gif"));
-
 		// Dos iconos de tamaño diferente para SO's que los necesiten
-		shell.setImages(new Image[] { icoPq, icoGr });
+		shell.setImages(new Image[] { vista.getImagenes().getIcoPq(), vista.getImagenes().getIcoGr() });
 
 		crearBarraMenu();
 
 		tray = display.getSystemTray();
 		final TrayItem trayItem = new TrayItem(tray, SWT.NONE);
-		shell.setImage(icoPq);
+		shell.setImage(vista.getImagenes().getIcoPq());
 		if (tray != null) {
-			trayItem.setImage(icoPq);
+			trayItem.setImage(vista.getImagenes().getIcoPq());
 		}
 
 		// Crear layout principal
@@ -1252,14 +1236,7 @@ public class I02_Principal {
 	}
 	
 	public void dispose() {
-		icoGr.dispose();
-		icoPq.dispose();
-		ico_imprimir.dispose();
-		// ico_mens.dispose();
-		ico_cuadrante.dispose();
-		ico_chico.dispose();
-		ico_chica.dispose();
-		ico_chicos.dispose();
+		
 		tabFolder.dispose();
 		estado.dispose();
 		// tray.getItem(0).dispose();

@@ -1,4 +1,4 @@
-package interfaces;
+package interfaces.general;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -69,6 +69,7 @@ public class I19_Excepcion {
 			for (int i=0; i < excepcion.getStackTrace().length; i++) {
 				e+= "\tat " + excepcion.getStackTrace()[i].toString() + "\n";
 			}
+			excepcion.printStackTrace();
 		}
 		
 

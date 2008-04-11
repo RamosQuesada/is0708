@@ -1,4 +1,4 @@
-package interfaces;
+package interfaces.admin;
 
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -39,21 +39,12 @@ import aplicacion.datos.Empleado;
 public class I05_Tab_EliminaJefe {
 
 	private ResourceBundle bundle;
-
 	private Vista vista;
-
 	private TabFolder tabFolder;
-
-	private Image ico_chico;
-
 	private Table tablaJefes;
-
 	private int seleccionado;// indice seleccionado en la tabla de jefes
-
 	private ArrayList<String> arrayJefes;
-
 	private Combo cmbJefes;
-
 	private Label datosJefe;
 
 	public I05_Tab_EliminaJefe(final ResourceBundle bundle, final Vista vista,
@@ -61,16 +52,13 @@ public class I05_Tab_EliminaJefe {
 		this.bundle = bundle;
 		this.vista = vista;
 		this.tabFolder = tabFolder;
-		// cargamos las imagenes
-		ico_chico = new Image(tabFolder.getDisplay(), I05_Tab_EliminaJefe.class
-				.getResourceAsStream("ico_chico.gif"));
 
 		// sin seleccionar
 		seleccionado = -1;
 
 		TabItem tabItemEmpleados = new TabItem(tabFolder, SWT.NONE);
 		tabItemEmpleados.setText("Admin:Elimina Jefe");
-		tabItemEmpleados.setImage(ico_chico);
+		tabItemEmpleados.setImage(vista.getImagenes().getIco_chico());
 
 		// Creamos un composite para la pestaña de mensajes
 		final Composite cEliminaJefe = new Composite(tabFolder, SWT.NONE);

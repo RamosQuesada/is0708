@@ -1,4 +1,4 @@
-package interfaces;
+package interfaces.admin;
 import idiomas.LanguageChanger;
 
 import java.io.DataInputStream;
@@ -57,13 +57,12 @@ public class I30_Info_BD {
 	 */
 	public void mostrarVentana() {
 		final Shell shell = new Shell(_padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
-		final Image icono = new Image(null, I30_Info_BD.class.getResourceAsStream("icoPq.gif"));
 		// Establecemos el layout del shell		
 		GridLayout lShell = new GridLayout();
 		lShell.numColumns = 2;
 		shell.setLayout(lShell);	
 		shell.setText(this._bundle.getString("I30_label_ip"));
-		shell.setImage(icono);
+		shell.setImage(_vista.getImagenes().getIcoPq());
 		final Label IP_label = new Label(shell, SWT.LEFT);
 		final Text IP_text = new Text(shell, SWT.LEFT | SWT.BORDER);
 		GridData data = new GridData();

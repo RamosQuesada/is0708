@@ -1,4 +1,4 @@
-package interfaces;
+package interfaces.general;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.events.FocusEvent;
@@ -11,6 +11,9 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
+
+import interfaces.imagenes.CargadorImagenes;
+
 import java.util.ResourceBundle;
 import aplicacion.Database;
 
@@ -29,12 +32,14 @@ public class I01_Login {
 	Text tEstado;
 	private Label progreso;
 	private boolean detectadoLector = false;
+	private CargadorImagenes imagenes;
 	
 	
-	public I01_Login(Shell padre, ResourceBundle bundle, Database db) {
+	public I01_Login(Shell padre, ResourceBundle bundle, Database db, CargadorImagenes imagenes) {
 		this.padre = padre;
 		this.bundle = bundle;
 		this.db = db;
+		this.imagenes = imagenes;
 		numeroVendedor = 0;
 		password = "";
 		botonPulsado = -1;
@@ -46,7 +51,7 @@ public class I01_Login {
 	 * @author Daniel Dionne
 	 */
 	public synchronized void mostrarVentana(String s) {
-		final Image fondo = new Image(padre.getDisplay(), I01_Login.class.getResourceAsStream("intro.png"));
+
 		dialog = new Shell (padre.getDisplay(), SWT.NONE | SWT.APPLICATION_MODAL);
 		
 		// Esto hace que los labels no tengan fondo
@@ -66,10 +71,9 @@ public class I01_Login {
 		final Button bAceptar  = new Button(contenido, SWT.PUSH);
 		final Button bCancelar = new Button(contenido, SWT.PUSH);
 
-		// Dos iconos de tama�o diferente para SO's que los necesiten
-		Image icoGr = new Image(padre.getDisplay(), I01_Login.class.getResourceAsStream("icoGr.gif"));
-		Image icoPq = new Image(padre.getDisplay(), I01_Login.class.getResourceAsStream("icoPq.gif"));
-		dialog.setImages(new Image[] {icoPq,icoGr});
+		// Dos iconos de tamaño diferente para SO's que los necesiten
+
+		dialog.setImages(new Image[] {imagenes.getIcoPq(),imagenes.getIcoGr()});
 		dialog.setText(bundle.getString("I01_tit_Ident"));
 		
 		// Contenido de la ventana		
@@ -122,7 +126,6 @@ public class I01_Login {
 		SelectionAdapter sabCancelar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				botonPulsado=0;
-				fondo.dispose();
 				dialog.dispose();
 			}
 		};
@@ -131,7 +134,7 @@ public class I01_Login {
 		// Un SelectionAdapter con lo que hace el botón bCancelar
 		SelectionAdapter sabAceptar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				accionPorDefecto(tUsuario, tPassword, bAceptar, fondo);
+				accionPorDefecto(tUsuario, tPassword, bAceptar, imagenes.getFondoLogin());
 			}
 		};
 		bAceptar.addSelectionListener(sabAceptar);
@@ -145,7 +148,7 @@ public class I01_Login {
 				switch (event.detail) {
 					case SWT.TRAVERSE_RETURN:
 						
-						accionPorDefecto(tUsuario, tPassword, bAceptar, fondo);
+						accionPorDefecto(tUsuario, tPassword, bAceptar, imagenes.getFondoLogin());
 						
 						event.detail = SWT.TRAVERSE_NONE;
 						event.doit = false;
@@ -156,7 +159,7 @@ public class I01_Login {
 		
 
 		// Ajustar el tamaño de la ventana
-		dialog.setBackgroundImage(fondo);
+		dialog.setBackgroundImage(imagenes.getFondoLogin());
 		dialog.setSize(500,400);
 
 		// Mostrar ventana centrada sobre la pantalla

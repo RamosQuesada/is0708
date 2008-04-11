@@ -1,4 +1,4 @@
-package interfaces;
+package interfaces.jefe;
 
 /*******************************************************************************
  * INTERFAZ I-09.1 :: Creaci�n de un contrato
@@ -15,6 +15,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.custom.ScrolledComposite;
+
+import interfaces.general.I12_Ayuda;
 
 import java.sql.Time;
 import java.util.ArrayList;

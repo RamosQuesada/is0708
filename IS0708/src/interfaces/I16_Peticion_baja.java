@@ -1,5 +1,7 @@
 package interfaces;
 
+import interfaces.general.I17_Seleccion_fecha;
+
 import java.util.ResourceBundle;
 import java.sql.Date;
 import org.eclipse.swt.SWT;
@@ -42,14 +44,13 @@ public class I16_Peticion_baja {
 	public void mostrarVentana() {
 		final Shell shell = new Shell (_padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 
-		final Image ico_mens_l = new Image(_padre.getDisplay(), I16_Peticion_baja.class.getResourceAsStream("ico_mens1_v.gif"));
 		
 		//Establecemos el layout del shell
 		GridLayout lShell = new GridLayout();
 		lShell.numColumns = 1;		
 		shell.setLayout(lShell);
 		shell.setText(_bundle.getString("I16_tit_petibaja"));
-		shell.setImage(ico_mens_l);
+//		shell.setImage(ico_mens_l);
 		
 		/*    */
 

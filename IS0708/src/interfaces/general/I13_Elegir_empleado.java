@@ -1,4 +1,4 @@
-package interfaces;
+package interfaces.general;
 
 import java.util.ArrayList;
 import java.util.ResourceBundle;
