@@ -113,7 +113,7 @@ public class I02_threadEmpl extends Thread{
 			primer_dia=hoy-lunes+1;
 		}
 		
-		this.cuadrante.ponPrimerDiaMes(primer_dia);
+		
 		
 		
 		int numDias=0;
@@ -285,6 +285,7 @@ public class I02_threadEmpl extends Thread{
 			if(!finalizar){
 				this.cuadrante.ponHoraInicioMes(lista_inicio_mes);
 				this.cuadrante.ponHoraFinMes(lista_fin_mes);
+				this.cuadrante.ponPrimerDiaMes(primer_dia);
 				cuadrante.ponAvance(0);
 				cuadrante.ponHorasComienzoDescanso(HorasComienzoDescansoAux);
 				cuadrante.ponHorasFin(HorasFinAux);

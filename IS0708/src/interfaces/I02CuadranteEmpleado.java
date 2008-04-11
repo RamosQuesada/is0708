@@ -216,15 +216,38 @@ public class I02CuadranteEmpleado {
 		int diaSemana=this.primerDiaMes;
 		int semana=1;
 		if(horaInicioMes!=null){
+			final String[] diasSemana={
+					"L","M","X","J","V","S","D"
+				};
+		boolean izq=false,der=false,arr=false,abajo=false;
+		for(int cont2=0;cont2<6;cont2++){
+		for(int cont=0;cont<7;cont++){
+			if(cont==0){izq=true;}
+			if(cont==6){der=true;}
+			if(cont2==0){arr=true;}
+			if(cont2==5){abajo=true;}
+			if(cont2==0){
+			dibujarDiaMes(gc,cont,1,null,null,diasSemana[cont],izq,der,arr,abajo,1,1);
+			}
+			else{
+				dibujarDiaMes(gc,cont,cont2+1,null,null,"",izq,der,arr,abajo,1,1);	
+			}
+			izq=der=arr=abajo=false;
+		}
+		}
 		for(int cont=0;cont<this.horaInicioMes.size();cont++){
-			dibujarDiaMes(gc,diaSemana-1,semana,horaInicioMes.get(cont),this.horaFinMes.get(cont));
+			if(cont==0){izq=true;}
+			if(cont==6){der=true;}
+			dibujarDiaMes(gc,diaSemana-1,semana+1,horaInicioMes.get(cont),this.horaFinMes.get(cont),null,izq,der,false,false,1,1);
 			diaSemana++;
 			if(diaSemana==8){
 				diaSemana=1;
 				semana++;
 			}
+			izq=der=arr=abajo=false;
 		}
 		}
+		dibujarDiaMes(gc,0,0,null,null,"",false,false,false,false,7,6);
 		/*
 		this.dibujarDiaMes(gc, 3, 1);
 		this.dibujarDiaMes(gc, 4, 1);
@@ -590,20 +613,22 @@ public class I02CuadranteEmpleado {
 		return posicion_absoluta;
 	}
 	
-	public void dibujarDiaMes(GC gc,int dia,int semana,Time entrada, Time Fin){
+	public void dibujarDiaMes(GC gc,int dia,int semana,Time entrada, Time Fin, String texto, boolean izq, boolean der, boolean arr, boolean abajo,int num_filas,int num_columnas){
 		int m = margenIzq + margenNombres;
 		m = margenIzq;
 		int h = horaFin - horaInicio;
 		h=7;
 		int sep=(ancho - m - margenDer)/h;
-		int sep2=(alto - margenInf - margenSup)/h;
+		int sep2=(alto - margenInf - margenSup )/h;
 		gc.setLineStyle(SWT.LINE_SOLID);
 		cambiarPincel(gc, 100,200,100);
 		this.cambiarRelleno(gc, 100, 200, 100);
 		gc.setLineWidth(2);
 		gc.fillGradientRectangle(this.margenIzq+dia*sep, h+semana*sep2, sep, sep2,true);
 		cambiarPincel(gc, 0,0,0);
-		
+		if(texto!=null){
+			gc.drawText(texto, margenIzq+dia*sep+sep/2, h+semana*sep2+sep2/2,false);
+		}
 		if((entrada!=null)&&(Fin!=null)){
 			String inicio =entrada.getHours()+":"+entrada.getMinutes();
 			String fin =Fin.getHours()+":"+Fin.getMinutes();
@@ -612,9 +637,20 @@ public class I02CuadranteEmpleado {
 		else{
 			gc.drawText("", margenIzq+dia*sep, h+semana*sep2+sep2/2,false);
 		}
-		gc.drawRectangle(this.margenIzq+dia*sep, h+semana*sep2, sep, sep2);
+	/*	if(texto==null){
+		if((num_filas>1)||(num_columnas>1)){
+		gc.setLineWidth(3);
+		gc.drawRectangle(this.margenIzq+dia*sep, h+semana*sep2, sep*num_filas, sep2*num_columnas);
 	//	gc.drawLine(this.margenIzq, convertirHora(hora), this.margenIzq+7*sep,convertirHora(hora));
 		gc.setLineStyle(SWT.LINE_SOLID);
+		}
+		}*/
+		
+	//	if(izq){gc.drawLine(this.margenIzq+dia*sep-sep, h+semana*sep2, this.margenIzq+dia*sep-sep, h+semana*sep2*2);}
+	//	if(der){{gc.drawLine(this.margenIzq+dia*sep, h+semana*sep2, this.margenIzq+dia*sep, h+semana*sep2*2);}}
+	//	if(arr){{gc.drawLine(this.margenIzq+dia*sep-sep, h+semana*sep2, this.margenIzq+dia*sep, h+semana*sep2);}}
+	//	if(abajo){{gc.drawLine(this.margenIzq+dia*sep-sep, h+semana*sep2*2, this.margenIzq+dia*sep, h+semana*sep2*2);}}
+		gc.setLineWidth(1);
 	}
 	/**
 	 * Metodo que dibuja una linea horizontal a una hora dada
