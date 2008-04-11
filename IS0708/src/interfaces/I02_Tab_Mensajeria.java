@@ -37,6 +37,8 @@ public class I02_Tab_Mensajeria extends Thread{
 	private Table tablaMensajes;
 	private Label lMensajes;
 	private final Image ico_mens, ico_mens_l;
+	private boolean estaMarcado;
+	private Button bMensMarcar;
 	// Los caracteres a previsualizar de un mensaje
 	final int prevTextoMens = 50; 
 	// Los caracteres a previsualizar de un asunto de mensaje
@@ -54,6 +56,7 @@ public class I02_Tab_Mensajeria extends Thread{
 		this.vista = vista;
 		this.bundle = bundle;
 		this.tabFolder = tabFolder;
+		this.estaMarcado = false;
 		ico_mens_l = new Image(tabFolder.getDisplay(), 
 				I02_Tab_Mensajeria.class.getResourceAsStream("ico_mens1_v.gif"));
 		ico_mens = new Image(tabFolder.getDisplay(),
@@ -164,11 +167,34 @@ public class I02_Tab_Mensajeria extends Thread{
 				// Si se ha pinchado en algún email (y no fuera)
 				if (tablaMensajes.getSelectionIndex()!=-1) {
 					Mensaje m = vista.getMensajesEntrantes().get(tablaMensajes.getSelectionIndex());
+					estaMarcado = m.isMarcado(); 
 					new I14_Escribir_mensaje(tabFolder.getShell(),bundle,vista,m,0,"");
 				}
 			}
 			public void mouseUp(MouseEvent e) {};
-			public void mouseDown(MouseEvent e) {};
+			public void mouseDown(MouseEvent e) {
+				if (tablaMensajes.getSelectionIndex()!=-1) {
+					Mensaje m = vista.getMensajesEntrantes().get(tablaMensajes.getSelectionIndex());
+					estaMarcado = m.isMarcado(); 
+				/*	TableItem seleccion = tablaMensajes.getItem(tablaMensajes.getSelectionCount());	
+					FontData[] fd = tablaMensajes.getFont().getFontData();
+					fd[0].setStyle(SWT.NORMAL);
+					Font fNormal = new Font(tablaMensajes.getDisplay(),fd);					
+					fd[0].setStyle(SWT.BOLD);
+					Font fNegrita = new Font(tablaMensajes.getDisplay(),fd);*/
+					if (estaMarcado){
+						bMensMarcar.setText(bundle.getString("I02_but_Desmarcar"));
+				//		seleccion.setFont(fNegrita);		
+					}
+					else{
+						bMensMarcar.setText(bundle.getString("I02_but_Marcar"));
+				//		seleccion.setFont(fNormal);
+					}
+					bMensMarcar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
+					1, 1));		
+					
+				}
+			};
 		});
 		
 		String[] titles = { " ", bundle.getString("I02_mens_De"),
@@ -215,14 +241,22 @@ public class I02_Tab_Mensajeria extends Thread{
 		bMensEliminar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 		false, 1, 1));
 		
-		final Button bMensMarcar = new Button(cMensajes, SWT.PUSH);
-		bMensMarcar.setText(bundle.getString("I02_but_Marcar"));
+		//final Button bMensMarcar = new Button(cMensajes, SWT.PUSH);
+		bMensMarcar = new Button(cMensajes, SWT.PUSH);
+		if (estaMarcado)
+			bMensMarcar.setText(bundle.getString("I02_but_Desmarcar"));
+		else
+			bMensMarcar.setText(bundle.getString("I02_but_Marcar"));
 		bMensMarcar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
 		1, 1));
 
 		bMensMarcar.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				if (tablaMensajes.getSelectionIndex()>=0) {
+					if (!estaMarcado)
+						bMensMarcar.setText(bundle.getString("I02_but_Desmarcar"));
+					else
+						bMensMarcar.setText(bundle.getString("I02_but_Marcar"));
 					vista.marcarMensaje(vista.getMensajesEntrantes().get(tablaMensajes.getSelectionIndex()));
 					desplazarVentanaMensajes(0);
 				}
