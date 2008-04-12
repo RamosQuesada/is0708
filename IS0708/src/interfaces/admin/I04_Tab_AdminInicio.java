@@ -116,9 +116,9 @@ public class I04_Tab_AdminInicio {
 				messageBox.setMessage(bundle.getString("I02_confirm_reset"));
 				int response = messageBox.open();
 				if (response == SWT.OK) {
-					System.out.println("BBDD reiniciada");
 					// paquete_pruebas.GeneraDatos.reset();
-					paquete_pruebas.InsertaDatosFijos.insertar();
+					paquete_pruebas.InsertaDatosFijos.insertarNdepart(20);
+					System.out.println("BBDD reiniciada");
 				}
 			}
 		});
