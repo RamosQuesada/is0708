@@ -17,7 +17,7 @@ public class InsertaDatosFijos {
 	static Database bd;
 	
 	public static void insertarNdepart(int numDepartamentos) {
-	
+// TODO hacer inserciones en la tabla "contratosdepartamento"	
 	
 		Date inicio = Date.valueOf("2008-01-01");
 		Date nacimiento = new Date(0);
@@ -35,7 +35,7 @@ public class InsertaDatosFijos {
 			Contrato contratoJefe = new Contrato("contratoJefeFijo "+nd, 0, turnoJefe.getIdTurno() ,7, patronContratoJefe, 1200, 1);
 			contratoJefe.setNumeroContrato(c.insertContrato(contratoJefe));
 			//c.insertTurnoPorContrato(turnoJefe.getIdTurno(), contratoJefe.getNumeroContrato());
-		
+			
 			// Crear el jefe de departamento
 			c.insertUsuario(10000100+nd*1000, "JefeFijo"+nd, "ape1", "ape2", nacimiento, 0, "email@email.es", Integer.toString(10000100+nd*1000), 2, inicio, inicio, 0, 0, 0, 2, contratoJefe.getNumeroContrato(), turnoJefe.getIdTurno(), null, null, null, false, new Date(0)); //hay que cambiar el rango a 2
 
@@ -225,7 +225,7 @@ public class InsertaDatosFijos {
 		bd.crearDependencias();
 	
 		//Inserta 20 nuevos departamentos para pruebas con sus datos independientes
-		InsertaDatosFijos.insertarNdepart(20);
+		InsertaDatosFijos.insertarNdepart(1);
 	}
 
 }
