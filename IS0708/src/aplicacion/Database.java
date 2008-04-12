@@ -2258,7 +2258,6 @@ public class Database extends Thread {
 
 
 	public void crearDependencias() {
-		int[] r = null;
 		try {
 			st = con.createStatement();
 
@@ -2276,8 +2275,6 @@ public class Database extends Thread {
 			st.addBatch("Alter table departamento add Foreign Key (JefeDepartamento) references usuario (NumVendedor) on delete restrict on update cascade;");
 			st.addBatch("Alter table mensaje add Index IX_envia (Remitente);");
 			st.addBatch("Alter table mensaje add Foreign Key (Remitente) references usuario (NumVendedor) on delete restrict on update cascade;");
-			
-			// Hasta aquí funcionan
 			st.addBatch("Alter table listaturnosporcontrato add Index IX_TurnosPorContrato (IdContrato);");
 			st.addBatch("Alter table listaturnosporcontrato add Foreign Key (IdContrato) references contrato (IdContrato) on delete cascade on update cascade;");
 			st.addBatch("Alter table usuario add Index IX_TieneContrato (IdContrato);");
@@ -2291,17 +2288,19 @@ public class Database extends Thread {
 			st.addBatch("Alter table usuario add Index IX_Prefiere (IdTurno);");
 			st.addBatch("Alter table usuario add Foreign Key (IdTurno) references turnos (IdTurno) on delete restrict on update cascade;");
 			st.addBatch("Alter table usuario add Index IX_TienePermiso (Rango);");
-			st.addBatch("Alter table usuario add Foreign Key (Rango) references PERMISOS (Rango) on delete restrict on update cascade;");
+			st.addBatch("Alter table usuario add Foreign Key (Rango) references permisos (Rango) on delete restrict on update cascade;");
+			
+			
 			st.addBatch("Alter table distribucion add Index IX_Relationship10 (NombreDept);");
 			st.addBatch("Alter table distribucion add Foreign Key (NombreDept) references departamento (Nombre) on delete cascade on update cascade;");
 			st.addBatch("Alter table festivos add Index IX_Relationship11 (NombreDept);");
 			st.addBatch("Alter table festivos add Foreign Key (NombreDept) references departamento (Nombre) on delete cascade on update cascade;");
 			st.addBatch("Alter table destinatario add Index IX_Recibe2 (IdMensaje);");
 			st.addBatch("Alter table destinatario add Foreign Key (IdMensaje) references mensaje (IdMensaje) on delete cascade on update cascade;");
-*/
-			/*
+
+			
 			st.addBatch("Alter table departamentousuario add Index IX_Relationship12 (NumVendedor);");
-			st.addBatch("Alter table departamentousuario add Foreign Key (NumVendedor) references Usuario (NumVendedor) on delete cascade on update cascade;");
+			st.addBatch("Alter table departamentousuario add Foreign Key (NumVendedor) references usuario (NumVendedor) on delete cascade on update cascade;");
 			st.addBatch("Alter table departamentousuario add Index IX_Relationship13 (NombreDepartamento);");
 			st.addBatch("Alter table departamentousuario add Foreign Key (NombreDepartamento) references departamento (Nombre) on delete restrict on update cascade;");
 
@@ -2310,13 +2309,11 @@ public class Database extends Thread {
 
 			st.addBatch("Alter table contratodepartamento add Index IX_Relationship17 (IdContrato);");
 			st.addBatch("Alter table contratodepartamento add Foreign Key (IdContrato) references contrato (IdContrato) on delete restrict on update cascade;");
-*/
-			r = st.executeBatch();
-			System.out.println("aplicacion.Database.java\t:: Dependencias generadas correctamente.\n" + r.toString());
+
+			st.executeBatch();
+			System.out.println("aplicacion.Database.java\t:: Dependencias generadas correctamente.");
 		} catch (SQLException e) {
 			e.printStackTrace();
-			if (r!=null)
-			System.out.println(r.toString());
 		}
 	}
 }

@@ -431,10 +431,10 @@ public class InsertaDatosFijos {
 		bd.run();
 //		bd.eliminarTodasLasTablas();
 //		bd.crearTablas();
-		bd.crearDependencias();
+//		bd.crearDependencias();
 	
 		//Inserta 20 nuevos departamentos para pruebas con sus datos independientes
-//		InsertaDatosFijos.insertarNdepart(1);
+		InsertaDatosFijos.insertarNdepart(1);
 	}
 
 }
