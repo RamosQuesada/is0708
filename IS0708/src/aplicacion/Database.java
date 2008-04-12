@@ -622,9 +622,11 @@ public class Database extends Thread {
 		String q = "INSERT INTO " + tablaUsuariosPorDepartamento + " values ('"
 		+ nvend + "', '" + nombre + "')";
 		try {
-			st = con.createStatement();
 			st.addBatch(q);
-			if (ultima) st.executeBatch();
+			if (ultima) {
+				st.executeBatch();
+				st = con.createStatement();
+			}
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
