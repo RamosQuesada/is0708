@@ -255,6 +255,8 @@ public class Empleado implements Drawable {
 		this.turnoE		= null;
 		this.turnosStr	= null;
 		this.turnoFavorito = turnoFavorito;
+		
+		this.UltimoAcceso = fContrato;
 	}
 /*
 	public Empleado(Empleado e) {
