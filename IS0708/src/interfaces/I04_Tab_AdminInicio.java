@@ -1,5 +1,8 @@
 package interfaces;
 
+import interfaces.admin.I30_Info_BD;
+import interfaces.general.I02_Principal;
+
 import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
