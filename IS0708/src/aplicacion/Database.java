@@ -1717,9 +1717,9 @@ public class Database extends Thread {
 	
 	public ResultSet obtenMensajesEntrantes(int vendedor, int inicio, int desp) {
 		ResultSet result = null;
-		String q = "SELECT * FROM " + tablaDestinatariosMensaje + " JOIN MENSAJE WHERE " + tablaDestinatariosMensaje + ".NumVendedor="
+		String q = "SELECT * FROM " + tablaDestinatariosMensaje + " JOIN " + tablaMensajes + " WHERE " + tablaDestinatariosMensaje + ".NumVendedor="
 		+ vendedor
-		+ " AND " + tablaDestinatariosMensaje + ".IdMensaje=MENSAJE.IdMensaje LIMIT "
+		+ " AND " + tablaDestinatariosMensaje + ".IdMensaje=" + tablaMensajes + ".IdMensaje LIMIT "
 		+ inicio + "," + (inicio + desp) + ";";
 		try {
 			st = con.createStatement();
