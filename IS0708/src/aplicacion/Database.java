@@ -72,9 +72,9 @@ public class Database extends Thread {
 			String url = "jdbc:mysql://72.34.56.241:3306/" + bd;
 
 // Descomentar este trozo para usar la base de datos local
-//			userName = "root";
-//			password = "";
-//			url = "jdbc:mysql://localhost/" + bd;
+			userName = "root";
+			password = "";
+			url = "jdbc:mysql://localhost/" + bd;
 
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			//DriverManager.setLoginTimeout(300);
@@ -2181,10 +2181,11 @@ public class Database extends Thread {
 					"Respuesta5 longtext," +
 					"Primary Key (Id)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
 
-			st.addBatch("Create table permisos (" +
+/*			st.addBatch("Create table permisos (" +
 					"Rango int not null," +
 					"OPCIONESPORDEFINIR Char(20) ," +
 					"Primary Key (Rango)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+*/
 
 			st.addBatch("Create table tieneincidencia (" +
 					"IdIncidencia Int NOT NULL," +
@@ -2287,8 +2288,8 @@ public class Database extends Thread {
 			st.addBatch("Alter table contrato add Foreign Key (TurnoInicial) references turnos (IdTurno) on delete restrict on update cascade;");
 			st.addBatch("Alter table usuario add Index IX_Prefiere (IdTurno);");
 			st.addBatch("Alter table usuario add Foreign Key (IdTurno) references turnos (IdTurno) on delete restrict on update cascade;");
-			st.addBatch("Alter table usuario add Index IX_TienePermiso (Rango);");
-			st.addBatch("Alter table usuario add Foreign Key (Rango) references permisos (Rango) on delete restrict on update cascade;");
+//			st.addBatch("Alter table usuario add Index IX_TienePermiso (Rango);");
+//			st.addBatch("Alter table usuario add Foreign Key (Rango) references permisos (Rango) on delete restrict on update cascade;");
 			
 			
 			st.addBatch("Alter table distribucion add Index IX_Relationship10 (NombreDept);");
