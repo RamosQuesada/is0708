@@ -429,9 +429,9 @@ public class InsertaDatosFijos {
 		bd = new Database();
 		c = new Controlador(bd, false);
 		bd.run();
-//		bd.eliminarTodasLasTablas();
-//		bd.crearTablas();
-//		bd.crearDependencias();
+		bd.eliminarTodasLasTablas();
+		bd.crearTablas();
+		bd.crearDependencias();
 	
 		//Inserta 20 nuevos departamentos para pruebas con sus datos independientes
 		InsertaDatosFijos.insertarNdepart(1);
