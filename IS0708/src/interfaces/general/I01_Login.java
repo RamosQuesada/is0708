@@ -51,7 +51,6 @@ public class I01_Login {
 	 * @author Daniel Dionne
 	 */
 	public synchronized void mostrarVentana(String s) {
-
 		dialog = new Shell (padre.getDisplay(), SWT.NONE | SWT.APPLICATION_MODAL);
 		
 		// Esto hace que los labels no tengan fondo
@@ -147,9 +146,13 @@ public class I01_Login {
 			public void handleEvent (Event event) {
 				switch (event.detail) {
 					case SWT.TRAVERSE_RETURN:
-						
 						accionPorDefecto(tUsuario, tPassword, bAceptar, imagenes.getFondoLogin());
-						
+						event.detail = SWT.TRAVERSE_NONE;
+						event.doit = false;
+						break;
+					case SWT.TRAVERSE_ESCAPE:
+						botonPulsado = 0;
+						dialog.dispose();
 						event.detail = SWT.TRAVERSE_NONE;
 						event.doit = false;
 						break;
@@ -199,7 +202,6 @@ public class I01_Login {
 				if (!dialog.isDisposed())
 					dialog.setCursor(new Cursor(dialog.getDisplay(), SWT.CURSOR_ARROW));
 				dialog.dispose();
-				fondo.dispose();
 			} catch (NumberFormatException exception) {
 				MessageBox messageBox = new MessageBox (dialog, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
 				messageBox.setText (bundle.getString("Error"));
