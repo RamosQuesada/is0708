@@ -540,7 +540,7 @@ public class Vista {
 
 							if (!loader.isAlive())
 								loader.start();
-//							i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);
+							i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);
 							
 						} else {
 							// Si el password no coincide
@@ -559,15 +559,14 @@ public class Vista {
 						}
 					} else {
 						// Si el usuario no existe en la base de datos, mostrar mensaje
-						MessageBox messageBox = new MessageBox(shell,
-								SWT.APPLICATION_MODAL | SWT.ICON_ERROR | SWT.OK);
+						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_ERROR | SWT.OK);
 						messageBox.setText(bundle.getString("Error"));
 						messageBox.setMessage(bundle.getString("I01_err_Login1"));
 						messageBox.open();
 					}
 				}
 //				if (i02!=null) i02.dispose();
-				i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);
+//				i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);
 			} else {
 				// Se ha pulsado el botón Cancelar o cerrar, por tanto hay que salir de la aplicación
 				shell.getDisplay().dispose();

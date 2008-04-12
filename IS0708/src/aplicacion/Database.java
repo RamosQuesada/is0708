@@ -1,8 +1,11 @@
 package aplicacion;
 
 
+import java.io.*;
 import java.sql.*;
 import java.util.Date;
+
+import aplicacion.utilidades.EncriptCadena;
 import aplicacion.utilidades.Util;
 
 /**
@@ -43,46 +46,41 @@ public class Database extends Thread {
 	 * Abre una conexión nueva con la base de datos
 	 */
 	public synchronized void abrirConexion() {
+		String userName = "";
+		String password = "";
+		String ip = "";
+
 		try {
 			//para desencriptar
-			/*FileInputStream is;
-		try {
-				is = new FileInputStream("src"+File.separator+"interfaces"+File.separator+"configBD");
-				DataInputStream dis = new DataInputStream(is);
-				String ip= dis.readUTF();
-				String username=dis.readUTF();
-				String contraseña=EncriptCadena.desencripta(dis.readUTF());
-				String descodificacion=EncriptCadena.desencripta(dis.readUTF());
-				System.out.println(ip);
-				System.out.println(username);
-				System.out.println(contraseña);
-				System.out.println(descodificacion);
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				System.out.println("No se encuentra el archivo");
-				e1.printStackTrace();
-			} catch (IOException e2) {
-				// TODO Auto-generated catch block
-				System.out.println("Error de entrada salida");
-				e2.printStackTrace();
-			}*/
-			String userName = "turnomat_user";
-			String password = "is0708";			
-			String bd = "turnomat_bd";
-			String url = "jdbc:mysql://72.34.56.241:3306/" + bd;
+			FileInputStream is;
+			is = new FileInputStream("src"+File.separator+"interfaces"+File.separator+"configBD");
+			DataInputStream dis = new DataInputStream(is);
+			ip= dis.readUTF();
+			userName=dis.readUTF();
+			password=EncriptCadena.desencripta(dis.readUTF());
+			String url = "jdbc:mysql://"+ ip +"/" + "turnomat_bd";
 
 // Descomentar este trozo para usar la base de datos local
-//			userName = "root";
-//			password = "";
-//			url = "jdbc:mysql://localhost/" + bd;
+			userName = "root";
+			password = "";
+			url = "jdbc:mysql://localhost/turnomat_bd";
 
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			//DriverManager.setLoginTimeout(300);
 			con = DriverManager.getConnection(url, userName, password);
-			System.out.println("aplicacion.Database.java\t:: Conexión a la BD");
+			System.err.println("Database :: Conexión a la BD");
+		} catch (FileNotFoundException e) {
+			System.err.println("Database :: No se encuentra el archivo: " + e.getMessage());
+		} catch (IOException e) {
+			System.err.println("Database :: Error de entrada salida: " + e.getMessage());
+		} catch (SQLException e) {
+			System.err.println("Database :: Error en conexión: " + e.getMessage() +
+					"\n - IP:         " + ip + 
+					"\n - Usuario:    " + userName + 
+					"\n - Contraseña: " + password);
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.err.println("aplicacion.Database.java\t:: Error en conexión");
+			System.err.println("Database :: Error al instanciar el conector MySQL: " + e.getMessage());
 		}
 	}
 
