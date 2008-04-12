@@ -89,19 +89,18 @@ public class Database extends Thread {
 	/**
 	 * Método que elimina un contrato de la base de datos
 	 * 
-	 * @param id
-	 *            Identificador del contrato
+	 * @param id Identificador del contrato
 	 * @return Informa sobre si se ha podido realizar el borrado o no
 	 */
 	public boolean borraContrato(int id) {
 		boolean correcto = false;
+		String q = "DELETE FROM " + tablaContratos + " WHERE IdContrato=" + id;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("DELETE FROM " + tablaContratos + " WHERE IdContrato=" + id);
-//			System.out.println("aplicacion.Database.java\t::Contrato Borrado");
+			st.executeUpdate(q);
 			correcto = true;
 		} catch (SQLException e) {
-			System.err.println("Error al Borrar el contrato");
+			System.err.println("Database :: Error al borrar el contrato:\n\t" + q);
 		}
 		return correcto;
 	}
@@ -113,12 +112,13 @@ public class Database extends Thread {
 	 */
 	public boolean borraContratoConTurnos(int idContrato){
 		boolean correcto = false;
+		String q = "DELETE FROM " + tablaTurnosPorContrato + " WHERE IdContrato=" + idContrato;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("DELETE FROM " + tablaTurnosPorContrato + " WHERE IdContrato=" + idContrato);
+			st.executeUpdate(q);
 			correcto = true;
 		} catch (SQLException e) {
-			System.err.println("Error al Borrar el contrato y sus turnos de ListaTurnosPorContrato");
+			System.err.println("Database :: Error al borrar el contrato y sus turnos de ListaTurnosPorContrato:\n\t" + q);
 		}
 		return correcto;
 	}
@@ -133,15 +133,13 @@ public class Database extends Thread {
 	 */
 	public boolean borraDepartamento(String nombre) {
 		boolean correcto = false;
+		String q = "DELETE FROM " + tablaDepartamentos + " WHERE Nombre='" + nombre + "'";
 		try {
 			st = con.createStatement();
-			st.executeUpdate("DELETE FROM " + tablaDepartamentos + " WHERE Nombre='" + nombre
-					+ "'");
-			System.out
-					.println("aplicacion.Database.java\t::Departamento Borrado");
+			st.executeUpdate(q);
 			correcto = true;
 		} catch (SQLException e) {
-			System.err.println("Error al Borrar el departamento");
+			System.err.println("Database :: Error al borrar el departamento:\n\t" + q);
 		}
 		return correcto;
 	}
@@ -166,7 +164,7 @@ public class Database extends Thread {
 			
 			correcto = true;
 		} catch (SQLException e) {
-			System.err.println("Error al Borrar el empleado");
+			System.err.println("Database :: Error al borrar el empleado");
 		}
 		return correcto;
 	}
@@ -180,13 +178,13 @@ public class Database extends Thread {
 	 */
 	public boolean borraMensaje(int id) {
 		boolean correcto = false;
+		String q = "DELETE FROM " + tablaMensajes + " WHERE IdMensaje=" + id;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("DELETE FROM " + tablaMensajes + " WHERE IdMensaje=" + id);
-//			System.out.println("aplicacion.Database.java\t::Mensaje Borrado");
+			st.executeUpdate(q);
 			correcto = true;
 		} catch (SQLException e) {
-			System.err.println("Error al Borrar el mensaje");
+			System.err.println("Database :: Error al Borrar el mensaje");
 		}
 		return correcto;
 	}
@@ -201,14 +199,15 @@ public class Database extends Thread {
 	public boolean borraMesTrabaja(int mes, int anio,String dep){
 		String fechaIni = anio +"-"+ mes +"-"+ "01";
 		String fechaFin = anio +"-"+ mes +"-"+ "31";
+		String q = "DELETE FROM " + tablaTrabaja + " WHERE Fecha >='" + fechaIni + "' and Fecha <='" +
+		fechaFin +"' and NumVendedor in (SELECT NumVendedor FROM " + tablaUsuariosPorDepartamento + " D where NombreDepartamento = '"+dep +"');";
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("DELETE FROM " + tablaTrabaja + " WHERE Fecha >='" + fechaIni + "' and Fecha <='" +
-					fechaFin +"' and NumVendedor in (SELECT NumVendedor FROM " + tablaUsuariosPorDepartamento + " D where NombreDepartamento = '"+dep +"');" );
+			st.executeUpdate(q);
 			correcto = true;
 		} catch (SQLException e) {
-			System.err.println("Error al Borrar el mes de La tabla trabaja");			
+			System.err.println("Database :: Error al borrar el mes de La tabla trabaja:\n\t" + q);			
 			System.err.println(e.getMessage());			
 		}
 		return correcto;
@@ -222,15 +221,13 @@ public class Database extends Thread {
 	 */
 	public boolean borraNombreDepartamentoUsuario(String nombre) {
 		boolean correcto = false;
+		String q = "DELETE FROM " + tablaUsuariosPorDepartamento + " WHERE NombreDepartamento='" + nombre + "'";
 		try {
 			st = con.createStatement();
-			st.executeUpdate("DELETE FROM " + tablaUsuariosPorDepartamento + " WHERE NombreDepartamento='" + nombre
-					+ "'");
-			System.out
-					.println("aplicacion.Database.java\t::DepartamentoUsuario Borrado");
+			st.executeUpdate(q);
 			correcto = true;
 		} catch (SQLException e) {
-			System.err.println("Error al Borrar en DepartamentoUsuario");
+			System.err.println("Database :: Error al borrar en DepartamentoUsuario:\n\t" + q);
 		}
 		return correcto;
 	}
@@ -243,15 +240,13 @@ public class Database extends Thread {
 	 */
 	public boolean borraNumerosDepartamentos(String nombre) {
 		boolean correcto = false;
+		String q = "DELETE FROM " + tablaNumerosPorDepartamento + " WHERE Nombre='" + nombre + "'";
 		try {
 			st = con.createStatement();
-			st.executeUpdate("DELETE FROM " + tablaNumerosPorDepartamento + " WHERE Nombre='" + nombre
-					+ "'");
-			System.out
-					.println("aplicacion.Database.java\t::Departamento Borrado");
+			st.executeUpdate(q);
 			correcto = true;
 		} catch (SQLException e) {
-			System.err.println("Error al Borrar el departamento");
+			System.err.println("Database :: Error al Borrar el departamento:\n\t" + q);
 		}
 		return correcto;
 	}
@@ -268,10 +263,9 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 			st.executeUpdate("DELETE FROM " + tablaTurnos + " WHERE IdTurno=" + id);
-//			System.out.println("aplicacion.Database.java\t::Turno Borrado");
 			correcto = true;
 		} catch (SQLException e) {
-			System.err.println("Error al Borrar el turno");
+			System.err.println("Database :: Error al borrar el turno");
 		}
 		return correcto;
 	}
@@ -283,13 +277,14 @@ public class Database extends Thread {
 	 */
 	public boolean borraTurnoDeContrato(int idTurno, int idContrato){
 		boolean correcto = false;
+		String q = "DELETE FROM " + tablaTurnosPorContrato + " WHERE IdTurno=" + idTurno 
+		 + " and IdContrato= "+ idContrato;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("DELETE FROM " + tablaTurnosPorContrato + " WHERE IdTurno=" + idTurno 
-							 + " and IdContrato= "+ idContrato);
+			st.executeUpdate(q);
 			correcto = true;
 		} catch (SQLException e) {
-			System.err.println("Error al Borrar el turno de ListaTurnosPorContrato");
+			System.err.println("Database :: Error al borrar el turno de ListaTurnosPorContrato");
 		}
 		return correcto;
 	}
@@ -307,10 +302,9 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 			st.executeUpdate("DELETE FROM " + tablaUsuarios + " WHERE NumVendedor=" + id);
-//			System.out.println("aplicacion.Database.java\t::Usuario Borrado");
 			correcto = true;
 		} catch (SQLException e) {
-			System.err.println("Error al Borrar el usuario");
+			System.err.println("Database :: Error al Borrar el usuario");
 		}
 		return correcto;
 	}
@@ -327,11 +321,9 @@ public class Database extends Thread {
 			st = con.createStatement();
 			st.executeUpdate("DELETE FROM " + tablaUsuariosPorDepartamento + " WHERE NumVendedor='" + nv
 					+ "'");
-			System.out
-					.println("aplicacion.Database.java\t::DepartamentoUsuario Borrado");
 			correcto = true;
 		} catch (SQLException e) {
-			System.err.println("Error al Borrar en DepartamentoUsuario");
+			System.err.println("Database :: Error al Borrar en DepartamentoUsuario");
 		}
 		return correcto;
 	}
@@ -343,9 +335,7 @@ public class Database extends Thread {
 			r = st.executeUpdate("UPDATE " + tablaDepartamentos + " SET Nombre='"
 					+ NombreNuevo + "'" + " WHERE Nombre='" + NombreAntiguo + "';");
 		} catch (SQLException e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			System.err.println("Error Cambiar Nombre del Depto. en la BD");
+			System.err.println("Database :: Error Cambiar Nombre del Depto. en la BD");
 			return false;
 		}
 		return true;
@@ -358,9 +348,7 @@ public class Database extends Thread {
 			r = st.executeUpdate("UPDATE " + tablaUsuariosPorDepartamento + " SET NombreDepartamento='"
 					+ NombreNuevo + "'" + " WHERE NombreDepartamento='" + NombreAntiguo + "';");
 		} catch (SQLException e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			System.err.println("Error Cambiar Nombre del Depto. en la BD");
+			System.err.println("Database :: Error Cambiar Nombre del Depto. en la BD");
 			return false;
 		}
 		return true;
@@ -373,9 +361,7 @@ public class Database extends Thread {
 			r = st.executeUpdate("UPDATE " + tablaNumerosPorDepartamento + " SET Nombre='"
 					+ NombreNuevo + "'" + " WHERE Nombre='" + NombreAntiguo + "';");
 		} catch (SQLException e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			System.err.println("Error Cambiar Nombre del Depto. en la BD");
+			System.err.println("Database :: Error Cambiar Nombre del Depto. en la BD");
 			return false;
 		}
 		return true;
@@ -406,9 +392,7 @@ public class Database extends Thread {
 					+ ", Salario=" + Salario + ", Tipo=" + Tipo
 					+ " WHERE IdContrato=" + IdContrato + ";");
 		} catch (SQLException e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			System.err.println("Error modificar contrato en la BD");
+			System.err.println("Database :: Error modificar contrato en la BD");
 			return false;
 		}
 		return true;
@@ -457,9 +441,7 @@ public class Database extends Thread {
 				+ ", IdContrato=" + Contr + ", IdTurno=" + Turn
 				+ " WHERE NumVendedor=" + idEmp + ";");
 	} catch (SQLException e) {
-		// TODO: handle exception
-		e.printStackTrace();
-		System.err.println("Error modificar empleado en la BD");
+		System.err.println("Database :: Error al modificar empleado en la BD");
 		return false;
 	}
 	return true;
@@ -493,9 +475,7 @@ public class Database extends Thread {
 					+ "', DuracionDescanso='" + tdesc + "'" + " WHERE IdTurno="
 					+ IdTurno + ";");
 		} catch (SQLException e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			System.err.println("Error modificar turno en la BD");
+			System.err.println("Database :: Error modificar turno en la BD");
 			return false;
 		}
 		return true;
@@ -520,7 +500,7 @@ public class Database extends Thread {
 	 * Comprueba si hay una conexión abierta con la base de datos
 	 * 
 	 * @return <i>true</i> si la conexión está abierta, <i>false</i> en caso
-	 *         contrario o si hay alguna excepci�n
+	 *         contrario o si hay alguna excepción
 	 */
 	public boolean conexionAbierta() {
 		boolean b = false;
@@ -546,7 +526,7 @@ public class Database extends Thread {
 					+ nvend);
 		} catch (SQLException e) {
 			// TODO: handle exception
-			System.err.println("Error al realizar la consulta del empleado ");
+			System.err.println("Database :: Error al realizar la consulta del empleado ");
 		}
 		return r;
 	}
@@ -588,9 +568,6 @@ public class Database extends Thread {
 							+ salario
 							+ ", "
 							+ tipocontrato + ");");
-
-			System.out
-					.println("aplicacion.Database.java\t::Contrato insertado");
 			//r = st.getGeneratedKeys();
 			r = st.executeQuery("SELECT LAST_INSERT_ID()");
 			if(r.next()) 
@@ -599,13 +576,13 @@ public class Database extends Thread {
 		} catch (SQLException e) {
 			i = -1;
 			e.printStackTrace();
-			System.err.println("Error al insertar el contrato");
+			System.err.println("Database :: Error al insertar el contrato");
 		}
 		return i;
 	}
 
 	/**
-	 * M�todo que inserta en la tabla Departamento los valores correspondientes
+	 * Método que inserta en la tabla Departamento los valores correspondientes
 	 * a un nuevo departamento
 	 * 
 	 * @param nombre
@@ -616,16 +593,15 @@ public class Database extends Thread {
 	 * @return Informa sobre si se ha podido realizar la inserci�n o no
 	 */
 	public boolean insertarDepartamento(String nombre, int jefe) {
+		// TODO insertar horas correctamente
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
 			st.executeUpdate("INSERT INTO " + tablaDepartamentos + " values ('" + nombre
 					+ "', '" + jefe + "', '" + "9:00:00" + "', '" + "23:00:00" + "')");
-			System.out
-					.println("aplicacion.Database.java\t::Departamento insertado");
 			correcto = true;
 		} catch (SQLException e) {
-			System.err.println("Error al insertar el departamento");
+			System.err.println("Database :: Error al insertar el departamento");
 			correcto = false;
 		}
 		return correcto;
@@ -647,12 +623,10 @@ public class Database extends Thread {
 			st = con.createStatement();
 			st.executeUpdate("INSERT INTO " + tablaUsuariosPorDepartamento + " values ('"
 					+ nvend + "', '" + nombre + "')");
-			System.out
-					.println("aplicacion.Database.java\t::Departamento insertado");
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
-			System.err.println("Error al insertar en DepartamentoUsuario");
+			System.err.println("Database :: Error al insertar en DepartamentoUsuario");
 		}
 		return correcto;
 	}
@@ -693,8 +667,6 @@ public class Database extends Thread {
 			st.executeUpdate("INSERT INTO " + tablaDistribucionHorarios + "values ('" + Hora
 					+ "', '" + DiaSemana + "', '" + Patron + "', '" + NumMax
 					+ "', '" + NumMin + "', '" + IdDepartamento + "')");
-			System.out
-					.println("aplicacion.Database.java\t::Distribucion insertada");
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
@@ -742,7 +714,6 @@ public class Database extends Thread {
 					+ FechaInicio + "', '" + FechaFin + "', '" + Patron
 					+ "', '" + NumMax + "', '" + NumMin + "', '"
 					+ IdDepartamento + "')");
-//			System.out.println("aplicacion.Database.java\t::Festivo insertado");
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
@@ -765,12 +736,10 @@ public class Database extends Thread {
 			st = con.createStatement();
 			st.executeUpdate("INSERT INTO " + tablaIncidencias + " values (" + 0 + ", '"
 					+ descripcion + "');");
-			System.out
-					.println("aplicacion.Database.java\t::Incidencia insertada");
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
-			System.err.println("Error al insertar la incidencia");
+			System.err.println("Database :: Error al insertar la incidencia");
 		}
 		return correcto;
 	}
@@ -779,10 +748,9 @@ public class Database extends Thread {
 			abrirConexion();
 			st = con.createStatement();
 			st.executeUpdate("INSERT INTO " + tablaIssues + " (text) values ( '" + texto + "');");
-//			System.out.println("aplicacion.Database.java\t::Issue insertado");
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.err.println("Error al insertar el issue");
+			System.err.println("Database :: Error al insertar el issue");
 		}
 	}
 
@@ -806,7 +774,7 @@ public class Database extends Thread {
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
-			System.err.println("Error al insertar en ListaDestinatarios");
+			System.err.println("Database :: Error al insertar en ListaDestinatarios");
 		}
 		return correcto;
 	}
@@ -847,11 +815,11 @@ public class Database extends Thread {
 			r = st.executeQuery("SELECT LAST_INSERT_ID()");
 			if(r.next()) 
 				i = r.getInt(1);
-			else System.err.println("Error al obtener el identificador auto-generado");
+			else System.err.println("Database :: Error al obtener el identificador auto-generado");
 		} catch (SQLException e) {
 			i = -1;
 			e.printStackTrace();
-			System.err.println("Error al insertar el mensaje");
+			System.err.println("Database :: Error al insertar el mensaje");
 		}
 		return i;
 	}
@@ -876,7 +844,7 @@ public class Database extends Thread {
 					.println("aplicacion.Database.java\t::Departamento insertado");
 			correcto = true;
 		} catch (SQLException e) {
-			System.err.println("Error al insertar en NumerosDepartamento");
+			System.err.println("Database :: Error al insertar en NumerosDepartamento");
 			correcto = false;
 		}
 		return correcto;
@@ -908,7 +876,7 @@ public class Database extends Thread {
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
-			System.err.println("Error al insertar la ListaTurnosPorContrato");
+			System.err.println("Database :: Error al insertar la ListaTurnosPorContrato");
 		}
 		return correcto;
 	}
@@ -940,7 +908,7 @@ public class Database extends Thread {
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
-			System.err.println("Error al insrtar en Trabaja");
+			System.err.println("Database :: Error al insrtar en Trabaja");
 		}
 		return correcto;
 	}
@@ -951,7 +919,7 @@ public class Database extends Thread {
 			st.executeBatch();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.err.println("Error al ejecutar batch SQL");
+			System.err.println("Database :: Error al ejecutar batch SQL");
 		}
 		return true;
 	}
@@ -999,11 +967,11 @@ public class Database extends Thread {
 			r = st.executeQuery("SELECT LAST_INSERT_ID()");
 			if(r.next()) 
 				i = r.getInt(1);
-			else System.err.println("Error al obtener el identificador auto-generado");
+			else System.err.println("Database :: Error al obtener el identificador auto-generado");
 		} catch (SQLException e) {
 			i = -1;
 			e.printStackTrace();
-			System.err.println("Error al insertar el Turno");
+			System.err.println("Database :: Error al insertar el Turno");
 		}
 		return i;
 	}
@@ -1029,7 +997,7 @@ public class Database extends Thread {
 		} catch (SQLException e) {
 			correcto = false;
 			e.printStackTrace();
-			System.err.println("Error al insertar enListaTurnosPorContrato");
+			System.err.println("Database :: Error al insertar enListaTurnosPorContrato");
 		}
 		return correcto;
 	}
@@ -1155,7 +1123,7 @@ public class Database extends Thread {
 //			System.out.println("aplicacion.Database.java\t::Mensaje Marcado");
 			correcto = true;
 		} catch (SQLException e) {
-			System.err.println("Error al Marcar el mensaje");
+			System.err.println("Database :: Error al Marcar el mensaje");
 		}
 		return correcto;
 	}
@@ -1169,7 +1137,7 @@ public class Database extends Thread {
 		} catch (SQLException e) {
 			// TODO: handle exception
 			e.printStackTrace();
-			System.err.println("Error Cambiar Jefe de Dpto en la BD");
+			System.err.println("Database :: Error Cambiar Jefe de Dpto en la BD");
 			return false;
 		}
 		return true;
@@ -1189,7 +1157,7 @@ public class Database extends Thread {
 					.executeQuery("SELECT * FROM " + tablaContratos + " WHERE IdContrato = "
 							+ idContrato + ";");
 		} catch (SQLException e) {
-			System.err.println("Error de lectura de Contrato");
+			System.err.println("Database :: Error de lectura de Contrato");
 		}
 		return result;
 	}
@@ -1202,15 +1170,16 @@ public class Database extends Thread {
 	 */
 	public ResultSet obtenContratosDepartamento(String departamento) {
 		ResultSet r = null;
+		String q = "SELECT * FROM " + tablaContratos + " WHERE IdContrato IN ("
+		+ "SELECT IdContrato FROM " + tablaUsuarios + " u, " + tablaUsuariosPorDepartamento + " d "
+		+ "WHERE u.NumVendedor=d.NumVendedor AND "
+		+ "d.NombreDepartamento = '"+ departamento + "');";
 		try {
 			st = con.createStatement();
-			r = st.executeQuery("SELECT * FROM " + tablaContratos + " WHERE IdContrato IN ("
-					+ "SELECT IdContrato FROM " + tablaUsuarios + " u, DepartamentoUsuario d "
-					+ "WHERE u.NumVendedor=d.NumVendedor AND "
-					+ "d.NombreDepartamento = '"+ departamento +"');");
+			r = st.executeQuery(q);
 			
 		} catch (SQLException e) {
-			System.err.println("Error al realizar la consulta de contratos");
+			System.err.println("Database :: Error al realizar la consulta de contratos:\n\t" + q);
 		}
 		return r;
 	}
@@ -1235,7 +1204,7 @@ public class Database extends Thread {
 		} catch (SQLException e) {
 			// TODO: handle exception
 			System.err
-					.println("Error al realizar la consulta en departamento ");
+					.println("Database :: Error al realizar la consulta en departamento ");
 		}
 		return r;
 	}
@@ -1269,7 +1238,7 @@ public class Database extends Thread {
 							"SELECT NumVendedor FROM " + tablaUsuariosPorDepartamento + " WHERE " +
 							"NombreDepartamento = '"+ departamento +"');");
 		} catch (SQLException e) {
-			System.err.println("Error al realizar la consulta de cuadrantes");
+			System.err.println("Database :: Error al realizar la consulta de cuadrantes");
 		}
 		return r;
 	}
@@ -1292,7 +1261,7 @@ public class Database extends Thread {
 		catch (SQLException e) {
 			// TODO: handle exception
 			System.err
-					.println("Error al realizar la consulta en departamento ");
+					.println("Database :: Error al realizar la consulta en departamento ");
 		}
 		return r;
 	}
@@ -1306,13 +1275,12 @@ public class Database extends Thread {
 	 */
 	public ResultSet obtenDepartamentosJefe(int nvend) {
 		ResultSet r = null;
+		String q = "SELECT Nombre FROM " + tablaDepartamentos + " WHERE JefeDepartamento = " + nvend;
 		try {
 			st = con.createStatement();
-			r = st.executeQuery("SELECT Nombre FROM " + tablaDepartamentos + " WHERE JefeDepartamento = " + nvend);
+			r = st.executeQuery(q);
 		} catch (SQLException e) {
-			// TODO: handle exception
-			System.err
-					.println("Error al realizar la consulta de los ids departamentos");
+			System.err.println("Database :: Error al realizar la consulta de los ids departamentos:\n\t" + q);
 		}
 		return r;
 	}
@@ -1332,7 +1300,7 @@ public class Database extends Thread {
 					.executeQuery("SELECT IdMensaje from " + tablaDestinatariosMensaje + " WHERE NumVendedor = "
 							+ idUsuario + ";");
 		} catch (SQLException e) {
-			System.err.println("Error obtenDestinatarios");
+			System.err.println("Database :: Error obtenDestinatarios");
 		}
 		return result;
 
@@ -1363,7 +1331,7 @@ public class Database extends Thread {
 		} catch (SQLException e) {
 			// TODO: handle exception
 			System.err
-					.println("Error al realizar la consulta de la distribucion ");
+					.println("Database :: Error al realizar la consulta de la distribucion ");
 		}
 		return rs;
 	}
@@ -1380,7 +1348,7 @@ public class Database extends Thread {
 		} catch (SQLException e) {
 			// TODO: handle exception
 			System.err
-					.println("Error al realizar la consulta de las distribuciones ");
+					.println("Database :: Error al realizar la consulta de las distribuciones ");
 		}
 		return rs;
 	}
@@ -1409,7 +1377,7 @@ public class Database extends Thread {
 		ResultSet r = null;
 		String subconsulta;
 		boolean to2null = true;
-		String consulta = "SELECT * FROM USUARIO WHERE ";
+		String consulta = "SELECT * FROM " + tablaUsuarios + " WHERE ";
 		int numero = 0;
 		if (idEmpl != null) {
 			consulta += "NumVendedor= " + idEmpl;
@@ -1468,13 +1436,13 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 			if (to2null) {
-				r = st.executeQuery("SELECT * FROM USUARIO");
+				r = st.executeQuery("SELECT * FROM " + tablaUsuarios + "");
 			} else
 				r = st.executeQuery(consulta);
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.err
-					.println("Error al realizar la consulta del empleado a la carta");
+					.println("Database :: Error al realizar la consulta del empleado a la carta");
 		}
 		return r;
 	}
@@ -1497,7 +1465,7 @@ public class Database extends Thread {
 		} catch (SQLException e) {
 			// TODO: handle exception
 			System.err
-					.println("Error al obtener los empleados de un departamento ");
+					.println("Database :: Error al obtener los empleados de un departamento ");
 		}
 		return r;
 	}
@@ -1522,7 +1490,7 @@ public class Database extends Thread {
 			// TODO: handle exception
 			e.printStackTrace();
 			System.err
-					.println("Error al realizar la consulta de los festivos ");
+					.println("Database :: Error al realizar la consulta de los festivos ");
 		}
 		return rs;
 	}
@@ -1541,7 +1509,7 @@ public class Database extends Thread {
 			// TODO: handle exception
 			e.printStackTrace();
 			System.err
-					.println("Error al realizar la consulta de los festivos ");
+					.println("Database :: Error al realizar la consulta de los festivos ");
 		}
 		return rs;
 	}
@@ -1553,7 +1521,7 @@ public class Database extends Thread {
 			r = st.executeQuery("SELECT HoraApertura, HoraCierre FROM DEPARTAMENTO WHERE Nombre='"+dpto+"';");
 		} catch (SQLException e) {
 			// TODO: handle exception
-			System.err.println("Error al realizar la consulta del horario de un Dpto");
+			System.err.println("Database :: Error al realizar la consulta del horario de un Dpto");
 		}
 		return r;
 	}
@@ -1565,7 +1533,7 @@ public class Database extends Thread {
 			r = st.executeQuery("SELECT HoraEntrada, HoraSalida FROM Trabaja WHERE NumVendedor='"+nv+"' AND Fecha='"+d+"' AND IdTurno='"+idturno+"';");
 		} catch (SQLException e) {
 			// TODO: handle exception
-			System.err.println("Error al realizar la consulta del Jefe del Dpto");
+			System.err.println("Database :: Error al realizar la consulta del Jefe del Dpto");
 		}
 		return r;
 	}
@@ -1585,7 +1553,7 @@ public class Database extends Thread {
 			result.next();
 			maximo = result.getInt("Maximo");
 		} catch (SQLException e) {
-			System.err.println("Error al obtener el maximo id de los mensajes");
+			System.err.println("Database :: Error al obtener el maximo id de los mensajes");
 		}
 		return maximo;
 	}
@@ -1601,15 +1569,13 @@ public class Database extends Thread {
 	 */
 	public ResultSet obtenIdsDepartamentos(int nvend) {
 		ResultSet r = null;
+		String q = "SELECT NombreDepartamento FROM " + tablaUsuariosPorDepartamento + " WHERE NumVendedor = " + nvend;
 		try {
 			st = con.createStatement();
-			r = st
-			.executeQuery("SELECT NombreDepartamento FROM DepartamentoUsuario WHERE NumVendedor = "
-					+ nvend);
+			r = st.executeQuery(q);
 		} catch (SQLException e) {
 			// TODO: handle exception
-			System.err
-					.println("Error al realizar la consulta de los ids departamentos");
+			System.err.println("Database :: Error al realizar la consulta de los ids departamentos:\n\t" + q);
 		}
 		return r;
 	}
@@ -1625,14 +1591,11 @@ public class Database extends Thread {
 		ResultSet r = null;
 		try {
 			st = con.createStatement();
-			r = st
-					.executeQuery("SELECT NumVendedor FROM DepartamentoUsuario,DEPARTAMENTO WHERE JefeDepartamento = "
+			r = st.executeQuery("SELECT NumVendedor FROM " + tablaUsuariosPorDepartamento + ", " + tablaDepartamentos + " WHERE JefeDepartamento = "
 							+ nvend
-							+ " and DEPARTAMENTO.Nombre=NombreDepartamento");
+							+ " and " + tablaDepartamentos + ".Nombre=NombreDepartamento");
 		} catch (SQLException e) {
-			// TODO: handle exception
-			System.err
-					.println("Error al realizar la consulta de los subordinados ");
+			System.err.println("Database :: Error al realizar la consulta de los subordinados ");
 		}
 		return r;
 	}
@@ -1644,7 +1607,7 @@ public class Database extends Thread {
 			r = st.executeQuery("SELECT JefeDepartamento FROM DEPARTAMENTO WHERE Nombre='"+nombreDep+"';");
 		} catch (SQLException e) {
 			// TODO: handle exception
-			System.err.println("Error al realizar la consulta del Jefe del Dpto");
+			System.err.println("Database :: Error al realizar la consulta del Jefe del Dpto");
 		}
 		return r;
 	}
@@ -1662,17 +1625,17 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 
-			// SELECT * FROM USUARIO
+			// SELECT * FROM " + tablaUsuarios + "
 			// WHERE  NumVendedor IN (
 			//		SELECT NumVendedor FROM DepartamentoUsuario
 			//		WHERE NombreDepartamento = 'departamento');
 			
-			r = st.executeQuery("SELECT * FROM USUARIO WHERE NumVendedor IN (" +
-							"SELECT NumVendedor FROM DepartamentoUsuario WHERE " +
+			r = st.executeQuery("SELECT * FROM " + tablaUsuarios+ " WHERE NumVendedor IN (" +
+							"SELECT NumVendedor FROM " + tablaUsuariosPorDepartamento + " WHERE " +
 							"NombreDepartamento = '"+ departamento +"');");
 			
 		} catch (SQLException e) {
-			System.err.println("Error al realizar la consulta de empleados");
+			System.err.println("Database :: Error al realizar la consulta de empleados");
 		}
 		return r;
 	}
@@ -1689,17 +1652,17 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 
-			// SELECT * FROM USUARIO
+			// SELECT * FROM " + tablaUsuarios+ "
 			// WHERE  NumVendedor IN (
-			//		SELECT NumVendedor FROM DepartamentoUsuario
+			//		SELECT NumVendedor FROM " + tablaUsuariosPorDepartamento + "
 			//		WHERE NombreDepartamento = 'departamento');
 			
-			r = st.executeQuery("SELECT * FROM USUARIO WHERE NumVendedor IN (" +
-							"SELECT NumVendedor FROM DepartamentoUsuario WHERE " +
+			r = st.executeQuery("SELECT * FROM " + tablaUsuarios+ " WHERE NumVendedor IN (" +
+							"SELECT NumVendedor FROM " + tablaUsuariosPorDepartamento + " WHERE " +
 							"NombreDepartamento = '"+ departamento +"');");
 			
 		} catch (SQLException e) {
-			System.err.println("Error al realizar la consulta de empleados");
+			System.err.println("Database :: Error al realizar la consulta de empleados");
 		}
 		return r;
 	}
@@ -1716,12 +1679,12 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 			r = st
-					.executeQuery("SELECT ListaTurnosPorContrato.IdTurno FROM USUARIO,ListaTurnosPorContrato WHERE NumVendedor = "
+					.executeQuery("SELECT ListaTurnosPorContrato.IdTurno FROM " + tablaUsuarios+ ",ListaTurnosPorContrato WHERE NumVendedor = "
 							+ idEmpl
 							+ " and USUARIO.IdContrato=ListaTurnosPorContrato.IdContrato");
 		} catch (SQLException e) {
 			// TODO: handle exception
-			System.err.println("Error al obtener los turnos de un contrato ");
+			System.err.println("Database :: Error al obtener los turnos de un contrato ");
 		}
 		return r;
 	}
@@ -1741,7 +1704,7 @@ public class Database extends Thread {
 			result = st.executeQuery("SELECT * FROM MENSAJE WHERE IdMensaje="
 					+ mensaje + ";");
 		} catch (SQLException e) {
-			System.err.println("Error obtenMensaje ");
+			System.err.println("Database :: Error obtenMensaje ");
 		}
 		return result;
 	}
@@ -1749,15 +1712,15 @@ public class Database extends Thread {
 	
 	public ResultSet obtenMensajesEntrantes(int vendedor, int inicio, int desp) {
 		ResultSet result = null;
+		String q = "SELECT * FROM " + tablaDestinatariosMensaje + " JOIN MENSAJE WHERE " + tablaDestinatariosMensaje + ".NumVendedor="
+		+ vendedor
+		+ " AND " + tablaDestinatariosMensaje + ".IdMensaje=MENSAJE.IdMensaje LIMIT "
+		+ inicio + "," + (inicio + desp) + ";";
 		try {
 			st = con.createStatement();
-			result = st
-					.executeQuery("SELECT * FROM " + tablaDestinatariosMensaje + " JOIN MENSAJE WHERE DESTINATARIO.NumVendedor="
-							+ vendedor
-							+ " AND DESTINATARIO.IdMensaje=MENSAJE.IdMensaje LIMIT "
-							+ inicio + "," + (inicio + desp) + ";");
+			result = st.executeQuery(q);
 		} catch (SQLException e) {
-			System.err.println("Error obtenMensajesEntrantes ");
+			System.err.println("Database :: Error obtenMensajesEntrantes ");
 		}
 		return result;
 	}
@@ -1789,7 +1752,7 @@ public class Database extends Thread {
 		catch (SQLException e) {
 			// TODO: handle exception
 			System.err
-					.println("Error al realizar la consulta Lista de Turnos ");
+					.println("Database :: Error al realizar la consulta Lista de Turnos ");
 		}
 		return r;
 	}
@@ -1802,7 +1765,7 @@ public class Database extends Thread {
 		}
 		catch (SQLException e) {
 			// TODO: handle exception
-			System.err.println("Error al realizar la consulta en departamento ");
+			System.err.println("Database :: Error al realizar la consulta en departamento ");
 		}
 		return r;		
 	}
@@ -1823,7 +1786,7 @@ public class Database extends Thread {
 							+ " and " + tablaDepartamentos + ".Nombre=NombreDepartamento");
 		} catch (SQLException e) {
 			// TODO: handle exception
-			System.err.println("Error al obtener el superior del empleado ");
+			System.err.println("Database :: Error al obtener el superior del empleado ");
 		}
 		return r;
 	}
@@ -1841,7 +1804,7 @@ public class Database extends Thread {
 			r = st.executeQuery("SELECT * FROM " + tablaContratos);
 		} catch (SQLException e) {
 			// TODO: handle exception
-			System.err.println("Error al realizar la consulta en CONTRATO ");
+			System.err.println("Database :: Error al realizar la consulta en CONTRATO ");
 		}
 		return r;
 	}	
@@ -1857,7 +1820,7 @@ public class Database extends Thread {
 		} catch (SQLException e) {
 			// TODO: handle exception
 			System.err
-					.println("Error al realizar la consulta en departamento ");
+					.println("Database :: Error al realizar la consulta en departamento ");
 		}
 		return r;
 	}	
@@ -1874,7 +1837,7 @@ public class Database extends Thread {
 			r = st.executeQuery("SELECT Nombre, Apellido1, Apellido2, NumVendedor FROM " + tablaUsuarios + " WHERE Rango='"+2+"';");
 		} catch (SQLException e) {
 			// TODO: handle exception
-			System.err.println("Error al realizar la consulta de nombres de (posibles) jefes de departamento ");
+			System.err.println("Database :: Error al realizar la consulta de nombres de (posibles) jefes de departamento ");
 		}
 		return r;
 	}	
@@ -1887,7 +1850,7 @@ public class Database extends Thread {
 			r = st.executeQuery("SELECT Numero FROM " + tablaNumerosPorDepartamento + " ';");
 		} catch (SQLException e) {
 			// TODO: handle exception
-			System.err.println("Error al realizar la consulta del Jefe del Dpto");
+			System.err.println("Database :: Error al realizar la consulta del Jefe del Dpto");
 		}
 		return r;
 	}		
@@ -1901,7 +1864,7 @@ public class Database extends Thread {
 			r = st.executeQuery("SELECT NumVendedor FROM " + tablaUsuarios + " WHERE Rango='"+2+"';");
 		} catch (SQLException e) {
 			// TODO: handle exception
-			System.err.println("Error al realizar la consulta de nombres de (posibles) jefes de departamento ");
+			System.err.println("Database :: Error al realizar la consulta de nombres de (posibles) jefes de departamento ");
 		}
 		return r;
 	}
@@ -1917,7 +1880,7 @@ public class Database extends Thread {
 			r = st.executeQuery("SELECT * FROM " + tablaTurnos);
 		} catch (SQLException e) {
 			// TODO: handle exception
-			System.err.println("Error al realizar la consulta en TURNOS ");
+			System.err.println("Database :: Error al realizar la consulta en TURNOS ");
 		}
 		return r;
 	}
@@ -1936,7 +1899,7 @@ public class Database extends Thread {
 			result = st.executeQuery("SELECT * FROM " + tablaTurnos + " WHERE IdTurno="
 					+ turno + ";");
 		} catch (SQLException e) {
-			System.err.println("Error obtenTurno ");
+			System.err.println("Database :: Error obtenTurno ");
 		}
 		return result;
 	}
@@ -1961,7 +1924,7 @@ public class Database extends Thread {
 		} catch (SQLException e) {
 			// TODO: handle exception
 			System.err
-					.println("Error al obtener el turno de una fecha concreta ");
+					.println("Database :: Error al obtener el turno de una fecha concreta ");
 		}
 		return r;
 	}
@@ -1981,7 +1944,7 @@ public class Database extends Thread {
 		} catch (SQLException e) {
 			// TODO: handle exception
 			System.err
-					.println("Error al realizar la consulta del turno favorito del usuario ");
+					.println("Database :: Error al realizar la consulta del turno favorito del usuario ");
 		}
 		return r;
 	}
@@ -2012,8 +1975,8 @@ public class Database extends Thread {
 //			r = st.executeQuery("SELECT * FROM TURNOS WHERE IdTurno IN ("
 //					+ "SELECT IdTurno FROM ListaTurnosPorContrato WHERE IdContrato IN ("
 //					+ "SELECT IdContrato FROM CONTRATO WHERE IdContrato IN ("
-//					+ "SELECT IdContrato FROM USUARIO WHERE NumVendedor IN ("
-//					+ "SELECT NumVendedor FROM DepartamentoUsuario WHERE "
+//					+ "SELECT IdContrato FROM " + tablaUsuarios+ " WHERE NumVendedor IN ("
+//					+ "SELECT NumVendedor FROM " + tablaUsuariosPorDepartamento + " WHERE "
 //					+ "NombreDepartamento = '"+ departamento +"'))));");
 
 			r = st.executeQuery("SELECT * FROM " + tablaTurnos + " WHERE IdTurno IN ("
@@ -2025,7 +1988,7 @@ public class Database extends Thread {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.err.println("Error al realizar la consulta de turnos de contratos");
+			System.err.println("Database :: Error al realizar la consulta de turnos de contratos");
 		}
 		return r;
 	}	
@@ -2046,7 +2009,7 @@ public class Database extends Thread {
 		} catch (SQLException e) {
 			// TODO: handle exception
 			System.err
-					.println("Error al realizar la consulta en departamento ");
+					.println("Database :: Error al realizar la consulta en departamento ");
 		}
 		return r;
 	}	
@@ -2063,7 +2026,7 @@ public class Database extends Thread {
 			r = st.executeQuery("SELECT IdTurno FROM " + tablaTrabaja + " WHERE NumVendedor='"+nv+"' AND Fecha='"+d+"';");
 		} catch (SQLException e) {
 			// TODO: handle exception
-			System.err.println("Error al realizar la consulta del Jefe del Dpto");
+			System.err.println("Database :: Error al realizar la consulta del Jefe del Dpto");
 		}
 		return r;
 	}	
@@ -2083,7 +2046,7 @@ public class Database extends Thread {
 			r = st.executeQuery("TRUNCATE TABLE " + nombre);
 		} catch (SQLException e) {
 			// TODO: handle exception
-			System.err.println("Error al vaciar la tabla");
+			System.err.println("Database :: Error al vaciar la tabla");
 			return false;
 		}
 		return true;
@@ -2115,7 +2078,7 @@ public class Database extends Thread {
 			System.out.println("aplicacion.Database.java\t:: Estructura de tablas y dependencias eliminadas correctamente.");
 
 		} catch (SQLException e) {
-			System.err.println("Error al borrar las tablas - ¿Quizá estén ya vacías?");
+			System.err.println("Database :: Error al borrar las tablas - ¿Quizá estén ya vacías?");
 		}
 	}
 
@@ -2286,60 +2249,74 @@ public class Database extends Thread {
 					"Importe Decimal(10,2) ," +
 					"Primary Key (NumVendedor,fecha)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
 			st.executeBatch();
-			
-			st.addBatch("Alter table tieneincidencia add Index IX_TieneIncidencia (IdIncidencia);");
-			st.addBatch("Alter table tieneincidencia add Foreign Key (IdIncidencia) references INCIDENCIAS (IdIncidencia) on delete cascade on update cascade;");
-			st.addBatch("Alter table ventas add Index IX_vende (NumVendedor);");
-			st.addBatch("Alter table ventas add Foreign Key (NumVendedor) references USUARIO (NumVendedor) on delete restrict on update cascade;");
-			st.addBatch("Alter table tieneincidencia add Index IX_TieneIncidencia2 (NumVendedor);");
-			st.addBatch("Alter table tieneincidencia add Foreign Key (NumVendedor) references USUARIO (NumVendedor) on delete cascade on update cascade;");
-			st.addBatch("Alter table trabaja add Index IX_Trabaja1 (NumVendedor);");
-			st.addBatch("Alter table trabaja add Foreign Key (NumVendedor) references USUARIO (NumVendedor) on delete restrict on update restrict;");
-			st.addBatch("Alter table destinatario add Index IX_Recibe1 (NumVendedor)");
-			st.addBatch("Alter table destinatario add Foreign Key (NumVendedor) references USUARIO (NumVendedor) on delete restrict on update cascade;");
-			st.addBatch("Alter table departamento add Index IX_jefedepartamento (JefeDepartamento);");
-			st.addBatch("Alter table departamento add Foreign Key (JefeDepartamento) references USUARIO (NumVendedor) on delete restrict on update cascade;");
-			st.addBatch("Alter table mensaje add Index IX_envia (Remitente);");
-			st.addBatch("Alter table mensaje add Foreign Key (Remitente) references USUARIO (NumVendedor) on delete restrict on update cascade;");
-			st.addBatch("Alter table listaturnosporcontrato add Index IX_TurnosPorContrato (IdContrato);");
-			st.addBatch("Alter table listaturnosporcontrato add Foreign Key (IdContrato) references CONTRATO (IdContrato) on delete cascade on update cascade;");
-			st.addBatch("Alter table usuario add Index IX_TieneContrato (IdContrato);");
-			st.addBatch("Alter table usuario add Foreign Key (IdContrato) references CONTRATO (IdContrato) on delete restrict on update cascade;");
-			st.addBatch("Alter table listaturnosporcontrato add Index IX_TurnosPorContratos (IdTurno);");
-			st.addBatch("Alter table listaturnosporcontrato add Foreign Key (IdTurno) references TURNOS (IdTurno) on delete cascade on update cascade;");
-			st.addBatch("Alter table trabaja add Index IX_Trabaja2 (IdTurno);");
-			st.addBatch("Alter table trabaja add Foreign Key (IdTurno) references TURNOS (IdTurno) on delete restrict on update cascade;");
-			st.addBatch("Alter table contrato add Index IX_TurnoInicial (TurnoInicial);");
-			st.addBatch("Alter table contrato add Foreign Key (TurnoInicial) references TURNOS (IdTurno) on delete restrict on update cascade;");
-			st.addBatch("Alter table usuario add Index IX_Prefiere (IdTurno);");
-			st.addBatch("Alter table usuario add Foreign Key (IdTurno) references TURNOS (IdTurno) on delete restrict on update cascade;");
-			st.addBatch("Alter table usuario add Index IX_TienePermiso (Rango);");
-			st.addBatch("Alter table usuario add Foreign Key (Rango) references PERMISOS (Rango) on delete restrict on update cascade;");
-			st.addBatch("Alter table distribucion add Index IX_Relationship10 (NombreDept);");
-			st.addBatch("Alter table distribucion add Foreign Key (NombreDept) references DEPARTAMENTO (Nombre) on delete cascade on update cascade;");
-			st.addBatch("Alter table festivos add Index IX_Relationship11 (NombreDept);");
-			st.addBatch("Alter table festivos add Foreign Key (NombreDept) references DEPARTAMENTO (Nombre) on delete cascade on update cascade;");
-			st.addBatch("Alter table destinatario add Index IX_Recibe2 (IdMensaje);");
-			st.addBatch("Alter table destinatario add Foreign Key (IdMensaje) references MENSAJE (IdMensaje) on delete cascade on update cascade;");
-
-			st.addBatch("Alter table departamentousuario add Index IX_Relationship12 (NumVendedor);");
-			st.addBatch("Alter table departamentousuario add Foreign Key (NumVendedor) references Usuario (NumVendedor) on delete cascade on update cascade;");
-			st.addBatch("Alter table departamentousuario add Index IX_Relationship13 (NombreDepartamento);");
-			st.addBatch("Alter table departamentousuario add Foreign Key (NombreDepartamento) references DEPARTAMENTO (Nombre) on delete restrict on update cascade;");
-
-			st.addBatch("Alter table contratodepartamento add Index IX_Relationship19 (NombreDept);");
-			st.addBatch("Alter table contratodepartamento add Foreign Key (NombreDept) references DEPARTAMENTO (Nombre) on delete cascade on update cascade;");
-
-			st.addBatch("Alter table contratodepartamento add Index IX_Relationship17 (IdContrato);");
-			st.addBatch("Alter table contratodepartamento add Foreign Key (IdContrato) references CONTRATO (IdContrato) on delete restrict on update cascade;");
-			
-			st.executeBatch();
-			System.out.println("aplicacion.Database.java\t:: Estructura de tablas y dependencias generadas correctamente.");
+			System.out.println("aplicacion.Database.java\t:: Estructura de tablas generadas correctamente.");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
+	public void crearDependencias() {
+		int[] r = null;
+		try {
+			st = con.createStatement();
+
+			st.addBatch("Alter table tieneincidencia add Index IX_TieneIncidencia (IdIncidencia);");
+			st.addBatch("Alter table tieneincidencia add Foreign Key (IdIncidencia) references incidencias (IdIncidencia) on delete cascade on update cascade;");
+			st.addBatch("Alter table ventas add Index IX_vende (NumVendedor);");
+			st.addBatch("Alter table ventas add Foreign Key (NumVendedor) references usuario (NumVendedor) on delete restrict on update cascade;");
+			st.addBatch("Alter table tieneincidencia add Index IX_TieneIncidencia2 (NumVendedor);");
+			st.addBatch("Alter table tieneincidencia add Foreign Key (NumVendedor) references usuario (NumVendedor) on delete cascade on update cascade;");
+			st.addBatch("Alter table trabaja add Index IX_Trabaja1 (NumVendedor);");
+			st.addBatch("Alter table trabaja add Foreign Key (NumVendedor) references usuario (NumVendedor) on delete restrict on update restrict;");
+			st.addBatch("Alter table destinatario add Index IX_Recibe1 (NumVendedor);");
+			st.addBatch("Alter table destinatario add Foreign Key (NumVendedor) references usuario (NumVendedor) on delete restrict on update cascade;");
+			st.addBatch("Alter table departamento add Index IX_jefedepartamento (JefeDepartamento);");
+			st.addBatch("Alter table departamento add Foreign Key (JefeDepartamento) references usuario (NumVendedor) on delete restrict on update cascade;");
+			st.addBatch("Alter table mensaje add Index IX_envia (Remitente);");
+			st.addBatch("Alter table mensaje add Foreign Key (Remitente) references usuario (NumVendedor) on delete restrict on update cascade;");
+			
+			// Hasta aquí funcionan
+			st.addBatch("Alter table listaturnosporcontrato add Index IX_TurnosPorContrato (IdContrato);");
+			st.addBatch("Alter table listaturnosporcontrato add Foreign Key (IdContrato) references contrato (IdContrato) on delete cascade on update cascade;");
+			st.addBatch("Alter table usuario add Index IX_TieneContrato (IdContrato);");
+			st.addBatch("Alter table usuario add Foreign Key (IdContrato) references contrato (IdContrato) on delete restrict on update cascade;");
+			st.addBatch("Alter table listaturnosporcontrato add Index IX_TurnosPorContratos (IdTurno);");
+			st.addBatch("Alter table listaturnosporcontrato add Foreign Key (IdTurno) references turnos (IdTurno) on delete cascade on update cascade;");
+			st.addBatch("Alter table trabaja add Index IX_Trabaja2 (IdTurno);");
+			st.addBatch("Alter table trabaja add Foreign Key (IdTurno) references turnos (IdTurno) on delete restrict on update cascade;");
+			st.addBatch("Alter table contrato add Index IX_TurnoInicial (TurnoInicial);");
+			st.addBatch("Alter table contrato add Foreign Key (TurnoInicial) references turnos (IdTurno) on delete restrict on update cascade;");
+			st.addBatch("Alter table usuario add Index IX_Prefiere (IdTurno);");
+			st.addBatch("Alter table usuario add Foreign Key (IdTurno) references turnos (IdTurno) on delete restrict on update cascade;");
+			st.addBatch("Alter table usuario add Index IX_TienePermiso (Rango);");
+			st.addBatch("Alter table usuario add Foreign Key (Rango) references PERMISOS (Rango) on delete restrict on update cascade;");
+			st.addBatch("Alter table distribucion add Index IX_Relationship10 (NombreDept);");
+			st.addBatch("Alter table distribucion add Foreign Key (NombreDept) references departamento (Nombre) on delete cascade on update cascade;");
+			st.addBatch("Alter table festivos add Index IX_Relationship11 (NombreDept);");
+			st.addBatch("Alter table festivos add Foreign Key (NombreDept) references departamento (Nombre) on delete cascade on update cascade;");
+			st.addBatch("Alter table destinatario add Index IX_Recibe2 (IdMensaje);");
+			st.addBatch("Alter table destinatario add Foreign Key (IdMensaje) references mensaje (IdMensaje) on delete cascade on update cascade;");
+*/
+			/*
+			st.addBatch("Alter table departamentousuario add Index IX_Relationship12 (NumVendedor);");
+			st.addBatch("Alter table departamentousuario add Foreign Key (NumVendedor) references Usuario (NumVendedor) on delete cascade on update cascade;");
+			st.addBatch("Alter table departamentousuario add Index IX_Relationship13 (NombreDepartamento);");
+			st.addBatch("Alter table departamentousuario add Foreign Key (NombreDepartamento) references departamento (Nombre) on delete restrict on update cascade;");
+
+			st.addBatch("Alter table contratodepartamento add Index IX_Relationship19 (NombreDept);");
+			st.addBatch("Alter table contratodepartamento add Foreign Key (NombreDept) references departamento (Nombre) on delete cascade on update cascade;");
+
+			st.addBatch("Alter table contratodepartamento add Index IX_Relationship17 (IdContrato);");
+			st.addBatch("Alter table contratodepartamento add Foreign Key (IdContrato) references contrato (IdContrato) on delete restrict on update cascade;");
+*/
+			r = st.executeBatch();
+			System.out.println("aplicacion.Database.java\t:: Dependencias generadas correctamente.\n" + r.toString());
+		} catch (SQLException e) {
+			e.printStackTrace();
+			if (r!=null)
+			System.out.println(r.toString());
+		}
+	}
 }

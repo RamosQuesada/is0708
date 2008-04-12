@@ -223,15 +223,12 @@ public class InsertaDatosFijos {
 		
 	}
 	
+	static Controlador c;
+	static Database bd;
+	
 	public static void insertarNdepart(int numDepartamentos) {
 	
-		// Comenzamos 
-		Database bd = new Database();
-		Controlador c = new Controlador(bd, false);
-		bd.run();
-		bd.eliminarTodasLasTablas();
-		bd.crearTablas();
-		
+	
 		Date inicio = Date.valueOf("2008-01-01");
 		Date nacimiento = new Date(0);
 		
@@ -429,10 +426,15 @@ public class InsertaDatosFijos {
 	}
 
 	public static void main(String[] args){
-
+		bd = new Database();
+		c = new Controlador(bd, false);
+		bd.run();
+//		bd.eliminarTodasLasTablas();
+//		bd.crearTablas();
+		bd.crearDependencias();
+	
 		//Inserta 20 nuevos departamentos para pruebas con sus datos independientes
-		InsertaDatosFijos.insertarNdepart(1);
-		
+//		InsertaDatosFijos.insertarNdepart(1);
 	}
 
 }
