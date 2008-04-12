@@ -1,5 +1,8 @@
 package interfaces;
 
+import interfaces.general.I02_Principal;
+import interfaces.jefe.I09_1_Creacion_contratos;
+
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
