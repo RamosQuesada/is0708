@@ -5,7 +5,7 @@ import org.eclipse.swt.widgets.Display;
 
 public class CargadorImagenes {
 	private Image icoGr, icoPq, ico_imprimir, ico_cuadrante, ico_chico,
-	ico_chica, ico_chicos, fondoLogin, ico_mens_l, ico_mens, fondoAdmin;		
+	ico_chica, ico_chicos, fondoLogin, ico_mens_l, ico_mens, fondoAdmin, grafica;		
 	
 	public CargadorImagenes(Display display) {
 		icoGr				= new Image(display, CargadorImagenes.class.getResourceAsStream("icoGr.gif"));
@@ -19,6 +19,7 @@ public class CargadorImagenes {
 		ico_mens_l			= new Image(display, CargadorImagenes.class.getResourceAsStream("ico_mens1_v.gif"));
 		ico_mens			= new Image(display, CargadorImagenes.class.getResourceAsStream("ico_mens2_v.gif"));
 		fondoAdmin			= new Image(display, CargadorImagenes.class.getResourceAsStream("admin.png"));
+		grafica				= new Image(display, CargadorImagenes.class.getResourceAsStream("grafica_1.ico"));
 	}
 	
 	public void dispose() {
@@ -78,6 +79,10 @@ public class CargadorImagenes {
 
 	public Image getFondoAdmin() {
 		return fondoAdmin;
+	}
+
+	public Image getGrafica() {
+		return grafica;
 	};
 	
 }
