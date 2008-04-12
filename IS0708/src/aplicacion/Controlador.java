@@ -154,7 +154,6 @@ public class Controlador {
 				emp.setIDDepartamentos(idDepartamentos);
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 			System.err.println("Controlador: Error al obtener el Empleado "
 					+ idEmpl + " de la base de datos");
 		}
@@ -174,9 +173,7 @@ public class Controlador {
 				numvendedores.add(nv);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.err
-					.println("Error al obtener numeros de vendedores de jefes en la base de datos");
+			System.err.println("Controlador :: Error al obtener numeros de vendedores de jefes en la base de datos");
 			e.printStackTrace();
 		}
 		return numvendedores;
@@ -201,7 +198,7 @@ public class Controlador {
 			}
 		} catch (Exception e) {
 			System.err
-					.println("Error al obtener Lista de Departamentos en la base de datos");
+					.println("Controlador :: Error al obtener Lista de Departamentos en la base de datos");
 		}
 		return depts;
 	}
@@ -231,9 +228,9 @@ public class Controlador {
 					depts.add(rs.getString("Nombre"));
 				}
 			} catch (Exception e) {
-				// TODO: handle exception
+				
 				System.err
-						.println("Error al obtener todos los Departamentos en la base de datos");
+						.println("Controlador :: Error al obtener todos los Departamentos en la base de datos");
 			}
 		} else {
 			ArrayList<String> aux = this.getIdsDepartamentos(idEmpl);
@@ -267,9 +264,9 @@ public class Controlador {
 				subs.add(idSub);
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 			System.err
-					.println("Error al obtener Lista de Subordinados en la base de datos");
+					.println("Controlador :: Error al obtener Lista de Subordinados en la base de datos");
 		}
 		return subs;
 	}
@@ -291,9 +288,9 @@ public class Controlador {
 				idSup = rs.getInt("JefeDepartamento");
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 			System.err
-					.println("Error al obtener el superior de la base de datos");
+					.println("Controlador :: Error al obtener el superior de la base de datos");
 		}
 		return idSup;
 	}
@@ -330,9 +327,9 @@ public class Controlador {
 				listaCoincidencias.add(this.getEmpleado(id));
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 			System.err
-					.println("Error al obtener el empleado de la base de datos");
+					.println("Controlador :: Error al obtener el empleado de la base de datos");
 		}
 		/*
 		 * //TODO ELIMINAR HASTA FIN-ELIMINAR, HECHA PARA PRUEBAS Color color;
@@ -458,9 +455,9 @@ public class Controlador {
 				jefes.add(nombrejefe+" "+ap1+" "+ap2 + "  Nº: "+ numvendedor );
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 			System.err
-					.println("Error al obtener los nombres de los jefes de la base de datos");
+					.println("Controlador :: Error al obtener los nombres de los jefes de la base de datos");
 		}
 	
 	return jefes;
@@ -498,9 +495,9 @@ public class Controlador {
 			
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 			System.err
-					.println("Error al obtener nombre del jefe de Dpto. de la base de datos");
+					.println("Controlador :: Error al obtener nombre del jefe de Dpto. de la base de datos");
 					tieneturno=false;
 		}
 	if(tieneturno){
@@ -566,9 +563,9 @@ public class Controlador {
 				    } 
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 			System.err
-					.println("Error al obtener empleados del Dpto. base de datos");
+					.println("Controlador :: Error al obtener empleados del Dpto. base de datos");
 				//tieneturno=false;
 		}
 		return info;
@@ -594,7 +591,7 @@ public class Controlador {
 			}
 		} catch (Exception e) {
 			System.err
-					.println("Error al obtener Lista de Departamentos en la base de datos");
+					.println("Controlador :: Error al obtener Lista de Departamentos en la base de datos");
 		}
 		return depts;
 	}
@@ -641,9 +638,9 @@ public class Controlador {
 				departamentos.add(this.getDepartamento(id));
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 			System.err
-					.println("Error al obtener todos los Departamentos en la base de datos");
+					.println("Controlador :: Error al obtener todos los Departamentos en la base de datos");
 		}
 
 		return departamentos;
@@ -664,9 +661,9 @@ public class Controlador {
 				departamentos.add(id);
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 			System.err
-					.println("Error al obtener todos los Departamentos en la base de datos");
+					.println("Controlador :: Error al obtener todos los Departamentos en la base de datos");
 		}
 
 		return departamentos;
@@ -696,7 +693,7 @@ public class Controlador {
 				departamento.getJefeDepartamento().getEmplId())
 				&& _db.insertarDepartamentoUsuario(departamento
 						.getJefeDepartamento().getEmplId(), departamento
-						.getNombreDepartamento());
+						.getNombreDepartamento(), true);
 	}
 
 	// este metodo lo usa el programa que rellena automaticamente las tablas de
@@ -715,7 +712,7 @@ public class Controlador {
 	 *            dentro del departamento
 	 * @param jefe
 	 *            Persona que dirige le departamento
-	 * @return Informa sobre si se ha podido realizar la inserci�n o no
+	 * @return Informa sobre si se ha podido realizar la inserción o no
 	 */
 	public boolean insertDepartamentoPruebas(String nombre, int jefe) {
 		return _db.insertarDepartamento(nombre, jefe);
@@ -793,10 +790,10 @@ public class Controlador {
 				}
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 			e.printStackTrace();
 			System.err
-					.println("Error al realizar la consulta de los festivos ");
+					.println("Controlador :: Error al realizar la consulta de los festivos ");
 		}
 		return lista;
 	}
@@ -922,7 +919,7 @@ public class Controlador {
 			}
 		} catch (Exception e) {
 			System.err
-					.println("Error al obtener Lista de Departamentos en la base de datos");
+					.println("Controlador :: Error al obtener Lista de Departamentos en la base de datos");
 		}
 		return emps;
 	/*	ResultSet rs = _db.obtenEmpleadosDepartamento(idDept);
@@ -933,7 +930,7 @@ public class Controlador {
 			}
 		} catch (Exception e) {
 			System.err
-					.println("Error al obtener Lista de Departamentos en la base de datos");
+					.println("Controlador :: Error al obtener Lista de Departamentos en la base de datos");
 		}
 		return emps;*/
 	}
@@ -976,7 +973,7 @@ public class Controlador {
 			}
 		} catch (Exception e) {
 			System.err
-					.println("Error al obtener Lista de Departamentos en la base de datos");
+					.println("Controlador :: Error al obtener Lista de Departamentos en la base de datos");
 		}
 		return emps;
 	}	
@@ -999,7 +996,7 @@ public class Controlador {
 			}
 			return contratos;		
 		} catch (Exception e){
-			System.err.println("Error en Controlador.getListaContratosDpto");
+			System.err.println("Controlador :: Error en Controlador.getListaContratosDpto");
 			return null;
 		}
 	}
@@ -1023,9 +1020,9 @@ public class Controlador {
 			}
 
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 			System.err
-					.println("Error al obtener Lista de Contratos del Departamento dado en la base de datos");
+					.println("Controlador :: Error al obtener Lista de Contratos del Departamento dado en la base de datos");
 		}
 		return contratos;
 	}*/
@@ -1038,10 +1035,26 @@ public class Controlador {
 	 *            Es el identificador único de cada empleado
 	 * @param nombre
 	 *            Nombre del departamento al que pertenece el empleado
-	 * @return Informa sobre si se ha podido realizar la inserci�n o no
+	 * @return Informa sobre si se ha podido realizar la inserción o no
 	 */
 	public boolean insertDepartamentoUsuario(int nvend, String nombre) {
-		return _db.insertarDepartamentoUsuario(nvend, nombre);
+		return _db.insertarDepartamentoUsuario(nvend, nombre, true);
+	}
+	
+	/**
+	 * Metodo que asocia empleados a un departamento y los inserta en la base de
+	 * datos
+	 * 
+	 * @param nvend
+	 *            Es el identificador único de cada empleado
+	 * @param nombre
+	 *            Nombre del departamento al que pertenece el empleado
+	 * @param ultima envía la petición sólo si ultima es true
+	 * @return Informa sobre si se ha podido realizar la inserción o no
+	 * 
+	 */
+	public boolean insertDepartamentoUsuario(int nvend, String nombre, boolean ultima) {
+		return _db.insertarDepartamentoUsuario(nvend, nombre, ultima);
 	}
 
 	/***************************************************************************
@@ -1252,7 +1265,7 @@ public class Controlador {
 			}
 		} catch (Exception e) {
 			System.err
-					.println("Error al obtener los ids de los contratos en la base de datos");
+					.println("Controlador :: Error al obtener los ids de los contratos en la base de datos");
 		}
 		return ids;
 	}
@@ -1267,7 +1280,7 @@ public class Controlador {
 		try {
 			boolean b = _db.cambiarContrato(c.getNumeroContrato(), c.getTurnoInicial(), c.getNombreContrato(), c.getPatron(), c.getDuracionCiclo(), c.getSalario(), c.getTipoContrato());
 		} catch (Exception e) {
-			System.err.println("Error Controlador.setContrato");
+			System.err.println("Controlador :: Error Controlador.setContrato");
 		}
 		return true;
 	}
@@ -1394,9 +1407,9 @@ public class Controlador {
 			}
 
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 			System.err
-					.println("Error al obtener Lista de Turnos en la base de datos");
+					.println("Controlador :: Error al obtener Lista de Turnos en la base de datos");
 		}
 		return turnos;
 	}
@@ -1428,9 +1441,9 @@ public class Controlador {
 			}
 
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 			System.err
-					.println("Error al obtener Lista de Turnos en la base de datos");
+					.println("Controlador :: Error al obtener Lista de Turnos en la base de datos");
 		}
 		return turnos;
 	}
@@ -1462,9 +1475,9 @@ public class Controlador {
 			}
 
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 			System.err
-					.println("Error al obtener Lista de Turnos en la base de datos");
+					.println("Controlador :: Error al obtener Lista de Turnos en la base de datos");
 		}
 		return turnos;
 	}
@@ -1487,7 +1500,7 @@ public class Controlador {
 			}
 			return turnos;		
 		} catch (Exception e){
-			System.err.println("Error en Controlador.getListaContratosDpto");
+			System.err.println("Controlador :: Error en Controlador.getListaContratosDpto");
 			return null;
 		}
 	}
@@ -1514,9 +1527,9 @@ public class Controlador {
 				}
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 			System.err
-					.println("Error al obtener Lista de Turnos del Departamento dado en la base de datos");
+					.println("Controlador :: Error al obtener Lista de Turnos del Departamento dado en la base de datos");
 		}
 		return turnos;
 	}*/
@@ -1543,7 +1556,7 @@ public class Controlador {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.err
-					.println("Error al obtener el turno de un día en la base de datos");
+					.println("Controlador :: Error al obtener el turno de un día en la base de datos");
 			e.printStackTrace();
 		}
 		return turno;
@@ -1671,7 +1684,7 @@ public class Controlador {
 			}
 		} catch (Exception e) {
 			System.err
-					.println("Error al obtener los ids de los turnos en la base de datos");
+					.println("Controlador :: Error al obtener los ids de los turnos en la base de datos");
 		}
 		return ids;
 	}
@@ -1777,53 +1790,60 @@ public class Controlador {
 	}
 
 	/**
-	 * M�todo que inserta en la base de datos los valores correspondientes a una
-	 * nueva distribuci�n
+	 * Método que inserta en la base de datos los valores correspondientes a una
+	 * nueva distribución
 	 * 
 	 * @param Hora
 	 *            Franja horaria dividida en unidades de una hora (por ej. De
-	 *            9:00 � 10:00) representado por la hora de inicio (ej. 9)
+	 *            9:00 - 10:00) representado por la hora de inicio (ej. 9)
 	 * 
 	 * @param DiaSemana
-	 *            Dia (Lunes, Martes,...,Domingo) en el que se aplica la
-	 *            distribuci�n
+	 *            Dia (Lunes, Martes, ... , Domingo) en el que se aplica la
+	 *            distribución
 	 * 
-	 * @param Patr�n
-	 *            Nos dice c�mo se distribuyen los grupos (expertos y novatos)
+	 * @param Patrón
+	 *            Nos dice cómo se distribuyen los grupos (expertos y novatos)
 	 * 
 	 * @param NumMax
-	 *            Nos acota el n�mero m�ximo de trabajadores requeridos dicho
-	 *            d�a en una cierta franja horaria
+	 *            Nos acota el número máximo de trabajadores requeridos dicho
+	 *            día en una cierta franja horaria
 	 * 
 	 * @param NumMin
-	 *            Nos acota el n�mero m�nimo de trabajadores requeridos dicho
-	 *            d�a en una cierta franja horaria
+	 *            Nos acota el número mínimo de trabajadores requeridos dicho
+	 *            día en una cierta franja horaria
 	 * 
 	 * @param IdDepartamento
 	 *            identificador del dpto.
 	 * 
-	 * @return Informa sobre si se ha podido realizar la inserci�n o no
+	 * @return Informa sobre si se ha podido realizar la inserción o no
 	 */
 	public boolean insertDistribucion(int Hora, int DiaSemana, String Patron,
-			int NumMax, int NumMin, String IdDepartamento) {
+		int NumMax, int NumMin, String IdDepartamento) {
 		return _db.insertarDistribucion(Hora, DiaSemana, Patron, NumMax,
-				NumMin, IdDepartamento);
+				NumMin, IdDepartamento, true);
+	}
+	
+	/**
+	 * Hace lo mismo que insertDistribucion pero envía la petición cuando el parámetro ultima es true
+	 */
+	public void insertDistribucion(int Hora, int DiaSemana, String Patron,
+		int NumMax, int NumMin, String IdDepartamento, boolean ultima) {
+		_db.insertarDistribucion(Hora, DiaSemana, Patron, NumMax,
+		NumMin, IdDepartamento, ultima);
 	}
 	
 	public boolean trabajaEmpleadoDia(int nv,Date d) {
 		ResultSet r =this._db.trabajaEmpleadoDia(nv, d);
 		String s=null;
 		try{
-		while(r.next()){
-		int t= r.getInt("IdTurno");
-	    s = Integer.toString(t);
-	//	System.out.println(t);
-		}
+			while(r.next()){
+				int t= r.getInt("IdTurno");
+				s = Integer.toString(t);
+				//	System.out.println(t);
+			}
 		} catch (Exception e) {
-			// TODO: handle exception
-			System.err
-					.println("Error en Controlador.trabaaEmpleadoDia");
-				//tieneturno=false;
+			System.err.println("Controlador :: Error en Controlador.trabaaEmpleadoDia");
+			//tieneturno=false;
 		}
 		return s!=null;
 	}
@@ -1929,9 +1949,7 @@ public class Controlador {
 			}
 
 		} catch (Exception e) {
-			// TODO: handle exception
-			System.err
-					.println("Error al obtener Lista de Turnos en la base de datos");
+			System.err.println("Controlador :: Error al obtener Lista de Turnos en la base de datos");
 		}
 		return numeros;
 	
@@ -1953,9 +1971,7 @@ public ArrayList<Integer[]> getInfoDistribucionDpto(String dpto, int diaSemana) 
 			}
 
 		} catch (Exception e) {
-			// TODO: handle exception
-			System.err
-					.println("Error al obtener Distribucion en la base de datos");
+			System.err.println("Controlador :: Error al obtener Distribucion en la base de datos");
 		}
 		return info;
 	
@@ -1975,9 +1991,7 @@ public ArrayList<String> getHorarioDpto(String dpto) {
 		}
 
 	} catch (Exception e) {
-		// TODO: handle exception
-		System.err
-				.println("Error al obtener Lista de Turnos en la base de datos");
+		System.err.println("Controlador :: Error al obtener Lista de Turnos en la base de datos");
 	}
 	return horas;
 

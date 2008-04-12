@@ -72,9 +72,9 @@ public class Database extends Thread {
 			String url = "jdbc:mysql://72.34.56.241:3306/" + bd;
 
 // Descomentar este trozo para usar la base de datos local
-			userName = "root";
-			password = "";
-			url = "jdbc:mysql://localhost/" + bd;
+//			userName = "root";
+//			password = "";
+//			url = "jdbc:mysql://localhost/" + bd;
 
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			//DriverManager.setLoginTimeout(300);
@@ -488,8 +488,7 @@ public class Database extends Thread {
 	public void cerrarConexion() {
 		try {
 			con.close();
-			System.out
-					.println("aplicacion.Database.java\t:: Conexión cerrada correctamente");
+			System.out.println("aplicacion.Database.java\t:: Conexión cerrada correctamente");
 		} catch (Exception e) {
 			// e.printStackTrace();
 			System.err.println("aplicacion.Database.java\t:: Error cerrando la conexión");
@@ -608,25 +607,29 @@ public class Database extends Thread {
 	}
 
 	/**
-	 * MEtodo que inserta en la tabla DepartamentoUsuario los valores
+	 * Método que inserta en la tabla DepartamentoUsuario los valores
 	 * correspondientes
 	 * 
 	 * @param nvend
 	 *            Es el identificador único de cada empleado
 	 * @param nombre
 	 *            Nombre del departamento al que pertenece el empleado
-	 * @return Informa sobre si se ha podido realizar la inserci�n o no
+	 * @param ultima Ejecuta las inserciones pendientes si es true, sino solo la envía
+	 * @return Informa sobre si se ha podido realizar la inserción o no
 	 */
-	public boolean insertarDepartamentoUsuario(int nvend, String nombre) {
+	public boolean insertarDepartamentoUsuario(int nvend, String nombre, boolean ultima) {
 		boolean correcto = false;
+		String q = "INSERT INTO " + tablaUsuariosPorDepartamento + " values ('"
+		+ nvend + "', '" + nombre + "')";
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO " + tablaUsuariosPorDepartamento + " values ('"
-					+ nvend + "', '" + nombre + "')");
+			st.addBatch(q);
+			if (ultima) st.executeBatch();
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
 			System.err.println("Database :: Error al insertar en DepartamentoUsuario");
+			e.printStackTrace();
 		}
 		return correcto;
 	}
@@ -660,50 +663,54 @@ public class Database extends Thread {
 	 * @return Informa sobre si se ha podido realizar la inserci�n o no
 	 */
 	public boolean insertarDistribucion(int Hora, int DiaSemana, String Patron,
-			int NumMax, int NumMin, String IdDepartamento) {
+			int NumMax, int NumMin, String IdDepartamento, boolean ultima) {
 		boolean correcto = false;
+		String q = "INSERT INTO " + tablaDistribucionHorarios + " values ('" + Hora
+		+ "', '" + DiaSemana + "', '" + Patron + "', '" + NumMax
+		+ "', '" + NumMin + "', '" + IdDepartamento + "')";
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO " + tablaDistribucionHorarios + "values ('" + Hora
-					+ "', '" + DiaSemana + "', '" + Patron + "', '" + NumMax
-					+ "', '" + NumMin + "', '" + IdDepartamento + "')");
+			st.addBatch(q);
+			if (ultima) st.executeBatch();
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
+			System.err.println("Database :: Error al insertar Distribución:\n\t" + q);
+			e.printStackTrace();
 		}
 		return correcto;
 	}
 
 	/**
-	 * M�todo que inserta en la tabla Festivos los valores correspondientes a
-	 * una distribuci�n para d�as festivos o promociones
+	 * Método que inserta en la tabla Festivos los valores correspondientes a
+	 * una distribución para días festivos o promociones
 	 * 
 	 * @param Hora
 	 *            Franja horaria dividida en unidades de una hora (por ej. De
-	 *            9:00 � 10:00) representado por la hora de inicio (ej. 9)
+	 *            9:00 a 10:00) representado por la hora de inicio (ej. 9)
 	 * 
 	 * @param FechaInicio
-	 *            Fecha de Inicio de la distribuci�n especial para festivos o
+	 *            Fecha de Inicio de la distribución especial para festivos o
 	 *            promociones
 	 * 
 	 * @param FechaFin
-	 *            Fecha de Finalizacion de la distribuci�n especial para
+	 *            Fecha de Finalizacion de la distribución especial para
 	 *            festivos o promociones
 	 * @param Patr�n
-	 *            Nos dice c�mo se distribuyen los grupos (expertos y novatos)
+	 *            Nos dice cómo se distribuyen los grupos (expertos y novatos)
 	 * 
 	 * @param NumMax
-	 *            Nos acota el n�mero m�ximo de trabajadores requeridos dicho
-	 *            d�a en una cierta franja horaria
+	 *            Nos acota el número máximo de trabajadores requeridos dicho
+	 *            día en una cierta franja horaria
 	 * 
 	 * @param NumMin
-	 *            Nos acota el n�mero m�nimo de trabajadores requeridos dicho
-	 *            d�a en una cierta franja horaria
+	 *            Nos acota el número mínimo de trabajadores requeridos dicho
+	 *            día en una cierta franja horaria
 	 * 
 	 * @param IdDepartamento
 	 *            identificador del dpto.
 	 * 
-	 * @return Informa sobre si se ha podido realizar la inserci�n o no
+	 * @return Informa sobre si se ha podido realizar la inserción o no
 	 */
 	public boolean insertarFestivo(int Hora, Date FechaInicio, Date FechaFin,
 			String Patron, int NumMax, int NumMin, String IdDepartamento) {
@@ -717,6 +724,7 @@ public class Database extends Thread {
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
+			System.err.println("Database :: Error al insertar Festivo");
 		}
 		return correcto;
 	}
@@ -991,8 +999,6 @@ public class Database extends Thread {
 			st = con.createStatement();
 			st.executeUpdate("INSERT INTO " + tablaTurnosPorContrato + " values ("
 					+ idTurno + ", " + idContrato + ");");
-			System.out
-					.println("aplicacion.Database.java\t::turnoPorContrato insertado");
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
@@ -1065,11 +1071,11 @@ public class Database extends Thread {
 					+ felicidad + "," + idioma + "," + rango + ","
 					+ idContrato + "," + idTurno + ",'" + Color + "','"
 					+ Telefono + "','" + Ssid + "'," + HaEntrado + ",'" + UltimoAcceso + "', 0)");
-//			System.out.println("aplicacion.Database.java\t::Usuario insertado");
 			correcto = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			correcto = false;
+			System.err.println("Database :: Error al insertar Usuario");
 		}
 		return correcto;
 	}
@@ -1101,6 +1107,7 @@ public class Database extends Thread {
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
+			System.err.println("Database :: Error al insertar Ventas");
 		}
 		return correcto;
 
@@ -1120,9 +1127,9 @@ public class Database extends Thread {
 			st = con.createStatement();
 			st.executeUpdate("UPDATE " + tablaMensajes + " SET Marcado= " + marca
 					+ " WHERE IdMensaje=" + id);
-//			System.out.println("aplicacion.Database.java\t::Mensaje Marcado");
 			correcto = true;
 		} catch (SQLException e) {
+			correcto = false;
 			System.err.println("Database :: Error al Marcar el mensaje");
 		}
 		return correcto;
@@ -1321,8 +1328,7 @@ public class Database extends Thread {
 
 		try {
 			st = con.createStatement();
-			rs = st
-					.executeQuery("SELECT * FROM DISTRIBUCION WHERE NombreDept ='"
+			rs = st.executeQuery("SELECT * FROM " + tablaDistribucionHorarios + " WHERE NombreDept ='"
 							+ nombre
 							+ "' AND DiaSemana="
 							+ DiaSemana
@@ -1330,8 +1336,7 @@ public class Database extends Thread {
 
 		} catch (SQLException e) {
 			// TODO: handle exception
-			System.err
-					.println("Database :: Error al realizar la consulta de la distribucion ");
+			System.err.println("Database :: Error al realizar la consulta de la distribucion ");
 		}
 		return rs;
 	}
@@ -1341,7 +1346,7 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 			rs = st
-					.executeQuery("SELECT * FROM DISTRIBUCION WHERE NombreDept ='"
+					.executeQuery("SELECT * FROM " + tablaDistribucionHorarios + " WHERE NombreDept ='"
 							+ nombre
 							+ " ORDER BY Hora ASC");
 
@@ -1482,7 +1487,7 @@ public class Database extends Thread {
 	public ResultSet obtenFestivos(String nombre, Date Fecha) {
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("SELECT * FROM FESTIVOS WHERE NombreDept ='"
+			rs = st.executeQuery("SELECT * FROM " + tablaFestivos + " WHERE NombreDept ='"
 					+ nombre + "' AND FechaInicio<='" + Fecha
 					+ "' AND FechaFin>='" + Fecha + "' ORDER BY Hora ASC");
 
@@ -2069,7 +2074,7 @@ public class Database extends Thread {
 			st.addBatch("DROP TABLE " + tablaVentas + ";");
 			st.addBatch("DROP TABLE " + tablaDepartamentos + ";");
 			st.addBatch("DROP TABLE " + tablaUsuarios + ";");
-			st.addBatch("DROP TABLE " + tablaPermisos + ";");
+//			st.addBatch("DROP TABLE " + tablaPermisos + ";");
 			st.addBatch("DROP TABLE " + tablaContratos + ";");
 			st.addBatch("DROP TABLE " + tablaTurnos + ";");
 			st.addBatch("DROP TABLE " + tablaNumerosPorDepartamento + ";");
@@ -2250,7 +2255,7 @@ public class Database extends Thread {
 					"Importe Decimal(10,2) ," +
 					"Primary Key (NumVendedor,fecha)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
 			st.executeBatch();
-			System.out.println("aplicacion.Database.java\t:: Estructura de tablas generadas correctamente.");
+			System.out.println("aplicacion.Database.java\t:: Estructura de tablas generada correctamente.");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
