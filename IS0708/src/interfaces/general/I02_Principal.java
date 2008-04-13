@@ -120,7 +120,7 @@ public class I02_Principal {
 			// AQUI SE LLAMA AL ALGORITMO
 			// la variable primerDiaGenerarCuadrante lleva el primer día
 
-			algoritmo.TurnoMatic t = new algoritmo.TurnoMatic(tmMes, tmAnio, vista, tmDep);
+			algoritmo.TurnoMatic t = new algoritmo.TurnoMatic(primerDiaGenerarCuadrante, tmMes, tmAnio, vista, tmDep);
 			final ResultadoTurnoMatic resultado = t.ejecutaAlgoritmo();
 			// quitar cuadrante de la fecha del calendario de la cache
 			// añadir t.getcuadrante a cache
