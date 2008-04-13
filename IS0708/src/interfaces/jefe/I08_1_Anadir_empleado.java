@@ -364,16 +364,18 @@ public class I08_1_Anadir_empleado {
 				else {
 					String cont = cContrato.getText();
 					int id=0;
-					
+					int turno=0;
 					for (int i=0; i<contratos.size(); i++) {
 						String nombre = contratos.get(i).getNombreContrato();
 						if (cont.equals(nombre)) {
 							id = contratos.get(i).getNumeroContrato();
+							turno = contratos.get(i).getTurnoInicial();
 							break;
 						}
 					}
 
-					Empleado emp = new Empleado(vista.getEmpleadoActual().getEmplId(), Util.convertirNVend(tNVend.getText()), tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, id, fechaContrato, fechaAlta, null, cDepto.getText(), null, 0, cIdioma.getSelectionIndex(),0);
+					
+					Empleado emp = new Empleado(vista.getEmpleadoActual().getEmplId(), Util.convertirNVend(tNVend.getText()), tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, id, fechaContrato, fechaAlta, null, cDepto.getText(), null, 0, cIdioma.getSelectionIndex(), turno);
 					vista.insertEmpleado(emp);
 
 					shell.dispose();
