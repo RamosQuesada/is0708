@@ -10,7 +10,6 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.graphics.*;
 
 import algoritmo.ResultadoTurnoMatic;
-import interfaces.imagenes.CargadorImagenes;
 
 import java.util.ResourceBundle;
 import java.util.Locale;
@@ -31,7 +30,6 @@ import interfaces.general.mensajeria.I02_Tab_Mensajeria;
 import interfaces.jefe.I02_Tab_Jefe_Empleados;
 import interfaces.jefe.I09_Tab_Contratos;
 import aplicacion.Vista;
-import aplicacion.datos.Departamento;
 import aplicacion.datos.Empleado;
 import aplicacion.utilidades.Util;
 
@@ -62,6 +60,7 @@ public class I02_Principal {
 	private Button itsMagic, bGuardarCambios; 
 	private TabFolder tabFolder;
 	private Composite estado;
+	private int primerDiaGenerarCuadrante;
 	
 	public I02_Principal(Shell shell, Display display, ResourceBundle bundle,
 			Locale locale, Vista vista) {
@@ -118,6 +117,9 @@ public class I02_Principal {
 				}
 			});
 			vista.infoDebug("I02_Principal", "Llamando al algoritmo para la fecha " + tmMes + " de " + tmAnio + ", dep. " + tmDep);
+			// AQUI SE LLAMA AL ALGORITMO
+			// la variable primerDiaGenerarCuadrante lleva el primer día
+
 			algoritmo.TurnoMatic t = new algoritmo.TurnoMatic(tmMes, tmAnio, vista, tmDep);
 			final ResultadoTurnoMatic resultado = t.ejecutaAlgoritmo();
 			// quitar cuadrante de la fecha del calendario de la cache
@@ -369,6 +371,7 @@ public class I02_Principal {
 			public void widgetDefaultSelected(SelectionEvent arg0) {}
 			public void widgetSelected(SelectionEvent arg0) {
 				if (vista.isCacheCargada()) {
+					// Preguntar si desea sobrerescribir los datos 
 					MessageBox messageBox = new MessageBox(shell,
 							SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
 					messageBox.setText(bundle.getString("Aviso"));
@@ -378,12 +381,25 @@ public class I02_Principal {
 							+ calendario.getYear() + " " +
 							bundle.getString("I02_dlg_CrearCuadrante2"));
 					if (messageBox.open()==SWT.YES) {
+						// Preguntar desde dónde quiere empezar
+						messageBox = new MessageBox(shell,
+								SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
+						messageBox.setText(bundle.getString("Aviso"));
+						// TODO usar bundle
+						messageBox.setMessage(
+								bundle.getString("¿Quiere empezar calcular todo el mes? (en caso contrario, se empezará" +
+								" en el día seleccionado)"));
+						if (messageBox.open()==SWT.YES) 
+							primerDiaGenerarCuadrante = 1;
+						else
+							primerDiaGenerarCuadrante = tmDia;
 						// Borrar tabla trabaja para esa fecha y ese departamento
 						vista.eliminaMesTrabaja(tmMes, tmAnio, tmDep);
 						vista.setProgreso(bundle.getString("I02_lab_GenerandoCuads"), 0);
 						vista.setCursorEspera();
 						algRunner = new AlgoritmoRun();
 						algRunner.start();
+
 					}
 				} else {
 					MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK);
