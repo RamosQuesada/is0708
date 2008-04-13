@@ -61,14 +61,14 @@ public class Database extends Thread {
 			String url = "jdbc:mysql://"+ ip +"/" + "turnomat_bd";
 
 // Descomentar este trozo para usar la base de datos local
-			userName = "root";
-			password = "";
-			url = "jdbc:mysql://localhost/turnomat_bd";
+//			userName = "root";
+//			password = "";
+//			url = "jdbc:mysql://localhost/turnomat_bd";
 
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			//DriverManager.setLoginTimeout(300);
 			con = DriverManager.getConnection(url, userName, password);
-			System.err.println("Database :: Conexión a la BD");
+			System.out.println("Database :: Conexión a la BD");
 		} catch (FileNotFoundException e) {
 			System.err.println("Database :: No se encuentra el archivo: " + e.getMessage());
 		} catch (IOException e) {
