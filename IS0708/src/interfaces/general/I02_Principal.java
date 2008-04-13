@@ -386,9 +386,8 @@ public class I02_Principal {
 								SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
 						messageBox.setText(bundle.getString("Aviso"));
 						// TODO usar bundle
-						messageBox.setMessage(
-								bundle.getString("¿Quiere empezar calcular todo el mes? (en caso contrario, se empezará" +
-								" en el día seleccionado)"));
+						messageBox.setMessage("¿Quiere empezar calcular todo el mes? (en caso contrario, se empezará" +
+								" en el día seleccionado)");
 						if (messageBox.open()==SWT.YES) 
 							primerDiaGenerarCuadrante = 1;
 						else
