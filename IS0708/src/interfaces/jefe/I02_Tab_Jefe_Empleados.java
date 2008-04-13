@@ -34,7 +34,12 @@ import org.eclipse.swt.widgets.Text;
 
 import aplicacion.Vista;
 import aplicacion.datos.Empleado;
-
+/**
+ * INTERFAZ I-02 :: Tabla de empleados de un jefe
+ * @author Dulce
+ *
+ * Muestra en la una tabla la informacion de todos los empleados de un jefe de departamento.
+ */
 public class I02_Tab_Jefe_Empleados extends Thread{
 	
 	final ResourceBundle _bundle;
@@ -128,8 +133,8 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 					}
 				}
 			}
-			
-			for (int i = 0; i < listaFiltrada.size(); i++) {
+			// rellenado de la tabla de empleados
+			for (int i = 1; i < listaFiltrada.size(); i++) {
 				TableItem tItem = new TableItem(tablaEmpleados, SWT.NONE);
 				
 				if (listaFiltrada.get(i).getSexo()==0)
@@ -137,13 +142,13 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 				else 
 					tItem.setImage(_vista.getImagenes().getIco_chico());
 				
+				
 				tItem.setText(1, String.valueOf(listaFiltrada.get(i).getEmplId()));
 				tItem.setText(2, listaFiltrada.get(i).getNombreCompleto());
 				tItem.setText(3, listaFiltrada.get(i).getDepartamentoId());
 				aplicacion.datos.Contrato c = listaFiltrada.get(i).getContrato(_vista);
 				if (c!=null) tItem.setText(4, c.getNombreContrato());
 				else         tItem.setText(4, "Error");
-				//tItem.setText(5, "911234567");
 				tItem.setImage(5, _vista.getImagenes().getIco_mens());				
 			}
 		}
