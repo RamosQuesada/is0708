@@ -152,6 +152,26 @@ public class I10_Nuevo_departamento {
 		tminIn=new Text (grouphoras, SWT.BORDER);	
 		tminIn.setLayoutData (new GridData(SWT.LEFT ,SWT.CENTER,false,true,1,1));
 		tminIn.setTextLimit(2);
+		tminIn.setBounds(1, 1, 1, 1);
+		
+		lhoraCierre = new Label (grouphoras, SWT.NONE);
+		lhoraCierre.setText(bundle.getString("I10_hora_cierre"));
+		lhoraCierre.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,4,1));
+		
+		thorCi=new Text (grouphoras, SWT.BORDER);	
+		thorCi.setLayoutData (new GridData(SWT.LEFT ,SWT.CENTER,false,true,1,1));
+		thorCi.setTextLimit(2);
+		
+		ldosPuntos=new Label (grouphoras, SWT.NONE);
+		ldosPuntos.setText(":");
+		ldosPuntos.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,false,true,1,1));
+		ldosPuntos.setBounds(1, 1, 1, 1);
+	
+		
+		tminCi=new Text (grouphoras, SWT.BORDER);	
+		tminCi.setLayoutData (new GridData(SWT.LEFT ,SWT.CENTER,false,true,1,1));
+		tminCi.setTextLimit(2);
+		tminCi.setBounds(1, 1, 1, 1);
 		
 		Label hueco=new Label (grouphoras, SWT.NONE);
 		hueco.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
