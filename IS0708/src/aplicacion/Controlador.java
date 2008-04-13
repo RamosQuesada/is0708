@@ -1350,8 +1350,8 @@ public class Controlador {
 	 * @param departamento identifica el departamento del cual se borrara el mes y el año indicado de trabajo
 	 * @return si se ha realizado correctamente la eliminacion
 	 */
-	public boolean eliminaMesTrabaja(int mes, int anio,String departamento){
-		return _db.borraMesTrabaja(mes, anio,departamento);
+	public boolean eliminaMesTrabaja(int dia, int mes, int anio,String departamento){
+		return _db.borraMesTrabaja(dia, mes, anio,departamento);
 	}
 	
 	/**

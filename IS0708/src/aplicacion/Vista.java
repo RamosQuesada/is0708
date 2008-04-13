@@ -1021,8 +1021,8 @@ public class Vista {
 	 * Otros métodos
 	 */
 	
-	public void eliminaMesTrabaja(int mes, int anio, String departamento) {
-		controlador.eliminaMesTrabaja(mes, anio, departamento);
+	public void eliminaMesTrabaja(int dia, int mes, int anio, String departamento) {
+		controlador.eliminaMesTrabaja(dia, mes, anio, departamento);
 		//borramos de la cache
 		/*boolean encontrado=false;
 		int i=0;
