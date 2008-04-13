@@ -225,7 +225,7 @@ public class InsertaDatosFijos {
 		bd.crearDependencias();
 	
 		//Inserta 20 nuevos departamentos para pruebas con sus datos independientes
-		InsertaDatosFijos.insertarNdepart(1);
+		InsertaDatosFijos.insertarNdepart(2);
 	}
 
 }
