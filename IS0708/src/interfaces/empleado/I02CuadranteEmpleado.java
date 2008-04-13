@@ -239,7 +239,7 @@ public class I02CuadranteEmpleado {
 		for(int cont=0;cont<this.horaInicioMes.size();cont++){
 			if(cont==0){izq=true;}
 			if(cont==6){der=true;}
-			dibujarDiaMes(gc,diaSemana-1,semana+1,horaInicioMes.get(cont),this.horaFinMes.get(cont),null,izq,der,false,false,1,1);
+			dibujarDiaMes(gc,diaSemana-1,semana+1,horaInicioMes.get(cont),this.horaFinMes.get(cont),new Integer(cont+1).toString(),izq,der,false,false,1,1);
 			diaSemana++;
 			if(diaSemana==8){
 				diaSemana=1;
@@ -248,7 +248,7 @@ public class I02CuadranteEmpleado {
 			izq=der=arr=abajo=false;
 		}
 		}
-		dibujarDiaMes(gc,0,0,null,null,"",false,false,false,false,7,6);
+	//	dibujarDiaMes(gc,0,0,null,null,"",false,false,false,false,7,6);
 		/*
 		this.dibujarDiaMes(gc, 3, 1);
 		this.dibujarDiaMes(gc, 4, 1);
