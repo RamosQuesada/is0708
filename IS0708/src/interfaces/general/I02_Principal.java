@@ -979,7 +979,7 @@ public class I02_Principal {
 			crearTabAdminInicio(tabFolder);
 //			crearTabAdminNuevoJefe(tabFolder);
 //			crearTabAdminEliminaJefe(tabFolder);
-//			crearTabAdminDepartamentos(tabFolder);	
+			crearTabAdminDepartamentos(tabFolder);	
 //			crearTabAdminContratos(tabFolder);
 			break;
 		case 2:
