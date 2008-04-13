@@ -300,7 +300,8 @@
 				<h2>Actores</h2>
 				<p>Empleado.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Seleccionar la opción de "Horarios".</p>
+				<p>1- Seleccionar la pestaña de "Cuadrantes".</p>
+				<p>2- Elegir la opción de "Ver por mes" o "Ver por semana".</p>
 				<h2>Secuencias alternativas</h2>
 				<p>1a- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
@@ -411,12 +412,13 @@
 				<h2>Actores</h2>
 				<p>Gerente.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Acceder al menú "Creación de departamentos".</p>
-				<p>2- Rellenar el formulario con los datos del departamento.</p>
-				<p>3- Mostrar mensaje de éxito.</p>
+				<p>1- Elegir la pestaña "Departamentos".</p>
+				<p>2- Elegir la opción de "Nuevo departamento".</p>
+				<p>3- Rellenar el formulario con los datos del departamento.</p>
+				<p>4- Mostrar mensaje de éxito.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>3a- Si el departamento ya existe, mostrar un mensaje de error.</p>
-				<p>3b- Si hay un error en la conexión se muestra por pantalla.</p>
+				<p>4a- Si el departamento ya existe, mostrar un mensaje de error.</p>
+				<p>4b- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
 <!-- Aquí acaba un CU -->
 
@@ -434,13 +436,14 @@
 				<h2>Actores</h2>
 				<p>Gerente y jefe de departamento.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Acceder al menú "Modificación de departamentos".</p>
-				<p>2- Elegir de una lista de sus departamentos uno de ellos.</p>
-				<p>3- Modificar los datos.</p>
-				<p>4- Confirmar.</p>
+				<p>1- Elegir la pestaña "Departamentos".</p>
+				<p>2- Seleccionar el departamento que va a ser modificado.</p>
+				<p>3- Elegir la opción de "Modificar departamento".</p>
+				<p>4- Modificar los datos.</p>
+				<p>5- Confirmar.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>4a- Si los datos está en formato incorrecto, mostrar error.</p>
-				<p>4b- Si hay un error en la conexión se muestra por pantalla.</p>
+				<p>5a- Si los datos está en formato incorrecto, mostrar error.</p>
+				<p>5b- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
 <!-- Aquí acaba un CU -->
 
@@ -458,11 +461,12 @@
 				<h2>Actores</h2>
 				<p>Gerente.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Acceder al menú "Eliminación de departamentos".</p>
-				<p>2- Seleccionar de una lista uno de sus departamentos para eliminar.</p>
-				<p>3- Confirmar.</p>
+				<p>1- Elegir la pestaña "Departamentos".</p>
+				<p>2- Seleccionar el departamento que va a ser eliminado.</p>
+				<p>3- Elegir la opción de "Eliminar departamento".</p>
+				<p>4- Confirmar.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>3a- Si hay un error en la conexión se muestra por pantalla.</p>
+				<p>4a- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
 <!-- Aquí acaba un CU -->
 
@@ -550,13 +554,14 @@
 				<h2>Actores</h2>
 				<p>Jefe de departamento.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opción "Dar de alta".</p>
+				<p>1- Elegir la pestaña "Empleados".</p>
+				<p>2- Elegir la opción de "Nuevo".</p>
 				<p>2- Introducir datos.</p>
 				<p>3- Confirmar.</p>
 				<p>4- Se añade el nuevo empleado a la base de datos.</p>
 				<h2>Secuencias alternativas</h2>
 				<p>2a- El empleado ya está en el sistema. No es necesario darlo de alta.</p>
-				<p>2b- Datos con formato incorrecto. La aplicación permite corregir los datos erróneos marcando los campos incorrectos de alguna forma (vuelta a 2).</p>
+				<p>2b- Datos con formato incorrecto. La aplicación permite corregir los datos erróneos indicando los campos incorrectos (vuelta a 2).</p>
 				<br><br><br>
 <!-- Aquí acaba un CU -->
 
@@ -574,14 +579,13 @@
 				<h2>Actores</h2>
 				<p>Jefe de departamento.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opción "Dar de baja".</p>
-				<p>2- Introducir identificador del empleado a eliminar.</p>
+				<p>1- Elegir la pestaña "Empleados".</p>
+				<p>2- Seleccionar el empleado que va a ser dado de baja.</p>
+				<p>3- Elegir la opción de "Eliminar".</p>
 				<p>3- Confirmar.</p>
 				<p>4- Se borra el nuevo empleado de la base de datos.</p>
-				<p>5- Si es necesario, se modifica el cuadrante (CU-27) y se notifica al jefe de departamento.</p>
+				<p>5- Si es necesario, el jefe de departamento tendrá que crear el nuevo cuadrante sin el empleado dado de baja (CU-27).</p>
 				<h2>Secuencias alternativas</h2>
-				<p>2a- El empleado no está en el sistema. No es necesario darle de baja.</p>
-				<p>2b- Identificafor incorrecto. La aplicación solicita vbolver a introducir el identificador.</p>
 				<br><br><br>
 <!-- Aquí acaba un CU -->
 
@@ -599,15 +603,15 @@
 				<h2>Actores</h2>
 				<p>Jefe de departamento.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Elegir opción "Modificar datos".</p>
+				<p>1- Elegir la pestaña "Empleados".</p>
+				<p>2- Seleccionar el empleado que va a ser editado.</p>
+				<p>1- Elegir la opción de "Editar".</p>
 				<p>2- Introducir los datos a modificar en lugar de los antiguos.</p>
 				<p>3- Confirmar.</p>
 				<p>4- Se actualizan los datos del empleado en la base de datos.</p>
-				<p>5- Se modifica el cuadrante si es necesario (CU-27) y se notifica al jefe de departamento.</p>
+				<p>5- Si es necesario, el jefe de departamento tendrá que crear el cuadrante con los nuevos datos del empleado (CU-27).</p>
 				<h2>Secuencias alternativas</h2>
-				<p>2a- El empleado no está en el sistema. Comprobar que se ha escrito bien el identicador.</p>
-				<p>2b- Si los datos está en formato incorrecto la aplicación permite corregir los datos erróneos marcando los campos incorrectos de alguna forma (vuelta a 2).</p>
-				<p>2c- Se accede a algún dato que no se puede modificar. Modificar los datos permitidos o cancelar la operación.</p>
+				<p>2a- Si los datos está en formato incorrecto la aplicación permite corregir los datos erróneos marcando los campos incorrectos de alguna forma (vuelta a 2).</p>
 				<br><br><br>
 <!-- Aquí acaba un CU -->
 
@@ -625,7 +629,8 @@
 				<h2>Actores</h2>
 				<p>Jefe de departamento.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- En la pestaña de "Contratos" seleccionar "Nuevo Contrato".</p>
+				<p>1- Elegir la pestaña "Contratos".</p>
+				<p>2- Elegir la opción de "Nuevo Contrato".</p>
 				<p>2- Rellenar los datos correspondientes del contrato.</p>
 				<p>3- Configurar los turnos del contrato:</p>
 				<p>3.1- Crear nuevos turnos (CU-35).</p>
@@ -655,9 +660,10 @@
 				<h2>Actores</h2>
 				<p>Jefe de departamento.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Seleccionar tipo de contrato a eliminar en la lista de la pestaña "Contratos".</p>
-				<p>2- Elegir la opción "Eliminar contrato".</p>
-				<p>3- Confirmar.</p>
+				<p>1- Elegir la pestaña "Contratos".</p>
+				<p>2- Seleccionar el contrato que va a ser eliminado.</p>		
+				<p>3- Elegir la opción de "Eliminar Contrato".</p>
+				<p>4- Confirmar.</p>
 				<h2>Secuencias alternativas</h2>
 				<p>1a- Si no se ha seleccionado un contrato, se informa.</p>
 				<p>3a- Si hay un error en la conexión se muestra por pantalla.</p>
@@ -679,10 +685,11 @@
 				<h2>Actores</h2>
 				<p>Jefe de departamento.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Seleccionar tipo de contrato a modificar en la lista de la pestaña "Contratos".</p>
-				<p>2- Elegir la opción "Modificar contrato".</p>
-				<p>3- Modificar los campos que se desee como si se estuviese añadiendo un nuevo contrato (CU-23).</p>
-				<p>4- Confirmar.</p>
+				<p>1- Elegir la pestaña "Contratos".</p>
+				<p>2- Seleccionar el contrato que va a ser modificado.</p>
+				<p>3- Elegir la opción de "Modificar Contrato".</p>
+				<p>4- Modificar los campos que se desee como si se estuviese añadiendo un nuevo contrato (CU-23).</p>
+				<p>5- Confirmar.</p>
 				<h2>Secuencias alternativas</h2>
 				<p>1a- Si no se ha seleccionado un contrato, se informa.</p>
 				<p>3a- Si los datos está en formato incorrecto da error.</p>
@@ -704,12 +711,13 @@
 				<h2>Postcondiciones si fallo</h2>
 				<p>Mensaje de error.</p>
 				<h2>Actores</h2>
-				<p>Usuario.</p>
+				<p>Gerente y jefe de departamento.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Seleccionar la opción "Cuadrante".</p>
-				<p>2- Visualizar.</p>
+				<p>1- Elegir la pestaña "Cuadrantes".</p>
+				<p>2- Elegir el mes y el formato "Ver por mes" o "Ver por día".</p> 
+				<p>3- Visualizar.</p>
 				<h2>Secuencias alternativas</h2>
-				<p>2a- El cuadrante elegido todavía no está creado, se pasa a CU-27.</p>
+				<p>2a- Si el cuadrante elegido todavía no está creado, se puede generar uno pasando a CU-27.</p>
 				<p>2b- Si hay un error en la conexión se muestra por pantalla.</p>
 				<br><br><br>
 <!-- Aquí acaba un CU -->
@@ -728,10 +736,11 @@
 				<h2>Actores</h2>
 				<p>Gerente y jefe de departamento.</p>
 				<h2>Secuencia normal</h2>
-				<p>1- Seleccionar opción "Generar cuadrante".</p>
-				<p>2- Introducir datos si es necesario.</p>
-				<p>3- La aplicación genera un cuadrante.</p>
-				<p>4- Notificación del cuadrante a los usuarios afectados (CU-29).</p>
+				<p>1- Elegir la pestaña "Cuadrantes".</p>
+				<p>2- Elegir el departamento para el que se quiere generar el cuadrante.</p> 
+				<p>3- Elegir el mes.</p> 
+				<p>4- Seleccionar opción "Generar cuadrantes".</p>
+				<p>5- La aplicación genera un cuadrante.</p>
 				<h2>Secuencias alternativas</h2>
 				<p>3a- En el caso de que se obtenga un cuadrante incompleto, además del cuadrante se genera una serie de sugerencias (CU-28).</p>
 				<br><br><br>
@@ -1045,8 +1054,7 @@
 				<br><br>
 
 				<h3>Abril 2008</h3>
-				<p>Se modifica en el caso de uso 02 algún paso de la secuencia de ejecución.</p>
-				<p>Se modifica el caso de uso 04, añadiendo la opción de desmarcar para los mensajes que están marcados.</p>
+				<p>Se han modificado todos los casos de uso que no seguían exactamente la secuencia indicada.</p>
 				
 
 				<br><br>
