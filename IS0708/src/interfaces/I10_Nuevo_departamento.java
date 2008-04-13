@@ -216,15 +216,31 @@ public class I10_Nuevo_departamento {
 								messageBox.setMessage (bundle.getString("I10_num_ya_existe"));
 								e.doit = messageBox.open () == SWT.CLOSE;
 							}else{
-								//creamos el departamento
-								String numjefe=(cmbJefes.getText().subSequence(cmbJefes.getText().length()-8, cmbJefes.getText().length())).toString();
-								vista.crearDepartamento(tName.getText(),tNumber.getText(),Integer.parseInt(numjefe));
-								MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
-								messageBox.setText (bundle.getString("Mensaje"));
-								messageBox.setMessage (bundle.getString("I10_dep_creado"));
-								e.doit = messageBox.open () == SWT.CLOSE;
-								father.add(tName.getText());
-								shell.dispose();					
+								//Miramos horas de incio y final
+								if(integerCheck(thorCi.getText())== true && integerCheck(thorIn.getText())== true && integerCheck(tminIn.getText())== true && integerCheck(tminCi.getText())== true){
+									if(Integer.parseInt(thorCi.getText())>=0 && Integer.parseInt(thorCi.getText())<24 && Integer.parseInt(thorIn.getText())>=0 && Integer.parseInt(thorIn.getText())<24 &&
+											Integer.parseInt(tminCi.getText())>=0 && Integer.parseInt(tminCi.getText())<60 && Integer.parseInt(tminIn.getText())>=0 && Integer.parseInt(tminIn.getText())<60	){
+										//creamos el departamento
+										String numjefe=(cmbJefes.getText().subSequence(cmbJefes.getText().length()-8, cmbJefes.getText().length())).toString();
+										vista.crearDepartamento(tName.getText(),tNumber.getText(),Integer.parseInt(numjefe));
+										MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
+										messageBox.setText (bundle.getString("Mensaje"));
+										messageBox.setMessage (bundle.getString("I10_dep_creado"));
+										e.doit = messageBox.open () == SWT.CLOSE;
+										father.add(tName.getText());
+										shell.dispose();
+									}else{
+										MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
+										messageBox.setText (bundle.getString("Mensaje"));
+										messageBox.setMessage (bundle.getString("I10_formato_horas"));
+										e.doit = messageBox.open () == SWT.CLOSE;
+									}
+								}else{
+									MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
+									messageBox.setText (bundle.getString("Mensaje"));
+									messageBox.setMessage (bundle.getString("I10_num_horas"));
+									e.doit = messageBox.open () == SWT.CLOSE;
+								}
 							}
 						}
 					}else{
