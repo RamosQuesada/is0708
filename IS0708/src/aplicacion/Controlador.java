@@ -1733,7 +1733,7 @@ public class Controlador {
 				//String fecha = cuadrante.getAnio() + "-" + cuadrante.getMes()
 				//		+ "-" + (dia + 1);
 				_db.insertarTrabaja(trabaja.getIdEmpl(), trabaja.getIdTurno(),
-						fecha, trabaja.getFichIni(), trabaja.getFichFin());
+						fecha, trabaja.getFichIni(), trabaja.getFichFin(), false);
 			}
 			_db.executeBatch();
 		}

@@ -485,11 +485,15 @@ public class Database extends Thread {
 	 */
 	public void cerrarConexion() {
 		try {
-			con.close();
-			System.out.println("aplicacion.Database.java\t:: Conexión cerrada correctamente");
+			while (!st.isClosed()) {
+				System.out.println("No se puede cerrar todavía");
+				wait(500);
+			}
+				con.close();
+				System.out.println("aplicacion.Database.java\t:: Conexión cerrada correctamente");
 		} catch (Exception e) {
-			// e.printStackTrace();
-			System.err.println("aplicacion.Database.java\t:: Error cerrando la conexión");
+			e.printStackTrace();
+			System.err.println("aplicacion.Database.java\t:: Error cerrando la conexión: " + e.getMessage());
 		}
 	}
 
@@ -623,7 +627,7 @@ public class Database extends Thread {
 			st.addBatch(q);
 			if (ultima) {
 				st.executeBatch();
-				st = con.createStatement();
+				st.close();
 			}
 			correcto = true;
 		} catch (SQLException e) {
@@ -669,9 +673,11 @@ public class Database extends Thread {
 		+ "', '" + DiaSemana + "', '" + Patron + "', '" + NumMax
 		+ "', '" + NumMin + "', '" + IdDepartamento + "')";
 		try {
-			st = con.createStatement();
 			st.addBatch(q);
-			if (ultima) st.executeBatch();
+			if (ultima) {
+				st.executeBatch();
+				st.close();
+			}
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
@@ -905,14 +911,16 @@ public class Database extends Thread {
 	 * @return true si se ha realizado correctamente o false en caso contrario
 	 */
 	public boolean insertarTrabaja(int numVendedor, int idTurno, String fecha,
-			Time horaEntrada, Time horaSalida) {
+			Time horaEntrada, Time horaSalida, boolean ultima) {
 		boolean correcto = false;
 		try {
-			st = con.createStatement();
 			st.addBatch("INSERT INTO " + tablaTrabaja + " values (" + numVendedor
 					+ ", " + idTurno + ", '" + fecha + "', '" + horaEntrada
 					+ "', '" + horaSalida + "');");
-			System.out.println("aplicacion.Database.java\t::Insertado en la tabla trabaja a toda ostia");
+			if (ultima){
+				st.executeBatch();
+				st.close();
+			}
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
@@ -923,11 +931,10 @@ public class Database extends Thread {
 	
 	public boolean executeBatch() {
 		try {
-			st = con.createStatement();
 			st.executeBatch();
+//			st.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.err.println("Database :: Error al ejecutar batch SQL");
+			System.err.println("Database :: Error al ejecutar batch SQL: " + e.getMessage());
 		}
 		return true;
 	}
@@ -1554,7 +1561,7 @@ public class Database extends Thread {
 		try {
 			st = con.createStatement();
 			result = st
-					.executeQuery("SELECT Max(IdMensaje)as Maximo from MENSAJE ;");
+					.executeQuery("SELECT Max(IdMensaje)as Maximo from " + tablaMensajes + ";");
 			result.next();
 			maximo = result.getInt("Maximo");
 		} catch (SQLException e) {
@@ -1681,15 +1688,13 @@ public class Database extends Thread {
 	 */
 	public ResultSet obtenListaTurnosContrato(int idEmpl) {
 		ResultSet r = null;
+		String q = "SELECT " + tablaTurnosPorContrato + ".IdTurno FROM " + tablaUsuarios + ", " + tablaTurnosPorContrato + " WHERE NumVendedor = "
+		+ idEmpl + " AND " + tablaUsuarios + ".IdContrato = " + tablaTurnosPorContrato + ".IdContrato;";
 		try {
 			st = con.createStatement();
-			r = st
-					.executeQuery("SELECT ListaTurnosPorContrato.IdTurno FROM " + tablaUsuarios+ ",ListaTurnosPorContrato WHERE NumVendedor = "
-							+ idEmpl
-							+ " and USUARIO.IdContrato=ListaTurnosPorContrato.IdContrato");
+			r = st.executeQuery(q);
 		} catch (SQLException e) {
-			// TODO: handle exception
-			System.err.println("Database :: Error al obtener los turnos de un contrato ");
+			System.err.println("Database :: Error al obtener los turnos de un contrato:\n\t" + q);
 		}
 		return r;
 	}
@@ -1704,12 +1709,13 @@ public class Database extends Thread {
 	 */
 	public ResultSet obtenMensaje(int mensaje) {
 		ResultSet result = null;
+		String q = "SELECT * FROM " + tablaMensajes + " WHERE IdMensaje="
+		+ mensaje + ";";
 		try {
 			st = con.createStatement();
-			result = st.executeQuery("SELECT * FROM MENSAJE WHERE IdMensaje="
-					+ mensaje + ";");
+			result = st.executeQuery(q);
 		} catch (SQLException e) {
-			System.err.println("Database :: Error obtenMensaje ");
+			System.err.println("Database :: Error al obtener los mensajes:\n\t" + q);
 		}
 		return result;
 	}
@@ -2080,6 +2086,7 @@ public class Database extends Thread {
 			st.addBatch("DROP TABLE " + tablaNumerosPorDepartamento + ";");
 			st.addBatch("DROP TABLE " + tablaIncidencias + ";");
 			st.executeBatch();
+			st.close();
 			System.out.println("aplicacion.Database.java\t:: Estructura de tablas y dependencias eliminadas correctamente.");
 
 		} catch (SQLException e) {
@@ -2255,6 +2262,7 @@ public class Database extends Thread {
 					"Importe Decimal(10,2) ," +
 					"Primary Key (NumVendedor,fecha)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
 			st.executeBatch();
+			st.close();
 			System.out.println("aplicacion.Database.java\t:: Estructura de tablas generada correctamente.");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -2317,6 +2325,7 @@ public class Database extends Thread {
 			st.addBatch("Alter table contratodepartamento add Foreign Key (IdContrato) references contrato (IdContrato) on delete restrict on update cascade;");
 
 			st.executeBatch();
+			st.close();
 			System.out.println("aplicacion.Database.java\t:: Dependencias generadas correctamente.");
 		} catch (SQLException e) {
 			e.printStackTrace();
