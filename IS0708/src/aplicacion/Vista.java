@@ -521,6 +521,7 @@ public class Vista {
 							"Administrador", "", "", null, 0, "", "admin", 0,
 							0, 0, null, null, null, null, null, 0, 0, 0));
 					identificadoOCancelado = true;
+					i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);
 				// Login normal
 				} else {
 					emp = getEmpleado(login.getNumeroVendedor());
