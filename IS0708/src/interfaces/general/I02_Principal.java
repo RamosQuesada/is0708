@@ -393,7 +393,7 @@ public class I02_Principal {
 						else
 							primerDiaGenerarCuadrante = tmDia;
 						// Borrar tabla trabaja para esa fecha y ese departamento
-						vista.eliminaMesTrabaja(tmMes, tmAnio, tmDep);
+						vista.eliminaMesTrabaja(primerDiaGenerarCuadrante, tmMes, tmAnio, tmDep);
 						vista.setProgreso(bundle.getString("I02_lab_GenerandoCuads"), 0);
 						vista.setCursorEspera();
 						algRunner = new AlgoritmoRun();

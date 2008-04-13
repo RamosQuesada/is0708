@@ -194,8 +194,8 @@ public class Database extends Thread {
 	 * @param dep identifica el departamento 
 	 * @return si se ha realizado correctamente la eliminacion
 	 */
-	public boolean borraMesTrabaja(int mes, int anio,String dep){
-		String fechaIni = anio +"-"+ mes +"-"+ "01";
+	public boolean borraMesTrabaja(int dia, int mes, int anio,String dep){
+		String fechaIni = anio +"-"+ mes +"-"+ dia;
 		String fechaFin = anio +"-"+ mes +"-"+ "31";
 		String q = "DELETE FROM " + tablaTrabaja + " WHERE Fecha >='" + fechaIni + "' and Fecha <='" +
 		fechaFin +"' and NumVendedor in (SELECT NumVendedor FROM " + tablaUsuariosPorDepartamento + " D where NombreDepartamento = '"+dep +"');";
