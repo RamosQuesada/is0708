@@ -383,22 +383,24 @@ public class I02_Principal {
 					if (messageBox.open()==SWT.YES) {
 						// Preguntar desde dónde quiere empezar
 						messageBox = new MessageBox(shell,
-								SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
+								SWT.APPLICATION_MODAL | SWT.YES | SWT.NO | SWT.CANCEL);
 						messageBox.setText(bundle.getString("Aviso"));
 						// TODO usar bundle
-						messageBox.setMessage("¿Quiere empezar calcular todo el mes? (en caso contrario, se empezará" +
+						messageBox.setMessage("¿Quiere calcular el mes entero? (en caso contrario, se empezará" +
 								" en el día seleccionado)");
-						if (messageBox.open()==SWT.YES) 
+						int r = messageBox.open();
+						if (r==SWT.YES) 
 							primerDiaGenerarCuadrante = 1;
-						else
+						else if (r==SWT.NO)
 							primerDiaGenerarCuadrante = tmDia;
-						// Borrar tabla trabaja para esa fecha y ese departamento
-						vista.eliminaMesTrabaja(primerDiaGenerarCuadrante, tmMes, tmAnio, tmDep);
-						vista.setProgreso(bundle.getString("I02_lab_GenerandoCuads"), 0);
-						vista.setCursorEspera();
-						algRunner = new AlgoritmoRun();
-						algRunner.start();
-
+						if (r!=SWT.CANCEL) {
+							// Borrar tabla trabaja para esa fecha y ese departamento
+							vista.eliminaMesTrabaja(primerDiaGenerarCuadrante, tmMes, tmAnio, tmDep);
+							vista.setProgreso(bundle.getString("I02_lab_GenerandoCuads"), 0);
+							vista.setCursorEspera();
+							algRunner = new AlgoritmoRun();
+							algRunner.start();
+						}
 					}
 				} else {
 					MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK);

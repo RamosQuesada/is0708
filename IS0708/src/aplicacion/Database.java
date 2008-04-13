@@ -627,7 +627,6 @@ public class Database extends Thread {
 			st.addBatch(q);
 			if (ultima) {
 				st.executeBatch();
-				st.close();
 			}
 			correcto = true;
 		} catch (SQLException e) {
@@ -676,7 +675,6 @@ public class Database extends Thread {
 			st.addBatch(q);
 			if (ultima) {
 				st.executeBatch();
-				st.close();
 			}
 			correcto = true;
 		} catch (SQLException e) {
@@ -919,7 +917,6 @@ public class Database extends Thread {
 					+ "', '" + horaSalida + "');");
 			if (ultima){
 				st.executeBatch();
-				st.close();
 			}
 			correcto = true;
 		} catch (SQLException e) {
