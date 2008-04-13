@@ -456,7 +456,11 @@ public class I08_1_Editar_empleado {
 							shell.dispose();
 						}
 							
-						}
+					} else {
+						vista.modificarEmpleado(id, nom, ap1, ap2, fechaNacimiento, sex,  mail, pass, 
+								Exp, fechaContrato,fechaAlta, Fel, idiom, ran, turn, indice);
+						shell.dispose();
+					}
 					
 
 						

@@ -287,6 +287,15 @@ public class I08_1_Anadir_empleado {
 					tNVend.setFocus();
 					tNVend.selectAll();
 				}
+				else if (n==0) {
+					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
+					messageBox.setText (bundle.getString("Error"));
+					messageBox.setMessage (bundle.getString("I08_err_NVend0"));
+					e.doit = messageBox.open () == SWT.YES;
+					// Enfocar tNVend y seleccionar texto
+					tNVend.setFocus();
+					tNVend.selectAll();
+				}
 				// Comprueba que la contraseña no es vacía (campo obligatorio)
 				else if (tPassword.getText().length()==0) {
 					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
