@@ -47,7 +47,14 @@ public class I08_1_Editar_empleado {
 	private Date fechaAlta;
 	private Date fechaNacimiento;
 	private int idVend;
-	//http://java.sun.com/j2se/1.4.2/docs/api/java/util/GregorianCalendar.html 
+	
+	/**
+	 * Constructor de la clase, crea la ventana de edicion de empleado
+	 * @param padre
+	 * @param bundle
+	 * @param vista
+	 * @param idVend
+	 */
 	public I08_1_Editar_empleado(Shell padre, ResourceBundle bundle, Vista vista, int idVend) {
 		this.padre = padre;
 		this.bundle = bundle;
@@ -58,7 +65,12 @@ public class I08_1_Editar_empleado {
 		this.idVend = idVend;
 		mostrarVentana();
 	}
-	
+	/**
+	 * Ventana de edicion de empleado
+	 * Incluye nombre, apellido1, apellido2, contraseña, mail, fecha de alta, fecha nacimiento, fecha contrato,
+	 * Color asignado al cuadrante, número de vendedor, sexo, idioma y nivel de experiencia. Es decir, todas los 
+	 * campos editables de los empleados.
+	 */
 	public void mostrarVentana() {		
 		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
 
@@ -73,8 +85,6 @@ public class I08_1_Editar_empleado {
 		grupoDer.setLayout(new GridLayout(2,false));
 		
 		final Label  lNVend			= new Label (grupoIzq, SWT.LEFT);
-		//cambiar por un label
-		
 		final Label  llNVend		= new Label (grupoIzq, SWT.LEFT);
 		final Label  lPassword		= new Label (grupoIzq, SWT.LEFT);
 		final Text   tPassword		= new Text  (grupoIzq, SWT.BORDER);
@@ -107,9 +117,9 @@ public class I08_1_Editar_empleado {
 		
 		final Button bGuardar		= new Button(shell, SWT.PUSH);
 		final Button bCancelar		= new Button(shell, SWT.PUSH);
-		String aux = String.valueOf(idVend);
+		
+		// Definicion de los campos de edición
 		lNVend			.setText(bundle.getString("Vendedor"));
-		llNVend			.setText(aux); 
 		lPassword		.setText(bundle.getString("Contrasena"));
 		lEMail			.setText(bundle.getString("EMail"));
 		lNombre			.setText(bundle.getString("Nombre"));
@@ -161,15 +171,17 @@ public class I08_1_Editar_empleado {
 		grupoIzq.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
 		grupoDer.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
 		
-		// INICIO DE RELLENO DE DATOS
+		// Inicio de rellenado de los campos de la ventana segun el empleado seleccionado.
 		
-		final Empleado emp=vista.getEmpleado(idVend);		
+		final Empleado emp=vista.getEmpleado(idVend);	
+		
 		tPassword.setText(emp.getPassword());	
 		tEMail.setText(emp.getEmail());		
 		tNombre.setText(emp.getNombre());		
 		tApell1.setText(emp.getApellido1());
 		tApell2.setText(emp.getApellido2());
 		
+		//Rellenado de los campos referidos fechas
 		String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
 		tFAlta.setText(String.valueOf(emp.getFAlta().getDate()) + " de " + meses[emp.getFAlta().getMonth()]+ " de " + String.valueOf(emp.getFAlta().getYear()+1900));
 		tFNacimiento.setText(String.valueOf(emp.getFechaNac().getDate()) + " de " + meses[emp.getFechaNac().getMonth()]+ " de " + String.valueOf(emp.getFechaNac().getYear()+1900));
@@ -187,6 +199,7 @@ public class I08_1_Editar_empleado {
 			cExperiencia.setItems (new String [] {	bundle.getString("Principiante"),
 												bundle.getString("Experto")});
 		
+		//Rellenado del campo de los departamentos posibles para dicho empleado
 		ArrayList<String> departamentos = vista.getEmpleadoActual().getDepartamentosId();
 		int jj=0;
 		boolean cumple=true;
@@ -201,6 +214,7 @@ public class I08_1_Editar_empleado {
 				cumple=false;
 		}
 		
+		//Rellenado del campo de los contratos posibles para dicho empleado
 		final ArrayList<Contrato> contratos = vista.getListaContratosDepartamento();
 		final ArrayList<Integer> ids = new ArrayList();
 		int j=0;
@@ -262,9 +276,6 @@ public class I08_1_Editar_empleado {
 				if(fecha!=null){
 					tFNacimiento.setText(String.valueOf(fecha.getDate()) + " de " + meses[fecha.getMonth()]+ " de " + String.valueOf(fecha.getYear()+1900));
 					fechaNacimiento = fecha;
-				}else{
-					//tFNacimiento.setText(String.valueOf(emp.getFechaNac().getDate()) + " de " + meses[emp.getFechaNac().getMonth()]+ " de " + String.valueOf(emp.getFechaNac().getYear()+1900));
-
 				}
 			}
 		};
@@ -286,9 +297,6 @@ public class I08_1_Editar_empleado {
 				if(fecha!=null){
 					tFContrato.setText(String.valueOf(fecha.getDate()) + " de " + meses[fecha.getMonth()]+ " de " + String.valueOf(fecha.getYear()+1900));
 					fechaContrato = fecha;
-				}else{
-					//tFContrato.setText(String.valueOf(emp.getFcontrato().getDate()) + " de " + meses[emp.getFcontrato().getMonth()]+ " de " + String.valueOf(emp.getFcontrato().getYear()+1900));
-				
 				}
 				}
 		};
@@ -311,10 +319,6 @@ public class I08_1_Editar_empleado {
 					//String tFAlta =String.valueOf(fechaAlta.getDate()) + "-" + fechaAlta.getMonth()+ "-" + String.valueOf(fechaAlta.getYear());
 					fechaAlta =  fecha;
 					int aux=1;
-				}else{
-					//tFAlta.setText(String.valueOf(emp.getFAlta().getDate()) + " de " + meses[emp.getFAlta().getMonth()]+ " de " + String.valueOf(emp.getFAlta().getYear()+1900));
-					
-					 
 				}
 			}
 		};
@@ -392,13 +396,7 @@ public class I08_1_Editar_empleado {
 					messageBox.setText (bundle.getString("Error"));
 					messageBox.setMessage (bundle.getString("I08_err_Fecha"));					
 					e.doit = messageBox.open () == SWT.YES;
-					// Enfocar tFNacimiento ,Fcontrato,Falta y seleccionar texto
-					tFNacimiento.setFocus();
-					tFNacimiento.selectAll();
-					tFContrato.setFocus();
-					tFContrato.selectAll();
-					tFAlta.setFocus();
-					tFAlta.selectAll();
+
 				}
 				// Comprueba la dirección de email (campo no obligatorio)
 				else if (tEMail.getText().length()!=0 && !Util.comprobarEmail(tEMail.getText())) {
@@ -451,7 +449,7 @@ public class I08_1_Editar_empleado {
 						msgBox.setText("Warning");
 						int resp = msgBox.open();
 						if (resp == SWT.OK) {
-							
+							// Si a pesar de todo esta de acuerdo
 							// modificacion del empleado.
 							vista.modificarEmpleado(id, nom, ap1, ap2, fechaNacimiento, sex,  mail, pass, 
 								Exp, fechaContrato,fechaAlta, Fel, idiom, ran, turn, indice);
@@ -474,7 +472,7 @@ public class I08_1_Editar_empleado {
 		bGuardar.addSelectionListener(sabGuardar);
 
 
-		// Botón por defecto bAceptar
+		// Botón por defecto bGuardar
 		shell.setDefaultButton(bGuardar);
 		// Ajustar el tama�o de la ventana al contenido
 		shell.pack();
