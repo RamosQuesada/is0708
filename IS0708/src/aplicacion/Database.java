@@ -46,19 +46,22 @@ public class Database extends Thread {
 	 * Abre una conexión nueva con la base de datos
 	 */
 	public synchronized void abrirConexion() {
-		String userName = "";
-		String password = "";
-		String ip = "";
+		String userName = "turnomat_user";
+		String password = "is0708";
+		String ip = "72.34.56.241:3306";
+		String dbName = "";
 
 		try {
 			//para desencriptar
 			FileInputStream is;
 			is = new FileInputStream("src"+File.separator+"interfaces"+File.separator+"configBD");
-			DataInputStream dis = new DataInputStream(is);
-			ip= dis.readUTF();
-			userName=dis.readUTF();
-			password=EncriptCadena.desencripta(dis.readUTF());
+//			DataInputStream dis = new DataInputStream(is);
+//			dbName=dis.readUTF();
+//			ip= dis.readUTF();
+//			userName=dis.readUTF();
+//			password=EncriptCadena.desencripta(dis.readUTF());
 			String url = "jdbc:mysql://"+ ip +"/" + "turnomat_bd";
+			//String url = "jdbc:mysql://"+ ip +"/" + dbName;
 
 // Descomentar este trozo para usar la base de datos local
 //			userName = "root";

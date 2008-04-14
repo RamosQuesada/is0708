@@ -143,7 +143,11 @@ public class I09_Tab_Contratos extends Thread {
 		TabItem tabItemContratos = new TabItem(tabFolder, SWT.NONE);
 		tabItemContratos.setText(bundle.getString("Contratos"));
 		tabItemContratos.setImage(vista.getImagenes().getIco_cuadrante());
-
+		tabItemContratos.addListener(SWT.Activate, new Listener() {
+			public void handleEvent(Event e) {
+				mostrarContratos();				
+			}
+		});
 		final Composite cContratos = new Composite(tabFolder, SWT.NONE);
 		tabItemContratos.setControl(cContratos);
 
@@ -338,10 +342,13 @@ public class I09_Tab_Contratos extends Thread {
 				msgBox.setText("Warning");
 				int resp = msgBox.open();
 				if (resp == SWT.OK) {
-					if (tablaContratos.getSelectionIndex() > -1) {
-						if (!tablaContratos.getItem(
-								tablaContratos.getSelectionIndex()).getText(1)
-								.equals("")) {
+					int indice=tablaContratos.getSelectionIndex();
+					if (indice > -1) {
+						System.out.println(vista.getListaContratosDepartamento().get(indice).getNumeroContrato());
+						ArrayList<Empleado> emp = vista.getEmpleados(null, null, 
+								vista.getListaContratosDepartamento().get(indice).getNumeroContrato()
+								, null, null, null, null);
+						if (emp.size()>0) {
 							MessageBox messageBox = new MessageBox(tabFolder
 									.getShell(), SWT.APPLICATION_MODAL
 									| SWT.ICON_WARNING | SWT.OK);
