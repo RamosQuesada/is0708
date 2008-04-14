@@ -124,8 +124,16 @@ public class I02_Principal {
 			final ResultadoTurnoMatic resultado = t.ejecutaAlgoritmo();
 			// quitar cuadrante de la fecha del calendario de la cache
 			// añadir t.getcuadrante a cache
-			vista.eliminaCuadranteCache(tmMes, tmAnio, tmDep);
-			vista.insertCuadranteCache(resultado.getCuadrante());
+			
+			if ((primerDiaGenerarCuadrante!=1) && vista.existeCuadranteCache(tmMes, tmAnio, tmDep))
+				vista.modificarCuadranteCache (primerDiaGenerarCuadrante, tmMes, tmAnio, tmDep, resultado.getCuadrante());
+			else {
+				vista.eliminaCuadranteCache(tmMes, tmAnio, tmDep);
+				vista.insertCuadranteCache(resultado.getCuadrante());
+			}
+
+			/*vista.eliminaCuadranteCache(tmMes, tmAnio, tmDep);
+			vista.insertCuadranteCache(resultado.getCuadrante());*/
 			display.asyncExec(new Runnable() {
 				public void run() {
 					MessageBox messageBoxResumen = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK );

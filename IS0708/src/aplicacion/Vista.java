@@ -350,6 +350,17 @@ public class Vista {
 		return true;
 	}
 	
+	public void modificarCuadranteCache (int primerDia, int mes, int anio, String idDepartamento, Cuadrante c) {
+		int i = 0;
+		while (i<cuadrantes.size()) {
+			if (cuadrantes.get(i).getAnio()!=anio || cuadrantes.get(i).getMes()!=mes || !cuadrantes.get(i).getIdDepartamento().equals(idDepartamento)) 
+				i++;
+		}
+		Cuadrante aux = cuadrantes.get(i);
+		for (int j=primerDia-1;j<c.getNumDias();j++)
+			aux.getCuad()[j]=c.getCuad()[j];
+	}
+ 	
 	/**
 	 * Este hilo conecta con la base de datos.
 	 * 
@@ -1287,6 +1298,18 @@ public class Vista {
 		return numeros.contains(text);*/
 
 	}
+	
+	public boolean existeCuadranteCache (int mes, int anio, String idDepartamento) {
+		int i = 0;
+		while (i<cuadrantes.size()) {
+			if (cuadrantes.get(i).getAnio()==anio && cuadrantes.get(i).getMes()==mes && cuadrantes.get(i).getIdDepartamento().equals(idDepartamento)) {
+				return true;
+			}
+			i++;
+		}
+		return false;
+	}
+	
 	/**
 	 * Función que cambia el jefe de un departamento
 	 * @param text nombre del departamento
