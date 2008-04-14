@@ -352,13 +352,15 @@ public class Vista {
 	
 	public void modificarCuadranteCache (int primerDia, int mes, int anio, String idDepartamento, Cuadrante c) {
 		int i = 0;
-		while (i<cuadrantes.size()) {
+		boolean encontrado = false;
+		while (i<cuadrantes.size() && !encontrado) {
 			if (cuadrantes.get(i).getAnio()!=anio || cuadrantes.get(i).getMes()!=mes || !cuadrantes.get(i).getIdDepartamento().equals(idDepartamento)) 
 				i++;
+			else
+				encontrado = true;
 		}
-		Cuadrante aux = cuadrantes.get(i);
 		for (int j=primerDia-1;j<c.getNumDias();j++)
-			aux.getCuad()[j]=c.getCuad()[j];
+			cuadrantes.get(i).getCuad()[j]=c.getCuad()[j];
 	}
  	
 	/**
