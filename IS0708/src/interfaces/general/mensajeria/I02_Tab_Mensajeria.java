@@ -62,6 +62,7 @@ public class I02_Tab_Mensajeria extends Thread{
 		this.estaMarcado = false;
 		this.mensSelecionado = null;
 		crearTab();
+		desplazarVentanaMensajes(0);
 	}
 	
 	/**
