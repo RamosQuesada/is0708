@@ -522,7 +522,7 @@ public class Controlador {
 		String nombreempleado=null;
 		String horaentrada=null;
 		String horasalida=null;
-		String info="Horarios Empleados:"+"\n";
+		String info="Horarios de Hoy:"+"\n";
 		ResultSet rs = _db.obtenListaEmpleadosDepartamento(nombreDep);
 		try {
 			while (rs.next()) {
