@@ -18,6 +18,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
@@ -48,6 +49,13 @@ public class I10_Config_departamento {
 	private ResourceBundle bundle;
 	
 	private Combo father;
+	private Label lhoraInicio;
+	private Text thorIn;
+	private Label ldosPuntos;
+	private Text tminIn;
+	private Label lhoraCierre;
+	private Text thorCi;
+	private Text tminCi;
 	
 	/** Constructor for new department */
 	public I10_Config_departamento(Shell padre, ResourceBundle bundle, Vista vista,String nombre,Combo father,boolean admin) {
@@ -124,6 +132,54 @@ public class I10_Config_departamento {
 			}
 			cmbJefes.select(0);
 			cmbJefes.setEnabled(false);
+			
+			//Horas de incio y cierre
+			final Composite grouphoras = new Composite(group, SWT.NONE);
+
+			grouphoras.setLayout(new GridLayout(4,false));
+			grouphoras.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,3,1));
+			
+			lhoraInicio = new Label (grouphoras, SWT.NONE);
+			lhoraInicio.setText(bundle.getString("I10_hora_incio"));
+			lhoraInicio.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,4,1));
+			
+			thorIn=new Text (grouphoras, SWT.BORDER);	
+			thorIn.setLayoutData (new GridData(SWT.LEFT ,SWT.CENTER,false,true,1,1));
+			thorIn.setTextLimit(2);
+			
+			ldosPuntos=new Label (grouphoras, SWT.NONE);
+			ldosPuntos.setText(":");
+			ldosPuntos.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,false,true,1,1));
+			ldosPuntos.setBounds(1, 1, 1, 1);
+		
+			
+			tminIn=new Text (grouphoras, SWT.BORDER);	
+			tminIn.setLayoutData (new GridData(SWT.LEFT ,SWT.CENTER,false,true,1,1));
+			tminIn.setTextLimit(2);
+			tminIn.setBounds(1, 1, 1, 1);
+			
+			lhoraCierre = new Label (grouphoras, SWT.NONE);
+			lhoraCierre.setText(bundle.getString("I10_hora_cierre"));
+			lhoraCierre.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,4,1));
+			
+			thorCi=new Text (grouphoras, SWT.BORDER);	
+			thorCi.setLayoutData (new GridData(SWT.LEFT ,SWT.CENTER,false,true,1,1));
+			thorCi.setTextLimit(2);
+			
+			ldosPuntos=new Label (grouphoras, SWT.NONE);
+			ldosPuntos.setText(":");
+			ldosPuntos.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,false,true,1,1));
+			ldosPuntos.setBounds(1, 1, 1, 1);
+		
+			
+			tminCi=new Text (grouphoras, SWT.BORDER);	
+			tminCi.setLayoutData (new GridData(SWT.LEFT ,SWT.CENTER,false,true,1,1));
+			tminCi.setTextLimit(2);
+			tminCi.setBounds(1, 1, 1, 1);
+			
+			Label hueco=new Label (grouphoras, SWT.NONE);
+			hueco.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
+			
 			
 
 			//Buttons "Accept" and "Cancel"
@@ -231,7 +287,7 @@ public class I10_Config_departamento {
 								//cambiamos el nombre
 								vista.cambiarNombreDepartamento(nombre,tName.getText());
 								father.removeAll();
-								ArrayList<String> array = vista.getNombreTodosDepartamentos();
+								ArrayList<String> array = vista.getNombreDepartamento(vista.getEmpleadoActual());
 								if (array != null) {
 									for (int i = 0; i < array.size(); i++) {
 										father.add(array.get(i));
