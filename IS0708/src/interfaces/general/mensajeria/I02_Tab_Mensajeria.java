@@ -243,6 +243,11 @@ public class I02_Tab_Mensajeria extends Thread{
 		bMensEliminar.setText(bundle.getString("I02_but_Eliminar"));
 		bMensEliminar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 		false, 1, 1));
+		bMensEliminar.addSelectionListener (new SelectionAdapter () {
+			public void widgetSelected (SelectionEvent e) {
+				vista.eliminaMensaje(mensSelecionado);
+			}
+		});
 		
 		//final Button bMensMarcar = new Button(cMensajes, SWT.PUSH);
 		bMensMarcar = new Button(cMensajes, SWT.PUSH);
