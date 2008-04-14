@@ -143,7 +143,7 @@ public class I05_Tab_EliminaJefe {
 			tItem.setText(0, nombre);
 			Empleado e = new Empleado();
 			e.setEmplId(Integer.valueOf(num));
-			ArrayList<String> arrayDepts = vista.getNombreDepartamento(e);
+			ArrayList<String> arrayDepts = vista.getNombreDepartamentosJefe(e);
 			String depts = "";
 			for (int j = 0; j < arrayDepts.size(); j++) {
 				depts += arrayDepts.get(j);
@@ -242,7 +242,7 @@ public class I05_Tab_EliminaJefe {
 							Empleado emp = new Empleado();
 							emp.setEmplId(Integer.valueOf(numElim));
 							ArrayList<String> arrayDepts = vista
-									.getNombreDepartamento(emp);
+									.getNombreDepartamentosJefe(emp);
 							if (arrayDepts.size()>0){
 								for (int j = 0; j < arrayDepts.size(); j++) {
 									String d = arrayDepts.get(j);

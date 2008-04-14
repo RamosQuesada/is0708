@@ -69,11 +69,13 @@ public class Vista {
 	/** Caché local: Cuadrantes del departamento actual */
 	private ArrayList<Cuadrante> cuadrantes = new ArrayList<Cuadrante>();
 	
-	/** Caché local: Lista de nombres de jefes de departamento */
-	private ArrayList<String> nombreJefesDepartamento = new ArrayList<String>();
-	
-	/** Caché local: Lista de números de jefes de departamento */
-	private ArrayList<Integer> numeroJefesDepartamento = new ArrayList<Integer>();
+
+//TODO borrar si no hacen falta
+//	/** Caché local: Lista de nombres de jefes de departamento */
+//	private ArrayList<String> nombreJefesDepartamento = new ArrayList<String>();
+//	
+//	/** Caché local: Lista de números de jefes de departamento */
+//	private ArrayList<Integer> numeroJefesDepartamento = new ArrayList<Integer>();
 	
 	/**
 	 * cola FIFO de inserciones/actualizaciones a realizar en la BD
@@ -167,10 +169,10 @@ public class Vista {
 						else if (e.tipo.equals("Empleado"))			controlador.cambiarEmpleado(((Empleado)e.o.get(0)).getEmplId(), ((Empleado)e.o.get(0)).getNombre(), ((Empleado)e.o.get(0)).getApellido1(), ((Empleado)e.o.get(0)).getApellido2(), ((Empleado)e.o.get(0)).getFechaNac(), ((Empleado)e.o.get(0)).getSexo(), ((Empleado)e.o.get(0)).getEmail(), ((Empleado)e.o.get(0)).getPassword(), ((Empleado)e.o.get(0)).getGrupo(), ((Empleado)e.o.get(0)).getFcontrato(), ((Empleado)e.o.get(0)).getFAlta(), ((Empleado)e.o.get(0)).getFelicidad(), ((Empleado)e.o.get(0)).getIdioma(), ((Empleado)e.o.get(0)).getRango(), ((Empleado)e.o.get(0)).getTurnoFavorito(), ((Empleado)e.o.get(0)).getContratoId());
 						else if (e.tipo.equals("Mensaje"))			controlador.marcarMensaje((Mensaje)e.o.get(0));
 						//else if (e.tipo.equals("JefeDepartamento"))	controlador.modificaDpto(((Departamento)e.o.get(0)).getNombreDepartamento(), ((Departamento)e.o.get(0)).getJefeDepartamento().getEmplId()); 
-						/*else if (e.tipo.equals("NombreDepartamento")){controlador.cambiaNombreDpto(e.o.get(0).toString(),e.o.get(1).toString());//nombre antiguo,nombrenuevo
-																		controlador.cambiaNombreDepartamentoUsuario(e.o.get(0).toString(),e.o.get(1).toString());
-																		controlador.cambiaNombreNumerosDEPARTAMENTOs(e.o.get(0).toString(),e.o.get(1).toString());
-																		} */
+						else if (e.tipo.equals("NombreDepartamento")){controlador.cambiaNombreDpto(((ArrayList<String>)e.o.get(0)).get(0),((ArrayList<String>)e.o.get(0)).get(1));}//nombre antiguo,nombre nuevo
+//																		controlador.cambiaNombreDepartamentoUsuario(e.o.get(0).toString(),e.o.get(1).toString());
+//																		controlador.cambiaNombreNumerosDEPARTAMENTOs(e.o.get(0).toString(),e.o.get(1).toString());
+//																		} 
 					}
 				}
 				setProgreso("Actualizando base de datos", 100);
@@ -895,6 +897,7 @@ public class Vista {
 	 * @param d Dia
 	 * @return Turno que trabaja, si no trabaja, null.
 	 */
+	@SuppressWarnings("deprecation")
 	public Turno trabajaEmpleadoDia(int nv, Date d) {
 		Cuadrante cuad = getCuadrante(d.getMonth()+1, d.getYear()+1900, getEmpleadoActual().getDepartamentoId());
 		if (cuad != null){
@@ -1144,9 +1147,10 @@ public class Vista {
 			temp = controlador.getDepartamentosJefe(numvendedor);
 			for (int i=0; i<temp.size(); i++)
 				departamentosJefe.add(controlador.getDepartamento(temp.get(i)));
-			setProgreso("Cargando jefes de departamento", 60);
-			numeroJefesDepartamento = controlador.getNumVendedorTodosJefes();
-			nombreJefesDepartamento = controlador.getNombreTodosJefes();
+			//TODO borrar si al final no se usa
+//			setProgreso("Cargando jefes de departamento", 60);
+//			numeroJefesDepartamento = controlador.getNumVendedorTodosJefes();
+//			nombreJefesDepartamento = controlador.getNombreTodosJefes();
 			setProgreso("Cargando turnos", 70);
 			ArrayList<Turno> turnosDep = new ArrayList<Turno>();
 			for (int i=0; i<departamentosJefe.size(); i++) {
@@ -1166,29 +1170,25 @@ public class Vista {
 		// TODO Auto-generated method stub
 //se modifica el nombre del Dpto. en las 3 tablas de Departamentos
 		
-		this.controlador.cambiaNombreDpto(NombreAntiguo, NombreNuevo);
-		this.controlador.cambiaNombreDepartamentoUsuario(NombreAntiguo, NombreNuevo);
-		this.controlador.cambiaNombreNumerosDEPARTAMENTOs(NombreAntiguo, NombreNuevo);
-		/*boolean esta=false;
-		 * ArrayList <String> aux=new ArrayList<String>();//Aqui meto los dos nombres que necesito, de esta forma no hace falta 
+//		this.controlador.cambiaNombreDpto(NombreAntiguo, NombreNuevo);
+//		//this.controlador.cambiaNombreDepartamentoUsuario(NombreAntiguo, NombreNuevo);
+//		//this.controlador.cambiaNombreNumerosDEPARTAMENTOs(NombreAntiguo, NombreNuevo);
+		boolean esta=false;
+		ArrayList <String> aux=new ArrayList<String>();//Aqui meto los dos nombres que necesito, de esta forma no hace falta 
 		aux.add(NombreAntiguo);
 		aux.add(NombreNuevo);
 		int i=0;
-		while(i<departamentosJefe.size()&&!esta){
-			if(departamentosJefe.get(i).getNombreDepartamento()==NombreAntiguo){
+		while (i<departamentosJefe.size() && !esta){
+			if (departamentosJefe.get(i).getNombreDepartamento().equals(NombreAntiguo)){
 				departamentosJefe.get(i).setNombreDepartamento(NombreNuevo);
 				modifyCache(aux,"NombreDepartamento");
-				esta=true;
+				return;
 			}
 			i++;
 		}
-		if(!esta){
-			Departamento d=getDepartamento(NombreAntiguo);
-			d.setNombreDepartamento(NombreNuevo);
-			departamentosJefe.add(d);
-			modifyCache(aux,"NombreDepartamento");
-		}*/
-		
+		if (getEmpleadoActual().getRango() == 0){
+			controlador.cambiaNombreDpto(NombreAntiguo, NombreNuevo);
+		}
 	}
 	
 	/**
@@ -1255,27 +1255,27 @@ public class Vista {
 		insertCache(aux,"crearDepartamento");*///no quitar el parseInt
 	}
 	/**
-	 * Función que nos dice si ya existe ese nombre de departament
-	 * @param text nombre a comparar
+	 * Función que nos dice si ya existe ese nombre de departamento
+	 * @param nombre nombre a comparar
 	 * @return
 	 */
-	public boolean existeNombreDepartamento(String text) {
-		// TODO Auto-generated method stub by Carlos Sánchez
-		ArrayList<String> departamentos = this.getNombreTodosDepartamentos();
-		return departamentos.contains(text);
+	public boolean existeNombreDepartamento(String nombre) {
+//		ArrayList<String> departamentos = this.getNombreTodosDepartamentos();
+//		return departamentos.contains(text);
 		//miramos en la cache
-		/*int i = 0;
+		int i = 0;
 		while (i<departamentosJefe.size()) {
-			if(departamentosJefe.get(i).getNombreDepartamento()==text){
+			if (departamentosJefe.get(i).getNombreDepartamento()==nombre){
 				return true;
 			}
+			i++;
 		}
-		//si no esta miramos en la BD y actualizamos la cache
-		Departamento d=this.getDepartamento(text);
-		departamentosJefe.add(d);//lo añado a la cache
-		//miro en controlador
-		ArrayList<String> numeros = this.controlador.getTodosNumerosDEPARTAMENTOs();
-		return numeros.contains(text);*/
+		//si no esta miramos en la BD
+		Departamento d = controlador.getDepartamento(nombre);
+		if (d == null)
+			return false;
+		//departamentosJefe.add(d);
+		return true;
 	}
 	/**
 	 * Función que nos dice si ya existe ese número de departamento
@@ -1283,26 +1283,26 @@ public class Vista {
 	 * @return
 	 */
 	public boolean existeNumDepartamento(String text) {
-		// TODO Auto-generated method stub by Carlos Sánchez
 		
 		ArrayList<String> numeros = this.controlador.getTodosNumerosDEPARTAMENTOs();
 		return numeros.contains(text);
-		/*
-		//miramos en la cache
-		int i = 0;
-		while (i<departamentosJefe.size()) {
-			for(int j=0;j<departamentosJefe.get(i).getNumerosDepartamento().size();j++){
-				if(departamentosJefe.get(i).getNumerosDepartamento().get(j).toString()==text){
-					return true;
-				}
-			}
-		}
-		//si no esta miramos en la BD y actualizamos la cache
-		Departamento d=this.getDepartamento(text);//no esta bien, ya que nos dan su num departamento y no su nombre que es la clave
-		departamentosJefe.add(d);
-		//miro en controlador
-		ArrayList<String> numeros = this.controlador.getTodosNumerosDEPARTAMENTOs();
-		return numeros.contains(text);*/
+		
+//		//miramos en la cache
+//		int i = 0;
+//		while (i<departamentosJefe.size()) {
+//			for (int j=0; j<departamentosJefe.get(i).getNumerosDepartamento().size();j++){
+//				if (departamentosJefe.get(i).getNumerosDepartamento().get(j).toString()==text){
+//					return true;
+//				}
+//			}
+//			i++;
+//		}
+//		//Si no esta miramos en la BD y actualizamos la cache
+//		Departamento d=this.getDepartamento(text);//no esta bien, ya que nos dan su num departamento y no su nombre que es la clave
+//		departamentosJefe.add(d);
+//		//miro en controlador
+//		ArrayList<String> numeros = this.controlador.getTodosNumerosDEPARTAMENTOs();
+//		return numeros.contains(text);
 
 	}
 	
@@ -1391,18 +1391,21 @@ public class Vista {
 						+ nummax+" (numero maximo de empleados)");
 			}
    
-   }
+	}
+	
 	/**
 	 * Funcion que dado un objeto empleado te devuelve de que departamento es jefe
-	 * @param empleadoActual
+	 * @param empleado
 	 * @return
 	 */
-	public ArrayList<String> getNombreDepartamento(Empleado empleadoActual) {
-		// TODO Auto-generated method stub
-		int nv=empleadoActual.getEmplId();
-		ArrayList<String> dptos=this.controlador.getDepartamentosJefe(nv);
+	public ArrayList<String> getNombreDepartamentosJefe(Empleado empleado) {
+		ArrayList<String> dptos = new ArrayList<String>();
+		if (getEmpleadoActual().getRango() == 2) // Solo para jefes
+			for (int i=0; i<departamentosJefe.size(); i++)
+				dptos.add(departamentosJefe.get(i).getNombreDepartamento());
 		return dptos;
 	}
+	
 	/**
 	 * Funcion que devuelve true si tiene algun empleado el departamento
 	 * @param text
