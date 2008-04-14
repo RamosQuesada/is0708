@@ -41,6 +41,7 @@ public class I02_Tab_Mensajeria extends Thread{
 	private Label lMensajes;
 	private boolean estaMarcado;
 	private Button bMensMarcar;
+	Mensaje mensSelecionado;
 	// Los caracteres a previsualizar de un mensaje
 	final int prevTextoMens = 50; 
 	// Los caracteres a previsualizar de un asunto de mensaje
@@ -59,6 +60,7 @@ public class I02_Tab_Mensajeria extends Thread{
 		this.bundle = bundle;
 		this.tabFolder = tabFolder;
 		this.estaMarcado = false;
+		this.mensSelecionado = null;
 		crearTab();
 	}
 	
@@ -172,8 +174,8 @@ public class I02_Tab_Mensajeria extends Thread{
 			public void mouseUp(MouseEvent e) {};
 			public void mouseDown(MouseEvent e) {
 				if (tablaMensajes.getSelectionIndex()!=-1) {
-					Mensaje m = vista.getMensajesEntrantes().get(tablaMensajes.getSelectionIndex());
-					estaMarcado = m.isMarcado(); 
+					mensSelecionado = vista.getMensajesEntrantes().get(tablaMensajes.getSelectionIndex());
+					estaMarcado = mensSelecionado.isMarcado(); 
 
 					if (estaMarcado){
 						bMensMarcar.setText(bundle.getString("I02_but_Desmarcar"));
@@ -227,6 +229,16 @@ public class I02_Tab_Mensajeria extends Thread{
 		bMensResponder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 		false, 1, 1));
 		
+		bMensResponder.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				if(mensSelecionado!=null)
+				new I14_Escribir_mensaje(tabFolder.getShell(),bundle,vista,null,mensSelecionado.getRemitente(),
+						vista.getEmpleado(mensSelecionado.getRemitente()).getNombreCompleto());
+			}
+		});
+		
+		
+		
 		final Button bMensEliminar = new Button(cMensajes, SWT.PUSH);
 		bMensEliminar.setText(bundle.getString("I02_but_Eliminar"));
 		bMensEliminar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
@@ -256,13 +268,12 @@ public class I02_Tab_Mensajeria extends Thread{
 						bMensMarcar.setText(bundle.getString("I02_but_Desmarcar"));
 						tablaMensajes.getItem(tablaMensajes.getSelectionIndex()).setFont(fNegrita);
 						TableItem item = tablaMensajes.getItem(tablaMensajes.getSelectionIndex());
-						int x = 0;
 					}
 					else{				
 						bMensMarcar.setText(bundle.getString("I02_but_Marcar"));
 						tablaMensajes.getItem(tablaMensajes.getSelectionIndex()).setFont(fNormal);
 						TableItem item = tablaMensajes.getItem(tablaMensajes.getSelectionIndex());
-							int x = 0;
+					
 					}
 					
 					vista.marcarMensaje(vista.getMensajesEntrantes().get(tablaMensajes.getSelectionIndex()));
