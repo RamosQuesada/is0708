@@ -180,8 +180,14 @@ public class I10_Config_departamento {
 			Label hueco=new Label (grouphoras, SWT.NONE);
 			hueco.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
 			
+			ArrayList<String> horas=vista.getHorarioDpto(nombre);
+			/* De momento asi xq no tiene horas metido
+			thorIn.setText((String) horas.get(0).subSequence(0, 1));
+			tminIn.setText((String) horas.get(0).subSequence(3, 4));
+			thorCi.setText((String) horas.get(1).subSequence(0, 1));
+			tminCi.setText((String) horas.get(1).subSequence(3, 4));
+			*/
 			
-
 			//Buttons "Accept" and "Cancel"
 
 			bAccept	= new Button(shell, SWT.PUSH);
