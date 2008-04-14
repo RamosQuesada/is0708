@@ -293,7 +293,7 @@ public class I10_Config_departamento {
 								//cambiamos el nombre
 								vista.cambiarNombreDepartamento(nombre,tName.getText());
 								father.removeAll();
-								ArrayList<String> array = vista.getNombreDepartamento(vista.getEmpleadoActual());
+								ArrayList<String> array = vista.getNombreDepartamentosJefe(vista.getEmpleadoActual());
 								if (array != null) {
 									for (int i = 0; i < array.size(); i++) {
 										father.add(array.get(i));

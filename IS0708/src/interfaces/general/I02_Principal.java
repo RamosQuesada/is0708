@@ -592,7 +592,7 @@ public class I02_Principal {
 		cmbDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 1, 1));
 		
-		ArrayList<String> array = vista.getNombreDepartamento(vista.getEmpleadoActual());
+		ArrayList<String> array = vista.getNombreDepartamentosJefe(vista.getEmpleadoActual());
 		if (array != null) {
 			for (int i = 0; i < array.size(); i++) {
 				cmbDepartamentos.add(array.get(i));
