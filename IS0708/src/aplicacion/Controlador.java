@@ -529,24 +529,24 @@ public class Controlador {
 				int nv = rs.getInt("NumVendedor");
 			    nombreempleado =this.getEmpleado(nv).getNombreCompleto();
 				//int idturno=rs.getInt("IdTurno");
-				//int idturno=this.getTurnoEmpleadoDia(this.getFechaActual(), nv);
+				int idturno=this.getTurnoEmpleadoDia(this.getFechaActual(), nv);
 				if(this.trabajaEmpleadoDia(nv, this.getFechaActual())){
 			    Turno t= this.getObjetoTurnoEmpleadoDia(this.getFechaActual(), nv);
 			    Time horaentradaaux = t.getHoraEntrada();
 			    horaentrada = horaentradaaux.toString();
 			    Time horasalidaaux = t.getHoraSalida();
 			    horasalida = horasalidaaux.toString();
-			 /*   ResultSet rs2=_db.obtenHorasTrabajoEmpleadoDia(nv, idturno, this.getFechaActual());
+			   ResultSet rs2=_db.obtenHorasTrabajoEmpleadoDia(nv, idturno, this.getFechaActual());
 			   while(rs2.next()){
-			    	Time horaentradaaux=rs2.getTime("HoraEntrada");
-			    	Time horasalidaaux=rs2.getTime("HoraSalida");
+	//		    	Time horaentradaaux=rs2.getTime("HoraEntrada");
+		//	    	Time horasalidaaux=rs2.getTime("HoraSalida");
 			    	String horaentrada2=horaentradaaux.toString();
 			    	String horasalida2=horasalidaaux.toString();
 				    horaentrada=horaentrada2;
 				    horasalida=horasalida2;
-			    }*/
+			    }
 		
-		//	    System.out.println(nombreempleado+": ("+nv+") " +horaentrada+"-"+horasalida);
+			    System.out.println(nombreempleado+": ("+nv+") " +horaentrada+"-"+horasalida);
 
 			  if(horaentrada!=null || horasalida!=null){
 				    
