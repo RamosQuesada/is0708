@@ -289,6 +289,11 @@ public class Vista {
 		deleteCache(idTurno, "Turno");
 		return true;
 	}
+	
+	public boolean eliminaMensaje(Mensaje m){
+		
+		return this.controlador.eliminaMensaje(m);		
+	}
 
 	/**
 	 * Modifica un contrato en la base de datos
