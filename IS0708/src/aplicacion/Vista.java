@@ -1431,6 +1431,19 @@ public class Vista {
 		}
 	}
 	
+	/**
+	 * Devuelve información de la distribucion de un departamento para un determinado dia. 
+	 * @param depart Nombre del departamento
+	 * @param tipoDia Tipo de dia (1-7) : (lunes-domingo)
+	 * @return devuelve un arraylist donde cada elemento es un vector de tres
+	 *         dimensiones de tal forma que vector[0]= Hora vector[1]= numero
+	 *         minimo de empleados para esa hora vector[2]= numero maximo de
+	 *         empleados para esa hora
+	 */
+	public ArrayList<Object[]> getDistribucionDepartamentoDiaSemana(String depart, int tipoDia){
+		return controlador.getDistribucionDiaSemana(depart, tipoDia);
+	}
+	
 	 
 	/**
 	 * Funcion que dado un Dpto, te devuelve 
