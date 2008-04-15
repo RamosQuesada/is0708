@@ -125,12 +125,8 @@ public class I02_Principal {
 			// quitar cuadrante de la fecha del calendario de la cache
 			// añadir t.getcuadrante a cache
 			
-			if ((primerDiaGenerarCuadrante!=1) && vista.existeCuadranteCache(tmMes, tmAnio, tmDep))
-				vista.modificarCuadranteCache (primerDiaGenerarCuadrante, tmMes, tmAnio, tmDep, resultado.getCuadrante());
-			else {
-				vista.eliminaCuadranteCache(tmMes, tmAnio, tmDep);
-				vista.insertCuadranteCache(resultado.getCuadrante());
-			}
+			vista.eliminaMesTrabaja(primerDiaGenerarCuadrante, tmMes, tmAnio, tmDep);
+			vista.insertCuadrante(resultado.getCuadrante());
 
 			/*vista.eliminaCuadranteCache(tmMes, tmAnio, tmDep);
 			vista.insertCuadranteCache(resultado.getCuadrante());*/
