@@ -160,8 +160,10 @@ public class Vista {
 						else if (e.tipo.equals("Turno"))			controlador.eliminaTurno((Integer) e.o.get(0));
 						else if (e.tipo.equals("ContratoConTurnos"))	controlador.eliminaContratoConTurnos((Integer) e.o.get(0));
 						else if (e.tipo.equals("Empleado"))			controlador.eliminaEmpleado((Integer) e.o.get(0));
-						/*else if (e.tipo.equals("eliminaMesTrabaja")) {controlador.eliminaMesTrabaja((Integer))e.o.get(0),(Integer)e.o.get(1),e.o.get(2).toString());
-						}*/
+						else if (e.tipo.equals("eliminaMesTrabaja")) {
+							ArrayList<Object> ar = (ArrayList<Object>)e.o.get(0);
+							controlador.eliminaMesTrabaja((Integer)ar.get(0),(Integer)ar.get(1),(Integer)ar.get(2),ar.get(3).toString());
+						}
 					}
 					else if(e.i==MODIFICAR) {
 						if      (e.tipo.equals("Contrato"))			controlador.modificarContrato(((Contrato)e.o.get(0)).getNumeroContrato(), ((Contrato)e.o.get(0)).getTurnoInicial(), ((Contrato)e.o.get(0)).getNombreContrato(), ((Contrato)e.o.get(0)).getPatron() , ((Contrato)e.o.get(0)).getDuracionCiclo(), ((Contrato)e.o.get(0)).getSalario(), ((Contrato)e.o.get(0)).getTipoContrato());
@@ -1042,23 +1044,32 @@ public class Vista {
 	/***************************************************************************
 	 * Otros métodos
 	 */
-	
+//	
+	/**
+	 * @param dia
+	 */
 	public void eliminaMesTrabaja(int dia, int mes, int anio, String departamento) {
-		controlador.eliminaMesTrabaja(dia, mes, anio, departamento);
+//		controlador.eliminaMesTrabaja(dia, mes, anio, departamento);
 		//borramos de la cache
-		/*boolean encontrado=false;
+		boolean encontrado=false;
 		int i=0;
-		while(i<cuadrantes.size()&& !encontrado){
-			if(cuadrantes.get(i).getIdDepartamento().equals(departamento) && cuadrantes.get(i).getMes()==mes && cuadrantes.get(i).getAnio()==anio){
-				cuadrantes.remove(i);
+		while (i<cuadrantes.size() && !encontrado){
+			Cuadrante cu = cuadrantes.get(i);
+			if (cu.getIdDepartamento().equals(departamento) && cu.getMes()==mes && cu.getAnio()==anio){
+				if (dia == 1)
+					cuadrantes.remove(i);
+				else
+					cuadrantes.get(i).eliminaTrabajaDesdeDia(dia);
 				encontrado=true;
 			}
+			i++;
 		}
 		ArrayList<Object> aux=new ArrayList<Object>();
+		aux.add(dia);
 		aux.add(mes);
 		aux.add(anio);
 		aux.add(departamento);
-		deleteCache(aux,"eliminaMesTrabaja");*/
+		deleteCache(aux,"eliminaMesTrabaja");
 	}
 	
 	/**
@@ -1278,6 +1289,7 @@ public class Vista {
 		//departamentosJefe.add(d);
 		return true;
 	}
+	
 	/**
 	 * Función que nos dice si ya existe ese número de departamento
 	 * @param text Numero a comparar
@@ -1285,25 +1297,22 @@ public class Vista {
 	 */
 	public boolean existeNumDepartamento(String text) {
 		
-		ArrayList<String> numeros = this.controlador.getTodosNumerosDEPARTAMENTOs();
-		return numeros.contains(text);
-		
-//		//miramos en la cache
-//		int i = 0;
-//		while (i<departamentosJefe.size()) {
-//			for (int j=0; j<departamentosJefe.get(i).getNumerosDepartamento().size();j++){
-//				if (departamentosJefe.get(i).getNumerosDepartamento().get(j).toString()==text){
-//					return true;
-//				}
-//			}
-//			i++;
-//		}
-//		//Si no esta miramos en la BD y actualizamos la cache
-//		Departamento d=this.getDepartamento(text);//no esta bien, ya que nos dan su num departamento y no su nombre que es la clave
-//		departamentosJefe.add(d);
-//		//miro en controlador
-//		ArrayList<String> numeros = this.controlador.getTodosNumerosDEPARTAMENTOs();
-//		return numeros.contains(text);
+		int nd = Integer.valueOf(text);
+		if (getEmpleadoActual().getRango() == 2){
+			//miramos en la cache
+			int i = 0;
+			while (i<departamentosJefe.size()) {
+				for (int j=0; j<departamentosJefe.get(i).getNumerosDepartamento().size();j++){
+					if (departamentosJefe.get(i).getNumerosDepartamento().get(j)==nd){
+						return true;
+					}
+				}
+				i++;
+			}
+			
+		}
+		//Si no es jefe o si no esta miramos en la BD
+		return controlador.existeNumDepartamento(nd);
 
 	}
 	
