@@ -55,18 +55,17 @@ public class Database extends Thread {
 			//para desencriptar
 			FileInputStream is;
 			is = new FileInputStream("src"+File.separator+"interfaces"+File.separator+"configBD");
-//			DataInputStream dis = new DataInputStream(is);
-//			dbName=dis.readUTF();
-//			ip= dis.readUTF();
-//			userName=dis.readUTF();
-//			password=EncriptCadena.desencripta(dis.readUTF());
-			String url = "jdbc:mysql://"+ ip +"/" + "turnomat_bd";
-			//String url = "jdbc:mysql://"+ ip +"/" + dbName;
+			DataInputStream dis = new DataInputStream(is);
+			dbName=dis.readUTF();
+			ip= dis.readUTF();
+			userName=dis.readUTF();
+			password=EncriptCadena.desencripta(dis.readUTF());
+			String url = "jdbc:mysql://"+ ip +"/" + dbName;
 
 // Descomentar este trozo para usar la base de datos local
-			userName = "root";
-			password = "";
-			url = "jdbc:mysql://localhost/turnomat_bd";
+//			userName = "root";
+//			password = "";
+//			url = "jdbc:mysql://localhost/turnomat_bd";
 
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			//DriverManager.setLoginTimeout(300);
