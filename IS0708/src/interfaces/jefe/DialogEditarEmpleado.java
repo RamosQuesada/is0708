@@ -176,8 +176,8 @@ public class DialogEditarEmpleado {
 		// Inicio de rellenado de los campos de la ventana segun el empleado seleccionado.
 		
 		final Empleado emp=vista.getEmpleado(idVend);	
-		String aux=String.valueOf(idVend);
-		llNVend.setText(aux);
+		String aux1=String.valueOf(idVend);
+		llNVend.setText(aux1);
 		
 		tPassword.setText(emp.getPassword());	
 		tEMail.setText(emp.getEmail());		
