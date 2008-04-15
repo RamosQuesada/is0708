@@ -120,6 +120,8 @@ public class DialogEditarEmpleado {
 		
 		// Definicion de los campos de edición
 		lNVend			.setText(bundle.getString("Vendedor"));
+		String aux=String.valueOf(idVend);
+		llNVend.setText(aux);
 		lPassword		.setText(bundle.getString("Contrasena"));
 		lEMail			.setText(bundle.getString("EMail"));
 		lNombre			.setText(bundle.getString("Nombre"));
@@ -184,10 +186,13 @@ public class DialogEditarEmpleado {
 		tApell2.setText(emp.getApellido2());
 		
 		//Rellenado de los campos referidos fechas
-		String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
-		tFAlta.setText(String.valueOf(emp.getFAlta().getDate()) + " de " + meses[emp.getFAlta().getMonth()]+ " de " + String.valueOf(emp.getFAlta().getYear()+1900));
-		tFNacimiento.setText(String.valueOf(emp.getFechaNac().getDate()) + " de " + meses[emp.getFechaNac().getMonth()]+ " de " + String.valueOf(emp.getFechaNac().getYear()+1900));
-		tFContrato.setText(String.valueOf(emp.getFcontrato().getDate()) + " de " + meses[emp.getFcontrato().getMonth()]+ " de " + String.valueOf(emp.getFcontrato().getYear()+1900));
+		String [] meses = {bundle.getString("enero"),bundle.getString("febrero"),bundle.getString("marzo"),
+				bundle.getString("abril"),bundle.getString("mayo"),bundle.getString("junio"),
+				bundle.getString("julio"),bundle.getString("agosto"),bundle.getString("septiembre"),
+				bundle.getString("octubre"),bundle.getString("noviembre"),bundle.getString("diciembre")};
+		tFAlta.setText(String.valueOf(emp.getFAlta().getDate())+" " + bundle.getString("artiFecha(de)")+" " + meses[emp.getFAlta().getMonth()]+" "+ bundle.getString("artiFecha(de)")+" " + String.valueOf(emp.getFAlta().getYear()+1900));
+		tFNacimiento.setText(String.valueOf(emp.getFechaNac().getDate())+" " + bundle.getString("artiFecha(de)") +" "+ meses[emp.getFechaNac().getMonth()]+" "+ bundle.getString("artiFecha(de)")+" " + String.valueOf(emp.getFechaNac().getYear()+1900));
+		tFContrato.setText(String.valueOf(emp.getFcontrato().getDate())+" " + bundle.getString("artiFecha(de)")+" " + meses[emp.getFcontrato().getMonth()]+" "+ bundle.getString("artiFecha(de)")+" " + String.valueOf(emp.getFcontrato().getYear()+1900));
 			
 		
 		
@@ -274,9 +279,12 @@ public class DialogEditarEmpleado {
 				}
 				Date fecha = i17.getFecha();
 				
-				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
+				String [] meses = {bundle.getString("enero"),bundle.getString("febrero"),bundle.getString("marzo"),
+						bundle.getString("abril"),bundle.getString("mayo"),bundle.getString("junio"),
+						bundle.getString("julio"),bundle.getString("agosto"),bundle.getString("septiembre"),
+						bundle.getString("octubre"),bundle.getString("noviembre"),bundle.getString("diciembre")};
 				if(fecha!=null){
-					tFNacimiento.setText(String.valueOf(fecha.getDate()) + " de " + meses[fecha.getMonth()]+ " de " + String.valueOf(fecha.getYear()+1900));
+					tFNacimiento.setText(String.valueOf(fecha.getDate())+" " + bundle.getString("artiFecha(de)")+" " + meses[fecha.getMonth()]+" "+ bundle.getString("artiFecha(de)")+" " + String.valueOf(fecha.getYear()+1900));
 					fechaNacimiento = fecha;
 				}
 			}
@@ -295,9 +303,12 @@ public class DialogEditarEmpleado {
 				
 				Date fecha = i17.getFecha();
 				 
-				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
+				String [] meses = {bundle.getString("enero"),bundle.getString("febrero"),bundle.getString("marzo"),
+						bundle.getString("abril"),bundle.getString("mayo"),bundle.getString("junio"),
+						bundle.getString("julio"),bundle.getString("agosto"),bundle.getString("septiembre"),
+						bundle.getString("octubre"),bundle.getString("noviembre"),bundle.getString("diciembre")};
 				if(fecha!=null){
-					tFContrato.setText(String.valueOf(fecha.getDate()) + " de " + meses[fecha.getMonth()]+ " de " + String.valueOf(fecha.getYear()+1900));
+					tFContrato.setText(String.valueOf(fecha.getDate())+" " + bundle.getString("artiFecha(de)")+" " + meses[fecha.getMonth()]+" "+ bundle.getString("artiFecha(de)")+" " + String.valueOf(fecha.getYear()+1900));
 					fechaContrato = fecha;
 				}
 				}
@@ -315,9 +326,12 @@ public class DialogEditarEmpleado {
 				}
 				Date fecha = i17.getFecha();
 				
-				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
+				String [] meses = {bundle.getString("enero"),bundle.getString("febrero"),bundle.getString("marzo"),
+						bundle.getString("abril"),bundle.getString("mayo"),bundle.getString("junio"),
+						bundle.getString("julio"),bundle.getString("agosto"),bundle.getString("septiembre"),
+						bundle.getString("octubre"),bundle.getString("noviembre"),bundle.getString("diciembre")};
 				if(fecha!=null){
-					tFAlta.setText(String.valueOf(fecha.getDate()) + " de " + meses[fecha.getMonth()]+ " de " + String.valueOf(fecha.getYear()+1900));
+					tFAlta.setText(String.valueOf(fecha.getDate())+" " + bundle.getString("artiFecha(de)")+" " + meses[fecha.getMonth()]+" "+ bundle.getString("artiFecha(de)")+" " + String.valueOf(fecha.getYear()+1900));
 					//String tFAlta =String.valueOf(fechaAlta.getDate()) + "-" + fechaAlta.getMonth()+ "-" + String.valueOf(fechaAlta.getYear());
 					fechaAlta =  fecha;
 					int aux=1;

@@ -210,9 +210,12 @@ public class DialogAnadirEmpleado {
 					}
 				}
 				fechaNacimiento = i17.getFecha();
-				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
+				String [] meses = {bundle.getString("enero"),bundle.getString("febrero"),bundle.getString("marzo"),
+						bundle.getString("abril"),bundle.getString("mayo"),bundle.getString("junio"),
+						bundle.getString("julio"),bundle.getString("agosto"),bundle.getString("septiembre"),
+						bundle.getString("octubre"),bundle.getString("noviembre"),bundle.getString("diciembre")};
 				if (fechaNacimiento!=null)
-				tFNacimiento.setText(String.valueOf(fechaNacimiento.getDate()) + " de " + meses[fechaNacimiento.getMonth()]+ " de " + String.valueOf(fechaNacimiento.getYear()+1900));
+				tFNacimiento.setText(String.valueOf(fechaNacimiento.getDate())+" " + bundle.getString("artiFecha(de)")+" "  + meses[fechaNacimiento.getMonth()]+" " + bundle.getString("artiFecha(de)")+" "  + String.valueOf(fechaNacimiento.getYear()+1900));
 			}
 		};
 		bFNacimiento.addSelectionListener(sabFNacimiento);
@@ -227,9 +230,12 @@ public class DialogAnadirEmpleado {
 					}
 				}
 				fechaContrato = i17.getFecha(); 				
-				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
+				String [] meses = {bundle.getString("enero"),bundle.getString("febrero"),bundle.getString("marzo"),
+						bundle.getString("abril"),bundle.getString("mayo"),bundle.getString("junio"),
+						bundle.getString("julio"),bundle.getString("agosto"),bundle.getString("septiembre"),
+						bundle.getString("octubre"),bundle.getString("noviembre"),bundle.getString("diciembre")};
 				if (fechaContrato != null)
-					tFContrato.setText(String.valueOf(fechaContrato.getDate()) + " de " + meses[fechaContrato.getMonth()]+ " de " + String.valueOf(fechaContrato.getYear()+1900));				
+					tFContrato.setText(String.valueOf(fechaContrato.getDate())+" " + bundle.getString("artiFecha(de)")+" " + meses[fechaContrato.getMonth()]+" " + bundle.getString("artiFecha(de)")+" "  + String.valueOf(fechaContrato.getYear()+1900));				
 			}
 		};
 		bFContrato.addSelectionListener(sabFContrato);
@@ -244,9 +250,12 @@ public class DialogAnadirEmpleado {
 					}
 				}
 				fechaAlta = i17.getFecha(); 
-				String [] meses = {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"};
+				String [] meses = {bundle.getString("enero"),bundle.getString("febrero"),bundle.getString("marzo"),
+						bundle.getString("abril"),bundle.getString("mayo"),bundle.getString("junio"),
+						bundle.getString("julio"),bundle.getString("agosto"),bundle.getString("septiembre"),
+						bundle.getString("octubre"),bundle.getString("noviembre"),bundle.getString("diciembre")};
 				if (fechaAlta != null)
-				tFAlta.setText(String.valueOf(fechaAlta.getDate()) + " de " + meses[fechaAlta.getMonth()]+ " de " + (String.valueOf(fechaAlta.getYear()+1900)));
+				tFAlta.setText(String.valueOf(fechaAlta.getDate()) +" " + bundle.getString("artiFecha(de)")+" " + meses[fechaAlta.getMonth()]+" " + bundle.getString("artiFecha(de)")+" "  + (String.valueOf(fechaAlta.getYear()+1900)));
 			}
 		};
 		bFAlta.addSelectionListener(sabFAlta);
