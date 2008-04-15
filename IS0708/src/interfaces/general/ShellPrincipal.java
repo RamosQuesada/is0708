@@ -22,8 +22,10 @@ import interfaces.I10_Nuevo_departamento;
 import interfaces.admin.*;
 import interfaces.empleado.Cuadrantes;
 import interfaces.empleado.Estadisticas;
+import interfaces.empleado.TabCuadranteEmpleado;
 import interfaces.general.cuadrantes.I_Cuadrante;
 import interfaces.general.mensajeria.TabMensajeria;
+import interfaces.jefe.TabDepartamentos;
 import interfaces.jefe.TabEmpleados;
 import interfaces.jefe.TabContratos;
 import aplicacion.Vista;
@@ -441,7 +443,15 @@ public class ShellPrincipal {
 	private void crearTabMensajes(TabFolder tabFolder) {
 		new TabMensajeria(tabFolder, vista, bundle);
 	}
-
+	
+	/**
+	 * Crea un tab de cuadrante de empleados
+	 * 
+	 * @param tabFolder el tabFolder donde colocarlo
+	 */
+	private void crearTabEmpleadoCuadrantes(TabFolder tabFolder) {
+		new TabCuadranteEmpleado(tabFolder, vista, bundle);
+	}
 	/**
 	 * Crea un tab con un listado de empleados
 	 * 
@@ -457,76 +467,9 @@ public class ShellPrincipal {
 	 * @param tabFolder el tabFolder donde colocarlo
 	 */
 	private void crearTabAdminDepartamentos(TabFolder tabFolder) {
-		new TabDepartamentos(tabFolder, vista, bundle);
+		new TabDepartamentosAdmin(tabFolder, vista, bundle);
 	}
 
-	private void crearTabJefeDepartamentos(TabFolder tabFolder) {
-		TabItem tabItemDepartamentos = new TabItem(tabFolder, SWT.NONE);
-		tabItemDepartamentos.setText(bundle.getString("Departamentos"));
-		tabItemDepartamentos.setImage(vista.getImagenes().getIco_chicos());
-
-		final Composite cDepartamentos = new Composite(tabFolder, SWT.NONE);
-		tabItemDepartamentos.setControl(cDepartamentos);
-
-		cDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-				true, 1, 1));
-		cDepartamentos.setLayout(new GridLayout(3, false));
-
-		Label lDepartamentos = new Label(cDepartamentos, SWT.LEFT);
-		lDepartamentos.setText(bundle.getString("Departamento"));
-		lDepartamentos.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
-				false, 1, 1));
-
-		final Combo cmbDepartamentos = new Combo(cDepartamentos, SWT.BORDER
-				| SWT.READ_ONLY);
-		cmbDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-				false, 1, 1));
-		
-		ArrayList<String> array = vista.getNombreDepartamentosJefe(vista.getEmpleadoActual());
-		if (array != null) {
-			for (int i = 0; i < array.size(); i++) {
-				cmbDepartamentos.add(array.get(i));
-			}
-		}
-		cmbDepartamentos.select(0);
-
-		// Composite for Buttons: "New Department" and "Configure Department"
-		Composite cBut = new Composite(cDepartamentos, SWT.LEFT);
-		cBut.setLayout(new GridLayout(2, false));
-
-		// Button "Configure Department"
-		Button bConfig = new Button(cBut, SWT.PUSH);
-		bConfig.setText(bundle.getString("I02_but_Config_dep"));
-		bConfig.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1,
-				1));
-
-		bConfig.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event e) {
-				System.out
-						.println("I02 :: Pulsado Configuración departamentos: "
-								+ cmbDepartamentos.getText());
-				new I10_Config_departamento(shell, bundle, vista,
-						cmbDepartamentos.getText(),cmbDepartamentos,false);
-			}
-		});
-
-		Composite cInfo = new Composite(cDepartamentos, SWT.BORDER);
-		cInfo.setLayout(new GridLayout(2, false));
-		cInfo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
-		final Text lContenido = new Text(cInfo, SWT.READ_ONLY | SWT.MULTI |SWT.V_SCROLL);
-		lContenido.setText(vista.infoDpto(cmbDepartamentos.getText()));
-		lContenido.setEditable(false);
-		lContenido.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-				true, 2, 1));
-		
-		//listener para el combo y mostrar la info debajo
-		cmbDepartamentos.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event e) {
-				lContenido.setText(vista.infoDpto(cmbDepartamentos.getText()));
-			}
-		});
-
-	}
 	
 	/**
 	 * Crea un tab con un listado de contratos
@@ -550,6 +493,16 @@ public class ShellPrincipal {
 		new TabContratosAdmin(tabFolder,vista,bundle,locale);
 	}
 
+	/**
+	 * Crea un tab con un listado de contratos para el menú de administrador
+	 * 
+	 * @param tabFolder
+	 *            el tabFolder donde colocarlo
+	 * @author Jose Maria Martin
+	 */
+	private void crearTabJefeDepartamentos(TabFolder tabFolder) {
+		new TabDepartamentos(tabFolder,vista,bundle);
+	}
 	/**
 	 * Crea un tab de inicio para el administrador
 	 * 
@@ -582,127 +535,6 @@ public class ShellPrincipal {
 	 */
 	private void crearTabAdminEliminaJefe(TabFolder tabFolder) {
 		new TabEliminaJefe(bundle,vista,tabFolder);
-	}
-
-	/**
-	 * Crea un tab de empleado para mostrar el cuadrante
-	 * 
-	 * @param tabFolder
-	 */
-	private void crearTabEmpleadoCuadrantes(TabFolder tabFolder) {
-		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
-		tabItem.setText("Empleado:Cuadrantes");
-		tabItem.setImage(vista.getImagenes().getIco_chico());
-
-		// Creamos el contenido de la pestaña cuadrantes
-		Composite cCuadrantes = new Composite(tabFolder, SWT.NONE);
-		tabItem.setControl(cCuadrantes);
-
-		cCuadrantes.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true,
-				1, 1));
-		// Le añadimos un layout
-		GridLayout lCuadrantes = new GridLayout();
-		lCuadrantes.numColumns = 2;
-		cCuadrantes.setLayout(lCuadrantes);
-
-		// Creamos el contenido interno de la pestaña cuadrantes
-		// Creamos un composite para los botones
-		final Composite cBotones = new Composite(cCuadrantes, SWT.BORDER);
-		cBotones.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false,
-				1, 1));
-		GridLayout lCBotones = new GridLayout();
-		lCBotones.numColumns = 1;
-		cBotones.setLayout(lCBotones);
-
-		// Creamos un composite para el calendario
-		final Label lCalendario = new Label(cBotones, SWT.LEFT);
-		lCalendario.setText(this.bundle.getString("Calendario"));
-		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
-				false, 1, 1));
-
-		// Creamos un composite para la zona donde se mostrara el calendario
-		final Composite cCuadrantesDer = new Composite(cCuadrantes, SWT.BORDER);
-		cCuadrantesDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-				true, 1, 1));
-		GridLayout lCuadrantesDer = new GridLayout();
-		lCuadrantesDer.numColumns = 1;
-		cCuadrantesDer.setLayout(lCuadrantesDer);
-		// final Label lCuadr1=new Label (cCuadrantesDer, SWT.CENTER);
-		// lCuadr1.setText("Aquí se mostrarían los cuadrantes");
-		Empleado empleado = this.vista.getEmpleadoActual();
-		final Cuadrantes cuadrante = new Cuadrantes(cCuadrantesDer,
-				false, bundle, empleado, fechaSeleccionada, vista);
-		cuadrante.setSemanal();
-
-		// Creamos el calendario
-		final DateTime calendario = new DateTime(cBotones, SWT.CALENDAR);
-		calendario.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				int day = calendario.getDay();
-				int month = calendario.getMonth();
-				int year = calendario.getYear();
-				fechaSeleccionada = Date.valueOf(Util.aFormatoDate(Integer
-						.toString(year), Integer.toString(month + 1), Integer
-						.toString(day)));
-				cuadrante.actualizaFecha(fechaSeleccionada);
-			}
-		});
-		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false,
-				1, 1));
-
-		// Creamos los botones para ver el horario por dias o semanas
-		final Button bPorSemanas = new Button(cBotones, SWT.RADIO);
-		bPorSemanas.setText(this.bundle.getString("Verporsemana"));
-		bPorSemanas.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false,
-				2, 1));
-		bPorSemanas.setSelection(true);
-		bPorSemanas.addListener(SWT.Selection, new Listener() {
-			// Seleccionado por mes
-			public void handleEvent(Event e) {
-				if (bPorSemanas.getSelection()) {
-					cuadrante.setSemanal();
-				} else{
-				//	bPorSemanas.setFocus();
-				}
-				//	cuadrante.setMensual();
-
-			}
-		});
-
-		// Creamos un boton para la seleccion del horario por semanas
-		final Button bPorMes = new Button(cBotones, SWT.RADIO);
-		bPorMes.setText(this.bundle.getString("I02_but_Verpormes"));
-		bPorMes.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1,
-				1));
-		// Creamos un oyente
-		bPorMes.addListener(SWT.Selection, new Listener() {
-			// Seleccionado por mes
-			public void handleEvent(Event e) {
-				if (bPorMes.getSelection()) {
-				
-					cuadrante.setMensual();
-					//crear ventana informando
-					/*
-					MessageBox messageBox = new MessageBox(shell,
-							SWT.APPLICATION_MODAL | SWT.OK
-									| SWT.ICON_INFORMATION);
-					messageBox.setText(bundle.getString("Mensaje"));
-					// Diferentes iconos:
-					messageBox.setMessage("Vista por meses, aun no creada");
-					if (messageBox.open() == SWT.OK) {
-						
-						bPorSemanas.setFocus();
-					}*/
-				
-					
-					
-				} else{
-					
-				}
-				//	cuadrante.setSemanal();
-
-			}
-		});
 	}
 
 	private void crearTabEmpleadoEstadisticas(TabFolder tabFolder) {
