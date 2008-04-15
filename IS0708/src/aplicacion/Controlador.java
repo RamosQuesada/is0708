@@ -799,6 +799,42 @@ public class Controlador {
 	}
 
 	/**
+	 * Obtiene la distribucion para un dia de la semana.
+	 * 
+	 * @param nombre Nombre del departamento
+	 * @param dia Dia de la semana. Lunes = 1, Martes = 2, ..., Domingo = 7
+	 * @return
+	 */
+	public ArrayList<Object[]> getDistribucionDiaSemana(String nombre, int dia) {
+		ArrayList<Object[]> lista = new ArrayList<Object[]>();
+		ResultSet r;
+		
+		try {
+				r = _db.obtenDistribucion(nombre, dia);
+				if (r.next()) {
+					r.last();
+					if (r.getRow() > 0) {
+						r.beforeFirst();
+						while (r.next()) {
+							Object[] vector = new Object[4];
+							vector[0] = (Integer) r.getInt("Hora");
+							vector[1] = (Integer) r.getInt("NumMin");
+							vector[2] = (Integer) r.getInt("NumMax");
+							vector[3] = (String) r.getString("Patron");
+							lista.add(vector);
+						}
+					}
+				}			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			System.err
+					.println("Controlador :: Error al realizar la consulta de una distribucion ");
+		}
+		return lista;
+	}
+	
+	/**
 	 * 
 	 * @param nombre
 	 * @param cal
