@@ -1406,6 +1406,7 @@ public class Controlador {
 	
 	/**
 	 * Borra el periodo de un mes indicado por los parámetros de entrada
+	 * @param dia identifica el primer dia del periodo a borrar
 	 * @param mes identifica el mes del periodo a borrar
 	 * @param anio identifica el anio del periodo a borrar
 	 * @param departamento identifica el departamento del cual se borrara el mes y el año indicado de trabajo
