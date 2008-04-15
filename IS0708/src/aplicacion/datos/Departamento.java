@@ -2,15 +2,13 @@ package aplicacion.datos;
 
 import java.util.ArrayList;
 
-import algoritmo.Calendario;
-
 /**
  * Clase que representa un departamento
  * @author David Rodilla Rodríguez
  */
 public class Departamento {
 
-/** Nombre del departamento */
+	/** Nombre del departamento */
 	private String _nombreDepartamento;
 	/** Numero asociado del departamento */
 	private ArrayList<Integer> _numerosDepartamento;
@@ -18,7 +16,6 @@ public class Departamento {
 	private Empleado _jefeDepartamento;
 	/** Conjunto de empleados que trabajan para el departamento */
 	private ArrayList<Empleado> _listaEmpleados;
-	private Calendario _calendario;
 	
 	/**
 	 * Constructor que se obtiene cuando se carga de la base de datos
@@ -26,21 +23,25 @@ public class Departamento {
 	 * @param nombreDepartamento Nombre del departamento
 	 * @param jefeDepartamento Jefe del departamento
 	 * @param listaEmpleados lista de empleados del departamento
-	 * @param calendario calendario de festivos del departamento
 	 */
 	public Departamento(String nombreDepartamento, int numeroDepartamento,
-			Empleado jefeDepartamento,ArrayList<Empleado> listaEmpleados,Calendario calendario){
+			Empleado jefeDepartamento,ArrayList<Empleado> listaEmpleados){
 		_numerosDepartamento = new ArrayList<Integer>();
 		_numerosDepartamento.add(numeroDepartamento);
 		this._jefeDepartamento=jefeDepartamento;
 		this._nombreDepartamento=nombreDepartamento;
 		this._listaEmpleados=listaEmpleados;
-		this._calendario=calendario;
-	}	
-	 public void set_JefeDepartamento(Integer id){//consultar con miguel
-		 _jefeDepartamento.setEmplId(id);
+	}
+	
+	/**
+	 * Cambia el jefe del departamento
+	 * @param id Nuevo jefe del departamento
+	 */
+	public void set_JefeDepartamento(Empleado empl){
+		_jefeDepartamento = empl;
 		 
-	 }
+	}
+	
 	/**
 	 * Constructor en el que no importan los empleados, se usa cuando se crea un 
 	 * departamento
@@ -64,6 +65,7 @@ public class Departamento {
 	public String getNombreDepartamento(){
 		return _nombreDepartamento;
 	}
+	
 	/**
 	 * Setter del nombre del departamento 
 	 * @param String con el nombre del departamento
@@ -102,22 +104,6 @@ public class Departamento {
 	 */
 	public void addNumeroDepartamento(int num){
 		_numerosDepartamento.add(num);
-	}
-
-	/**
-	 * Gtter del calendario
-	 * @return Calendario
-	 */
-	public Calendario getCalendario() {
-		return _calendario;
-	}
-
-	/**
-	 * Setter del calendario
-	 * @param calendario the Calendario to set
-	 */
-	public void setCalendario(Calendario calendario) {
-		this._calendario = calendario;
 	}
 
 }
