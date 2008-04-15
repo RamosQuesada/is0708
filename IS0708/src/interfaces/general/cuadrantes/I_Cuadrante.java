@@ -102,7 +102,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private int meses31[]=new int[7];
 	private int meses30[]=new int[4];
 	
-	private Color colorJefe = new Color(display,110,240,240);
+	private Color colorJefe = new Color(display,120,170,120);
 	private Color color7M = new Color(display,110,110,200);
 	private Color color7T = new Color(display,110,110,160);
 	private Color color4M = new Color(display,110,200,110);
@@ -600,6 +600,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				}
 				if (e.button == 1 && !diaValido && turnoSeleccionado!=null) {
 					ArrayList<Empleado> empleados = vista.getEmpleados();
+					//empleados.remove(0);
 					aplicacion.datos.Empleado emp2=empleados.get(empActVistaMes);
 					//Comprobamos que los empleados tengan el mismo contrato
 					if (empleadoSeleccionado.getContratoId() == emp2.getContratoId()){
@@ -671,9 +672,10 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					dia++;
 				}
 				//Comprueba si el cursor esta situado sobre algun empleado
-				int iEmp = 0;
+				int iEmp = 1;
 				Boolean empEncontrado = false;
 				ArrayList<Empleado> empleados = vista.getEmpleados();
+				//empleados.remove(0);
 				int altoFila = 20;
 				int altoFilaCont = 0;
 				int inicioY = margenSupVistaMes + altoFila;
@@ -891,10 +893,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		int inicioY=margenSupVistaMes+altoFila;
 		//Sacamos la informacion del turno
 		
-		
 		if (turnoSeleccionado!=null) {
 			dibujaBotonPuls(gc,margenIzq+margenNombres+((turnPulsX)*anchoDia),
-					inicioY+((turnPulsY)*altoFila),anchoDia,altoFila);
+					inicioY+((turnPulsY-1)*altoFila),anchoDia,altoFila);
 		}
 		
 		if (diaValido) { //&& diaActVistaMes<iCuad.length && empActVistaMes<iCuad[diaActVistaMes].size()){
@@ -918,23 +919,23 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			
 			Util.cambiarRelleno(display, gc, r-50,g-50,b-50);
 			gc.fillRectangle(inicioX+((diaActVistaMes)*anchoDia),
-					inicioY+((empActVistaMes)*altoFila)-alto,ancho,alto);
+					inicioY+((empActVistaMes-1)*altoFila)-alto,ancho,alto);
 			Util.cambiarRelleno(display, gc, r,g,b);
 			Util.cambiarPincel(display, gc, r-100,g-100,b-100);
 			gc.fillRectangle(inicioX+((diaActVistaMes)*anchoDia)-2,
-					inicioY+((empActVistaMes)*altoFila)-(alto+2),ancho-2,alto-2);
+					inicioY+((empActVistaMes-1)*altoFila)-(alto+2),ancho-2,alto-2);
 			gc.drawRectangle(inicioX+((diaActVistaMes)*anchoDia)-2,
-					inicioY+((empActVistaMes)*altoFila)-(alto+2),ancho-2,alto-2);
+					inicioY+((empActVistaMes-1)*altoFila)-(alto+2),ancho-2,alto-2);
 			gc.drawText("Id. Turno: "+String.valueOf(idTurno),
 					inicioX+((diaActVistaMes)*anchoDia)+2,
-					inicioY+((empActVistaMes)*altoFila)-alto+2,altoFila);
+					inicioY+((empActVistaMes-1)*altoFila)-alto+2,altoFila);
 			gc.drawText(descTurno,
 					inicioX+((diaActVistaMes)*anchoDia)+2,
-					inicioY+((empActVistaMes)*altoFila)-(alto-(altoFila)),altoFila);
+					inicioY+((empActVistaMes-1)*altoFila)-(alto-(altoFila)),altoFila);
 			
 			//Util.darBrillo(display, gc, r, g, b,30);
 			dibujaBotonPuls(gc,margenIzq+margenNombres+((diaActVistaMes)*anchoDia),
-					inicioY+((empActVistaMes)*altoFila),anchoDia,altoFila);
+					inicioY+((empActVistaMes-1)*altoFila),anchoDia,altoFila);
 			//System.out.println("Act. Dia: "+diaActVistaMes+" Long. dia: "+iCuad[diaActVistaMes].size()+" Empleado: "+iCuad[diaActVistaMes].get(empActVistaMes).getEmpl().getNombre());
 		}
 		
@@ -1018,36 +1019,37 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					}
 				ArrayList<Empleado> empleados=vista.getEmpleados();
 				int limI=0;
-				for (int i=0; i < empleados.size(); i++) {
+				for (int i=1; i < empleados.size(); i++) {
 					aplicacion.datos.Empleado e=empleados.get(i);
-					gcFondo.drawText(e.getNombre(), margenIzq, margenSupVistaMes + 20 + i*altoFila);
+					gcFondo.drawText(e.getNombre(), margenIzq, margenSupVistaMes + 20 + (i-1)*altoFila);
 					for (int j=0; j < iCuad.length; j++) {
 						//Despues calculamos el turno a visualizar
 						Boolean encontrado=false;
 						int k=0;
 						while (!encontrado && k<iCuad[j].size()) {
 							if (iCuad[j].get(k).getEmpl().getEmplId()==e.getEmplId()) {	
-								dibujaCasilla(gcFondo, i, j, k, new Color(display,120,170,120));
+								dibujaCasilla(gcFondo, i-1, j, k, new Color(display,120,170,120));
 								encontrado=true;
 							}
 							k++;
 						}
 						if (!encontrado)
-							dibujaCasillaVacia(gcFondo, i, j, blanco,anchoDia,altoFila);
+							dibujaCasillaVacia(gcFondo, i-1, j, blanco,anchoDia,altoFila);
 						//System.out.println("Dia: "+j+" Long. dia: "+iCuad[j].size());
 					}
-					limI=i+1;
+					limI=i;
 				}
 				//Leyenda de los colores
 				if (anchoDia>12 && altoFila>12) {
+					
 					int despX=margenIzq;
 					String j="Jefe";
-					gcFondo.drawText(j,despX,margenSupVistaMes + 20 + (limI+1)*altoFila);
+					//gcFondo.drawText(j,despX,margenSupVistaMes + 20 + (limI+1)*altoFila);
 					despX+=(gcFondo.textExtent(j).x+4);
-					gcFondo.setBackground(colorJefe);
-					gcFondo.fillRectangle(despX, margenSupVistaMes + 20 + (limI+1)*altoFila, anchoDia-5,altoFila-5);
+					//gcFondo.setBackground(colorJefe);
+					//gcFondo.fillRectangle(despX, margenSupVistaMes + 20 + (limI+1)*altoFila, anchoDia-5,altoFila-5);
 					despX+=(anchoDia-5+15);
-					gcFondo.setBackground(blanco);
+					//gcFondo.setBackground(blanco);
 					
 					String m7="7h Mañana";
 					gcFondo.drawText(m7,despX,margenSupVistaMes + 20 + (limI+1)*altoFila);
