@@ -218,7 +218,13 @@ public class Vista {
 	 * @return false si el cuadrante ya existe
 	 */
 	public boolean insertCuadrante(Cuadrante c) {
-		cuadrantes.remove(c);
+		int i=0;
+		while (i<cuadrantes.size()){
+			if (cuadrantes.get(i).getMes()==c.getMes())
+				cuadrantes.remove(i);
+			else
+				i++;
+		}
 		cuadrantes.add(c);
 		insertCache(c, "Cuadrante");
 		return true;
@@ -787,10 +793,6 @@ public class Vista {
 		}
 	}
 	
-	public void insertCuadranteCache(Cuadrante c) {
-		cuadrantes.add(c);
-	}
-
 	public ArrayList<Trabaja> getListaTrabajaDia(int dia, int mes, int anio, String idDepartamento) {
 		Cuadrante c = getCuadrante(mes, anio, idDepartamento);
 		return c.getListaTrabajaDia(dia-1);
