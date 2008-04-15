@@ -738,9 +738,9 @@ public class Controlador {
 		 _db.cambiaNombreDepartamento(NombreAntiguo, NombreNuevo);
 	}
 	/**
-	 * Metodo que a partir de un identificador de departamento y un dia de la
-	 * semana (entero) nos devuelve una lista dividida en horas con sus
-	 * correspondientes limites de numero de empleados maximo y minimo.
+	 * Metodo que a partir de un identificador de departamento y un dia
+	 * nos devuelve una lista dividida en horas con sus correspondientes 
+	 * limites de numero de empleados maximo y minimo.
 	 * 
 	 * @param idDepartamento
 	 * @param Fecha
