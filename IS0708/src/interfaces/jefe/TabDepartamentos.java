@@ -1,7 +1,6 @@
-package interfaces.admin;
+package interfaces.jefe;
 
 import interfaces.I10_Config_departamento;
-import interfaces.I10_Nuevo_departamento;
 
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -15,8 +14,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
@@ -33,17 +30,10 @@ public class TabDepartamentos {
 		this.vista = vista;
 		this.bundle = bundle;
 		this.tabFolder = tabFolder;
-		crearTabAdminDepartamentos();
+		crearTabJefeDepartamentos();
 	}
 	
-	/**
-	 * Crea un tab con un listado de departamentos
-	 * 
-	 * @param tabFolder el tabFolder donde colocarlo
-	 * @author Carlos Sánchez, Agustín y Alberto Benayas
-	 */
-	private void crearTabAdminDepartamentos() {
-		
+	private void crearTabJefeDepartamentos() {
 		TabItem tabItemDepartamentos = new TabItem(tabFolder, SWT.NONE);
 		tabItemDepartamentos.setText(bundle.getString("Departamentos"));
 		tabItemDepartamentos.setImage(vista.getImagenes().getIco_chicos());
@@ -64,17 +54,15 @@ public class TabDepartamentos {
 				| SWT.READ_ONLY);
 		cmbDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 1, 1));
-
-		// ArrayList<String> array = vista.getEmpleadoActual()
-		// .getDepartamentosId();
-		ArrayList<String> array = vista.getNombreTodosDepartamentos();
+		
+		ArrayList<String> array = vista.getNombreDepartamentosJefe(vista.getEmpleadoActual());
 		if (array != null) {
 			for (int i = 0; i < array.size(); i++) {
 				cmbDepartamentos.add(array.get(i));
 			}
 		}
 		cmbDepartamentos.select(0);
-				
+
 		// Composite for Buttons: "New Department" and "Configure Department"
 		Composite cBut = new Composite(cDepartamentos, SWT.LEFT);
 		cBut.setLayout(new GridLayout(2, false));
@@ -87,49 +75,20 @@ public class TabDepartamentos {
 
 		bConfig.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
+				System.out
+						.println("I02 :: Pulsado Configuración departamentos: "
+								+ cmbDepartamentos.getText());
 				new I10_Config_departamento(tabFolder.getShell(), bundle, vista,
-						cmbDepartamentos.getText(),cmbDepartamentos,true);
-			}
-		});
-
-		// Button "New Department"
-		Button bNew = new Button(cBut, SWT.PUSH);
-		bNew.setText(bundle.getString("I02_but_Nuevo_dep"));
-		bNew.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		bNew.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event e) {
-				new I10_Nuevo_departamento(tabFolder.getShell(),bundle,vista,cmbDepartamentos);
-			}
-		});
-		
-		// Button "Delete Department"
-		Button bDel = new Button(cBut, SWT.PUSH);
-		bDel.setText(bundle.getString("I02_but_Del_dep"));
-		bDel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		bDel.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event e) {
-				if(vista.tieneEmpleados(cmbDepartamentos.getText())){
-					MessageBox messageBox = new MessageBox (tabFolder.getShell(), SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
-					messageBox.setText (bundle.getString("Mensaje"));
-					messageBox.setMessage (bundle.getString("I02_err_elim"));
-					e.doit = messageBox.open () == SWT.CLOSE;
-				}else{//si no tiene ningun empleado
-					MessageBox messageBox = new MessageBox (tabFolder.getShell(), SWT.APPLICATION_MODAL | SWT.OK | SWT.CANCEL | SWT.ICON_INFORMATION);
-					messageBox.setText (bundle.getString("Mensaje"));
-					messageBox.setMessage (bundle.getString("I02_confirm_elim_dep"));
-					if(messageBox.open () == SWT.OK){
-						vista.eliminaDepartamento(cmbDepartamentos.getText());
-					}
-				}
+						cmbDepartamentos.getText(),cmbDepartamentos,false);
 			}
 		});
 
 		Composite cInfo = new Composite(cDepartamentos, SWT.BORDER);
 		cInfo.setLayout(new GridLayout(2, false));
 		cInfo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
-		final Text lContenido = new Text(cInfo,SWT.READ_ONLY | SWT.MULTI |SWT.V_SCROLL);
-		lContenido.setEditable(false);
+		final Text lContenido = new Text(cInfo, SWT.READ_ONLY | SWT.MULTI |SWT.V_SCROLL);
 		lContenido.setText(vista.infoDpto(cmbDepartamentos.getText()));
+		lContenido.setEditable(false);
 		lContenido.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 				true, 2, 1));
 		
@@ -141,4 +100,5 @@ public class TabDepartamentos {
 		});
 
 	}
+
 }

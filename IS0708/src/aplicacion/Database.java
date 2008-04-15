@@ -64,9 +64,9 @@ public class Database extends Thread {
 			//String url = "jdbc:mysql://"+ ip +"/" + dbName;
 
 // Descomentar este trozo para usar la base de datos local
-//			userName = "root";
-//			password = "";
-//			url = "jdbc:mysql://localhost/turnomat_bd";
+			userName = "root";
+			password = "";
+			url = "jdbc:mysql://localhost/turnomat_bd";
 
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			//DriverManager.setLoginTimeout(300);
