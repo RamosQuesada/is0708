@@ -755,7 +755,11 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		}
 	}
 	
-	public void setDepartamento(String departamento) {
+	/**
+	 * Asigna el departamento que queremos ver y carga el cuadrante 
+	 * @param departamento
+	 */
+	public void setDepartamentoYCarga(String departamento) {
 		this.departamento = departamento;
 		if (vista.isCacheCargada()) {
 			cargarDeCache();

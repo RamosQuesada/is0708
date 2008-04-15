@@ -34,12 +34,9 @@ import aplicacion.datos.Empleado;
 import aplicacion.utilidades.Util;
 
 /**
- * Interfaz de usuario I-02 :: Ventana principal - Jefe
- * 
- * @author Daniel Dionne
- * 
+ * Interfaz de usuario :: Ventana principal
  */
-public class I02_Principal {
+public class Principal {
 	private Vista vista;
 	private Shell shell;
 	private Display display;
@@ -54,7 +51,7 @@ public class I02_Principal {
 	private DateTime calendario;
 	private Combo cDepartamentos;
 	private I_Cuadrante ic; 
-	//apaño de última hora para ejecutar el algoritmo en un thread
+
 	private int tmAnio, tmMes, tmDia;
 	private String tmDep;
 	private Button itsMagic, bGuardarCambios; 
@@ -62,8 +59,15 @@ public class I02_Principal {
 	private Composite estado;
 	private int primerDiaGenerarCuadrante;
 	
-	public I02_Principal(Shell shell, Display display, ResourceBundle bundle,
-			Locale locale, Vista vista) {
+	/**
+	 * Constructor del interfaz principal.
+	 * @param shell		el shell sobre el que construir la ventana (se instancia en la Vista)
+	 * @param display	display sobre el que se ejecuta la aplicación (también se instancia en la Vista)
+	 * @param bundle	paquete de idioma
+	 * @param locale	locale actual
+	 * @param vista		la Vista
+	 */
+	public Principal(Shell shell, Display display, ResourceBundle bundle, Locale locale, Vista vista) {
 		this.shell = shell;
 		this.display = display;
 		this.bundle = bundle;
@@ -75,37 +79,41 @@ public class I02_Principal {
 	
 	/**
 	 * Este hilo espera a que cargue la caché, y luego carga el cuadrante
-	 * @author Daniel D
+	 * @author Daniel Dionne
 	 */
 	public class CuadranteLoader extends Thread {
 		public synchronized void run() {
 			setName("CuadranteLoader");
 			try {
+				// Espera a que la caché esté cargada
 				while (!vista.isCacheCargada()) {
 					sleep(50);
 				}
 			} catch (Exception e) {}
 			if (!display.isDisposed()) {
+				// Selecciona el día que queremos ver
+				ic.setDia(tmDia, tmMes, tmAnio);
 				display.asyncExec(new Runnable() {
 					public void run() {
+						// Introduce los departamentos en el selector de departamentos
+						// y carga el cuadrante correspondiente 
 						for (int i=0; i<vista.getEmpleadoActual().getDepartamentosId().size(); i++) {
 							cDepartamentos.add(vista.getDepartamento(vista.getEmpleadoActual().getDepartamentosId().get(i)).getNombreDepartamento());
 						}
 						cDepartamentos.setEnabled(true);
 						cDepartamentos.select(0);
 						tmDep = cDepartamentos.getText();
-						ic.setDepartamento(tmDep);
+						ic.setDepartamentoYCarga(tmDep);
 						itsMagic.setEnabled(true);
 					}
 				});
-				ic.setDia(tmDia, tmMes, tmAnio);
 			}
 		}
 	}
 	
 	/**
-	 * Este hilo ejecuta el algoritmo en segundo plano
-	 * @author Daniel D
+	 * Este hilo ejecuta el algoritmo en segundo plano.
+	 * @author Daniel Dionne
 	 */
 	private class AlgoritmoRun extends Thread {
 		public void run() {
@@ -116,20 +124,17 @@ public class I02_Principal {
 					cDepartamentos.setEnabled(false);
 				}
 			});
+			// Mostrar info de debug (si está activada la opción)
 			vista.infoDebug("I02_Principal", "Llamando al algoritmo para la fecha " + tmMes + " de " + tmAnio + ", dep. " + tmDep);
-			// AQUI SE LLAMA AL ALGORITMO
-			// la variable primerDiaGenerarCuadrante lleva el primer día
-
+			// Instanciar el algoritmo
 			algoritmo.TurnoMatic t = new algoritmo.TurnoMatic(primerDiaGenerarCuadrante, tmMes, tmAnio, vista, tmDep);
+			// Ejecutar y obtener resultado
 			final ResultadoTurnoMatic resultado = t.ejecutaAlgoritmo();
-			// quitar cuadrante de la fecha del calendario de la cache
-			// añadir t.getcuadrante a cache
-			
+			// Quitar cuadrante de la fecha del calendario
 			vista.eliminaMesTrabaja(primerDiaGenerarCuadrante, tmMes, tmAnio, tmDep);
+			// Añadir cuadrante nuevo
 			vista.insertCuadrante(resultado.getCuadrante());
-
-			/*vista.eliminaCuadranteCache(tmMes, tmAnio, tmDep);
-			vista.insertCuadranteCache(resultado.getCuadrante());*/
+			// Mostrar resultado, cargar cuadrante en interfaz y redibujar
 			display.asyncExec(new Runnable() {
 				public void run() {
 					MessageBox messageBoxResumen = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK );
@@ -155,33 +160,25 @@ public class I02_Principal {
 		}
 	}
 	
+	/**
+	 * Crea la barra de menú superior de la aplicación.
+	 */
 	private void crearBarraMenu() {
-		// Una barra de menús
-		Menu barra = new Menu(shell, SWT.BAR);
-		shell.setMenuBar(barra);
-		// Con un elemento "archivo"
-		MenuItem archivoItem = new MenuItem(barra, SWT.CASCADE);
-		archivoItem.setText(bundle.getString("I02_men_Archivo"));
+		Menu menu = new Menu(shell, SWT.BAR);
+		shell.setMenuBar(menu);
+		// Elemento "Archivo"
+		MenuItem itemArchivo = new MenuItem(menu, SWT.CASCADE);
+		itemArchivo.setText(bundle.getString("I02_men_Archivo"));
 	
-		MenuItem debugMenu = new MenuItem(barra, SWT.CASCADE);
-		debugMenu.setText("Debug");
-		debugMenu.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event e) {
-				new I19_Excepcion(vista, null);
-			}
-		});
-	
-		// Y un submenú de persiana asociado al elemento
-		Menu submenu = new Menu(shell, SWT.DROP_DOWN);
-		archivoItem.setMenu(submenu);
+		// Submenú de persiana asociado al elemento
+		Menu subMenuArchivo = new Menu(shell, SWT.DROP_DOWN);
+		itemArchivo.setMenu(subMenuArchivo);
 		// Aquí los elementos del submenú
 
 /*		// Item Abrir
 		MenuItem itemAbrir = new MenuItem(submenu, SWT.PUSH);
 		itemAbrir.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				// TODO
-				// System.out.println("Pulsado abrir");
 			}
 		});
 
@@ -193,7 +190,7 @@ public class I02_Principal {
 				+ bundle.getString("I02_men_itm_abriracc").charAt(0));
 */
 		// Item Imprimir
-		MenuItem itemImprimir = new MenuItem(submenu, SWT.PUSH);
+		MenuItem itemImprimir = new MenuItem(subMenuArchivo, SWT.PUSH);
 		itemImprimir.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				if (vista.isCacheCargada()) {
@@ -216,9 +213,10 @@ public class I02_Principal {
 				+ bundle.getString("I02_men_itm_imprimiracc").charAt(0));
 
 		// Item Cerrar sesión
-		MenuItem itemCerrarSesion = new MenuItem(submenu, SWT.PUSH);
+		MenuItem itemCerrarSesion = new MenuItem(subMenuArchivo, SWT.PUSH);
 		itemCerrarSesion.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
+				// TODO
 //				vista.login();
 			}
 		});
@@ -230,7 +228,7 @@ public class I02_Principal {
 		itemCerrarSesion.setEnabled(false);
 		
 		// Item Salir
-		MenuItem itemSalir = new MenuItem(submenu, SWT.PUSH);
+		MenuItem itemSalir = new MenuItem(subMenuArchivo, SWT.PUSH);
 		itemSalir.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				shell.close();
@@ -245,7 +243,7 @@ public class I02_Principal {
 		
 		
 		// Ayuda
-		MenuItem helpMenuHeader = new MenuItem(barra, SWT.CASCADE);
+		MenuItem helpMenuHeader = new MenuItem(menu, SWT.CASCADE);
 		helpMenuHeader.setText(bundle.getString("I02_men_Ayuda"));
 		Menu helpMenu = new Menu(shell, SWT.DROP_DOWN);
 		helpMenuHeader.setMenu(helpMenu);
@@ -259,6 +257,16 @@ public class I02_Principal {
 				new I12_Ayuda(display, locale, bundle, helppath);
 			}
 		});
+		
+		
+		MenuItem menuInforme = new MenuItem(helpMenu, SWT.PUSH);
+		menuInforme.setText(bundle.getString("I02_men_itm_Informe"));
+		menuInforme.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				new I19_Excepcion(vista, null);
+			}
+		});
+
 		helpHelpItem.setAccelerator(SWT.F1);
 		setProgreso("Cargando datos", 10);
 	}
@@ -299,7 +307,7 @@ public class I02_Principal {
 		loader.start();
 		cDepartamentos.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				ic.setDepartamento(cDepartamentos.getText());
+				ic.setDepartamentoYCarga(cDepartamentos.getText());
 				tmDep = cDepartamentos.getText();
 			}
 		});

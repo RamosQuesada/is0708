@@ -1,6 +1,6 @@
 package interfaces.general.mensajeria;
 
-import interfaces.general.I02_Principal;
+import interfaces.general.Principal;
 import interfaces.imagenes.CargadorImagenes;
 
 import java.util.ArrayList;

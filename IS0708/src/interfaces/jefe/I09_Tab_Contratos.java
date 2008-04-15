@@ -1,6 +1,6 @@
 package interfaces.jefe;
 
-import interfaces.general.I02_Principal;
+import interfaces.general.Principal;
 
 import java.util.ArrayList;
 import java.util.Locale;

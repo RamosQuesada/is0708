@@ -1,6 +1,6 @@
 package interfaces;
 
-import interfaces.general.I02_Principal;
+import interfaces.general.Principal;
 import interfaces.jefe.I09_1_Creacion_contratos;
 
 import java.util.ArrayList;
@@ -151,7 +151,7 @@ public class I09_Tab_Contratos extends Thread {
 		this.tabFolder = tabFolder;
 		this.locale = locale;
 		this.indiceJefe = -1;
-		ico_cuadrante = new Image(tabFolder.getDisplay(), I02_Principal.class
+		ico_cuadrante = new Image(tabFolder.getDisplay(), Principal.class
 				.getResourceAsStream("ico_cuadrante.gif"));
 
 		TabItem tabItemContratos = new TabItem(tabFolder, SWT.NONE);
