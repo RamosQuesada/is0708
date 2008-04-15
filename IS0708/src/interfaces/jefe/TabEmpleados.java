@@ -287,8 +287,8 @@ public class TabEmpleados extends Thread{
 				int aux1=tablaEmpleados.getSelectionIndex();
 				if (aux1<0){
 					MessageBox messageBox = new MessageBox (_tabFolder.getShell(), SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
-					messageBox.setText ("Error");
-					messageBox.setMessage ("Para editar debe seleccionar previamente un empleado de la tabla");					
+					messageBox.setText (_bundle.getString("Error"));
+					messageBox.setMessage (_bundle.getString("I02_select_edit_emp"));					
 					e.doit = messageBox.open () == SWT.YES;
 				}else{
 					TableItem[] aux=tablaEmpleados.getSelection();
@@ -308,13 +308,13 @@ public class TabEmpleados extends Thread{
 				int aux1=tablaEmpleados.getSelectionIndex();
 				if (aux1<0){
 					MessageBox messageBox = new MessageBox (_tabFolder.getShell(), SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
-					messageBox.setText ("Error");
-					messageBox.setMessage ("Para Dar de Baja a un empleado debe seleccionar previamente un empleado de la tabla");					
+					messageBox.setText (_bundle.getString("Error"));
+					messageBox.setMessage (_bundle.getString("I02_select_elim_emp"));					
 					e.doit = messageBox.open () == SWT.YES;
 				}else{
 					MessageBox messageBox = new MessageBox (_tabFolder.getShell(), SWT.APPLICATION_MODAL | SWT.OK | SWT.CANCEL | SWT.ICON_WARNING);
-					messageBox.setText ("¡ATENCION!");
-					messageBox.setMessage ("Se dispone a borrar un empleado de la Base de Datos, ¿Desea Continuar?");					
+					messageBox.setText (_bundle.getString("ATENCION"));
+					messageBox.setMessage (_bundle.getString("I02_aviso_elim_emp"));
 					if (e.doit = messageBox.open () == SWT.OK) {					
 						TableItem[] aux=tablaEmpleados.getSelection();
 						idVend = (Integer)Integer.valueOf(aux[0].getText(1));

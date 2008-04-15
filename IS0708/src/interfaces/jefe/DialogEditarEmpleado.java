@@ -174,6 +174,8 @@ public class DialogEditarEmpleado {
 		// Inicio de rellenado de los campos de la ventana segun el empleado seleccionado.
 		
 		final Empleado emp=vista.getEmpleado(idVend);	
+		String aux=String.valueOf(idVend);
+		llNVend.setText(aux);
 		
 		tPassword.setText(emp.getPassword());	
 		tEMail.setText(emp.getEmail());		
@@ -241,10 +243,10 @@ public class DialogEditarEmpleado {
 		cIdioma.select(emp.getIdioma());
 		
 		
-		shell.setText("Editar empleado");
+		shell.setText(bundle.getString("I08_but_EditarEmpleado"));
 		shell.setLayout(layout);
 		
-		bGuardar.setText("Guardar");
+		bGuardar.setText(bundle.getString("Guardar"));
 		bGuardar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		
 		bCancelar.setText(bundle.getString("Cancelar"));
@@ -446,7 +448,7 @@ public class DialogEditarEmpleado {
 								SWT.APPLICATION_MODAL | SWT.ICON_WARNING | SWT.OK
 										| SWT.CANCEL);
 						msgBox.setMessage(bundle.getString("I09_aviso_inconsistencias"));
-						msgBox.setText("Warning");
+						msgBox.setText(bundle.getString("Aviso"));
 						int resp = msgBox.open();
 						if (resp == SWT.OK) {
 							// Si a pesar de todo esta de acuerdo
