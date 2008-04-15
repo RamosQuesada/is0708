@@ -2040,7 +2040,19 @@ public class Database extends Thread {
 			System.err.println("Database :: Error al realizar la consulta del Jefe del Dpto");
 		}
 		return r;
-	}	
+	}
+	
+	public ResultSet getDepartamentoPorNumero(int numero) {
+		ResultSet r = null;
+		try {
+			st = con.createStatement();
+			r = st.executeQuery("SELECT * FROM " + tablaNumerosPorDepartamento + " WHERE Numero="+numero+";");
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println("Database :: Error al realizar la consulta del Numero del Dpto");
+		}
+		return r;
+	}
 
 	/**
 	 * Vacia los contenidos de la tabla especificada

@@ -1092,6 +1092,21 @@ public class Controlador {
 	public boolean insertDepartamentoUsuario(int nvend, String nombre, boolean ultima) {
 		return _db.insertarDepartamentoUsuario(nvend, nombre, ultima);
 	}
+	
+	public boolean existeNumDepartamento(int numero) {
+		try {
+			ResultSet r = _db.getDepartamentoPorNumero(numero);
+			
+			if (r.next())
+				return true;
+			else
+				return false;
+		} catch(SQLException e) {
+			System.err.println("Controlador :: Error en Controlador.existeNumDepartamento");
+		}
+		
+		return false;
+	}
 
 	/***************************************************************************
 	 * Métodos relacionados con mensajes
