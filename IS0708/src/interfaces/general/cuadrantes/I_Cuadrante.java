@@ -1041,6 +1041,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					limI=i;
 				}
 				//Leyenda de los colores
+				/**
 				if (anchoDia>12 && altoFila>12) {
 					
 					int despX=margenIzq;
@@ -1084,7 +1085,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					gcFondo.fillRectangle(despX, margenSupVistaMes + 23 + (limI+2)*altoFila, anchoDia-5,altoFila-5);
 					despX+=(anchoDia-5+15);
 					gcFondo.setBackground(blanco);
-				}
+				}**/
 			}
 		}
 		if (fondo!=null)
