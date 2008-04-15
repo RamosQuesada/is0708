@@ -22,7 +22,7 @@ import aplicacion.mensajeria.Mensaje;
 
 import idiomas.LanguageChanger;
 import interfaces.general.I01_Login;
-import interfaces.general.I02_Principal;
+import interfaces.general.Principal;
 import interfaces.imagenes.CargadorImagenes;
 
 public class Vista {
@@ -34,7 +34,7 @@ public class Vista {
 	private Locale locale;
 
 	private I01_Login login;
-	private I02_Principal i02;
+	private Principal i02;
 	private boolean alive = true;
 	private LanguageChanger l;
 	private Thread conector, loader, cacheUploader;
@@ -550,7 +550,7 @@ public class Vista {
 							"Administrador", "", "", null, 0, "", "admin", 0,
 							0, 0, null, null, null, null, null, 0, 0, 0));
 					identificadoOCancelado = true;
-					i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);
+					i02 = new Principal(shell, shell.getDisplay(), bundle, locale, this);
 				// Login normal
 				} else {
 					emp = getEmpleado(login.getNumeroVendedor());
@@ -570,7 +570,7 @@ public class Vista {
 
 							if (!loader.isAlive())
 								loader.start();
-							i02 = new I02_Principal(shell, shell.getDisplay(), bundle, locale, this);
+							i02 = new Principal(shell, shell.getDisplay(), bundle, locale, this);
 							
 						} else {
 							// Si el password no coincide
