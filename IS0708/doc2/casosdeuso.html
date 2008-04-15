@@ -74,7 +74,7 @@
 					<li><a href="#24">CU 24 - Eliminar contrato</a></li>	
 					<li><a href="#25">CU 25 - Modificar contrato</a></li>	
 					<li><a href="#26">CU 26 - Consultar cuadrantes</a></li>	
-					<li><a href="#27">CU 27 - Generar cuadrante</a></li>	
+					<li><a href="#27">CU 27 - Generar cuadrante para un mes entero</a></li>	
 					<li><a href="#28">CU 28 - Generar sugerencias</a></li>	
 					<li><a href="#29">CU 29 - Enviar mensajes de forma automática</a></li>
 					<li><a href="#30">CU 30 - Ordenar empleados para la elección de vacaciones</a></li>	
@@ -87,6 +87,7 @@
 					<li><a href="#37">CU 37 - Eliminar turno</a></li>
 					<li><a href="#38">CU 38 - Asignar turno inicial</a></li>
 					<li><a href="#39">CU 39 - Configurar el patrón de un contrato</a></li>
+					<li><a href="#40">CU 40 - Generar cuadrante a partir de cualquier día del mes</a></li>
 
 
 
@@ -724,9 +725,9 @@
 
 <!-- Aquí empieza un CU -->			
 				<a name="27"></a>
-				<h1>Caso de uso 27: Generar cuadrante</h1>
+				<h1>Caso de uso 27: Generar cuadrante para un mes entero</h1>
 				<h2>Objetivo en contexto</h2>
-				<p>Generación del cuadrante.</p>
+				<p>Generación del cuadrante para un mes entero.</p>
 				<h2>Precondiciones</h2>
 				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
 				<h2>Postcondiciones si éxito</h2>
@@ -739,8 +740,10 @@
 				<p>1- Elegir la pestaña "Cuadrantes".</p>
 				<p>2- Elegir el departamento para el que se quiere generar el cuadrante.</p> 
 				<p>3- Elegir el mes.</p> 
-				<p>4- Seleccionar opción "Generar cuadrantes".</p>
-				<p>5- La aplicación genera un cuadrante.</p>
+				<p>4- Seleccionar opción "Generar cuadrantes".</p>				
+				<p>5- "Aceptar" si queremos borrar el cuadrante que haya creado anteriormente.</p>
+				<p>6- Pulsar "Sí" a la pregunta de si se quiere calcular el mes entero.</p> 				
+				<p>7- La aplicación genera un cuadrante.</p>
 				<h2>Secuencias alternativas</h2>
 				<p>3a- En el caso de que se obtenga un cuadrante incompleto, además del cuadrante se genera una serie de sugerencias (CU-28).</p>
 				<br><br><br>
@@ -1021,6 +1024,33 @@
 				<br><br><br>
 <!-- Aquí acaba un CU -->	
 
+<!-- Aquí empieza un CU -->			
+				<a name="27"></a>
+				<h1>Caso de uso 40: Generar cuadrante a partir de cualquier día del mes</h1>
+				<h2>Objetivo en contexto</h2>
+				<p>Generación del cuadrante a partir de cualquier día del mes, sin que sea necesario que se genere para un mes entero.</p>
+				<h2>Precondiciones</h2>
+				<p>Estar identificado, y debe ser posible establecer la conexión con la base de datos.</p>
+				<h2>Postcondiciones si éxito</h2>
+				<p>Cuadrante.</p>
+				<h2>Postcondiciones si fallo</h2>
+				<p></p>
+				<h2>Actores</h2>
+				<p>Gerente y jefe de departamento.</p>
+				<h2>Secuencia normal</h2>
+				<p>1- Elegir la pestaña "Cuadrantes".</p>
+				<p>2- Elegir el departamento para el que se quiere generar el cuadrante.</p> 
+				<p>3- Elegir el mes.</p> 
+				<p>4- Elegir el día a partir del que se quiere generar el cuadrante.</p>
+				<p>5- Seleccionar opción "Generar cuadrantes".</p>				
+				<p>6- "Aceptar" si queremos borrar el cuadrante que haya creado anteriormente.</p>
+				<p>7- Pulsar "No" a la pregunta de si se quiere calcular el mes entero.</p> 				
+				<p>8- La aplicación genera un cuadrante.</p>
+				<h2>Secuencias alternativas</h2>
+				<p>3a- En el caso de que se obtenga un cuadrante incompleto, además del cuadrante se genera una serie de sugerencias (CU-28).</p>
+				<br><br><br>
+<!-- Aquí acaba un CU -->
+
 				</div>
 				<h1>Historial de cambios</h1>
 
@@ -1057,7 +1087,7 @@
 
 				<h3>Abril 2008</h3>
 				<p>Se han modificado todos los casos de uso que no seguían exactamente la secuencia indicada.</p>
-				
+				<p>Se ha añadido el caso de uso 40 (Generar cuadrante a partir de cualquier día del mes).</p>
 
 				<br><br>
 
