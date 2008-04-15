@@ -653,12 +653,44 @@ public class I02CuadranteEmpleado {
 			cambiarPincel(gc, 0,0,0);
 
 			if(texto!=null){
-				gc.drawText(texto, margenIzq+dia*sep+sep/2, h+semana*sep2,false);
+				int tamanoFuente=0;
+				if(!activar){
+					if((entrada!=null)&&(Fin!=null)){
+						tamanoFuente=sep/8;
+						cambiarPincel(gc,0,150,0);
+					}
+					else{
+					tamanoFuente=sep/5;
+					cambiarPincel(gc,250,250,250);
+					}
+				}
+				else{
+					tamanoFuente=sep/3;
+				}
+				Font fuente=gc.getFont();
+				gc.setFont(new Font(display,"Times",tamanoFuente,SWT.BOLD));
+				String text = texto;
+		        Point textSize = gc.textExtent(text);
+		        gc.drawText(text,margenIzq+dia*sep+sep/2-textSize.x/2, h+semana*sep2+textSize.y/100,false);
+		        cambiarPincel(gc,0,0,0);
+				gc.getFont().dispose();
+				gc.setFont(fuente);
 			}
+
 			if((entrada!=null)&&(Fin!=null)){
 				String inicio =entrada.getHours()+":"+entrada.getMinutes();
 				String fin =Fin.getHours()+":"+Fin.getMinutes();
-				gc.drawText(inicio+"-"+fin, margenIzq+dia*sep, h+semana*sep2+sep2/2,false);
+				int tamanoFuente=sep/8;
+				Font fuente=gc.getFont();
+				gc.setFont(new Font(display,"Verdana",tamanoFuente,SWT.NORMAL));
+				String text1 = inicio;
+				String text2 = fin;
+		        Point textSize = gc.textExtent(text1);
+		        Point textSize2 = gc.textExtent(text2);
+		        gc.drawText(text1,margenIzq+dia*sep+sep/2-textSize.x/2, h+semana*sep2+sep2-textSize2.y-textSize.y,false);
+		        gc.drawText(text2,margenIzq+dia*sep+sep/2-textSize2.x/2, h+semana*sep2+sep2-textSize2.y,false);
+				gc.getFont().dispose();
+				gc.setFont(fuente);
 			}
 			else{
 				gc.drawText("", margenIzq+dia*sep, h+semana*sep2+sep2/2,false);
