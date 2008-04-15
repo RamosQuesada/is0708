@@ -4,6 +4,7 @@
 package interfaces.jefe;
 
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.layout.GridLayout;
@@ -12,6 +13,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
@@ -71,6 +73,7 @@ public class I20_Configuracion_Dias {
 
 	private Composite cNumeros = null;
 	private Composite padre;
+	private ResourceBundle bundle;
 
 	/**
 	 * This method initializes sShell	
@@ -444,11 +447,12 @@ public class I20_Configuracion_Dias {
 		scroll.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 	}
 	
-	public I20_Configuracion_Dias(Vista vista, String departamento, Composite padre){
+	public I20_Configuracion_Dias(Vista vista, String departamento, Composite padre, ResourceBundle bundle){
 		this.vista=vista;
 		this.departamento=departamento;
 	//	this.sShell=shell;
 		this.padre=padre;
+		this.bundle = bundle;
 	//	createSShell();
 		createScroll();
 	}
@@ -507,6 +511,11 @@ public class I20_Configuracion_Dias {
 	
 	public void setGridData(GridData g){
 		this.scroll.setLayoutData(g);
+	}
+
+	public Composite getControl() {
+		// TODO Auto-generated method stub
+		return scroll;
 	}
 
 }
