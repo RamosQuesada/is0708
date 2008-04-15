@@ -34,7 +34,7 @@ public class Vista {
 	private Locale locale;
 
 	private ShellLogin login;
-	private ShellPrincipal i02;
+	private ShellPrincipal shellPrincipal;
 	private boolean alive = true;
 	private LanguageChanger l;
 	private Thread conector, loader, cacheUploader;
@@ -525,7 +525,7 @@ public class Vista {
 	 */
 	public void login() {
 		// Si la ventana de aplicación está abierta, ocultarla
-		if (i02!=null && !i02.getShell().isDisposed()) i02.getShell().setVisible(false);
+		if (shellPrincipal!=null && !shellPrincipal.getShell().isDisposed()) shellPrincipal.getShell().setVisible(false);
 		
 		login = new ShellLogin(shell, bundle, db, imagenes);
 		boolean identificadoOCancelado = false;
@@ -550,7 +550,7 @@ public class Vista {
 							"Administrador", "", "", null, 0, "", "admin", 0,
 							0, 0, null, null, null, null, null, 0, 0, 0));
 					identificadoOCancelado = true;
-					i02 = new ShellPrincipal(shell, shell.getDisplay(), bundle, locale, this);
+					shellPrincipal = new ShellPrincipal(shell, shell.getDisplay(), bundle, locale, this);
 				// Login normal
 				} else {
 					emp = getEmpleado(login.getNumeroVendedor());
@@ -570,7 +570,7 @@ public class Vista {
 
 							if (!loader.isAlive())
 								loader.start();
-							i02 = new ShellPrincipal(shell, shell.getDisplay(), bundle, locale, this);
+							shellPrincipal = new ShellPrincipal(shell, shell.getDisplay(), bundle, locale, this);
 							
 						} else {
 							// Si el password no coincide
@@ -601,9 +601,7 @@ public class Vista {
 				// Se ha pulsado el botón Cancelar o cerrar, por tanto hay que salir de la aplicación
 				shell.getDisplay().dispose();
 				identificadoOCancelado = true; // Para que salga del bucle
-				if (db.conexionAbierta()) {
-					db.cerrarConexion();
-				}
+				stop();
 			}
 		}
 	}
@@ -615,17 +613,19 @@ public class Vista {
 		try {
 			alive = false;
 			loader.interrupt();
-			i02.dispose();
+			if (shellPrincipal!=null) shellPrincipal.dispose();
 			display.dispose();
 		}
 		catch(Exception e) {
-			System.err.println("Vista ::\tError al cerrar la aplicación.");
+			String error = "Vista ::\tError al cerrar la aplicación:\n";
+			if (e.getMessage()!=null) error += e.getMessage();
+			else e.printStackTrace();
+			System.err.println(error);
 		};
 	}
 
 	/**
 	 * Devuelve el display de la aplicación.
-	 * 
 	 * @return el display de la aplicación
 	 */
 	public Display getDisplay() {
@@ -652,7 +652,7 @@ public class Vista {
 	 *            el String a mostrar
 	 */
 	public void setTextoEstado(String estado) {
-		i02.setTextoEstado(estado);
+		shellPrincipal.setTextoEstado(estado);
 	}
 
 	/**
@@ -1104,7 +1104,7 @@ public class Vista {
 			if (i02!=null) i02.setProgreso("", 100);
 		}
 		*/
-		if (i02!=null) i02.setProgreso(s, prog);
+		if (shellPrincipal!=null) shellPrincipal.setProgreso(s, prog);
 	}
 
 	/**
