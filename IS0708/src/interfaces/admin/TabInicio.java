@@ -24,12 +24,12 @@ import aplicacion.Vista;
  * de la base de datos del menu de administrador
  * @author Jose Maria Martin
  */
-public class I04_Tab_AdminInicio {
+public class TabInicio {
 	private ResourceBundle bundle;
 	private Vista vista;
 	private TabFolder tabFolder;
 
-	public I04_Tab_AdminInicio(final ResourceBundle bundle, final Vista vista,
+	public TabInicio(final ResourceBundle bundle, final Vista vista,
 		final TabFolder tabFolder) {
 		this.bundle = bundle;
 		this.vista = vista;
@@ -91,7 +91,7 @@ public class I04_Tab_AdminInicio {
 				messageBox.setText("Reset BD");
 				messageBox.setMessage(bundle.getString("I30_confirm_config"));
 				if(messageBox.open()==SWT.OK){
-					new I30_Info_BD(tabFolder.getShell(), bundle, vista);
+					new ShellInfoBD(tabFolder.getShell(), bundle, vista);
 				}
 			}
 		});

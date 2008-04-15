@@ -21,7 +21,7 @@ import aplicacion.Database;
  * Interfaz de usuario I-01 :: Identificaci�n
  * @author Daniel Dionne
  */
-public class I01_Login {
+public class ShellLogin {
 	private Shell padre = null;
 	private ResourceBundle bundle;
 	private int numeroVendedor;
@@ -35,7 +35,7 @@ public class I01_Login {
 	private CargadorImagenes imagenes;
 	
 	
-	public I01_Login(Shell padre, ResourceBundle bundle, Database db, CargadorImagenes imagenes) {
+	public ShellLogin(Shell padre, ResourceBundle bundle, Database db, CargadorImagenes imagenes) {
 		this.padre = padre;
 		this.bundle = bundle;
 		this.db = db;

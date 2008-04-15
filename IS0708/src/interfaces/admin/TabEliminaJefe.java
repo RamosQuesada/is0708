@@ -36,7 +36,7 @@ import aplicacion.datos.Empleado;
  * 
  * @author Jose Maria Martin
  */
-public class I05_Tab_EliminaJefe {
+public class TabEliminaJefe {
 
 	private ResourceBundle bundle;
 	private Vista vista;
@@ -47,7 +47,7 @@ public class I05_Tab_EliminaJefe {
 	private Combo cmbJefes;
 	private Label datosJefe;
 
-	public I05_Tab_EliminaJefe(final ResourceBundle bundle, final Vista vista,
+	public TabEliminaJefe(final ResourceBundle bundle, final Vista vista,
 			final TabFolder tabFolder) {
 		this.bundle = bundle;
 		this.vista = vista;

@@ -33,17 +33,17 @@ import aplicacion.Vista;
 import aplicacion.datos.Empleado;
 import aplicacion.utilidades.Util;
 import impresion.Imprimir;
-import interfaces.general.I01_Login;
+import interfaces.general.ShellLogin;
 
 import java.util.Calendar;
 import java.util.ResourceBundle;
 
-public class I08_2_Consultar_empleado {
+public class DialogConsultarEmpleado {
 	private Shell padre = null;
 	private Empleado empleado;
 	private ResourceBundle bundle;
 	private Vista vista;
-	public I08_2_Consultar_empleado(Shell padre, Empleado empleado, Vista vista, ResourceBundle bundle) {
+	public DialogConsultarEmpleado(Shell padre, Empleado empleado, Vista vista, ResourceBundle bundle) {
 		this.padre = padre;
 		this.empleado = empleado;
 		this.bundle = bundle;

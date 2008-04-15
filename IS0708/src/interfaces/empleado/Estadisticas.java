@@ -33,13 +33,13 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 import aplicacion.Vista;
 
-public class I07_empleado_estadisticas {
+public class Estadisticas {
 	
 	private ResourceBundle bundle;
 	private Vista vista;
 	private TabFolder tabFolder;
 	private Label lFondo;
-	public I07_empleado_estadisticas(final ResourceBundle bundle, final Vista vista,
+	public Estadisticas(final ResourceBundle bundle, final Vista vista,
 			final TabFolder tabFolder) {
 		this.bundle = bundle;
 		this.vista = vista;

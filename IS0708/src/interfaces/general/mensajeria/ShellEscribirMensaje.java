@@ -19,18 +19,18 @@ import aplicacion.Vista;
 import aplicacion.mensajeria.Mensaje;
 import aplicacion.mensajeria.Mensajeria;
 
-import interfaces.general.I13_Elegir_empleado;
+import interfaces.general.DialogElegirEmpleado;
 
 import java.util.ResourceBundle;
 
-public class I14_Escribir_mensaje {
+public class ShellEscribirMensaje {
 	private Shell _padre = null;
 	private ResourceBundle _bundle;
 	private Vista _vista;
 	private Shell shell;
-	private I13_Elegir_empleado tNombre;
+	private DialogElegirEmpleado tNombre;
 	
-	public I14_Escribir_mensaje(Shell padre, ResourceBundle bundle, Vista vista, Mensaje mensaje, int idEmpl, String destinatario) {
+	public ShellEscribirMensaje(Shell padre, ResourceBundle bundle, Vista vista, Mensaje mensaje, int idEmpl, String destinatario) {
 		_padre = padre;
 		_bundle = bundle;
 		_vista = vista;
@@ -65,7 +65,7 @@ public class I14_Escribir_mensaje {
 		if (mensaje==null) {
 			if (idEmpl==0) {
 				lNombre.setText(_bundle.getString("I14_lab_Para"));
-				tNombre = new I13_Elegir_empleado(cDatosMensaje,_vista, _bundle);
+				tNombre = new DialogElegirEmpleado(cDatosMensaje,_vista, _bundle);
 			}
 			else {
 				lNombre.setText(_bundle.getString("I14_lab_Para")+ ": " + destinatario);
@@ -183,7 +183,7 @@ public class I14_Escribir_mensaje {
 			bResponder.addSelectionListener (new SelectionAdapter () {
 				public void widgetSelected (SelectionEvent e) {
 					shell.dispose();
-					new I14_Escribir_mensaje(_padre,_bundle,_vista,null,mensaje.getRemitente(),_vista.getEmpleado(mensaje.getRemitente()).getNombreCompleto());
+					new ShellEscribirMensaje(_padre,_bundle,_vista,null,mensaje.getRemitente(),_vista.getEmpleado(mensaje.getRemitente()).getNombreCompleto());
 				}
 			});
 			

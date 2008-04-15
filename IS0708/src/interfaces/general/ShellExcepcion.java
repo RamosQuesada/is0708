@@ -14,9 +14,9 @@ import org.eclipse.swt.widgets.Text;
 
 import aplicacion.Vista;
 
-public class I19_Excepcion {
+public class ShellExcepcion {
 	private Shell shell;
-	public I19_Excepcion(Vista v, Exception excepcion) {
+	public ShellExcepcion(Vista v, Exception excepcion) {
 		final Vista vista = v;
 		Display d;
 		if (excepcion != null) {

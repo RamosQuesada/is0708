@@ -1,6 +1,6 @@
 package interfaces.admin;
 
-import interfaces.general.Principal;
+import interfaces.general.ShellPrincipal;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -28,7 +28,7 @@ import aplicacion.datos.Contrato;
 import aplicacion.datos.Empleado;
 import aplicacion.datos.Turno;
 
-public class I06_Tab_Contratos_Admin extends Thread {
+public class TabContratosAdmin extends Thread {
 	final ResourceBundle bundle;
 	final Vista vista;
 	final TabFolder tabFolder;
@@ -165,7 +165,7 @@ public class I06_Tab_Contratos_Admin extends Thread {
 	 *            la herramienta de idiomas
 	 * @author Jose Maria Martin
 	 */
-	public I06_Tab_Contratos_Admin(final TabFolder tabFolder, final Vista vista,
+	public TabContratosAdmin(final TabFolder tabFolder, final Vista vista,
 			final ResourceBundle bundle, final Locale locale) {
 		this.bundle = bundle;
 		this.vista = vista;

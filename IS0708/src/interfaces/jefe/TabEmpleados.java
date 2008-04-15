@@ -40,7 +40,7 @@ import aplicacion.datos.Empleado;
  *
  * Muestra en la una tabla la informacion de todos los empleados de un jefe de departamento.
  */
-public class I02_Tab_Jefe_Empleados extends Thread{
+public class TabEmpleados extends Thread{
 	
 	final ResourceBundle _bundle;
 	final Vista _vista;
@@ -162,7 +162,7 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 	 * @param tabFolder el tabFolder donde colocarlo
 	 * @author Daniel Dionne
 	 */
-	public I02_Tab_Jefe_Empleados(TabFolder tabFolder, Vista vista, ResourceBundle bundle ) {
+	public TabEmpleados(TabFolder tabFolder, Vista vista, ResourceBundle bundle ) {
 		_bundle = bundle;
 		_vista = vista;
 		_tabFolder = tabFolder;
@@ -272,7 +272,7 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 
 		bEmplNuevo.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				new I08_1_Anadir_empleado(_tabFolder.getShell(), _bundle, _vista);
+				new DialogAnadirEmpleado(_tabFolder.getShell(), _bundle, _vista);
 				mostrarEmpleados();
 			}
 		});
@@ -293,7 +293,7 @@ public class I02_Tab_Jefe_Empleados extends Thread{
 				}else{
 					TableItem[] aux=tablaEmpleados.getSelection();
 					idVend = (Integer)Integer.valueOf(aux[0].getText(1));
-					new I08_1_Editar_empleado(_tabFolder.getShell(),_bundle, _vista,idVend);
+					new DialogEditarEmpleado(_tabFolder.getShell(),_bundle, _vista,idVend);
 				}
 			}
 		});

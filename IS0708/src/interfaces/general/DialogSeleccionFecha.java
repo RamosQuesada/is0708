@@ -20,7 +20,7 @@ import java.sql.Date;
 
 import aplicacion.Vista;
 
-public class I17_Seleccion_fecha {
+public class DialogSeleccionFecha {
 	private Shell padre = null;
 	private Text texto_asociado;
 	//private Double fechaNumerica;
@@ -29,7 +29,7 @@ public class I17_Seleccion_fecha {
 	private Date fecha;
 	private Date fechaAnt;
 	private Shell shell; 
-	public I17_Seleccion_fecha(Shell padre) {
+	public DialogSeleccionFecha(Shell padre) {
 		this.padre = padre;
 		mostrarVentana();
 	}

@@ -1,6 +1,6 @@
 package interfaces;
 
-import interfaces.general.I17_Seleccion_fecha;
+import interfaces.general.DialogSeleccionFecha;
 
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -32,7 +32,7 @@ public class I18_Cambio_horario {
 	private Shell padre = null;
 	private ResourceBundle _bundle;
 	
-	private I17_Seleccion_fecha ventana;
+	private DialogSeleccionFecha ventana;
 	private Text cFechaInicio;
 	private Text cFechaFin;
 	private Date iFechaInicio;
@@ -90,7 +90,7 @@ public class I18_Cambio_horario {
 		//Introducimos los valores y eventos de Fecha Inicio
 		bFechaInicio.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shell);
+				DialogSeleccionFecha i17 = new DialogSeleccionFecha(shell);
 				while (!i17.isDisposed()) {
 					if (!shell.getDisplay().readAndDispatch()) {
 						shell.getDisplay().sleep();
@@ -109,7 +109,7 @@ public class I18_Cambio_horario {
 		//Introducimos los valores y eventos de Fecha Inicio
 		bFechaFin.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(shell);
+				DialogSeleccionFecha i17 = new DialogSeleccionFecha(shell);
 				while (!i17.isDisposed()) {
 					if (!shell.getDisplay().readAndDispatch()) {
 						shell.getDisplay().sleep();

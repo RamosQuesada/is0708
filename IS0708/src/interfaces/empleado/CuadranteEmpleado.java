@@ -17,7 +17,7 @@ import aplicacion.Vista;
 import aplicacion.datos.Empleado;
 import aplicacion.datos.Turno;
 
-public class I02CuadranteEmpleado {
+public class CuadranteEmpleado {
 	
 	private Vista vista;
 	private boolean redibujar;
@@ -60,7 +60,7 @@ public class I02CuadranteEmpleado {
 	}
 	
 	//private ArrayList<Turno> tiposTurno;
-	private I02_threadEmpl thread;
+	private ThreadsCuadrantes thread;
 	//private I02_cuadrEmpl superior;
 	private GC gc;
 
@@ -154,9 +154,9 @@ public class I02CuadranteEmpleado {
 	 * 						el cuadrante a partir del margen izquierdo, dejando un espacio para
 	 * 						los nombres.
 	 */
-	public I02CuadranteEmpleado(Display d, int subdivisiones, int horaInicio, int horaFin, int margenIzq, 
+	public CuadranteEmpleado(Display d, int subdivisiones, int horaInicio, int horaFin, int margenIzq, 
 			int margenDer, int margenSup, int margenInf, int margenNombres,ResourceBundle bundle,Empleado empleado,
-			Date fecha,Vista vista,I02_cuadrEmpl sup) {
+			Date fecha,Vista vista,Cuadrantes sup) {
 		display = d;
 		_bundle=bundle;
 		this.vista=vista;
@@ -359,7 +359,7 @@ public class I02CuadranteEmpleado {
 				
 			}
 		}
-		thread = new I02_threadEmpl(this);
+		thread = new ThreadsCuadrantes(this);
 		
 		thread.start();
 	

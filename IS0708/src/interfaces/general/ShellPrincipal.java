@@ -19,16 +19,13 @@ import java.sql.Date;
 import impresion.Imprimir;
 import interfaces.I10_Config_departamento;
 import interfaces.I10_Nuevo_departamento;
-import interfaces.admin.I03_Tab_NuevoJefe;
-import interfaces.admin.I04_Tab_AdminInicio;
-import interfaces.admin.I05_Tab_EliminaJefe;
-import interfaces.admin.I06_Tab_Contratos_Admin;
-import interfaces.empleado.I02_cuadrEmpl;
-import interfaces.empleado.I07_empleado_estadisticas;
+import interfaces.admin.*;
+import interfaces.empleado.Cuadrantes;
+import interfaces.empleado.Estadisticas;
 import interfaces.general.cuadrantes.I_Cuadrante;
-import interfaces.general.mensajeria.I02_Tab_Mensajeria;
-import interfaces.jefe.I02_Tab_Jefe_Empleados;
-import interfaces.jefe.I09_Tab_Contratos;
+import interfaces.general.mensajeria.TabMensajeria;
+import interfaces.jefe.TabEmpleados;
+import interfaces.jefe.TabContratos;
 import aplicacion.Vista;
 import aplicacion.datos.Empleado;
 import aplicacion.utilidades.Util;
@@ -36,7 +33,7 @@ import aplicacion.utilidades.Util;
 /**
  * Interfaz de usuario :: Ventana principal
  */
-public class Principal {
+public class ShellPrincipal {
 	private Vista vista;
 	private Shell shell;
 	private Display display;
@@ -67,7 +64,7 @@ public class Principal {
 	 * @param locale	locale actual
 	 * @param vista		la Vista
 	 */
-	public Principal(Shell shell, Display display, ResourceBundle bundle, Locale locale, Vista vista) {
+	public ShellPrincipal(Shell shell, Display display, ResourceBundle bundle, Locale locale, Vista vista) {
 		this.shell = shell;
 		this.display = display;
 		this.bundle = bundle;
@@ -189,7 +186,7 @@ public class Principal {
 		itemAbrir.setAccelerator(SWT.MOD1
 				+ bundle.getString("I02_men_itm_abriracc").charAt(0));
 */
-		// Item Imprimir
+		// Archivo - Imprimir
 		MenuItem itemImprimir = new MenuItem(subMenuArchivo, SWT.PUSH);
 		itemImprimir.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
@@ -212,7 +209,7 @@ public class Principal {
 		itemImprimir.setAccelerator(SWT.MOD1
 				+ bundle.getString("I02_men_itm_imprimiracc").charAt(0));
 
-		// Item Cerrar sesión
+		// Archivo - Cerrar sesión
 		MenuItem itemCerrarSesion = new MenuItem(subMenuArchivo, SWT.PUSH);
 		itemCerrarSesion.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
@@ -220,26 +217,22 @@ public class Principal {
 //				vista.login();
 			}
 		});
-		// Texto del item de menú
 		itemCerrarSesion.setText(bundle.getString("I02_men_itm_CerrarSes") + "\tCtrl+"
 				+ bundle.getString("I02_men_itm_cerrarSesacc"));
 		// Acceso rápido (ctrl+c)
 		itemCerrarSesion.setAccelerator(SWT.MOD1 + bundle.getString("I02_men_itm_cerrarSesacc").charAt(0));
 		itemCerrarSesion.setEnabled(false);
 		
-		// Item Salir
+		// Archivo - Salir
 		MenuItem itemSalir = new MenuItem(subMenuArchivo, SWT.PUSH);
 		itemSalir.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				shell.close();
 			}
 		});
-		// Texto del item de menú
-		itemSalir.setText(bundle.getString("I02_men_itm_Salir") + "\tCtrl+"
-				+ bundle.getString("I02_men_itm_saliracc"));
+		itemSalir.setText(bundle.getString("I02_men_itm_Salir") + "\tCtrl+" + bundle.getString("I02_men_itm_saliracc"));
 		// Acceso rápido (ctrl+s)
-		itemSalir.setAccelerator(SWT.MOD1
-				+ bundle.getString("I02_men_itm_saliracc").charAt(0));
+		itemSalir.setAccelerator(SWT.MOD1 + bundle.getString("I02_men_itm_saliracc").charAt(0));
 		
 		
 		// Ayuda
@@ -248,27 +241,28 @@ public class Principal {
 		Menu helpMenu = new Menu(shell, SWT.DROP_DOWN);
 		helpMenuHeader.setMenu(helpMenu);
 
+		// Ayuda - Ayuda
 		MenuItem helpHelpItem = new MenuItem(helpMenu, SWT.PUSH);
 		helpHelpItem.setText(bundle.getString("I02_men_itm_Ayuda") + "\tF1");
-		// display
 		helpHelpItem.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				String helppath = "/Ayuda/" + locale.getCountry() + "/index.html";
-				new I12_Ayuda(display, locale, bundle, helppath);
+				new ShellAyuda(display, locale, bundle, helppath);
 			}
 		});
 		
-		
+		// Ayuda - Enviar informe
 		MenuItem menuInforme = new MenuItem(helpMenu, SWT.PUSH);
 		menuInforme.setText(bundle.getString("I02_men_itm_Informe"));
 		menuInforme.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				new I19_Excepcion(vista, null);
+				new ShellExcepcion(vista, null);
 			}
 		});
 
 		helpHelpItem.setAccelerator(SWT.F1);
-		setProgreso("Cargando datos", 10);
+		
+		// TODO estaría guay un "acerca de"
 	}
 
 	private void crearTabJefeCuadrantes(TabFolder tabFolder) {
@@ -442,136 +436,28 @@ public class Principal {
 	/**
 	 * Crea un tab de mensajería
 	 * 
-	 * @param tabFolder
-	 *            el tabFolder donde colocarlo
-	 * @author Daniel Dionne
+	 * @param tabFolder el tabFolder donde colocarlo
 	 */
 	private void crearTabMensajes(TabFolder tabFolder) {
-		new I02_Tab_Mensajeria(tabFolder, vista, bundle);
+		new TabMensajeria(tabFolder, vista, bundle);
 	}
 
 	/**
 	 * Crea un tab con un listado de empleados
 	 * 
-	 * @param tabFolder
-	 *            el tabFolder donde colocarlo
-	 * @author Daniel Dionne
+	 * @param tabFolder el tabFolder donde colocarlo
 	 */
 	private void crearTabJefeEmpleados(TabFolder tabFolder) {
-		new I02_Tab_Jefe_Empleados(tabFolder, vista, bundle);
+		new TabEmpleados(tabFolder, vista, bundle);
 	}
 
 	/**
-	 * Crea un tab con un listado de departamentos
+	 * Crea un tab de admin de departamentos
 	 * 
-	 * @param tabFolder
-	 *            el tabFolder donde colocarlo
-	 * @author Daniel Dionne && Carlos Sánchez
+	 * @param tabFolder el tabFolder donde colocarlo
 	 */
 	private void crearTabAdminDepartamentos(TabFolder tabFolder) {
-		TabItem tabItemDepartamentos = new TabItem(tabFolder, SWT.NONE);
-		tabItemDepartamentos.setText(bundle.getString("Departamentos"));
-		tabItemDepartamentos.setImage(vista.getImagenes().getIco_chicos());
-
-		final Composite cDepartamentos = new Composite(tabFolder, SWT.NONE);
-		tabItemDepartamentos.setControl(cDepartamentos);
-
-		cDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-				true, 1, 1));
-		cDepartamentos.setLayout(new GridLayout(3, false));
-
-		Label lDepartamentos = new Label(cDepartamentos, SWT.LEFT);
-		lDepartamentos.setText(bundle.getString("Departamento"));
-		lDepartamentos.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
-				false, 1, 1));
-
-		final Combo cmbDepartamentos = new Combo(cDepartamentos, SWT.BORDER
-				| SWT.READ_ONLY);
-		cmbDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-				false, 1, 1));
-
-		// ArrayList<String> array = vista.getEmpleadoActual()
-		// .getDepartamentosId();
-		ArrayList<String> array = vista.getNombreTodosDepartamentos();
-		if (array != null) {
-			for (int i = 0; i < array.size(); i++) {
-				cmbDepartamentos.add(array.get(i));
-			}
-		}
-		// cmbDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
-		cmbDepartamentos.select(0);
-		
-
-		
-		// Composite for Buttons: "New Department" and "Configure Department"
-		Composite cBut = new Composite(cDepartamentos, SWT.LEFT);
-		cBut.setLayout(new GridLayout(2, false));
-
-		// Button "Configure Department"
-		Button bConfig = new Button(cBut, SWT.PUSH);
-		bConfig.setText(bundle.getString("I02_but_Config_dep"));
-		bConfig.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1,
-				1));
-
-		bConfig.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event e) {
-				System.out
-						.println("I02 :: Pulsado Configuración departamentos: "
-								+ cmbDepartamentos.getText());
-				new I10_Config_departamento(shell, bundle, vista,
-						cmbDepartamentos.getText(),cmbDepartamentos,true);
-			}
-		});
-
-		// Button "New Department"
-		Button bNew = new Button(cBut, SWT.PUSH);
-		bNew.setText(bundle.getString("I02_but_Nuevo_dep"));
-		bNew.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		bNew.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event e) {
-				// System.out.println("I02 :: Pulsado Nuevo Departamento");
-				new I10_Nuevo_departamento(shell,bundle,vista,cmbDepartamentos);
-			}
-		});
-		
-		// Button "Delete Department"
-		Button bDel = new Button(cBut, SWT.PUSH);
-		bDel.setText(bundle.getString("I02_but_Del_dep"));
-		bDel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		bDel.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event e) {
-				if(vista.tieneEmpleados(cmbDepartamentos.getText())){
-					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
-					messageBox.setText (bundle.getString("Mensaje"));
-					messageBox.setMessage (bundle.getString("I02_err_elim"));
-					e.doit = messageBox.open () == SWT.CLOSE;
-				}else{//si no tiene ningun empleado
-					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.CANCEL | SWT.ICON_INFORMATION);
-					messageBox.setText (bundle.getString("Mensaje"));
-					messageBox.setMessage (bundle.getString("I02_confirm_elim_dep"));
-					if(messageBox.open () == SWT.OK){
-						vista.eliminaDepartamento(cmbDepartamentos.getText());
-					}
-				}
-			}
-		});
-
-		Composite cInfo = new Composite(cDepartamentos, SWT.BORDER);
-		cInfo.setLayout(new GridLayout(2, false));
-		cInfo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
-		final Text lContenido = new Text(cInfo,SWT.READ_ONLY | SWT.MULTI |SWT.V_SCROLL);
-		lContenido.setEditable(false);
-		lContenido.setText(vista.infoDpto(cmbDepartamentos.getText()));
-		lContenido.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-				true, 2, 1));
-		
-		//listener para el combo y mostrar la info debajo
-		cmbDepartamentos.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event e) {
-				lContenido.setText(vista.infoDpto(cmbDepartamentos.getText()));
-			}
-		});
-
+		new TabDepartamentos(tabFolder, vista, bundle);
 	}
 
 	private void crearTabJefeDepartamentos(TabFolder tabFolder) {
@@ -650,7 +536,7 @@ public class Principal {
 	 * @author Jose Maria Martin
 	 */
 	private void crearTabJefeContratos(TabFolder tabFolder) {
-		new I09_Tab_Contratos(tabFolder,vista,bundle,locale);
+		new TabContratos(tabFolder,vista,bundle,locale);
 	}
 	
 	/**
@@ -661,7 +547,7 @@ public class Principal {
 	 * @author Jose Maria Martin
 	 */
 	private void crearTabAdminContratos(TabFolder tabFolder) {
-		new I06_Tab_Contratos_Admin(tabFolder,vista,bundle,locale);
+		new TabContratosAdmin(tabFolder,vista,bundle,locale);
 	}
 
 	/**
@@ -672,7 +558,7 @@ public class Principal {
 	 * @author Roberto Garcia & Jose Maria Martin
 	 */
 	private void crearTabAdminInicio(TabFolder tabFolder) {
-		new I04_Tab_AdminInicio(bundle,vista,tabFolder);
+		new TabInicio(bundle,vista,tabFolder);
 	}
 
 	/**
@@ -683,7 +569,7 @@ public class Principal {
 	 * @author Roberto Garcia
 	 */
 	private void crearTabAdminNuevoJefe(TabFolder tabFolder) {
-		new I03_Tab_NuevoJefe(tabFolder,bundle,vista);
+		new TabNuevoJefe(tabFolder,bundle,vista);
 
 	}
 
@@ -695,7 +581,7 @@ public class Principal {
 	 * @author David Rodilla
 	 */
 	private void crearTabAdminEliminaJefe(TabFolder tabFolder) {
-		new I05_Tab_EliminaJefe(bundle,vista,tabFolder);
+		new TabEliminaJefe(bundle,vista,tabFolder);
 	}
 
 	/**
@@ -744,7 +630,7 @@ public class Principal {
 		// final Label lCuadr1=new Label (cCuadrantesDer, SWT.CENTER);
 		// lCuadr1.setText("Aquí se mostrarían los cuadrantes");
 		Empleado empleado = this.vista.getEmpleadoActual();
-		final I02_cuadrEmpl cuadrante = new I02_cuadrEmpl(cCuadrantesDer,
+		final Cuadrantes cuadrante = new Cuadrantes(cCuadrantesDer,
 				false, bundle, empleado, fechaSeleccionada, vista);
 		cuadrante.setSemanal();
 
@@ -820,7 +706,7 @@ public class Principal {
 	}
 
 	private void crearTabEmpleadoEstadisticas(TabFolder tabFolder) {
-		new I07_empleado_estadisticas(bundle,vista,tabFolder);
+		new Estadisticas(bundle,vista,tabFolder);
 	}
 
 	/**

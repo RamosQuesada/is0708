@@ -16,7 +16,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.custom.ScrolledComposite;
 
-import interfaces.general.I12_Ayuda;
+import interfaces.general.ShellAyuda;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ import aplicacion.datos.Empleado;
 import aplicacion.datos.Turno;
 import aplicacion.utilidades.Util;
 
-public class I09_1_Creacion_contratos {
+public class DialogCreacionContratos {
 	private Shell padre = null;
 
 	private Shell shell = null;
@@ -92,7 +92,7 @@ public class I09_1_Creacion_contratos {
 	 *            contrato para mostrar en la ventana en caso de que <b>id</b>
 	 *            sea distinto de <i>-1</i>
 	 */
-	public I09_1_Creacion_contratos(Shell padre, ResourceBundle bundle,
+	public DialogCreacionContratos(Shell padre, ResourceBundle bundle,
 			Locale locale, Vista vista, int modo, int id, Contrato cm) {
 		this.padre = padre;
 		this.bundle = bundle;
@@ -631,7 +631,7 @@ public class I09_1_Creacion_contratos {
 			public void widgetSelected(SelectionEvent e) {
 				String helppath = "/Ayuda/" + locale.getCountry()
 						+ "/contratos.html";
-				new I12_Ayuda(shell.getDisplay(), locale, bundle, helppath);
+				new ShellAyuda(shell.getDisplay(), locale, bundle, helppath);
 			}
 		};
 		bAyuda.addSelectionListener(sabAyuda);
@@ -639,7 +639,7 @@ public class I09_1_Creacion_contratos {
 		// Listener para el bot�n de nuevo turno
 		SelectionAdapter sabNuevoTurno = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				I09_1_1_Creacion_turnos i09 = new I09_1_1_Creacion_turnos(
+				DialogCreacionTurnos i09 = new DialogCreacionTurnos(
 						shell, vista, bundle, 0, -1, idContrato, null);
 				while (!i09.getShell().isDisposed()) {
 					if (!shell.getDisplay().readAndDispatch()) {
@@ -681,7 +681,7 @@ public class I09_1_Creacion_contratos {
 					if (listaTurnosContrato.getSelectionIndex() > -1) {
 						int index = listaTurnosContrato.getSelectionIndex();
 						int id = turnos.get(index).getIdTurno();
-						I09_1_1_Creacion_turnos i091 = new I09_1_1_Creacion_turnos(
+						DialogCreacionTurnos i091 = new DialogCreacionTurnos(
 								shell, vista, bundle, 1, id, idContrato, turnos
 										.get(index));
 						while (!i091.getShell().isDisposed()) {

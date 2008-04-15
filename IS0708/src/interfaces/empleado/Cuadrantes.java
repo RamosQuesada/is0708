@@ -34,7 +34,7 @@ import aplicacion.utilidades.Util;
  * crea un cuadrante sobre la misma.
  *
  */
-public class I02_cuadrEmpl extends Thread{
+public class Cuadrantes extends Thread{
 
 
 	/**
@@ -108,7 +108,7 @@ public class I02_cuadrEmpl extends Thread{
 	private final Label lGridCuadrante;
 	private final Combo cGridCuadrante;
 	private Label lCuadranteTitulo;
-	private I02CuadranteEmpleado cuadrante;
+	private CuadranteEmpleado cuadrante;
 	private GC gc2;
 	private Vista vista;
 
@@ -202,7 +202,7 @@ public class I02_cuadrEmpl extends Thread{
 	 * y el cuadrante.
 	 * @param c	Composite sobre el que dibujar el cuadrante
 	 */
-	public I02_cuadrEmpl(Composite c, Boolean diario,ResourceBundle bundle,Empleado empleado,
+	public Cuadrantes(Composite c, Boolean diario,ResourceBundle bundle,Empleado empleado,
 			Date fecha,Vista vista) {
 		this.semanal = diario;
 		this.vista=vista;
@@ -254,7 +254,7 @@ public class I02_cuadrEmpl extends Thread{
 		horaInicio = 9;
 		horaFin = 23;
 		display = canvas.getDisplay();
-		cuadrante = new I02CuadranteEmpleado(display, 1, horaInicio, horaFin, margenIzq, margenDer, margenSup, margenInf, margenNombres,_bundle,
+		cuadrante = new CuadranteEmpleado(display, 1, horaInicio, horaFin, margenIzq, margenDer, margenSup, margenInf, margenNombres,_bundle,
 				empleado,fecha,vista,this);
 		
 		calcularTamano();
