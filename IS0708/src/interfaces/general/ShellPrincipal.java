@@ -17,7 +17,6 @@ import java.util.Locale;
 import java.sql.Date;
 
 import impresion.Imprimir;
-import interfaces.I10_Config_departamento;
 import interfaces.I10_Nuevo_departamento;
 import interfaces.admin.*;
 import interfaces.empleado.Cuadrantes;

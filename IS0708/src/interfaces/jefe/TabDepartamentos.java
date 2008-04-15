@@ -1,6 +1,6 @@
 package interfaces.jefe;
 
-import interfaces.I10_Config_departamento;
+import interfaces.admin.ShellConfigDepartamento;
 
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -78,7 +78,7 @@ public class TabDepartamentos {
 				System.out
 						.println("I02 :: Pulsado Configuración departamentos: "
 								+ cmbDepartamentos.getText());
-				new I10_Config_departamento(tabFolder.getShell(), bundle, vista,
+				new ShellConfigDepartamento(tabFolder.getShell(), bundle, vista,
 						cmbDepartamentos.getText(),cmbDepartamentos,false);
 			}
 		});

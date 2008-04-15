@@ -1,4 +1,4 @@
-package interfaces;
+package interfaces.admin;
 
 /*******************************************************************************
  * INTERFACE :: ManageDepartment
@@ -29,7 +29,7 @@ import org.eclipse.swt.widgets.Shell;
 import aplicacion.Vista;
 import aplicacion.datos.Departamento;
 import aplicacion.datos.Empleado;
-public class I10_Config_departamento {
+public class ShellConfigDepartamento {
 	private Shell padre;
 	private Shell shell;
 	private Vista vista;
@@ -58,7 +58,7 @@ public class I10_Config_departamento {
 	private Text tminCi;
 	
 	/** Constructor for new department */
-	public I10_Config_departamento(Shell padre, ResourceBundle bundle, Vista vista,String nombre,Combo father,boolean admin) {
+	public ShellConfigDepartamento(Shell padre, ResourceBundle bundle, Vista vista,String nombre,Combo father,boolean admin) {
 		this.padre = padre;
 		this.bundle = bundle;
 		this.vista = vista;
