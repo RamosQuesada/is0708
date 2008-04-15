@@ -1014,7 +1014,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					for (int j=0; j < iCuad.length; j++) {
 						if (((j+1)-dom)%7==0) gcFondo.setForeground(new Color(display,255,0,0));
 						else if (((j+1)-dom)%7==1) gcFondo.setForeground(new Color(display,0,0,0));
-						gcFondo.drawText(String.valueOf(j+1), margenIzq + margenNombres + j*anchoDia + anchoDia/2, margenSupVistaMes);
+						gcFondo.drawText(String.valueOf(j+1), margenIzq + margenNombres + j*anchoDia + 
+								(anchoDia/2 - gcFondo.textExtent(String.valueOf(j+1)).x/2), margenSupVistaMes);
 						gcFondo.setForeground(new Color(display,0,0,0));
 					}
 				ArrayList<Empleado> empleados=vista.getEmpleados();
@@ -1130,7 +1131,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		//gc.setForeground(new Color(display,0,0,0));
 		if (anchoDia>19)
 			//gc.drawText(String.valueOf(iCuad[j].get(k).getTurno().getAbreviatura().charAt(0)),margenIzq + margenNombres + j*anchoDia + (7/2), margenSup + 20 + i*altoFila + 2,altoFila);
-			gc.drawText(String.valueOf(idTurno),margenIzq + margenNombres + j*anchoDia + (7/2),margenSupVistaMes + 20 + i*altoFila + 2,altoFila);
+			gc.drawText(String.valueOf(idTurno),
+					margenIzq + margenNombres + j*anchoDia + (anchoDia/2 - gc.textExtent(String.valueOf(idTurno)).x/2),
+					margenSupVistaMes + i*altoFila + 23,altoFila);
 				
 		gc.setBackground(new Color(display,255,255,255));
 		gc.setForeground(new Color(display,0,0,0));
