@@ -17,6 +17,7 @@ public class Mensaje {
 	private String asunto;
 	private String texto;
 	private boolean marcado;
+	private boolean leido;
 	
 	/**
 	 * Constructor de la clase con campos
@@ -34,17 +35,16 @@ public class Mensaje {
 		this.asunto = asunto;
 		this.texto = texto;
 		this.marcado = marcado;
+		this.leido = false;
 	}
 	
 	public int getDestinatario() {
 		return destinatario;
 	}
 
-
 	public void setDestinatario(int destinatario) {
 		this.destinatario = destinatario;
 	}
-
 
 	public String getAsunto() {
 		return asunto;
@@ -93,6 +93,14 @@ public class Mensaje {
 	public void setMarcado(boolean marcado) {
 		this.marcado = marcado;
 	}
+
+	public void setLeido()
+	{
+		if (leido = false)
+		leido = true;
+	}
 	
-	
+	public boolean isLeído() {
+		return leido;
+	}
 }

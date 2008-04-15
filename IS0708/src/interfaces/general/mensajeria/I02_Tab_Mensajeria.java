@@ -15,6 +15,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -110,24 +111,31 @@ public class I02_Tab_Mensajeria extends Thread{
 		Font fCursiva = new Font(tablaMensajes.getDisplay(),fd);
 		fd[0].setStyle(SWT.BOLD);
 		Font fNegrita = new Font(tablaMensajes.getDisplay(),fd);
-		
-		while (vista.getEmpleados().size()>0 && i < vista.getMensajesEntrantes().size() && i < num_men_hoja) {
+		Color yellow = new Color(tablaMensajes.getDisplay(),255,255,0);
+		int totalEntrantes = vista.getMensajesEntrantes().size();
+
+		while (vista.getEmpleados().size()>0 && i < totalEntrantes && i < num_men_hoja) {
 			TableItem tItem = new TableItem(tablaMensajes, SWT.NONE);
-			if (vista.getMensajesEntrantes().get(i).isMarcado())
+			if (vista.getMensajesEntrantes().get(totalEntrantes-i-1).isMarcado())
+			{
+				tItem.setBackground(yellow);
+			}
+			//TODO mostrar mensajes leídos o no leídos
+			if (vista.getMensajesEntrantes().get(totalEntrantes-i-1).isLeído()) 
+			{
+				//tItem.setImage(ico_mens_l);
+			}	
+			else 
+			{
+				//tItem.setImage(ico_mens);
 				tItem.setFont(fNegrita);
-//TODO mostrar mensajes leídos o no leídos
-//			if (mensajesEntrantes.get(i).isLeído()) {
-//				tItem.setFont(fCursiva);
-//				tItem.setImage(ico_mens_l);
-//			}	
-//			else 
-//				tItem.setImage(ico_mens);
+			}
 			if (remitentes.size()>i)
-			tItem.setText(1, remitentes.get(i));
+			tItem.setText(1, remitentes.get(totalEntrantes-i-1));
 			
-			tItem.setText(2, Util.recortarTexto(vista.getMensajesEntrantes().get(i).getAsunto(), prevAsuntoMens));
-			tItem.setText(3, Util.recortarTexto(vista.getMensajesEntrantes().get(i).getTexto(), prevTextoMens));
-			tItem.setText(4, Util.dateAString(vista.getMensajesEntrantes().get(i).getFecha()));
+			tItem.setText(2, Util.recortarTexto(vista.getMensajesEntrantes().get(totalEntrantes-i-1).getAsunto(), prevAsuntoMens));
+			tItem.setText(3, Util.recortarTexto(vista.getMensajesEntrantes().get(totalEntrantes-i-1).getTexto(), prevTextoMens));
+			tItem.setText(4, Util.dateAString(vista.getMensajesEntrantes().get(totalEntrantes-i-1).getFecha()));
 			i++;
 		}
 		lMensajes.setText(bundle.getString("I02_lab_MostrandoMensajes1") + " " + String.valueOf(primerMensaje+1) + " " + 
@@ -167,15 +175,18 @@ public class I02_Tab_Mensajeria extends Thread{
 			public void mouseDoubleClick(MouseEvent e) {
 				// Si se ha pinchado en algún email (y no fuera)
 				if (tablaMensajes.getSelectionIndex()!=-1) {
-					Mensaje m = vista.getMensajesEntrantes().get(tablaMensajes.getSelectionIndex());
+					int totalEntrantes = vista.getMensajesEntrantes().size();
+					Mensaje m = vista.getMensajesEntrantes().get(totalEntrantes - tablaMensajes.getSelectionIndex()-1);
 					estaMarcado = m.isMarcado(); 
+					vista.setLeido(m);
 					new I14_Escribir_mensaje(tabFolder.getShell(),bundle,vista,m,0,"");
 				}
 			}
 			public void mouseUp(MouseEvent e) {};
 			public void mouseDown(MouseEvent e) {
 				if (tablaMensajes.getSelectionIndex()!=-1) {
-					mensSelecionado = vista.getMensajesEntrantes().get(tablaMensajes.getSelectionIndex());
+					int totalEntrantes = vista.getMensajesEntrantes().size();
+					mensSelecionado = vista.getMensajesEntrantes().get(totalEntrantes - tablaMensajes.getSelectionIndex()-1);
 					estaMarcado = mensSelecionado.isMarcado(); 
 
 					if (estaMarcado){
@@ -263,27 +274,29 @@ public class I02_Tab_Mensajeria extends Thread{
 		bMensMarcar.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				if (tablaMensajes.getSelectionIndex()>=0) {
-					
+					/*
 					FontData[] fd = tablaMensajes.getFont().getFontData();
 					fd[0].setStyle(SWT.NORMAL);
 					Font fNormal = new Font(tablaMensajes.getDisplay(),fd);					
 					fd[0].setStyle(SWT.BOLD);
 					Font fNegrita = new Font(tablaMensajes.getDisplay(),fd);
-					
+					int totalEntrantes = vista.getMensajesEntrantes().size();
+					*/
 					if (!estaMarcado){
 						bMensMarcar.setText(bundle.getString("I02_but_Desmarcar"));
-						tablaMensajes.getItem(tablaMensajes.getSelectionIndex()).setFont(fNegrita);
-						TableItem item = tablaMensajes.getItem(tablaMensajes.getSelectionIndex());
+						/*tablaMensajes.getItem(tablaMensajes.getSelectionIndex()).setFont(fNegrita);
+						TableItem item = tablaMensajes.getItem(tablaMensajes.getSelectionIndex());*/
 					}
 					else{				
 						bMensMarcar.setText(bundle.getString("I02_but_Marcar"));
-						tablaMensajes.getItem(tablaMensajes.getSelectionIndex()).setFont(fNormal);
-						TableItem item = tablaMensajes.getItem(tablaMensajes.getSelectionIndex());
+						/*tablaMensajes.getItem(tablaMensajes.getSelectionIndex()).setFont(fNormal);
+						TableItem item = tablaMensajes.getItem(tablaMensajes.getSelectionIndex());*/
 					
 					}
-					
-					vista.marcarMensaje(vista.getMensajesEntrantes().get(tablaMensajes.getSelectionIndex()));
+					int totalEntrantes = vista.getMensajesEntrantes().size();
+					vista.marcarMensaje(vista.getMensajesEntrantes().get(totalEntrantes - tablaMensajes.getSelectionIndex()-1));
 					desplazarVentanaMensajes(0);
+					vista.loadMensajes();
 				}
 			}
 		});

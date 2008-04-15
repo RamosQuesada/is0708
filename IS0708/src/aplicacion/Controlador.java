@@ -1185,6 +1185,16 @@ public class Controlador {
 		return _db.marcaMensaje(!mensaje.isMarcado(), mensaje.getIdmensaje());
 	}
 
+	/**
+	 * Marca un mensaje en la base de datos como LEIDO
+	 * 
+	 * @param mensaje Mensaje a marcar
+	 * @return <i>true</i> si el mensaje se ha marcado como leido correctamente
+	 */
+	/*public void setLeido(Mensaje mensaje) {
+		return _db.setLeido(!mensaje.isLeido(), mensaje.getIdmensaje());
+	}	*/
+	
 	/***************************************************************************
 	 * Métodos relacionados con contratos
 	 */
@@ -1996,6 +2006,7 @@ public ArrayList<String> getHorarioDpto(String dpto) {
 	return horas;
 
 }
+
 
 
 
