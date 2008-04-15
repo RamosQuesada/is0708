@@ -1,6 +1,5 @@
 package interfaces.admin;
 
-import interfaces.I10_Config_departamento;
 import interfaces.I10_Nuevo_departamento;
 
 import java.util.ArrayList;
@@ -87,7 +86,7 @@ public class TabDepartamentosAdmin {
 
 		bConfig.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				new I10_Config_departamento(tabFolder.getShell(), bundle, vista,
+				new ShellConfigDepartamento(tabFolder.getShell(), bundle, vista,
 						cmbDepartamentos.getText(),cmbDepartamentos,true);
 			}
 		});
