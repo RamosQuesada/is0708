@@ -19,7 +19,7 @@ import org.eclipse.swt.widgets.*;
 import aplicacion.Vista;
 import aplicacion.datos.Empleado;
 
-public class I13_Elegir_empleado extends Thread {
+public class DialogElegirEmpleado extends Thread {
 	private Composite padre;
 	private Text tNombre;
 	private List listFiltro;
@@ -30,7 +30,7 @@ public class I13_Elegir_empleado extends Thread {
 	private ResourceBundle bundle;
 	
 	
-	public I13_Elegir_empleado (Composite padre, Vista vista, ResourceBundle bundle) {
+	public DialogElegirEmpleado (Composite padre, Vista vista, ResourceBundle bundle) {
 		this.padre = padre;
 		this.vista = vista;
 		this.bundle = bundle;

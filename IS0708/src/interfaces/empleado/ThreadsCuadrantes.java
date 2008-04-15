@@ -14,7 +14,7 @@ import aplicacion.utilidades.Util;
  * Clase que implementa el thread que dado una vista de cuadrante empleado, le introduce
  * los valores a mostrar.
  */
-public class I02_threadEmpl extends Thread{
+public class ThreadsCuadrantes extends Thread{
 	
 	public static int Lunes =1;
 	public static int Martes =2;
@@ -34,7 +34,7 @@ public class I02_threadEmpl extends Thread{
 	/**
 	 * Cuadrante al que le vamos a pasar
 	 */
-	private I02CuadranteEmpleado cuadrante;
+	private CuadranteEmpleado cuadrante;
 	
 	/**
 	 * Indica si hay algún otro thread corriendo 
@@ -45,7 +45,7 @@ public class I02_threadEmpl extends Thread{
 	 * Constructor del thread de Empleado, que pide el los horarios de un empleado
 	 * @param cuadrante
 	 */
-	public I02_threadEmpl(I02CuadranteEmpleado cuadrante){
+	public ThreadsCuadrantes(CuadranteEmpleado cuadrante){
 		this.cuadrante=cuadrante;
 	}
 	

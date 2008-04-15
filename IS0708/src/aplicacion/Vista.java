@@ -21,8 +21,8 @@ import aplicacion.datos.Turno;
 import aplicacion.mensajeria.Mensaje;
 
 import idiomas.LanguageChanger;
-import interfaces.general.I01_Login;
-import interfaces.general.Principal;
+import interfaces.general.ShellLogin;
+import interfaces.general.ShellPrincipal;
 import interfaces.imagenes.CargadorImagenes;
 
 public class Vista {
@@ -33,8 +33,8 @@ public class Vista {
 	private ResourceBundle bundle;
 	private Locale locale;
 
-	private I01_Login login;
-	private Principal i02;
+	private ShellLogin login;
+	private ShellPrincipal i02;
 	private boolean alive = true;
 	private LanguageChanger l;
 	private Thread conector, loader, cacheUploader;
@@ -527,7 +527,7 @@ public class Vista {
 		// Si la ventana de aplicación está abierta, ocultarla
 		if (i02!=null && !i02.getShell().isDisposed()) i02.getShell().setVisible(false);
 		
-		login = new I01_Login(shell, bundle, db, imagenes);
+		login = new ShellLogin(shell, bundle, db, imagenes);
 		boolean identificadoOCancelado = false;
 		Empleado emp = null;
 		// Intenta identificar al usuario hasta que lo consigue o hasta que se pulsa el botón cancelar
@@ -550,7 +550,7 @@ public class Vista {
 							"Administrador", "", "", null, 0, "", "admin", 0,
 							0, 0, null, null, null, null, null, 0, 0, 0));
 					identificadoOCancelado = true;
-					i02 = new Principal(shell, shell.getDisplay(), bundle, locale, this);
+					i02 = new ShellPrincipal(shell, shell.getDisplay(), bundle, locale, this);
 				// Login normal
 				} else {
 					emp = getEmpleado(login.getNumeroVendedor());
@@ -570,7 +570,7 @@ public class Vista {
 
 							if (!loader.isAlive())
 								loader.start();
-							i02 = new Principal(shell, shell.getDisplay(), bundle, locale, this);
+							i02 = new ShellPrincipal(shell, shell.getDisplay(), bundle, locale, this);
 							
 						} else {
 							// Si el password no coincide

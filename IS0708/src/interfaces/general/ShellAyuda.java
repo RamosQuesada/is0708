@@ -20,7 +20,7 @@ import java.io.File;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class I12_Ayuda {
+public class ShellAyuda {
 
 	private String htmlDefault;
 	private Browser browser;
@@ -57,11 +57,11 @@ public class I12_Ayuda {
 	 * @param _display
 	 *            class uses main window display atribut to show help window
 	 */
-	public I12_Ayuda(Display d, Locale locale, ResourceBundle bundle, String hpath) {
+	public ShellAyuda(Display d, Locale locale, ResourceBundle bundle, String hpath) {
 
 		display = d;
 		shell = new Shell(display, SWT.CLOSE | SWT.MAX |SWT.MIN | SWT.APPLICATION_MODAL);
-		icoPq = new Image(display, I12_Ayuda.class.getResourceAsStream("icoPq.gif"));
+		icoPq = new Image(display, ShellAyuda.class.getResourceAsStream("icoPq.gif"));
 
 		htmlDefault = "<html> \n <head> \n " + "</head>"
 			+ "<body>" + bundle.getString("I12_err_fileNotFound")
@@ -100,10 +100,10 @@ public class I12_Ayuda {
 		shell.setText("Turno Matic");
 		shell.setSize(700, 500);
 
-		icoBk	= new Image(display, I12_Ayuda.class.getResourceAsStream("ico_Bk.gif"));
-		icoFw	= new Image(display, I12_Ayuda.class.getResourceAsStream("ico_Fw.gif"));
-		icoHome = new Image(display, I12_Ayuda.class.getResourceAsStream("ico_Home.gif"));
-		icoPrnt = new Image(display, I12_Ayuda.class.getResourceAsStream("ico_Imprimir.gif"));
+		icoBk	= new Image(display, ShellAyuda.class.getResourceAsStream("ico_Bk.gif"));
+		icoFw	= new Image(display, ShellAyuda.class.getResourceAsStream("ico_Fw.gif"));
+		icoHome = new Image(display, ShellAyuda.class.getResourceAsStream("ico_Home.gif"));
+		icoPrnt = new Image(display, ShellAyuda.class.getResourceAsStream("ico_Imprimir.gif"));
 		
 		Composite c = new Composite(shell,SWT.NONE);
 		c.setLayout(new GridLayout(1,true));
@@ -144,7 +144,7 @@ public class I12_Ayuda {
 		});
 		bHome.addListener(SWT.Selection, new Listener(){
 			public void handleEvent(Event event) {
-				browser.setText(I12_Ayuda.this.html);				
+				browser.setText(ShellAyuda.this.html);				
 			}
 			
 		});

@@ -1,7 +1,7 @@
 package interfaces.admin;
 
-import interfaces.general.I17_Seleccion_fecha;
-import interfaces.jefe.I08_1_Anadir_empleado;
+import interfaces.general.DialogSeleccionFecha;
+import interfaces.jefe.DialogAnadirEmpleado;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ import aplicacion.datos.Departamento;
 import aplicacion.datos.Empleado;
 import aplicacion.utilidades.Util;
 
-public class I03_Tab_NuevoJefe {
+public class TabNuevoJefe {
 	
 	private ResourceBundle bundle;	
 	private Vista vista;	
@@ -54,7 +54,7 @@ public class I03_Tab_NuevoJefe {
 	 * @param vista
 	 * 				la vista de la aplicación
 	 */  
-	public I03_Tab_NuevoJefe(final TabFolder tabFolder,final ResourceBundle bundle,final Vista vista){
+	public TabNuevoJefe(final TabFolder tabFolder,final ResourceBundle bundle,final Vista vista){
 		
 		//inicializamos las variables de la clase
 		this.bundle = bundle;
@@ -473,7 +473,7 @@ public class I03_Tab_NuevoJefe {
 		// Listener para el selector de fecha de nacimiento
 		SelectionAdapter sabFNacimiento = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
-				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(tabFolder.getShell());
+				DialogSeleccionFecha i17 = new DialogSeleccionFecha(tabFolder.getShell());
 				while (!i17.isDisposed()) {
 					if (!tabFolder.getDisplay().readAndDispatch()) {
 						tabFolder.getDisplay().sleep();
@@ -495,7 +495,7 @@ public class I03_Tab_NuevoJefe {
 		// Listener para el selector de fecha de contrato
 		SelectionAdapter sabFContrato = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
-				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(tabFolder.getShell());
+				DialogSeleccionFecha i17 = new DialogSeleccionFecha(tabFolder.getShell());
 				while (!i17.isDisposed()) {
 					if (!tabFolder.getDisplay().readAndDispatch()) {
 						tabFolder.getDisplay().sleep();
@@ -517,7 +517,7 @@ public class I03_Tab_NuevoJefe {
 		// Listener para el selector de fecha de alta
 		SelectionAdapter sabFAlta = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
-				I17_Seleccion_fecha i17 = new I17_Seleccion_fecha(tabFolder.getShell());
+				DialogSeleccionFecha i17 = new DialogSeleccionFecha(tabFolder.getShell());
 				while (!i17.isDisposed()) {
 					if (!tabFolder.getDisplay().readAndDispatch()) {
 						tabFolder.getDisplay().sleep();

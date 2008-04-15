@@ -1,6 +1,6 @@
 package interfaces.jefe;
 
-import interfaces.general.Principal;
+import interfaces.general.ShellPrincipal;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -28,7 +28,7 @@ import aplicacion.datos.Contrato;
 import aplicacion.datos.Empleado;
 import aplicacion.datos.Turno;
 
-public class I09_Tab_Contratos extends Thread {
+public class TabContratos extends Thread {
 	final ResourceBundle bundle;
 	final Vista vista;
 	final TabFolder tabFolder;
@@ -132,7 +132,7 @@ public class I09_Tab_Contratos extends Thread {
 	 *            la herramienta de idiomas
 	 * @author Jose Maria Martin
 	 */
-	public I09_Tab_Contratos(final TabFolder tabFolder, final Vista vista,
+	public TabContratos(final TabFolder tabFolder, final Vista vista,
 			final ResourceBundle bundle, final Locale locale) {
 		this.bundle = bundle;
 		this.vista = vista;
@@ -219,7 +219,7 @@ public class I09_Tab_Contratos extends Thread {
 
 		bNuevoContrato.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				I09_1_Creacion_contratos i09 = new I09_1_Creacion_contratos(
+				DialogCreacionContratos i09 = new DialogCreacionContratos(
 						tabFolder.getShell(), bundle,locale, vista, 0, -1, null);
 				while (!i09.getShell().isDisposed()) {
 					if (!tabFolder.getShell().getDisplay().readAndDispatch()) {
@@ -291,7 +291,7 @@ public class I09_Tab_Contratos extends Thread {
 						} else {
 							TableItem it = tablaContratos
 									.getItem(tablaContratos.getSelectionIndex());
-							I09_1_Creacion_contratos i09c = new I09_1_Creacion_contratos(
+							DialogCreacionContratos i09c = new DialogCreacionContratos(
 									tabFolder.getShell(), bundle,locale, vista, 1,
 									Integer.parseInt(it.getText(0)),
 									vista.getListaContratosDepartamento().get(

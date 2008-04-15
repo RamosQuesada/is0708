@@ -32,14 +32,14 @@ import aplicacion.utilidades.EncriptCadena;
  * @author Jose Maria Martin
  */
 
-public class I30_Info_BD {
+public class ShellInfoBD {
 	private Shell _padre = null;
 
 	private ResourceBundle _bundle;
 	
 	private Vista _vista;
 
-	public I30_Info_BD(Shell padre, ResourceBundle bundle, Vista vista) {
+	public ShellInfoBD(Shell padre, ResourceBundle bundle, Vista vista) {
 		_padre = padre;
 		_bundle = bundle;
 		_vista = vista;

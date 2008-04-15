@@ -24,7 +24,7 @@ import aplicacion.Vista;
  * Clase que crea la ventana de eleccion de tipo de mensaje
  * @author David Rodilla
  */
-public class I15_Mensaje_nuevo {
+public class ShellMensajeNuevo {
 	/**
 	 * Ventana que llama a la de esta clase
 	 */
@@ -52,7 +52,7 @@ public class I15_Mensaje_nuevo {
 	/** Constructor
 	 * @param padre ventana que llama a la actual
 	 */
-	public I15_Mensaje_nuevo(Shell padre,ResourceBundle bundle, Vista vista) {
+	public ShellMensajeNuevo(Shell padre,ResourceBundle bundle, Vista vista) {
 		_padre = padre;
 		_bundle = bundle;
 		_vista = vista;
@@ -107,7 +107,7 @@ public class I15_Mensaje_nuevo {
 
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
-				opcion_actual=I15_Mensaje_nuevo.MENSAJERIA_INTERNA;
+				opcion_actual=ShellMensajeNuevo.MENSAJERIA_INTERNA;
 				
 			}
 
@@ -127,7 +127,7 @@ public class I15_Mensaje_nuevo {
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
 				
-				opcion_actual=I15_Mensaje_nuevo.PETICION_BAJA;
+				opcion_actual=ShellMensajeNuevo.PETICION_BAJA;
 				
 			}
 
@@ -145,7 +145,7 @@ public class I15_Mensaje_nuevo {
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
 				
-				opcion_actual=I15_Mensaje_nuevo.CAMBIO_HORARIO;
+				opcion_actual=ShellMensajeNuevo.CAMBIO_HORARIO;
 				
 			}
 
@@ -170,7 +170,7 @@ public class I15_Mensaje_nuevo {
 					e.doit = messageBox.open () == SWT.CLOSE;
 				}
 				if(opcion_actual==MENSAJERIA_INTERNA){
-					I14_Escribir_mensaje ventana = new I14_Escribir_mensaje(_padre,_bundle, _vista, null, 0, "");
+					ShellEscribirMensaje ventana = new ShellEscribirMensaje(_padre,_bundle, _vista, null, 0, "");
 					shell.dispose();
 
 				}

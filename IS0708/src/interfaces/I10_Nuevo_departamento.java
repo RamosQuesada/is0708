@@ -1,6 +1,6 @@
 package interfaces;
 
-import interfaces.general.I13_Elegir_empleado;
+import interfaces.general.DialogElegirEmpleado;
 
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -54,7 +54,7 @@ public class I10_Nuevo_departamento {
 	private Button bCancel;
 
 	private ResourceBundle bundle;
-	private I13_Elegir_empleado tNombre;
+	private DialogElegirEmpleado tNombre;
 	private Combo father;
 	
 	/** Constructor for new department */

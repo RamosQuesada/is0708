@@ -1,6 +1,6 @@
 package interfaces.general.mensajeria;
 
-import interfaces.general.Principal;
+import interfaces.general.ShellPrincipal;
 import interfaces.imagenes.CargadorImagenes;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ import aplicacion.Vista;
 import aplicacion.mensajeria.Mensaje;
 import aplicacion.utilidades.Util;
 
-public class I02_Tab_Mensajeria extends Thread{
+public class TabMensajeria extends Thread{
 	private final Vista vista;
 	private final ResourceBundle bundle;
 	private TabFolder tabFolder;
@@ -56,7 +56,7 @@ public class I02_Tab_Mensajeria extends Thread{
 	
 	private Button bMensAnteriores,bMensSiguientes,bActualizar;
 	
-	public I02_Tab_Mensajeria (TabFolder tabFolder, Vista vista, ResourceBundle bundle) {
+	public TabMensajeria (TabFolder tabFolder, Vista vista, ResourceBundle bundle) {
 		this.vista = vista;
 		this.bundle = bundle;
 		this.tabFolder = tabFolder;
@@ -179,7 +179,7 @@ public class I02_Tab_Mensajeria extends Thread{
 					Mensaje m = vista.getMensajesEntrantes().get(totalEntrantes - tablaMensajes.getSelectionIndex()-1);
 					estaMarcado = m.isMarcado(); 
 					vista.setLeido(m);
-					new I14_Escribir_mensaje(tabFolder.getShell(),bundle,vista,m,0,"");
+					new ShellEscribirMensaje(tabFolder.getShell(),bundle,vista,m,0,"");
 				}
 			}
 			public void mouseUp(MouseEvent e) {};
@@ -232,7 +232,7 @@ public class I02_Tab_Mensajeria extends Thread{
 		1, 1));
 		bMensNuevo.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				new I15_Mensaje_nuevo(tabFolder.getShell(), bundle, vista);
+				new ShellMensajeNuevo(tabFolder.getShell(), bundle, vista);
 			}
 		});
 		
@@ -244,7 +244,7 @@ public class I02_Tab_Mensajeria extends Thread{
 		bMensResponder.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				if(mensSelecionado!=null)
-				new I14_Escribir_mensaje(tabFolder.getShell(),bundle,vista,null,mensSelecionado.getRemitente(),
+				new ShellEscribirMensaje(tabFolder.getShell(),bundle,vista,null,mensSelecionado.getRemitente(),
 						vista.getEmpleado(mensSelecionado.getRemitente()).getNombreCompleto());
 			}
 		});

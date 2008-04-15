@@ -2,7 +2,7 @@ package aplicacion;
 
 import org.eclipse.swt.widgets.Display;
 
-import interfaces.general.I19_Excepcion;
+import interfaces.general.ShellExcepcion;
 
 /**
  * Esta es la clase principal de la aplicación. Desde aquí se crean el modelo,
@@ -34,7 +34,7 @@ public class Aplicacion {
 			v.start();
 		}
 		catch (Exception e) {
-			new I19_Excepcion(v, e);
+			new ShellExcepcion(v, e);
 		}
 	}
 }

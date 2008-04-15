@@ -30,7 +30,7 @@ import aplicacion.datos.Empleado;
 import aplicacion.datos.Turno;
 import aplicacion.utilidades.Posicion;
 
-public class I09_1_1_Creacion_turnos {
+public class DialogCreacionTurnos {
 	private Shell padre = null;
 	private Shell shell = null;
 	private ResourceBundle bundle;
@@ -57,7 +57,7 @@ public class I09_1_1_Creacion_turnos {
 	 * @param idContrato idetificador del contrato al que pertenece dicho turno
 	 * @param tm turno para mostrar en la ventana en caso de que <b>modo</b> sea distinto de <i>0</i>
 	 */
-	public I09_1_1_Creacion_turnos(Shell padre, Vista vista, ResourceBundle bundle,int modo,int idTurno, int idContrato, Turno tm) {
+	public DialogCreacionTurnos(Shell padre, Vista vista, ResourceBundle bundle,int modo,int idTurno, int idContrato, Turno tm) {
 		this.padre = padre;
 		this.bundle = bundle;
 		this.modo=modo;
