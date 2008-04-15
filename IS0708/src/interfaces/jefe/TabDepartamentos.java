@@ -82,20 +82,26 @@ public class TabDepartamentos {
 						cmbDepartamentos.getText(),cmbDepartamentos,false);
 			}
 		});
-
-		Composite cInfo = new Composite(cDepartamentos, SWT.BORDER);
+		//TODO estoy haciendo pruebas con esto
+	/*	Composite cInfo = new Composite(cDepartamentos, SWT.BORDER);
 		cInfo.setLayout(new GridLayout(2, false));
-		cInfo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
-		final Text lContenido = new Text(cInfo, SWT.READ_ONLY | SWT.MULTI |SWT.V_SCROLL);
+		cInfo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));*/
+		
+		I20_Configuracion_Dias cInfo=new I20_Configuracion_Dias(vista, array.get(0), cDepartamentos);
+		cInfo.setGridData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
+		
+		
+		//TODO y con esto tambien
+/*		final Text lContenido = new Text(cInfo, SWT.READ_ONLY | SWT.MULTI |SWT.V_SCROLL);
 		lContenido.setText(vista.infoDpto(cmbDepartamentos.getText()));
 		lContenido.setEditable(false);
 		lContenido.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-				true, 2, 1));
+				true, 2, 1));*/
 		
 		//listener para el combo y mostrar la info debajo
 		cmbDepartamentos.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				lContenido.setText(vista.infoDpto(cmbDepartamentos.getText()));
+	//			lContenido.setText(vista.infoDpto(cmbDepartamentos.getText()));
 			}
 		});
 
