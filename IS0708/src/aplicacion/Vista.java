@@ -522,7 +522,7 @@ public class Vista {
 				cacheCargada = true;
 				// Se queda consultando los mensajes periódicamente
 				while (alive) {
-					loadMensajes();
+					loadTodosMensajes();
 					cacheCargada = true;
 					try {
 						// TODO Espera 20 segundos (¿cómo lo dejamos?)
@@ -987,12 +987,12 @@ public class Vista {
 	 * 
 	 * @return la lista de empleados
 	 */
-	public ArrayList<Mensaje> getMensajesEntrantes() {
+	/*public ArrayList<Mensaje> getMensajesEntrantes() {
 		if (mensajesEntrantes == null) {
 			loadMensajes();
 		}
 		return mensajesEntrantes;
-	}
+	}*/
 	
 	/**
 	 * Devuelve la lista COMPLETA de mensajes que ha recibido el empleado actual. La
