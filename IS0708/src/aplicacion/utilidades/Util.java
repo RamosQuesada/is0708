@@ -326,25 +326,10 @@ public class Util {
 	 */
 	public static String recortarTituloTexto(String texto, int x) {
 		String s = texto;
-		String salida;
-		String aux;
 		if (texto.length()>x) {
 			s = texto.substring(0, x-3) + "...";
 		}		
-		
-		salida = new String();
-		
-		for (int i=0; i<s.length(); i++)
-		{
-			aux = s.substring(i, i+1);
-			if (s.charAt(i) == '\n') 
-			{
-				aux = " ";
-			}
-			salida = salida.concat(aux);
-		}
-		
-		return salida;
+		return s;
 	}
 
 	/**
@@ -355,19 +340,27 @@ public class Util {
 	 * @return la cadena recortada
 	 */
 	public static String recortarContenidoTexto(String texto, int x) {
-		String s = texto;
 		String salida;
 		String aux;
-		if (texto.length()>x) {
-			s = texto.substring(0, x-3) + "...";
-		}		
-		
+		String s = recortarTituloTexto(texto,x);
+				
 		salida = new String();
+		
+		/*for (int i=0; i<s.length(); i++)
+		{
+			aux = s.substring(i, i+1);
+			if (s.charAt(i) == '\n') 
+			{
+				aux = " ";
+			}
+			salida = salida.concat(aux);
+		}*/
 		
 		for (int i=0; i<s.length(); i++)
 		{
 			aux = s.substring(i, i+1);
-			if (s.charAt(i) == '\n') 
+			System.out.println(s.charAt(i));
+ 			if (s.charAt(i) == '\n') 
 			{
 				aux = " ";
 			}
