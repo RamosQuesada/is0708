@@ -650,6 +650,13 @@ public class Empleado implements Drawable {
 	public int getContratoId() {
 		return idContrato;
 	}
+	/**
+	 * Devuelve el contrato del empleado
+	 * @return Contrato
+	 */
+	public Contrato getContrato(){
+		return contrato;
+	}
 	
 	public String getNombreContrato() {
 		return contrato.getNombreContrato();
