@@ -327,14 +327,18 @@ public class TabEmpleados extends Thread{
 		final Button bEmplVentas = new Button(cEmplDer, SWT.PUSH);
 		bEmplVentas.setText(bundle.getString("I02_but_Ventas"));
 		bEmplVentas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,1, 1));
-		bEmplVentas.addSelectionListener(new SelectionAdapter(){
+		SelectionAdapter sabFecha = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
+		//bEmplVentas.addSelectionListener(new SelectionAdapter(){
+			//public void widgetSelected(SelectionEvent e){
 				new DialogVentasEmpleado(_tabFolder.getShell(), _bundle, _vista);
 			}
-			});
+			//});
+			
+			};
 			
 		
-		
+		bEmplVentas.addSelectionListener(sabFecha);
 		cEmplContr.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent arg0) {				
 				comboCambiado(arg0);
