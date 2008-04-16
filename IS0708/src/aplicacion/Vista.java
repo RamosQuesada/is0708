@@ -7,6 +7,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
@@ -323,9 +324,29 @@ public class Vista {
 		return true;
 	}
 	
+	/**
+	 * Modifica la información de un empleado
+	 * @param idEmp Nueva idEmpleado
+	 * @param nomb Nuevo nombre
+	 * @param Ape1 Nuevo primer apellido
+	 * @param Ape2 Nuevo segundo apellido
+	 * @param FNac Nueva fecha de nacimiento
+	 * @param sexo Nuevo sexo
+	 * @param mail Nuevo email
+	 * @param Passw Nueva contraseña
+	 * @param grupo Nuevo grupo
+	 * @param FCont Nueva fecha de contratacion
+	 * @param Fentr Nueva fecha de entrada
+	 * @param Felic Nueva felicidad
+	 * @param Idiom Nuevo idioma
+	 * @param Rang Nuevo rango
+	 * @param Turn Nuevo turno favorito
+	 * @param Contr Nuevo contrato
+	 * @return <i>cierto</i> si se ha podido modificar
+	 */
 	public boolean modificarEmpleado(int idEmp, String nomb, String Ape1, String Ape2, Date FNac, int sexo, 
 			String mail, String Passw, int grupo, Date FCont, Date Fentr, int Felic, int Idiom, 
-			int Rang, int Turn, int Contr) {
+			int Rang, int Turn, int Contr, Color color){
 		Empleado e = getEmpleado(idEmp);
 		Contrato c = getContrato(Contr);
 		
@@ -345,6 +366,8 @@ public class Vista {
 		e.setRango(Rang);
 		e.setTurnoFavorito(Turn);
 		e.setContrato(c);
+		e.setIdContrato(Contr);
+		e.setColor(color);
 		
 		modifyCache(e, "Empleado");
 		return true;
