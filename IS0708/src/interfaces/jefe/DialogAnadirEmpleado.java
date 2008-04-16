@@ -384,7 +384,7 @@ public class DialogAnadirEmpleado {
 					}
 
 					
-					Empleado emp = new Empleado(vista.getEmpleadoActual().getEmplId(), Util.convertirNVend(tNVend.getText()), tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, id, fechaContrato, fechaAlta, null, cDepto.getText(), null, 0, cIdioma.getSelectionIndex(), turno);
+					Empleado emp = new Empleado(vista.getEmpleadoActual().getEmplId(), Util.convertirNVend(tNVend.getText()), tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, id, fechaContrato, fechaAlta, null, cDepto.getText(), null, 0, cIdioma.getSelectionIndex(), turno, 0);
 					emp.setColor(lColor.getBackground());
 					vista.insertEmpleado(emp);
 

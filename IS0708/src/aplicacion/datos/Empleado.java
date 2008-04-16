@@ -227,7 +227,8 @@ public class Empleado implements Drawable {
 	public Empleado (Integer idSuperior, int idEmpl, String nombre, String apellido1,
 			String apellido2, Date fechaNac, int sexo, String email, String password,
 			int grupo, int rango, int contrato, Date fContrato, Date fAlta, Color color,
-			String idDepartamento, ArrayList<Integer> idSubordinados,int felicidad, int idioma, int turnoFavorito) {
+			String idDepartamento, ArrayList<Integer> idSubordinados,int felicidad, int idioma,
+			int turnoFavorito, int posicion) {
 		if (idSuperior==null) this.idSuperior=0;
 		else setIdSuperior(idSuperior);
 		setEmplId(idEmpl);
@@ -258,6 +259,7 @@ public class Empleado implements Drawable {
 		this.turnoFavorito = turnoFavorito;
 		
 		this.UltimoAcceso = fContrato;
+		this.posicion = posicion;
 	}
 /*
 	public Empleado(Empleado e) {

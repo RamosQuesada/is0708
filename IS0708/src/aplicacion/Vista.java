@@ -631,7 +631,7 @@ public class Vista {
 				if (login.getNumeroVendedor() == 0 && login.getPassword().equals("admin")) {
 					controlador.setEmpleadoActual(new Empleado(0, 0,
 							"Administrador", "", "", null, 0, "", "admin", 0,
-							0, 0, null, null, null, null, null, 0, 0, 0));
+							0, 0, null, null, null, null, null, 0, 0, 0, 0));
 					identificadoOCancelado = true;
 					shellPrincipal = new ShellPrincipal(shell, shell.getDisplay(), bundle, locale, this);
 				// Login normal
