@@ -829,6 +829,35 @@ public class Vista {
 		return turnos.size();
 	}
 	/**
+	 * Esta función devuele un arraylist con los turnos de un contrato especifico
+	 * @param idContrato
+	 * @return ArrayList con los turnos de ese contratos
+	 */
+	public ArrayList<Turno> getTurnosDeUnContrato(int idContrato){
+		
+		int i=0;
+		boolean encontrado=false;
+		ArrayList<Turno> turnosContrato=new ArrayList<Turno>();
+		ArrayList<Integer> numTurnos=new ArrayList<Integer>();
+		while(i<contratos.size()&&!encontrado){//miramos en la cache
+			if(contratos.get(i).getNumeroContrato()==idContrato){
+				encontrado=true;
+			}else{
+				i++;
+			}
+		}
+		if(encontrado){//si esta en la cache
+			numTurnos=contratos.get(i).getNumTurnosContrato();
+			for(int j=0;j<numTurnos.size();j++){
+				turnosContrato.add(getTurno(numTurnos.get(j)));
+			}
+			return turnosContrato;
+		}else{//si no esta devolvemos null, aunk deberiamos generar error
+			return null;
+		}
+		
+	}
+	/**
 	 * 
 	 * @return los turnos cargados de la base de datos
 	 */
