@@ -49,11 +49,12 @@ public class DialogVentasEmpleado {
 	
 	public void mostrarVentana() {		
 		final Shell shell = new Shell (padre, SWT.CLOSE | SWT.APPLICATION_MODAL);
-
-		GridLayout layout = new GridLayout(2,false);
+		shell.setLayout(new GridLayout(2,true));
+		
 		final Group grupo = new Group(shell, SWT.NONE);
 		grupo.setText(bundle.getString("ventas_empleado"));
 		grupo.setLayout(new GridLayout(2,false));
+		grupo.setLayoutData(new GridData(SWT.LEFT,SWT.FILL,true,true,2,1));
 		
 		final Label  lNventas		= new Label (grupo, SWT.LEFT);
 		final Text   tNventas		= new Text  (grupo, SWT.BORDER);
@@ -74,13 +75,11 @@ public class DialogVentasEmpleado {
 		bAceptar		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		bCancelar		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 
-		grupo			.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
 		
 		tNventas.setTextLimit(8);
 		
 
 		shell.setText(bundle.getString("ventas_empleado"));
-		shell.setLayout(layout);
 		
 		bAceptar.setText(bundle.getString("Aceptar"));
 		bAceptar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
