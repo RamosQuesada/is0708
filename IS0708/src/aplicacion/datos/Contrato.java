@@ -127,43 +127,53 @@ public class Contrato {
 	public ArrayList<Integer> getNumTurnosContrato(){
 		String p=this._patron;
 		String numTurno="";
+		boolean f=false;
 		ArrayList<Integer> turnos=new ArrayList<Integer>();
 		for(int i=0;i<p.length();i++){
-			if(p.charAt(i)==':'){//leemos turno
+			if(p.charAt(i)==':'){
 				i++;
-				boolean f1=false;
-				while(p.charAt(i)!=',' && p.charAt(i)!='/' && p.charAt(i)!='d' && f1!=true){
-					numTurno+=p.charAt(i);
-					i++;
-					if(i>p.length()-1){
-						i--;
-						f1=true;
-					}
-				}
+				//ahora empezamos a leer
 				if(p.charAt(i)!='d'){
-					i--;
-					turnos.add(Integer.valueOf(numTurno));
-					numTurno="";
-				}
-			}else{
-				if(p.charAt(i)==','){
-					i++;
-					boolean f2=false;
-					while(p.charAt(i)!=',' && p.charAt(i)!='/' && p.charAt(i)!='d' && f2!=true){
+					while(f!=true && p.charAt(i)!='/'){
 						numTurno+=p.charAt(i);
-						i++;
-						if(i>p.length()-1){
-							i--;
-							f2=true;
+						if(i<p.length()-1){
+							i++;
+						}else{f=true;}
+						if(p.charAt(i)==','){
+							if(!turnos.contains(Integer.valueOf(numTurno))){
+								turnos.add(Integer.valueOf(numTurno));
+								numTurno="";
+								if(i<p.length()-1){
+									i++;
+								}else{f=true;}
+							}else{
+								numTurno="";
+								if(i<p.length()-1){
+									i++;
+								}else{f=true;}
+								
+							}
 						}
 					}
-					if(p.charAt(i)!='d'){
-						turnos.add(Integer.valueOf(numTurno));
-						numTurno="";
+					if(numTurno!=""){
+						if(!turnos.contains(Integer.valueOf(numTurno))){
+							turnos.add(Integer.valueOf(numTurno));
+							numTurno="";
+							if(i<p.length()-1){
+								i++;
+							}else{f=true;}
+						}else{
+							numTurno="";
+							if(i<p.length()-1){
+								i++;
+							}else{f=true;}
+						}
 					}
 				}
 			}
 		}
 		return turnos;
 	}
-}
+	
+	
+}//fin de clase
