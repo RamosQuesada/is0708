@@ -48,7 +48,7 @@ public class TabMensajeria extends Thread{
 	// Los caracteres a previsualizar de un asunto de mensaje
 	final int prevAsuntoMens = 20;
 	// El número de mensajes a mostrar por hoja
-	final int num_men_hoja = 5;
+	final int num_men_hoja = 10;
 	// El primer mensaje a mostrar (aumenta al pinchar en "ver más")
 	private int primerMensaje = 0;
 	// Este argumento sirve para que el hilo se ejecute indefinidamente o solo una vez

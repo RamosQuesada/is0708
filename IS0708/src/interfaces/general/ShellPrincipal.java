@@ -17,9 +17,7 @@ import java.util.Locale;
 import java.sql.Date;
 
 import impresion.Imprimir;
-import interfaces.I10_Nuevo_departamento;
 import interfaces.admin.*;
-import interfaces.empleado.Cuadrantes;
 import interfaces.empleado.Estadisticas;
 import interfaces.empleado.TabCuadranteEmpleado;
 import interfaces.general.cuadrantes.I_Cuadrante;
@@ -28,8 +26,6 @@ import interfaces.jefe.TabDepartamentos;
 import interfaces.jefe.TabEmpleados;
 import interfaces.jefe.TabContratos;
 import aplicacion.Vista;
-import aplicacion.datos.Empleado;
-import aplicacion.utilidades.Util;
 
 /**
  * Interfaz de usuario :: Ventana principal
