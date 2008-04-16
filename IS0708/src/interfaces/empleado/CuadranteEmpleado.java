@@ -449,7 +449,7 @@ public class CuadranteEmpleado {
 		int y= (int)(10*Math.cos(angulo));
 		gc.setLineWidth(3);
 		cambiarPincel(gc, 249, 244, 153);
-		gc.drawOval((ancho-margenIzq-margenDer)/2-100+x, (alto-margenInf-margenSup)/2+5+y, 5, 5);
+		gc.drawOval((ancho-margenIzq-margenDer)/2-90+x, (alto-margenInf-margenSup)/2+5+y, 5, 5);
 		gc.drawOval((ancho-margenIzq-margenDer)/2+140+x, (alto-margenInf-margenSup)/2+5+y, 5, 5);
 		gc.drawText(texto,(ancho-margenIzq-margenDer)/2-55, (alto-margenInf-margenSup)/2,true);
 		gc.getFont().dispose();
