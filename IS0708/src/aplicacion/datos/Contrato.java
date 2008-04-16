@@ -126,12 +126,41 @@ public class Contrato {
 	 */
 	public ArrayList<Integer> getNumTurnosContrato(){
 		String p=this._patron;
+		String numTurno="";
 		ArrayList<Integer> turnos=new ArrayList<Integer>();
 		for(int i=0;i<p.length();i++){
-			if(p.charAt(i)==':'){
+			if(p.charAt(i)==':'){//leemos turno
 				i++;
-				if(p.charAt(i)!='d' && !turnos.contains(Integer.valueOf(p.charAt(i)))){
-					turnos.add(Integer.valueOf(p.charAt(i)));
+				boolean f1=false;
+				while(p.charAt(i)!=',' && p.charAt(i)!='/' && p.charAt(i)!='d' && f1!=true){
+					numTurno+=p.charAt(i);
+					i++;
+					if(i>p.length()-1){
+						i--;
+						f1=true;
+					}
+				}
+				if(p.charAt(i)!='d'){
+					i--;
+					turnos.add(Integer.valueOf(numTurno));
+					numTurno="";
+				}
+			}else{
+				if(p.charAt(i)==','){
+					i++;
+					boolean f2=false;
+					while(p.charAt(i)!=',' && p.charAt(i)!='/' && p.charAt(i)!='d' && f2!=true){
+						numTurno+=p.charAt(i);
+						i++;
+						if(i>p.length()-1){
+							i--;
+							f2=true;
+						}
+					}
+					if(p.charAt(i)!='d'){
+						turnos.add(Integer.valueOf(numTurno));
+						numTurno="";
+					}
 				}
 			}
 		}
