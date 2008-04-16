@@ -13,8 +13,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
-import com.sun.xml.internal.bind.v2.runtime.output.ForkXmlOutput;
-
 import algoritmo.Cuadrante;
 import algoritmo.Trabaja;
 import aplicacion.datos.Contrato;
@@ -208,7 +206,7 @@ public class Vista {
 	/**
 	 * Inserta un turno en la base de datos
 	 * @param t el turno a insertar
-	 * @return el id 
+	 * @return el id, -1 si el turno ya existe
 	 */
 	public int insertTurno(Turno t) {
 		if (getTurno(t.getIdTurno())!=null) return -1;
@@ -263,8 +261,8 @@ public class Vista {
 	
 	/**
 	 * Elimina un contrato de la base de datos
-	 * @param idContrato el contrato a eliminar
-	 * @return false si el contrato no existe
+	 * @param idContrato El contrato a eliminar
+	 * @return <i>false</i> si el contrato no existe
 	 */
 	public boolean eliminaContrato(int idContrato) {
 		Contrato c = getContrato(idContrato);
@@ -275,6 +273,11 @@ public class Vista {
 		return true;
 	}
 	
+	/**
+	 * Elimina un contrato con todos sus turnos
+	 * @param idContrato El contrato a eliminar
+	 * @return <i>false</i> si el contrato no existe
+	 */
 	public boolean eliminaContratoConTurnos(int idContrato) {
 		Contrato c = getContrato(idContrato);
 		if (c==null) return false;
