@@ -165,6 +165,7 @@ public class Database extends Thread {
 			
 			correcto = true;
 		} catch (SQLException e) {
+			e.printStackTrace();
 			System.err.println("Database :: Error al borrar el empleado");
 		}
 		return correcto;
@@ -1476,7 +1477,7 @@ public class Database extends Thread {
 			numero = 1;
 		}
 		if (idDpto != null) {
-			subconsulta = "SELECT NumVendedor FROM DepartamentoUsuario WHERE NombreDepartamento= '"
+			subconsulta = "SELECT NumVendedor FROM " + tablaUsuariosPorDepartamento + " WHERE NombreDepartamento= '"
 					+ idDpto + "'";
 			to2null = false;
 			if (numero == 0)
@@ -1508,7 +1509,7 @@ public class Database extends Thread {
 	 */
 	public ResultSet obtenEmpleadosDepartamento(String nombre) {
 		ResultSet r = null;
-		String consulta = "SELECT NumVendedor FROM DepartamentoUsuario WHERE NombreDepartamento ='"
+		String consulta = "SELECT NumVendedor FROM " + tablaUsuariosPorDepartamento + " WHERE NombreDepartamento ='"
 				+ nombre + "'";
 		try {
 			st = con.createStatement();
@@ -1552,7 +1553,7 @@ public class Database extends Thread {
 		
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("SELECT * FROM FESTIVOS WHERE NombreDept ='"
+			rs = st.executeQuery("SELECT * FROM " + tablaFestivos + " WHERE NombreDept ='"
 					+ nombre + "' AND FechaInicio>='" + FechaInicio
 					+ "' AND FechaInicio<='" + FechaFin + "' ORDER BY Hora ASC");
 
@@ -1569,7 +1570,7 @@ public class Database extends Thread {
 		ResultSet r = null;
 		try {
 			st = con.createStatement();
-			r = st.executeQuery("SELECT HoraApertura, HoraCierre FROM DEPARTAMENTO WHERE Nombre='"+dpto+"';");
+			r = st.executeQuery("SELECT HoraApertura, HoraCierre FROM " + tablaDepartamentos + " WHERE Nombre='"+dpto+"';");
 		} catch (SQLException e) {
 			// TODO: handle exception
 			System.err.println("Database :: Error al realizar la consulta del horario de un Dpto");
@@ -1581,7 +1582,7 @@ public class Database extends Thread {
 		ResultSet r = null;
 		try {
 			st = con.createStatement();
-			r = st.executeQuery("SELECT HoraEntrada, HoraSalida FROM Trabaja WHERE NumVendedor='"+nv+"' AND Fecha='"+d+"' AND IdTurno='"+idturno+"';");
+			r = st.executeQuery("SELECT HoraEntrada, HoraSalida FROM " + tablaTrabaja + " WHERE NumVendedor='"+nv+"' AND Fecha='"+d+"' AND IdTurno='"+idturno+"';");
 		} catch (SQLException e) {
 			// TODO: handle exception
 			System.err.println("Database :: Error al realizar la consulta del Jefe del Dpto");
@@ -1655,7 +1656,7 @@ public class Database extends Thread {
 		ResultSet r = null;
 		try {
 			st = con.createStatement();
-			r = st.executeQuery("SELECT JefeDepartamento FROM DEPARTAMENTO WHERE Nombre='"+nombreDep+"';");
+			r = st.executeQuery("SELECT JefeDepartamento FROM " + tablaDepartamentos + " WHERE Nombre='"+nombreDep+"';");
 		} catch (SQLException e) {
 			// TODO: handle exception
 			System.err.println("Database :: Error al realizar la consulta del Jefe del Dpto");
