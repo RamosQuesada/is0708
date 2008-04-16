@@ -54,7 +54,7 @@ public class DialogVentasEmpleado {
 		final Group grupo = new Group(shell, SWT.NONE);
 		grupo.setText(bundle.getString("ventas_empleado"));
 		grupo.setLayout(new GridLayout(2,false));
-		grupo.setLayoutData(new GridData(SWT.LEFT,SWT.FILL,true,true,2,1));
+		grupo.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,2,1));
 		
 		final Label  lNventas		= new Label (grupo, SWT.LEFT);
 		final Text   tNventas		= new Text  (grupo, SWT.BORDER);
