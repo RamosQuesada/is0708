@@ -50,7 +50,7 @@ public class TabMensajeria extends Thread{
 	// Los caracteres a previsualizar de un asunto de mensaje
 	final int prevAsuntoMens = 20;
 	// El número de mensajes a mostrar por hoja
-	private int num_men_hoja = 10;
+	private int num_men_hoja = 5;
 	// El primer mensaje a mostrar (aumenta al pinchar en "ver más")
 	private int primerMensaje = 0;
 	// Este argumento sirve para que el hilo se ejecute indefinidamente o solo una vez
@@ -81,7 +81,7 @@ public class TabMensajeria extends Thread{
 					// Cargar remitentes
 					remitentes = new ArrayList<String>();
 					// Añadir nombre remitentes a lista remitentes
-					for (int i = 0; i < vista.getMensajesEntrantes().size(); i++) {
+					for (int i = 0; i < vista.getTodosMensajesEntrantes().size(); i++) {
 						//DORIAAAAAAAAAAAAAAAA (todos)
 						remitentes.add(vista.getEmpleado(vista.getTodosMensajesEntrantes().get(i).getRemitente()).getNombreCompleto());				
 					}
@@ -181,8 +181,8 @@ public class TabMensajeria extends Thread{
 			public void mouseDoubleClick(MouseEvent e) {
 				// Si se ha pinchado en algún email (y no fuera)
 				if (tablaMensajes.getSelectionIndex()!=-1) {
-					int totalEntrantes = vista.getMensajesEntrantes().size();
-					Mensaje m = vista.getMensajesEntrantes().get(totalEntrantes - tablaMensajes.getSelectionIndex()-1);
+					int totalEntrantes = vista.getTodosMensajesEntrantes().size();
+					Mensaje m = vista.getTodosMensajesEntrantes().get(totalEntrantes - tablaMensajes.getSelectionIndex()-1-primerMensaje);
 					estaMarcado = m.isMarcado(); 
 					vista.setLeido(m);
 					new ShellEscribirMensaje(tabFolder.getShell(),bundle,vista,m,0,"");
@@ -192,7 +192,7 @@ public class TabMensajeria extends Thread{
 			public void mouseDown(MouseEvent e) {
 				if (tablaMensajes.getSelectionIndex()!=-1) {
 					int totalEntrantes = vista.getMensajesEntrantes().size();
-					mensSelecionado = vista.getMensajesEntrantes().get(totalEntrantes - tablaMensajes.getSelectionIndex()-1);
+					mensSelecionado = vista.getTodosMensajesEntrantes().get(totalEntrantes - tablaMensajes.getSelectionIndex()-1-primerMensaje);
 					estaMarcado = mensSelecionado.isMarcado(); 
 
 					if (estaMarcado){
@@ -308,8 +308,8 @@ public class TabMensajeria extends Thread{
 						TableItem item = tablaMensajes.getItem(tablaMensajes.getSelectionIndex());*/
 					
 					}
-					int totalEntrantes = vista.getMensajesEntrantes().size();
-					vista.marcarMensaje(vista.getMensajesEntrantes().get(totalEntrantes - tablaMensajes.getSelectionIndex()-1));
+					int totalEntrantes = vista.getTodosMensajesEntrantes().size();
+					vista.marcarMensaje(vista.getTodosMensajesEntrantes().get(totalEntrantes - tablaMensajes.getSelectionIndex()-1));
 					desplazarVentanaMensajes(0);
 					vista.loadMensajes();
 				}
@@ -363,7 +363,7 @@ public class TabMensajeria extends Thread{
 		bActualizar.setEnabled(false);
 		if (primerMensaje<0) primerMensaje=0;
 		tablaMensajes.setCursor(new Cursor(tablaMensajes.getDisplay(), SWT.CURSOR_WAIT));
-		if (desp==0) vista.loadMensajes();
+		if (desp==0) vista.loadTodosMensajes();
 		notify();
 	}
 
