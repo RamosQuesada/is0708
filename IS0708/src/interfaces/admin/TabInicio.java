@@ -63,22 +63,22 @@ public class TabInicio {
 
 		Composite compDer = new Composite(cInicio, SWT.NONE);
 		compDer.setLayout(new GridLayout(2, false));
-		compDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1,2));
+		compDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1,2));
 
 		final Label lFondo2 = new Label(cInicio, SWT.NONE);
 		lFondo2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1,1));
 		lFondo2.setBackground(new Color(vista.getDisplay(), 210, 165, 62));
 
 		final Label bienvenido = new Label(compDer, SWT.WRAP);
-		bienvenido.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 2, 1));
+		bienvenido.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 2, 1));
 		bienvenido.setText(bundle.getString("I02_bienvenido"));
 
 		final Label lConfig = new Label(compDer, SWT.WRAP);
-		lConfig.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, false, 1, 1));
+		lConfig.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		lConfig.setText(bundle.getString("I02_configBD"));
 
 		final Button configBD = new Button(compDer, SWT.PUSH);
-		configBD.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		configBD.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		configBD.setText("CONFIG BD");
 		configBD.addSelectionListener(new SelectionListener() {
 			public void widgetDefaultSelected(SelectionEvent arg0) {
@@ -86,8 +86,7 @@ public class TabInicio {
 
 			public void widgetSelected(SelectionEvent arg0) {
 				MessageBox messageBox = new MessageBox(tabFolder.getShell(),
-						SWT.APPLICATION_MODAL | SWT.ICON_QUESTION | SWT.OK
-								| SWT.CANCEL);
+						SWT.APPLICATION_MODAL | SWT.ICON_QUESTION | SWT.OK | SWT.CANCEL);
 				messageBox.setText("Reset BD");
 				messageBox.setMessage(bundle.getString("I30_confirm_config"));
 				if(messageBox.open()==SWT.OK){
@@ -97,13 +96,12 @@ public class TabInicio {
 		});
 
 		final Label lReset = new Label(compDer, SWT.WRAP);
-		lReset.setLayoutData(new GridData(SWT.CENTER, SWT.BOTTOM, true, false, 1, 1));
+		lConfig.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		lReset.setText(bundle.getString("I02_resetBD"));
 
 		final Button resetBD = new Button(compDer, SWT.PUSH);
-		resetBD.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1));
+		resetBD.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, false, 1, 1));
 		resetBD.setText("RESET BD");
-		resetBD.setEnabled(false);
 		resetBD.addSelectionListener(new SelectionListener() {
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 			}
@@ -117,7 +115,7 @@ public class TabInicio {
 				int response = messageBox.open();
 				if (response == SWT.OK) {
 					// paquete_pruebas.GeneraDatos.reset();
-					paquete_pruebas.InsertaDatosFijos.insertarNdepart(20);
+					paquete_pruebas.InsertaDatosFijos.resetBD();
 					System.out.println("BBDD reiniciada");
 				}
 			}

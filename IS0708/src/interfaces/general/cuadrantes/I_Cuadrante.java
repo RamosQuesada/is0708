@@ -65,12 +65,14 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private Canvas canvas;
 	private boolean cacheCargada = false;
 	private I_Turno turno = null;
+	private int despMouse;
 	
 	// La variable terminadoDeCrear sirve para que una franja nueva no desaparezca al crearla
 	private Boolean diario = true; // 1: muestra cuadrante diario, 0: muestra cuadrante mensual
 	private int empleadoActivo = -1;
 	private I_Turno turnoActivo  = null; // Este turno es para el interfaz de creación de turnos
-
+	private boolean moviendoEmpleado = false;	// Indica si estamos desplazando al empleado
+	
 	private Label lGridCuadrante;
 	private Combo cGridCuadrante;
 	private Label lCuadranteTitulo;
@@ -141,10 +143,10 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	}
 	
 	public class I_Trabaja {
-		private Empleado empl;//id del empleado
-		private Time FichIni;//Fichaje inicial,hay que mirar bien los tipos que van a llevar las fechas
-		private Time FichFin;//Fichaje final
-		private I_Turno turno;//Identificador del turno
+		private Empleado empl;	//id del empleado
+		private Time FichIni;	//Fichaje inicial,hay que mirar bien los tipos que van a llevar las fechas
+		private Time FichFin;	//Fichaje final
+		private I_Turno turno;	//Identificador del turno
 		
 		public I_Trabaja (Trabaja tr) {
 			this.empl=vista.getEmpleado(tr.getIdEmpl());
@@ -152,7 +154,6 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			this.FichFin=tr.getFichFin();
 			// Aquí hay que hacer una copia del turno
 			this.turno = new I_Turno(vista.getTurno(tr.getIdTurno()));
-					
 		}
 
 		public Empleado getEmpl() {
@@ -186,8 +187,14 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		public void setIdTurno(I_Turno idTurno) {
 			this.turno = idTurno;
 		}
-		
-		
+
+		public boolean isModificado() {
+			return turno.isModificado();
+		}
+
+		public void setModificado(boolean modificado) {
+			turno.setModificado(modificado);
+		}
 	}
 
 	protected ArrayList<I_Trabaja> iCuad[];		//Esta matriz seria la salida del algoritmo,un vector donde en cada posicion hay una lista de los empleados que trabajan
@@ -205,12 +212,12 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	 * 						</ul>
 	 * @param horaApertura	Hora de inicio del cuadrante
 	 * @param horaFin		Hora de fin del cuadrante. Las horas pasadas de las 24 se muestran
-	 * 						como la madrugada del d�a siguiente.
-	 * @param margenIzq		Margen izquierdo en p�xeles
-	 * @param margenDer		Margen derecho en p�xeles
-	 * @param margenSup		Margen superior en p�xeles
-	 * @param margenInf		Margen inferior en p�xeles
-	 * @param margenNombres	Margen de los nombres en p�xeles (indica d�nde empieza a dibujarse
+	 * 						como la madrugada del día siguiente.
+	 * @param margenIzq		Margen izquierdo en píxeles
+	 * @param margenDer		Margen derecho en píxeles
+	 * @param margenSup		Margen superior en píxeles
+	 * @param margenInf		Margen inferior en píxeles
+	 * @param margenNombres	Margen de los nombres en píxeles (indica dónde empieza a dibujarse
 	 * 						el cuadrante a partir del margen izquierdo, dejando un espacio para
 	 * 						los nombres.
 	 */
@@ -400,8 +407,11 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		
 		mouseMoveListenerCuadrDiario = new MouseMoveListener() {
 			public void mouseMove(MouseEvent e) {
-				if (turno!=null || cacheCargada) {
-				// Si acabo de apretar el botón para crear una franja, pero
+				despMouse = e.y - alto_franjas/2;
+				if (moviendoEmpleado) {
+					canvas.redraw();
+				} else if (turno!=null || cacheCargada) {
+				// Si acabo de apretar el botón para crear una franja, pero 
 				// todavía no he movido el ratón
 			/*	if (creando && empleadoActivo != -1) {
 					Posicion p = cuadrante.sticky(e.x);
@@ -434,7 +444,6 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				// comprobar si el cursor está en alguna franja, una por una	
 					else {
 						// Comprueba el empleado activo (vertical)
-						
 						int i = 0;
 						Boolean encontrado = false;
 						Boolean redibujar = false;
@@ -467,6 +476,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 									if 		(t.contienePixelInt(e.x))	{ cursor(1); encontrado = true; turnoActivo = t; redibujar=true;}
 									else if (t.tocaLadoIzquierdo(e.x))	{ cursor(2); encontrado = true; turnoActivo = t; redibujar=true;}
 									else if (t.tocaLadoDerecho(e.x))	{ cursor(2); encontrado = true; turnoActivo = t; redibujar=true;}
+									else if (e.x < margenNombres)		{ cursor(3); encontrado = true; turnoActivo = null; redibujar=true;}
+									else cursor(0);
 								}
 								i++;
 							}
@@ -474,6 +485,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 							if 		(turno.contienePixelInt(e.x))	{ cursor(1); encontrado = true; turnoActivo = turno; redibujar=true;}
 							else if (turno.tocaLadoIzquierdo(e.x))	{ cursor(2); encontrado = true; turnoActivo = turno; redibujar=true;}
 							else if (turno.tocaLadoDerecho(e.x))	{ cursor(2); encontrado = true; turnoActivo = turno; redibujar=true;}
+							else if (e.x < margenNombres)			{ cursor(3); encontrado = true; turnoActivo = null; redibujar=true;}
+							else cursor(0);
 						}
 						if (!encontrado && turnoActivo!=null) { cursor(0); turnoActivo=null; redibujar=true; }
 						if (redibujar) canvas.redraw();
@@ -490,14 +503,14 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					turnoActivo.botonSecundario(e.x, margenIzq, margenNombres, horaApertura, tamHora, tamSubdiv, numSubdivisiones);
 					if (bGuardar!=null) bGuardar.setEnabled(true);
 					canvas.redraw();
-				} else
-				if (turnoActivo!=null && e.button == 1) {
+				} else if (turnoActivo!=null && e.button == 1) {
 					movimiento = turnoActivo.botonPrimario(e.x, margenIzq, margenNombres, horaApertura, tamHora, tamSubdiv, numSubdivisiones);
-				}
+				} else if (e.x < margenNombres) moviendoEmpleado = true;
 			}
 			
 			public void mouseUp(MouseEvent e) {
 				movimiento=0;
+				moviendoEmpleado = false;
 			}
 			
 			public void mouseDoubleClick(MouseEvent e) {
@@ -511,7 +524,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					if (f.contienePixelInt(e.x)) {
 						f = cuadrante.empleados.get(empleadoActivo).turno.franjas
 								.get(i);
-						// TODO que calcule el sticky en el que est�
+						// TODO que calcule el sticky en el que est?
 						// Franja f2 = cuadrante.new Franja (f.inicio, e.x-10);
 						// f.inicio=e.x+10;
 						// cuadrante.empleados.get(empleadoActivo).franjas.add(f2);
@@ -836,7 +849,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	 */
 	public void dibujarTurnos(GC gc) {
 		if (turno!=null) {			
-			turno.dibujar(display, "", gc, 0, null, margenIzq, margenNombres,margenSup,sep_vert_franjas,alto_franjas,tamHora, tamSubdiv, horaApertura, numSubdivisiones);
+			turno.dibujar(display, "", gc, 0, null, margenIzq, margenNombres,margenSup,sep_vert_franjas,alto_franjas,tamHora, tamSubdiv, horaApertura, numSubdivisiones,0);
 		}
 		else if (!cacheCargada) {
 			gc.setForeground(new Color(display, 0,0,0));
@@ -846,10 +859,12 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			for (int i = 0; i < iCuad[dia-1].size(); i++) {
 				// Dibujar el nombre del empleado y el turno
 				String nombre = iCuad[dia-1].get(i).getEmpl().getNombre().charAt(0) + ". " + iCuad[dia-1].get(i).getEmpl().getApellido1();
-				iCuad[dia-1].
-				get(i).
-				getTurno().
-				dibujar(display, nombre, gc, i, vista.getEmpleados().get(i).dameColor() ,margenIzq, margenNombres,margenSup,sep_vert_franjas,alto_franjas,tamHora, tamSubdiv, horaApertura, numSubdivisiones);
+				int desp = 0;
+				if (moviendoEmpleado && empleadoActivo == i)
+					desp = despMouse;  
+				iCuad[dia-1].get(i).getTurno().
+				dibujar(display, nombre, gc, i, vista.getEmpleados().get(i).dameColor(), margenIzq, margenNombres, margenSup, sep_vert_franjas, alto_franjas, tamHora, tamSubdiv, horaApertura, numSubdivisiones, desp);
+				
 			}
 
 /*			for ( int i=0; i<vista.getEmpleados().size(); i++) {
