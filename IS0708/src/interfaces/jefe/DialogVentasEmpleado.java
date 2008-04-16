@@ -44,6 +44,7 @@ public class DialogVentasEmpleado {
 		this.padre = padre;
 		this.bundle = bundle;
 		this.vista = vista;
+		mostrarVentana();
 	}
 	
 	public void mostrarVentana() {		
@@ -146,6 +147,13 @@ public class DialogVentasEmpleado {
 		
 		bCancelar.addSelectionListener(sabCancelar);
 		bAceptar.addSelectionListener(sabAceptar);
+		// Botón por defecto bAceptar
+		shell.setDefaultButton(bAceptar);
+		// Ajustar el tama�o de la ventana al contenido
+		shell.pack();
+		// Mostrar ventana centrada sobre el padre
+		shell.setLocation(padre.getBounds().width/2 + padre.getBounds().x - shell.getSize().x/2, padre.getBounds().height/2 + padre.getBounds().y - shell.getSize().y/2);
+		shell.open();
 	}
 
 }
