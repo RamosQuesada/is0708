@@ -13,6 +13,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
+import com.sun.xml.internal.bind.v2.runtime.output.ForkXmlOutput;
+
 import algoritmo.Cuadrante;
 import algoritmo.Trabaja;
 import aplicacion.datos.Contrato;
@@ -164,6 +166,9 @@ public class Vista {
 						else if (e.tipo.equals("eliminaMesTrabaja")) {
 							ArrayList<Object> ar = (ArrayList<Object>)e.o.get(0);
 							controlador.eliminaMesTrabaja((Integer)ar.get(0),(Integer)ar.get(1),(Integer)ar.get(2),ar.get(3).toString());
+						}else if (e.tipo.equals("eliminaTurnoDeContrato")){
+							ArrayList<Object> aux = (ArrayList<Object>)e.o.get(0);
+							controlador.eliminaTurnoDeContrato((Integer)aux.get(0),(Integer)aux.get(1));
 						}
 					}
 					else if(e.i==MODIFICAR) {
@@ -301,7 +306,61 @@ public class Vista {
 		deleteCache(idTurno, "Turno");
 		return true;
 	}
-	
+	/**
+	 * Esta funcion elimina un turno de un contrato
+	 * @param idTurno
+	 * @param idContrato
+	 * @return boolean que nos confirma exito ne la operacion
+	 */
+	public void eliminaTurnoDeContrato(int idTurno, int idContrato){
+		//modificamos cache
+		//buscamos el contrato
+		int i=0;
+		boolean encontrado=false;
+		String p="";
+		String patron="";
+		String patron_aux="";
+		while(i<contratos.size()&&!encontrado){//miramos en la cache
+			if(contratos.get(i).getNumeroContrato()==idContrato){
+				encontrado=true;
+			}else{
+				i++;
+			}
+		}
+		if (encontrado){//modificamos patron del contrato
+			patron=contratos.get(i).getPatron();//cogemos el contrato
+			//modificamos el patron quitando el turno que nos dicen 
+			for(int j=0;j<patron.length();j++){
+				if(patron.charAt(j)==':'){
+					if(patron.charAt(j+1)!=idTurno){
+						p=patron.charAt(j-1)+"";//dias del turno
+						p+=":";//dos puntos
+						p+=patron.charAt(j+1);//idturno
+						if(patron.length()-j!=1){//si tiene barra se la metemos
+							p+=patron.charAt(j+2);//metemos la barra
+						}
+						patron_aux+=p;//actualizamos el patron auxiliar que sera el que utilicemos despues para modificar el contrato
+						
+					}
+				}
+			}
+			contratos.get(i).setPatron(patron_aux);//modificamos patron en cache
+			//ahora modificamos el patron de todos los empleados que tengan ese contrato
+			for (int k = 0; k < empleados.size(); k++) {
+				if(empleados.get(k).getContrato().getNumeroContrato()==idContrato){
+					empleados.get(k).getContrato().setPatron(patron_aux);
+				}
+			}
+		}else{
+			//deberiamos dar mensaje de error por pantalla
+		}
+		//modificamos bbdd
+		ArrayList<Object> aux=new ArrayList<Object>();
+		aux.add(idTurno);
+		aux.add(idContrato);
+		deleteCache(aux,"eliminaTurnoDeContrato");//borramos de la bbdd
+		
+	}
 	public boolean eliminaMensaje(Mensaje m){
 		
 		return this.controlador.eliminaMensaje(m);		
@@ -701,7 +760,28 @@ public class Vista {
 	public void setCursorFlecha() {
 		shell.setCursor(new Cursor(display, SWT.CURSOR_ARROW));
 	}
-
+	/**
+	 * 
+	 * Establece información de la distribucion de un departamento para un determinado dia. 
+	 * @param depart Nombre del departamento
+	 * @param tipoDia Tipo de dia (1-7) : (lunes-domingo)
+	 * @param datos arraylist donde cada elemento es un vector de tres
+	 *        dimensiones de tal forma que vector[0]= Hora vector[1]= numero
+	 *        minimo de empleados para esa hora vector[2]= numero maximo de
+	 *        mpleados para esa hora
+	 */
+	public void setDistribucionDiaSemana(String depart, int tipoDia, ArrayList<Object[]> datos){
+		controlador.setDistribucionDiaSemana(depart, tipoDia, datos);
+	}
+	/**
+	 * Funcion que establece la hora de entrada y salida de un departamento
+	 * @param dpto: Id del Dpto.
+	 * @param entrada: hora de apertura del departamento
+	 * @return salida: hora de cierre del departamento
+	 */
+	public void setHorarioDpto(String dpto, Time entrada, Time salida) {
+		controlador.setHorarioDpto(dpto, entrada, salida);
+	}
 	/**
 	 * Devuelve true si la aplicación se ha iniciado en modo debug
 	 * 
