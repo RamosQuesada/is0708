@@ -1289,6 +1289,16 @@ public class Controlador {
 	public boolean marcarMensaje(Mensaje mensaje) {
 		return _db.marcaMensaje(!mensaje.isMarcado(), mensaje.getIdmensaje());
 	}
+	
+	/**
+	 * Marca un mensaje en la base de datos como visto.
+	 * 
+	 * @param mensaje Mensaje a marcar
+	 * @return <i>true</i> si el mensaje se ha marcado correctamente
+	 */
+	public boolean setLeido(Mensaje mensaje) {
+		return _db.marcaMensajeLeido(true, mensaje.getIdmensaje());
+	}
 
 	/**
 	 * Marca un mensaje en la base de datos como LEIDO

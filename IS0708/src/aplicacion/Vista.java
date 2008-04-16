@@ -176,7 +176,7 @@ public class Vista {
 						else if (e.tipo.equals("Turno"))			controlador.modificarTurno(((Turno)e.o.get(0)).getIdTurno(), ((Turno)e.o.get(0)).getDescripcion(), ((Turno)e.o.get(0)).getHoraEntrada(), ((Turno)e.o.get(0)).getHoraSalida(), ((Turno)e.o.get(0)).getHoraDescanso(), ((Turno)e.o.get(0)).getTDescanso());
 						else if (e.tipo.equals("Empleado"))			controlador.cambiarEmpleado(((Empleado)e.o.get(0)).getEmplId(), ((Empleado)e.o.get(0)).getNombre(), ((Empleado)e.o.get(0)).getApellido1(), ((Empleado)e.o.get(0)).getApellido2(), ((Empleado)e.o.get(0)).getFechaNac(), ((Empleado)e.o.get(0)).getSexo(), ((Empleado)e.o.get(0)).getEmail(), ((Empleado)e.o.get(0)).getPassword(), ((Empleado)e.o.get(0)).getGrupo(), ((Empleado)e.o.get(0)).getFcontrato(), ((Empleado)e.o.get(0)).getFAlta(), ((Empleado)e.o.get(0)).getFelicidad(), ((Empleado)e.o.get(0)).getIdioma(), ((Empleado)e.o.get(0)).getRango(), ((Empleado)e.o.get(0)).getTurnoFavorito(), ((Empleado)e.o.get(0)).getContratoId());
 						else if (e.tipo.equals("Mensaje"))			controlador.marcarMensaje((Mensaje)e.o.get(0));
-						//else if (e.tipo.equals("MensajeLeido"))		controlador.setLeido((Mensaje)e.o.get(0));
+						else if (e.tipo.equals("MensajeLeido"))		controlador.setLeido((Mensaje)e.o.get(0));
 						//else if (e.tipo.equals("JefeDepartamento"))	controlador.modificaDpto(((Departamento)e.o.get(0)).getNombreDepartamento(), ((Departamento)e.o.get(0)).getJefeDepartamento().getEmplId()); 
 						else if (e.tipo.equals("NombreDepartamento")){controlador.cambiaNombreDpto(((ArrayList<String>)e.o.get(0)).get(0),((ArrayList<String>)e.o.get(0)).get(1));}//nombre antiguo,nombre nuevo
 //																		controlador.cambiaNombreDepartamentoUsuario(e.o.get(0).toString(),e.o.get(1).toString());
@@ -1210,6 +1210,18 @@ public class Vista {
 	 */
 	public boolean marcarMensaje(Mensaje mensaje) {
 		modifyCache(mensaje, "Mensaje");
+		return true;
+	}
+	
+	/**
+	 * Pone un mensaje como visto
+	 * 
+	 * @param mensaje
+	 *            el mensaje a marcar como visto
+	 * @return <i>true</i> si el marcado del mensaje se ha visto correctamente
+	 */
+	public boolean marcarMensajeVisto(Mensaje mensaje) {
+		modifyCache(mensaje, "MensajeLeido");
 		return true;
 	}
 

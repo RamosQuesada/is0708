@@ -1142,6 +1142,28 @@ public class Database extends Thread {
 		}
 		return correcto;
 	}
+	
+	/**
+	 * 
+	 * @param marca
+	 *            marca del mensaje(true si marcar y false si desmarcar)
+	 * @param id
+	 *            identificador del mensaje a marcar
+	 * @return Indica si se ha podido marcar o no el mensaje
+	 */
+	public boolean marcaMensajeLeido(boolean marca, int id) {
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("UPDATE " + tablaMensajes + " SET visto= " + marca
+					+ " WHERE IdMensaje=" + id);
+			correcto = true;
+		} catch (SQLException e) {
+			correcto = false;
+			System.err.println("Database :: Error al Marcar el mensaje");
+		}
+		return correcto;
+	}
 
 	public boolean modificaDepartamento(String Nombre, int nvend) {
 		int r = 0;
