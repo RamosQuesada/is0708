@@ -613,8 +613,10 @@ public class Controlador {
 			r.last();
 			if (r.getRow() > 0) {
 				r.first();
+				Time hApert = r.getTime("HoraApertura");
+				Time hCierr = r.getTime("HoraCierre");
 				Empleado e = getEmpleado(r.getInt("JefeDepartamento"));
-				Departamento d = new Departamento(id, 0, e);
+				Departamento d = new Departamento(id, 0, e, hApert, hCierr);
 				return d;
 			}
 		} catch (Exception e) {
