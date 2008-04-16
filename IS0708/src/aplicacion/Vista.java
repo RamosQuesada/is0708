@@ -42,7 +42,7 @@ public class Vista {
 	private LanguageChanger l;
 	private Thread conector, loader, cacheUploader;
 	private boolean cacheCargada = false;
-	private int num_men_hoja = 5;
+	private int num_men_hoja = 0;
 	CargadorImagenes imagenes;
 	
 	/** Lista de tareas que se están llevando a cabo para mostrar en la barra inferior */
@@ -1669,6 +1669,14 @@ public class Vista {
 		modifyCache(m, "MensajeLeido");
 		return true;
 	}
+
+	public int getNum_men_hoja() {
+		return num_men_hoja;
+	}
+
+	public void setNum_men_hoja(int num_men_hoja) {
+		this.num_men_hoja = num_men_hoja;
+	}
 	   
-	   
+	
 }
