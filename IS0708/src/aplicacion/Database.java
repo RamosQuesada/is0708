@@ -155,13 +155,14 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("DELETE FROM " + tablaUsuarios + " WHERE NumVendedor=" + NumVendedor);
+			
 			st.executeUpdate("DELETE FROM " + tablaUsuariosPorDepartamento + " WHERE NumVendedor=" + NumVendedor);
 			st.executeUpdate("DELETE FROM " + tablaMensajes + " WHERE Remitente=" + NumVendedor);
 			st.executeUpdate("DELETE FROM " + tablaDestinatariosMensaje + " WHERE NumVendedor=" + NumVendedor);
 			st.executeUpdate("DELETE FROM " + tablaIncidenciasPorUsuario + " WHERE NumVendedor=" + NumVendedor);
 			st.executeUpdate("DELETE FROM " + tablaTrabaja + " WHERE NumVendedor=" + NumVendedor);
 			st.executeUpdate("DELETE FROM " + tablaVentas + " WHERE NumVendedor=" + NumVendedor);
+			st.executeUpdate("DELETE FROM " + tablaUsuarios + " WHERE NumVendedor=" + NumVendedor);
 			
 			correcto = true;
 		} catch (SQLException e) {
