@@ -1,5 +1,7 @@
 package aplicacion.datos;
 
+import java.util.ArrayList;
+
 /**
  * Clase que representa un contrato
  * @author Miguel Angel Alonso Pajuelo
@@ -117,5 +119,22 @@ public class Contrato {
 	public void set_tipoContrato(int contrato) {
 		_tipoContrato = contrato;
 	}
-	
+	/**
+	 * Esta funcion devuelve un arraylist con los numeros de turnos del contrato
+	 * a partir del patron
+	 * @return Arraylist con los numeros de los turnos;
+	 */
+	public ArrayList<Integer> getNumTurnosContrato(){
+		String p=this._patron;
+		ArrayList<Integer> turnos=new ArrayList<Integer>();
+		for(int i=0;i<p.length();i++){
+			if(p.charAt(i)==':'){
+				i++;
+				if(p.charAt(i)!='d' && !turnos.contains(Integer.valueOf(p.charAt(i)))){
+					turnos.add(Integer.valueOf(p.charAt(i)));
+				}
+			}
+		}
+		return turnos;
+	}
 }
