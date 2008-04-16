@@ -21,6 +21,7 @@ public class CuadranteEmpleado {
 	
 	private Vista vista;
 	private boolean redibujar;
+	private boolean finSemana;
 	private Display display;
 	private int ancho;
 	private int alto=100;
@@ -183,6 +184,11 @@ public class CuadranteEmpleado {
 	 * @param gc				El GC del display sobre el que se dibujar� el cuadrante.
 	 * @param empleadoActivo	La posici�n del empleado a resaltar en la lista de empleados.
 	 */
+	/**
+	 * Dibuja el cuadrante, resaltando el empleado activo.
+	 * @param gc				El GC del display sobre el que se dibujar� el cuadrante.
+	 * @param empleadoActivo	La posici�n del empleado a resaltar en la lista de empleados.
+	 */
 	// TODO Deber�a lanzar una excepci�n si empleadoActivo > empleados.size
 	public void dibujarCuadranteDia(GC gc, int empleadoActivo) {
 		dibujarDias(gc);
@@ -191,7 +197,56 @@ public class CuadranteEmpleado {
 	public void dibujarCuadranteMes(GC gc){
 		Calendar c = Calendar.getInstance();
 		// Esto coge el d�a 1 de este mes
-		c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),1);
+		final String[] diasSemana={
+				"L","M","X","J","V","S","D"
+			};
+		if(this.avance!=0){
+			boolean izq=false,der=false,arr=false,abajo=false;
+			cambiarPincel(gc, 90,140,90);
+			this.cambiarRelleno(gc, 90, 140, 90);
+			gc.fillGradientRectangle(0,0,this.ancho,this.alto,true);
+			
+			for(int cont2=0;cont2<6;cont2++){
+				for(int cont=0;cont<7;cont++){
+					if(cont==0){izq=true;}
+					if(cont==6){der=true;}
+					if(cont2==0){arr=true;}
+					if(cont2==5){abajo=true;}
+					if(cont2==0){
+					dibujarDiaMes(gc,true,cont,1,null,null,diasSemana[cont],izq,der,arr,abajo,1,1);
+					}
+					else{
+						dibujarDiaMes(gc,false,cont,cont2+1,null,null,"",izq,der,arr,abajo,1,1);	
+					}
+					izq=der=arr=abajo=false;
+				}
+				
+				}
+			dibujarDiaMes(gc,false,0,1,null,null,"",false,false,false,false,7,1);
+			dibujarDiaMes(gc,false,0,1,null,null,"",false,false,false,false,7,6);
+			
+			dibujarCarga(gc,"CARGANDO CUADRANTE");
+			/*cambiarRelleno(gc,100,200,100);
+			cambiarPincel(gc,100,200,100);
+			gc.fillGradientRectangle(ancho/4, alto/4, this.ancho/2, this.alto/2, true);
+			cambiarPincel(gc,0,0,0);
+			gc.drawRectangle(ancho/3, alto/3, ancho/2, alto/2);
+			int tamanoFuente=alto/20;
+			Font fuente=gc.getFont();
+			gc.setFont(new Font(display,"Times",tamanoFuente,SWT.BOLD));
+			String text = " CARGANDO CUADRANTE";
+			String text2 = "MENSUAL";
+	        Point textSize = gc.textExtent(text);
+	        Point textSize2 = gc.textExtent(text2);
+	        gc.drawText(text,0+ancho/2-textSize.x/2, 0+alto/2+textSize.y/2,false);
+	        gc.drawText(text2,0+ancho/2-textSize.x/2, 0+alto/2+textSize2.y/2+textSize.y,false);
+	        cambiarPincel(gc,0,0,0);
+			gc.getFont().dispose();
+			gc.setFont(fuente);*/
+		}
+		else{
+			c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),1);
+		
 		// Y esto en qu� d�a de la semana cae
 		int primerDia = c.get(Calendar.DAY_OF_WEEK);
 		c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),1);
@@ -217,13 +272,12 @@ public class CuadranteEmpleado {
 		int diaSemana=this.primerDiaMes;
 		int semana=1;
 		if(horaInicioMes!=null){
-			final String[] diasSemana={
-					"L","M","X","J","V","S","D"
-				};
+
 		boolean izq=false,der=false,arr=false,abajo=false;
 		
 		cambiarPincel(gc, 90,140,90);
 		this.cambiarRelleno(gc, 90, 140, 90);
+		
 		gc.fillGradientRectangle(0,0,this.ancho,this.alto,true);
 		for(int cont2=0;cont2<6;cont2++){
 		for(int cont=0;cont<7;cont++){
@@ -239,6 +293,7 @@ public class CuadranteEmpleado {
 			}
 			izq=der=arr=abajo=false;
 		}
+		
 		}
 		for(int cont=0;cont<this.horaInicioMes.size();cont++){
 			if(cont==0){izq=true;}
@@ -254,7 +309,7 @@ public class CuadranteEmpleado {
 		}
 		dibujarDiaMes(gc,false,0,1,null,null,"",false,false,false,false,7,1);
 		dibujarDiaMes(gc,false,0,1,null,null,"",false,false,false,false,7,6);
-
+		}
 		/*
 		this.dibujarDiaMes(gc, 3, 1);
 		this.dibujarDiaMes(gc, 4, 1);
@@ -388,7 +443,7 @@ public class CuadranteEmpleado {
 			dibujarCarga(gc," CARGANDO BASE DATOS ");
 		}
 		else
-		if(this.avance!=0){
+		if(this.avance>1){
 			dibujarCarga(gc," CARGANDO CUADRANTES ");
 		}
 		else{
@@ -745,4 +800,11 @@ public class CuadranteEmpleado {
 	public boolean dameRedibujar(){
 		return redibujar;
 	}
-}
+	public void ponRedibujarSemana(boolean b) {
+		// TODO Auto-generated method stub
+		this.finSemana=b;
+		
+	}
+	public boolean dameRedibujarSemana(){
+		return finSemana;
+	}}

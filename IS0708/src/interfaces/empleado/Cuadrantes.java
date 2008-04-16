@@ -142,6 +142,12 @@ public class Cuadrantes extends Thread{
 						redibujar();
 						cuadrante.ponRedibujar(false);
 					}
+					else{
+						if((cuadrante.dameRedibujarSemana())&&(semanal)){
+							redibujar();
+							cuadrante.ponRedibujarSemana(false);
+						}
+					}
 				}
 			});
 			try {
