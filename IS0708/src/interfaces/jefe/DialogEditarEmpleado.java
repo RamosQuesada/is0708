@@ -468,13 +468,13 @@ public class DialogEditarEmpleado {
 							// Si a pesar de todo esta de acuerdo
 							// modificacion del empleado.
 							vista.modificarEmpleado(id, nom, ap1, ap2, fechaNacimiento, sex,  mail, pass, 
-								Exp, fechaContrato,fechaAlta, Fel, idiom, ran, turn, indice);
+								Exp, fechaContrato,fechaAlta, Fel, idiom, ran, turn, indice, lColor.getBackground());
 							shell.dispose();
 						}
 							
 					} else {
 						vista.modificarEmpleado(id, nom, ap1, ap2, fechaNacimiento, sex,  mail, pass, 
-								Exp, fechaContrato,fechaAlta, Fel, idiom, ran, turn, indice);
+								Exp, fechaContrato,fechaAlta, Fel, idiom, ran, turn, indice, lColor.getBackground());
 						shell.dispose();
 					}
 					
