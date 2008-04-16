@@ -3,6 +3,7 @@ package aplicacion;
 
 import java.io.*;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Date;
 
 import aplicacion.utilidades.EncriptCadena;
@@ -1344,6 +1345,46 @@ public class Database extends Thread {
 			System.err.println("Database :: Error al realizar la consulta de la distribucion ");
 		}
 		return rs;
+	}
+	
+	public boolean borraDistribucion(String nombre, int DiaSemana) {
+		boolean correcto = false ;
+		
+		try {
+			st = con.createStatement();
+			st.executeUpdate("DELETE FROM " + tablaDistribucionHorarios + " WHERE NombreDept ='"
+							+ nombre
+							+ "' AND DiaSemana="
+							+ DiaSemana);
+			return true;
+		} catch(SQLException e) {
+			e.printStackTrace();
+			System.err.println("Database :: Error al borrar la distribucion ");
+		}
+		
+		return correcto;
+	}
+	
+	public boolean setDistribucion(String nombre, int DiaSemana, Object[] datos, boolean ultimo) {
+		boolean correcto = false ;
+		try {			
+			st.addBatch("INSERT INTO " + tablaDistribucionHorarios + " VALUES (" + (Integer)datos[0] + ", "
+					+ DiaSemana + ", '"
+					+ (String)datos[3] + "', "
+					+ (Integer)datos[2] + ", "
+					+ (Integer)datos[1] + ", '"
+					+ nombre + "');");
+			
+			if (ultimo)
+				st.executeBatch();
+			
+			correcto=true;
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			System.err.println("Database :: Error al insertar la distribucion ");
+		}
+		return correcto;
 	}
 
 	public ResultSet obtenDistribuciones(String nombre) {
