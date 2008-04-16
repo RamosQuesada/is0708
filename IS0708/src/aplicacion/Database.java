@@ -1578,6 +1578,20 @@ public class Database extends Thread {
 		}
 		return r;
 	}
+	
+	public boolean setHorarioDpto(String dpto, Time entrada, Time salida) {
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("UPDATE " + tablaDepartamentos + " SET HoraApertura = '" + entrada + "', HoraCierre = '" + salida + "';");
+			
+			correcto = true;
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println("Database :: Error al realizar la consulta del horario de un Dpto");
+		}
+		return correcto;
+	}	
 
 	public ResultSet obtenHorasTrabajoEmpleadoDia(int nv,int idturno,Date d) {
 		ResultSet r = null;
