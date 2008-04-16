@@ -31,7 +31,6 @@ public class DialogElegirEmpleado extends Thread {
 	public DialogElegirEmpleado (Composite padre, Vista vista, ResourceBundle bundle) {
 		this.padre = padre;
 		this.vista = vista;
-		this.bundle = bundle;
 		empleadosOut = new ArrayList<Empleado>();
 		listShell = new Shell (padre.getShell(), SWT.NONE);
 		mostrarVentana();

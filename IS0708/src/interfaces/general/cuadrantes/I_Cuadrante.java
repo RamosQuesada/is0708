@@ -273,7 +273,6 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 						iCuad[i].add(new I_Trabaja(c[i].get(j)));
 					}
 				}
-				//ordenarICuad();
 				cacheCargada = true;
 				if (!display.isDisposed()) {
 					display.asyncExec(new Runnable() {
@@ -285,36 +284,6 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			}
 		}
 		catch (Exception e) {};
-	}
-	
-	private void ordenarICuad() {
-		// Para cada día
-		for (int i=0; i<iCuad.length; i++) {
-			// Ordenar el arraylist por inserción
-			for (int j=1; j<iCuad[i].size(); j++) {
-				int k=j;
-				boolean colocado = false;
-				while (!colocado && k<iCuad[i].size()) {
-					// Si el seleccionado es menor que el que estoy mirando
-					if ((	iCuad[i].get(j).getEmpl().getApellido1() +
-							iCuad[i].get(j).getEmpl().getApellido2() +
-							iCuad[i].get(j).getEmpl().getNombre()
-							).compareTo(
-									iCuad[i].get(k).getEmpl().getApellido1() +
-									iCuad[i].get(k).getEmpl().getApellido2() +
-									iCuad[i].get(k).getEmpl().getNombre()
-									)==-1) {
-						// Colocarlo ahí
-						iCuad[i].add(j, iCuad[i].get(k));
-						iCuad[i].remove(k+1);
-						colocado = true;
-						System.out.println("movido");
-					}
-					k++;
-							
-				}
-			}
-		}
 	}
 	
 	/**
