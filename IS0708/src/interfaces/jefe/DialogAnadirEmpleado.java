@@ -369,6 +369,15 @@ public class DialogAnadirEmpleado {
 					tEMail.setFocus();
 					tEMail.selectAll();
 				}
+				else if (vista.getEmpleado(n) != null) {
+					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
+					messageBox.setText (bundle.getString("Error"));
+					messageBox.setMessage (bundle.getString("I08_err_NVendExiste"));
+					e.doit = messageBox.open () == SWT.YES;
+					// Enfocar tNVend y seleccionar texto
+					tNVend.setFocus();
+					tNVend.selectAll();
+				}
 				// Si todo está bien, inserta el empleado
 				else {
 					String cont = cContrato.getText();

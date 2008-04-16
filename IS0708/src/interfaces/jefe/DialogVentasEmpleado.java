@@ -152,6 +152,7 @@ public class DialogVentasEmpleado {
 		shell.pack();
 		// Mostrar ventana centrada sobre el padre
 		shell.setLocation(padre.getBounds().width/2 + padre.getBounds().x - shell.getSize().x/2, padre.getBounds().height/2 + padre.getBounds().y - shell.getSize().y/2);
+		shell.setSize(200, 150);
 		shell.open();
 	}
 
