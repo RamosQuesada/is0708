@@ -532,5 +532,17 @@ public class Util {
 		return c;
 	}
 	
+	/**
+	 * Calcula el hexadecimal de un objeto Color
+	 * @param color Color del que se quiere saber su hexadecimal
+	 * @return Un string con el color en hexadecimal
+	 */
+	public static String ColorAHex(Color color){
+		int r = color.getRed();
+		int g = color.getGreen();
+		int b = color.getBlue();
+		String hex = Integer.toHexString(r)+Integer.toHexString(g)+Integer.toHexString(b);
+		return hex;
+	}
 	
 }
