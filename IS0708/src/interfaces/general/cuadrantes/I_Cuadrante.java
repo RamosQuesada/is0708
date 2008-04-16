@@ -674,14 +674,16 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					//Comprobamos si el cursor se encuentra sobre el nombre de algún empleado
 					//Primero comprobamos la franja vertical de ancho margenNombres
 					Boolean enFranjaVert=false;
-					if (e.x>margenIzq+1 && e.x<margenIzq+margenNombres-21)
+					if (e.x>margenIzq+1 && e.x<margenIzq+margenNombres-25)
 						enFranjaVert=true;
 					if (enFranjaVert && empEncontrado) {
 						cursor(3);
 						nombreValido = true;
 					}
-					else
+					else {
+						cursor(0);
 						nombreValido = false;
+					}
 					canvas.redraw();
 				}
 			}
@@ -937,6 +939,11 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				gc.drawText(String.valueOf(idTurno),cursor.x-anchoDia/2 + (7/2),cursor.y - altoFila/2 + 2,altoFila);
 			dibujaBoton(gc,cursor.x-anchoDia/2,cursor.y-altoFila/2,anchoDia,altoFila);
 			gc.setBackground(new Color(display,255,255,255));
+		}
+		
+		if (nombreValido) {
+			gc.setBackground(colorJefe);
+			gc.fillRectangle(margenIzq+1,inicioY+((empActVistaMes-1)*altoFila), margenNombres-25, altoFila);
 		}
 	}
 	
