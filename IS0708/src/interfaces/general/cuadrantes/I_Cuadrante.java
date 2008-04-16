@@ -85,6 +85,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private int empActVistaMes=0;
 	private int indiceEmpAct=0;
 	private boolean diaValido=false;
+	private boolean nombreValido=false;
 	private boolean turnoPulsado=false;
 	private int turnPulsX=0;
 	private int turnPulsY=0;
@@ -621,58 +622,68 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		mouseMoveListenerCuadrMensual = new MouseMoveListener() {
 			public void mouseMove(MouseEvent e) {
 				if (cacheCargada) {
-				//Comprueba si el cursor esta situado sobre algun dia
-				cursor.x = e.x; cursor.y = e.y-origen;
-				diaValido = false;
-				int dia = 0;
-				Boolean diaEncontrado = false;
-				int inicioX = margenNombres + margenIzq;
-				int anchoMes = ancho - margenIzq - margenDer - margenNombres;
-				int anchoDia = anchoMes / iCuad.length;
-				int anchoDiaCont=0;
-				while (!diaEncontrado && (dia < iCuad.length)) {
-					// Calculamos la franja horizontal de cada dia
-					if (e.x > (inicioX + anchoDiaCont + 1)
-							&& e.x < (inicioX + anchoDiaCont + anchoDia - 1)) {
-						diaActVistaMes = dia;
-						diaEncontrado = true;
+					//Comprueba si el cursor esta situado sobre algun dia
+					cursor.x = e.x; cursor.y = e.y-origen;
+					diaValido = false;
+					int dia = 0;
+					Boolean diaEncontrado = false;
+					int inicioX = margenNombres + margenIzq;
+					int anchoMes = ancho - margenIzq - margenDer - margenNombres;
+					int anchoDia = anchoMes / iCuad.length;
+					int anchoDiaCont=0;
+					while (!diaEncontrado && (dia < iCuad.length)) {
+						// Calculamos la franja horizontal de cada dia
+						if (e.x > (inicioX + anchoDiaCont + 1)
+								&& e.x < (inicioX + anchoDiaCont + anchoDia - 1)) {
+							diaActVistaMes = dia;
+							diaEncontrado = true;
+						}
+						anchoDiaCont += anchoDia;
+						dia++;
 					}
-					anchoDiaCont += anchoDia;
-					dia++;
-				}
-				//Comprueba si el cursor esta situado sobre algun empleado
-				int iEmp = 1;
-				Boolean empEncontrado = false;
-				ArrayList<Empleado> empleados = vista.getEmpleados();
-				//empleados.remove(0);
-				int altoFila = 20;
-				int altoFilaCont = 0;
-				int inicioY = margenSupVistaMes + altoFila;
-				while (!empEncontrado && (iEmp < empleados.size())) {
-					// Calculamos la franja vertical de cada empleado
-					if (cursor.y > (inicioY + altoFilaCont + 1)
-							&& cursor.y < (inicioY + altoFilaCont + altoFila - 1)) {
-						empActVistaMes = iEmp;
-						empEncontrado = true;
+					//Comprueba si el cursor esta situado sobre algun empleado
+					int iEmp = 1;
+					Boolean empEncontrado = false;
+					ArrayList<Empleado> empleados = vista.getEmpleados();
+					//empleados.remove(0);
+					int altoFila = 20;
+					int altoFilaCont = 0;
+					int inicioY = margenSupVistaMes + altoFila;
+					while (!empEncontrado && (iEmp < empleados.size())) {
+						// Calculamos la franja vertical de cada empleado
+						if (cursor.y > (inicioY + altoFilaCont + 1)
+								&& cursor.y < (inicioY + altoFilaCont + altoFila - 1)) {
+							empActVistaMes = iEmp;
+							empEncontrado = true;
+						}
+						altoFilaCont += altoFila;
+						iEmp++;
 					}
-					altoFilaCont += altoFila;
-					iEmp++;
-				}
-				if (empEncontrado && diaEncontrado) {
-					if (empTrabDia(diaActVistaMes, empleados.get(empActVistaMes).getEmplId())) {
-						cursor(1);
-						diaValido = true;
+					if (empEncontrado && diaEncontrado) {
+						if (empTrabDia(diaActVistaMes, empleados.get(empActVistaMes).getEmplId())) {
+							cursor(1);
+							diaValido = true;
+						} else {
+							cursor(0);
+							diaValido = false;
+						}
 					} else {
 						cursor(0);
 						diaValido = false;
 					}
-				} else {
-					cursor(0);
-					diaValido = false;
+					//Comprobamos si el cursor se encuentra sobre el nombre de algún empleado
+					//Primero comprobamos la franja vertical de ancho margenNombres
+					Boolean enFranjaVert=false;
+					if (e.x>margenIzq+1 && e.x<margenIzq+margenNombres-21)
+						enFranjaVert=true;
+					if (enFranjaVert && empEncontrado) {
+						cursor(3);
+						nombreValido = true;
+					}
+					else
+						nombreValido = false;
+					canvas.redraw();
 				}
-					
-			canvas.redraw();
-			}
 			}
 		};
 
@@ -992,6 +1003,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 								(anchoDia/2 - gcFondo.textExtent(String.valueOf(j+1)).x/2), margenSupVistaMes);
 						gcFondo.setForeground(new Color(display,0,0,0));
 					}
+				gcFondo.setForeground(new Color(display,20,20,200));
+				gcFondo.drawText("Empleados", margenIzq , margenSupVistaMes);
+				gcFondo.setForeground(new Color(display,0,0,0));
 				ArrayList<Empleado> empleados=vista.getEmpleados();
 				int limI=0;
 				for (int i=1; i < empleados.size(); i++) {
@@ -1224,6 +1238,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		case 2:
 			canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_SIZEE));
 			break;
+		case 3:
+			canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_SIZEALL));
+			break;
 		default:
 			canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_ARROW));
 			break;
@@ -1350,4 +1367,21 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		}
 		return result;
 	}
+	
+	/**
+	 * Calcula la longitud máxima de los nombres de la lista de "empleados".
+	 * @param empleados		Lista a examinar.
+	 * @return 				Longitud máxima en un entero.
+	 */
+	public int obtenMaxNombre(GC gc,ArrayList<Empleado> empleados){
+		int max=0;
+		for (int i=1;i<empleados.size();i++) {
+			if (max < gc.textExtent(empleados.get(i).getNombre()).x){
+				max=gc.textExtent(empleados.get(i).getNombre()).x;
+			}
+			i++;
+		}
+		return max;
+	}
+	
 }
