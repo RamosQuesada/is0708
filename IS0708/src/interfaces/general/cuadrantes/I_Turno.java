@@ -15,7 +15,6 @@ import aplicacion.utilidades.Util;
  *
  */
 public class I_Turno extends aplicacion.datos.Turno {
-
 	/**
 	 * Crea una instancia nueva a partir de un turno dado
 	 * @param t turno a copiar
@@ -44,6 +43,7 @@ public class I_Turno extends aplicacion.datos.Turno {
 	private int anchoLados = 4;
 	int inicio1, inicio2, fin1, fin2;
 	int despl = 0; // Para saber de dónde la he cogido
+	private boolean modificado; // indica si ha sido modificado
 
 	public void calculaTiempoTrabajado() {
 		int franja1, franja2;
@@ -82,7 +82,7 @@ public class I_Turno extends aplicacion.datos.Turno {
 		}
 	}
 	
-	public void dibujar(Display display, String nombre, GC gc, int posV, Color color, int margenIzq, int margenNombres, int margenSup, int sep_vert_franjas, int alto_franjas, int tamHora, int tamSubdiv, int horaApertura, int numSubdiv) {
+	public void dibujar(Display display, String nombre, GC gc, int posV, Color color, int margenIzq, int margenNombres, int margenSup, int sep_vert_franjas, int alto_franjas, int tamHora, int tamSubdiv, int horaApertura, int numSubdiv, int y) {
 		calculaTiempoTrabajado();
 		// Si el empleado no tiene color, asignarle un color verde
 		if (color==null)
@@ -90,6 +90,7 @@ public class I_Turno extends aplicacion.datos.Turno {
 		gc.setBackground(new Color(display, 0,0,0));
 		gc.setForeground(new Color(display, 0,0,0));
 		int despV = margenSup+(posV+1)*(alto_franjas+sep_vert_franjas);
+		if (y!=0) despV = y;
 		if (margenNombres > 0) {
 			gc.drawText(nombre, margenIzq, despV, true);
 			gc.drawText(horas1+horas2+(minutos1+minutos2)/60 + ":" + Util.aString((minutos1+minutos2)%60), margenNombres-10, despV, true);
@@ -150,8 +151,6 @@ public class I_Turno extends aplicacion.datos.Turno {
 		}
 	}
 	
-	
-	
 	public void desactivarFranjas() {
 		activa1 = false;
 		activa2 = false;
@@ -195,7 +194,7 @@ public class I_Turno extends aplicacion.datos.Turno {
 	 * Comprueba si el píxel dado está contenido en el lado izquierdo de la franja, es decir,
 	 * en el intervalo cerrado [inicio-d,inicio+d], donde 'd' es el ancho del borde de la franja,
 	 * de donde se coge para estirarla y encogerla.
-	 * @param x P�xel a comprobar
+	 * @param x P?xel a comprobar
 	 * @see #contienePixel(int)
 	 * @see #contienePixelInt(int)
 	 * @see	#tocaLadoDerecho(int)
@@ -219,7 +218,6 @@ public class I_Turno extends aplicacion.datos.Turno {
 		}
 		return cambiaInicio;
 	}
-
 
 	/**
 	 * Comprueba si el píxel dado está contenido en el lado izquierdo de la franja, es decir,
@@ -250,7 +248,6 @@ public class I_Turno extends aplicacion.datos.Turno {
 		return cambiaFin;
 	}
 
-
 	public void activarFranja1() {
 		activa1 = true;
 	}
@@ -269,6 +266,7 @@ public class I_Turno extends aplicacion.datos.Turno {
 	 * @param tamSubdiv el tamaño de una subdivision
 	 */
 	public void botonSecundario (int x, int margenIzq, int margenNombres, int horaApertura, int tamHora, int tamSubdiv, int numSubdiv) {
+		modificado = true;
 		// Si hay descanso, se elimina la franja seleccionada
 		if (tDescanso!=0) {
 			// Si estoy borrando la primera franja, tengo que copiar la segunda a la primera
@@ -339,7 +337,9 @@ public class I_Turno extends aplicacion.datos.Turno {
 		}
 
 	}
+	
 	public int moverLadoIzquierdo(int x, int margenIzq, int margenNombres, int horaApertura, int tamHora, int tamSubdiv, int numSubdiv){
+		modificado = true;
 		int mov = 1; // Esta variable indica si sigo moviendo el lado izquierdo
 		int h = dameHoraCursor(x, margenIzq, margenNombres, horaApertura, tamHora);
 		int m = dameSubdivCursor(x, margenIzq, margenNombres, tamHora, tamSubdiv)*(60/numSubdiv);
@@ -393,6 +393,7 @@ public class I_Turno extends aplicacion.datos.Turno {
 	}
 	
 	public int moverLadoDerecho(int x, int margenIzq, int margenNombres, int horaApertura, int horaCierre, int tamHora, int tamSubdiv, int numSubdiv){
+		modificado = true;
 		int mov = 3;
 		int h = dameHoraCursor(x, margenIzq, margenNombres, horaApertura, tamHora);
 		int m = dameSubdivCursor(x, margenIzq, margenNombres, tamHora, tamSubdiv)*(60/numSubdiv);
@@ -465,6 +466,7 @@ public class I_Turno extends aplicacion.datos.Turno {
 	}
 	
 	public int moverFranja(int x, int margenIzq, int margenNombres, int horaApertura, int horaCierre, int tamHora, int tamSubdiv, int numSubdiv) {
+		modificado = true;
 		int mov = 2;
 		int h = dameHoraCursor(x, margenIzq, margenNombres, horaApertura, tamHora) - (despl*(60/numSubdiv))/60;
 		int m = dameSubdivCursor(x, margenIzq, margenNombres, tamHora, tamSubdiv)*(60/numSubdiv) - (despl*(60/numSubdiv))%60;
@@ -562,4 +564,14 @@ public class I_Turno extends aplicacion.datos.Turno {
 		if (m<0) m=0;
 		return m;
 	}
+
+	public boolean isModificado() {
+		return modificado;
+	}
+
+	public void setModificado(boolean modificado) {
+		this.modificado = modificado;
+	}
+	
+	
 }
