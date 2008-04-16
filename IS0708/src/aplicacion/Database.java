@@ -2348,7 +2348,7 @@ public class Database extends Thread {
 					"Rango int NOT NULL," +
 					"IdContrato Int NOT NULL," +
 					"IdTurno Int NOT NULL," +					
-					"Color varchar(25)," +
+					"Color varchar(6)," +
 					"Telefono varchar(12)," +
 					"Ssid varchar(20)," +
 					"HaEntrado bool," +
