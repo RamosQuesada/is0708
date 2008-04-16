@@ -83,7 +83,7 @@ public class TabDepartamentos {
 			}
 		});
 		
-		final TabFolder fCentro= new TabFolder(cDepartamentos, SWT.NONE);
+	/*	final TabFolder fCentro= new TabFolder(cDepartamentos, SWT.NONE);
 		
 		I20_Configuracion_Dias cInfoHorario=new I20_Configuracion_Dias(vista, array.get(0), fCentro,bundle);
 		cInfoHorario.setGridData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
@@ -105,7 +105,7 @@ public class TabDepartamentos {
 		
 		TabItem tab3=new TabItem(fCentro, SWT.NONE);
 		tab3.setText(bundle.getString("TabDepartamentos_tab3"));
-		tab3.setControl(lContenido);
+		tab3.setControl(lContenido);*/
 		
 		//TODO estoy haciendo pruebas con esto
 	/*	Composite cInfo = new Composite(cDepartamentos, SWT.BORDER);
