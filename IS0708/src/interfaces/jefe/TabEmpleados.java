@@ -295,6 +295,8 @@ public class TabEmpleados extends Thread{
 					idVend = (Integer)Integer.valueOf(aux[0].getText(1));
 					new DialogEditarEmpleado(_tabFolder.getShell(),_bundle, _vista,idVend);
 				}
+				
+				mostrarEmpleados();
 			}
 		});
 		
@@ -321,6 +323,8 @@ public class TabEmpleados extends Thread{
 						_vista.eliminaEmpleado(idVend);
 					}
 				}
+				
+				mostrarEmpleados();
 			}
 		});
 		
