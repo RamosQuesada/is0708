@@ -1183,6 +1183,40 @@ public class Controlador {
 		return misMensajes;
 	}
 
+
+	/**
+	 * Obtiene una lista de <i>b</i> mensajes salientes por orden cronológico,
+	 * del más nuevo al más antiguo, empezando desde el mensaje <i>a</i>.
+	 * 
+	 * @param idEmpl
+	 *            el empleado remitente de los mensajes
+	 * @return la lista de mensajes
+	 */
+	public ArrayList<Mensaje> getTodosMensajesEntrantes(int idEmpl) {
+		ArrayList<Mensaje> misMensajes = new ArrayList<Mensaje>();
+		try {
+			
+			ResultSet mensajes = _db.obtenTodosMensajesEntrantes(idEmpl);
+						
+			if (mensajes!=null) {
+				while (mensajes.next()) {
+					Mensaje m = new Mensaje(
+							mensajes.getInt("IdMensaje"),
+							mensajes.getInt("Remitente"), idEmpl,
+							mensajes.getDate("Fecha"),
+							mensajes.getString("Asunto"),
+							mensajes.getString("Texto"),
+							mensajes.getBoolean("Marcado"));				
+						misMensajes.add(m);
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return misMensajes;
+	}
+	
 	/**
 	 * Inserta un mensaje en la base de datos.
 	 * 

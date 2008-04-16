@@ -1734,6 +1734,21 @@ public class Database extends Thread {
 		}
 		return result;
 	}
+	
+	public ResultSet obtenTodosMensajesEntrantes(int vendedor) {
+		ResultSet result = null;
+		String q = "SELECT * FROM " + tablaDestinatariosMensaje + " JOIN " + tablaMensajes + " WHERE " + tablaDestinatariosMensaje + ".NumVendedor="
+		+ vendedor
+		+ " AND " + tablaDestinatariosMensaje + ".IdMensaje=" + tablaMensajes + ".IdMensaje ORDER BY Fecha DESC;";
+		try {
+			st = con.createStatement();
+			result = st.executeQuery(q);
+		} catch (SQLException e) {
+			System.err.println("Database :: Error obtenMensajesEntrantes ");
+		}
+		return result;
+	}
+	
 
 	/**
 	 * Método que devuelve los mensajes salientes de un empleado ordenados por

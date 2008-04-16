@@ -825,6 +825,17 @@ public class Vista {
 		infoDebug("Vista", "Acabado");
 	}
 	
+
+	/**
+	 * Carga los mensajes de la base de datos
+	 */
+	public void loadTodosMensajes() {
+		// Carga mensajes
+		infoDebug("Vista", "Cargando mensajes");
+		mensajesEntrantes = getTodosMensajesEntrantes(getEmpleadoActual().getEmplId());
+		infoDebug("Vista", "Acabado");
+	}	
+	
 	/**
 	 * Devuelve la lista de empleados que trabaja en el mismo departamento que
 	 * el actual. La carga si esta no se ha cargado todavía.
@@ -847,6 +858,19 @@ public class Vista {
 		}
 		return mensajesEntrantes;
 	}
+	
+	/**
+	 * Devuelve la lista COMPLETA de mensajes que ha recibido el empleado actual. La
+	 * carga si esta no se ha cargado todavía.
+	 * 
+	 * @return la lista de empleados
+	 */
+	public ArrayList<Mensaje> getTodosMensajesEntrantes() {
+		if (mensajesEntrantes == null) {
+			loadTodosMensajes();
+		}
+		return mensajesEntrantes;
+	}	
 
 	/**
 	 * Obtiene uno o varios empleados, que coincidan con los datos dados del
@@ -964,7 +988,8 @@ public class Vista {
 	/***************************************************************************
 	 * Métodos relacionados con mensajes
 	 */
-
+    
+    
 	/**
 	 * Obtiene una lista de <i>b</i> mensajes entrantes por orden cronológico,
 	 * del más nuevo al más antiguo, empezando desde el mensaje <i>a</i>.
@@ -993,7 +1018,32 @@ public class Vista {
 		}*/
 		
 	}
-
+	
+    
+	/**
+	 * Obtiene una lista de <i>b</i> mensajes entrantes por orden cronológico,
+	 * del más nuevo al más antiguo, empezando desde el mensaje <i>a</i>.
+	 * 
+	 * @param idEmpl
+	 *            el empleado destinatario de los mensajes
+	 * @return
+	 */
+	public ArrayList<Mensaje> getTodosMensajesEntrantes(int idEmpl) {
+		// Esto no funciona, y no sé por qué
+		// setProgreso("Cargando mensajes", 50);
+		ArrayList<Mensaje> array = controlador.getTodosMensajesEntrantes(idEmpl);
+		return array;
+		/*if(mensajesEntrantes.size()==0){//si esta vacio, rellenamos cache
+			ArrayList<Mensaje> array = controlador.getMensajesEntrantes(idEmpl,a,b);
+			for(int i=0;i<array.size();i++){
+				mensajesEntrantes.add(array.get(i));
+			}
+			return mensajesEntrantes;
+		}else{
+			return mensajesEntrantes;
+		}*/
+	}
+    
 	/**
 	 * Obtiene una lista de <i>b</i> mensajes salientes por orden cronológico,
 	 * del más nuevo al más antiguo, empezando desde el mensaje <i>a</i>.
