@@ -48,7 +48,7 @@ public class TabMensajeria extends Thread{
 	// Los caracteres a previsualizar de un asunto de mensaje
 	final int prevAsuntoMens = 20;
 	// El número de mensajes a mostrar por hoja
-	final int num_men_hoja = 10;
+	final int num_men_hoja = 5;
 	// El primer mensaje a mostrar (aumenta al pinchar en "ver más")
 	private int primerMensaje = 0;
 	// Este argumento sirve para que el hilo se ejecute indefinidamente o solo una vez
@@ -80,7 +80,8 @@ public class TabMensajeria extends Thread{
 					remitentes = new ArrayList<String>();
 					// Añadir nombre remitentes a lista remitentes
 					for (int i = 0; i < vista.getMensajesEntrantes().size(); i++) {
-						remitentes.add(vista.getEmpleado(vista.getMensajesEntrantes().get(i).getRemitente()).getNombreCompleto());				
+						//DORIAAAAAAAAAAAAAAAA (todos)
+						remitentes.add(vista.getEmpleado(vista.getTodosMensajesEntrantes().get(i).getRemitente()).getNombreCompleto());				
 					}
 					// Actualizar tabla
 					if (!tabFolder.isDisposed()) {
@@ -112,16 +113,18 @@ public class TabMensajeria extends Thread{
 		fd[0].setStyle(SWT.BOLD);
 		Font fNegrita = new Font(tablaMensajes.getDisplay(),fd);
 		Color yellow = new Color(tablaMensajes.getDisplay(),255,255,0);
-		int totalEntrantes = vista.getMensajesEntrantes().size();
-
-		while (vista.getEmpleados().size()>0 && i < totalEntrantes && i < num_men_hoja) {
+		ArrayList<Mensaje> mensajes = vista.getTodosMensajesEntrantes();
+		int totalEntrantes = mensajes.size();
+		System.out.println(totalEntrantes);
+			
+		while (vista.getEmpleados().size()>0 && i + primerMensaje < totalEntrantes && i < num_men_hoja) {
 			TableItem tItem = new TableItem(tablaMensajes, SWT.NONE);
-			if (vista.getMensajesEntrantes().get(totalEntrantes-i-1).isMarcado())
+			if (mensajes.get(totalEntrantes-i-1-primerMensaje).isMarcado())
 			{
 				tItem.setBackground(yellow);
 			}
 			//TODO mostrar mensajes leídos o no leídos
-			if (vista.getMensajesEntrantes().get(totalEntrantes-i-1).isLeído()) 
+			if (mensajes.get(totalEntrantes-i-1-primerMensaje).isLeído()) 
 			{
 				//tItem.setImage(ico_mens_l);
 			}	
@@ -133,9 +136,9 @@ public class TabMensajeria extends Thread{
 			if (remitentes.size()>i)
 			tItem.setText(1, remitentes.get(totalEntrantes-i-1));
 			
-			tItem.setText(2, Util.recortarTexto(vista.getMensajesEntrantes().get(totalEntrantes-i-1).getAsunto(), prevAsuntoMens));
-			tItem.setText(3, Util.recortarTexto(vista.getMensajesEntrantes().get(totalEntrantes-i-1).getTexto(), prevTextoMens));
-			tItem.setText(4, Util.dateAString(vista.getMensajesEntrantes().get(totalEntrantes-i-1).getFecha()));
+			tItem.setText(2, Util.recortarTexto(mensajes.get(totalEntrantes-i-1-primerMensaje).getAsunto(), prevAsuntoMens));
+			tItem.setText(3, Util.recortarTexto(mensajes.get(totalEntrantes-i-1-primerMensaje).getTexto(), prevTextoMens));
+			tItem.setText(4, Util.dateAString(mensajes.get(totalEntrantes-i-1-primerMensaje).getFecha()));
 			i++;
 		}
 		lMensajes.setText(bundle.getString("I02_lab_MostrandoMensajes1") + " " + String.valueOf(primerMensaje+1) + " " + 
