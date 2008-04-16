@@ -2069,9 +2069,9 @@ public class Controlador {
 		}
 		return numeros;
 	
-}
+	}
 	
-public ArrayList<Integer[]> getInfoDistribucionDpto(String dpto, int diaSemana) {
+	public ArrayList<Integer[]> getInfoDistribucionDpto(String dpto, int diaSemana) {
 		ArrayList<Integer[]> info = new ArrayList<Integer[]>();
 		try {
 			ResultSet rs = _db.obtenDistribucion(dpto, diaSemana);
@@ -2091,29 +2091,36 @@ public ArrayList<Integer[]> getInfoDistribucionDpto(String dpto, int diaSemana) 
 		}
 		return info;
 	
-}	
+	}	
 	
-public ArrayList<String> getHorarioDpto(String dpto) {
-	ArrayList<String> horas = new ArrayList<String>();
-	try {
-		ResultSet rs = _db.obtenHorarioDpto(dpto);
-		while (rs.next()) {
-			Time ThoraApertura=rs.getTime("HoraApertura");
-			Time ThoraCierre=rs.getTime("HoraCierre");
-			String horaApertura=ThoraApertura.toString();
-			String horaCierre=ThoraCierre.toString();
-			horas.add(horaApertura);
-			horas.add(horaCierre);
+	public ArrayList<String> getHorarioDpto(String dpto) {
+		ArrayList<String> horas = new ArrayList<String>();
+		try {
+			ResultSet rs = _db.obtenHorarioDpto(dpto);
+			while (rs.next()) {
+				Time ThoraApertura=rs.getTime("HoraApertura");
+				Time ThoraCierre=rs.getTime("HoraCierre");
+				String horaApertura=ThoraApertura.toString();
+				String horaCierre=ThoraCierre.toString();
+				horas.add(horaApertura);
+				horas.add(horaCierre);
+			}
+	
+		} catch (Exception e) {
+			System.err.println("Controlador :: Error al obtener Lista de Turnos en la base de datos");
 		}
-
-	} catch (Exception e) {
-		System.err.println("Controlador :: Error al obtener Lista de Turnos en la base de datos");
+		return horas;
+	
 	}
-	return horas;
 
-}
-
-
+	public void setHorarioDpto(String dpto, Time entrada, Time salida) {		
+		try {
+			_db.setHorarioDpto(dpto, entrada, salida);			
+		} catch (Exception e) {
+			System.err.println("Controlador :: Error al obtener Lista de Turnos en la base de datos");
+		}		
+	
+	}
 
 
 }

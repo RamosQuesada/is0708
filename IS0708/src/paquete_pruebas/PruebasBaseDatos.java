@@ -33,7 +33,9 @@ public class PruebasBaseDatos {
 		b = c.existeNumDepartamento(69696969);
 		b = c.existeNumDepartamento(1);
 		
-		c.setDistribucionDiaSemana("DatosFijos7", 2, c.getDistribucionDiaSemana("DatosFijos7", 1));
+		//Time e = new Time(9);
+		//c.setHorarioDpto("DatosFijos7", e, e);
+		//c.setDistribucionDiaSemana("DatosFijos7", 2, c.getDistribucionDiaSemana("DatosFijos7", 1));
 		/*Database db = new Database();
 		db.abrirConexion();
 		db.borraMesTrabaja(6,2008);
