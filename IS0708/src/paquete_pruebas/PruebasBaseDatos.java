@@ -33,7 +33,7 @@ public class PruebasBaseDatos {
 		b = c.existeNumDepartamento(69696969);
 		b = c.existeNumDepartamento(1);
 		
-		Util.stringAColor("Color {255, 255, 255}");
+		Util.stringAColor("FFFFFF");
 		//Time e = new Time(9);
 		//c.setHorarioDpto("DatosFijos7", e, e);
 		//c.setDistribucionDiaSemana("DatosFijos7", 2, c.getDistribucionDiaSemana("DatosFijos7", 1));

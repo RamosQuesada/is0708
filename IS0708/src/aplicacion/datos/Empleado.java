@@ -465,7 +465,7 @@ public class Empleado implements Drawable {
 	}
 	
 	public String getNombreColor() {
-		return color.toString();
+		return Util.ColorAHex(color);
 	}
 	
 	/**
