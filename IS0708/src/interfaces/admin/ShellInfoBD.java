@@ -114,17 +114,17 @@ public class ShellInfoBD {
 			String name = dis.readUTF();
 			String ip= dis.readUTF();
 			String username=dis.readUTF();
-			String contraseña=EncriptCadena.desencripta(dis.readUTF());
+			String contrasena=EncriptCadena.desencripta(dis.readUTF());
 			String descodificacion=EncriptCadena.desencripta(dis.readUTF());
 			System.out.println(ip);
 			System.out.println(username);
-			System.out.println(contraseña);
+			System.out.println(contrasena);
 			System.out.println(descodificacion);
 			System.out.println(name);
 			db_text.setText(name);
 			IP_text.setText(ip);
 			username_text.setText(username);
-			password_text.setText(contraseña);
+			password_text.setText(contrasena);
 			passwordAdmin_text.setText(descodificacion);
 			
 		} catch (FileNotFoundException e1) {

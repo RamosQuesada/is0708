@@ -60,7 +60,7 @@ public class DialogCreacionContratos {
 
 	private ArrayList<Integer> idsTurnosEliminados;
 
-	private ArrayList<Integer> idsTurnosAñadidos;
+	private ArrayList<Integer> idsTurnosAnadidos;
 
 	private int turnoInicial;
 
@@ -116,7 +116,7 @@ public class DialogCreacionContratos {
 			turnos = new ArrayList<Turno>();
 		idsTurnosInsertados = new ArrayList<Integer>();
 		idsTurnosEliminados = new ArrayList<Integer>();
-		idsTurnosAñadidos = new ArrayList<Integer>();
+		idsTurnosAnadidos = new ArrayList<Integer>();
 		cambiarPatron = false;
 		// contratos=vista.getControlador().getListaContratosDpto("DatosFijos");
 		crearVentana();
@@ -825,7 +825,7 @@ public class DialogCreacionContratos {
 				}
 				Turno tElegido = iet.getTurnoElegido();
 				if (tElegido != null) {
-					idsTurnosAñadidos.add(tElegido.getIdTurno());
+					idsTurnosAnadidos.add(tElegido.getIdTurno());
 					listaTurnosContrato.removeAll();
 					turnos.add(tElegido);
 					cambiarPatron = true;
@@ -1094,8 +1094,8 @@ public class DialogCreacionContratos {
 	 * @return <i>idsTurnosAñadidos</i> que contiene la lista de los
 	 *         identificadores de los turnos.
 	 */
-	public ArrayList<Integer> getTurnosAñadidos() {
-		return idsTurnosAñadidos;
+	public ArrayList<Integer> getTurnosAnadidos() {
+		return idsTurnosAnadidos;
 	}
 
 	/**

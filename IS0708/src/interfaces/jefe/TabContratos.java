@@ -241,7 +241,7 @@ public class TabContratos extends Thread {
 						// idc);
 					}
 					ids.clear();
-					ids = i09.getTurnosAñadidos();
+					ids = i09.getTurnosAnadidos();
 					for (int i = 0; i < ids.size(); i++) {
 						int idt = ids.get(i);
 						if (idt != c.getTurnoInicial() && (idc != -1))

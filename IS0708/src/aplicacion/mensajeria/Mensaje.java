@@ -100,7 +100,7 @@ public class Mensaje {
 		leido = true;
 	}
 	
-	public boolean isLeído() {
+	public boolean isLeido() {
 		return leido;
 	}
 }
