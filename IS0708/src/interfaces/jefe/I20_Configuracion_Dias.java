@@ -124,12 +124,12 @@ public class I20_Configuracion_Dias {
 		gridData1.verticalSpan = 2;
 		gridData1.verticalAlignment = GridData.FILL;
 		gTiposDia = new Group(composite, SWT.V_SCROLL);
-		gTiposDia.setText("Tipos de día");
+		gTiposDia.setText(bundle.getString("ConfiguracionHorarios_label_tipos"));
 		gTiposDia.setLayout(gridLayout4);
 		createCTipos();
 		gTiposDia.setLayoutData(gridData1);
 		rLunes = new Button(cTipos, SWT.RADIO);
-		rLunes.setText("Lunes");
+		rLunes.setText(bundle.getString("Lunes"));
 		rLunes.setSelection(true);
 		rLunes.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
@@ -140,7 +140,7 @@ public class I20_Configuracion_Dias {
 			}
 		});
 		rMartes = new Button(cTipos, SWT.RADIO);
-		rMartes.setText("Martes");
+		rMartes.setText(bundle.getString("Martes"));
 		rMartes.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				seleccion=1; // TODO Auto-generated Event stub widgetSelected()
@@ -150,7 +150,7 @@ public class I20_Configuracion_Dias {
 			}
 		});
 		rMiercoles = new Button(cTipos, SWT.RADIO);
-		rMiercoles.setText("Miercoles");
+		rMiercoles.setText(bundle.getString("Miercoles"));
 		rMiercoles.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				seleccion=2; // TODO Auto-generated Event stub widgetSelected()
@@ -160,7 +160,7 @@ public class I20_Configuracion_Dias {
 			}
 		});
 		rJueves = new Button(cTipos, SWT.RADIO);
-		rJueves.setText("Jueves");
+		rJueves.setText(bundle.getString("Jueves"));
 		rJueves.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				seleccion=3; // TODO Auto-generated Event stub widgetSelected()
@@ -170,7 +170,7 @@ public class I20_Configuracion_Dias {
 			}
 		});
 		rViernes = new Button(cTipos, SWT.RADIO);
-		rViernes.setText("Viernes");
+		rViernes.setText(bundle.getString("Viernes"));
 		rViernes.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				seleccion=4; // TODO Auto-generated Event stub widgetSelected()
@@ -180,7 +180,7 @@ public class I20_Configuracion_Dias {
 			}
 		});
 		rSabado = new Button(cTipos, SWT.RADIO);
-		rSabado.setText("Sabado");
+		rSabado.setText(bundle.getString("Sabado"));
 		rSabado.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				seleccion=5; // TODO Auto-generated Event stub widgetSelected()
@@ -190,7 +190,7 @@ public class I20_Configuracion_Dias {
 			}
 		});
 		rDomingo = new Button(cTipos, SWT.RADIO);
-		rDomingo.setText("Domingo");
+		rDomingo.setText(bundle.getString("Domingo"));
 		rDomingo.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				seleccion=6; // TODO Auto-generated Event stub widgetSelected()
@@ -205,7 +205,7 @@ public class I20_Configuracion_Dias {
 		final ArrayList<Button> otrosTipos=new ArrayList<Button>();
 		for(int i=0;i<3;i++){
 			otrosTipos.add(new Button(cTipos, SWT.RADIO));
-			otrosTipos.get(i).setText("Tipo"+(i+1));
+			otrosTipos.get(i).setText(bundle.getString("Tipo")+(i+1));
 			final int cuenta=i;
 			otrosTipos.get(i).addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 				public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
@@ -220,7 +220,7 @@ public class I20_Configuracion_Dias {
 		}		
 		
 		bNuevoTipo = new Button(gTiposDia, SWT.NONE);
-		bNuevoTipo.setText("Nuevo tipo");
+		bNuevoTipo.setText(bundle.getString("ConfiguracionHorarios_boton_nuevo"));
 		bNuevoTipo.setLayoutData(gridData2);
 		bNuevoTipo.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
@@ -241,7 +241,7 @@ public class I20_Configuracion_Dias {
 			}
 		});
 		bEliminar = new Button(gTiposDia, SWT.NONE);
-		bEliminar.setText("Eliminar tipo");
+		bEliminar.setText(bundle.getString("ConfiguracionHorarios_boton_eliminar"));
 		bEliminar.setLayoutData(gridData3);
 		bEliminar.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
@@ -249,7 +249,7 @@ public class I20_Configuracion_Dias {
 					 MessageBox messageBox = new MessageBox(sShell,
 								SWT.ICON_INFORMATION | SWT.OK);
 						messageBox
-								.setMessage("No se puede eliminar este día de la configuración");
+								.setMessage(bundle.getString("ConfiguracionHorarios_error_eliminar"));
 						messageBox.setText("Error");
 						int response = messageBox.open();
 				 }
@@ -263,7 +263,7 @@ public class I20_Configuracion_Dias {
 			}
 		});
 		bModificar = new Button(gTiposDia, SWT.NONE);
-		bModificar.setText("Modificar tipo");
+		bModificar.setText(bundle.getString("Modificar tipo"));
 		bModificar.setLayoutData(gridData14);
 		bModificar.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
@@ -289,7 +289,7 @@ public class I20_Configuracion_Dias {
 		gridData4.grabExcessVerticalSpace = true;
 		gridData4.verticalAlignment = GridData.FILL;
 		gNumerosDia = new Group(composite, SWT.NONE);
-		gNumerosDia.setText("Número de empleados mínimos y máximos del día");
+		gNumerosDia.setText(bundle.getString("ConfiguracionHorarios_min_max"));
 		gNumerosDia.setLayout(gridLayout1);
 		gNumerosDia.setLayoutData(gridData4);
 		
@@ -305,7 +305,7 @@ public class I20_Configuracion_Dias {
 		rellenar(vista.getDistribucionDepartamentoDiaSemana(departamento, 0));	
 		
 		bGuardar = new Button(gNumerosDia, SWT.NONE);
-		bGuardar.setText("Guardar Cambios");
+		bGuardar.setText(bundle.getString("ConfiguracionHorarios_boton_guardar"));
 		bGuardar.setLayoutData(gridData5);
 		
 		bGuardar.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
@@ -337,12 +337,12 @@ public class I20_Configuracion_Dias {
 			lHorario.add(new Label(cNumeros, SWT.NONE));
 			lHorario.get(i).setText("Desde las "+(Integer)horarios.get(i)[0]+" a las "+((Integer)horarios.get(i)[0])+1);
 			lMinimo.add(new Label(cNumeros, SWT.NONE));
-			lMinimo.get(i).setText("Mínimo");
+			lMinimo.get(i).setText(bundle.getString("Minimo"));
 			sMinimo.add(new Spinner(cNumeros, SWT.BORDER));
 			sMinimo.get(i).setSelection(((Integer)horarios.get(i)[1]));
 			sMinimo.get(i).setMinimum(0);
 			lMaximo.add(new Label(cNumeros, SWT.NONE));
-			lMaximo.get(i).setText("Máximo");
+			lMaximo.get(i).setText(bundle.getString("Maximo"));
 			sMaximo.add(new Spinner(cNumeros, SWT.BORDER));
 			sMaximo.get(i).setSelection((Integer)horarios.get(i)[2]);
 			sMaximo.get(i).setMinimum(1);
@@ -385,7 +385,7 @@ public class I20_Configuracion_Dias {
 		
 		//crea el grupo
 		gHoras = new Group(composite, SWT.NONE);
-		gHoras.setText("Horarios de apertura  cierre");
+		gHoras.setText("Horarios de apertura y cierre");
 		gHoras.setLayoutData(gridData6);
 		gHoras.setLayout(gridLayout2);
 		lApertura = new Label(gHoras, SWT.NONE);
