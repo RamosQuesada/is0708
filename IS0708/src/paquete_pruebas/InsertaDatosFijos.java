@@ -17,7 +17,8 @@ public class InsertaDatosFijos {
 	static Database bd;
 	
 	public static void insertarNdepart(int numDepartamentos) {
-// TODO hacer inserciones en la tabla "contratosdepartamento"	
+// TODO hacer inserciones en la tabla "contratosdepartamento"
+// TODO insertar colores de los empleados
 	
 		Date inicio = Date.valueOf("2008-01-01");
 		Date nacimiento = new Date(0);
@@ -225,7 +226,7 @@ public class InsertaDatosFijos {
 		bd.crearDependencias();
 	
 		//Inserta 20 nuevos departamentos para pruebas con sus datos independientes
-		InsertaDatosFijos.insertarNdepart(2);
+		InsertaDatosFijos.insertarNdepart(20);
 	}
 
 }
