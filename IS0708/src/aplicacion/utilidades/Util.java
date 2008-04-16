@@ -516,14 +516,20 @@ public class Util {
 		
 	}
 	
+	/**
+	 * Convierte un String en formato Hexadecimal a un objeto de
+	 * tipo Color
+	 * @param color
+	 * @return Objeto Color
+	 */
 	public static Color stringAColor(String color) {
 		Color c = null;
 		try {
 			int r,g,b;
 			
-			r = Integer.valueOf(color.substring(7, 10));
-			g = Integer.valueOf(color.substring(12, 15));
-			b = Integer.valueOf(color.substring(17, 20));
+			r = Integer.parseInt(color.substring(0, 2), 16);
+			g = Integer.parseInt(color.substring(2, 4), 16);
+			b = Integer.parseInt(color.substring(4, 6), 16);
 			
 			c = new Color(null, r,g,b);
 		} catch(Exception e) {
