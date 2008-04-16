@@ -1,5 +1,6 @@
 package aplicacion.datos;
 
+import java.sql.Time;
 import java.util.ArrayList;
 
 /**
@@ -16,6 +17,10 @@ public class Departamento {
 	private Empleado _jefeDepartamento;
 	/** Conjunto de empleados que trabajan para el departamento */
 	private ArrayList<Empleado> _listaEmpleados;
+	/** Hora en la que abre el departamento */
+	private Time _horaApertura;
+	/** Hora en la que cierra el departamento */
+	private Time _horaCierre;
 	
 	/**
 	 * Constructor que se obtiene cuando se carga de la base de datos
@@ -25,21 +30,15 @@ public class Departamento {
 	 * @param listaEmpleados lista de empleados del departamento
 	 */
 	public Departamento(String nombreDepartamento, int numeroDepartamento,
-			Empleado jefeDepartamento,ArrayList<Empleado> listaEmpleados){
+			Empleado jefeDepartamento, ArrayList<Empleado> listaEmpleados,
+			Time horaApertura, Time horaCierre){
 		_numerosDepartamento = new ArrayList<Integer>();
 		_numerosDepartamento.add(numeroDepartamento);
-		this._jefeDepartamento=jefeDepartamento;
-		this._nombreDepartamento=nombreDepartamento;
-		this._listaEmpleados=listaEmpleados;
-	}
-	
-	/**
-	 * Cambia el jefe del departamento
-	 * @param id Nuevo jefe del departamento
-	 */
-	public void set_JefeDepartamento(Empleado empl){
-		_jefeDepartamento = empl;
-		 
+		_jefeDepartamento = jefeDepartamento;
+		_nombreDepartamento = nombreDepartamento;
+		_listaEmpleados = listaEmpleados;
+		_horaApertura = horaApertura;
+		_horaCierre = horaCierre;
 	}
 	
 	/**
@@ -50,12 +49,24 @@ public class Departamento {
 	 * @param jefeDepartamento Jefe del departamento
 	 */
 	public Departamento(String nombreDepartamento, int numeroDepartamento,
-			Empleado jefeDepartamento){
+			Empleado jefeDepartamento,
+			Time horaApertura, Time horaCierre){
 		_numerosDepartamento = new ArrayList<Integer>();
 		_numerosDepartamento.add(numeroDepartamento);
-		this._jefeDepartamento=jefeDepartamento;
-		this._nombreDepartamento=nombreDepartamento;
-		this._listaEmpleados=null;
+		_jefeDepartamento=jefeDepartamento;
+		_nombreDepartamento=nombreDepartamento;
+		_listaEmpleados=null;
+		_horaApertura = horaApertura;
+		_horaCierre = horaCierre;
+	}
+	
+	/**
+	 * Cambia el jefe del departamento
+	 * @param id Nuevo jefe del departamento
+	 */
+	public void setJefeDepartamento(Empleado empl){
+		_jefeDepartamento = empl;
+		 
 	}
 	
 	/**
@@ -86,7 +97,7 @@ public class Departamento {
 	 * Getter de la lista de empleados
 	 * @return ArrayList<Empleado> lista de empleados del departamento
 	 */
-	public ArrayList<Empleado> _listaEmpleados(){
+	public ArrayList<Empleado> getlistaEmpleados(){
 		return _listaEmpleados;
 	}
 	
@@ -104,6 +115,38 @@ public class Departamento {
 	 */
 	public void addNumeroDepartamento(int num){
 		_numerosDepartamento.add(num);
+	}
+
+	/**
+	 * Getter de la hora de apertura
+	 * @return la hora de apertura
+	 */
+	public Time getHoraApertura() {
+		return _horaApertura;
+	}
+
+	/**
+	 * Modifica la hora de apertura
+	 * @param apertura La nueva hora de apertura
+	 */
+	public void setHoraApertura(Time apertura) {
+		_horaApertura = apertura;
+	}
+
+	/**
+	 * Consulta la hora de cierre
+	 * @return la hora de cierre
+	 */
+	public Time getHoraCierre() {
+		return _horaCierre;
+	}
+
+	/**
+	 * Modifica la hora de cierre
+	 * @param cierre La nueva hora de cierre
+	 */
+	public void setHoraCierre(Time cierre) {
+		_horaCierre = cierre;
 	}
 
 }

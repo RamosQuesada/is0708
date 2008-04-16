@@ -364,7 +364,8 @@ public class Vista {
 		e.setFelicidad(Felic);
 		e.setIdioma(Idiom);
 		e.setRango(Rang);
-		e.setTurnoFavorito(Turn);
+		if (Contr != e.getContratoId())
+			e.setTurnoFavorito(c.getTurnoInicial());
 		e.setContrato(c);
 		e.setIdContrato(Contr);
 		e.setColor(color);
@@ -1556,11 +1557,20 @@ public class Vista {
 	 * la primera(horas.get(0)) es la hora de apertura
 	 * y la segunda(horas.get(1)) la hora de cierre
 	 * @param dpto: Id del Dpto.
-	 * @return
+	 * @return ArrayList<String>: [0: horaApertura, 1: horaCierre]
 	 */
 	public ArrayList<String> getHorarioDpto(String dpto) {
-		// TODO Auto-generated method stub
-		ArrayList<String> horas = this.controlador.getHorarioDpto(dpto);
+		ArrayList<String> horas;
+		if (getEmpleadoActual().getRango()==2){
+			for (int i=0; i<departamentosJefe.size(); i++)
+				if (departamentosJefe.get(i).getNombreDepartamento().equals(dpto)){
+					horas = new ArrayList<String>();
+					horas.add(departamentosJefe.get(i).getHoraApertura().toString());
+					horas.add(departamentosJefe.get(i).getHoraCierre().toString());
+					return horas;
+				}
+		}
+		horas = this.controlador.getHorarioDpto(dpto);
 		return horas;
 	}
 
