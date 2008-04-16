@@ -26,6 +26,12 @@ public class PruebasBaseDatos {
 	//esta como date porque luego peta al insertar asi q por favor cambiad las pruebas
 	public static void main(String[] args) {
 		
+		Database db = new Database();
+		db.abrirConexion();
+		Controlador c = new Controlador(db, true);
+		boolean b=false;
+		b = c.existeNumDepartamento(69696969);
+		b = c.existeNumDepartamento(1);
 		
 		/*Database db = new Database();
 		db.abrirConexion();

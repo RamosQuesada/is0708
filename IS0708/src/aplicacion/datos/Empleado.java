@@ -459,11 +459,10 @@ public class Empleado implements Drawable {
 	 */
 	public Color getColor() {
 		return color;
-		
 	}
 	
 	public String getNombreColor() {
-		return "Blanco";
+		return color.toString();
 	}
 	
 	/**
