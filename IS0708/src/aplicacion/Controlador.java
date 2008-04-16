@@ -150,7 +150,7 @@ public class Controlador {
 				emp = new Empleado(idSuperior, id, nombre, apellido1,
 						apellido2, fechaNac, sexo, email, password, grupo,
 						rango, idContrato, fechaContrato, fechaAlta, color,
-						null, idSubordinados, felicidad, idioma, turnoFavorito);
+						null, idSubordinados, felicidad, idioma, turnoFavorito, 0);
 				emp.setIDDepartamentos(idDepartamentos);
 			}
 		} catch (Exception e) {
@@ -969,7 +969,7 @@ public class Controlador {
 				Empleado emp = new Empleado(idSuperior, id, nombre, apellido1,
 						apellido2, fechaNac, sexo, email, password, grupo,
 						rango, idContrato, fechaContrato, fechaAlta, color,
-						null, idSubordinados, felicidad, idioma, turnoFavorito);
+						null, idSubordinados, felicidad, idioma, turnoFavorito, 0);
 				emp.setIDDepartamentos(idDepartamentos);
 				emps.add(emp);
 			}
@@ -1023,7 +1023,7 @@ public class Controlador {
 				Empleado emp = new Empleado(null, id, nombre, apellido1,
 						apellido2, fechaNac, sexo, email, password, grupo,
 						rango, idContrato, fechaContrato, fechaAlta, color,
-						null, null, felicidad, idioma, turnoFavorito);
+						null, null, felicidad, idioma, turnoFavorito, 0);
 				emp.setIDDepartamentos(null);
 				emps.add(emp);
 			}
