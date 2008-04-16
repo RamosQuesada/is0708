@@ -39,13 +39,12 @@ public class TabMensajeria extends Thread{
 	private Label lMensajes;
 	private boolean estaMarcado;
 	private Button bMensMarcar;
+	private boolean iniciado = false;
 	Mensaje mensSelecionado;
 	// Los caracteres a previsualizar de un mensaje
 	final int prevTextoMens = 50; 
 	// Los caracteres a previsualizar de un asunto de mensaje
 	final int prevAsuntoMens = 20;
-	// El número de mensajes a mostrar por hoja
-	private int num_men_hoja = 5;
 	// El primer mensaje a mostrar (aumenta al pinchar en "ver más")
 	private int primerMensaje = 0;
 	// Este argumento sirve para que el hilo se ejecute indefinidamente o solo una vez
@@ -77,7 +76,6 @@ public class TabMensajeria extends Thread{
 					remitentes = new ArrayList<String>();
 					// Añadir nombre remitentes a lista remitentes
 					for (int i = 0; i < vista.getMensajesEntrantes().size(); i++) {
-						//DORIAAAAAAAAAAAAAAAA (todos)
 						remitentes.add(vista.getEmpleado(vista.getTodosMensajesEntrantes().get(i).getRemitente()).getNombreCompleto());				
 					}
 					// Actualizar tabla
@@ -114,7 +112,7 @@ public class TabMensajeria extends Thread{
 		int totalEntrantes = mensajes.size();
 		System.out.println(totalEntrantes);
 			
-		while (vista.getEmpleados().size()>0 && i + primerMensaje < totalEntrantes && i < num_men_hoja) {
+		while (vista.getEmpleados().size()>0 && i + primerMensaje < totalEntrantes && i < vista.getNum_men_hoja()) {
 			TableItem tItem = new TableItem(tablaMensajes, SWT.NONE);
 			if (mensajes.get(totalEntrantes-i-1-primerMensaje).isMarcado())
 			{
@@ -139,7 +137,8 @@ public class TabMensajeria extends Thread{
 			i++;
 		}
 		lMensajes.setText(bundle.getString("I02_lab_MostrandoMensajes1") + " " + String.valueOf(primerMensaje+1) + " " + 
-				bundle.getString("I02_lab_MostrandoMensajes2") + " " + String.valueOf(primerMensaje+num_men_hoja));
+				bundle.getString("I02_lab_MostrandoMensajes2") + " " + String.valueOf(primerMensaje+vista.getNum_men_hoja())+ " " + 
+				bundle.getString("I02_lab_MostrandoMensajes3") + " " + String.valueOf(totalEntrantes) );
 		tablaMensajes.setEnabled(true);
 		tablaMensajes.setCursor(new Cursor(tablaMensajes.getDisplay(), SWT.CURSOR_ARROW));
 		bMensSiguientes.setEnabled(true);
@@ -228,10 +227,11 @@ public class TabMensajeria extends Thread{
 		
 		tablaMensajes.addPaintListener(new PaintListener(){
 			public void paintControl(PaintEvent arg0) {
-				num_men_hoja = ((tabFolder.getSize().y - tabFolder.getBorderWidth()*2) / 
-				(tablaMensajes.getItemHeight()+2))-7;
+				vista.setNum_men_hoja(((tabFolder.getSize().y - tabFolder.getBorderWidth()*2) / 
+				(tablaMensajes.getItemHeight()+2))-7);
+				//desplazarVentanaMensajes(0);
+				vista.loadTodosMensajes();
 			}
-			
 		});
 		
 		// Añadir botones
@@ -305,7 +305,7 @@ public class TabMensajeria extends Thread{
 					int totalEntrantes = vista.getTodosMensajesEntrantes().size();
 					vista.marcarMensaje(vista.getTodosMensajesEntrantes().get(totalEntrantes - tablaMensajes.getSelectionIndex()-1));
 					desplazarVentanaMensajes(0);
-					vista.loadMensajes();
+					vista.loadTodosMensajes();
 				}
 			}
 		});
@@ -317,7 +317,7 @@ public class TabMensajeria extends Thread{
 
 		bMensAnteriores.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				desplazarVentanaMensajes(-num_men_hoja);
+				desplazarVentanaMensajes(-vista.getNum_men_hoja());
 			}
 		});
 
@@ -328,7 +328,7 @@ public class TabMensajeria extends Thread{
 
 		bMensSiguientes.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				desplazarVentanaMensajes(num_men_hoja);
+				desplazarVentanaMensajes(vista.getNum_men_hoja());
 			}
 		});
 
