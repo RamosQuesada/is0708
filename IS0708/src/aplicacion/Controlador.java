@@ -834,6 +834,24 @@ public class Controlador {
 		return lista;
 	}
 	
+	public void setDistribucionDiaSemana(String depart, int tipoDia, ArrayList<Object[]> datos) {
+		
+		_db.borraDistribucion(depart, tipoDia);
+		int i=0;
+		if (datos.size() > 0) {
+			for (i=0; i<datos.size()-1; i++) {
+				Object[] vector = new Object[4];
+				vector = datos.get(i);
+				_db.setDistribucion(depart, tipoDia, vector, false);
+			}
+			
+			
+			Object[] vector = new Object[4];
+			vector = datos.get(i);
+			_db.setDistribucion(depart, tipoDia, vector, true);
+		}
+	}
+	
 	/**
 	 * 
 	 * @param nombre
