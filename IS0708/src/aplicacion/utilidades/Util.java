@@ -511,8 +511,25 @@ public class Util {
 		if(diasemana==4) return "Jueves";
 		if(diasemana==5) return "Viernes";
 		if(diasemana==6) return "Sabado";
-
+		
 		return null;
+		
+	}
+	
+	public static Color stringAColor(String color) {
+		Color c = null;
+		try {
+			int r,g,b;
+			
+			r = Integer.valueOf(color.substring(7, 10));
+			g = Integer.valueOf(color.substring(12, 15));
+			b = Integer.valueOf(color.substring(17, 20));
+			
+			c = new Color(null, r,g,b);
+		} catch(Exception e) {
+			System.err.println("Util :: Formato de String incorrecto");
+		}
+		return c;
 	}
 	
 	

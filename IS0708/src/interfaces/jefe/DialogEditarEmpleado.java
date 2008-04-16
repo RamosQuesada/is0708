@@ -247,6 +247,8 @@ public class DialogEditarEmpleado {
 		cDepto.select(jj);
 		cIdioma.select(emp.getIdioma());
 		
+		// Rellenado del color
+		lColor.setBackground(emp.getColor());
 		
 		shell.setText(bundle.getString("I08_but_EditarEmpleado"));
 		shell.setLayout(layout);

@@ -956,7 +956,7 @@ public class Controlador {
 				int idContrato = rs.getInt("IdContrato");
 				Date fechaContrato = rs.getDate("FechaContrato");
 				Date fechaAlta = rs.getDate("FechaEntrada");
-				Color color = null;
+				Color color = Util.stringAColor(rs.getString("Color"));
 				int idSuperior = this.getIdSuperior(idEmpl);
 				ArrayList<Integer> idSubordinados = this
 						.getIdsSubordinados(idEmpl);
