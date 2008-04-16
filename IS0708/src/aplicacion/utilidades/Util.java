@@ -538,11 +538,13 @@ public class Util {
 	 * @return Un string con el color en hexadecimal
 	 */
 	public static String ColorAHex(Color color){
-		int r = color.getRed();
-		int g = color.getGreen();
-		int b = color.getBlue();
-		String hex = Integer.toHexString(r)+Integer.toHexString(g)+Integer.toHexString(b);
-		return hex;
+		String r = Integer.toHexString(color.getRed()).toUpperCase();
+		if (r.length()==1) r = 0 + r;
+		String g = Integer.toHexString(color.getGreen()).toUpperCase();
+		if (g.length()==1) g = 0 + g;
+		String b = Integer.toHexString(color.getBlue()).toUpperCase();
+		if (b.length()==1) b = 0 + b;
+		return r+g+b;
 	}
 	
 }
