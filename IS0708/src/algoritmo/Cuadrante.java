@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import aplicacion.utilidades.Util;
 
 /**
- * Esta clase corresponde con la salida del algoritmo,un arraylist de objetos de la clase Trabaja
+ * Esta clase corresponde con la salida del algoritmo, un arraylist de objetos de la clase Trabaja
  * @author DavidMartin & Miguel Angel Diaz
  */
 public class Cuadrante {
@@ -16,7 +16,7 @@ public class Cuadrante {
 	private int mes;
 	
 	/**
-	 * Año del cuadrante
+	 * Anio del cuadrante
 	 */
 	private int anio;
 	
@@ -36,9 +36,9 @@ public class Cuadrante {
 	private String idDepartamento;
 	
 	/**
-	 * Constructora con parámetros
+	 * Constructora con parametros
 	 * @param mes Mes
-	 * @param anio Año
+	 * @param anio Anio
 	 * @param idDepartamento Identificador del departamento
 	 */
 	@SuppressWarnings("unchecked")
@@ -70,13 +70,17 @@ public class Cuadrante {
 	}
 
 	/**
-	 * Consulta del año
-	 * @return año
+	 * Consulta del anio
+	 * @return anio
 	 */
 	public int getAnio() {
 		return anio;
 	}
 
+	/**
+	 * Modifica el anio
+	 * @param anio Nuevo anio
+	 */
 	public void setAnio(int anio) {
 		this.anio = anio;
 	}
@@ -89,18 +93,27 @@ public class Cuadrante {
 		return numDias;
 	}
 
+	/**
+	 * Modifica el numero de dias del mes
+	 * @param mes Nuevo mes
+	 */
 	public void setNumDias(int numDias) {
 		this.numDias = numDias;
 	}
 
 	/**
 	 * Consulta la lista de trabaja
-	 * @return lista de trabaja
+	 * @return Lista de trabaja
 	 */
 	public ArrayList<Trabaja> getListaTrabajaDia(int dia){
 		return cuad[dia];
 	}
 	
+	/**
+	 * Inserta trabaja en un dia determinado 
+	 * @param dia Dia en el que se debe insertar el nuevo Trabaja
+	 * @param trab Nuevo trabaja
+	 */
 	public void setTrabajaDia(int dia, Trabaja trab){
 		cuad[dia].add(trab);
 	}
@@ -113,22 +126,34 @@ public class Cuadrante {
 		return cuad;
 	}
 
+	/**
+	 * Modifica el cuadrante
+	 * @param cuad Nuevo cuadrante
+	 */
 	public void setCuad(ArrayList<Trabaja>[] cuad) {
 		this.cuad = cuad;
 	}
 
 	/**
-	 * Consulta el departamento
+	 * Consulta el id del departamento
 	 * @return identificador del departamento
 	 */
 	public String getIdDepartamento() {
 		return idDepartamento;
 	}
 
+	/**
+	 * Modifica el id del departamento
+	 * @param idDepartamento Nuevo id del departamento
+	 */
 	public void setIdDepartamento(String idDepartamento) {
 		this.idDepartamento = idDepartamento;
 	}
 	
+	/**
+	 * Obtiene informacion del cuadrante
+	 * @return informacion del cuadrante
+	 */
 	public String toString() {
 		String s = "";
 		s+= mes + ", " +anio+"\n";
@@ -141,6 +166,10 @@ public class Cuadrante {
 		return s;
 	}
 	
+	/**
+	 * Elimina la informacion del cuadrante a partir del dia dado
+	 * @param dia Dia desde el que borrar los datos del cuadrante
+	 */
 	public void eliminaTrabajaDesdeDia(int dia){
 		for (int i=dia; i<numDias; i++){
 			cuad[i] = new ArrayList<Trabaja>();
