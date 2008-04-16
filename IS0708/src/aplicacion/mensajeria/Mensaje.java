@@ -97,7 +97,7 @@ public class Mensaje {
 	public void setLeido()
 	{
 		if (leido = false)
-		leido = true;
+		leido = true;	
 	}
 	
 	public boolean isLeido() {
