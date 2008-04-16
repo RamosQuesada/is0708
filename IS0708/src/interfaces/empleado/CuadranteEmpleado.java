@@ -19,6 +19,7 @@ import aplicacion.datos.Turno;
 
 public class CuadranteEmpleado {
 	
+	private int repreAvance=0;
 	private Vista vista;
 	private boolean redibujar;
 	private boolean finSemana;
@@ -56,6 +57,13 @@ public class CuadranteEmpleado {
 		this.horaInicioMes=inicio;
 	}
 	
+	public void ponRepreAvance(int i){
+		this.repreAvance=i;
+	}
+	
+	public int dameRepreAvance(){
+		return this.repreAvance;
+	}
 	public void ponHoraFinMes(ArrayList<Time> fin){
 		this.horaFinMes=fin;
 	}
@@ -225,7 +233,7 @@ public class CuadranteEmpleado {
 			dibujarDiaMes(gc,false,0,1,null,null,"",false,false,false,false,7,1);
 			dibujarDiaMes(gc,false,0,1,null,null,"",false,false,false,false,7,6);
 			
-			dibujarCarga(gc,"CARGANDO CUADRANTE");
+			dibujarCarga(gc," CARGANDO BASE DATOS ");
 			/*cambiarRelleno(gc,100,200,100);
 			cambiarPincel(gc,100,200,100);
 			gc.fillGradientRectangle(ancho/4, alto/4, this.ancho/2, this.alto/2, true);
@@ -337,6 +345,10 @@ public class CuadranteEmpleado {
 		int sep = (ancho - m - margenDer)/h;
 		//int subsep = sep/subdivisiones;
 		tamanoFila=(alto)/15;
+		cambiarPincel(gc, 90,140,90);
+		this.cambiarRelleno(gc, 90, 140, 90);
+		gc.fillGradientRectangle(0,0,this.ancho,this.alto,true);
+		
 		cambiarPincel(gc, 0,143,65);
 		this.cambiarRelleno(gc, 180,230,180);
 		
@@ -432,9 +444,17 @@ public class CuadranteEmpleado {
 		Font fuente=gc.getFont();
 		cambiarPincel(gc, 0, 0, 0);
 		gc.setFont(new Font(display,"Times",10,SWT.BOLD));
+		double angulo = (int)((420/360)*this.repreAvance);
+		int x= (int)(10*Math.sin(angulo));
+		int y= (int)(10*Math.cos(angulo));
+		gc.setLineWidth(3);
+		cambiarPincel(gc, 249, 244, 153);
+		gc.drawOval((ancho-margenIzq-margenDer)/2-100+x, (alto-margenInf-margenSup)/2+5+y, 5, 5);
+		gc.drawOval((ancho-margenIzq-margenDer)/2+140+x, (alto-margenInf-margenSup)/2+5+y, 5, 5);
 		gc.drawText(texto,(ancho-margenIzq-margenDer)/2-55, (alto-margenInf-margenSup)/2,true);
 		gc.getFont().dispose();
 		gc.setFont(fuente);
+		
         
 	}
 	
@@ -466,7 +486,7 @@ public class CuadranteEmpleado {
 			}
 			
 		}
-		redibujar=false;
+	//	redibujar=false;
 		
 		}
 	}
@@ -563,12 +583,6 @@ public class CuadranteEmpleado {
 		gc.setBackground(new Color(display,r, g, b));
 	}
 
-	/**
-	 * Pega el valor x al m�s cercano dentro de la rejilla. El tama�o de la rejilla est� determinado
-	 * por el n�mero de subdivisiones.
-	 * @param x		El valor a ajustar
-	 * @return		El valor ajustado a la rejilla
-	 */
 
 	/**
 	 * Actualiza el tama�o del cuadrante, el tama�o de las horas y las subdivisiones, y para cada

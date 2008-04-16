@@ -138,20 +138,14 @@ public class Cuadrantes extends Thread{
 			else{
 			display.asyncExec(new Runnable () {
 				public void run() {
-					if(cuadrante.dameRedibujar()){
-						redibujar();
-						cuadrante.ponRedibujar(false);
-					}
-					else{
-						if((cuadrante.dameRedibujarSemana())&&(semanal)){
-							redibujar();
-							cuadrante.ponRedibujarSemana(false);
-						}
-					}
+					redibujar();
+
+
+					cuadrante.ponRepreAvance((cuadrante.dameRepreAvance()+1)%6);
 				}
 			});
 			try {
-				sleep(100);
+				sleep(300);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

@@ -75,7 +75,7 @@ public class ThreadsCuadrantes extends Thread{
 		/*
 		 * No redibujar, hasta que este completado
 		 */
-		this.cuadrante.ponRedibujar(false);
+		//this.cuadrante.ponRedibujar(false);
 		cuadrante.ponRedibujarSemana(false);
 		cuadrante.ponAvance(-1);
 		
@@ -149,11 +149,8 @@ public class ThreadsCuadrantes extends Thread{
 
 			/* Mantenerse esperando hasta que Esperar a que se cargue la cache */
 			while((!(cuadrante.dameVista()).isCacheCargada())&&(!finalizar)){
-				if(redibujar){
 					cuadrante.ponAvance(-1);
 					cuadrante.ponRedibujar(true);
-					redibujar=false;
-				}
 				try {
 					 sleep(100);
 				} catch (InterruptedException e) {
