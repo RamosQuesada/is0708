@@ -76,7 +76,8 @@ public class ThreadsCuadrantes extends Thread{
 		 * No redibujar, hasta que este completado
 		 */
 		this.cuadrante.ponRedibujar(false);
-		
+		cuadrante.ponRedibujarSemana(false);
+		cuadrante.ponAvance(-1);
 		
 		/*
 		 * ponemos la fecha actual
@@ -103,7 +104,6 @@ public class ThreadsCuadrantes extends Thread{
 		}		
 		
 
-		//System.out.println("primer dia mes "+(GregorianCalendar.FRIDAY-calendario2.get(GregorianCalendar.DAY_OF_WEEK)));
 		int lunes = GregorianCalendar.FRIDAY;
 		int hoy = calendario2.get(GregorianCalendar.DAY_OF_WEEK);
 		int primer_dia=0;
@@ -144,13 +144,7 @@ public class ThreadsCuadrantes extends Thread{
 		ArrayList<Float> HorasFinDescansoAux=new ArrayList<Float>();
 		while (cont < 7 && (! finalizar)){
 			//si cont > 2 esperando 2..
-			if((cont>2)&&(cont<5)){
-				cuadrante.ponAvance(2);
-			}
-			//si cont > 5 esperando 1..
-			if(cont>=5){
-				cuadrante.ponAvance(1);
-			}
+			cuadrante.ponAvance(2);
 			boolean redibujar=true;
 
 			/* Mantenerse esperando hasta que Esperar a que se cargue la cache */
@@ -250,13 +244,23 @@ public class ThreadsCuadrantes extends Thread{
 		ArrayList<Time> lista_inicio_mes=new ArrayList<Time>();
 		ArrayList<Time> lista_fin_mes=new ArrayList<Time>();
 		if(!finalizar){
+		
+		if(!finalizar){
+			cuadrante.ponAvance(1);
+			cuadrante.ponHorasComienzoDescanso(HorasComienzoDescansoAux);
+			cuadrante.ponHorasFin(HorasFinAux);
+			cuadrante.ponHorasFinDescanso(HorasFinDescansoAux);
+			cuadrante.ponHorasInicio(HorasInicioAux);
+			this.cuadrante.ponRedibujarSemana(true);
+		}
+		
 		boolean recorrido_mes=false;
 
 		//Trabaja trabaja_mes;
 		Turno turno;
 		while(!recorrido_mes){
-	//	System.out.println("dia"+calendario2.get(GregorianCalendar.DAY_OF_WEEK));
-	//	System.out.println("dia"+calendario2.get(GregorianCalendar.DAY_OF_MONTH));
+
+		
 		try{
 			turno=this.dameTurno(calendario2.get(GregorianCalendar.DAY_OF_MONTH),
 					calendario2.get(GregorianCalendar.MONTH), calendario2.get(GregorianCalendar.YEAR));
@@ -278,6 +282,7 @@ public class ThreadsCuadrantes extends Thread{
 		catch(Exception e){
 			
 		}
+		
 
 		}
 		}
