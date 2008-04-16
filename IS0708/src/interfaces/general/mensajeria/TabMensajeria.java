@@ -76,7 +76,7 @@ public class TabMensajeria extends Thread{
 					// Cargar remitentes
 					remitentes = new ArrayList<String>();
 					// Añadir nombre remitentes a lista remitentes
-					for (int i = 0; i < vista.getTodosMensajesEntrantes().size(); i++) {
+					for (int i = 0; i < vista.getMensajesEntrantes().size(); i++) {
 						//DORIAAAAAAAAAAAAAAAA (todos)
 						remitentes.add(vista.getEmpleado(vista.getTodosMensajesEntrantes().get(i).getRemitente()).getNombreCompleto());				
 					}

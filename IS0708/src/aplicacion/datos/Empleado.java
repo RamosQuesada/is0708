@@ -81,6 +81,7 @@ public class Empleado implements Drawable {
 	private String ssid = "0";
 	private boolean HaEntrado = false;
 	private Date UltimoAcceso = new Date(0);
+	private int posicion;
 	
 	//Optimizacion Algoritmo (reducción llamadas a BBDD)
 	private ArrayList<Turno> turnoE;
@@ -1156,5 +1157,15 @@ public class Empleado implements Drawable {
 		}
 		return turnos;
 	}
+
+	public int getPosicion() {
+		return posicion;
+	}
+
+	public void setPosicion(int posicion) {
+		this.posicion = posicion;
+	}
+	
+	
 	
 }

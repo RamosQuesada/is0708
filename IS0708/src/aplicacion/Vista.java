@@ -873,8 +873,7 @@ public class Vista {
 	public void loadMensajes() {
 		// Carga mensajes
 		infoDebug("Vista", "Cargando mensajes");
-		mensajesEntrantes = getMensajesEntrantes(getEmpleadoActual()
-				.getEmplId(), 0, num_men_hoja);
+		mensajesEntrantes = getMensajesEntrantes(getEmpleadoActual().getEmplId(), 0, num_men_hoja);
 		infoDebug("Vista", "Acabado");
 	}
 	
