@@ -814,18 +814,18 @@ public class Database extends Thread {
 	 */
 	// como es autoincrementable se ha quitado el id
 	public int insertarMensaje(int remitente, Date fecha, String asunto,
-			String texto, boolean marcado) {
+			String texto, boolean marcado, boolean visto) {
 		int i = 0;
 		ResultSet r = null;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO " + tablaMensajes + " (Remitente, Fecha, Asunto, Texto, Marcado) values ( "
+			st.executeUpdate("INSERT INTO " + tablaMensajes + " (Remitente, Fecha, Asunto, Texto, Marcado, visto) values ( "
 							+ remitente
 							+ ", '"
 							+ fecha
 							+ "', '"
 							+ asunto
-							+ "', '" + texto + "', " + marcado + ");");
+							+ "', '" + texto + "', " + marcado + ", " + visto + ");");
 //			System.out.println("aplicacion.Database.java\t::Mensaje insertado");
 			//r = st.getGeneratedKeys();
 			r = st.executeQuery("SELECT LAST_INSERT_ID()");
