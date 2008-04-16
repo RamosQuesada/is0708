@@ -27,8 +27,6 @@ public class DialogElegirEmpleado extends Thread {
 	private Shell listShell;
 	private int idEmpl = 0;
 	private Vista vista;
-	private ResourceBundle bundle;
-	
 	
 	public DialogElegirEmpleado (Composite padre, Vista vista, ResourceBundle bundle) {
 		this.padre = padre;
@@ -132,9 +130,18 @@ public class DialogElegirEmpleado extends Thread {
 	}
 	
 	public int getIdEmpl() {
+		if (idEmpl==0) { 
+			try {
+				idEmpl = Integer.parseInt(tNombre.getText());
+			}
+			catch (Exception e) {
+				// TODO Mostrar mensaje de error
+			}
+		}
 		return idEmpl;
 	}
-	
+
+
 	public String getNombreEmpl() {
 		return tNombre.getText();
 	}
