@@ -1779,7 +1779,7 @@ public class Database extends Thread {
 		ResultSet result = null;
 		String q = "SELECT * FROM " + tablaDestinatariosMensaje + " JOIN " + tablaMensajes + " WHERE " + tablaDestinatariosMensaje + ".NumVendedor="
 		+ vendedor
-		+ " AND " + tablaDestinatariosMensaje + ".IdMensaje=" + tablaMensajes + ".IdMensaje ORDER BY Fecha DESC;";
+		+ " AND " + tablaDestinatariosMensaje + ".IdMensaje=" + tablaMensajes + ".IdMensaje ORDER BY Fecha;";
 		try {
 			st = con.createStatement();
 			result = st.executeQuery(q);
