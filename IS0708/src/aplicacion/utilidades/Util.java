@@ -318,13 +318,13 @@ public class Util {
 	}
 	
 	/**
-	 * Recorta el final de una cadena te texto, añadiendo al final "..." si se ha 
+	 * Recorta el final de una cadena de texto, añadiendo al final "..." si se ha 
 	 * recortado.
 	 * @param texto el texto a recortar
 	 * @param x el límite de tamaño de la cadena, contando los puntos
 	 * @return la cadena recortada
 	 */
-	public static String recortarTexto(String texto, int x) {
+	public static String recortarTituloTexto(String texto, int x) {
 		String s = texto;
 		String salida;
 		String aux;
@@ -346,6 +346,37 @@ public class Util {
 		
 		return salida;
 	}
+
+	/**
+	 * Recorta el final de una cadena te texto, añadiendo al final "..." si se ha 
+	 * recortado y sustituye los saltos de linea por espacios.
+	 * @param texto el texto a recortar
+	 * @param x el límite de tamaño de la cadena, contando los puntos
+	 * @return la cadena recortada
+	 */
+	public static String recortarContenidoTexto(String texto, int x) {
+		String s = texto;
+		String salida;
+		String aux;
+		if (texto.length()>x) {
+			s = texto.substring(0, x-3) + "...";
+		}		
+		
+		salida = new String();
+		
+		for (int i=0; i<s.length(); i++)
+		{
+			aux = s.substring(i, i+1);
+			if (s.charAt(i) == '\n') 
+			{
+				aux = " ";
+			}
+			salida = salida.concat(aux);
+		}
+		
+		return salida;
+	}
+	
 	/**
 	 * Devuelve el nombre del mes i en el idioma del bundle.
 	 * @param bundle paquete de idioma

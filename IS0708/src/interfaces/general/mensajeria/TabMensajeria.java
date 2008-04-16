@@ -133,8 +133,8 @@ public class TabMensajeria extends Thread{
 			if (remitentes.size()>i)
 			tItem.setText(1, remitentes.get(totalEntrantes-i-1));
 			
-			tItem.setText(2, Util.recortarTexto(mensajes.get(totalEntrantes-i-1-primerMensaje).getAsunto(), prevAsuntoMens));
-			tItem.setText(3, Util.recortarTexto(mensajes.get(totalEntrantes-i-1-primerMensaje).getTexto(), prevTextoMens));
+			tItem.setText(2, Util.recortarTituloTexto(mensajes.get(totalEntrantes-i-1-primerMensaje).getAsunto(), prevAsuntoMens));
+			tItem.setText(3, Util.recortarContenidoTexto(mensajes.get(totalEntrantes-i-1-primerMensaje).getTexto(), prevTextoMens));
 			tItem.setText(4, Util.dateAString(mensajes.get(totalEntrantes-i-1-primerMensaje).getFecha()));
 			i++;
 		}

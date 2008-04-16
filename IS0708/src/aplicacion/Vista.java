@@ -40,7 +40,7 @@ public class Vista {
 	private LanguageChanger l;
 	private Thread conector, loader, cacheUploader;
 	private boolean cacheCargada = false;
-	private int num_men_hoja = 10;
+	private int num_men_hoja = 5;
 	CargadorImagenes imagenes;
 	
 	/** Lista de tareas que se están llevando a cabo para mostrar en la barra inferior */
