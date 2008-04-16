@@ -785,7 +785,12 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			display.asyncExec(new Runnable() {
 				public void run() {
 					canvas.redraw();
-					if (turno==null) lCuadranteTitulo.setText(String.valueOf(dia) + " de " + aplicacion.utilidades.Util.mesAString(vista.getBundle(), mes-1) + " de " + String.valueOf(anio));
+					if (turno==null)
+						if (diario)
+							lCuadranteTitulo.setText(String.valueOf(dia) + " de " + aplicacion.utilidades.Util.mesAString(vista.getBundle(), mes-1) + " de " + String.valueOf(anio));
+						else
+							lCuadranteTitulo.setText(aplicacion.utilidades.Util.mesAString(vista.getBundle(), mes-1).substring(0,1).toUpperCase()+
+									aplicacion.utilidades.Util.mesAString(vista.getBundle(), mes-1).substring(1)+ " de " + String.valueOf(anio));
 				}
 			});
 		}
@@ -1259,7 +1264,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			canvas.removeMouseListener(mouseListenerCuadrMensual);
 			canvas.addMouseMoveListener(mouseMoveListenerCuadrDiario);
 			canvas.addMouseListener(mouseListenerCuadrDiario);
-			lCuadranteTitulo.setVisible(true);
+			//lCuadranteTitulo.setVisible(true);
 			lGridCuadrante.setVisible(true);
 			cGridCuadrante.setVisible(true);
 			this.calcularTamano();
@@ -1270,7 +1275,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			canvas.addMouseMoveListener(mouseMoveListenerCuadrMensual);
 			canvas.addMouseListener(mouseListenerCuadrMensual);
 			//Ocultamos el combo de los intervalos
-			lCuadranteTitulo.setVisible(false);
+			//lCuadranteTitulo.setVisible(false);
 			lGridCuadrante.setVisible(false);
 			cGridCuadrante.setVisible(false);
 		}
