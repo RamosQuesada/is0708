@@ -39,6 +39,8 @@ public class DialogVentasEmpleado {
 	private ResourceBundle bundle;
 	private Vista vista;
 	private Date fecha;
+	private int idVend;
+	private int ventas;
 	
 	public DialogVentasEmpleado(Shell padre, ResourceBundle bundle, Vista vista) {
 		this.padre = padre;
@@ -56,6 +58,8 @@ public class DialogVentasEmpleado {
 		grupo.setLayout(new GridLayout(2,false));
 		grupo.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,2,1));
 		
+		final Label  lIdVend		= new Label (grupo, SWT.LEFT);
+		final Label   llIdVend		= new Label  (grupo, SWT.BORDER);
 		final Label  lNventas		= new Label (grupo, SWT.LEFT);
 		final Text   tNventas		= new Text  (grupo, SWT.BORDER);
 		final Button bFecha			= new Button(grupo, SWT.PUSH);
@@ -64,9 +68,13 @@ public class DialogVentasEmpleado {
 		final Button bAceptar		= new Button(shell, SWT.PUSH);
 		final Button bCancelar		= new Button(shell, SWT.PUSH);
 		
+		lIdVend				.setText(bundle.getString("Vendedor"));
+		llIdVend			.setText(String.valueOf(idVend));
 		lNventas			.setText(bundle.getString("Ventas"));
 		bFecha				.setText(bundle.getString("Fecha"));
 		
+		lIdVend			.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
+		llIdVend		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,false,1,1));
 		lNventas		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
 		tNventas		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,false,1,1));
 		bFecha			.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
