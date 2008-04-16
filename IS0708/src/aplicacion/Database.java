@@ -399,7 +399,7 @@ public class Database extends Thread {
 	}
 
 	/**
-	 * Modifica un turno en la BD. Se le pasan todos los parametros aunque no
+	 * Modifica un empleado en la BD. Se le pasan todos los parametros aunque no
 	 * cambien excepto el de HorasExtras ya que ese no lo debemos tocar
 	 * @param idEmp
 	 * @param nomb
@@ -419,32 +419,31 @@ public class Database extends Thread {
 	 * @param Contr
 	 * @return Devuelve un bool que dice si todo ha ido bien.
 	 */
-	
 	public boolean cambiarEmpleado(int idEmp, String nomb, String Ape1, String Ape2, Date FNac, int sexo, 
 			String mail, String Passw, int grupo, Date FCont, Date Fentr, int Felic, int Idiom, 
 			int Rang, int Turn, int Contr) {
-	int r = 0;
-	try {
-		String Nac = Util.dateAString(FNac);
-		String Cont = Util.dateAString(FCont);
-		String Entr = Util.dateAString(Fentr);
-		
-		st = con.createStatement();
-		r = st.executeUpdate("UPDATE " + tablaUsuarios + " SET Nombre='"
-				+ nomb + "', Apellido1='" + Ape1 + "', Apellido2='"
-				+ Ape2 + "', FechaNacimiento='" + Nac
-				+ "', Sexo=" + sexo + ", Email='" + mail
-				+ "', Password='" + Passw + "', IndicadorGrupo=" + grupo
-				+ ", FechaContrato='" + Cont + "', FechaEntrada='" + Entr
-				+ "', Felicidad=" + Felic
-				+ ", Idioma=" + Idiom + ", Rango=" + Rang
-				+ ", IdContrato=" + Contr + ", IdTurno=" + Turn
-				+ " WHERE NumVendedor=" + idEmp + ";");
-	} catch (SQLException e) {
-		System.err.println("Database :: Error al modificar empleado en la BD");
-		return false;
-	}
-	return true;
+		int r = 0;
+		try {
+			String Nac = Util.dateAString(FNac);
+			String Cont = Util.dateAString(FCont);
+			String Entr = Util.dateAString(Fentr);
+			
+			st = con.createStatement();
+			r = st.executeUpdate("UPDATE " + tablaUsuarios + " SET Nombre='"
+					+ nomb + "', Apellido1='" + Ape1 + "', Apellido2='"
+					+ Ape2 + "', FechaNacimiento='" + Nac
+					+ "', Sexo=" + sexo + ", Email='" + mail
+					+ "', Password='" + Passw + "', IndicadorGrupo=" + grupo
+					+ ", FechaContrato='" + Cont + "', FechaEntrada='" + Entr
+					+ "', Felicidad=" + Felic
+					+ ", Idioma=" + Idiom + ", Rango=" + Rang
+					+ ", IdContrato=" + Contr + ", IdTurno=" + Turn
+					+ " WHERE NumVendedor=" + idEmp + ";");
+		} catch (SQLException e) {
+			System.err.println("Database :: Error al modificar empleado en la BD");
+			return false;
+		}
+		return true;
 	}
 	
 	/**
