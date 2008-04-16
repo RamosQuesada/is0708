@@ -10,6 +10,8 @@ import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Cursor;
@@ -48,7 +50,7 @@ public class TabMensajeria extends Thread{
 	// Los caracteres a previsualizar de un asunto de mensaje
 	final int prevAsuntoMens = 20;
 	// El número de mensajes a mostrar por hoja
-	final int num_men_hoja = 10;
+	private int num_men_hoja = 10;
 	// El primer mensaje a mostrar (aumenta al pinchar en "ver más")
 	private int primerMensaje = 0;
 	// Este argumento sirve para que el hilo se ejecute indefinidamente o solo una vez
@@ -171,6 +173,7 @@ public class TabMensajeria extends Thread{
 		tablaMensajes.setEnabled(false);
 		tablaMensajes.setLinesVisible(true);
 		tablaMensajes.setHeaderVisible(true);
+		
 
 		// Iniciar hilo de cargar mensajes
 		start();
@@ -226,6 +229,15 @@ public class TabMensajeria extends Thread{
 				tablaMensajes.getColumn(4).setWidth(ancho / 8);
 			}
 			public void controlMoved(ControlEvent e) {};
+		});
+		
+		tablaMensajes.addPaintListener(new PaintListener(){
+			public void paintControl(PaintEvent arg0) {
+				num_men_hoja = (tabFolder.getSize().y - tabFolder.getBorderWidth()*2) / 
+				(tablaMensajes.getItemHeight()+1)-6;
+				System.out.println("Caben: " + num_men_hoja);
+			}
+			
 		});
 		
 		// Añadir botones
