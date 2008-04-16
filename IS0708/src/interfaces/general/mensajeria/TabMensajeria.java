@@ -124,7 +124,7 @@ public class TabMensajeria extends Thread{
 				tItem.setBackground(yellow);
 			}
 			//TODO mostrar mensajes leídos o no leídos
-			if (mensajes.get(totalEntrantes-i-1-primerMensaje).isLeído()) 
+			if (mensajes.get(totalEntrantes-i-1-primerMensaje).isLeido()) 
 			{
 				//tItem.setImage(ico_mens_l);
 			}	
