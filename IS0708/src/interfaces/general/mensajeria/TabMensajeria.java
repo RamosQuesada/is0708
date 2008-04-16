@@ -39,6 +39,8 @@ public class TabMensajeria extends Thread{
 	private Label lMensajes;
 	private boolean estaMarcado;
 	private Button bMensMarcar;
+	private boolean bAnt = true;
+	private boolean bSig = true;
 	private boolean iniciado = false;
 	Mensaje mensSelecionado;
 	// Los caracteres a previsualizar de un mensaje
@@ -46,7 +48,7 @@ public class TabMensajeria extends Thread{
 	// Los caracteres a previsualizar de un asunto de mensaje
 	final int prevAsuntoMens = 20;
 	// El primer mensaje a mostrar (aumenta al pinchar en "ver más")
-	private int primerMensaje = 0;
+	private int primerMensaje = 00;
 	// Este argumento sirve para que el hilo se ejecute indefinidamente o solo una vez
 	// (para las llamadas puntuales de actualizar, siguientes y anteriores
 	
@@ -59,7 +61,7 @@ public class TabMensajeria extends Thread{
 		this.estaMarcado = false;
 		this.mensSelecionado = null;
 		crearTab();
-		desplazarVentanaMensajes(0);
+		//desplazarVentanaMensajes(0);
 	}
 	
 	/**
@@ -75,7 +77,7 @@ public class TabMensajeria extends Thread{
 					// Cargar remitentes
 					remitentes = new ArrayList<String>();
 					// Añadir nombre remitentes a lista remitentes
-					for (int i = 0; i < vista.getMensajesEntrantes().size(); i++) {
+					for (int i = 0; i < vista.getTodosMensajesEntrantes().size(); i++) {
 						remitentes.add(vista.getEmpleado(vista.getTodosMensajesEntrantes().get(i).getRemitente()).getNombreCompleto());				
 					}
 					// Actualizar tabla
@@ -88,8 +90,12 @@ public class TabMensajeria extends Thread{
 					}
 				}
 				try {
-					// TODO Espera 10 segundos (¿cómo lo dejamos?)
-					wait(10000);
+					// TODO Espera 5 segundos (¿Como lo dejamos?)
+					wait(5000);
+					//desplazarVentanaMensajes(0);
+					//vista.loadTodosMensajes();
+					notify();
+					
 				} catch (Exception e) {}
 			}
 		}
@@ -108,18 +114,19 @@ public class TabMensajeria extends Thread{
 		fd[0].setStyle(SWT.BOLD);
 		Font fNegrita = new Font(tablaMensajes.getDisplay(),fd);
 		Color yellow = new Color(tablaMensajes.getDisplay(),255,255,0);
-		ArrayList<Mensaje> mensajes = vista.getTodosMensajesEntrantes();
-		int totalEntrantes = mensajes.size();
-		System.out.println(totalEntrantes);
+		//ArrayList<Mensaje> mensajes = vista.getTodosMensajesEntrantes();
+		//int totalEntrantes = mensajes.size();
+		System.out.println("Num Men Hoja: " + vista.getNum_men_hoja());
+		System.out.println("Primer Mensaje" + primerMensaje);
 			
-		while (vista.getEmpleados().size()>0 && i + primerMensaje < totalEntrantes && i < vista.getNum_men_hoja()) {
+		while (vista.getEmpleados().size()>0 && i + primerMensaje < vista.getTodosMensajesEntrantes().size() && i < vista.getNum_men_hoja()) {
 			TableItem tItem = new TableItem(tablaMensajes, SWT.NONE);
-			if (mensajes.get(totalEntrantes-i-1-primerMensaje).isMarcado())
+			if (vista.getTodosMensajesEntrantes().get(vista.getTodosMensajesEntrantes().size()-i-1-primerMensaje).isMarcado())
 			{
 				tItem.setBackground(yellow);
 			}
 			//TODO mostrar mensajes leídos o no leídos
-			if (mensajes.get(totalEntrantes-i-1-primerMensaje).isLeido()) 
+			if (vista.getTodosMensajesEntrantes().get(vista.getTodosMensajesEntrantes().size()-i-1-primerMensaje).isLeido()) 
 			{
 				tItem.setImage(vista.getImagenes().getIco_mens_l());
 			}	
@@ -129,16 +136,25 @@ public class TabMensajeria extends Thread{
 				tItem.setFont(fNegrita);
 			}
 			if (remitentes.size()>i)
-			tItem.setText(1, remitentes.get(totalEntrantes-i-1));
+			tItem.setText(1, remitentes.get(vista.getTodosMensajesEntrantes().size()-i-1));
 			
-			tItem.setText(2, Util.recortarTituloTexto(mensajes.get(totalEntrantes-i-1-primerMensaje).getAsunto(), prevAsuntoMens));
-			tItem.setText(3, Util.recortarContenidoTexto(mensajes.get(totalEntrantes-i-1-primerMensaje).getTexto(), prevTextoMens));
-			tItem.setText(4, Util.dateAString(mensajes.get(totalEntrantes-i-1-primerMensaje).getFecha()));
+			tItem.setText(2, Util.recortarTituloTexto(vista.getTodosMensajesEntrantes().get(vista.getTodosMensajesEntrantes().size()-i-1-primerMensaje).getAsunto(), prevAsuntoMens));
+			tItem.setText(3, Util.recortarContenidoTexto(vista.getTodosMensajesEntrantes().get(vista.getTodosMensajesEntrantes().size()-i-1-primerMensaje).getTexto(), prevTextoMens));
+			tItem.setText(4, Util.dateAString(vista.getTodosMensajesEntrantes().get(vista.getTodosMensajesEntrantes().size()-i-1-primerMensaje).getFecha()));
 			i++;
 		}
+		int min;
+		if(primerMensaje + vista.getNum_men_hoja()<vista.getTodosMensajesEntrantes().size())
+		{
+			min = primerMensaje + vista.getNum_men_hoja();
+		}
+		else
+		{
+			min = vista.getTodosMensajesEntrantes().size();
+		}
 		lMensajes.setText(bundle.getString("I02_lab_MostrandoMensajes1") + " " + String.valueOf(primerMensaje+1) + " " + 
-				bundle.getString("I02_lab_MostrandoMensajes2") + " " + String.valueOf(primerMensaje+vista.getNum_men_hoja())+ " " + 
-				bundle.getString("I02_lab_MostrandoMensajes3") + " " + String.valueOf(totalEntrantes) );
+				bundle.getString("I02_lab_MostrandoMensajes2") + " " + String.valueOf(min)+ " " + 
+				bundle.getString("I02_lab_MostrandoMensajes3") + " " + String.valueOf(vista.getTodosMensajesEntrantes().size()) );
 		tablaMensajes.setEnabled(true);
 		tablaMensajes.setCursor(new Cursor(tablaMensajes.getDisplay(), SWT.CURSOR_ARROW));
 		bMensSiguientes.setEnabled(true);
@@ -185,7 +201,7 @@ public class TabMensajeria extends Thread{
 			public void mouseUp(MouseEvent e) {};
 			public void mouseDown(MouseEvent e) {
 				if (tablaMensajes.getSelectionIndex()!=-1) {
-					int totalEntrantes = vista.getMensajesEntrantes().size();
+					int totalEntrantes = vista.getTodosMensajesEntrantes().size();
 					mensSelecionado = vista.getTodosMensajesEntrantes().get(totalEntrantes - tablaMensajes.getSelectionIndex()-1-primerMensaje);
 					estaMarcado = mensSelecionado.isMarcado(); 
 
@@ -229,8 +245,17 @@ public class TabMensajeria extends Thread{
 			public void paintControl(PaintEvent arg0) {
 				vista.setNum_men_hoja(((tabFolder.getSize().y - tabFolder.getBorderWidth()*2) / 
 				(tablaMensajes.getItemHeight()+2))-7);
+				if(vista.getNum_men_hoja()>vista.getTodosMensajesEntrantes().size())
+				{
+					vista.setNum_men_hoja(vista.getTodosMensajesEntrantes().size());						
+				}
+				//bMensAnteriores.setEnabled(true);
+				//bMensSiguientes.setEnabled(true);
+				//bAnt = true;
+				//bSig = true;
 				//desplazarVentanaMensajes(0);
-				vista.loadTodosMensajes();
+				//vista.loadTodosMensajes();
+				//vista.setNum_men_hoja(10);
 			}
 		});
 		
@@ -302,8 +327,8 @@ public class TabMensajeria extends Thread{
 						TableItem item = tablaMensajes.getItem(tablaMensajes.getSelectionIndex());*/
 					
 					}
-					int totalEntrantes = vista.getTodosMensajesEntrantes().size();
-					vista.marcarMensaje(vista.getTodosMensajesEntrantes().get(totalEntrantes - tablaMensajes.getSelectionIndex()-1));
+					//int totalEntrantes = vista.getTodosMensajesEntrantes().size();
+					vista.marcarMensaje(vista.getTodosMensajesEntrantes().get(vista.getTodosMensajesEntrantes().size() - tablaMensajes.getSelectionIndex()-1-primerMensaje));
 					desplazarVentanaMensajes(0);
 					vista.loadTodosMensajes();
 				}
@@ -314,10 +339,20 @@ public class TabMensajeria extends Thread{
 		bMensAnteriores.setText(bundle.getString("I02_but_Anteriores"));
 		bMensAnteriores.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
 		1, 1));
-
+		bMensAnteriores.setEnabled(bAnt);
+		
 		bMensAnteriores.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				desplazarVentanaMensajes(-vista.getNum_men_hoja());
+				if(primerMensaje > 0)
+				{
+					desplazarVentanaMensajes(-vista.getNum_men_hoja());
+					bMensSiguientes.setEnabled(true);
+				}
+				else
+				{
+					bAnt = false;
+					bMensAnteriores.setEnabled(false);
+				}
 			}
 		});
 
@@ -325,10 +360,21 @@ public class TabMensajeria extends Thread{
 		bMensSiguientes.setText(bundle.getString("I02_but_Siguientes"));
 		bMensSiguientes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
 		1, 1));
+		bMensSiguientes.setEnabled(bSig);
 
 		bMensSiguientes.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				desplazarVentanaMensajes(vista.getNum_men_hoja());
+				int totalEntrantes = vista.getTodosMensajesEntrantes().size();
+				if (primerMensaje+vista.getNum_men_hoja() < totalEntrantes)
+				{
+					desplazarVentanaMensajes(vista.getNum_men_hoja());
+					bMensAnteriores.setEnabled(true);
+				}
+				else
+				{
+					bSig = false;
+					bMensSiguientes.setEnabled(false);
+				}
 			}
 		});
 
