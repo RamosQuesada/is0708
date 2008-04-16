@@ -233,9 +233,10 @@ public class TabMensajeria extends Thread{
 		
 		tablaMensajes.addPaintListener(new PaintListener(){
 			public void paintControl(PaintEvent arg0) {
-				num_men_hoja = (tabFolder.getSize().y - tabFolder.getBorderWidth()*2) / 
-				(tablaMensajes.getItemHeight()+1)-6;
-				System.out.println("Caben: " + num_men_hoja);
+				num_men_hoja = ((tabFolder.getSize().y - tabFolder.getBorderWidth()*2) / 
+				(tablaMensajes.getItemHeight()+2))-7;
+				mostrarMensajes();
+//				System.out.println("Caben: " + num_men_hoja);
 			}
 			
 		});
