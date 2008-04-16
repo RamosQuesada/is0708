@@ -1105,7 +1105,7 @@ public class Database extends Thread {
 	 * @return Informa sobre si se ha podido realizar la inserci�n o no
 	 */
 
-	public boolean insertarVentas(int idUsuario, Date Fecha, int numVentas) {
+	public boolean insertarVentas(int idUsuario, Date Fecha, float numVentas) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();

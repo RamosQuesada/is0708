@@ -259,6 +259,10 @@ public class Vista {
 		return true;
 	}
 	
+	public boolean insertVentas (int idVend, float ventas, Date fecha){
+		return controlador.insertVentas(idVend, ventas, fecha);
+	}
+	
 	/**
 	 * Elimina un contrato de la base de datos
 	 * @param idContrato El contrato a eliminar

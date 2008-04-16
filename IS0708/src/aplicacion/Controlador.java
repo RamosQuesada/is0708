@@ -1958,6 +1958,16 @@ public class Controlador {
 		NumMin, IdDepartamento, ultima);
 	}
 	
+	/**
+	 * Inserta las ventas de un empleado para un determinado dia
+	 * @param idVend
+	 * @param ventas
+	 * @param fecha
+	 */
+	public boolean insertVentas(int idVend,float ventas, Date fecha){
+		return _db.insertarVentas(idVend, fecha, ventas);
+	}
+	
 	public boolean trabajaEmpleadoDia(int nv,Date d) {
 		ResultSet r =this._db.trabajaEmpleadoDia(nv, d);
 		String s=null;

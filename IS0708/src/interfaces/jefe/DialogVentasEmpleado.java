@@ -40,12 +40,13 @@ public class DialogVentasEmpleado {
 	private Vista vista;
 	private Date fecha;
 	private int idVend;
-	private int ventas;
+	private Float ventas;
 	
 	public DialogVentasEmpleado(Shell padre, ResourceBundle bundle, Vista vista) {
 		this.padre = padre;
 		this.bundle = bundle;
 		this.vista = vista;
+
 		mostrarVentana();
 	}
 	
@@ -146,9 +147,12 @@ public class DialogVentasEmpleado {
 					tFecha.setFocus();
 					tFecha.selectAll();			
 				}
+				ventas= Float.valueOf((tNventas.getText()));
+				idVend= vista.getEmpleadoActual().getEmplId();
 				
-				//añadir ventas en la tabla y en la base de datos
 				
+				//añadir ventas en la base de datos
+				vista.insertVentas(idVend, ventas, fecha);
 			}
 		};
 		
