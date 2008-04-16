@@ -1,8 +1,4 @@
 package interfaces.general.mensajeria;
-
-import interfaces.general.ShellPrincipal;
-import interfaces.imagenes.CargadorImagenes;
-
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
@@ -18,7 +14,6 @@ import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -128,11 +123,11 @@ public class TabMensajeria extends Thread{
 			//TODO mostrar mensajes leídos o no leídos
 			if (mensajes.get(totalEntrantes-i-1-primerMensaje).isLeido()) 
 			{
-				//tItem.setImage(ico_mens_l);
+				tItem.setImage(vista.getImagenes().getIco_mens_l());
 			}	
 			else 
 			{
-				//tItem.setImage(ico_mens);
+				tItem.setImage(vista.getImagenes().getIco_mens());
 				tItem.setFont(fNegrita);
 			}
 			if (remitentes.size()>i)
@@ -235,8 +230,6 @@ public class TabMensajeria extends Thread{
 			public void paintControl(PaintEvent arg0) {
 				num_men_hoja = ((tabFolder.getSize().y - tabFolder.getBorderWidth()*2) / 
 				(tablaMensajes.getItemHeight()+2))-7;
-				mostrarMensajes();
-//				System.out.println("Caben: " + num_men_hoja);
 			}
 			
 		});
