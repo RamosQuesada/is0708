@@ -115,7 +115,7 @@ public class TabInicio {
 				int response = messageBox.open();
 				if (response == SWT.OK) {
 					// paquete_pruebas.GeneraDatos.reset();
-					paquete_pruebas.InsertaDatosFijos.resetBD();
+//					paquete_pruebas.InsertaDatosFijos.insertarNdepart(20);
 					System.out.println("BBDD reiniciada");
 				}
 			}
