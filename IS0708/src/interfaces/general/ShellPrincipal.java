@@ -866,7 +866,6 @@ public class ShellPrincipal {
 					lEstado.setText("Conectado");
 					pbEstado.setVisible(false);
 				}
-
 				shell.getDisplay().sleep();
 			}
 		}
