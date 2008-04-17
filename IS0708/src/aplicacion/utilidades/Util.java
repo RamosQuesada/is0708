@@ -553,4 +553,74 @@ public class Util {
 		return r+g+b;
 	}
 	
+	/**
+	 * Calcula la fecha siguiente a la fecha dada
+	 * @param fecha
+	 * @return la fecha siguiente
+	 * @author Alberto
+	 */
+	public static Date diaSiguiente(Date fecha){
+		int mes=fecha.getMonth()+1;
+		int ano=fecha.getYear();
+		int dia=fecha.getDate();
+		
+		int diaNuevo=dia;
+		int mesNuevo=mes;
+		int anoNuevo=ano;
+		
+		if ((mes==1)||(mes==3)||(mes==5)||(mes==7)||(mes==8)||(mes==10)||(mes==12)){
+			if (dia==31){
+				if(mes==12){
+					diaNuevo=1;
+					mesNuevo=1;
+					anoNuevo=anoNuevo+1;
+				}
+				else{
+					diaNuevo=1;
+					mesNuevo=mesNuevo+1;
+				}
+				
+			}
+			else{
+				diaNuevo=diaNuevo+1;
+			}
+		}
+		
+		if ((mes==4)||(mes==6)||(mes==9)||(mes==11)){
+			if (dia==30){
+				diaNuevo=1;
+				mesNuevo=mesNuevo+1;
+			}
+			else{
+				diaNuevo=diaNuevo+1;				
+			}
+		}
+		
+		if (mes==2){
+			if (ano%4==0){
+				if (dia==29){
+					diaNuevo=1;
+					mesNuevo=mesNuevo+1;
+				}
+				else{
+					diaNuevo=diaNuevo+1;					
+				}
+			}
+		
+			else{
+				if (dia==28){
+					diaNuevo=1;
+					mesNuevo=mesNuevo+1;
+				}
+				else{
+					diaNuevo=diaNuevo+1;
+					
+				}
+			}
+		}
+		
+		Date fechaNueva=new Date(anoNuevo,mesNuevo-1,diaNuevo);
+		return fechaNueva;
+	}
+	
 }
