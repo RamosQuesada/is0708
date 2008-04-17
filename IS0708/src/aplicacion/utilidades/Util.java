@@ -360,7 +360,7 @@ public class Util {
 		{
 			aux = s.substring(i, i+1);
 			//System.out.println(s.charAt(i));
- 			if (s.charAt(i) == '\n') 
+ 			if (s.charAt(i) == '\n' || s.charAt(i) == '\r') 
 			{
 				aux = " ";
 			}
