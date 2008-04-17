@@ -1974,6 +1974,16 @@ public class Controlador {
 		return _db.insertarVentas(idVend, fecha, ventas);
 	}
 	
+	public boolean existeVentas(int idVend,Date fecha){
+		ResultSet rs=_db.obtenVentas(idVend, fecha);
+		return rs!=null;
+			
+	}
+	
+	public void cambiarVentas(int idVend,Date fecha,float ventas){
+		_db.cambiarVentas(idVend, fecha, ventas);
+	}
+	
 	public boolean trabajaEmpleadoDia(int nv,Date d) {
 		ResultSet r =this._db.trabajaEmpleadoDia(nv, d);
 		String s=null;
@@ -2076,8 +2086,8 @@ public class Controlador {
 	 */
 	public void cambiarEmpleado (int idEmp, String nomb, String Ape1, String Ape2, java.util.Date FNac, int sexo, 
 			String mail, String Passw, int grupo, java.util.Date FCont, java.util.Date Fentr, int Felic, int Idiom, 
-			int Rang, int Turn, int Contr){
-		this._db.cambiarEmpleado(idEmp, nomb, Ape1, Ape2, FNac, sexo, mail, Passw, grupo, FCont, Fentr, Felic, Idiom, Rang, Turn, Contr);
+			int Rang, int Turn, Color color, int Contr){
+		this._db.cambiarEmpleado(idEmp, nomb, Ape1, Ape2, FNac, sexo, mail, Passw, grupo, FCont, Fentr, Felic, Idiom, Rang, Turn, color,Contr);
 	}
 	
 	public ArrayList<String> getTodosNumerosDEPARTAMENTOs() {

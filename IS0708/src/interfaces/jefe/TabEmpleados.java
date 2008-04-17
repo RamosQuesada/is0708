@@ -333,6 +333,7 @@ public class TabEmpleados extends Thread{
 		bEmplVentas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,1, 1));
 		bEmplVentas.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent e){
+				final int idVend;
 				int aux1=tablaEmpleados.getSelectionIndex();
 				if (aux1<0){
 					MessageBox messageBox = new MessageBox (_tabFolder.getShell(), SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
@@ -340,7 +341,9 @@ public class TabEmpleados extends Thread{
 					messageBox.setMessage (_bundle.getString("I02_select_Vent_emp"));					
 					e.doit = messageBox.open () == SWT.YES;
 				}else{
-				new DialogVentasEmpleado(_tabFolder.getShell(), _bundle, _vista);
+					TableItem[] aux=tablaEmpleados.getSelection();
+					idVend = (Integer)Integer.valueOf(aux[0].getText(1));
+					new DialogVentasEmpleado(_tabFolder.getShell(), _bundle, _vista,idVend);
 			}
 			}
 			});
