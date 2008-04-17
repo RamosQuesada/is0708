@@ -597,13 +597,13 @@ public class Database extends Thread {
 	 *            Persona que dirige le departamento
 	 * @return Informa sobre si se ha podido realizar la inserci�n o no
 	 */
-	public boolean insertarDepartamento(String nombre, int jefe) {
+	public boolean insertarDepartamento(String nombre, int jefe,Time hI, Time hC) {
 		// TODO insertar horas correctamente
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
 			st.executeUpdate("INSERT INTO " + tablaDepartamentos + " values ('" + nombre
-					+ "', '" + jefe + "', '" + "9:00:00" + "', '" + "23:00:00" + "')");
+					+ "', '" + jefe + "', '" + hI + "', '" + hC + "')");
 			correcto = true;
 		} catch (SQLException e) {
 			System.err.println("Database :: Error al insertar el departamento");
