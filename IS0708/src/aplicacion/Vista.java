@@ -320,47 +320,6 @@ public class Vista {
 	 * @return boolean que nos confirma exito ne la operacion
 	 */
 	public void eliminaTurnoDeContrato(int idTurno, int idContrato){
-		//modificamos cache
-		//buscamos el contrato
-		int i=0;
-		boolean encontrado=false;
-		String p="";
-		String patron="";
-		String patron_aux="";
-		while(i<contratos.size()&&!encontrado){//miramos en la cache
-			if(contratos.get(i).getNumeroContrato()==idContrato){
-				encontrado=true;
-			}else{
-				i++;
-			}
-		}
-		if (encontrado){//modificamos patron del contrato
-			patron=contratos.get(i).getPatron();//cogemos el contrato
-			//modificamos el patron quitando el turno que nos dicen 
-			for(int j=0;j<patron.length();j++){
-				if(patron.charAt(j)==':'){
-					if(patron.charAt(j+1)!=idTurno){
-						p=patron.charAt(j-1)+"";//dias del turno
-						p+=":";//dos puntos
-						p+=patron.charAt(j+1);//idturno
-						if(patron.length()-j!=1){//si tiene barra se la metemos
-							p+=patron.charAt(j+2);//metemos la barra
-						}
-						patron_aux+=p;//actualizamos el patron auxiliar que sera el que utilicemos despues para modificar el contrato
-						
-					}
-				}
-			}
-			contratos.get(i).setPatron(patron_aux);//modificamos patron en cache
-			//ahora modificamos el patron de todos los empleados que tengan ese contrato
-			for (int k = 0; k < empleados.size(); k++) {
-				if(empleados.get(k).getContrato().getNumeroContrato()==idContrato){
-					empleados.get(k).getContrato().setPatron(patron_aux);
-				}
-			}
-		}else{
-			//deberiamos dar mensaje de error por pantalla
-		}
 		//modificamos bbdd
 		ArrayList<Object> aux=new ArrayList<Object>();
 		aux.add(idTurno);
