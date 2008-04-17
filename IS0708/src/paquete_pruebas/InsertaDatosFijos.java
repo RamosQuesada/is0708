@@ -38,6 +38,7 @@ public class InsertaDatosFijos {
 			String patronContratoJefe = "6:" + turnoJefe.getIdTurno() + "/1:d";
 			Contrato contratoJefe = new Contrato("contratoJefeFijo "+nd, 0, turnoJefe.getIdTurno() ,7, patronContratoJefe, 1200, 1);
 			contratoJefe.setNumeroContrato(c.insertContrato(contratoJefe));
+			
 			//c.insertTurnoPorContrato(turnoJefe.getIdTurno(), contratoJefe.getNumeroContrato());
 			
 			// Crear el jefe de departamento
@@ -48,6 +49,8 @@ public class InsertaDatosFijos {
 		    c.insertNumerosDepartamento(nd, "DatosFijos"+nd);
 
 			c.insertDepartamentoUsuario(10000100+nd*1000, depart);			
+			
+			c.insertContratoDepartamento(contratoJefe, depart);
 			
 			// Horas en las que esta cerrado
 		    for (int i=1; i<=7; i++) {
@@ -216,7 +219,7 @@ public class InsertaDatosFijos {
 			System.out.println("Departamento " + nd + " insertado.");
 		}
 		
-		//bd.cerrarConexion();
+		bd.cerrarConexion();
 		
 	}
 
