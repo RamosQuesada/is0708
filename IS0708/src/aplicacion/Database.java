@@ -2327,6 +2327,7 @@ public class Database extends Thread {
 					"HoraSalida Time ," +
 					"HoraInicioDescanso time ," +
 					"DuracionDescanso time," +
+					"Color varchar(6)," +
 					"check (horaentrada<horasalida)," +
 					"Primary Key (IdTurno)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
 
