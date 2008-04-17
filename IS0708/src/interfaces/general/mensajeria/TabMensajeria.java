@@ -286,7 +286,7 @@ public class TabMensajeria extends Thread{
 		
 		
 		final Button bMensEliminar = new Button(cMensajes, SWT.PUSH);
-		bMensEliminar.setText(bundle.getString("I02_but_Eliminar"));
+		bMensEliminar.setText(bundle.getString("I02_but_Eliminar2"));
 		bMensEliminar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 		false, 1, 1));
 		bMensEliminar.addSelectionListener (new SelectionAdapter () {
