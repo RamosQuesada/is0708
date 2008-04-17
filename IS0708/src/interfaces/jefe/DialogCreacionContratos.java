@@ -262,6 +262,23 @@ public class DialogCreacionContratos {
 					}
 					aux += nDiasSeguidos + ":" + turnos1 + "/";
 					patron = aux.substring(0, aux.length() - 1);
+					boolean correcto=true;
+					for (int i=0;i<turnos.size();i++){
+						int id= turnos.get(i).getIdTurno();
+						boolean correcto2=patron.contains(Integer.toString(id));
+						correcto=correcto&&correcto2;
+					}
+					if (!correcto) {						
+						patron="";
+						MessageBox msgBox = new MessageBox(shell, SWT.APPLICATION_MODAL
+								| SWT.ICON_ERROR | SWT.OK);
+						msgBox
+								.setMessage(bundle
+										.getString("I09_patron_incorrecto"));
+						msgBox.setText("Error");
+						msgBox.open();
+						
+					}
 					System.out.println(patron);
 					shell.dispose();
 				}

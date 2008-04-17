@@ -44,7 +44,7 @@ public class TabContratos extends Thread {
 	 * Implementa un hilo que coge los empleados del departamento del servidor.
 	 */
 	public void run() {
-		// boolean run = true;
+		boolean run = true;
 		try {
 			while (!vista.isCacheCargada()) {
 				sleep(5000);
@@ -54,10 +54,11 @@ public class TabContratos extends Thread {
 		// Coge los datos de todos los contratos
 		// contratos = vista.getListaContratosDepartamento();
 		datosInterfazCargados = true;
-		// while (run) {
+		while (run) {
 
 		if (tablaContratos.isDisposed()) {
-		} // run = false;
+			run = false;
+		} 
 		else {
 			if (!tablaContratos.isDisposed()) {
 				// Actualizar tabla
@@ -74,13 +75,13 @@ public class TabContratos extends Thread {
 			}
 			try {
 				// Espera 10 segundos (¿cómo lo dejamos?)
-				sleep(10000);
+				sleep(5000);
 			} catch (Exception e) {
 			}
 		}
 	}
 
-	// }
+	 }
 
 	/**
 	 * Añade a la tabla tablaContratos, cada uno de los contratos disponibles
@@ -88,6 +89,7 @@ public class TabContratos extends Thread {
 	 * 
 	 */
 	private void mostrarContratos() {
+		int indice=tablaContratos.getSelectionIndex();
 		if (vista.isCacheCargada() && datosInterfazCargados) {
 			tablaContratos.removeAll();
 			for (int i = 0; i < vista.getListaContratosDepartamento().size(); i++) {
@@ -119,6 +121,7 @@ public class TabContratos extends Thread {
 				tItem.setText(7, Integer.toString(c.getTipoContrato()));
 			}
 		}
+		tablaContratos.setSelection(indice);
 	}
 
 	/**
