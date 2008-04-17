@@ -220,7 +220,7 @@ public class ShellConfigDepartamento {
 								}
 								if(!thorIn.getText().contentEquals(((String) horas.get(0).subSequence(0, 2))) || !tminIn.getText().contentEquals(((String) horas.get(0).subSequence(3, 5))) ||
 										!thorCi.getText().contentEquals(((String) horas.get(1).subSequence(0, 2))) ||	!tminCi.getText().contentEquals(((String) horas.get(1).subSequence(3, 5)))){
-									vista.cambiarHorarioDepartamento(thorIn.getText(),tminIn.getText(),thorCi.getText(),tminCi.getText(),nombre);
+									vista.cambiarHorarioDepartamento(Integer.parseInt(thorIn.getText()),Integer.parseInt(tminIn.getText()),Integer.parseInt(thorCi.getText()),Integer.parseInt(tminCi.getText()),nombre);
 								}
 								father.select(0);
 								shell.dispose();
