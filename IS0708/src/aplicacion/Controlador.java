@@ -1591,7 +1591,7 @@ public class Controlador {
 							descanso,Util.stringAColor(color));
 					turnos.add(t);
 				}*/
-			ResultSet rs = _db.obtenTurnosContrato(idContrato);
+			ResultSet rs = _db.obtenTurnosDeContrato(idContrato);
 			while (rs.next()) {
 				int idTurno = rs.getInt("IdTurno");
 				String descr = rs.getString("Descripcion");
@@ -1641,7 +1641,7 @@ public class Controlador {
 							descanso,Util.stringAColor(color));
 					turnos.add(t);
 				}*/
-			ResultSet rs = _db.obtenTurnosContratoEmpleado(idEmpl);
+			ResultSet rs = _db.obtenTurnosDeContratoPorEmpleado(idEmpl);
 			while (rs.next()) {
 				int idTurno = rs.getInt("IdTurno");
 				String descr = rs.getString("Descripcion");

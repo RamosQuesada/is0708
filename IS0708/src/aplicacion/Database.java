@@ -1918,7 +1918,7 @@ return result;
 	 * @param idContrato id del contrato
 	 * @return resultado de la consulta
 	 */
-	public ResultSet obtenTurnosContrato(int idContrato) {
+	public ResultSet obtenTurnosDeContrato(int idContrato) {
 		ResultSet r = null;
 		String q = "SELECT " + tablaTurnos + ".* FROM " + tablaTurnos + ", " + tablaTurnosPorContrato + 
 		" WHERE " + tablaTurnos + ".idTurno = " + tablaTurnosPorContrato + ".idTurno AND " + tablaTurnosPorContrato + ".idContrato = ' "+ idContrato +"';";
@@ -1927,7 +1927,7 @@ return result;
 			r = st.executeQuery(q);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.err.println("Database.obtenTurnosPorContrato :: Error al obtener los turnos de un contrato:\n\t" + q);
+			System.err.println("Database.obtenTurnosDeContrato :: Error al obtener los turnos de un contrato:\n\t" + q);
 			e.printStackTrace();
 		}
 		return r;
@@ -1938,7 +1938,7 @@ return result;
 	 * @param idEmpl id del empleado
 	 * @return resultado de la consulta
 	 */
-	public ResultSet obtenTurnosContratoEmpleado(int idEmpl) {
+	public ResultSet obtenTurnosDeContratoPorEmpleado(int idEmpl) {
 		ResultSet r = null;
 		String q = "SELECT " + tablaTurnos + ".* FROM " + tablaTurnos + ", " + tablaTurnosPorContrato + ", " + tablaUsuarios + 
 		" WHERE " + tablaTurnos + ".idTurno = " + tablaTurnosPorContrato + ".idTurno AND " + 
@@ -1949,7 +1949,7 @@ return result;
 			r = st.executeQuery(q);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.err.println("Database.obtenTurnosPorContrato :: Error al obtener los turnos de un contrato:\n\t" + q);
+			System.err.println("Database.obtenTurnosDeContratoPorEmpleado :: Error al obtener los turnos de un contrato:\n\t" + q);
 			e.printStackTrace();
 		}
 		return r;
