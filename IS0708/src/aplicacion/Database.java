@@ -8,6 +8,8 @@ import java.util.Date;
 
 import org.eclipse.swt.graphics.Color;
 
+import algoritmo.Cuadrante;
+import algoritmo.Trabaja;
 import aplicacion.utilidades.EncriptCadena;
 import aplicacion.utilidades.Util;
 
@@ -976,6 +978,51 @@ public class Database extends Thread {
 			System.err.println("Database :: Error al insertar en Trabaja");
 		}
 		return correcto;
+	}
+	
+	
+	public boolean insertarCuadrante(Cuadrante cuadrante) {
+		boolean correcto = false;
+		String q = "INSERT INTO " + tablaTrabaja + "\n";
+		String an, me, di, fecha; int d;
+		for (int dia = 0; dia < cuadrante.getNumDias(); dia++) {
+			ArrayList<Trabaja> cuad = cuadrante.getListaTrabajaDia(dia);
+			for (int i = 0; i < cuad.size(); i++) {
+				Trabaja trabaja = cuad.get(i);
+				an = "" + cuadrante.getAnio();
+				if (an.length()==1)
+					an = "0" + an;
+				
+				me = "" + cuadrante.getMes();
+				if (me.length()==1)
+					me = "0" + me;
+				d = dia + 1;
+				di = "" + d;
+				if (di.length()==1)
+					di = "0" + di;
+				fecha = an + "-" + me + "-" + di;
+
+				q += "SELECT  " + 
+					"'" + trabaja.getIdEmpl() + "', " +
+					"'" + trabaja.getIdTurno() + "', " +
+					"'" + fecha + "', " +
+					"'" + trabaja.getFichIni() + "', " +
+					"'" + trabaja.getFichFin() + "'\n";
+				if (dia!=cuadrante.getNumDias()-1 || i!=cuad.size()-1)
+					q += "UNION ALL\n";
+			}
+		}
+		try {
+			st.executeUpdate(q);
+			System.out.println(q);
+			correcto = true;
+		} catch (SQLException e) {
+			correcto = false;
+			System.err.println("Database :: Error al insertar en Cuadrante:\n" + q);
+			e.printStackTrace();
+		}
+		System.out.println("CUADRANTE INSERTADO A TODA OSTIAAAAAAA");
+		return correcto;	
 	}
 	
 	/**
