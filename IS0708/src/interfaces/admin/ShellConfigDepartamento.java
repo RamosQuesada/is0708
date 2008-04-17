@@ -95,8 +95,6 @@ public class ShellConfigDepartamento {
 		if(admin){
 			final Group group = new Group(shell, SWT.NONE);
 			group.setText(bundle.getString("Departamento"));
-			group.setLayout(new GridLayout(1,false));
-			group.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,2,1));
 
 			group.setLayout(new GridLayout(3,false));
 			group.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,2,1));
@@ -181,12 +179,11 @@ public class ShellConfigDepartamento {
 			hueco.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
 			
 			ArrayList<String> horas=vista.getHorarioDpto(nombre);
-			/* De momento asi xq no tiene horas metido
-			thorIn.setText((String) horas.get(0).subSequence(0, 1));
-			tminIn.setText((String) horas.get(0).subSequence(3, 4));
-			thorCi.setText((String) horas.get(1).subSequence(0, 1));
-			tminCi.setText((String) horas.get(1).subSequence(3, 4));
-			*/
+			// De momento asi xq no tiene horas metido
+			thorIn.setText((String) horas.get(0).subSequence(0, 2));
+			tminIn.setText((String) horas.get(0).subSequence(3, 5));
+			thorCi.setText((String) horas.get(1).subSequence(0, 2));
+			tminCi.setText((String) horas.get(1).subSequence(3, 5));
 			
 			//Buttons "Accept" and "Cancel"
 
@@ -207,22 +204,6 @@ public class ShellConfigDepartamento {
 			bAccept.addSelectionListener (
 					new SelectionAdapter () {
 						public void widgetSelected (SelectionEvent e) {
-							/*if(integerCheck(tNumber.getText())==true){
-					// TODO Asignar jefe departamento
-					//Empleado jefe = vista.getEmpleado(tNombre.getIdEmpl());
-					//Departamento departamento = new Departamento(tName.getText(),Integer.parseInt(tNumber.getText()),jefe);
-					//vista.insertDepartamento(departamento);
-					//
-					shell.dispose();
-				}else{
-					//show message for user
-					MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
-					messageBox.setText (bundle.getString("Mensaje"));
-					messageBox.setMessage (bundle.getString("I10_err_check_number"));
-					e.doit = messageBox.open () == SWT.CLOSE;
-					System.out.println("Non-integer value in Number field: "+tNumber.getText());
-				}		
-							 */
 							if(tName.getText()!=""){
 								//cambiamos el nombre
 								vista.cambiarNombreDepartamento(nombre,tName.getText());
@@ -237,7 +218,6 @@ public class ShellConfigDepartamento {
 										father.add(array.get(i));
 									}
 								}
-								// cmbDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
 								father.select(0);
 								shell.dispose();
 							}else{//si no se ha metido texto
