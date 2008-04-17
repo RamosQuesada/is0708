@@ -21,7 +21,7 @@ public class Turno {
 	protected Time horaSalida;
 	protected Time horaDescanso;
 	protected int tDescanso; //minutos de descanso
-	
+	protected Color color;
 	/**
 	 * Crea una instancia nueva a partir de un turno dado
 	 * @param t turno a copiar
@@ -44,13 +44,14 @@ public class Turno {
 	 * @param horaDescanso	 Hora de inicio del descanso
 	 * @param descanso		 Tiempo asignado a descanso (en minutos)
 	 */
-	public Turno(int idTurno, String descripcion, Time horaEntrada, Time horaSalida, Time horaDescanso, int descanso) {
+	public Turno(int idTurno, String descripcion, Time horaEntrada, Time horaSalida, Time horaDescanso, int descanso, Color color) {
 		this.idTurno = idTurno;
 		this.descripcion = descripcion;
 		this.horaEntrada = horaEntrada;
 		this.horaSalida = horaSalida;
 		this.horaDescanso = horaDescanso;
 		tDescanso = descanso;
+		this.color=color;
 	}
 	
 	/**
@@ -64,7 +65,7 @@ public class Turno {
 	 * 						 (en String recuperado de la BBDD con JDBC)
 	 * @param descanso		 Tiempo asignado a descanso (en minutos)
 	 */
-	public Turno(int idTurno, String descripcion,String horaEntrada, String horaSalida, String horaDescanso, int descanso) {
+	public Turno(int idTurno, String descripcion,String horaEntrada, String horaSalida, String horaDescanso, int descanso, Color color) {
 		super();
 		this.idTurno = idTurno;
 		this.descripcion = descripcion;
@@ -72,6 +73,7 @@ public class Turno {
 		this.horaEntrada=Time.valueOf(horaEntrada);
 		this.horaSalida=Time.valueOf(horaSalida);
 		this.horaDescanso=Time.valueOf(horaDescanso);
+		this.color=color;
 	}
 	
 	public static void intercambiar(Turno t1, Turno t2){
@@ -172,5 +174,14 @@ public class Turno {
 	}
 	public void setTDescanso(int descanso) {
 		tDescanso = descanso;
+	}
+	public void setColor(Color color) {
+		this.color = color;
+	}
+	public Color getColor() {
+		return color;
+	}
+	public String getNombreColor() {
+		return Util.ColorAHex(color);
 	}
 }

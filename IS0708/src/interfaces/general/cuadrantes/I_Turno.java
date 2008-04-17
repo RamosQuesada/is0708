@@ -23,12 +23,12 @@ public class I_Turno extends aplicacion.datos.Turno {
 		super(t);
 	}
 	
-	public I_Turno(int idTurno, String descripcion, Time horaEntrada, Time horaSalida, Time horaDescanso, int descanso) {
-		super(idTurno, descripcion, horaEntrada, horaSalida, horaDescanso, descanso);
+	public I_Turno(int idTurno, String descripcion, Time horaEntrada, Time horaSalida, Time horaDescanso, int descanso, Color color) {
+		super(idTurno, descripcion, horaEntrada, horaSalida, horaDescanso, descanso, color);
 	}
 	
-	public I_Turno(int idTurno, String descripcion,String horaEntrada, String horaSalida, String horaDescanso, int descanso) {
-		super(idTurno, descripcion, horaEntrada, horaSalida, horaDescanso, descanso);
+	public I_Turno(int idTurno, String descripcion,String horaEntrada, String horaSalida, String horaDescanso, int descanso, Color color) {
+		super(idTurno, descripcion, horaEntrada, horaSalida, horaDescanso, descanso,color);
 	}
 		
 	

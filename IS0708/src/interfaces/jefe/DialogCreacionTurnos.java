@@ -174,11 +174,11 @@ public class DialogCreacionTurnos {
 				else {
 				Turno it=ic.getTurno();
 				if (modo==0){					
-					turnoInsertado = new Turno(0,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso());
+					turnoInsertado = new Turno(0,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso(),it.getColor());
 					//CAMBIAR
 					//int id=vista.getControlador().insertTurno(turnoInsertado);
 					int id=vista.insertTurno(turnoInsertado);
-					turnoInsertado = new Turno(id,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso());
+					turnoInsertado = new Turno(id,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso(),it.getColor());
 					//vista.getTurnos().add(turnoInsertado);
 					if (id!=-1){
 						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
@@ -200,7 +200,7 @@ public class DialogCreacionTurnos {
 					//CAMBIAR
 					boolean okis=vista.modificarTurno(idTurno,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso());
 					//boolean okis=vista.getControlador().modificarTurno(idTurno,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso());
-					turnoModificado = new Turno(idTurno,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso());
+					turnoModificado = new Turno(idTurno,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso(),it.getColor());
 					if (okis){
 						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
 						messageBox.setText("Info");

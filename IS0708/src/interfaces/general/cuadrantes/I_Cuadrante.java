@@ -299,7 +299,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	 * @param cCuadrante el composite sobre el que dibujar
 	 */
 	public void setCompositeUnTurno(Composite cCuadrante) {
-		turno = new I_Turno(new Turno(0,"","12:00:00","19:00:00","13:00:00",60));
+		turno = new I_Turno(new Turno(0,"","12:00:00","19:00:00","13:00:00",60,blanco));
 		margenNombres=30;
 		setComposite(cCuadrante, null, null, null, null);
 	}
@@ -906,7 +906,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			//Sacamos la informacion del turno
 			int idTurno=iCuad[diaActVistaMes].get(indiceEmpAct).getTurno().getIdTurno();
 			//Obtenemos el color de relleno a partir de él
-			Color colorTurno=obtenColor(idTurno);
+			//Color colorTurno=obtenColor(idTurno);
+			Color colorTurno=iCuad[diaActVistaMes].get(indiceEmpAct).getTurno().getColor();
+			colorTurno=vista.getTurno(idTurno).getColor();
 			//Obtenemos las cadenas a mostrar
 			String idTurnoS=("Id. Turno: "+String.valueOf(idTurno));
 			String descTurno=iCuad[diaActVistaMes].get(indiceEmpAct).getTurno().getDescripcion();
@@ -945,7 +947,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			//Sacamos la informacion del turno
 			int idTurno=turnoSeleccionado.getIdTurno();
 			//Obtenemos el color de relleno a partir de él
-			Color colorTurno=obtenColor(idTurno);
+			//Color colorTurno=obtenColor(idTurno);
+			turnoSeleccionado.setColor(color7M);
+			Color colorTurno=turnoSeleccionado.getColor();
 			gc.setBackground(colorTurno);
 			gc.setForeground(new Color(display,colorTurno.getRed()-100,colorTurno.getGreen()-100,colorTurno.getBlue()-100));
 			//gc.drawRectangle(cursor.x-anchoDia/2, cursor.y-altoFila/2, anchoDia, altoFila);
@@ -1131,7 +1135,11 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		//Obtenemos el identificador de turno del empleado que le toca ese día
 		int idTurno = iCuad[j].get(empl).getTurno().getIdTurno();
 		//Obtenemos el color de relleno a partir de él
-		Color colorTurno=obtenColor(idTurno);
+		//Color colorTurno=obtenColor(idTurno);
+		
+		Color colorTurno=iCuad[j].get(empl).getTurno().getColor();
+		//vista.getTurno(idTurno);
+		colorTurno = vista.getTurno(idTurno).getColor();
 		//Primero se pinta el rectangulo
 		
 		gc.setForeground(new Color(display,colorTurno.getRed()-100,colorTurno.getGreen()-100,colorTurno.getBlue()-100));
