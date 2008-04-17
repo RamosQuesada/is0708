@@ -1438,9 +1438,13 @@ public class Vista {
 	 * Funcion que incluye en la BBDD un nuevo departamento
 	 * @param nombredep Nombre del departamento
 	 * @param num Numero de departamento
+	 * @param minCi  minutos cierre
+	 * @param horCi  hora Cierre
+	 * @param minIn  minuto apertura
+	 * @param horIn  hora apertura
 	 * @param nomJefe nombre del Jefe de departamento
 	 */
-	public void crearDepartamento(String nombredep, String num, int nvJefe) {
+	public void crearDepartamento(String nombredep, String num, int nvJefe, int horIn, int minIn, int horCi, int minCi) {
 		// TODO Auto-generated method stub by carlos Sánchez
 		//Agustin deberia devolverme algo q me indique si hay un fallo alcrearlo cual es
 		//hazlo como mas facil te sea.Yo no se cuantos distintos puede haber.
