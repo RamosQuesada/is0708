@@ -124,10 +124,15 @@ public class ShellPrincipal {
 			algoritmo.TurnoMatic t = new algoritmo.TurnoMatic(primerDiaGenerarCuadrante, tmMes, tmAnio, vista, tmDep);
 			// Ejecutar y obtener resultado
 			final ResultadoTurnoMatic resultado = t.ejecutaAlgoritmo();
-			// Quitar cuadrante de la fecha del calendario
-			vista.eliminaMesTrabaja(primerDiaGenerarCuadrante, tmMes, tmAnio, tmDep);
-			// Añadir cuadrante nuevo
-			vista.insertCuadrante(resultado.getCuadrante());
+			if ((primerDiaGenerarCuadrante!=1) && vista.existeCuadranteCache(tmMes, tmAnio, tmDep))
+				// Modificar cuadrante
+				vista.modificarCuadrante(primerDiaGenerarCuadrante, tmMes, tmAnio, tmDep, resultado.getCuadrante());
+			else {
+				// Quitar cuadrante de la fecha del calendario
+				vista.eliminaCuadrante(tmMes, tmAnio, tmDep);
+				// Añadir cuadrante nuevo
+				vista.insertCuadrante(resultado.getCuadrante());
+			}
 			// Mostrar resultado, cargar cuadrante en interfaz y redibujar
 			display.asyncExec(new Runnable() {
 				public void run() {
