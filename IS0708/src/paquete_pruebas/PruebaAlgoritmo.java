@@ -28,8 +28,8 @@ public class PruebaAlgoritmo {
 		
 		disponibles = new ArrayList<Empleado>();
 		//public turnoString idTurno, String descripcion,String horaEntrada, String horaSalida, String horaDescanso, int descanso
-		t1 = new Turno(1,"M1","9:00:00","14:00:00","12:30:00",20);
-		t2 = new Turno(2,"T1","9:00:00","17:00:00","14:30:00",25);
+		t1 = new Turno(1,"M1","9:00:00","14:00:00","12:30:00",20, null);
+		t2 = new Turno(2,"T1","9:00:00","17:00:00","14:30:00",25, null);
 		/*
 		 * Os comento esta parte, que da error porque se han cambiado las clases Turno y Empleado*/
 		

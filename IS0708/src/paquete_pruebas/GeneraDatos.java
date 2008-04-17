@@ -168,7 +168,7 @@ public class GeneraDatos {
 		Contrato contrato;
 		String depart="Pruebas_Aleatorias";
 		//crear turno jefe departamento
-		turno=new Turno(0,"M1","9:00:00","14:00:00","12:30:00",20);//turno por defecto para el jefe
+		turno=new Turno(0,"M1","9:00:00","14:00:00","12:30:00",20, null);//turno por defecto para el jefe
 		
 		//crear contrato jefe departamento
 		contrato=new Contrato("jefe",0,1,7,"5T2D",1200,0); //no hace falta
@@ -270,7 +270,7 @@ public class GeneraDatos {
 			HoraSalida=new Time((int)(rnd.nextInt(4)+HoraEntrada.getHours()+4),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(60)));//hay que hacer un rango
 			HoraInicioDescanso=new Time((int)(((HoraSalida.getHours()-HoraEntrada.getHours())/2)+HoraEntrada.getHours()),(int)(rnd.nextInt(60)),(int)(rnd.nextInt(60)));
 			Duracion=(int)(rnd.nextInt(31));//media hora,mas no jejjej
-			turno=new Turno(idTurno,Descripcion,HoraEntrada,HoraSalida,HoraInicioDescanso,Duracion);
+			turno=new Turno(idTurno,Descripcion,HoraEntrada,HoraSalida,HoraInicioDescanso,Duracion, null);
 			System.out.println("TURNOS");
         	System.out.println("//////////////////////////");
         	System.out.println("Descripcion: "+Descripcion);
