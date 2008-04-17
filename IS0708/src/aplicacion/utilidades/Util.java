@@ -489,8 +489,18 @@ public class Util {
 	        return false;
 	    }
 	}
-	
-	public static String horaAString(int hora, int minutos){
+	public static String horaAString(int hora){
+		 
+		if(hora<0 || hora>23){
+			return null;
+		}
+		String Shora = Integer.toString(hora);
+		if (hora-10<0){
+			return "0"+Shora+":00";
+		}
+		return Shora+":00";
+	}
+	public static String horaminutosAString(int hora, int minutos){
 	 
 		if(hora<0 || hora>23 || minutos<0 || minutos>59){
 			return null;
