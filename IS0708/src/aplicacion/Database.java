@@ -443,7 +443,7 @@ public class Database extends Thread {
 			String mail, String Passw, int grupo, Date FCont, Date Fentr, int Felic, int Idiom, 
 			int Rang, int Turn, Color color, int Contr) {
 		int r = 0;
-		String col =color.toString();
+		String col =Util.ColorAHex(color);
 		try {
 			String Nac = Util.dateAString(FNac);
 			String Cont = Util.dateAString(FCont);
