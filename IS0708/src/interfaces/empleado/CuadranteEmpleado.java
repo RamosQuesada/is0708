@@ -444,13 +444,45 @@ public class CuadranteEmpleado {
 		Font fuente=gc.getFont();
 		cambiarPincel(gc, 0, 0, 0);
 		gc.setFont(new Font(display,"Times",10,SWT.BOLD));
-		double angulo = (int)((420/360)*this.repreAvance);
-		int x= (int)(10*Math.sin(angulo));
-		int y= (int)(10*Math.cos(angulo));
+		for(int cont=0;cont<7;cont++){
+			int ang_aux =(int)(((360+(360/8))/360)*cont);
+			int yaux = (int)(10*Math.sin(ang_aux));
+			if(cont==6){yaux-=3;}
+			if(cont==0){yaux+=3;}
+			int xaux = (int)(10*Math.cos(ang_aux));
+			if(this.repreAvance<7){
+				if((cont>(this.repreAvance))){
+					cambiarPincel(gc, 0, 0, 0);
+					cambiarRelleno(gc, 0, 0, 0);
+				}
+				else{
+					cambiarPincel(gc, 249, 244, 153);
+					cambiarRelleno(gc, 249, 244, 153);
+				}
+			}
+			else{
+				int aux=cont+7;
+				if((aux<(this.repreAvance)+1)){
+					cambiarPincel(gc, 0, 0, 0);
+					cambiarRelleno(gc, 0, 0, 0);
+				}
+				else{
+					cambiarPincel(gc, 249, 244, 153);
+					cambiarRelleno(gc, 249, 244, 153);
+				}
+			}
+			
+			gc.fillOval((ancho-margenIzq-margenDer)/2+xaux+20, (alto-margenInf-margenSup)/2+30+yaux, 5, 5);
+			//gc.drawOval;
+		}
+		double angulo = (int)(((360+45)/360)*this.repreAvance);
+		int x= (int)(10*Math.cos(angulo));
+		int y= (int)(10*Math.sin(angulo));
 		gc.setLineWidth(3);
 		cambiarPincel(gc, 249, 244, 153);
-		gc.drawOval((ancho-margenIzq-margenDer)/2-90+x, (alto-margenInf-margenSup)/2+5+y, 5, 5);
-		gc.drawOval((ancho-margenIzq-margenDer)/2+140+x, (alto-margenInf-margenSup)/2+5+y, 5, 5);
+		gc.drawOval((ancho-margenIzq-margenDer)/2+x+20, (alto-margenInf-margenSup)/2+30+y, 5, 5);
+		//gc.drawOval((ancho-margenIzq-margenDer)/2+140+x, (alto-margenInf-margenSup)/2+5+y, 5, 5);
+		cambiarPincel(gc, 0, 0, 0);
 		gc.drawText(texto,(ancho-margenIzq-margenDer)/2-55, (alto-margenInf-margenSup)/2,true);
 		gc.getFont().dispose();
 		gc.setFont(fuente);
