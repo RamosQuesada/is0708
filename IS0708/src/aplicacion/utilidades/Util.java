@@ -490,16 +490,17 @@ public class Util {
 	    }
 	}
 	
-	public static String horaAString(int hora){
+	public static String horaAString(int hora, int minutos){
 	 
-		if(hora<0 || hora>23){
+		if(hora<0 || hora>23 || minutos<0 || minutos>59){
 			return null;
 		}
 		String Shora = Integer.toString(hora);
+		String Sminutos = Integer.toString(minutos);
 		if (hora-10<0){
-			return "0"+Shora+":00";
+			return "0"+Shora+":"+Sminutos;
 		}
-		return Shora+":00";
+		return Shora+":"+Sminutos;
 	}
 	
 	public static String intADiaSemana(int diasemana){
