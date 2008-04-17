@@ -178,7 +178,7 @@ public class ShellConfigDepartamento {
 			Label hueco=new Label (grouphoras, SWT.NONE);
 			hueco.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
 			
-			ArrayList<String> horas=vista.getHorarioDpto(nombre);
+			 final ArrayList<String> horas=vista.getHorarioDpto(nombre);
 			// De momento asi xq no tiene horas metido
 			thorIn.setText((String) horas.get(0).subSequence(0, 2));
 			tminIn.setText((String) horas.get(0).subSequence(3, 5));
@@ -217,6 +217,10 @@ public class ShellConfigDepartamento {
 									for (int i = 0; i < array.size(); i++) {
 										father.add(array.get(i));
 									}
+								}
+								if(!thorIn.getText().contentEquals(((String) horas.get(0).subSequence(0, 2))) || !tminIn.getText().contentEquals(((String) horas.get(0).subSequence(3, 5))) ||
+										!thorCi.getText().contentEquals(((String) horas.get(1).subSequence(0, 2))) ||	!tminCi.getText().contentEquals(((String) horas.get(1).subSequence(3, 5)))){
+									vista.cambiarHorarioDepartamento(thorIn.getText(),tminIn.getText(),thorCi.getText(),tminCi.getText(),nombre);
 								}
 								father.select(0);
 								shell.dispose();
