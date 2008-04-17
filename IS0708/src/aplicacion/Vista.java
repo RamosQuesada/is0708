@@ -1453,9 +1453,13 @@ public class Vista {
 	//pero si su numero de vendedor (por eso lo he puesto como int) que forma parte de la PK 
 		
 		int n= Integer.parseInt(num);
+		String horaapertura=aplicacion.utilidades.Util.horaminutosAString(horIn, minIn);
+		String horacierre=aplicacion.utilidades.Util.horaminutosAString(horCi, minCi);
+		Time thI= Time.valueOf(horaapertura);
+		Time thC=Time.valueOf(horacierre);
 		this.controlador.insertDepartamentoUsuario(nvJefe, nombredep); //tabla DepartamentoUsuario
 		this.controlador.insertNumerosDepartamento(n, nombredep); //tabla NumerosDEPARTAMENTOs
-		this.controlador.insertDepartamentoPruebas(nombredep, nvJefe); //tabla DEPARTAMENTO
+		this.controlador.insertDepartamentoPruebas(nombredep, nvJefe,thI,thC); //tabla DEPARTAMENTO
 		//insertamos en la cache
 		//Departamento d=new Departamento(nombredep,Integer.parseInt(num),getEmpleado(nvJefe),null,null);
 		//departamentosJefe.add(d);

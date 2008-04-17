@@ -692,7 +692,8 @@ public class Controlador {
 	 */
 	public boolean insertDepartamento(Departamento departamento) {
 		return _db.insertarDepartamento(departamento.getNombreDepartamento(),
-				departamento.getJefeDepartamento().getEmplId())
+				departamento.getJefeDepartamento().getEmplId(),
+					departamento.getHoraApertura(),departamento.getHoraCierre())
 				&& _db.insertarDepartamentoUsuario(departamento
 						.getJefeDepartamento().getEmplId(), departamento
 						.getNombreDepartamento(), true);
@@ -716,8 +717,8 @@ public class Controlador {
 	 *            Persona que dirige le departamento
 	 * @return Informa sobre si se ha podido realizar la inserción o no
 	 */
-	public boolean insertDepartamentoPruebas(String nombre, int jefe) {
-		return _db.insertarDepartamento(nombre, jefe);
+	public boolean insertDepartamentoPruebas(String nombre, int jefe,Time hI, Time hC) {
+		return _db.insertarDepartamento(nombre, jefe,hI,hC);
 	}
 	
 	

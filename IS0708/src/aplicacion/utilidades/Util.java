@@ -508,9 +508,9 @@ public class Util {
 		String Shora = Integer.toString(hora);
 		String Sminutos = Integer.toString(minutos);
 		if (hora-10<0){
-			return "0"+Shora+":"+Sminutos;
+			return "0"+Shora+":"+Sminutos+":00";
 		}
-		return Shora+":"+Sminutos;
+		return Shora+":"+Sminutos+":00";
 	}
 	
 	public static String intADiaSemana(int diasemana){
