@@ -67,9 +67,9 @@ public class Database extends Thread {
 			String url = "jdbc:mysql://"+ ip +"/" + dbName;
 
 // Descomentar este trozo para usar la base de datos local
-			userName = "root";
-			password = "";
-			url = "jdbc:mysql://localhost/turnomat_bd";
+//			userName = "root";
+//			password = "";
+//			url = "jdbc:mysql://localhost/turnomat_bd";
 
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			//DriverManager.setLoginTimeout(300);
@@ -421,9 +421,9 @@ public class Database extends Thread {
 		int r = 0;
 		try {
 			st = con.createStatement();
-			r = st.executeUpdate("UPDATE " + tablaVentas + " SET Fecha="
-					+ fecha + ", Importe='" + ventas 
-					+ " WHERE IdVend=" + IdVend + ";");
+			r = st.executeUpdate("UPDATE " + tablaVentas + " SET Fecha='"
+					+ fecha + "', Importe='" + ventas 
+					+ "' WHERE NumVendedor=" + IdVend + ";");
 		} catch (SQLException e) {
 			System.err.println("Database :: Error modificar ventas en la BD");
 			return false;
@@ -1301,7 +1301,7 @@ public class Database extends Thread {
 			st=con.createStatement();
 			result = st
 			.executeQuery("SELECT * FROM " + tablaVentas + " WHERE NumVendedor = "
-					+ idVend +  "' AND Fecha<='"+ fecha + ";");
+					+ idVend +  " AND Fecha<='"+ fecha + "';");
 } catch (SQLException e) {
 	e.printStackTrace();
 	System.err.println("Database :: Error de lectura de Ventas");
