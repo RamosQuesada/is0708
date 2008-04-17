@@ -2063,7 +2063,7 @@ return result;
 		try {
 			st = con.createStatement();
 			r = st
-					.executeQuery("SELECT JefeDepartamento FROM " + tablaUsuariosPorDepartamento + "," + tablaDepartamentos + " WHERE NumVendedor = "
+					.executeQuery("SELECT * FROM " + tablaUsuariosPorDepartamento + "," + tablaDepartamentos + " WHERE NumVendedor = "
 							+ nvend
 							+ " and " + tablaDepartamentos + ".Nombre=NombreDepartamento");
 		} catch (SQLException e) {
