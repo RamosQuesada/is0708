@@ -36,6 +36,7 @@ public class Database extends Thread {
 	public static final String tablaTurnos						= "turnos";
 	public static final String tablaUsuarios					= "usuario";
 	public static final String tablaVentas						= "ventas";
+	public static final String tablaSugerencias					= "sugerencias";
 
 	Connection con;
 	Statement st;
@@ -941,11 +942,37 @@ public class Database extends Thread {
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
-			System.err.println("Database :: Error al insrtar en Trabaja");
+			System.err.println("Database :: Error al insertar en Trabaja");
 		}
 		return correcto;
 	}
 	
+	/**
+	 * Método que inserta en la tabla sugerencias 
+	 * 
+	 * @param fecha
+	 *            dia para el que existe la sugerencia
+	 * @param horaInicio
+	 *            hora de inicio de la sugerencia
+	 * @param nombre
+	 *            Nombre del departamento
+	 * @param texto
+	 * 			  Texto de la sugerencia
+	 * @return true si se ha realizado correctamente o false en caso contrario
+	 */
+	public boolean insertarSugerencia (Date fecha, Time horaInicio, String nombre, String texto) {
+		boolean correcto = false;
+		try {
+			st.addBatch("INSERT INTO " + tablaSugerencias + " values (" + nombre 
+					+ ", '" + fecha + "', '" + horaInicio + "', " + texto + ");");
+			correcto = true;
+		} catch (SQLException e) {
+			correcto = false;
+			System.err.println("Database :: Error al insertar en Sugerencias");
+		}
+		return correcto;
+	}
+
 	public boolean executeBatch() {
 		try {
 			st.executeBatch();
@@ -1403,6 +1430,31 @@ public class Database extends Thread {
 		}
 		return rs;
 	}
+	
+	/**
+	 * Método que selecciona de la tabla de sugerencias aquellas filas cuyo 
+	 * departamento y dia coincide con los pasados como parametros de la funcion
+	 * 
+	 * @param nombre Nombre del departamento
+	 * @param dia Dia de la sugerencia
+	 * @return
+	 */
+	public ResultSet obtenSugerencias (String nombre, Date dia) {
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT * FROM " + tablaSugerencias + " WHERE NombreDept ='"
+							+ nombre
+							+ "' AND fecha ='"
+							+ dia
+							+ "' ORDER BY HoraInicio ASC");
+
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println("Database :: Error al realizar la consulta de la sugerencia ");
+		}
+		return rs;
+	}
+	
 	
 	public boolean borraDistribucion(String nombre, int DiaSemana) {
 		boolean correcto = false ;
@@ -2222,6 +2274,7 @@ public class Database extends Thread {
 			st.addBatch("DROP TABLE " + tablaTurnos + ";");
 			st.addBatch("DROP TABLE " + tablaNumerosPorDepartamento + ";");
 			st.addBatch("DROP TABLE " + tablaIncidencias + ";");
+//			st.addBatch("DROP TABLE " + tablaSugerencias + ";");
 			st.executeBatch();
 			st.close();
 			System.out.println("aplicacion.Database.java\t:: Estructura de tablas y dependencias eliminadas correctamente.");
@@ -2399,6 +2452,14 @@ public class Database extends Thread {
 					"Fecha Datetime ," +
 					"Importe Decimal(10,2) ," +
 					"Primary Key (NumVendedor,fecha)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+			
+			st.addBatch("Create table sugerencias (" +
+ 					"NombreDept varchar(20) NOT NULL," +
+ 					"Fecha Date NOT NULL," +
+ 					"HoraInicio Time NOT NULL," +
+ 					"Asunto Varchar(100) ," +
+ 					"Primary Key (NombreDept,fecha,horaInicio)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+
 			st.executeBatch();
 			st.close();
 			System.out.println("aplicacion.Database.java\t:: Estructura de tablas generada correctamente.");
@@ -2461,6 +2522,8 @@ public class Database extends Thread {
 
 			st.addBatch("Alter table contratodepartamento add Index IX_Relationship17 (IdContrato);");
 			st.addBatch("Alter table contratodepartamento add Foreign Key (IdContrato) references contrato (IdContrato) on delete restrict on update cascade;");
+			
+//			Meter dependencias tablasugerencias			
 
 			st.executeBatch();
 			st.close();
