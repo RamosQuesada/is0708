@@ -444,7 +444,8 @@ public class CuadranteEmpleado {
 		Font fuente=gc.getFont();
 		cambiarPincel(gc, 0, 0, 0);
 		gc.setFont(new Font(display,"Times",10,SWT.BOLD));
-		for(int cont=0;cont<7;cont++){
+		
+	/*	for(int cont=0;cont<7;cont++){
 			int ang_aux =(int)(((360+(360/8))/360)*cont);
 			int yaux = (int)(10*Math.sin(ang_aux));
 			if(cont==6){yaux-=3;}
