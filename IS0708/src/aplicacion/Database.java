@@ -1303,13 +1303,16 @@ return result;
 	 */
 	public ResultSet obtenContratosDepartamento(String departamento) {
 		ResultSet r = null;
-		String q = "SELECT IdContrato FROM " + tablaContratosPorDepartamento + 
-		" WHERE NombreDept='"+ departamento + "';";
+
+		String q = "SELECT * FROM " + tablaContratosPorDepartamento + " JOIN " + tablaContratos +
+		" WHERE " + tablaContratosPorDepartamento + ".NombreDept='"+ departamento 
+		+ "' AND " + tablaContratosPorDepartamento + ".IdContrato = " + tablaContratos + ".IdContrato;";
 		try {
 			st = con.createStatement();
 			r = st.executeQuery(q);
 			
-		} catch (SQLException e) {			
+		} catch (SQLException e) {
+			e.printStackTrace();
 			System.err.println("Database :: Error al realizar la consulta de contratos de un departamento:\n\t" + q);
 		}
 		return r;
