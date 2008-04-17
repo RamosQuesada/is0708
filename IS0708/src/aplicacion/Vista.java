@@ -1001,8 +1001,85 @@ public class Vista {
 	public ArrayList<Empleado> getEmpleados(Integer idEmpl, String idDpto,
 			Integer idContrato, String nombre, String apellido1,
 			String apellido2, Integer rango) {
-		return controlador.getEmpleados(idEmpl, idDpto, idContrato, nombre,
+		
+		ArrayList<Empleado> datos = (ArrayList<Empleado>) empleados.clone();
+		
+		if (idEmpl != null)
+			for (int i=0; i<datos.size(); i++) {
+				Empleado e = datos.get(i);
+				
+				if (e.getEmplId() != idEmpl) {
+						datos.remove(e);						
+				}
+					 
+			}
+		
+		if (idDpto != null)
+			for (int i=0; i<datos.size(); i++) {
+				Empleado e = datos.get(i);
+				
+				if (e.getDepartamentoId() != idDpto) {
+						datos.remove(e);						
+				}
+					 
+			}
+		
+		if (idContrato != null)
+			for (int i=0; i<datos.size(); i++) {
+				Empleado e = datos.get(i);
+				
+				if (e.getContratoId() != idContrato) {
+						datos.remove(e);						
+				}
+					 
+			}
+		
+		if (nombre != null)
+			for (int i=0; i<datos.size(); i++) {
+				Empleado e = datos.get(i);
+				
+				if (e.getNombre() != nombre) {
+						datos.remove(e);						
+				}
+					 
+			}
+		
+		if (apellido1 != null)
+			for (int i=0; i<datos.size(); i++) {
+				Empleado e = datos.get(i);
+				
+				if (e.getApellido1() != apellido1) {
+						datos.remove(e);						
+				}
+					 
+			}
+		
+		if (apellido2 != null)
+			for (int i=0; i<datos.size(); i++) {
+				Empleado e = datos.get(i);
+				
+				if (e.getApellido2() != apellido2) {
+						datos.remove(e);						
+				}
+					 
+			}
+		
+		if (rango != null)
+			for (int i=0; i<datos.size(); i++) {
+				Empleado e = datos.get(i);
+				
+				if (e.getRango() != rango) {
+						datos.remove(e);						
+				}
+					 
+			}
+		
+		if (datos.size() > 0)
+			return datos;
+		else
+			return controlador.getEmpleados(idEmpl, idDpto, idContrato, nombre,
 				apellido1, apellido2, rango);
+		
 		//TODO
 	}
 
