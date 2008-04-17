@@ -100,8 +100,8 @@ public class Empleado implements Drawable {
 		if (idDepartamentos.size() > departamentos.size())
 			departamentos.clear();
 			for (int i = 0; i < idDepartamentos.size(); i++) {
-				v.getControlador().setProgreso("Cargando departamentos", (100/idDepartamentos.size())*i);
-				departamentos.add(v.getControlador().getDepartamento(idDepartamentos.get(i)));
+				v.setProgreso("Cargando departamentos", (100/idDepartamentos.size())*i);
+				departamentos.add(v.getDepartamento(idDepartamentos.get(i)));
 			}
 	}
 	
@@ -114,8 +114,8 @@ public class Empleado implements Drawable {
 		if (idSubordinados.size() > subordinados.size())
 			subordinados.clear();
 			for (int i = 0; i < idSubordinados.size(); i++) {
-				v.getControlador().setProgreso("Cargando empleados", (100/idSubordinados.size())*i);
-				subordinados.add(v.getControlador().getEmpleado(idSubordinados.get(i)));
+				v.setProgreso("Cargando empleados", (100/idSubordinados.size())*i);
+				subordinados.add(v.getEmpleado(idSubordinados.get(i)));
 			}
 	}
 
@@ -126,9 +126,9 @@ public class Empleado implements Drawable {
 	private void actualizarSuperior(Vista v) {
 		// Actualizar el superior si hace falta
 		if (superior==null && idSuperior!=0) {
-			v.getControlador().setProgreso("Cargando empleado", 50);
-			superior= v.getControlador().getEmpleado(idSuperior);
-			v.getControlador().setProgreso("Cargando empleado",100);
+			v.setProgreso("Cargando empleado", 50);
+			superior= v.getEmpleado(idSuperior);
+			v.setProgreso("Cargando empleado",100);
 		}
 	}
 	
@@ -139,9 +139,9 @@ public class Empleado implements Drawable {
 	private void actualizarContrato(Vista v) {
 		// Actualizar el contrato si hace falta
 		if (contrato==null && idContrato!=0) {
-			v.getControlador().setProgreso("Cargando contrato", 50);
-			contrato= v.getControlador().getContrato(idContrato);
-			v.getControlador().setProgreso("Cargando contrato",100);
+			v.setProgreso("Cargando contrato", 50);
+			contrato= v.getContrato(idContrato);
+			v.setProgreso("Cargando contrato",100);
 		}
 	}
 	
@@ -651,13 +651,6 @@ public class Empleado implements Drawable {
 	 */
 	public int getContratoId() {
 		return idContrato;
-	}
-	/**
-	 * Devuelve el contrato del empleado
-	 * @return Contrato
-	 */
-	public Contrato getContrato(){
-		return contrato;
 	}
 	
 	public String getNombreContrato() {

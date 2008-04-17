@@ -1314,8 +1314,6 @@ public class Vista {
 	 *            un valor de 0 a 99, ó 100 para que desaparezca.
 	 */
 	public void setProgreso(String s, int prog) {
-		// TODO ver qué pasa con esto
-		/*
 		// Si la tarea no está, se añade
 		// Si está, se actualiza su progreso
 		// El progreso mostrado es el promedio de todas
@@ -1338,13 +1336,13 @@ public class Vista {
 			// se añade
 			if (!encontrada && prog<100) tareas.add(new Tarea(s,prog));
 			// Muestra la última en la lista
-			if (i02!=null) i02.setProgreso(tareas.get(tareas.size()).s, p);
+			if (shellPrincipal!=null) shellPrincipal.setProgreso(tareas.get(tareas.size()).s, p);
 		} else {
 		// Si no hay tareas
-			if (i02!=null) i02.setProgreso("", 100);
+			if (shellPrincipal!=null) shellPrincipal.setProgreso("", 100);
 		}
-		*/
-		if (shellPrincipal!=null) shellPrincipal.setProgreso(s, prog);
+		
+//		if (shellPrincipal!=null) shellPrincipal.setProgreso(s, prog);
 	}
 
 	/**

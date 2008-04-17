@@ -116,8 +116,8 @@ public class TabMensajeria extends Thread{
 		Color yellow = new Color(tablaMensajes.getDisplay(),255,255,0);
 		//ArrayList<Mensaje> mensajes = vista.getTodosMensajesEntrantes();
 		//int totalEntrantes = mensajes.size();
-		System.out.println("Num Men Hoja: " + vista.getNum_men_hoja());
-		System.out.println("Primer Mensaje" + primerMensaje);
+//		System.out.println("Num Men Hoja: " + vista.getNum_men_hoja());
+//		System.out.println("Primer Mensaje" + primerMensaje);
 			
 		while (vista.getEmpleados().size()>0 && i + primerMensaje < vista.getTodosMensajesEntrantes().size() && i < vista.getNum_men_hoja()) {
 			TableItem tItem = new TableItem(tablaMensajes, SWT.NONE);
