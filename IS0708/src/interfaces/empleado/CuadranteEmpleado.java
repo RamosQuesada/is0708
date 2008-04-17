@@ -462,7 +462,7 @@ public class CuadranteEmpleado {
 			}
 			else{
 				int aux=cont+7;
-				if((aux<(this.repreAvance)+1)){
+				if(aux<((this.repreAvance))){
 					cambiarPincel(gc, 0, 0, 0);
 					cambiarRelleno(gc, 0, 0, 0);
 				}
@@ -475,12 +475,16 @@ public class CuadranteEmpleado {
 			gc.fillOval((ancho-margenIzq-margenDer)/2+xaux+20, (alto-margenInf-margenSup)/2+30+yaux, 5, 5);
 			//gc.drawOval;
 		}
-		double angulo = (int)(((360+45)/360)*this.repreAvance);
+		/*System.out.println("avance"+repreAvance);
+		double angulo =(int)(((360+(360/8))/360)*repreAvance);
 		int x= (int)(10*Math.cos(angulo));
 		int y= (int)(10*Math.sin(angulo));
 		gc.setLineWidth(3);
+		if((repreAvance==6)||(repreAvance==13)){y-=3;}
+		if((repreAvance==0)||(repreAvance==7)){y+=3;}
 		cambiarPincel(gc, 249, 244, 153);
-		gc.drawOval((ancho-margenIzq-margenDer)/2+x+20, (alto-margenInf-margenSup)/2+30+y, 5, 5);
+		cambiarRelleno(gc, 249, 244, 153);
+		gc.fillOval((ancho-margenIzq-margenDer)/2+x+20, (alto-margenInf-margenSup)/2+30+y, 5, 5);*/
 		//gc.drawOval((ancho-margenIzq-margenDer)/2+140+x, (alto-margenInf-margenSup)/2+5+y, 5, 5);
 		cambiarPincel(gc, 0, 0, 0);
 		gc.drawText(texto,(ancho-margenIzq-margenDer)/2-55, (alto-margenInf-margenSup)/2,true);
