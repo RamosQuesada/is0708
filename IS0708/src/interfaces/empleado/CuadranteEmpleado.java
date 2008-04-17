@@ -1,6 +1,8 @@
 package interfaces.empleado;
 
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import org.eclipse.swt.widgets.Display;
 import aplicacion.Vista;
 import aplicacion.datos.Empleado;
 import aplicacion.datos.Turno;
+import aplicacion.utilidades.Util;
 
 public class CuadranteEmpleado {
 	
@@ -444,7 +447,13 @@ public class CuadranteEmpleado {
 		Font fuente=gc.getFont();
 		cambiarPincel(gc, 0, 0, 0);
 		gc.setFont(new Font(display,"Times",10,SWT.BOLD));
-		
+
+		BufferedImage carga= this.dameVista().getImagenes().getCarga();
+		//org.eclipse.swt.graphics.Image carga = this.dameVista().getImagenes().getCarga();
+		Image cargaRed = carga.getScaledInstance(
+				(int)(d.getWidth()/2), (int)(d.getHeight()/2),
+				Image.SCALE_FAST); 
+	//	gc.drawImage(carga, 0, 0);
 	/*	for(int cont=0;cont<7;cont++){
 			int ang_aux =(int)(((360+(360/8))/360)*cont);
 			int yaux = (int)(10*Math.sin(ang_aux));
@@ -784,8 +793,9 @@ public class CuadranteEmpleado {
 			}
 
 			if((entrada!=null)&&(Fin!=null)){
-				String inicio =entrada.getHours()+":"+entrada.getMinutes();
-				String fin =Fin.getHours()+":"+Fin.getMinutes();
+				Util util;
+				String inicio =Util.aString(entrada.getHours())+":"+Util.aString(entrada.getMinutes());
+				String fin =Util.aString(Fin.getHours())+":"+Util.aString(Fin.getMinutes());
 				int tamanoFuente=sep/8;
 				Font fuente=gc.getFont();
 				gc.setFont(new Font(display,"Verdana",tamanoFuente,SWT.NORMAL));
