@@ -515,14 +515,14 @@ public class Util {
 	
 	public static String intADiaSemana(int diasemana){
 		
-		if(diasemana==0) return "Domingo";
 		if(diasemana==1) return "Lunes";
 		if(diasemana==2) return "Martes";
 		if(diasemana==3) return "Miercoles";
 		if(diasemana==4) return "Jueves";
 		if(diasemana==5) return "Viernes";
 		if(diasemana==6) return "Sabado";
-		
+		if(diasemana==7) return "Domingo";
+
 		return null;
 		
 	}
