@@ -333,6 +333,19 @@ public class Database extends Thread {
 		}
 		return correcto;
 	}
+	
+	public boolean borraSugerenciasDia (String nombre, Date dia) {
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("DELETE FROM " + tablaSugerencias + " WHERE NombreDept='" + nombre + 
+					"AND Fecha='" + dia + "'");
+			correcto = true;
+		} catch (SQLException e) {
+			System.err.println("Database :: Error al Borrar en SugerenciasDia");
+		}
+		return correcto;	
+	}
 
 	public boolean cambiaNombreDepartamento(String NombreAntiguo, String NombreNuevo) {
 		int r = 0;
@@ -1477,7 +1490,7 @@ return result;
 	 * @param dia Dia de la sugerencia
 	 * @return
 	 */
-	public ResultSet obtenSugerencias (String nombre, Date dia) {
+	public ResultSet obtenSugerenciasDia (String nombre, Date dia) {
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery("SELECT * FROM " + tablaSugerencias + " WHERE NombreDept ='"
@@ -2563,6 +2576,10 @@ return result;
 			st.addBatch("Alter table contratodepartamento add Foreign Key (IdContrato) references contrato (IdContrato) on delete restrict on update cascade;");
 			
 //			Meter dependencias tablasugerencias			
+/*			st.addBatch("Alter table sugerencias add Index IX_Sugerencia1 (NombreDept);");
+ * 			st.addBatch("Alter table sugerencias add Foreign Key (Nombre Dept) references departamento (Nombre) ----------------------;");
+ * 
+*/
 
 			st.executeBatch();
 			st.close();
