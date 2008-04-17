@@ -415,7 +415,7 @@ public class Vista {
 		return true;
 	}
 	
-	public void modificarCuadranteCache (int primerDia, int mes, int anio, String idDepartamento, Cuadrante c) {
+	public void modificarCuadrante (int primerDia, int mes, int anio, String idDepartamento, Cuadrante c) {
 		int i = 0;
 		boolean encontrado = false;
 		while (i<cuadrantes.size() && !encontrado) {
@@ -852,7 +852,7 @@ public class Vista {
 		return c;
 	}
 	
-	public void eliminaCuadranteCache(int mes, int anio, String idDepartamento) {
+	public void eliminaCuadrante(int mes, int anio, String idDepartamento) {
 		if (!alive) return;
 		int i = 0;
 		while (i<cuadrantes.size()) {
