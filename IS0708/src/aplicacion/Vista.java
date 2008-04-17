@@ -1692,6 +1692,19 @@ public class Vista {
 	public void setNum_men_hoja(int num_men_hoja) {
 		this.num_men_hoja = num_men_hoja;
 	}
+	/**
+	 * Funcion que cambia el horario de un departamento
+	 * @param text horaInicio
+	 * @param text2 minutoInicio
+	 * @param text3 horaCierre
+	 * @param text4	minutoCierre	
+	 * @param nombre nombre departamento
+	 */
+	public void cambiarHorarioDepartamento(String text, String text2,
+			String text3, String text4, String nombre) {
+		// TODO Auto-generated method stub
+		
+	}
 	   
 	
 }
