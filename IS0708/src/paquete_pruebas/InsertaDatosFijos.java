@@ -3,6 +3,8 @@ package paquete_pruebas;
 import java.sql.Date;
 import java.sql.Time;
 
+import org.eclipse.swt.graphics.Color;
+
 import aplicacion.Controlador;
 import aplicacion.Database;
 import aplicacion.datos.Contrato;
@@ -29,7 +31,7 @@ public class InsertaDatosFijos {
 			String depart = "DatosFijos" + nd;
 			
 			// Crear turno jefe departamento
-			Turno turnoJefe = new Turno(0, "turnoJefeFijo"+nd, "9:00:00", "19:00:00", "13:00:00", 180);
+			Turno turnoJefe = new Turno(0, "turnoJefeFijo"+nd, "9:00:00", "19:00:00", "13:00:00", 180, null);
 			turnoJefe.setIdTurno(c.insertTurno(turnoJefe));
 			
 			// Crear contrato jefe departamento
@@ -104,19 +106,19 @@ public class InsertaDatosFijos {
 			c.insertDistribucion(21, 7, "1e1p", 6, 4, depart, true);
 			
 			// Turnos
-			Turno t7hM = new Turno(0, "7h Mañana"+nd, "09:00:00", "16:00:00", "09:40:00", 20);
+			Turno t7hM = new Turno(0, "7h Mañana"+nd, "09:00:00", "16:00:00", "09:40:00", 20, null);
 			t7hM.setIdTurno(c.insertTurno(t7hM));
-			Turno t7hT = new Turno(0, "7h Tarde"+nd, "15:00:00", "22:00:00", "18:30:00", 20);
+			Turno t7hT = new Turno(0, "7h Tarde"+nd, "15:00:00", "22:00:00", "18:30:00", 20, null);
 			t7hT.setIdTurno(c.insertTurno(t7hT));
 			
-			Turno t4hM = new Turno(0, "4h Mañana"+nd, "09:00:00", "13:00:00", "09:00:00", 0);
+			Turno t4hM = new Turno(0, "4h Mañana"+nd, "09:00:00", "13:00:00", "09:00:00", 0, null);
 			t4hM.setIdTurno(c.insertTurno(t4hM));
-			Turno t4hT = new Turno(0, "4h Tarde"+nd, "18:00:00", "22:00:00", "18:00:00", 0);
+			Turno t4hT = new Turno(0, "4h Tarde"+nd, "18:00:00", "22:00:00", "18:00:00", 0, null);
 			t4hT.setIdTurno(c.insertTurno(t4hT));
 			
-			Turno tSabM = new Turno(0, "Sab Mañana"+nd, "10:00:00", "16:00:00", "10:00:00", 0);
+			Turno tSabM = new Turno(0, "Sab Mañana"+nd, "10:00:00", "16:00:00", "10:00:00", 0, null);
 			tSabM.setIdTurno(c.insertTurno(tSabM));
-			Turno tSabT = new Turno(0, "Sab Tarde"+nd, "16:00:00", "22:00:00", "16:00:00", 0);
+			Turno tSabT = new Turno(0, "Sab Tarde"+nd, "16:00:00", "22:00:00", "16:00:00", 0, null);
 			tSabT.setIdTurno(c.insertTurno(tSabT));
 			
 			// Contratos
@@ -217,24 +219,25 @@ public class InsertaDatosFijos {
 		bd.cerrarConexion();
 		
 	}
-	
-	/**
-	 * Resetea la base de datos e inserta n departamentos de pruebas
-	 */
-	public static void resetBD(int n){
+
+	public static void prepararDB() {
 		bd = new Database();
 		c = new Controlador(bd, false);
 		bd.run();
 		bd.eliminarTodasLasTablas();
 		bd.crearTablas();
 		bd.crearDependencias();
+	}
 	
+	public static void resetBD(int n) {
+		// Prepara la estructura de la BD
+		prepararDB();
+		// Inserta 20 nuevos departamentos para pruebas con sus datos independientes
+		insertarNdepart(20);
 		//Inserta n nuevos departamentos para pruebas con sus datos independientes
 		InsertaDatosFijos.insertarNdepart(n);
 	}
-
 	public static void main(String[] args){
-		InsertaDatosFijos.resetBD(20);
+		resetBD(20);
 	}
-
 }
