@@ -67,9 +67,9 @@ public class Database extends Thread {
 			String url = "jdbc:mysql://"+ ip +"/" + dbName;
 
 // Descomentar este trozo para usar la base de datos local
-//			userName = "root";
-//			password = "";
-//			url = "jdbc:mysql://localhost/turnomat_bd";
+			userName = "root";
+			password = "";
+			url = "jdbc:mysql://localhost/turnomat_bd";
 
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			//DriverManager.setLoginTimeout(300);
@@ -1019,7 +1019,7 @@ public class Database extends Thread {
 	 */
 	// como es autoincrementable he quitado el id
 	public int insertarTurno(String Descripcion, Time HoraEntrada,
-			Time HoraSalida, Time HoraInicioDescanso, int Duracion) {
+			Time HoraSalida, Time HoraInicioDescanso, int Duracion, String color) {
 		int i = -1;
 		ResultSet r = null;
 		try {
@@ -1037,7 +1037,9 @@ public class Database extends Thread {
 							+ "', '"
 							+ HoraInicioDescanso
 							+ "', '"
-							+ tdesc + "')");
+							+ tdesc 
+							+ "', '"
+							+ color + "')");
 //			System.out.println("aplicacion.Database.java\t::Turno insertado");
 			//r = st.getGeneratedKeys();
 			r = st.executeQuery("SELECT LAST_INSERT_ID()");
@@ -1302,7 +1304,7 @@ return result;
 	public ResultSet obtenContratosDepartamento(String departamento) {
 		ResultSet r = null;
 		String q = "SELECT IdContrato FROM " + tablaContratosPorDepartamento + 
-		"WHERE NombreDept='"+ departamento + "');";
+		" WHERE NombreDept='"+ departamento + "');";
 		try {
 			st = con.createStatement();
 			r = st.executeQuery(q);

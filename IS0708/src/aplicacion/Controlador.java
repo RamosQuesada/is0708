@@ -693,8 +693,7 @@ public class Controlador {
 	public boolean insertDepartamento(Departamento departamento) {
 		return _db.insertarDepartamento(departamento.getNombreDepartamento(),
 				departamento.getJefeDepartamento().getEmplId(),
-					departamento.getHoraApertura(),departamento.getHoraCierre())
-				&& _db.insertarDepartamentoUsuario(departamento
+					departamento.getHoraApertura(),departamento.getHoraCierre())				&& _db.insertarDepartamentoUsuario(departamento
 						.getJefeDepartamento().getEmplId(), departamento
 						.getNombreDepartamento(), true);
 	}
@@ -1458,7 +1457,7 @@ public class Controlador {
 	 */
 	public int insertTurno(Turno t) {
 		int idTurno = _db.insertarTurno(t.getDescripcion(), t.getHoraEntrada(),
-				t.getHoraSalida(), t.getHoraDescanso(), t.getTDescanso());
+				t.getHoraSalida(), t.getHoraDescanso(), t.getTDescanso(),Util.ColorAHex(t.getColor()));
 		return idTurno;
 	}
 
@@ -1532,9 +1531,10 @@ public class Controlador {
 				Time HoraS = rs.getTime("HoraSalida");
 				Time HoraI = rs.getTime("HoraInicioDescanso");
 				Time duracion = rs.getTime("DuracionDescanso");
+				String color=rs.getString("Color");
 				int descanso = aplicacion.utilidades.Util.dameMinutos(duracion);
 				Turno t = new Turno(idTurn, descr, HoraE, HoraS, HoraI,
-						descanso);
+						descanso,Util.stringAColor(color));
 				turnos.add(t);
 			}
 
@@ -1565,9 +1565,10 @@ public class Controlador {
 					Time HoraS = rs2.getTime("HoraSalida");
 					Time HoraI = rs2.getTime("HoraInicioDescanso");
 					Time duracion = rs2.getTime("DuracionDescanso");
+					String color=rs.getString("Color");
 					int descanso = aplicacion.utilidades.Util.dameMinutos(duracion);
 					Turno t = new Turno(idTurn, descr, HoraE, HoraS, HoraI,
-							descanso);
+							descanso,Util.stringAColor(color));
 					turnos.add(t);
 				}
 			}
@@ -1599,9 +1600,10 @@ public class Controlador {
 					Time HoraS = rs2.getTime("HoraSalida");
 					Time HoraI = rs2.getTime("HoraInicioDescanso");
 					Time duracion = rs2.getTime("DuracionDescanso");
+					String color=rs.getString("Color");
 					int descanso = aplicacion.utilidades.Util.dameMinutos(duracion);
 					Turno t = new Turno(idTurn, descr, HoraE, HoraS, HoraI,
-							descanso);
+							descanso,Util.stringAColor(color));
 					turnos.add(t);
 				}
 			}
@@ -1628,7 +1630,7 @@ public class Controlador {
 			rs = _db.obtenTurnosDepartamento(idDepartamento);
 			
 			while (rs.next()) {
-				turnos.add(new Turno(rs.getInt("IdTurno"), rs.getString("Descripcion"), rs.getTime("HoraEntrada"), rs.getTime("HoraSalida"), rs.getTime("HoraInicioDescanso"), rs.getTime("DuracionDescanso").getHours()*60+rs.getTime("DuracionDescanso").getMinutes()));				
+				turnos.add(new Turno(rs.getInt("IdTurno"), rs.getString("Descripcion"), rs.getTime("HoraEntrada"), rs.getTime("HoraSalida"), rs.getTime("HoraInicioDescanso"), rs.getTime("DuracionDescanso").getHours()*60+rs.getTime("DuracionDescanso").getMinutes(), Util.stringAColor(rs.getString("Color"))));				
 			}
 			return turnos;		
 		} catch (Exception e){
@@ -1717,9 +1719,10 @@ public class Controlador {
 				Time hSalida = rs.getTime("HoraSalida");
 				Time hInicioDescanso = rs.getTime("HoraInicioDescanso");
 				Time duracion = rs.getTime("DuracionDescanso");
+				String color=rs.getString("Color");
 				int descanso = aplicacion.utilidades.Util.dameMinutos(duracion);
 				Turno t = new Turno(idTurno, descr, hEntrada, hSalida,
-						hInicioDescanso, descanso);
+						hInicioDescanso, descanso, Util.stringAColor(color));
 				turnos.add(t);
 			}
 		} catch (SQLException e) {
@@ -1789,9 +1792,10 @@ public class Controlador {
 				Time HoraS = rs2.getTime("HoraSalida");
 				Time HoraI = rs2.getTime("HoraInicioDescanso");
 				Time duracion = rs2.getTime("DuracionDescanso");
+				String color=rs2.getString("Color");
 				int descanso = aplicacion.utilidades.Util.dameMinutos(duracion);
 				t = new Turno(id, descr, HoraE, HoraS, HoraI,
-						descanso);
+						descanso,Util.stringAColor(color));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
