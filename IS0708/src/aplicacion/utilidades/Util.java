@@ -458,13 +458,35 @@ public class Util {
 			if (r>255-brillo) r=255; else r+=brillo;
 			if (g>255-brillo) g=255; else g+=brillo;
 			if (b>255-brillo) b=255; else b+=brillo;
-		}
-		else {
+		} else {
 			if (r<-brillo) r=0; else r+=brillo;
 			if (g<-brillo) g=0; else g+=brillo;
 			if (b<-brillo) b=0; else b+=brillo;
 		}
 		gc.setBackground(new Color(display,r, g, b));
+	}
+	
+	/**
+	 * Devuelve un color diferenciado del dado. Calcula automáticamente si debe hacer la diferencia positiva o negativa.
+	 * @param color color de referencia
+	 * @param cantidad valor de la diferencia
+	 * @return un nuevo color que contraste con el dado
+	 */
+	public static Color getColorDiferenciado(Color color, int cantidad) {
+		int r = color.getRed();
+		int g = color.getGreen();
+		int b = color.getBlue();
+		int c = cantidad;
+		if ((r+g+b)/3>128) {
+			if (r>255-c) r=255; else r+=c;
+			if (g>255-c) g=255; else g+=c;
+			if (b>255-c) b=255; else b+=c;
+		} else {
+			if (r<-c) r=0; else r+=c;
+			if (g<-c) g=0; else g+=c;
+			if (b<-c) b=0; else b+=c;
+		}
+		return new Color(color.getDevice(), r, g, b);
 	}
 	
 	/**check if the String text is integer*/

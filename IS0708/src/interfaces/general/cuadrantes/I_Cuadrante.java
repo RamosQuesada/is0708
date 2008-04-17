@@ -1142,7 +1142,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		colorTurno = vista.getTurno(idTurno).getColor();
 		//Primero se pinta el rectangulo
 		
-		gc.setForeground(new Color(display,colorTurno.getRed()-100,colorTurno.getGreen()-100,colorTurno.getBlue()-100));
+		gc.setForeground(Util.getColorDiferenciado(colorTurno, 100));
 		gc.drawRectangle(margenIzq + margenNombres + j*anchoDia, margenSupVistaMes + 20 + i*altoFila, anchoDia, altoFila);
 
 		gc.setBackground(colorTurno);
