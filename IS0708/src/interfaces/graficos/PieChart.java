@@ -1,4 +1,4 @@
-package interfaces.general;
+package interfaces.graficos;
 
 import java.awt.image.*;
 
@@ -17,12 +17,12 @@ import org.jfree.data.general.DefaultPieDataset;
  * @author Carlos Sanchez Garcia
  *
  */
-public class Chart {
+public class PieChart {
 	/**
 	 * Constructor de la clase
 	 *
 	 */
-	public Chart(){
+	public PieChart(){
 		
 	}
 	/**
@@ -97,45 +97,10 @@ public class Chart {
 	}
 	
 	public void creaVentana(){
-//		Chart a=new Chart();
-//		Display display = new Display();
-//		final Shell shell = new Shell(display);
-//		shell.setText("SWT Image");
-//		shell.setLayout(new GridLayout(1,false));
-//		Label c = new Label(shell, SWT.CENTER);
-//		//Canvas c = new Canvas(shell,SWT.NONE);
-//		c.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-//		c.setImage(a.dameImagen(convertToSWT(a.creaImagen()),display));
-//
-//		shell.setSize(500,500);
-//		// Mostrar ventana centrada en la pantalla
-//		shell.setLocation(
-//				display.getBounds().width  / 2 - shell.getSize().x / 2, 
-//				display.getBounds().height / 2 - shell.getSize().y / 2  );
-//		shell.open();
-//		
-//		shell.addListener(SWT.Close, new Listener() {
-//			public void handleEvent(Event e) {
-//				MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO | SWT.ICON_WARNING);
-//				messageBox.setText("Mensaje");
-//				// Diferentes iconos:
-//				// http://www.developer.com/java/other/article.php/10936_3330861_2
-//				messageBox.setMessage("I02_dlg_CerrarAp");
-//				e.doit = messageBox.open() == SWT.YES;
-//			}
-//		});
-//		while (!shell.isDisposed()) {
-//			if (!display.readAndDispatch()) {
-//				display.sleep();
-//			}
-//		}
-		//Chart a=new Chart();
-		//Display display = new Display();
 		final Shell shell = new Shell();
 		shell.setText("SWT Image");
 		shell.setLayout(new GridLayout(1,true));
 		Label c = new Label(shell, SWT.CENTER);
-		//Canvas c = new Canvas(shell,SWT.NONE);
 		c.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		c.setImage(dameImagen(convertToSWT(creaImagen()),shell.getDisplay()));
 
@@ -146,16 +111,6 @@ public class Chart {
 				shell.getDisplay().getBounds().height / 2 - shell.getSize().y / 2  );
 		shell.open();
 		
-//		shell.addListener(SWT.Close, new Listener() {
-//			public void handleEvent(Event e) {
-//				MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO | SWT.ICON_WARNING);
-//				messageBox.setText("Mensaje");
-//				// Diferentes iconos:
-//				// http://www.developer.com/java/other/article.php/10936_3330861_2
-//				messageBox.setMessage("I02_dlg_CerrarAp");
-//				e.doit = messageBox.open() == SWT.YES;
-//			}
-//		});
 		while (!shell.isDisposed()) {
 			if (!shell.getDisplay().readAndDispatch()) {
 				shell.getDisplay().sleep();

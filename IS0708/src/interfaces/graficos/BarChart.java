@@ -1,4 +1,4 @@
-package interfaces.general;
+package interfaces.graficos;
 
 import java.awt.image.*;
 
@@ -11,18 +11,20 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.layout.*;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 /**
  * Clase que genera graficos
  * @author Carlos Sanchez Garcia
  *
  */
-public class Chart {
+public class BarChart {
 	/**
 	 * Constructor de la clase
 	 *
 	 */
-	public Chart(){
+	public BarChart(){
 		
 	}
 	/**
@@ -31,13 +33,17 @@ public class Chart {
 	 */
 	public BufferedImage creaImagen()
     {
-		DefaultPieDataset pieDataset = new DefaultPieDataset();
-		pieDataset.setValue("Enero", new Integer(75));
-		pieDataset.setValue("Febrero", new Integer(10));
-		pieDataset.setValue("Marzo", new Integer(10));
-		pieDataset.setValue("Resto", new Integer(5));
-		JFreeChart chart = ChartFactory.createPieChart("Ventas realizadas",
-				pieDataset, true, true, false);
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+		dataset.setValue(5, "Ventas", "Enero");
+		dataset.setValue(7, "Ventas", "Febrero");
+		dataset.setValue(9, "Ventas", "Marzo");
+		dataset.setValue(5, "Ventas", "Abril");
+		dataset.setValue(10, "Ventas", "Mayo");
+		String NumeroVentas = "Numero de Ventas";
+		String Ventas = "Ventas realizadas";
+		JFreeChart chart = ChartFactory.createBarChart(Ventas, Ventas,
+				NumeroVentas, dataset, PlotOrientation.VERTICAL, false, true,
+				false);
 
          BufferedImage image = chart.createBufferedImage(300,300);
         return image;
@@ -97,45 +103,10 @@ public class Chart {
 	}
 	
 	public void creaVentana(){
-//		Chart a=new Chart();
-//		Display display = new Display();
-//		final Shell shell = new Shell(display);
-//		shell.setText("SWT Image");
-//		shell.setLayout(new GridLayout(1,false));
-//		Label c = new Label(shell, SWT.CENTER);
-//		//Canvas c = new Canvas(shell,SWT.NONE);
-//		c.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-//		c.setImage(a.dameImagen(convertToSWT(a.creaImagen()),display));
-//
-//		shell.setSize(500,500);
-//		// Mostrar ventana centrada en la pantalla
-//		shell.setLocation(
-//				display.getBounds().width  / 2 - shell.getSize().x / 2, 
-//				display.getBounds().height / 2 - shell.getSize().y / 2  );
-//		shell.open();
-//		
-//		shell.addListener(SWT.Close, new Listener() {
-//			public void handleEvent(Event e) {
-//				MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO | SWT.ICON_WARNING);
-//				messageBox.setText("Mensaje");
-//				// Diferentes iconos:
-//				// http://www.developer.com/java/other/article.php/10936_3330861_2
-//				messageBox.setMessage("I02_dlg_CerrarAp");
-//				e.doit = messageBox.open() == SWT.YES;
-//			}
-//		});
-//		while (!shell.isDisposed()) {
-//			if (!display.readAndDispatch()) {
-//				display.sleep();
-//			}
-//		}
-		//Chart a=new Chart();
-		//Display display = new Display();
 		final Shell shell = new Shell();
 		shell.setText("SWT Image");
 		shell.setLayout(new GridLayout(1,true));
 		Label c = new Label(shell, SWT.CENTER);
-		//Canvas c = new Canvas(shell,SWT.NONE);
 		c.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		c.setImage(dameImagen(convertToSWT(creaImagen()),shell.getDisplay()));
 
@@ -146,16 +117,6 @@ public class Chart {
 				shell.getDisplay().getBounds().height / 2 - shell.getSize().y / 2  );
 		shell.open();
 		
-//		shell.addListener(SWT.Close, new Listener() {
-//			public void handleEvent(Event e) {
-//				MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO | SWT.ICON_WARNING);
-//				messageBox.setText("Mensaje");
-//				// Diferentes iconos:
-//				// http://www.developer.com/java/other/article.php/10936_3330861_2
-//				messageBox.setMessage("I02_dlg_CerrarAp");
-//				e.doit = messageBox.open() == SWT.YES;
-//			}
-//		});
 		while (!shell.isDisposed()) {
 			if (!shell.getDisplay().readAndDispatch()) {
 				shell.getDisplay().sleep();
