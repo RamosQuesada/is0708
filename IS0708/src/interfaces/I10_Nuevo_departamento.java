@@ -222,7 +222,8 @@ public class I10_Nuevo_departamento {
 											Integer.parseInt(tminCi.getText())>=0 && Integer.parseInt(tminCi.getText())<60 && Integer.parseInt(tminIn.getText())>=0 && Integer.parseInt(tminIn.getText())<60	){
 										//creamos el departamento
 										String numjefe=(cmbJefes.getText().subSequence(cmbJefes.getText().length()-8, cmbJefes.getText().length())).toString();
-										vista.crearDepartamento(tName.getText(),tNumber.getText(),Integer.parseInt(numjefe));
+										vista.crearDepartamento(tName.getText(),tNumber.getText(),Integer.parseInt(numjefe),Integer.parseInt(thorIn.getText()),Integer.parseInt(tminIn.getText()),
+												Integer.parseInt(thorCi.getText()),Integer.parseInt(tminCi.getText()));
 										MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
 										messageBox.setText (bundle.getString("Mensaje"));
 										messageBox.setMessage (bundle.getString("I10_dep_creado"));
