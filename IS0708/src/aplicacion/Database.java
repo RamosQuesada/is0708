@@ -1605,7 +1605,7 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("UPDATE " + tablaDepartamentos + " SET HoraApertura = '" + entrada + "', HoraCierre = '" + salida + "';");
+			st.executeUpdate("UPDATE " + tablaDepartamentos + " SET HoraApertura = '" + entrada + "', HoraCierre = '" + salida + "' WHERE Nombre='" + dpto + "';");
 			
 			correcto = true;
 		} catch (SQLException e) {
