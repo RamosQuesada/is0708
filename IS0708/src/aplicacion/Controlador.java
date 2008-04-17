@@ -29,6 +29,8 @@ public class Controlador {
 	private GregorianCalendar _calendario;
 	final boolean _modoDebug;
 	private String departamento = "";
+	private int idSup = 0;
+	
 	public Controlador(Database baseDatos, boolean modoDebug) {
 		_modoDebug = modoDebug;
 		_db = baseDatos;
@@ -967,7 +969,7 @@ public class Controlador {
 				ArrayList<String> idDepartamentos = new ArrayList<String>();
 				
 				if (rango == 1) {
-					idSuperior = this.getIdSuperior(idEmpl);
+					idSuperior = idSup;//this.getIdSuperior(idEmpl);
 					idDepartamentos.add(departamento);
 				} else if (rango == 2) {
 					idSubordinados = this.getIdsSubordinados(idEmpl);
