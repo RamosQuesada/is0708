@@ -43,9 +43,9 @@ public class InsertaDatosFijos {
 
 			// Creamos un nuevo departamento
 		    c.insertDepartamentoPruebas(depart,10000100+nd*1000,Time.valueOf("9:00:00"),Time.valueOf("23:00:00"));
+		    c.insertNumerosDepartamento(nd, "DatosFijos"+nd);
 
-			c.insertDepartamentoUsuario(10000100+nd*1000, depart);
-			
+			c.insertDepartamentoUsuario(10000100+nd*1000, depart);			
 			
 			// Horas en las que esta cerrado
 		    for (int i=1; i<=7; i++) {
