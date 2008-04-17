@@ -1379,6 +1379,21 @@ public class Controlador {
 		_db.insertarTurnoPorContrato(turnoInicial, idContrato);
 		return idContrato;
 	}
+	
+	public int insertContrato(Contrato c, String departamento) {
+		// int idContrato=c.getNumeroContrato();
+		int turnoInicial = c.getTurnoInicial();
+		String nombre = c.getNombreContrato();
+		String patron = c.getPatron();
+		int duracionCiclo = c.getDuracionCiclo();
+		double salario = c.getSalario();
+		int tipocontrato = c.getTipoContrato();
+		int idContrato = _db.insertarContrato(turnoInicial, nombre, patron,
+				duracionCiclo, salario, tipocontrato);
+		_db.insertarTurnoPorContrato(turnoInicial, idContrato);
+		_db.insertarContratoPorDepartamento(departamento, idContrato);
+		return idContrato;
+	}
 
 	/**
 	 * 

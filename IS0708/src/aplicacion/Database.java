@@ -613,7 +613,7 @@ public class Database extends Thread {
 					+ "', '" + nombre + "')");
 			correcto = true;
 		} catch (SQLException e) {
-			System.err.println("Database :: Error al insertar el departamento");
+			System.err.println("Database :: Error al insertar el contratodepartamento");
 			correcto = false;
 		}
 		return correcto;
