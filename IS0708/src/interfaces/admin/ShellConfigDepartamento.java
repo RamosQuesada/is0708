@@ -356,9 +356,30 @@ public class ShellConfigDepartamento {
 										father.add(array.get(i));
 									}
 								}
-								// cmbDepartamentos.setItems(new String[] { "Baños", "Cocinas" });
-								father.select(0);
-								shell.dispose();
+								if(!thorIn.getText().contentEquals(((String) horas.get(0).subSequence(0, 2))) || !tminIn.getText().contentEquals(((String) horas.get(0).subSequence(3, 5))) ||
+										!thorCi.getText().contentEquals(((String) horas.get(1).subSequence(0, 2))) ||	!tminCi.getText().contentEquals(((String) horas.get(1).subSequence(3, 5)))){
+									if(integerCheck(thorCi.getText())== true && integerCheck(thorIn.getText())== true && integerCheck(tminIn.getText())== true && integerCheck(tminCi.getText())== true){
+										if(Integer.parseInt(thorCi.getText())>=0 && Integer.parseInt(thorCi.getText())<24 && Integer.parseInt(thorIn.getText())>=0 && Integer.parseInt(thorIn.getText())<24 &&
+												Integer.parseInt(tminCi.getText())>=0 && Integer.parseInt(tminCi.getText())<60 && Integer.parseInt(tminIn.getText())>=0 && Integer.parseInt(tminIn.getText())<60	){
+											vista.cambiarHorarioDepartamento(Integer.parseInt(thorIn.getText()),Integer.parseInt(tminIn.getText()),Integer.parseInt(thorCi.getText()),Integer.parseInt(tminCi.getText()),nombre);
+											father.select(0);
+											shell.dispose();
+										}else{
+											MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
+											messageBox.setText (bundle.getString("Mensaje"));
+											messageBox.setMessage (bundle.getString("I10_formato_horas"));
+											e.doit = messageBox.open () == SWT.CLOSE;
+										}
+									}else{
+										MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
+										messageBox.setText (bundle.getString("Mensaje"));
+										messageBox.setMessage (bundle.getString("I10_num_horas"));
+										e.doit = messageBox.open () == SWT.CLOSE;
+									}
+								}else{
+									father.select(0);
+									shell.dispose();
+								}
 							}else{//si no se ha metido texto
 								MessageBox messageBox = new MessageBox (padre, SWT.APPLICATION_MODAL | SWT.CLOSE | SWT.ICON_INFORMATION);
 								messageBox.setText (bundle.getString("Mensaje"));
