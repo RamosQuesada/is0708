@@ -1894,7 +1894,8 @@ public class Controlador {
 	 *            cuadrante que se quiere guardar
 	 */
 	public void insertCuadrante(Cuadrante cuadrante) {
-		for (int dia = 0; dia < cuadrante.getNumDias(); dia++) {
+		_db.insertarCuadrante(cuadrante);
+/*		for (int dia = 0; dia < cuadrante.getNumDias(); dia++) {
 			ArrayList<Trabaja> cuad = cuadrante.getListaTrabajaDia(dia);
 			for (int i = 0; i < cuad.size(); i++) {
 				Trabaja trabaja = cuad.get(i);
@@ -1932,6 +1933,7 @@ public class Controlador {
 			}
 			_db.executeBatch();
 		}
+*/		
 	}
 	
 	/**
