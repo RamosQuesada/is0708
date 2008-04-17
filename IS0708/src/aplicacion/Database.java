@@ -1891,13 +1891,12 @@ return result;
 		}
 		return r;
 	}
+	
 	/**
 	 * Listar los distintos turnos que tiene un determinado empleado.
 	 * 
-	 * @param idEmpl
-	 *            Identificador del empleado
-	 * @return Todos los identificadores de turnos que tiene un determinado
-	 *         empleado.
+	 * @param idEmpl Identificador del empleado
+	 * @return Todos los identificadores de turnos que tiene un determinado empleado.
 	 */
 	public ResultSet obtenListaTurnosContrato(int idEmpl) {
 		ResultSet r = null;
@@ -1909,6 +1908,48 @@ return result;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.err.println("Database :: Error al obtener los turnos de un contrato:\n\t" + q);
+			e.printStackTrace();
+		}
+		return r;
+	}
+
+	/**
+	 * Obtiene la lista de turnos de un contrato a partir del idContrato
+	 * @param idContrato id del contrato
+	 * @return resultado de la consulta
+	 */
+	public ResultSet obtenTurnosContrato(int idContrato) {
+		ResultSet r = null;
+		String q = "SELECT " + tablaTurnos + ".* FROM " + tablaTurnos + ", " + tablaTurnosPorContrato + 
+		" WHERE " + tablaTurnos + ".idTurno = " + tablaTurnosPorContrato + ".idTurno AND " + tablaTurnosPorContrato + ".idContrato = ' "+ idContrato +"';";
+		try {
+			st = con.createStatement();
+			r = st.executeQuery(q);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("Database.obtenTurnosPorContrato :: Error al obtener los turnos de un contrato:\n\t" + q);
+			e.printStackTrace();
+		}
+		return r;
+	}
+	
+	/**
+	 * Obtiene la lista de turnos de un contrato a partir del idEmpl
+	 * @param idEmpl id del empleado
+	 * @return resultado de la consulta
+	 */
+	public ResultSet obtenTurnosContratoEmpleado(int idEmpl) {
+		ResultSet r = null;
+		String q = "SELECT " + tablaTurnos + ".* FROM " + tablaTurnos + ", " + tablaTurnosPorContrato + ", " + tablaUsuarios + 
+		" WHERE " + tablaTurnos + ".idTurno = " + tablaTurnosPorContrato + ".idTurno AND " + 
+		tablaTurnosPorContrato + ".idContrato = " + tablaUsuarios + ".idContrato AND " +
+		tablaUsuarios + ".NumVendedor = ' "+ idEmpl +"';";
+		try {
+			st = con.createStatement();
+			r = st.executeQuery(q);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("Database.obtenTurnosPorContrato :: Error al obtener los turnos de un contrato:\n\t" + q);
 			e.printStackTrace();
 		}
 		return r;
