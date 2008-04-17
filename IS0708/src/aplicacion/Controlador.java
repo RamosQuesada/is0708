@@ -972,6 +972,7 @@ public class Controlador {
 					idSuperior = idSup;//this.getIdSuperior(idEmpl);
 					idDepartamentos.add(departamento);
 				} else if (rango == 2) {
+					idSup = id;
 					idSubordinados = this.getIdsSubordinados(idEmpl);
 					idDepartamentos = this
 					.getIdsDepartamentos(idEmpl);

@@ -243,8 +243,9 @@ public class Vista {
 	public int insertContrato(Contrato c) {
 		if (getContrato(c.getNumeroContrato())!=null) return -1;
 //		insertCache(c, "Contrato");
-		int i = controlador.insertContrato(c);
+		int i = controlador.insertContrato(c, this.getEmpleadoActual().getDepartamentoId());		
 		c.setNumeroContrato(i);
+		
 		contratos.add(c);
 		return i;
 	}
