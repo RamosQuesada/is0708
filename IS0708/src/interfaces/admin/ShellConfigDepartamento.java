@@ -285,7 +285,62 @@ public class ShellConfigDepartamento {
 			bAccept.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 			bAccept.setText(bundle.getString("Aceptar"));
 
+			//Ojo para abajo
+			//Horas de incio y cierre
+			final Composite grouphoras = new Composite(group, SWT.NONE);
 
+			grouphoras.setLayout(new GridLayout(4,false));
+			grouphoras.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,3,1));
+			
+			lhoraInicio = new Label (grouphoras, SWT.NONE);
+			lhoraInicio.setText(bundle.getString("I10_hora_incio"));
+			lhoraInicio.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,4,1));
+			
+			thorIn=new Text (grouphoras, SWT.BORDER);	
+			thorIn.setLayoutData (new GridData(SWT.LEFT ,SWT.CENTER,false,true,1,1));
+			thorIn.setTextLimit(2);
+			
+			ldosPuntos=new Label (grouphoras, SWT.NONE);
+			ldosPuntos.setText(":");
+			ldosPuntos.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,false,true,1,1));
+			ldosPuntos.setBounds(1, 1, 1, 1);
+		
+			
+			tminIn=new Text (grouphoras, SWT.BORDER);	
+			tminIn.setLayoutData (new GridData(SWT.LEFT ,SWT.CENTER,false,true,1,1));
+			tminIn.setTextLimit(2);
+			tminIn.setBounds(1, 1, 1, 1);
+			
+			lhoraCierre = new Label (grouphoras, SWT.NONE);
+			lhoraCierre.setText(bundle.getString("I10_hora_cierre"));
+			lhoraCierre.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,4,1));
+			
+			thorCi=new Text (grouphoras, SWT.BORDER);	
+			thorCi.setLayoutData (new GridData(SWT.LEFT ,SWT.CENTER,false,true,1,1));
+			thorCi.setTextLimit(2);
+			
+			ldosPuntos=new Label (grouphoras, SWT.NONE);
+			ldosPuntos.setText(":");
+			ldosPuntos.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,false,true,1,1));
+			ldosPuntos.setBounds(1, 1, 1, 1);
+		
+			
+			tminCi=new Text (grouphoras, SWT.BORDER);	
+			tminCi.setLayoutData (new GridData(SWT.LEFT ,SWT.CENTER,false,true,1,1));
+			tminCi.setTextLimit(2);
+			tminCi.setBounds(1, 1, 1, 1);
+			
+			Label hueco=new Label (grouphoras, SWT.NONE);
+			hueco.setLayoutData	(new GridData(SWT.FILL,SWT.CENTER,true,true,1,1));
+			
+			 final ArrayList<String> horas=vista.getHorarioDpto(nombre);
+			// De momento asi xq no tiene horas metido
+			thorIn.setText((String) horas.get(0).subSequence(0, 2));
+			tminIn.setText((String) horas.get(0).subSequence(3, 5));
+			thorCi.setText((String) horas.get(1).subSequence(0, 2));
+			tminCi.setText((String) horas.get(1).subSequence(3, 5));
+			
+			//OJO Para arriba
 
 
 			bAccept.addSelectionListener (
