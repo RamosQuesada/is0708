@@ -586,6 +586,22 @@ public class Database extends Thread {
 		return i;
 	}
 
+	public boolean insertarContratoPorDepartamento(String nombre, int idContrato) {
+		// TODO insertar horas correctamente
+		boolean correcto = false;
+		try {
+			st = con.createStatement();
+			st.executeUpdate("INSERT INTO " + tablaContratosPorDepartamento + " values ('" + idContrato
+					+ "', '" + nombre + "')");
+			correcto = true;
+		} catch (SQLException e) {
+			System.err.println("Database :: Error al insertar el departamento");
+			correcto = false;
+		}
+		return correcto;
+	}
+	
+	
 	/**
 	 * Método que inserta en la tabla Departamento los valores correspondientes
 	 * a un nuevo departamento
@@ -1226,16 +1242,14 @@ public class Database extends Thread {
 	 */
 	public ResultSet obtenContratosDepartamento(String departamento) {
 		ResultSet r = null;
-		String q = "SELECT * FROM " + tablaContratos + " WHERE IdContrato IN ("
-		+ "SELECT IdContrato FROM " + tablaUsuarios + " u, " + tablaUsuariosPorDepartamento + " d "
-		+ "WHERE u.NumVendedor=d.NumVendedor AND "
-		+ "d.NombreDepartamento = '"+ departamento + "');";
+		String q = "SELECT IdContrato FROM " + tablaContratosPorDepartamento + 
+		"WHERE NombreDept='"+ departamento + "');";
 		try {
 			st = con.createStatement();
 			r = st.executeQuery(q);
 			
 		} catch (SQLException e) {
-			System.err.println("Database :: Error al realizar la consulta de contratos:\n\t" + q);
+			System.err.println("Database :: Error al realizar la consulta de contratos de un departamento:\n\t" + q);
 		}
 		return r;
 	}
