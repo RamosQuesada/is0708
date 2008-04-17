@@ -1,6 +1,7 @@
 package paquete_pruebas;
 
 import java.sql.Date;
+import java.sql.Time;
 
 import aplicacion.Controlador;
 import aplicacion.Database;
@@ -41,7 +42,7 @@ public class InsertaDatosFijos {
 			c.insertUsuario(10000100+nd*1000, "JefeFijo"+nd, "ape1", "ape2", nacimiento, 0, "email@email.es", Integer.toString(10000100+nd*1000), 2, inicio, inicio, 0, 0, 0, 2, contratoJefe.getNumeroContrato(), turnoJefe.getIdTurno(), "FFFFE0", null, null, false, new Date(0)); //hay que cambiar el rango a 2
 
 			// Creamos un nuevo departamento
-		    c.insertDepartamentoPruebas(depart,10000100+nd*1000);
+		    c.insertDepartamentoPruebas(depart,10000100+nd*1000,Time.valueOf("9:00:00"),Time.valueOf("23:00:00"));
 
 			c.insertDepartamentoUsuario(10000100+nd*1000, depart);
 			
@@ -216,8 +217,11 @@ public class InsertaDatosFijos {
 		bd.cerrarConexion();
 		
 	}
-
-	public static void main(String[] args){
+	
+	/**
+	 * Resetea la base de datos e inserta n departamentos de pruebas
+	 */
+	public static void resetBD(int n){
 		bd = new Database();
 		c = new Controlador(bd, false);
 		bd.run();
@@ -225,8 +229,12 @@ public class InsertaDatosFijos {
 		bd.crearTablas();
 		bd.crearDependencias();
 	
-		//Inserta 20 nuevos departamentos para pruebas con sus datos independientes
-		InsertaDatosFijos.insertarNdepart(20);
+		//Inserta n nuevos departamentos para pruebas con sus datos independientes
+		InsertaDatosFijos.insertarNdepart(n);
+	}
+
+	public static void main(String[] args){
+		InsertaDatosFijos.resetBD(20);
 	}
 
 }
