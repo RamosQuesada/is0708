@@ -1394,6 +1394,10 @@ public class Controlador {
 		_db.insertarContratoPorDepartamento(departamento, idContrato);
 		return idContrato;
 	}
+	
+	public void insertContratoDepartamento(Contrato c, String departamento) {		
+		_db.insertarContratoPorDepartamento(departamento, c.getNumeroContrato());		
+	}
 
 	/**
 	 * 
