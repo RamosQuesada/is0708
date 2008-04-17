@@ -458,9 +458,10 @@ public class Database extends Thread {
 					+ ", FechaContrato='" + Cont + "', FechaEntrada='" + Entr
 					+ "', Felicidad=" + Felic
 					+ ", Idioma=" + Idiom + ", Rango=" + Rang
-					+ ", IdContrato=" + Contr + ", IdTurno=" + Turn + ", Color=" + col
-					+ " WHERE NumVendedor=" + idEmp + ";");
+					+ ", IdContrato=" + Contr + ", IdTurno=" + Turn + ", Color='" + col
+					+ "' WHERE NumVendedor=" + idEmp + ";");
 		} catch (SQLException e) {
+			e.printStackTrace();
 			System.err.println("Database :: Error al modificar empleado en la BD");
 			return false;
 		}
@@ -609,8 +610,8 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO " + tablaContratosPorDepartamento + " values ('" + idContrato
-					+ "', '" + nombre + "')");
+			st.executeUpdate("INSERT INTO " + tablaContratosPorDepartamento + " values ('" + nombre
+					+ "', '" + idContrato + "')");
 			correcto = true;
 		} catch (SQLException e) {
 			System.err.println("Database :: Error al insertar el contratodepartamento");
