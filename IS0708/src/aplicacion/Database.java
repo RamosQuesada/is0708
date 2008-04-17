@@ -2311,7 +2311,7 @@ return result;
 			st.addBatch("DROP TABLE " + tablaTurnos + ";");
 			st.addBatch("DROP TABLE " + tablaNumerosPorDepartamento + ";");
 			st.addBatch("DROP TABLE " + tablaIncidencias + ";");
-//			st.addBatch("DROP TABLE " + tablaSugerencias + ";");
+			st.addBatch("DROP TABLE " + tablaSugerencias + ";");
 			st.executeBatch();
 			st.close();
 			System.out.println("aplicacion.Database.java\t:: Estructura de tablas y dependencias eliminadas correctamente.");

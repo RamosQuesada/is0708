@@ -233,11 +233,8 @@ public class InsertaDatosFijos {
 		// Prepara la estructura de la BD
 		prepararDB();
 		// Inserta 20 nuevos departamentos para pruebas con sus datos independientes
-		insertarNdepart(20);
+		insertarNdepart(5);
 		//Inserta n nuevos departamentos para pruebas con sus datos independientes
 		InsertaDatosFijos.insertarNdepart(n);
-	}
-	public static void main(String[] args){
-		resetBD(20);
 	}
 }

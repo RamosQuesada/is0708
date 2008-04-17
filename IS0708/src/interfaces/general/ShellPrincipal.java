@@ -52,7 +52,11 @@ public class ShellPrincipal {
 	private TabFolder tabFolder;
 	private Composite estado;
 	private int primerDiaGenerarCuadrante;
-	
+
+	// Estas dos variables controlan la barra de abajo
+	private int progreso = 100;
+	private String mensProgreso;
+
 	/**
 	 * Constructor del interfaz principal.
 	 * @param shell		el shell sobre el que construir la ventana (se instancia en la Vista)
@@ -846,21 +850,27 @@ public class ShellPrincipal {
 	 *            Un valor de 0 a 99, ó >100 para que desaparezca.
 	 */
 	public void setProgreso(String mensaje, int i) {
-		final int i2 = i;
-		final String mens = mensaje;
-		if (!display.isDisposed()) {
-			display.asyncExec(new Runnable() {
-				public void run() {
-					if (i2 >= 0 && i2 < 100) {
-						lEstado.setText(mens);
-						pbEstado.setVisible(true);
-						pbEstado.setSelection(i2);
-					} else if (i2 >= 100) {
-						lEstado.setText("Conectado");
-						pbEstado.setVisible(false);
-					}
+		progreso = i;
+		mensProgreso = mensaje;
+	}
+	
+	public void mostrarVentana() {
+		// Este bucle mantiene la ventana abierta
+		while (!shell.isDisposed()) {
+			if (!shell.getDisplay().readAndDispatch()) {
+				if (progreso >= 0 && progreso < 100) {
+					lEstado.setText(mensProgreso);
+					pbEstado.setVisible(true);
+					pbEstado.setSelection(progreso);
+				} else if (progreso >= 100) {
+					lEstado.setText("Conectado");
+					pbEstado.setVisible(false);
 				}
-			});
+
+				shell.getDisplay().sleep();
+			}
 		}
+		// Cierre de la aplicación
+		vista.stop();
 	}
 }
