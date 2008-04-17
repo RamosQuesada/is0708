@@ -111,7 +111,7 @@ public class Mensajeria {
 	 * @param texto String con el contenido del mensaje.
 	 */
 	public int creaMensaje(int destinatario, String asunto, String texto){
-		return controlador.insertMensaje(new Mensaje(0, controlador.getEmpleadoActual().getEmplId(), destinatario, controlador.getFechaActual(),  asunto, texto, false));
+		return controlador.insertMensaje(new Mensaje(0, controlador.getEmpleadoActual().getEmplId(), destinatario, controlador.getFechaActual(),  asunto, texto, false,false));
 	}
 	
 	/**

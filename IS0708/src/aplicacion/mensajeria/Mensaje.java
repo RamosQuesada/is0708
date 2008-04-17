@@ -27,7 +27,7 @@ public class Mensaje {
 	 * @param asunto
 	 * @param texto
 	 */
-	public Mensaje(int idMensaje, int remitente, int destinatario, Date fecha, String asunto, String texto, boolean marcado) {
+	public Mensaje(int idMensaje, int remitente, int destinatario, Date fecha, String asunto, String texto, boolean marcado, boolean leido) {
 		this.idMensaje = idMensaje;
 		this.destinatario = destinatario;
 		this.remitente = remitente;
@@ -35,7 +35,7 @@ public class Mensaje {
 		this.asunto = asunto;
 		this.texto = texto;
 		this.marcado = marcado;
-		this.leido = false;
+		this.leido = leido;
 	}
 	
 	public int getDestinatario() {
