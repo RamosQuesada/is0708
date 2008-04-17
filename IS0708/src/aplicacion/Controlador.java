@@ -28,7 +28,7 @@ public class Controlador {
 	private Empleado _empleadoActual;
 	private GregorianCalendar _calendario;
 	final boolean _modoDebug;
-
+	private String departamento = "";
 	public Controlador(Database baseDatos, boolean modoDebug) {
 		_modoDebug = modoDebug;
 		_db = baseDatos;
@@ -286,6 +286,7 @@ public class Controlador {
 			if (rs.next()) {
 				rs.first();
 				idSup = rs.getInt("JefeDepartamento");
+				departamento = rs.getString("NombreDepartamento");
 			}
 		} catch (Exception e) {
 			
@@ -960,11 +961,19 @@ public class Controlador {
 				Date fechaContrato = rs.getDate("FechaContrato");
 				Date fechaAlta = rs.getDate("FechaEntrada");
 				Color color = Util.stringAColor(rs.getString("Color"));
-				int idSuperior = this.getIdSuperior(idEmpl);
-				ArrayList<Integer> idSubordinados = this
-						.getIdsSubordinados(idEmpl);
-				ArrayList<String> idDepartamentos = this
-						.getIdsDepartamentos(idEmpl);
+				int idSuperior = 0;
+				
+				ArrayList<Integer> idSubordinados = new ArrayList<Integer>();
+				ArrayList<String> idDepartamentos = new ArrayList<String>();
+				
+				if (rango == 1) {
+					idSuperior = this.getIdSuperior(idEmpl);
+					idDepartamentos.add(departamento);
+				} else if (rango == 2) {
+					idSubordinados = this.getIdsSubordinados(idEmpl);
+					idDepartamentos = this
+					.getIdsDepartamentos(idEmpl);
+				}
 				int felicidad = rs.getInt("Felicidad");
 				int idioma = rs.getInt("Idioma");
 				//TODO cargarlo de la BD
