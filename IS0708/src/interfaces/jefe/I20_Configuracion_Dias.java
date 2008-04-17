@@ -3,6 +3,7 @@
  */
 package interfaces.jefe;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -28,7 +29,13 @@ import aplicacion.Vista;
 
 /**
  * @author Alberto
- *
+ * falta: 
+ * -ajustar layouts para hacerlo bonito 
+ * -poner los strings con lo del idioma 
+ * -meter los minutos a los label
+ * -dar funcionalidad al boton guardar cambios
+ * -obtener los dias de alguna tabla
+ * 
  */
 public class I20_Configuracion_Dias {
 
@@ -129,72 +136,86 @@ public class I20_Configuracion_Dias {
 		createCTipos();
 		gTiposDia.setLayoutData(gridData1);
 		rLunes = new Button(cTipos, SWT.RADIO);
-		rLunes.setText(bundle.getString("Lunes"));
+		rLunes.setText(bundle.getString("lunes"));
 		rLunes.setSelection(true);
 		rLunes.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-				 seleccion=0;// TODO Auto-generated Event stub widgetSelected()
-				 rellenar(vista.getDistribucionDepartamentoDiaSemana(departamento, 0));
+				 seleccion=0;
+				 ArrayList<String> horario=vista.getHorarioDpto(departamento);
+				 rellenar(vista.getDistribucionDepartamentoDiaSemana(departamento, 0),new Time(Integer.parseInt(horario.get(0).substring(0,2)),0,0),
+						 new Time(Integer.parseInt(horario.get(1).substring(0,2)),0,0));
 				 scroll.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				 composite.layout();
 			}
 		});
 		rMartes = new Button(cTipos, SWT.RADIO);
-		rMartes.setText(bundle.getString("Martes"));
+		rMartes.setText(bundle.getString("martes"));
 		rMartes.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-				seleccion=1; // TODO Auto-generated Event stub widgetSelected()
-				rellenar(vista.getDistribucionDepartamentoDiaSemana(departamento, 1));
+				seleccion=1;
+				ArrayList<String> horario=vista.getHorarioDpto(departamento);
+				 rellenar(vista.getDistribucionDepartamentoDiaSemana(departamento, 1),new Time(Integer.parseInt(horario.get(0).substring(0,2)),0,0),
+						 new Time(Integer.parseInt(horario.get(1).substring(0,2)),0,0));
 				scroll.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				composite.layout();
 			}
 		});
 		rMiercoles = new Button(cTipos, SWT.RADIO);
-		rMiercoles.setText(bundle.getString("Miercoles"));
+		rMiercoles.setText(bundle.getString("miercoles"));
 		rMiercoles.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-				seleccion=2; // TODO Auto-generated Event stub widgetSelected()
-				rellenar(vista.getDistribucionDepartamentoDiaSemana(departamento, 2));
+				seleccion=2;
+				ArrayList<String> horario=vista.getHorarioDpto(departamento);
+				 rellenar(vista.getDistribucionDepartamentoDiaSemana(departamento, 2),new Time(Integer.parseInt(horario.get(0).substring(0,2)),0,0),
+						 new Time(Integer.parseInt(horario.get(1).substring(0,2)),0,0));
 				scroll.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				composite.layout();
 			}
 		});
 		rJueves = new Button(cTipos, SWT.RADIO);
-		rJueves.setText(bundle.getString("Jueves"));
+		rJueves.setText(bundle.getString("jueves"));
 		rJueves.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-				seleccion=3; // TODO Auto-generated Event stub widgetSelected()
-				rellenar(vista.getDistribucionDepartamentoDiaSemana(departamento, 3));
+				seleccion=3;
+				ArrayList<String> horario=vista.getHorarioDpto(departamento);
+				 rellenar(vista.getDistribucionDepartamentoDiaSemana(departamento, 3),new Time(Integer.parseInt(horario.get(0).substring(0,2)),0,0),
+						 new Time(Integer.parseInt(horario.get(1).substring(0,2)),0,0));
 				scroll.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				composite.layout();
 			}
 		});
 		rViernes = new Button(cTipos, SWT.RADIO);
-		rViernes.setText(bundle.getString("Viernes"));
+		rViernes.setText(bundle.getString("viernes"));
 		rViernes.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-				seleccion=4; // TODO Auto-generated Event stub widgetSelected()
-				rellenar(vista.getDistribucionDepartamentoDiaSemana(departamento, 4));
+				seleccion=4;
+				ArrayList<String> horario=vista.getHorarioDpto(departamento);
+				 rellenar(vista.getDistribucionDepartamentoDiaSemana(departamento, 4),new Time(Integer.parseInt(horario.get(0).substring(0,2)),0,0),
+						 new Time(Integer.parseInt(horario.get(1).substring(0,2)),0,0));
 				scroll.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				composite.layout();
 			}
 		});
 		rSabado = new Button(cTipos, SWT.RADIO);
-		rSabado.setText(bundle.getString("Sabado"));
+		rSabado.setText(bundle.getString("sabado"));
 		rSabado.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-				seleccion=5; // TODO Auto-generated Event stub widgetSelected()
-				rellenar(vista.getDistribucionDepartamentoDiaSemana(departamento, 5));
+				seleccion=5;
+				ArrayList<String> horario=vista.getHorarioDpto(departamento);
+				 rellenar(vista.getDistribucionDepartamentoDiaSemana(departamento, 5),new Time(Integer.parseInt(horario.get(0).substring(0,2)),0,0),
+						 new Time(Integer.parseInt(horario.get(1).substring(0,2)),0,0));
 				scroll.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				composite.layout();
 			}
 		});
 		rDomingo = new Button(cTipos, SWT.RADIO);
-		rDomingo.setText(bundle.getString("Domingo"));
+		rDomingo.setText(bundle.getString("domingo"));
 		rDomingo.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-				seleccion=6; // TODO Auto-generated Event stub widgetSelected()
-				rellenar(vista.getDistribucionDepartamentoDiaSemana(departamento, 6));
+				seleccion=6;
+				ArrayList<String> horario=vista.getHorarioDpto(departamento);
+				 rellenar(vista.getDistribucionDepartamentoDiaSemana(departamento, 6),new Time(Integer.parseInt(horario.get(0).substring(0,2)),0,0),
+						 new Time(Integer.parseInt(horario.get(1).substring(0,2)),0,0));
 				scroll.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				composite.layout();
 			}
@@ -209,8 +230,10 @@ public class I20_Configuracion_Dias {
 			final int cuenta=i;
 			otrosTipos.get(i).addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 				public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-					seleccion=7+cuenta; // TODO Auto-generated Event stub widgetSelected()
-					rellenar(vista.getDistribucionDepartamentoDiaSemana(departamento, 7+cuenta));
+					seleccion=7+cuenta;
+					ArrayList<String> horario=vista.getHorarioDpto(departamento);
+					 rellenar(vista.getDistribucionDepartamentoDiaSemana(departamento, 7+cuenta),new Time(Integer.parseInt(horario.get(0).substring(0,2)),0,0),
+							 new Time(Integer.parseInt(horario.get(1).substring(0,2)),0,0));
 					scroll.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 					composite.layout();
 				}
@@ -230,8 +253,10 @@ public class I20_Configuracion_Dias {
 				final int cuenta=otrosTipos.size()-1;
 				b.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 					public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
-						seleccion=7+cuenta; // TODO Auto-generated Event stub widgetSelected()
-						rellenar(vista.getDistribucionDepartamentoDiaSemana(departamento, 7+cuenta));
+						seleccion=7+cuenta;
+						ArrayList<String> horario=vista.getHorarioDpto(departamento);
+						 rellenar(vista.getDistribucionDepartamentoDiaSemana(departamento, 7+cuenta),new Time(Integer.parseInt(horario.get(0).substring(0,2)),0,0),
+								 new Time(Integer.parseInt(horario.get(1).substring(0,2)),0,0));
 						scroll.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 						composite.layout();
 					}
@@ -263,7 +288,7 @@ public class I20_Configuracion_Dias {
 			}
 		});
 		bModificar = new Button(gTiposDia, SWT.NONE);
-		bModificar.setText(bundle.getString("Modificar tipo"));
+		bModificar.setText(bundle.getString("ConfiguracionHorarios_modificar_tipo"));
 		bModificar.setLayoutData(gridData14);
 		bModificar.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
@@ -302,7 +327,9 @@ public class I20_Configuracion_Dias {
 		sMaximo=new ArrayList<Spinner>();
 		
 		createCNumeros();
-		rellenar(vista.getDistribucionDepartamentoDiaSemana(departamento, 0));	
+		ArrayList<String> horario=vista.getHorarioDpto(departamento);
+		rellenar(vista.getDistribucionDepartamentoDiaSemana(departamento, 0),new Time(Integer.parseInt(horario.get(0).substring(0,2)),0,0),
+				 new Time(Integer.parseInt(horario.get(1).substring(0,2)),0,0));	
 		
 		bGuardar = new Button(gNumerosDia, SWT.NONE);
 		bGuardar.setText(bundle.getString("ConfiguracionHorarios_boton_guardar"));
@@ -316,8 +343,10 @@ public class I20_Configuracion_Dias {
 		
 	}
 
-	private void rellenar(ArrayList<Object[]> horarios) {
+	private void rellenar(ArrayList<Object[]> horarios,Time apertura,Time cierre) {
 			
+		setAperturaCierre();
+				
 		 for (int i=0;i<lHorario.size();i++){
 			 lHorario.get(i).dispose();
 			 lMinimo.get(i).dispose();
@@ -333,19 +362,30 @@ public class I20_Configuracion_Dias {
 		 sMinimo.clear();
 		 sMaximo.clear();
 		
-		for (int i=0;i<horarios.size();i++){
-			lHorario.add(new Label(cNumeros, SWT.NONE));
-			lHorario.get(i).setText("Desde las "+(Integer)horarios.get(i)[0]+" a las "+((Integer)horarios.get(i)[0])+1);
-			lMinimo.add(new Label(cNumeros, SWT.NONE));
-			lMinimo.get(i).setText(bundle.getString("Minimo"));
-			sMinimo.add(new Spinner(cNumeros, SWT.BORDER));
-			sMinimo.get(i).setSelection(((Integer)horarios.get(i)[1]));
-			sMinimo.get(i).setMinimum(0);
-			lMaximo.add(new Label(cNumeros, SWT.NONE));
-			lMaximo.get(i).setText(bundle.getString("Maximo"));
-			sMaximo.add(new Spinner(cNumeros, SWT.BORDER));
-			sMaximo.get(i).setSelection((Integer)horarios.get(i)[2]);
-			sMaximo.get(i).setMinimum(1);
+		for (int i=apertura.getHours();i<cierre.getHours();i++){
+			Label label1=new Label(cNumeros,SWT.NONE);
+			label1.setText("Desde las "+(Integer)horarios.get(i)[0]+" a las "+((Integer)horarios.get(i)[0]+1));
+			lHorario.add(label1);
+			
+			Label minimo=new Label(cNumeros,SWT.NONE);
+			minimo.setText(bundle.getString("Minimo"));
+			lMinimo.add(minimo);
+			
+			Spinner spMinimo=new Spinner(cNumeros, SWT.BORDER);
+			spMinimo.setSelection(((Integer)horarios.get(i)[1]));
+			spMinimo.setMinimum(0);
+			sMinimo.add(spMinimo);			
+			
+			Label maximo=new Label(cNumeros,SWT.NONE);
+			maximo.setText(bundle.getString("Maximo"));
+			lMaximo.add(maximo);
+			
+			
+			Spinner spMaximo=new Spinner(cNumeros, SWT.BORDER);
+			spMaximo.setSelection(((Integer)horarios.get(i)[1]));
+			spMaximo.setMinimum(1);
+			sMaximo.add(spMaximo);
+
 		}
 		cNumeros.layout();
 		gNumerosDia.layout();
@@ -392,30 +432,33 @@ public class I20_Configuracion_Dias {
 		lApertura.setText("Apertura:");
 		lApertura.setLayoutData(gridData8);
 		sApertura = new Spinner(gHoras, SWT.BORDER);
-		sApertura.setSelection(Integer.valueOf(horario.get(0)));
+		sApertura.setSelection(Integer.valueOf(horario.get(0).substring(0, 2)));
 		sApertura.setMaximum(23);
 		sApertura.setLayoutData(gridData10);
 		sAperturaMin = new Spinner(gHoras, SWT.BORDER);
 		sAperturaMin.setMaximum(59);
+		sApertura.setSelection(Integer.valueOf(horario.get(0).substring(3, 5)));
 		lCierre = new Label(gHoras, SWT.NONE);
 		lCierre.setText("Cierre:");
 		lCierre.setLayoutData(gridData9);
 		sCierre = new Spinner(gHoras, SWT.BORDER);
-		sCierre.setSelection(Integer.valueOf(horario.get(1)));
+		sCierre.setSelection(Integer.valueOf(horario.get(1).substring(0, 2)));
 		sCierre.setMaximum(24);
 		sCierre.setMinimum(1);
 		sCierre.setLayoutData(gridData7);
 		sCierreMin = new Spinner(gHoras, SWT.BORDER);
 		sCierreMin.setMaximum(59);
 		sCierreMin.setIncrement(5);
+		sApertura.setSelection(Integer.valueOf(horario.get(1).substring(3, 5)));
 		bEstablecer = new Button(gHoras, SWT.NONE);
 		bEstablecer.setText("Estabecer");
 		bEstablecer.setLayoutData(gridData11);
 		bEstablecer.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				// TODO guardar la hora de apertura y cierre para este departamento este dia, y actualizar lo de abajo
-				//vista.setHorarioDpto(departamento,sApertura.getSelection(),sCierre.getSelection());
-				rellenar(vista.getDistribucionDepartamentoDiaSemana(departamento, seleccion));
+				vista.setHorarioDpto(departamento,new Time (sApertura.getSelection(),sAperturaMin.getSelection(),0),new Time(sCierre.getSelection(),sCierreMin.getSelection(),0));
+				rellenar(vista.getDistribucionDepartamentoDiaSemana(departamento, seleccion),new Time(sApertura.getSelection(),0,0),
+						 new Time(sCierre.getSelection(),0,0));
 				scroll.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 				composite.layout();
 			}
@@ -424,8 +467,10 @@ public class I20_Configuracion_Dias {
 	
 	private void setAperturaCierre(){
 		ArrayList<String> horario=vista.getHorarioDpto(departamento);
-		sApertura.setSelection(Integer.valueOf(horario.get(0)));
-		sCierre.setSelection(Integer.valueOf(horario.get(1)));
+		sApertura.setSelection(Integer.valueOf(horario.get(0).substring(0, 2)));
+		sAperturaMin.setSelection(Integer.valueOf(horario.get(0).substring(3, 5)));
+		sCierre.setSelection(Integer.valueOf(horario.get(1).substring(0, 2)));
+		sCierreMin.setSelection(Integer.valueOf(horario.get(1).substring(3, 5)));
 	}
 
 	/**
@@ -438,7 +483,7 @@ public class I20_Configuracion_Dias {
 		gridData.grabExcessHorizontalSpace = true;
 		gridData.grabExcessVerticalSpace = true;
 		gridData.verticalAlignment = GridData.FILL;
-		scroll = new ScrolledComposite(sShell, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+		scroll = new ScrolledComposite(padre, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
 		scroll.setExpandHorizontal(true);
 	    scroll.setExpandVertical(true);
 		createComposite();
@@ -447,10 +492,10 @@ public class I20_Configuracion_Dias {
 		scroll.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 	}
 	
-	public I20_Configuracion_Dias(Vista vista, String departamento, Composite padre, ResourceBundle bundle){
+	public I20_Configuracion_Dias(Vista vista, String departamento, Composite padre, ResourceBundle bundle, Shell shell){
 		this.vista=vista;
 		this.departamento=departamento;
-	//	this.sShell=shell;
+		this.sShell=shell;
 		this.padre=padre;
 		this.bundle = bundle;
 	//	createSShell();
@@ -487,26 +532,6 @@ public class I20_Configuracion_Dias {
 		cNumeros = new Composite(gNumerosDia, SWT.NONE);
 		cNumeros.setLayoutData(gridData13);
 		cNumeros.setLayout(gridLayout5);
-	}
-
-/*	public static void main(String [] args){
-		
-		I20_Configuracion_Dias vista=new I20_Configuracion_Dias(null,null,null,null);
-		Shell shell=vista.getShell();
-		shell.open();
-
-		while (!shell.isDisposed()) {
-	      if (!shell.getDisplay().readAndDispatch()) {
-	        shell.getDisplay().sleep();
-	      }
-	    }
-	    shell.getDisplay().dispose();
-
-	}*/
-
-	private Shell getShell() {
-		// TODO Auto-generated method stub
-		return sShell;
 	}
 	
 	public void setGridData(GridData g){
