@@ -1380,12 +1380,14 @@ public class Vista {
 			if (!alive) return;
 			setProgreso("Cargando empleados", 25);
 			
-			empleados = controlador.getEmpleadosDepartamento(getEmpleadoActual().getEmplId(),dep);
 			setProgreso("Cargando empleados", 100);
 			if (!alive) return;
 			setProgreso("Cargando contratos", 50);
 			
 			contratos = controlador.getListaContratosDpto(dep);
+			
+			empleados = controlador.getEmpleadosDepartamento(getEmpleadoActual().getEmplId(),dep);
+			
 			setProgreso("Cargando contratos", 100);
 			if (!alive) return;
 			if (rango == 1) { // Si es un empleado, coger turnos de su departamento
