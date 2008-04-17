@@ -1569,11 +1569,13 @@ public class Controlador {
 	 * @param idContrato
 	 *            identificador de contrato
 	 * @return ArrayList de turnos pertenecientes al contrato dado
+	 * POR DIOS COMO ME ENCUENTRE AL MONO QUE HIZO ESTA CAGADA LO MATO
+	 * FDO: EL BOSS
 	 */
 	public ArrayList<Turno> getTurnosDeUnContrato(int idContrato) {//no quitar la usa la clase de generar datos aleatorios
 		ArrayList<Turno> turnos = new ArrayList<Turno>();
 		try {
-			ResultSet rs = _db.obtenTurnosDeUnContrato(idContrato);
+/*			ResultSet rs = _db.obtenTurnosDeUnContrato(idContrato);
 			while (rs.next()) {
 				int idTurn = rs.getInt("IdTurno");
 				ResultSet rs2 = _db.obtenTurno(idTurn);
@@ -1588,7 +1590,21 @@ public class Controlador {
 					Turno t = new Turno(idTurn, descr, HoraE, HoraS, HoraI,
 							descanso,Util.stringAColor(color));
 					turnos.add(t);
-				}
+				}*/
+			ResultSet rs = _db.obtenTurnosContrato(idContrato);
+			while (rs.next()) {
+				int idTurno = rs.getInt("IdTurno");
+				String descr = rs.getString("Descripcion");
+				Time HoraE = rs.getTime("HoraEntrada");
+				Time HoraS = rs.getTime("HoraSalida");
+				Time HoraI = rs.getTime("HoraInicioDescanso");
+				Time duracion = rs.getTime("DuracionDescanso");
+				String color=rs.getString("Color");
+				int descanso = aplicacion.utilidades.Util.dameMinutos(duracion);
+				Turno t = new Turno(idTurno, descr, HoraE, HoraS, HoraI,
+						descanso,Util.stringAColor(color));
+				turnos.add(t);
+
 			}
 
 		} catch (Exception e) {
@@ -1603,11 +1619,13 @@ public class Controlador {
 	 * @param idEmpl
 	 *            identificador del empleado
 	 * @return devuelve todos los turnos que tiene un empleado según su contrato
+	 * OTRA IGUAL, ¡ME VAIS A MATAR A DISGUSTOS! 
+	 * FDO: EL BOSS
 	 */
 	public ArrayList<Turno> getListaTurnosContrato(int idEmpl) {
 		ArrayList<Turno> turnos = new ArrayList<Turno>();
 		try {
-			ResultSet rs = _db.obtenListaTurnosContrato(idEmpl);
+/*			ResultSet rs = _db.obtenListaTurnosContrato(idEmpl);
 			while (rs.next()) {
 				int idTurn = rs.getInt("IdTurno");
 				ResultSet rs2 = _db.obtenTurno(idTurn);
@@ -1622,9 +1640,21 @@ public class Controlador {
 					Turno t = new Turno(idTurn, descr, HoraE, HoraS, HoraI,
 							descanso,Util.stringAColor(color));
 					turnos.add(t);
-				}
+				}*/
+			ResultSet rs = _db.obtenTurnosContratoEmpleado(idEmpl);
+			while (rs.next()) {
+				int idTurno = rs.getInt("IdTurno");
+				String descr = rs.getString("Descripcion");
+				Time HoraE = rs.getTime("HoraEntrada");
+				Time HoraS = rs.getTime("HoraSalida");
+				Time HoraI = rs.getTime("HoraInicioDescanso");
+				Time duracion = rs.getTime("DuracionDescanso");
+				String color=rs.getString("Color");
+				int descanso = aplicacion.utilidades.Util.dameMinutos(duracion);
+				Turno t = new Turno(idTurno, descr, HoraE, HoraS, HoraI,
+						descanso,Util.stringAColor(color));
+				turnos.add(t);
 			}
-
 		} catch (Exception e) {
 			
 			System.err.println("Controlador :: Error al obtener Lista de Turnos del contrato de un empleado en la base de datos: " + e.getMessage());
