@@ -1156,7 +1156,7 @@ public class Controlador {
 				while (r.next()) {
 					Mensaje m = new Mensaje(r.getInt("IdMensaje"), r.getInt("Remitente"), idEmpl,
 							r.getDate("Fecha"), r.getString("Asunto"),
-							r.getString("Texto"), r.getBoolean("Marcado"));
+							r.getString("Texto"), r.getBoolean("visto"), r.getBoolean("Marcado"));
 					temp.add(m);
 				}
 			}
@@ -1192,7 +1192,8 @@ public class Controlador {
 							mensajes.getDate("Fecha"),
 							mensajes.getString("Asunto"),
 							mensajes.getString("Texto"),
-							mensajes.getBoolean("Marcado"));				
+							mensajes.getBoolean("Marcado"),
+							mensajes.getBoolean("visto"));				
 						misMensajes.add(m);
 				}
 			}
@@ -1226,7 +1227,8 @@ public class Controlador {
 							mensajes.getDate("Fecha"),
 							mensajes.getString("Asunto"),
 							mensajes.getString("Texto"),
-							mensajes.getBoolean("Marcado"));				
+							mensajes.getBoolean("Marcado"),
+							mensajes.getBoolean("visto"));				
 						misMensajes.add(m);
 				}
 			}
