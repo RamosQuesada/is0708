@@ -376,7 +376,6 @@ public class TabContratos extends Thread {
 								ArrayList<Integer> turnosFuera = new ArrayList<Integer>();
 								int idOut = Integer.valueOf(tit.getText(0));
 								ArrayList<Turno> turnosOut = vista
-										.getControlador()
 										.getTurnosDeUnContrato(idOut);
 								int apariciones = 0;
 								for (int k = 0; k < turnosOut.size(); k++) {
@@ -386,7 +385,6 @@ public class TabContratos extends Thread {
 										Contrato aux = auxContratos.get(i);
 										if (aux.getNumeroContrato() != idOut) {
 											ArrayList<Turno> auxTurnos = vista
-													.getControlador()
 													.getTurnosDeUnContrato(
 															aux
 																	.getNumeroContrato());
