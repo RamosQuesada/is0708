@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
@@ -25,11 +26,13 @@ public class TabDepartamentos {
 	final Vista vista;
 	final ResourceBundle bundle;
 	final TabFolder tabFolder;
+	final Shell padre;
 	
-	public TabDepartamentos(TabFolder tabFolder, Vista vista, ResourceBundle bundle) {
+	public TabDepartamentos(TabFolder tabFolder, Vista vista, ResourceBundle bundle, Shell padre) {
 		this.vista = vista;
 		this.bundle = bundle;
 		this.tabFolder = tabFolder;
+		this.padre=padre;
 		crearTabJefeDepartamentos();
 	}
 	
@@ -83,10 +86,11 @@ public class TabDepartamentos {
 			}
 		});
 		
-	/*	final TabFolder fCentro= new TabFolder(cDepartamentos, SWT.NONE);
+		final TabFolder fCentro= new TabFolder(cDepartamentos, SWT.NONE);
+		fCentro.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		
-		I20_Configuracion_Dias cInfoHorario=new I20_Configuracion_Dias(vista, array.get(0), fCentro,bundle);
-		cInfoHorario.setGridData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
+		//comentado hasta que no pete. para probar descomentar
+	//	SubTabConfiguracionDias cInfoHorario=new SubTabConfiguracionDias(vista, array.get(0), fCentro,bundle,padre);
 		
 		final Text lContenido = new Text(fCentro, SWT.READ_ONLY | SWT.MULTI |SWT.V_SCROLL);
 		lContenido.setText(vista.infoDpto(cmbDepartamentos.getText()));
@@ -94,10 +98,10 @@ public class TabDepartamentos {
 		lContenido.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 				true, 2, 1));
 		
-		
-		TabItem tab1=new TabItem(fCentro, SWT.NONE);
+		//comentado para ke no pete al resto
+	/*	TabItem tab1=new TabItem(fCentro, SWT.NONE);
 		tab1.setText(bundle.getString("TabDepartamentos_tab1"));
-		tab1.setControl(cInfoHorario.getControl());		
+		tab1.setControl(cInfoHorario.getControl());	*/
 		
 		TabItem tab2=new TabItem(fCentro, SWT.NONE);
 		tab2.setText(bundle.getString("TabDepartamentos_tab2"));
@@ -105,18 +109,8 @@ public class TabDepartamentos {
 		
 		TabItem tab3=new TabItem(fCentro, SWT.NONE);
 		tab3.setText(bundle.getString("TabDepartamentos_tab3"));
-		tab3.setControl(lContenido);*/
-		
-		//TODO estoy haciendo pruebas con esto
-	/*	Composite cInfo = new Composite(cDepartamentos, SWT.BORDER);
-		cInfo.setLayout(new GridLayout(2, false));
-		cInfo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));*/
-		
-		
-		
-		
-		
-		
+		tab3.setControl(lContenido);
+			
 		//listener para el combo y mostrar la info debajo
 		cmbDepartamentos.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
