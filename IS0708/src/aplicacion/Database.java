@@ -1895,6 +1895,7 @@ return result;
 			r = st.executeQuery(q);
 		} catch (SQLException e) {
 			System.err.println("Database :: Error al obtener los turnos de un contrato:\n\t" + q);
+			e.printStackTrace();
 		}
 		return r;
 	}
