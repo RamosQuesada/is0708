@@ -1694,14 +1694,14 @@ public class Vista {
 	}
 	/**
 	 * Funcion que cambia el horario de un departamento
-	 * @param text horaInicio
-	 * @param text2 minutoInicio
-	 * @param text3 horaCierre
-	 * @param text4	minutoCierre	
+	 * @param i horaInicio
+	 * @param j minutoInicio
+	 * @param k horaCierre
+	 * @param m	minutoCierre	
 	 * @param nombre nombre departamento
 	 */
-	public void cambiarHorarioDepartamento(String text, String text2,
-			String text3, String text4, String nombre) {
+	public void cambiarHorarioDepartamento(int i, int j,
+			int k, int m, String nombre) {
 		// TODO Auto-generated method stub
 		
 	}
