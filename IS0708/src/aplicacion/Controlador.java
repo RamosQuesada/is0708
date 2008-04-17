@@ -1552,7 +1552,7 @@ public class Controlador {
 	 *            identificador de contrato
 	 * @return ArrayList de turnos pertenecientes al contrato dado
 	 */
-	public ArrayList<Turno> getTurnosDeUnContrato(int idContrato) {
+	public ArrayList<Turno> getTurnosDeUnContrato(int idContrato) {//no quitar la usa la clase de generar datos aleatorios
 		ArrayList<Turno> turnos = new ArrayList<Turno>();
 		try {
 			ResultSet rs = _db.obtenTurnosDeUnContrato(idContrato);
