@@ -111,7 +111,7 @@ public class DialogCreacionContratos {
 		contratoModificado = cm;
 		// CAMBIAR
 		if (idContrato != -1)
-			turnos = vista.getControlador().getTurnosDeUnContrato(idContrato);
+			turnos = vista.getTurnosDeUnContrato(idContrato);
 		else
 			turnos = new ArrayList<Turno>();
 		idsTurnosInsertados = new ArrayList<Integer>();
@@ -772,7 +772,6 @@ public class DialogCreacionContratos {
 									Contrato aux = auxContratos.get(i);
 									if (aux.getNumeroContrato() != idContrato) {
 										ArrayList<Turno> auxTurnos = vista
-												.getControlador()
 												.getTurnosDeUnContrato(
 														aux.getNumeroContrato());
 										for (int j = 0; j < auxTurnos.size(); j++) {
@@ -1009,12 +1008,7 @@ public class DialogCreacionContratos {
 									for (int i = 0; i < idsTurnosEliminados
 											.size(); i++) {
 										int aux = idsTurnosEliminados.get(i);
-										// CAMBIAR
-										okis = okis
-												&& vista
-														.getControlador()
-														.eliminaTurnoDeContrato(
-																aux, idContrato);
+										vista.eliminaTurnoDeContrato(aux, idContrato);
 									}
 									if (okis) {
 										MessageBox messageBox = new MessageBox(
