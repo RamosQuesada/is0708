@@ -383,6 +383,38 @@ public class TabEmpleados extends Thread{
 				nombreEscrito(arg0);
 			}
 		});
+		
+		tablaEmpleados.addMouseListener(new MouseListener() {
+
+			public void mouseDoubleClick(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				final int idVend;
+				int aux1=tablaEmpleados.getSelectionIndex();
+				if (aux1<0){
+					MessageBox messageBox = new MessageBox (_tabFolder.getShell(), SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
+					messageBox.setText (_bundle.getString("Error"));
+					messageBox.setMessage (_bundle.getString("I02_select_edit_emp"));					
+					//e.doit = messageBox.open () == SWT.YES;
+				}else{
+					TableItem[] aux=tablaEmpleados.getSelection();
+					idVend = (Integer)Integer.valueOf(aux[0].getText(1));
+					new DialogEditarEmpleado(_tabFolder.getShell(),_bundle, _vista,idVend);
+				}
+				
+				mostrarEmpleados();
+			}
+
+			public void mouseDown(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			public void mouseUp(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 	
 	}
 	
