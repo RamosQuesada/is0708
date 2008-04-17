@@ -496,7 +496,7 @@ public class ShellPrincipal {
 	 * @author Jose Maria Martin
 	 */
 	private void crearTabJefeDepartamentos(TabFolder tabFolder) {
-		new TabDepartamentos(tabFolder,vista,bundle);
+		new TabDepartamentos(tabFolder,vista,bundle,shell);
 	}
 	/**
 	 * Crea un tab de inicio para el administrador
