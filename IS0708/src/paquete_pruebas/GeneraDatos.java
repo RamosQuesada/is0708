@@ -178,7 +178,7 @@ public class GeneraDatos {
 		c.insertDepartamentoUsuario(12345678, depart);
 		
 		//creamos un nuevo departamento
-	    c.insertDepartamentoPruebas(depart,12345678);//se supone que el jefe será el que acabamos de crear
+	    c.insertDepartamentoPruebas(depart,12345678,Time.valueOf("9:00:00"),Time.valueOf("23:00:00"));//se supone que el jefe será el que acabamos de crear
 		
 		//he comentado lo anterior porque no se si solo tenemos que generar un departamento o mas de un departamento
 
