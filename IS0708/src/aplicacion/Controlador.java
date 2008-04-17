@@ -1558,9 +1558,8 @@ public class Controlador {
 			}
 
 		} catch (Exception e) {
-			
-			System.err
-					.println("Controlador :: Error al obtener Lista de Turnos en la base de datos");
+			System.err.println("Controlador :: Error al obtener Lista de Turnos de los empleados en la base de datos: " + e.getMessage());
+			e.printStackTrace();
 		}
 		return turnos;
 	}
@@ -1593,9 +1592,8 @@ public class Controlador {
 			}
 
 		} catch (Exception e) {
-			
-			System.err
-					.println("Controlador :: Error al obtener Lista de Turnos en la base de datos");
+			System.err.println("Controlador :: Error al obtener Lista de Turnos de un contrato en la base de datos: "+ e.getMessage());
+			e.printStackTrace();
 		}
 		return turnos;
 	}
@@ -1629,8 +1627,8 @@ public class Controlador {
 
 		} catch (Exception e) {
 			
-			System.err
-					.println("Controlador :: Error al obtener Lista de Turnos en la base de datos");
+			System.err.println("Controlador :: Error al obtener Lista de Turnos del contrato de un empleado en la base de datos: " + e.getMessage());
+			e.printStackTrace();
 		}
 		return turnos;
 	}
@@ -2124,7 +2122,8 @@ public class Controlador {
 			}
 
 		} catch (Exception e) {
-			System.err.println("Controlador :: Error al obtener Lista de Turnos en la base de datos");
+			System.err.println("Controlador :: Error al obtener todos los números de departamento en la base de datos: " + e.getMessage());
+			e.printStackTrace();
 		}
 		return numeros;
 	
@@ -2146,7 +2145,8 @@ public class Controlador {
 			}
 
 		} catch (Exception e) {
-			System.err.println("Controlador :: Error al obtener Distribucion en la base de datos");
+			System.err.println("Controlador :: Error al obtener Distribucion en la base de datos: " + e.getMessage());
+			e.printStackTrace();
 		}
 		return info;
 	
