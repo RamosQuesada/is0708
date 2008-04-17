@@ -1042,7 +1042,7 @@ public class Database extends Thread {
 			tdesc.setHours(0);
 			st = con.createStatement();
 			st
-					.executeUpdate("INSERT INTO " + tablaTurnos + " (Descripcion, HoraEntrada, HoraSalida, HoraInicioDescanso, DuracionDescanso) VALUES ('"
+					.executeUpdate("INSERT INTO " + tablaTurnos + " (Descripcion, HoraEntrada, HoraSalida, HoraInicioDescanso, DuracionDescanso, Color) VALUES ('"
 							+ Descripcion
 							+ "', '"
 							+ HoraEntrada
