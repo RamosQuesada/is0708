@@ -2205,7 +2205,7 @@ public class Database extends Thread {
 					"IdContrato Int NOT NULL AUTO_INCREMENT," +
 					"TurnoInicial Int NOT NULL," +
 					"Nombre Varchar(20) ," +
-					"Patron Varchar(30) ," +
+					"Patron Varchar(150) ," +
 					"DuracionCiclo Int ," +
 					"Salario Decimal(8,2) ," +
 					"Tipo tinyint(1)," +
