@@ -566,14 +566,7 @@ public class Vista {
 		login();
 		// Si no he cerrado el shell, ya he hecho login correctamente
 		if (!shell.isDisposed()) {
-			// Este bucle mantiene la ventana abierta
-			while (!shell.isDisposed()) {
-				if (!shell.getDisplay().readAndDispatch()) {
-					shell.getDisplay().sleep();
-				}
-			}
-			// Cierre de la aplicación
-			stop();
+			shellPrincipal.mostrarVentana();
 		}
 	}
 	

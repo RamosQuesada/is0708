@@ -114,8 +114,7 @@ public class TabInicio {
 				messageBox.setMessage(bundle.getString("I02_confirm_reset"));
 				int response = messageBox.open();
 				if (response == SWT.OK) {
-					// paquete_pruebas.GeneraDatos.reset();
-//					paquete_pruebas.InsertaDatosFijos.resetBD(20);
+					paquete_pruebas.InsertaDatosFijos.resetBD(5);
 					System.out.println("BBDD reiniciada");
 				}
 			}

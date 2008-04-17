@@ -555,6 +555,7 @@ public class Util {
 	 * @return Un string con el color en hexadecimal
 	 */
 	public static String ColorAHex(Color color){
+		if (color == null) return "000000";
 		String r = Integer.toHexString(color.getRed()).toUpperCase();
 		if (r.length()==1) r = 0 + r;
 		String g = Integer.toHexString(color.getGreen()).toUpperCase();
