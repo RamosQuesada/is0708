@@ -42,10 +42,11 @@ public class DialogVentasEmpleado {
 	private int idVend;
 	private Float ventas;
 	
-	public DialogVentasEmpleado(Shell padre, ResourceBundle bundle, Vista vista) {
+	public DialogVentasEmpleado(Shell padre, ResourceBundle bundle, Vista vista, int idVend) {
 		this.padre = padre;
 		this.bundle = bundle;
 		this.vista = vista;
+		this.idVend=idVend;
 
 		mostrarVentana();
 	}
@@ -148,11 +149,26 @@ public class DialogVentasEmpleado {
 					tFecha.selectAll();			
 				}
 				ventas= Float.valueOf((tNventas.getText()));
-				idVend= vista.getEmpleadoActual().getEmplId();
-				
+								
 				
 				//añadir ventas en la base de datos
-				vista.insertVentas(idVend, ventas, fecha);
+				//Si ya tiene ventas para ese dia la modifica si no la inserta 
+				if (vista.existeVentas(idVend, fecha)){
+					MessageBox msgBox = new MessageBox(shell,
+							SWT.APPLICATION_MODAL | SWT.ICON_WARNING | SWT.OK
+									| SWT.CANCEL);
+					msgBox.setMessage(bundle.getString("existe_Ventas"));
+					msgBox.setText(bundle.getString("Aviso"));
+					int resp = msgBox.open();
+					if (resp == SWT.OK) {
+						// Si a pesar de todo esta de acuerdo modificacion de las ventas.
+						vista.cambiarVentas(idVend, fecha, ventas);
+						
+					}
+					
+				}else	
+					vista.insertVentas(idVend, ventas, fecha);
+				shell.dispose();
 			}
 		};
 		
@@ -164,7 +180,7 @@ public class DialogVentasEmpleado {
 		shell.pack();
 		// Mostrar ventana centrada sobre el padre
 		shell.setLocation(padre.getBounds().width/2 + padre.getBounds().x - shell.getSize().x/2, padre.getBounds().height/2 + padre.getBounds().y - shell.getSize().y/2);
-		shell.setSize(200, 150);
+		shell.setSize(200, 200);
 		shell.open();
 	}
 

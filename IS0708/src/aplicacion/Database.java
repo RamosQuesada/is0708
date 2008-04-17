@@ -6,6 +6,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.eclipse.swt.graphics.Color;
+
 import aplicacion.utilidades.EncriptCadena;
 import aplicacion.utilidades.Util;
 
@@ -401,6 +403,20 @@ public class Database extends Thread {
 		}
 		return true;
 	}
+	
+	public boolean cambiarVentas(int IdVend, Date fecha, float ventas) {
+		int r = 0;
+		try {
+			st = con.createStatement();
+			r = st.executeUpdate("UPDATE " + tablaVentas + " SET Fecha="
+					+ fecha + ", Importe='" + ventas 
+					+ " WHERE IdVend=" + IdVend + ";");
+		} catch (SQLException e) {
+			System.err.println("Database :: Error modificar ventas en la BD");
+			return false;
+		}
+		return true;
+	}
 
 	/**
 	 * Modifica un empleado en la BD. Se le pasan todos los parametros aunque no
@@ -425,8 +441,9 @@ public class Database extends Thread {
 	 */
 	public boolean cambiarEmpleado(int idEmp, String nomb, String Ape1, String Ape2, Date FNac, int sexo, 
 			String mail, String Passw, int grupo, Date FCont, Date Fentr, int Felic, int Idiom, 
-			int Rang, int Turn, int Contr) {
+			int Rang, int Turn, Color color, int Contr) {
 		int r = 0;
+		String col =color.toString();
 		try {
 			String Nac = Util.dateAString(FNac);
 			String Cont = Util.dateAString(FCont);
@@ -441,7 +458,7 @@ public class Database extends Thread {
 					+ ", FechaContrato='" + Cont + "', FechaEntrada='" + Entr
 					+ "', Felicidad=" + Felic
 					+ ", Idioma=" + Idiom + ", Rango=" + Rang
-					+ ", IdContrato=" + Contr + ", IdTurno=" + Turn
+					+ ", IdContrato=" + Contr + ", IdTurno=" + Turn + ", Color=" + col
 					+ " WHERE NumVendedor=" + idEmp + ";");
 		} catch (SQLException e) {
 			System.err.println("Database :: Error al modificar empleado en la BD");
@@ -1152,12 +1169,13 @@ public class Database extends Thread {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO " + tablaVentas + " values ('" + Fecha + "', '"
-					+ numVentas + "', '" + idUsuario + "')");
+			st.executeUpdate("INSERT INTO " + tablaVentas + " values ('" + idUsuario + "', '"
+					+ Fecha + "', '" + numVentas + "')");
 //			System.out.println("aplicacion.Database.java\t::Ventas insertada");
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
+			e.printStackTrace();
 			System.err.println("Database :: Error al insertar Ventas");
 		}
 		return correcto;
@@ -1261,6 +1279,20 @@ public class Database extends Thread {
 		return result;
 	}
 
+	public ResultSet obtenVentas(int idVend,Date fecha){
+		ResultSet result =null;
+		try{
+			st=con.createStatement();
+			result = st
+			.executeQuery("SELECT * FROM " + tablaVentas + " WHERE NumVendedor = "
+					+ idVend +  "' AND Fecha<='"+ fecha + ";");
+} catch (SQLException e) {
+	e.printStackTrace();
+	System.err.println("Database :: Error de lectura de Ventas");
+}
+return result;
+		
+	}
 	/**
 	 * Método que lee todos los contratos de un departamento
 	 * 
