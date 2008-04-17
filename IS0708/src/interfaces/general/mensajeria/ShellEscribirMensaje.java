@@ -130,7 +130,7 @@ public class ShellEscribirMensaje {
 						MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO | SWT.ICON_INFORMATION);
 						messageBox.setText (_bundle.getString("Mensaje"));
 						messageBox.setMessage (_bundle.getString("sintextoasun"));
-						if( messageBox.open () == SWT.YES){
+						if( messageBox.open () == SWT.YES){							
 							shell.dispose();
 						}
 					}	
@@ -139,7 +139,25 @@ public class ShellEscribirMensaje {
 						messageBox.setText (_bundle.getString("Mensaje"));
 						messageBox.setMessage (_bundle.getString("sinasunto"));
 						if( messageBox.open () == SWT.YES){
-							shell.dispose();
+
+							tAsunto.setText("(sin asunto)");
+							
+							Mensajeria m = new Mensajeria(_vista.getControlador(), _vista.getEmpleadoActual().getEmplId());
+							int destino = idEmpl;
+							if (idEmpl==0) destino = tNombre.getIdEmpl();
+							if (m.creaMensaje(destino, tAsunto.getText(), tMensaje.getText())>-1) {
+								MessageBox messageBox2 = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
+								messageBox.setText (_bundle.getString("Enviado"));
+								messageBox.setMessage (_bundle.getString("I14_lab_Enviado"));
+								messageBox.open ();
+							}
+							else {
+								MessageBox messageBox2 = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
+								messageBox.setText (_bundle.getString("Error"));
+								messageBox.setMessage (_bundle.getString("I14_lab_NoEnviado"));
+								messageBox.open ();
+							}
+							shell.dispose();							
 						}
 					}	
 					else if(tMensaje.getCharCount()==0){
@@ -147,6 +165,22 @@ public class ShellEscribirMensaje {
 						messageBox.setText (_bundle.getString("Mensaje"));
 						messageBox.setMessage (_bundle.getString("sintexto"));
 						if( messageBox.open () == SWT.YES){
+							
+							Mensajeria m = new Mensajeria(_vista.getControlador(), _vista.getEmpleadoActual().getEmplId());
+							int destino = idEmpl;
+							if (idEmpl==0) destino = tNombre.getIdEmpl();
+							if (m.creaMensaje(destino, tAsunto.getText(), tMensaje.getText())>-1) {
+								MessageBox messageBox2 = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
+								messageBox.setText (_bundle.getString("Enviado"));
+								messageBox.setMessage (_bundle.getString("I14_lab_Enviado"));
+								messageBox.open ();
+							}
+							else {
+								MessageBox messageBox2 = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
+								messageBox.setText (_bundle.getString("Error"));
+								messageBox.setMessage (_bundle.getString("I14_lab_NoEnviado"));
+								messageBox.open ();
+							}
 							shell.dispose();
 						}
 					}
