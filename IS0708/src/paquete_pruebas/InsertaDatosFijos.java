@@ -125,23 +125,23 @@ public class InsertaDatosFijos {
 			String patron7hM = "6:" + t7hM.getIdTurno() + "/1:d/" +
 			                   "6:" + t7hT.getIdTurno() + "/1:d";
 			Contrato c7hM = new Contrato("7 horas mañana "+nd, 0, t7hM.getIdTurno(), 14, patron7hM, 800, 1);
-			c7hM.setNumeroContrato(c.insertContrato(c7hM));
+			c7hM.setNumeroContrato(c.insertContrato(c7hM, depart));
 			String patron7hT = "6:" + t7hT.getIdTurno() + "/1:d/" +
 	         				   "6:" + t7hM.getIdTurno() + "/1:d";
 			Contrato c7hT = new Contrato("7 horas tarde "+nd, 0, t7hT.getIdTurno(), 14, patron7hT, 800, 1);
-			c7hT.setNumeroContrato(c.insertContrato(c7hT));
+			c7hT.setNumeroContrato(c.insertContrato(c7hT, depart));
 			
 			String patron4h = "7:" + t4hM.getIdTurno() + "," + t4hT.getIdTurno();
 			Contrato c4hM = new Contrato("4 horas mañana "+nd, 0, t4hM.getIdTurno(), 7, patron4h, 600, 4);
-			c4hM.setNumeroContrato(c.insertContrato(c4hM));
+			c4hM.setNumeroContrato(c.insertContrato(c4hM, depart));
 			Contrato c4hT = new Contrato("4 horas tarde "+nd, 0, t4hT.getIdTurno(), 7, patron4h, 600, 4);
-			c4hT.setNumeroContrato(c.insertContrato(c4hT));
+			c4hT.setNumeroContrato(c.insertContrato(c4hT, depart));
 			
 			String patronSab = "5:d/2:" + tSabM.getIdTurno() + "," + tSabT.getIdTurno();	
 			Contrato cSabM = new Contrato("Sabadero mañana "+nd, 0, tSabM.getIdTurno(), 7, patronSab, 600, 4);
-			cSabM.setNumeroContrato(c.insertContrato(cSabM));
+			cSabM.setNumeroContrato(c.insertContrato(cSabM, depart));
 			Contrato cSabT = new Contrato("Sabadero tarde "+nd, 0, tSabT.getIdTurno(), 7, patronSab, 600, 4);
-			cSabT.setNumeroContrato(c.insertContrato(cSabT));
+			cSabT.setNumeroContrato(c.insertContrato(cSabT, depart));
 			
 			// turnosPorContrato - solo hace falta insertar los que sean distintos del inicial del contrato
 			//c.insertTurnoPorContrato(t7hM.getIdTurno(), c7hM.getNumeroContrato());
@@ -216,7 +216,7 @@ public class InsertaDatosFijos {
 			System.out.println("Departamento " + nd + " insertado.");
 		}
 		
-		bd.cerrarConexion();
+		//bd.cerrarConexion();
 		
 	}
 
@@ -233,7 +233,7 @@ public class InsertaDatosFijos {
 		// Prepara la estructura de la BD
 		prepararDB();
 		// Inserta 20 nuevos departamentos para pruebas con sus datos independientes
-		insertarNdepart(5);
+		//insertarNdepart(5);
 		//Inserta n nuevos departamentos para pruebas con sus datos independientes
 		InsertaDatosFijos.insertarNdepart(n);
 	}
