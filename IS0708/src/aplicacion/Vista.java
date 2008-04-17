@@ -1703,7 +1703,11 @@ public class Vista {
 	public void cambiarHorarioDepartamento(int i, int j,
 			int k, int m, String nombre) {
 		// TODO Auto-generated method stub
-		
+		String horaapertura=aplicacion.utilidades.Util.horaminutosAString(i, j);
+		String horacierre=aplicacion.utilidades.Util.horaminutosAString(k, m);
+		Time thI= Time.valueOf(horaapertura);
+		Time thC=Time.valueOf(horacierre);
+		this.controlador.cambiaHorarioDpto(nombre, thI, thC);
 	}
 	   
 	

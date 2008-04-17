@@ -1180,6 +1180,25 @@ public class Database extends Thread {
 		return true;
 	}
 
+	
+	public boolean modificaHorarioDepartamento(String Nombre, Time hI, Time hC) {
+		int r = 0;
+		try {
+			st = con.createStatement();
+			r = st.executeUpdate("UPDATE " + tablaDepartamentos + " SET HoraApertura='"
+					+ hI +"'"+ ", HoraCierre='"+hC+"'"+ "WHERE Nombre='" + Nombre + "';");
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			System.err.println("Database :: Error Cambiar Jefe de Dpto en la BD");
+			return false;
+		}
+		return true;
+	}
+	
+	
+	
 	/**
 	 * 
 	 * @param idContrato

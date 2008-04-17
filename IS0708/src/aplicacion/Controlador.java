@@ -740,6 +740,9 @@ public class Controlador {
 	public void cambiaNombreDpto(String NombreAntiguo, String NombreNuevo) {
 		 _db.cambiaNombreDepartamento(NombreAntiguo, NombreNuevo);
 	}
+	public void cambiaHorarioDpto(String Nombre, Time hI, Time hC) {
+		 _db.modificaHorarioDepartamento(Nombre, hI, hC);
+	}
 	/**
 	 * Metodo que a partir de un identificador de departamento y un dia
 	 * nos devuelve una lista dividida en horas con sus correspondientes 
