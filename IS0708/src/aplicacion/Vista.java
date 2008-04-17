@@ -1303,42 +1303,49 @@ public class Vista {
 	 */
 	public void loadCache() {
 		int rango = getEmpleadoActual().getRango();
-		String dep = getEmpleadoActual().getDepartamentoId();
-		int numvendedor = getEmpleadoActual().getEmplId();
-		if (!alive) return;
-		setProgreso("Cargando empleados", 25);
-		empleados = controlador.getEmpleadosDepartamento(getEmpleadoActual().getEmplId(),dep);
-		setProgreso("Cargando empleados", 100);
-		if (!alive) return;
-		setProgreso("Cargando contratos", 50);
-		contratos = controlador.getListaContratosDpto(dep);
-		setProgreso("Cargando contratos", 100);
-		if (!alive) return;
-		if (rango == 1) { // Si es un empleado, coger turnos de su departamento
-			setProgreso("Cargando turnos", 70);
-			turnos = controlador.getListaTurnosEmpleadosDpto(dep);
-			setProgreso("Cargando turnos", 100);
-		} else if (rango == 2) { // Si es un jefe, coger turnos de todos los departamentos
-			ArrayList<String> temp = new ArrayList<String>();
-			temp = controlador.getDepartamentosJefe(numvendedor);
-			for (int i=0; i<temp.size(); i++)
-				departamentosJefe.add(controlador.getDepartamento(temp.get(i)));
-			//TODO borrar si al final no se usa
-//			setProgreso("Cargando jefes de departamento", 60);
-//			numeroJefesDepartamento = controlador.getNumVendedorTodosJefes();
-//			nombreJefesDepartamento = controlador.getNombreTodosJefes();
-			setProgreso("Cargando turnos", 70);
-			ArrayList<Turno> turnosDep = new ArrayList<Turno>();
-			for (int i=0; i<departamentosJefe.size(); i++) {
-				turnosDep = controlador.getListaTurnosEmpleadosDpto(departamentosJefe.get(i).getNombreDepartamento());
-				for (int j=0; j<turnosDep.size(); j++) {
-					turnos.add(turnosDep.get(j));
-				}				
-			}
-			setProgreso("Cargando turnos", 100);
+		ArrayList<String> idsDptos = getEmpleadoActual().getDepartamentosId();
+		
+		// Para todos los departamentos a los que pertenezca el empleado
+		for (int nd=0; nd<idsDptos.size(); nd++){
+			String dep = idsDptos.get(nd);
+			int numvendedor = getEmpleadoActual().getEmplId();
+			if (!alive) return;
+			setProgreso("Cargando empleados", 25);
 			
-		} else {
-			System.err.println("Vista\t:: Tipo de empleado inválido para cargar la cache.");
+			empleados = controlador.getEmpleadosDepartamento(getEmpleadoActual().getEmplId(),dep);
+			setProgreso("Cargando empleados", 100);
+			if (!alive) return;
+			setProgreso("Cargando contratos", 50);
+			
+			contratos = controlador.getListaContratosDpto(dep);
+			setProgreso("Cargando contratos", 100);
+			if (!alive) return;
+			if (rango == 1) { // Si es un empleado, coger turnos de su departamento
+				setProgreso("Cargando turnos", 70);
+				turnos = controlador.getListaTurnosEmpleadosDpto(dep);
+				setProgreso("Cargando turnos", 100);
+			} else if (rango == 2) { // Si es un jefe, coger turnos de todos los departamentos
+				ArrayList<String> temp = new ArrayList<String>();
+				temp = controlador.getDepartamentosJefe(numvendedor);
+				for (int i=0; i<temp.size(); i++)
+					departamentosJefe.add(controlador.getDepartamento(temp.get(i)));
+				//TODO borrar si al final no se usa
+	//			setProgreso("Cargando jefes de departamento", 60);
+	//			numeroJefesDepartamento = controlador.getNumVendedorTodosJefes();
+	//			nombreJefesDepartamento = controlador.getNombreTodosJefes();
+				setProgreso("Cargando turnos", 70);
+				ArrayList<Turno> turnosDep = new ArrayList<Turno>();
+				for (int i=0; i<departamentosJefe.size(); i++) {
+					turnosDep = controlador.getListaTurnosEmpleadosDpto(departamentosJefe.get(i).getNombreDepartamento());
+					for (int j=0; j<turnosDep.size(); j++) {
+						turnos.add(turnosDep.get(j));
+					}				
+				}
+				setProgreso("Cargando turnos", 100);
+				
+			} else {
+				System.err.println("Vista\t:: Tipo de empleado inválido para cargar la cache.");
+			}
 		}
 	}
 
