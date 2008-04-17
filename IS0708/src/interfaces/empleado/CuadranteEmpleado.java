@@ -437,7 +437,7 @@ public class CuadranteEmpleado {
 	
 	
 	public void dibujarCarga(GC gc,String texto){
-		cambiarPincel(gc, 100, 200, 100);
+		/*cambiarPincel(gc, 100, 200, 100);
 		cambiarRelleno(gc, 100, 200, 100);
 		gc.fillRectangle((ancho-margenIzq-margenDer)/2-130,
 				(alto-margenInf-margenSup)/2-40,300,100);
@@ -447,8 +447,24 @@ public class CuadranteEmpleado {
 		Font fuente=gc.getFont();
 		cambiarPincel(gc, 0, 0, 0);
 		gc.setFont(new Font(display,"Times",10,SWT.BOLD));
+		*/
+		org.eclipse.swt.graphics.Image carga= this.dameVista().getImagenes().getCarga();
+		//carga.getImageData().scaledTo(10, 100);
+		//gc.drawImage(carga, 0, 0);
+		int factor=ancho;
+		if(alto<ancho){
+			factor=alto;
+		}
+		float prod=((float)factor)/500;
+		System.out.println("factor"+factor);
+		System.out.println("prod"+prod);
+		int x=(int)(ancho-margenIzq)/2-((int)(carga.getImageData().width*prod)/2);
+		int y=(int)(alto-margenInf-margenSup)/2-((int)(carga.getImageData().height*prod)/2);
+		System.out.println("x"+x+"y"+y);
 
-	//	BufferedImage carga= this.dameVista().getImagenes().getCarga();
+		gc.drawImage(carga,0,0,carga.getImageData().width, carga.getImageData().height,	x,y,
+				((int)(carga.getImageData().width*prod)), ((int)(carga.getImageData().height*prod)));
+		//, arg5, arg6, arg7, arg8)
 		//org.eclipse.swt.graphics.Image carga = this.dameVista().getImagenes().getCarga();
 //		Image cargaRed = carga.getScaledInstance(
 //				(int)(d.getWidth()/2), (int)(d.getHeight()/2),
@@ -496,10 +512,10 @@ public class CuadranteEmpleado {
 		cambiarRelleno(gc, 249, 244, 153);
 		gc.fillOval((ancho-margenIzq-margenDer)/2+x+20, (alto-margenInf-margenSup)/2+30+y, 5, 5);*/
 		//gc.drawOval((ancho-margenIzq-margenDer)/2+140+x, (alto-margenInf-margenSup)/2+5+y, 5, 5);
-		cambiarPincel(gc, 0, 0, 0);
+		/*cambiarPincel(gc, 0, 0, 0);
 		gc.drawText(texto,(ancho-margenIzq-margenDer)/2-55, (alto-margenInf-margenSup)/2,true);
 		gc.getFont().dispose();
-		gc.setFont(fuente);
+		gc.setFont(fuente);*/
 		
         
 	}
