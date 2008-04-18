@@ -23,7 +23,6 @@ public class Sugerencia {
 	private int minimo;
 	private Time horaIni;
 	private Time horaFin;
-	//private int dia;
 	private Date fecha;
 	
 	/**
@@ -35,12 +34,11 @@ public class Sugerencia {
 	 * @param dia Día de la sugerencia
 	 * @param tipo Tipo de sugerencia
 	 */
-	public Sugerencia(int faltas, int minimo, Time ini, Time fin, /*int dia*/Date fecha, int tipo){
+	public Sugerencia(int faltas, int minimo, Time ini, Time fin, Date fecha, int tipo){
 		this.faltas=faltas;
 		this.minimo=minimo;
 		this.horaIni=ini;
 		this.horaFin=fin;
-		//this.dia=dia;
 		this.fecha=fecha;
 		this.tipo=tipo;
 	}
@@ -156,12 +154,8 @@ public class Sugerencia {
 		} else
 			strAux2=Integer.toString(aux2);
 		
-		int diaSug = fecha.getDate();
-		//int numDiasMes = Util.dameDias(fecha.getMonth(),fecha.getYear()-1900);
-		//if (diaSug > numDiasMes) diaSug=1;
-		
-		//String cadena="El dia "+(dia+1)+", desde las "+horaIni.getHours()+":"+strAux1+" hasta las "+horaFin.getHours()+":"+strAux2+", faltan "+faltas+" empleados.";
-		String cadena="El dia "+(diaSug)+", desde las "+horaIni.getHours()+":"+strAux1+" hasta las "+horaFin.getHours()+":"+strAux2+", faltan "+faltas+" empleados.";
+		//String cadena="El dia "+(fecha.getDate())+", desde las "+horaIni.getHours()+":"+strAux1+" hasta las "+horaFin.getHours()+":"+strAux2+", faltan "+faltas+" empleados.";
+		String cadena="De "+horaIni.getHours()+":"+strAux1+" a "+horaFin.getHours()+":"+strAux2+" faltan "+faltas+" empleados.";
 		if (tipo==1){cadena=cadena+" Falta mas del 50% del personal.";}
 		else{if(tipo==2){cadena=cadena+" Situación crítica. Falta todo el personal.";}}
 		return cadena;
