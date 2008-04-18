@@ -152,5 +152,11 @@ public class TabCuadranteEmpleado {
 
 			}
 		});
+		// Creamos un boton para la seleccion del horario por semanas
+		final Button cambiarDatos = new Button(cBotones, SWT.BUTTON1);
+		cambiarDatos.setText(this.bundle.getString("I02_but_cambiarDatos"));
+		cambiarDatos.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1,
+				1));
+	
 	}
 }

@@ -456,8 +456,6 @@ public class CuadranteEmpleado {
 			factor=alto;
 		}
 		float prod=((float)factor)/500;
-		System.out.println("factor"+factor);
-		System.out.println("prod"+prod);
 		int x=(int)(ancho-margenIzq)/2-((int)(carga.getImageData().width*prod)/2);
 		int y=(int)(alto-margenInf-margenSup)/2-((int)(carga.getImageData().height*prod)/2);
 		System.out.println("x"+x+"y"+y);
