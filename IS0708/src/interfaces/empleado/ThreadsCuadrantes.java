@@ -240,7 +240,6 @@ public class ThreadsCuadrantes extends Thread{
 		//ArrayList<String> turnos= new ArrayList<String>();
 		ArrayList<Time> lista_inicio_mes=new ArrayList<Time>();
 		ArrayList<Time> lista_fin_mes=new ArrayList<Time>();
-		if(!finalizar){
 		
 		if(!finalizar){
 			cuadrante.ponAvance(1);
@@ -251,38 +250,41 @@ public class ThreadsCuadrantes extends Thread{
 			this.cuadrante.ponRedibujarSemana(true);
 		}
 		
+		if(!finalizar){
 		boolean recorrido_mes=false;
 
 		//Trabaja trabaja_mes;
 		Turno turno;
-		while(!recorrido_mes){
+		while((!recorrido_mes)&&(!finalizar)){
 
 		
-		try{
-			turno=this.dameTurno(calendario2.get(GregorianCalendar.DAY_OF_MONTH),
-					calendario2.get(GregorianCalendar.MONTH), calendario2.get(GregorianCalendar.YEAR));
-			if(turno!=null){
-				lista_inicio_mes.add((turno.getHoraEntrada()));
-				lista_fin_mes.add((turno.getHoraSalida()));
+			try{
+				turno=this.dameTurno(calendario2.get(GregorianCalendar.DAY_OF_MONTH),
+						calendario2.get(GregorianCalendar.MONTH), calendario2.get(GregorianCalendar.YEAR));
+				if(turno!=null){
+					lista_inicio_mes.add((turno.getHoraEntrada()));
+					lista_fin_mes.add((turno.getHoraSalida()));
+				}
+				else{
+					lista_inicio_mes.add(null);
+					lista_fin_mes.add(null);
+				}
+				
+				calendario2.roll(GregorianCalendar.DATE, 1);
+				if(calendario2.get(GregorianCalendar.DAY_OF_MONTH)==1){
+					recorrido_mes=true;
+				}
+	
 			}
-			else{
-				lista_inicio_mes.add(null);
-				lista_fin_mes.add(null);
+			catch(Exception e){
+				
 			}
 			
-			calendario2.roll(GregorianCalendar.DATE, 1);
-			if(calendario2.get(GregorianCalendar.DAY_OF_MONTH)==1){
-				recorrido_mes=true;
-			}
-
+	
 		}
-		catch(Exception e){
-			
 		}
 		
-
-		}
-		}
+		
 			corriendo=false;
 			
 			if(!finalizar){

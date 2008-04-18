@@ -99,12 +99,14 @@ public class CambiarDatos {
 		final Composite cAceptar = new Composite (cGrupo, SWT.NONE);
 		cAceptar.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 0, 0));
 		GridLayout lAceptar = new GridLayout();
-		lAceptar.numColumns = 3;
+		lAceptar.numColumns = 2;
 		cAceptar.setLayout(lAceptar);
 		final Button bAceptar		= new Button(cAceptar, SWT.PUSH);
 		final Button bCancelar		= new Button(cAceptar, SWT.PUSH);
 		bAceptar.setText( _bundle.getString("Aceptar"));
+		bAceptar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		bCancelar.setText(_bundle.getString("Cancelar"));
+		bCancelar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 
 		
