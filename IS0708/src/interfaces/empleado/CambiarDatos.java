@@ -54,31 +54,58 @@ public class CambiarDatos {
 		
 		/*  a continuacion 3 radio butons para la eleccion del tipo de mensaje  */
 		
-		final Composite cGrupo = new Composite (shell, SWT.BORDER);
+		final Composite cGrupo = new Composite (shell, SWT.NONE);
 		cGrupo.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 0, 0));
 		GridLayout lGrupo = new GridLayout();
-		lGrupo.numColumns = 2;
+		lGrupo.numColumns = 1;
 		cGrupo.setLayout(lGrupo);
+		
+		
+
+		
 		final Label lcontraseña	= new Label(cGrupo, SWT.LEFT);
 		lcontraseña.setText(_bundle.getString("Contrasena"));
-		final Text tcontraseña =new Text (cGrupo, SWT.BORDER);
-		tcontraseña.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 0, 0));
-		final Label lcontraseña2	= new Label(cGrupo, SWT.LEFT);
-		lcontraseña2.setText(_bundle.getString("DeNuevoContrasena"));
-		final Text tcontraseña2 =new Text (cGrupo, SWT.BORDER);
-		tcontraseña2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 0, 0));		
-		final Composite cGrupo2 = new Composite (cGrupo, SWT.BORDER);
+		final Composite cGrupo2 = new Composite (cGrupo, SWT.NONE);
 		cGrupo2.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 0, 0));
 		GridLayout lGrupo2 = new GridLayout();
-		lGrupo2.numColumns = 3;
+		lGrupo2.numColumns = 1;
 		cGrupo2.setLayout(lGrupo2);
+		final Text tcontraseña =new Text (cGrupo2, SWT.BORDER);
+		tcontraseña.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 0, 0));
+		final Label lcontraseña2	= new Label(cGrupo2, SWT.LEFT);
+		lcontraseña2.setText(_bundle.getString("DeNuevoContrasena"));
+		final Text tcontraseña2 =new Text (cGrupo2, SWT.BORDER);
+		tcontraseña2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 0, 0));
 		
-		final Button espanol		= new Button(cGrupo2, SWT.RADIO);
+
+		
+		final Label lseleccionIdioma	= new Label(cGrupo, SWT.LEFT);
+		lseleccionIdioma.setText(_bundle.getString("ElegirIdioma"));
+		
+		final Composite cGrupo3 = new Composite (cGrupo, SWT.NONE);
+		cGrupo3.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 0, 0));
+		GridLayout lGrupo3 = new GridLayout();
+		lGrupo3.numColumns = 3;
+		cGrupo3.setLayout(lGrupo3);
+		final Button espanol		= new Button(cGrupo3, SWT.RADIO);
 		espanol.setText(_bundle.getString("Espanol"));
-		final Button ingles		= new Button(cGrupo2, SWT.RADIO);
+		espanol.setSelection(true);
+		final Button ingles		= new Button(cGrupo3, SWT.RADIO);
 		ingles.setText(_bundle.getString("Ingles"));
-		final Button Polaco		= new Button(cGrupo2, SWT.RADIO);
+		final Button Polaco		= new Button(cGrupo3, SWT.RADIO);
 		Polaco.setText(_bundle.getString("Polaco"));
+		
+
+		final Composite cAceptar = new Composite (cGrupo, SWT.NONE);
+		cAceptar.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 0, 0));
+		GridLayout lAceptar = new GridLayout();
+		lAceptar.numColumns = 3;
+		cAceptar.setLayout(lAceptar);
+		final Button bAceptar		= new Button(cAceptar, SWT.PUSH);
+		final Button bCancelar		= new Button(cAceptar, SWT.PUSH);
+		bAceptar.setText( _bundle.getString("Aceptar"));
+		bCancelar.setText(_bundle.getString("Cancelar"));
+		
 
 		
 		// Bot�n por defecto bAceptar
