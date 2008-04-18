@@ -156,8 +156,9 @@ public class Sugerencia {
 		} else
 			strAux2=Integer.toString(aux2);
 		
-		int diaSug = fecha.getDate()+1;
-		if (diaSug > Util.dameDias(fecha.getMonth(),fecha.getYear()-1900)) diaSug=1;
+		int diaSug = fecha.getDate();
+		//int numDiasMes = Util.dameDias(fecha.getMonth(),fecha.getYear()-1900);
+		//if (diaSug > numDiasMes) diaSug=1;
 		
 		//String cadena="El dia "+(dia+1)+", desde las "+horaIni.getHours()+":"+strAux1+" hasta las "+horaFin.getHours()+":"+strAux2+", faltan "+faltas+" empleados.";
 		String cadena="El dia "+(diaSug)+", desde las "+horaIni.getHours()+":"+strAux1+" hasta las "+horaFin.getHours()+":"+strAux2+", faltan "+faltas+" empleados.";

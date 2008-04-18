@@ -68,11 +68,11 @@ public class Analisis {
 						// en caso contrario, se amplia en 5 minutos la franja de la sugerencia
 						if (contador<minimoDia){
 							if ((sugAnterior!=null)&&(minimoDia-contador!=sugAnterior.getFaltas()) && (sugAnterior.getTipo()!=tipoFalta(contador,minimoDia))){		
-								Sugerencia sug=new Sugerencia(minimoDia-contador,minimoDia,new Time(t.getHours(),t.getMinutes(),0),new Time(t.getHours(),t.getMinutes()+5,0),/*i*/new Date (cuadrante.getAnio(),cuadrante.getMes(),i),tipoFalta(contador,minimoDia));
+								Sugerencia sug=new Sugerencia(minimoDia-contador,minimoDia,new Time(t.getHours(),t.getMinutes(),0),new Time(t.getHours(),t.getMinutes()+5,0),/*i*/new Date (cuadrante.getAnio()+1900,cuadrante.getMes()-1,i+1),tipoFalta(contador,minimoDia));
 								sugerencias[i].add(sug);
 							} else {
 								if (sugAnterior==null) {
-									Sugerencia sug=new Sugerencia(minimoDia-contador,minimoDia,new Time(t.getHours(),t.getMinutes(),0),new Time(t.getHours(),t.getMinutes()+5,0),/*i*/new Date (cuadrante.getAnio(),cuadrante.getMes(),i),tipoFalta(contador,minimoDia));
+									Sugerencia sug=new Sugerencia(minimoDia-contador,minimoDia,new Time(t.getHours(),t.getMinutes(),0),new Time(t.getHours(),t.getMinutes()+5,0),/*i*/new Date (cuadrante.getAnio()+1900,cuadrante.getMes()-1,i+1),tipoFalta(contador,minimoDia));
 									sugerencias[i].add(sug);
 								} else 
 									sugAnterior.ampliar(0,5);
