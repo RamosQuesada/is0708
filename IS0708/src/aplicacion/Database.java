@@ -523,12 +523,8 @@ public class Database extends Thread {
 	 */
 	public void cerrarConexion() {
 		try {
-			while (!st.isClosed()) {
-				System.out.println("No se puede cerrar todavía");
-				wait(500);
-			}
-				con.close();
-				System.out.println("aplicacion.Database.java\t:: Conexión cerrada correctamente");
+			con.close();
+			System.out.println("aplicacion.Database.java\t:: Conexión cerrada correctamente");
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("aplicacion.Database.java\t:: Error cerrando la conexión: " + e.getMessage());
