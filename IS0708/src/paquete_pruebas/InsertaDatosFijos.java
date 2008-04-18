@@ -9,6 +9,7 @@ import aplicacion.Controlador;
 import aplicacion.Database;
 import aplicacion.datos.Contrato;
 import aplicacion.datos.Turno;
+import aplicacion.utilidades.Util;
 
 /**
  * Inserta datos fijos para pruebas
@@ -109,19 +110,19 @@ public class InsertaDatosFijos {
 			c.insertDistribucion(21, 7, "1e1p", 6, 4, depart, true);
 			
 			// Turnos
-			Turno t7hM = new Turno(0, "7h Mañana"+nd, "09:00:00", "16:00:00", "09:40:00", 20, null);
+			Turno t7hM = new Turno(0, "7h Mañana"+nd, "09:00:00", "16:00:00", "09:40:00", 20,  Util.stringAColor("3CB371"));
 			t7hM.setIdTurno(c.insertTurno(t7hM));
-			Turno t7hT = new Turno(0, "7h Tarde"+nd, "15:00:00", "22:00:00", "18:30:00", 20, null);
+			Turno t7hT = new Turno(0, "7h Tarde"+nd, "15:00:00", "22:00:00", "18:30:00", 20,  Util.stringAColor("008000"));
 			t7hT.setIdTurno(c.insertTurno(t7hT));
 			
-			Turno t4hM = new Turno(0, "4h Mañana"+nd, "09:00:00", "13:00:00", "09:00:00", 0, null);
+			Turno t4hM = new Turno(0, "4h Mañana"+nd, "09:00:00", "13:00:00", "09:00:00", 0, Util.stringAColor("87CEEB"));
 			t4hM.setIdTurno(c.insertTurno(t4hM));
-			Turno t4hT = new Turno(0, "4h Tarde"+nd, "18:00:00", "22:00:00", "18:00:00", 0, null);
+			Turno t4hT = new Turno(0, "4h Tarde"+nd, "18:00:00", "22:00:00", "18:00:00", 0, Util.stringAColor("1E90FF"));
 			t4hT.setIdTurno(c.insertTurno(t4hT));
 			
-			Turno tSabM = new Turno(0, "Sab Mañana"+nd, "10:00:00", "16:00:00", "10:00:00", 0, null);
+			Turno tSabM = new Turno(0, "Sab Mañana"+nd, "10:00:00", "16:00:00", "10:00:00", 0, Util.stringAColor("FFEFD5"));
 			tSabM.setIdTurno(c.insertTurno(tSabM));
-			Turno tSabT = new Turno(0, "Sab Tarde"+nd, "16:00:00", "22:00:00", "16:00:00", 0, null);
+			Turno tSabT = new Turno(0, "Sab Tarde"+nd, "16:00:00", "22:00:00", "16:00:00", 0, Util.stringAColor("FFA07A"));
 			tSabT.setIdTurno(c.insertTurno(tSabT));
 			
 			// Contratos
