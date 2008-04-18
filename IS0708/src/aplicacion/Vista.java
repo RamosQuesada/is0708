@@ -997,13 +997,14 @@ public class Vista {
 			String apellido2, Integer rango) {
 		
 		ArrayList<Empleado> datos = (ArrayList<Empleado>) empleados.clone();
+		ArrayList<Empleado> sol = new ArrayList<Empleado>();
 		
 		if (idEmpl != null)
 			for (int i=0; i<datos.size(); i++) {
 				Empleado e = datos.get(i);
 				
-				if (e.getEmplId() != idEmpl) {
-						datos.remove(e);						
+				if (e.getEmplId() == idEmpl) {
+						sol.add(e);						
 				}
 					 
 			}
@@ -1012,8 +1013,8 @@ public class Vista {
 			for (int i=0; i<datos.size(); i++) {
 				Empleado e = datos.get(i);
 				
-				if (e.getDepartamentoId() != idDpto) {
-						datos.remove(e);						
+				if (e.getDepartamentoId() == idDpto) {
+					sol.add(e);							
 				}
 					 
 			}
@@ -1022,8 +1023,8 @@ public class Vista {
 			for (int i=0; i<datos.size(); i++) {
 				Empleado e = datos.get(i);
 				
-				if (e.getContratoId() != idContrato) {
-						datos.remove(e);						
+				if (e.getContratoId() == idContrato) {
+					sol.add(e);							
 				}
 					 
 			}
@@ -1032,8 +1033,8 @@ public class Vista {
 			for (int i=0; i<datos.size(); i++) {
 				Empleado e = datos.get(i);
 				
-				if (e.getNombre() != nombre) {
-						datos.remove(e);						
+				if (e.getNombre() == nombre) {
+					sol.add(e);							
 				}
 					 
 			}
@@ -1042,8 +1043,8 @@ public class Vista {
 			for (int i=0; i<datos.size(); i++) {
 				Empleado e = datos.get(i);
 				
-				if (e.getApellido1() != apellido1) {
-						datos.remove(e);						
+				if (e.getApellido1() == apellido1) {
+					sol.add(e);							
 				}
 					 
 			}
@@ -1052,8 +1053,8 @@ public class Vista {
 			for (int i=0; i<datos.size(); i++) {
 				Empleado e = datos.get(i);
 				
-				if (e.getApellido2() != apellido2) {
-						datos.remove(e);						
+				if (e.getApellido2() == apellido2) {
+					sol.add(e);							
 				}
 					 
 			}
@@ -1062,14 +1063,14 @@ public class Vista {
 			for (int i=0; i<datos.size(); i++) {
 				Empleado e = datos.get(i);
 				
-				if (e.getRango() != rango) {
-						datos.remove(e);						
+				if (e.getRango() == rango) {
+					sol.add(e);							
 				}
 					 
 			}
 		
-		if (datos.size() > 0)
-			return datos;
+		if (sol.size() > 0)
+			return sol;
 		else
 			return controlador.getEmpleados(idEmpl, idDpto, idContrato, nombre,
 				apellido1, apellido2, rango);
