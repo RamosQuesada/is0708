@@ -184,7 +184,7 @@ public class TabMensajeria extends Thread{
 		lMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,false, 5, 1));
 		lMensajes.setText(bundle.getString("I02_lab_CargandoMensajes"));
 		
-		dMensajes = new Label(cMensajes,SWT.NONE);
+		dMensajes = new Label(cMensajes,SWT.RIGHT);
 		dMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,false, 2, 1));
 		dMensajes.setText("Hola"/*bundle.getString("I02_lab_CargandoMensajes")*/);
 		
