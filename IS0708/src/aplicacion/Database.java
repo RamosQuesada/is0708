@@ -1017,7 +1017,6 @@ public class Database extends Thread {
 			System.err.println("Database :: Error al insertar en Cuadrante:\n" + q);
 			e.printStackTrace();
 		}
-		System.out.println("CUADRANTE INSERTADO A TODA OSTIAAAAAAA");
 		return correcto;	
 	}
 	
@@ -1186,7 +1185,7 @@ public class Database extends Thread {
 			String password, int indicadorGrupo, Date fechaContrato,
 			Date fechaEntrada, int horasExtras, int felicidad, int idioma,
 			int rango, int idContrato, int idTurno, String Color, String Telefono,
-			String Ssid, boolean HaEntrado, Date UltimoAcceso) {
+			String Ssid, boolean HaEntrado, Date UltimoAcceso, int posicion) {
 		boolean correcto = false;
 		try {
 			st = con.createStatement();
@@ -1197,7 +1196,7 @@ public class Database extends Thread {
 					+ "','" + fechaEntrada + "'," + horasExtras + ","
 					+ felicidad + "," + idioma + "," + rango + ","
 					+ idContrato + "," + idTurno + ",'" + Color + "','"
-					+ Telefono + "','" + Ssid + "'," + HaEntrado + ",'" + UltimoAcceso + "', 0)");
+					+ Telefono + "','" + Ssid + "'," + HaEntrado + ",'" + UltimoAcceso + "', " + posicion + ")");
 			correcto = true;
 		} catch (SQLException e) {
 			e.printStackTrace();

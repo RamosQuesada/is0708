@@ -879,8 +879,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				if (moviendoEmpleado && empleadoActivo == i)
 					desp = despMouse;  
 				iCuad[dia-1].get(i).getTurno().
-				dibujar(display, nombre, gc, i, vista.getEmpleados().get(i).dameColor(), margenIzq, margenNombres, margenSup, sep_vert_franjas, alto_franjas, tamHora, tamSubdiv, horaApertura, numSubdivisiones, desp);
-				
+				dibujar(display, nombre, gc, i, iCuad[dia-1].get(i).getEmpl().dameColor(), margenIzq, margenNombres, margenSup, sep_vert_franjas, alto_franjas, tamHora, tamSubdiv, horaApertura, numSubdivisiones, desp);	
 			}
 
 /*			for ( int i=0; i<vista.getEmpleados().size(); i++) {
@@ -1172,7 +1171,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		
 		Color colorTurno=iCuad[j].get(empl).getTurno().getColor();
 		//vista.getTurno(idTurno);
-		colorTurno = vista.getTurno(idTurno).getColor();
+//		colorTurno = vista.getTurno(idTurno).getColor();
 		//Primero se pinta el rectangulo
 		
 		gc.setForeground(Util.getColorDiferenciado(colorTurno, 100));
