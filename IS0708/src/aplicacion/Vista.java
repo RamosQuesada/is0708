@@ -1390,14 +1390,14 @@ public class Vista {
 			empleados = controlador.getEmpleadosDepartamento(getEmpleadoActual().getEmplId(),dep);
 			setProgreso("Cargando empleados dpto "+dep, 100);
 			
-			/*//Prueba ordenación empleados
+			//Prueba ordenación empleados
 			System.out.println("long: "+empleados.size());
 			ordenaEmpleados();
 			System.out.println("long: "+empleados.size());
 			for (int i = 0; i < empleados.size(); i++) {
 				System.out.println(empleados.get(i).getPosicion());
 			}
-			//Fin PRueba*/
+			//Fin PRueba
 			
 			
 			if (!alive) return;
@@ -1783,19 +1783,22 @@ public class Vista {
 		}
 		//Jefe ya añadido al auxiliar
 		boolean fin=false;
-		for (int j = 0; j < empleados.size(); j++) {
+		int j=0;
+		int lon=empleados.size();
+		while(j < lon) {
 			fin=false;
 			for (int j2 = 1; j2 < aux.size() && !fin; j2++) {
-				if(aux.get(j2).getPosicion()>=empleados.get(j).getPosicion()){
-					aux.add(j2, empleados.get(j));
-					empleados.remove(j);
+				if(aux.get(j2).getPosicion()>=empleados.get(0).getPosicion()){
+					aux.add(j2, empleados.get(0));
+					empleados.remove(0);
 					fin=true;
 				}
 			}
 			if(!fin){
-				aux.add(empleados.get(j));
-				empleados.remove(j);
+				aux.add(empleados.get(0));
+				empleados.remove(0);
 			}
+			j++;
 		}
 		System.out.println("long aux; "+aux.size());
 		empleados=aux;
