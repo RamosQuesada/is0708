@@ -1390,6 +1390,16 @@ public class Vista {
 			empleados = controlador.getEmpleadosDepartamento(getEmpleadoActual().getEmplId(),dep);
 			setProgreso("Cargando empleados dpto "+dep, 100);
 			
+			/*//Prueba ordenación empleados
+			System.out.println("long: "+empleados.size());
+			ordenaEmpleados();
+			System.out.println("long: "+empleados.size());
+			for (int i = 0; i < empleados.size(); i++) {
+				System.out.println(empleados.get(i).getPosicion());
+			}
+			//Fin PRueba*/
+			
+			
 			if (!alive) return;
 			if (rango == 1) { // Si es un empleado, coger turnos de su departamento
 				setProgreso("Cargando turnos dpto "+dep, 70);
@@ -1756,6 +1766,39 @@ public class Vista {
 		Time thI= Time.valueOf(horaapertura);
 		Time thC=Time.valueOf(horacierre);
 		this.controlador.cambiaHorarioDpto(nombre, thI, thC);
+	}
+	/**
+	 * Función que ordena el ArrayList de los empleados
+	 */
+	public void ordenaEmpleados(){
+		int i=0;
+		ArrayList<Empleado> aux=new ArrayList<Empleado>();
+		//Busco el jefe
+		while(i<empleados.size()&& empleados.get(i).getRango()!=2){
+			i++;
+		}
+		if(i<empleados.size()){
+			aux.add(empleados.get(i));
+			empleados.remove(i);
+		}
+		//Jefe ya añadido al auxiliar
+		boolean fin=false;
+		for (int j = 0; j < empleados.size(); j++) {
+			fin=false;
+			for (int j2 = 1; j2 < aux.size() && !fin; j2++) {
+				if(aux.get(j2).getPosicion()>=empleados.get(j).getPosicion()){
+					aux.add(j2, empleados.get(j));
+					empleados.remove(j);
+					fin=true;
+				}
+			}
+			if(!fin){
+				aux.add(empleados.get(j));
+				empleados.remove(j);
+			}
+		}
+		System.out.println("long aux; "+aux.size());
+		empleados=aux;
 	}
 	   
 	
