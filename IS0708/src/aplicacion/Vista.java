@@ -1380,20 +1380,20 @@ public class Vista {
 			int numvendedor = getEmpleadoActual().getEmplId();
 
 			if (!alive) return;
-			setProgreso("Cargando contratos", 50);
+			setProgreso("Cargando contratos dpto "+dep, 50);
 			contratos = controlador.getListaContratosDpto(dep);
-			setProgreso("Cargando contratos", 100);
+			setProgreso("Cargando contratos dpto "+dep, 100);
 
 			if (!alive) return;
-			setProgreso("Cargando empleados", 25);
+			setProgreso("Cargando empleados dpto "+dep, 25);
 			empleados = controlador.getEmpleadosDepartamento(getEmpleadoActual().getEmplId(),dep);
-			setProgreso("Cargando empleados", 100);
+			setProgreso("Cargando empleados dpto "+dep, 100);
 			
 			if (!alive) return;
 			if (rango == 1) { // Si es un empleado, coger turnos de su departamento
-				setProgreso("Cargando turnos", 70);
+				setProgreso("Cargando turnos dpto "+dep, 70);
 				turnos = controlador.getListaTurnosEmpleadosDpto(dep);
-				setProgreso("Cargando turnos", 100);
+				setProgreso("Cargando turnos dpto "+dep, 100);
 			} else if (rango == 2) { // Si es un jefe, coger turnos de todos los departamentos
 				ArrayList<String> temp = new ArrayList<String>();
 				temp = controlador.getDepartamentosJefe(numvendedor);
@@ -1403,7 +1403,7 @@ public class Vista {
 	//			setProgreso("Cargando jefes de departamento", 60);
 	//			numeroJefesDepartamento = controlador.getNumVendedorTodosJefes();
 	//			nombreJefesDepartamento = controlador.getNombreTodosJefes();
-				setProgreso("Cargando turnos", 70);
+				setProgreso("Cargando turnos dpto "+dep, 70);
 				ArrayList<Turno> turnosDep = new ArrayList<Turno>();
 				for (int i=0; i<departamentosJefe.size(); i++) {
 					turnosDep = controlador.getListaTurnosEmpleadosDpto(departamentosJefe.get(i).getNombreDepartamento());
@@ -1411,12 +1411,13 @@ public class Vista {
 						turnos.add(turnosDep.get(j));
 					}				
 				}
-				setProgreso("Cargando turnos", 100);
+				setProgreso("Cargando turnos dpto "+dep, 100);
 				
 			} else {
 				System.err.println("Vista\t:: Tipo de empleado inválido para cargar la cache.");
 			}
 		}
+		System.out.println("Cache cargada");
 	}
 
 	public void cambiarNombreDepartamento(String NombreAntiguo, String NombreNuevo) {
