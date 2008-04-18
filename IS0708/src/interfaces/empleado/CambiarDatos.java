@@ -8,8 +8,12 @@ import interfaces.general.mensajeria.ShellMensajeNuevo;
 import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -22,6 +26,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import aplicacion.Vista;
+import aplicacion.datos.Empleado;
 
 public class CambiarDatos {
 	/**
@@ -30,6 +35,8 @@ public class CambiarDatos {
 	private Shell _padre = null;
 	private ResourceBundle _bundle;
 	private Vista _vista;
+	private String scontraseña;
+	private String srepe_contraseña;
 
 	public CambiarDatos(Shell shell, ResourceBundle bundle, Vista vista) {
 		_padre=shell;
@@ -62,19 +69,34 @@ public class CambiarDatos {
 		
 		
 
-		
+		final Label lcontraseñaActual	= new Label(cGrupo, SWT.LEFT);
+		lcontraseñaActual.setText(_bundle.getString("ContrasenaActual"));
+		final Composite cGrupoca = new Composite (cGrupo, SWT.NONE);
+		cGrupoca.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 0, 0));
+		GridLayout lGrupoca = new GridLayout();
+		lGrupoca.numColumns = 1;
+		cGrupoca.setLayout(lGrupoca);
+		final Text tcontraseñaActual =new Text (cGrupoca, SWT.BORDER);
+		tcontraseñaActual.setEchoChar('*');
+		tcontraseñaActual.setTextLimit(10);
+		tcontraseñaActual.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 0, 0));
 		final Label lcontraseña	= new Label(cGrupo, SWT.LEFT);
-		lcontraseña.setText(_bundle.getString("Contrasena"));
+		lcontraseña.setText(_bundle.getString("ContrasenaNueva"));
 		final Composite cGrupo2 = new Composite (cGrupo, SWT.NONE);
 		cGrupo2.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 0, 0));
 		GridLayout lGrupo2 = new GridLayout();
 		lGrupo2.numColumns = 1;
 		cGrupo2.setLayout(lGrupo2);
 		final Text tcontraseña =new Text (cGrupo2, SWT.BORDER);
+		tcontraseña.setEchoChar('*');
+		tcontraseña.setTextLimit(10);
 		tcontraseña.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 0, 0));
+
 		final Label lcontraseña2	= new Label(cGrupo2, SWT.LEFT);
 		lcontraseña2.setText(_bundle.getString("DeNuevoContrasena"));
 		final Text tcontraseña2 =new Text (cGrupo2, SWT.BORDER);
+		tcontraseña2.setEchoChar('*');
+		tcontraseña2.setTextLimit(10);
 		tcontraseña2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 0, 0));
 		
 
@@ -108,6 +130,63 @@ public class CambiarDatos {
 		bCancelar.setText(_bundle.getString("Cancelar"));
 		bCancelar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
+		bAceptar.addSelectionListener (new SelectionAdapter () {
+			public void widgetSelected (SelectionEvent e) {
+				if((tcontraseña.getText().length()>0)&&((tcontraseña.getText().compareTo(tcontraseña2.getText())==0))&&(((tcontraseñaActual.getText().compareTo(_vista.getEmpleadoActual().getPassword())==0)))){			
+					int idioma=1;
+					String passw = tcontraseña.getText();
+					if(espanol.getSelection()){idioma=0;}
+					else if(ingles.getSelection()){idioma=1;}
+					else if(Polaco.getSelection()){idioma=2;}
+					System.out.println("idioma"+idioma);
+					Empleado empleado = _vista.getEmpleadoActual();
+					try{
+						_vista.modificarEmpleado(empleado.getEmplId(), empleado.getNombre(),
+							empleado.getApellido1(), empleado.getApellido2(),
+							empleado.getFechaNac(), empleado.getSexo(),
+							empleado.getEmail(),passw, empleado.getGrupo(), empleado.getFcontrato(),
+							empleado.getFAlta(),empleado.getFelicidad(),idioma,empleado.getRango() ,
+							empleado.getTurnoFavorito(),empleado.getContratoId(),empleado.getColor());
+						MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
+						messageBox.setText (_bundle.getString("Error"));
+						messageBox.setMessage ("modificacion realizada");
+						messageBox.open ();
+					}
+					catch(Exception exc){
+						MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
+						messageBox.setText (_bundle.getString("Error"));
+						messageBox.setMessage ("error en la modificacion, inténtelo mas tarde");
+						messageBox.open ();
+					}
+					shell.dispose();
+				}
+				else{
+					if((tcontraseñaActual.getText().compareTo(_vista.getEmpleadoActual().getPassword())!=0)){
+						MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
+						messageBox.setText (_bundle.getString("Error"));
+						messageBox.setMessage ("contraseña antigua incorrecta");
+						messageBox.open ();
+					}
+					else if(((tcontraseña.getText().compareTo(tcontraseña2.getText())!=0))&&(tcontraseña.getText().length()>0)){
+						MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
+						messageBox.setText (_bundle.getString("Error"));
+						messageBox.setMessage ("la nueva contraseña no coincide");
+						messageBox.open ();
+					}
+					else if(tcontraseña.getText().length()==0){
+						MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
+						messageBox.setText (_bundle.getString("Error"));
+						messageBox.setMessage ("la nueva contraseña esta vacía");
+						messageBox.open ();	
+					}
+				}
+			}				
+		});
+		bCancelar.addSelectionListener (new SelectionAdapter () {
+			public void widgetSelected (SelectionEvent e) {
+				shell.dispose();
+			}				
+		});
 
 		
 		// Bot�n por defecto bAceptar
