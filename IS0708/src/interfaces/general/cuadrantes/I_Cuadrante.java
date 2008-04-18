@@ -89,6 +89,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private boolean diaValido=false;
 	private boolean nombreValido=false;
 	private String nombreSeleccionado=null;
+	private int nombreMarcado=0;
 	private boolean turnoPulsado=false;
 	private int turnPulsX=0;
 	private int turnPulsY=0;
@@ -550,9 +551,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					casillaSeleccionada = iCuad[diaActVistaMes].get(indiceEmpAct);
 				}
 				if (e.button == 1 &&(nombreValido)) {
-					//if (nombreSeleccionado==null)
-						
-					//nombreSeleccionado=vista.getEmpleados().get(empActVistaMes);
+					if (nombreSeleccionado==null)
+						nombreMarcado=empActVistaMes;
+					nombreSeleccionado=vista.getEmpleados().get(empActVistaMes).getNombre();
 				}
 			};
 			
@@ -618,6 +619,13 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					}
 				}
 				turnoSeleccionado = null;
+				if (e.button == 1 && nombreValido && nombreSeleccionado!=null) {
+					
+				}
+				if (e.button == 1 && !nombreValido && nombreSeleccionado!=null) {
+					
+				}
+				nombreSeleccionado=null;
 				//turnoPulsado=false;
 				canvas.redraw();
 			};
@@ -957,10 +965,11 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			int idTurno=turnoSeleccionado.getIdTurno();
 			//Obtenemos el color de relleno a partir de él
 			//Color colorTurno=obtenColor(idTurno);
-			turnoSeleccionado.setColor(color7M);
-			Color colorTurno=turnoSeleccionado.getColor();
+			//turnoSeleccionado.setColor(color7M);
+			//Color colorTurno=turnoSeleccionado.getColor();
+			Color colorTurno=vista.getTurno(idTurno).getColor();
 			gc.setBackground(colorTurno);
-			gc.setForeground(new Color(display,colorTurno.getRed()-100,colorTurno.getGreen()-100,colorTurno.getBlue()-100));
+			gc.setForeground(Util.getColorDiferenciado(colorTurno, 100));
 			//gc.drawRectangle(cursor.x-anchoDia/2, cursor.y-altoFila/2, anchoDia, altoFila);
 			gc.fillRectangle(cursor.x-anchoDia/2, cursor.y-altoFila/2, anchoDia, altoFila);
 			if (anchoDia>14)
@@ -971,10 +980,14 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		
 		if (nombreValido) {
 			gc.setBackground(colorJefe);
-			gc.fillRectangle(margenIzq-1,inicioY+((empActVistaMes-1)*altoFila), margenNombres-22, altoFila);
+			gc.fillRectangle(margenIzq-7,inicioY+((empActVistaMes-1)*altoFila), margenNombres-15, altoFila);
 			String nomSel=vista.getEmpleados().get(empActVistaMes).getNombre();
 			gc.setForeground(negro);
-			gc.drawText(nomSel,margenIzq+2,inicioY+((empActVistaMes-1)*altoFila)+1);
+			gc.drawText(nomSel,margenIzq+2,inicioY+((empActVistaMes-1)*altoFila)+2);
+		}
+		
+		if (nombreSeleccionado!=null){
+			
 		}
 	}
 	
