@@ -18,6 +18,7 @@ import java.sql.Date;
 
 import impresion.Imprimir;
 import interfaces.admin.*;
+import interfaces.empleado.CambiarDatos;
 import interfaces.empleado.Estadisticas;
 import interfaces.empleado.TabCuadranteEmpleado;
 import interfaces.general.cuadrantes.I_Cuadrante;
@@ -271,7 +272,7 @@ public class ShellPrincipal {
 		// TODO estaría guay un "acerca de"
 	}
 
-	private void crearTabJefeCuadrantes(TabFolder tabFolder) {
+	private void crearTabJefeCuadrantes(final TabFolder tabFolder) {
 		// Crear el item del tabFolder
 		TabItem tabItemCuadrantes = new TabItem(tabFolder, SWT.NONE);
 		tabItemCuadrantes.setText(bundle.getString("Cuadrantes"));
@@ -350,6 +351,9 @@ public class ShellPrincipal {
 		final Button bPorMes = new Button(cCuadrantes, SWT.RADIO);
 		bPorMes.setText(bundle.getString("I02_but_Verpormes"));
 		bPorMes.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));
+		
+		// Creamos un boton para la seleccion del horario por semanas
+
 		// Oyente para saber cuando se ha modificado la seleccion del boton
 		/** ********************************************************* */
 		bPorMes.addListener(SWT.Selection, new Listener() {
@@ -436,7 +440,18 @@ public class ShellPrincipal {
 				// TODO Guardar los cambios
 			}
 		});
+		final Button bcambiarDatos = new Button(cCuadrantes, SWT.PUSH);
+		bcambiarDatos.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 2, 1));
+		bcambiarDatos.setText(this.bundle.getString("I02_but_cambiarDatos"));
+
+
+		bcambiarDatos.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+			new CambiarDatos(tabFolder.getShell(), bundle, vista);
+				}
+		});
 		ic.setComposite(cCuadrante,bPorMes,bPorSemanas, bGuardarCambios, calendario);
+
 	}
 
 	/**
