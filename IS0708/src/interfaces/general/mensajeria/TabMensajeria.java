@@ -37,6 +37,7 @@ public class TabMensajeria extends Thread{
 	private ArrayList<String> remitentes; 
 	private Table tablaMensajes;
 	private Label lMensajes;
+	private Label dMensajes;
 	private boolean estaMarcado;
 	private Button bMensMarcar;
 	private boolean bAnt = true;
@@ -107,6 +108,7 @@ public class TabMensajeria extends Thread{
 	private void mostrarMensajes() {
 		tablaMensajes.removeAll();
 		int i = 0;
+		int numNuevos = 0;
 		// Crear una fuente cursiva y otra negrita
 		FontData[] fd = tablaMensajes.getFont().getFontData();
 		fd[0].setStyle(SWT.ITALIC);
@@ -134,6 +136,7 @@ public class TabMensajeria extends Thread{
 			{
 				tItem.setImage(vista.getImagenes().getIco_mens());
 				tItem.setFont(fNegrita);
+				numNuevos++;
 			}
 			if (remitentes.size()>i)
 			tItem.setText(1, remitentes.get(vista.getTodosMensajesEntrantes().size()-i-1));
@@ -154,7 +157,9 @@ public class TabMensajeria extends Thread{
 		}
 		lMensajes.setText(bundle.getString("I02_lab_MostrandoMensajes1") + " " + String.valueOf(primerMensaje+1) + " " + 
 				bundle.getString("I02_lab_MostrandoMensajes2") + " " + String.valueOf(min)+ " " + 
-				bundle.getString("I02_lab_MostrandoMensajes3") + " " + String.valueOf(vista.getTodosMensajesEntrantes().size()) );
+				bundle.getString("I02_lab_MostrandoMensajes3") + " " + String.valueOf(vista.getTodosMensajesEntrantes().size()));
+		dMensajes.setText(bundle.getString("I02_lab_MostrandoMensajes4") + " " + String.valueOf(numNuevos) + " " +
+				bundle.getString("I02_lab_MostrandoMensajes5"));
 		tablaMensajes.setEnabled(true);
 		tablaMensajes.setCursor(new Cursor(tablaMensajes.getDisplay(), SWT.CURSOR_ARROW));
 		bMensSiguientes.setEnabled(true);
@@ -176,21 +181,25 @@ public class TabMensajeria extends Thread{
 		cMensajes.setLayout(new GridLayout(7, true));
 		
 		lMensajes = new Label(cMensajes,SWT.NONE);
-		lMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,false, 7, 1));
+		lMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,false, 5, 1));
 		lMensajes.setText(bundle.getString("I02_lab_CargandoMensajes"));
+		
+		dMensajes = new Label(cMensajes,SWT.NONE);
+		dMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,false, 2, 1));
+		dMensajes.setText("Hola"/*bundle.getString("I02_lab_CargandoMensajes")*/);
 		
 		tablaMensajes = new Table(cMensajes,SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
 		tablaMensajes.setEnabled(false);
 		tablaMensajes.setLinesVisible(true);
 		tablaMensajes.setHeaderVisible(true);
-		
 
 		// Iniciar hilo de cargar mensajes
 		start();
 		tablaMensajes.addMouseListener(new MouseListener() {
 			public void mouseDoubleClick(MouseEvent e) {
 				// Si se ha pinchado en algún email (y no fuera)
-				if (tablaMensajes.getSelectionIndex()!=-1) {
+				int pos = (e.y-24)/19;		
+				if (tablaMensajes.getSelectionIndex()!=-1 && tablaMensajes.getSelectionIndex() == pos) {
 					int totalEntrantes = vista.getTodosMensajesEntrantes().size();
 					Mensaje m = vista.getTodosMensajesEntrantes().get(totalEntrantes - tablaMensajes.getSelectionIndex()-1-primerMensaje);
 					estaMarcado = m.isMarcado(); 
@@ -200,7 +209,8 @@ public class TabMensajeria extends Thread{
 			}
 			public void mouseUp(MouseEvent e) {};
 			public void mouseDown(MouseEvent e) {
-				if (tablaMensajes.getSelectionIndex()!=-1) {
+				int pos = (e.y-24)/19;				
+				if (tablaMensajes.getSelectionIndex()!=-1 && tablaMensajes.getSelectionIndex() == pos) {
 					int totalEntrantes = vista.getTodosMensajesEntrantes().size();
 					mensSelecionado = vista.getTodosMensajesEntrantes().get(totalEntrantes - tablaMensajes.getSelectionIndex()-1-primerMensaje);
 					estaMarcado = mensSelecionado.isMarcado(); 
@@ -213,7 +223,10 @@ public class TabMensajeria extends Thread{
 					}
 					bMensMarcar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
 					1, 1));		
-					
+				}
+				else
+				{
+					mensSelecionado = null;
 				}
 			};
 		});
@@ -243,8 +256,11 @@ public class TabMensajeria extends Thread{
 		
 		tablaMensajes.addPaintListener(new PaintListener(){
 			public void paintControl(PaintEvent arg0) {
-				vista.setNum_men_hoja(((tabFolder.getSize().y - tabFolder.getBorderWidth()*2) / 
-				(tablaMensajes.getItemHeight()+2))-7);
+				vista.setNum_men_hoja((tabFolder.getSize().y-24)/19-5-tabFolder.getBorderWidth()*2);
+				System.out.println(vista.getNum_men_hoja());
+				//vista.setNum_men_hoja(((tabFolder.getSize().y - tabFolder.getBorderWidth()*2) / 
+				//(tablaMensajes.getItemHeight()+2))-7);
+							
 				if(vista.getNum_men_hoja()>vista.getTodosMensajesEntrantes().size())
 				{
 					vista.setNum_men_hoja(vista.getTodosMensajesEntrantes().size());						
