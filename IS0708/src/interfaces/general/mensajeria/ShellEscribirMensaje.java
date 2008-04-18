@@ -126,7 +126,13 @@ public class ShellEscribirMensaje {
 			});
 			bAceptar.addSelectionListener (new SelectionAdapter () {
 				public void widgetSelected (SelectionEvent e) {
-					if((tAsunto.getCharCount()==0)||(tMensaje.getCharCount()==0)){
+					if (idEmpl==0 && tNombre.getIdEmpl()==0) {
+						MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
+						messageBox.setText (_bundle.getString("Error"));
+						messageBox.setMessage (_bundle.getString("I14_err_sinDestinatario"));
+						messageBox.open ();
+					}
+					else if((tAsunto.getCharCount()==0)||(tMensaje.getCharCount()==0)){
 						
 						MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO | SWT.ICON_INFORMATION);
 						messageBox.setText (_bundle.getString("Mensaje"));
@@ -161,12 +167,6 @@ public class ShellEscribirMensaje {
 							shell.dispose();							
 						}
 					}	
-					else if (idEmpl==0 && tNombre.getIdEmpl()==0) {
-						MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
-						messageBox.setText (_bundle.getString("Error"));
-						messageBox.setMessage (_bundle.getString("I14_err_sinDestinatario"));
-						messageBox.open ();
-					}
 					else {
 						Mensajeria m = new Mensajeria(_vista.getControlador(), _vista.getEmpleadoActual().getEmplId());
 						int destino = idEmpl;
