@@ -190,7 +190,7 @@ public class CambiarDatos {
 
 		
 		// Bot�n por defecto bAceptar
-		//shell.setDefaultButton(bAceptar);
+		shell.setDefaultButton(bAceptar);
 		// Ajustar el tama�o de la ventana al contenido
 		shell.pack();
 		// Mostrar ventana centrada sobre el padre
