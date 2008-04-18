@@ -42,6 +42,7 @@ public class DialogCreacionTurnos {
 	private Turno turnoInsertado;
 	private Vista vista;
 	private Turno turnoModificado;
+	private boolean seleccionColor;
 	
 	/**
 	 * Constructor. crea una nueva ventana para la creacion de un nuevo turno
@@ -65,6 +66,7 @@ public class DialogCreacionTurnos {
 		this.idContrato=idContrato;
 		this.vista=vista;
 		turnoModificado=tm;
+		seleccionColor=false;
 		shell = new Shell (padre, SWT.CLOSE | SWT.RESIZE | SWT.APPLICATION_MODAL);
 		mostrarVentana();
 	}
@@ -108,33 +110,55 @@ public class DialogCreacionTurnos {
 		final Label  lDesc		= new Label (grupo1, SWT.LEFT);
 		final Text   tDesc		= new Text  (grupo1, SWT.BORDER);
 		lDesc			.setText(bundle.getString("I09_lab_desc_Turno"));
-		lDesc			.setLayoutData	(new GridData(SWT.LEFT,SWT.CENTER,false,true,1,1));
-		tDesc			.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
+		lDesc			.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
+		tDesc			.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,false,1,1));
 		tDesc			.setToolTipText(bundle.getString("I09_tip_IdTurno"));
 		if (modo==0) tDesc.setText("");
 		else tDesc.setText(turnoModificado.getDescripcion());
+		final Button bColor			= new Button(grupo1, SWT.PUSH);
+		final Label  lColor			= new Label	(grupo1,  SWT.BORDER);
+		bColor		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,true,1,1));
+		lColor		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
+		bColor		.setText(bundle.getString("I03_lab_SelColor"));
+		if (modo==1) lColor.setBackground(turnoModificado.getColor());
+		// Listener para el selector de color
+		SelectionAdapter sabColor = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e){
+				ColorDialog cd = new ColorDialog(shell);
+				cd.setText(bundle.getString("I03_lab_SelColor"));
+				cd.setRGB(new RGB(255, 255, 255));
+				RGB newColor = cd.open();
+				if (newColor != null) {
+					lColor.setBackground(new Color(shell.getDisplay(), newColor));
+					seleccionColor=true;					
+				}
+			}
+		};
+		bColor.addSelectionListener(sabColor);
 
 // Grupo 2 - Turno
 		GridLayout g = new GridLayout(1,false);
 		g.verticalSpacing=0;
-		GridData gd = new GridData(SWT.FILL,SWT.FILL,false,true,1,1);
+		GridData gd = new GridData(SWT.FILL,SWT.FILL,true,true,1,1);
 		gd.heightHint=30;
 		grupo2.setLayout(g);
 		grupo2.setLayoutData(gd);
+		
+		grupo2.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,false,2,1));
+		grupo1.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,false,2,1));
+		
 		
 		final I_Cuadrante ic = new I_Cuadrante(vista, 0, 0, "", 4, 9, 23);
 		ic.setCompositeUnTurno(grupo2);
 		if (modo==1) {
 			ic.setTurno(turnoModificado);
 		}
+		
 		final Button bAceptar	= new Button(shell, SWT.PUSH);
 		final Button bCancelar	= new Button(shell, SWT.PUSH);		
 		
 		bAceptar	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		bCancelar	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-
-		grupo1.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,false,2,1));
-		grupo2.setLayoutData		(new GridData(SWT.FILL,SWT.FILL,true,true,2,1));
 		
 		bAceptar	.setText(bundle.getString("Aceptar"));
 		bCancelar	.setText(bundle.getString("Cancelar"));
@@ -162,7 +186,7 @@ public class DialogCreacionTurnos {
 			public void widgetSelected(SelectionEvent e) {
 				//modo = 0 es nuevo turno y modo =1 es modificar
 				String desc = tDesc.getText();
-				if (desc.equals("")){
+				if (desc.equals("")||(!seleccionColor)){
 					MessageBox messageBox = new MessageBox(shell,
 							SWT.APPLICATION_MODAL | SWT.OK
 									| SWT.ICON_INFORMATION);
@@ -173,6 +197,7 @@ public class DialogCreacionTurnos {
 				}
 				else {
 				Turno it=ic.getTurno();
+				it.setColor(lColor.getBackground());
 				if (modo==0){					
 					turnoInsertado = new Turno(0,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso(),it.getColor());
 					//CAMBIAR
