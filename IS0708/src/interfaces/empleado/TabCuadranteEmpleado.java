@@ -1,5 +1,7 @@
 package interfaces.empleado;
 
+import interfaces.general.mensajeria.ShellMensajeNuevo;
+
 import java.sql.Date;
 import java.util.ResourceBundle;
 
@@ -153,10 +155,16 @@ public class TabCuadranteEmpleado {
 			}
 		});
 		// Creamos un boton para la seleccion del horario por semanas
-		final Button cambiarDatos = new Button(cBotones, SWT.BUTTON1);
-		cambiarDatos.setText(this.bundle.getString("I02_but_cambiarDatos"));
-		cambiarDatos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1,
+		final Button bcambiarDatos = new Button(cBotones, SWT.BUTTON1);
+		bcambiarDatos.setText(this.bundle.getString("I02_but_cambiarDatos"));
+		bcambiarDatos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1,
 				1));
+
+		bcambiarDatos.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+			new CambiarDatos(tabFolder.getShell(), bundle, vista);
+				}
+		});
 	
 	}
 }

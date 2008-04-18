@@ -141,7 +141,7 @@ public class Cuadrantes extends Thread{
 					redibujar();
 
 
-					cuadrante.ponRepreAvance((cuadrante.dameRepreAvance()+1)%15);
+					cuadrante.ponRepreAvance((cuadrante.dameRepreAvance()+1)%8);
 				}
 			});
 			try {

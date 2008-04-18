@@ -5,7 +5,8 @@ import org.eclipse.swt.widgets.Display;
 
 public class CargadorImagenes {
 	private Image icoGr, icoPq, ico_imprimir, ico_cuadrante, ico_chico,
-	ico_chica, ico_chicos, fondoLogin, ico_mens_l, ico_mens, fondoAdmin, grafica,carga;		
+	ico_chica, ico_chicos, fondoLogin, ico_mens_l, ico_mens, fondoAdmin, grafica,
+	carga1,carga2,carga3,carga4,carga5,carga6,carga7;		
 	
 	public CargadorImagenes(Display display) {
 		icoGr				= new Image(display, CargadorImagenes.class.getResourceAsStream("icoGr.gif"));
@@ -20,7 +21,14 @@ public class CargadorImagenes {
 		ico_mens			= new Image(display, CargadorImagenes.class.getResourceAsStream("ico_mens2_v.gif"));
 		fondoAdmin			= new Image(display, CargadorImagenes.class.getResourceAsStream("admin.png"));
 		grafica				= new Image(display, CargadorImagenes.class.getResourceAsStream("grafica_1.ico"));
-		carga				= new Image(display, CargadorImagenes.class.getResourceAsStream("turnomatic.gif"));
+		carga1				= new Image(display, CargadorImagenes.class.getResourceAsStream("espere01.png"));
+		carga2				= new Image(display, CargadorImagenes.class.getResourceAsStream("espere02.png"));
+		carga3				= new Image(display, CargadorImagenes.class.getResourceAsStream("espere03.png"));
+		carga4				= new Image(display, CargadorImagenes.class.getResourceAsStream("espere04.png"));
+		carga5				= new Image(display, CargadorImagenes.class.getResourceAsStream("espere05.png"));
+		carga6				= new Image(display, CargadorImagenes.class.getResourceAsStream("espere06.png"));
+		carga7				= new Image(display, CargadorImagenes.class.getResourceAsStream("espere07.png"));
+		
 	}
 	
 	public void dispose() {
@@ -35,7 +43,13 @@ public class CargadorImagenes {
 		ico_mens_l.dispose();
 		ico_mens.dispose();
 		fondoAdmin.dispose();
-		carga.dispose();
+		carga1.dispose();
+		carga2.dispose();
+		carga3.dispose();
+		carga4.dispose();
+		carga5.dispose();
+		carga6.dispose();
+		carga7.dispose();
 		
 	}
 
@@ -89,7 +103,17 @@ public class CargadorImagenes {
 		return grafica;
 	};
 	
-	public Image getCarga(){
-		return carga;
+	public Image getCarga(int i){
+		switch (i){
+		case 1: return carga1;
+		case 2: return carga2;
+		case 3: return carga3;
+		case 4: return carga4;
+		case 5: return carga5;
+		case 6: return carga6;
+		case 7: return carga7;
+		default: return carga1;
+		}
+		
 	}
 }

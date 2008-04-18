@@ -448,7 +448,7 @@ public class CuadranteEmpleado {
 		cambiarPincel(gc, 0, 0, 0);
 		gc.setFont(new Font(display,"Times",10,SWT.BOLD));
 		*/
-		org.eclipse.swt.graphics.Image carga= this.dameVista().getImagenes().getCarga();
+		org.eclipse.swt.graphics.Image carga= this.dameVista().getImagenes().getCarga(this.repreAvance);
 		//carga.getImageData().scaledTo(10, 100);
 		//gc.drawImage(carga, 0, 0);
 		int factor=ancho;
