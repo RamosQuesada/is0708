@@ -31,6 +31,7 @@ public class Controlador {
 	private String departamento = "";
 	private int idSup = 0;
 	
+	
 	public Controlador(Database baseDatos, boolean modoDebug) {
 		_modoDebug = modoDebug;
 		_db = baseDatos;
@@ -55,7 +56,10 @@ public class Controlador {
 	public boolean getModoDebug() {
 		return _modoDebug;
 	}
-
+	
+	public boolean conexionAbierta(){
+		return _db.conexionAbierta();
+	}
 	/**
 	 * Asigna el empleado que ha iniciado sesión.
 	 * 
