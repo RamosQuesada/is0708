@@ -1,7 +1,5 @@
 package interfaces.general.cuadrantes;
 
-
-
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -72,7 +70,6 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private int empleadoActivo = -1;
 	private I_Turno turnoActivo  = null; // Este turno es para el interfaz de creación de turnos
 	private boolean moviendoEmpleado = false;	// Indica si estamos desplazando al empleado
-	
 	private Label lGridCuadrante;
 	private Combo cGridCuadrante;
 	private Label lCuadranteTitulo;
@@ -126,6 +123,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private MouseMoveListener mouseMoveListenerCuadrDiario;
 	private MouseListener mouseListenerCuadrMensual;
 	private MouseMoveListener mouseMoveListenerCuadrMensual;
+	
+	private ArrayList<Empleado> empleadosMostrados;
 	
 	public class Loader extends Thread {
 		public void run() {
@@ -250,6 +249,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		meses30[1]=6;
 		meses30[2]=9;
 		meses30[3]=11;
+		
+		//Inicializar lista de empleados mostrados
+		empleadosMostrados = new ArrayList<Empleado>();
 	}
 	
 	public void setMargenes(int margenIzq, int margenDer, int margenSup, int margenInf, int margenNombres) {
@@ -409,8 +411,25 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		
 		mouseMoveListenerCuadrDiario = new MouseMoveListener() {
 			public void mouseMove(MouseEvent e) {
-				despMouse = e.y - alto_franjas/2;
+				despMouse = Math.max(e.y - alto_franjas/2,margenSup+alto_franjas+sep_vert_franjas);
 				if (moviendoEmpleado) {
+					// asignarle la posición del empleado que está debajo
+					
+					int fila =  Math.round(e.y/(alto_franjas+sep_vert_franjas))-1;
+					if (fila<0) fila=0;
+					else if (fila>=empleadosMostrados.size())fila = empleadosMostrados.size()-1;
+					
+					// Intercambiar posiciones y reordenar datos
+					int posicionArriba = empleadosMostrados.get(empleadoActivo).getPosicion();
+					if (posicionArriba!=fila+1) {
+						if (fila<posicionArriba-2) fila = posicionArriba-2;
+						else if (fila>posicionArriba) fila = posicionArriba;
+						empleadosMostrados.get(fila).setPosicion(posicionArriba);
+						empleadosMostrados.get(posicionArriba-1).setPosicion(fila+1);
+						empleadoActivo=fila;
+						vista.ordenaEmpleados();
+						if (bGuardar!=null) bGuardar.setEnabled(true);
+					}
 					canvas.redraw();
 				} else if (turno!=null || cacheCargada) {
 				// Si acabo de apretar el botón para crear una franja, pero 
@@ -513,6 +532,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			public void mouseUp(MouseEvent e) {
 				movimiento=0;
 				moviendoEmpleado = false;
+				//TODO mover empleado
+				canvas.redraw();
 			}
 			
 			public void mouseDoubleClick(MouseEvent e) {
@@ -847,7 +868,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	public void dibujarCuadranteDia(Display d, GC gc, int empleadoActivo) {
 		
 //		Long i = new Date().getTime();
-		dibujarSeleccion(gc, empleadoActivo);
+//		dibujarSeleccion(gc, empleadoActivo);
 //		Long j = new Date().getTime();
 		actualizarFondo(gc);
 //		Long k = new Date().getTime();
@@ -872,7 +893,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			gc.drawText("Cargando\ndatos...", 5, 5);
 		}
 		else {
-			for (int i = 0; i < iCuad[dia-1].size(); i++) {
+/*			for (int i = 0; i < iCuad[dia-1].size(); i++) {
 				// Dibujar el nombre del empleado y el turno
 				String nombre = iCuad[dia-1].get(i).getEmpl().getNombre().charAt(0) + ". " + iCuad[dia-1].get(i).getEmpl().getApellido1();
 				int desp = 0;
@@ -881,17 +902,24 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				iCuad[dia-1].get(i).getTurno().
 				dibujar(display, nombre, gc, i, iCuad[dia-1].get(i).getEmpl().dameColor(), margenIzq, margenNombres, margenSup, sep_vert_franjas, alto_franjas, tamHora, tamSubdiv, horaApertura, numSubdivisiones, desp);	
 			}
-
-/*			for ( int i=0; i<vista.getEmpleados().size(); i++) {
+*/
+			int fila = 0;
+			empleadosMostrados.clear();
+			for ( int i=0; i<vista.getEmpleados().size(); i++) {
 			// Dibujar el nombre del empleado y el turno
 				String nombre = vista.getEmpleados().get(i).getNombre().charAt(0) + ". " + vista.getEmpleados().get(i).getApellido1();			
-		
+				int desp = 0;
+				if (moviendoEmpleado && empleadoActivo == fila)
+					desp = despMouse;  
 				for (int j = 0; j < iCuad[dia-1].size(); j++) {
-					if (vista.getEmpleados().get(i).getEmplId() == iCuad[dia-1].get(j).getEmpl().getEmplId())
-					iCuad[dia-1].get(j).getTurno().dibujar(display, nombre, gc, i, vista.getEmpleados().get(j).dameColor() ,margenIzq, margenNombres,margenSup,sep_vert_franjas,alto_franjas,tamHora, tamSubdiv, horaApertura, numSubdivisiones);
+					if (vista.getEmpleados().get(i).getEmplId() == iCuad[dia-1].get(j).getEmpl().getEmplId()) {
+						empleadosMostrados.add(vista.getEmpleados().get(i));
+						iCuad[dia-1].get(j).getTurno().dibujar(display, nombre, gc, fila, empleadosMostrados.get(fila).getColor() ,margenIzq, margenNombres,margenSup,sep_vert_franjas,alto_franjas,tamHora, tamSubdiv, horaApertura, numSubdivisiones, desp);
+						fila++;
+					}
 				}
 			}
-*/
+
 
 		}
 	}
@@ -1249,8 +1277,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private void dibujarSeleccion (GC gc, int emp) {
 		if (emp!=-1) {
 			Color color = new Color(display,220,240,220);
-			if (vista.getEmpleados().get(emp).dameColor()!=null)
-				color = new Color(display, 255-(255-vista.getEmpleados().get(emp).dameColor().getRed())/5, 255-(255-vista.getEmpleados().get(emp).dameColor().getGreen())/5, 255-(255-vista.getEmpleados().get(emp).dameColor().getBlue())/5);
+			if (vista.getEmpleados().get(emp).getColor()!=null)
+				color = new Color(display, 255-(255-vista.getEmpleados().get(emp).getColor().getRed())/5, 255-(255-vista.getEmpleados().get(emp).getColor().getGreen())/5, 255-(255-vista.getEmpleados().get(emp).getColor().getBlue())/5);
 			gc.setBackground(color);
 			gc.fillRectangle(Math.max(margenIzq-2,0),margenSup+(sep_vert_franjas+alto_franjas)*(emp+1)-5,ancho-margenIzq-margenDer,alto_franjas+11);
 		}
@@ -1444,6 +1472,5 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			i++;
 		}
 		return max;
-	}
-	
+	}	
 }

@@ -821,10 +821,6 @@ public class Empleado implements Drawable {
 		return b;
 	}
 	
-	public Color dameColor(){
-		return color;
-	}
-	
 	/**
 	 * Devuelve la lista de subordinados del empleado 
 	 * @return la lista de subordinados
