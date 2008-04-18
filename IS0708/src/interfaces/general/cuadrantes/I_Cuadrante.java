@@ -550,7 +550,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					casillaSeleccionada = iCuad[diaActVistaMes].get(indiceEmpAct);
 				}
 				if (e.button == 1 &&(nombreValido)) {
-					if (nombreSeleccionado==null)
+					//if (nombreSeleccionado==null)
 						
 					//nombreSeleccionado=vista.getEmpleados().get(empActVistaMes);
 				}
