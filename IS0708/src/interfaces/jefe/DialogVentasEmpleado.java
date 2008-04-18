@@ -163,9 +163,7 @@ public class DialogVentasEmpleado {
 					if (resp == SWT.OK) {
 						// Si a pesar de todo esta de acuerdo modificacion de las ventas.
 						vista.cambiarVentas(idVend, fecha, ventas);
-						
 					}
-					
 				}else	
 					vista.insertVentas(idVend, ventas, fecha);
 				shell.dispose();
