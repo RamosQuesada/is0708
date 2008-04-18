@@ -2594,7 +2594,7 @@ return result;
  					"NombreDept varchar(20) NOT NULL," +
  					"Fecha Date NOT NULL," +
  					"HoraInicio Time NOT NULL," +
- 					"Asunto Varchar(100) ," +
+ 					"Texto Varchar(100) ," +
  					"Primary Key (NombreDept,fecha,horaInicio)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
 
 			st.executeBatch();
@@ -2659,12 +2659,11 @@ return result;
 
 			st.addBatch("Alter table contratodepartamento add Index IX_Relationship17 (IdContrato);");
 			st.addBatch("Alter table contratodepartamento add Foreign Key (IdContrato) references contrato (IdContrato) on delete restrict on update cascade;");
-			
-//			Meter dependencias tablasugerencias			
-/*			st.addBatch("Alter table sugerencias add Index IX_Sugerencia1 (NombreDept);");
- * 			st.addBatch("Alter table sugerencias add Foreign Key (Nombre Dept) references departamento (Nombre) ----------------------;");
- * 
-*/
+						
+			st.addBatch("Alter table sugerencias add Index IX_Sugerencia1 (NombreDept);");
+ 			st.addBatch("Alter table sugerencias add Foreign Key (NombreDept) references departamento (Nombre) on delete cascade on update cascade;");
+ 
+
 
 			st.executeBatch();
 			st.close();
