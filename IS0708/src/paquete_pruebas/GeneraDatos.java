@@ -174,7 +174,7 @@ public class GeneraDatos {
 		contrato=new Contrato("jefe",0,1,7,"5T2D",1200,0); //no hace falta
 	
 		//crear el jefe de departamento
-		c.insertUsuario(12345678,"jefe","","",fechaNac,0,"Juanfran@ajandemore.es","boss",0,fechaContrato,fechaEntrada,0,0,0,2,contrato.getNumeroContrato(),turno.getIdTurno(), null, null, null, false, null);//hay que cambiar el rango a 2, 
+		c.insertUsuario(12345678,"jefe","","",fechaNac,0,"Juanfran@ajandemore.es","boss",0,fechaContrato,fechaEntrada,0,0,0,2,contrato.getNumeroContrato(),turno.getIdTurno(), null, null, null, false, null, 0);//hay que cambiar el rango a 2, 
 		c.insertDepartamentoUsuario(12345678, depart);
 		
 		//creamos un nuevo departamento
@@ -397,7 +397,7 @@ public class GeneraDatos {
         	System.out.println("idTurno: "+idTurno);
         	System.out.println("//////////////////////////");
         	System.out.println();
-			c.insertUsuario(id, nombre, apellido1, apellido2, fechaNac, sexo, email, password, indicadorGrupo, fechaContrato, fechaEntrada, horasExtras, felicidad, idioma, rango, idContrato, idTurno, null, null, null, false, null);
+			c.insertUsuario(id, nombre, apellido1, apellido2, fechaNac, sexo, email, password, indicadorGrupo, fechaContrato, fechaEntrada, horasExtras, felicidad, idioma, rango, idContrato, idTurno, null, null, null, false, null, i);
     	}
 
 		bd.cerrarConexion();

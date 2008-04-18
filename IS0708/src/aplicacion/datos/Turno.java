@@ -32,6 +32,7 @@ public class Turno {
 		horaEntrada  = new Time(t.getHoraEntrada() .getTime());
 		horaSalida   = new Time(t.getHoraSalida()  .getTime());
 		horaDescanso = new Time(t.getHoraDescanso().getTime());
+		color		 = new Color(t.getColor().getDevice(), t.getColor().getRed(), t.getColor().getGreen(), t.getColor().getBlue());
 		tDescanso = t.tDescanso;
 	}
 	

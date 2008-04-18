@@ -371,7 +371,7 @@ public class Controlador {
 						.getFAlta(), 0, 0, empleado.getIdioma(), 1,
 				empleado.getContratoId(), empleado.getTurnoFavorito(),
 				empleado.getNombreColor(), empleado.getTelefono(), empleado.getSsid(),
-				empleado.getHaEntrado(), empleado.getUltimoAcceso());
+				empleado.getHaEntrado(), empleado.getUltimoAcceso(), empleado.getPosicion());
 	}
 	
 
@@ -430,12 +430,12 @@ public class Controlador {
 			String password, int indicadorGrupo, Date fechaContrato,
 			Date fechaEntrada, int horasExtras, int felicidad, int idioma,
 			int rango, int idContrato, int idTurno, String Color, String Telefono,
-			String Ssid, boolean HaEntrado, Date UltimoAcceso) {
+			String Ssid, boolean HaEntrado, Date UltimoAcceso, int posicion) {
 		return _db.insertarUsuario(id, nombre, apellido1, apellido2, fechaNac,
 				sexo, email, password, indicadorGrupo, fechaContrato,
 				fechaEntrada, horasExtras, felicidad, idioma, rango,
 				idContrato, idTurno, Color, Telefono,
-				Ssid, HaEntrado, UltimoAcceso);
+				Ssid, HaEntrado, UltimoAcceso, posicion);
 	}
 
 	
@@ -968,6 +968,7 @@ public class Controlador {
 				Date fechaContrato = rs.getDate("FechaContrato");
 				Date fechaAlta = rs.getDate("FechaEntrada");
 				Color color = Util.stringAColor(rs.getString("Color"));
+				int posicion = rs.getInt("Posicion");
 				int idSuperior = 0;
 				
 				ArrayList<Integer> idSubordinados = new ArrayList<Integer>();
@@ -989,7 +990,7 @@ public class Controlador {
 				Empleado emp = new Empleado(idSuperior, id, nombre, apellido1,
 						apellido2, fechaNac, sexo, email, password, grupo,
 						rango, idContrato, fechaContrato, fechaAlta, color,
-						null, idSubordinados, felicidad, idioma, turnoFavorito, 0);
+						null, idSubordinados, felicidad, idioma, turnoFavorito, posicion);
 				emp.setIDDepartamentos(idDepartamentos);
 				emps.add(emp);
 			}
