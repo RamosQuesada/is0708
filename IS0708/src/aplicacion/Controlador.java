@@ -9,6 +9,7 @@ import java.util.GregorianCalendar;
 import org.eclipse.swt.graphics.Color;
 import algoritmo.Calendario;
 import algoritmo.Cuadrante;
+import algoritmo.Sugerencia;
 import algoritmo.Trabaja;
 import aplicacion.datos.Contrato;
 import aplicacion.datos.Departamento;
@@ -1960,6 +1961,40 @@ public class Controlador {
 			return datos;		
 		} catch (Exception e) {
 			System.err.println("Controlador :: Error en getCuadrante");
+			return null;
+		}
+	}
+	
+	/***************************************************************************
+	 * Metodos relacionados con Sugerencia
+	 */
+	
+	/**
+	 * Guarda una sugerencia en la base de datos
+	 * @param Sugerencia
+	 */
+	public void insertSugerencia(Sugerencia sugerencia) {
+		_db.insertarSugerencia(sugerencia.getFecha(),sugerencia.getHoraIni(),
+				sugerencia.getDept(),sugerencia.getSugerencia());
+	}
+	
+	/**
+	 * Método que lee de la base de datos las sugerencias de un departamento para un dia concreto
+	 * @param dept departamento de las sugerencias
+	 * @param fecha dia para el que se quieren las sugerencias
+	 * @return
+	 */
+	public ArrayList<String> getSugerenciasDia(String dept, Date fecha) {
+		ResultSet sug = null;
+		ArrayList<String> sugDia= new ArrayList<String>();
+		try{
+			sug = _db.obtenSugerenciasDia(dept, fecha);
+			while (sug.next()) {
+				sugDia.add(sug.getString("Texto"));
+			}
+			return sugDia;
+		} catch (Exception e) {
+			System.err.println("Controlador :: Error en getSugerenciasDia");
 			return null;
 		}
 	}

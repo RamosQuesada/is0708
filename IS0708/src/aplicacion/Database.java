@@ -1536,7 +1536,7 @@ return result;
 	public ResultSet obtenSugerenciasDia (String nombre, Date dia) {
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("SELECT * FROM " + tablaSugerencias + " WHERE NombreDept ='"
+			rs = st.executeQuery("SELECT Texto FROM " + tablaSugerencias + " WHERE NombreDept ='"
 							+ nombre
 							+ "' AND fecha ='"
 							+ dia

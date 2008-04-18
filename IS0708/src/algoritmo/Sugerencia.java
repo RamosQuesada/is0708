@@ -24,6 +24,7 @@ public class Sugerencia {
 	private Time horaIni;
 	private Time horaFin;
 	private Date fecha;
+	private String dept;
 	
 	/**
 	 * Constructora por parámetros
@@ -31,16 +32,18 @@ public class Sugerencia {
 	 * @param minimo Mínimo de empleados
 	 * @param ini Hora de inicio de la franja
 	 * @param fin Hora de fin de la franja
-	 * @param dia Día de la sugerencia
+	 * @param fecha Fecha de la sugerencia
 	 * @param tipo Tipo de sugerencia
+	 * @param dept Departamento 
 	 */
-	public Sugerencia(int faltas, int minimo, Time ini, Time fin, Date fecha, int tipo){
+	public Sugerencia(int faltas, int minimo, Time ini, Time fin, Date fecha, int tipo, String dept){
 		this.faltas=faltas;
 		this.minimo=minimo;
 		this.horaIni=ini;
 		this.horaFin=fin;
 		this.fecha=fecha;
 		this.tipo=tipo;
+		this.dept=dept;
 	}
 	
 	/**
@@ -85,6 +88,14 @@ public class Sugerencia {
 		this.horaFin = horaFin;
 	}
 	
+	public String getDept() {
+		return dept;
+	}
+	
+	public void setDept (String dept) {
+		this.dept = dept;
+	}
+	
 	/**
 	 * Devuelve la hora de inicio de la franja de la sugerencia
 	 * @return horaIni
@@ -99,6 +110,22 @@ public class Sugerencia {
 	 */
 	public void setHoraIni(Time horaIni) {
 		this.horaIni = horaIni;
+	}
+	
+	/**
+	 * Devuelve la fecha de la sugerencia
+	 * @return fecha
+	 */
+	public Date getFecha() {
+		return fecha;
+	}
+	
+	/**
+	 * Establece la fecha de la sugerencia 
+	 * @param fecha
+	 */
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
 	}
 	
 	/**
@@ -174,5 +201,7 @@ public class Sugerencia {
 		resul=resul*(faltasD/minD);
 		return resul;
 	}
+
+
 	
 }
