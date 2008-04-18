@@ -88,6 +88,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private int indiceEmpAct=0;
 	private boolean diaValido=false;
 	private boolean nombreValido=false;
+	private String nombreSeleccionado=null;
 	private boolean turnoPulsado=false;
 	private int turnPulsX=0;
 	private int turnPulsY=0;
@@ -105,7 +106,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private int meses31[]=new int[7];
 	private int meses30[]=new int[4];
 	
-	private Color colorJefe = new Color(display,120,170,120);
+	private Color colorJefe = new Color(display,160,210,210);
 	private Color color7M = new Color(display,110,110,200);
 	private Color color7T = new Color(display,110,110,160);
 	private Color color4M = new Color(display,110,200,110);
@@ -548,6 +549,11 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					turnoSeleccionado = iCuad[diaActVistaMes].get(indiceEmpAct).getTurno();
 					casillaSeleccionada = iCuad[diaActVistaMes].get(indiceEmpAct);
 				}
+				if (e.button == 1 &&(nombreValido)) {
+					if (nombreSeleccionado==null)
+						
+					//nombreSeleccionado=vista.getEmpleados().get(empActVistaMes);
+				}
 			};
 			
 			public void mouseUp(MouseEvent e){
@@ -694,7 +700,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 						nombreValido = true;
 					}
 					else {
-						cursor(0);
+						if (!diaValido) {
+							cursor(0);
+						}
 						nombreValido = false;
 					}
 					canvas.redraw();
@@ -907,8 +915,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			int idTurno=iCuad[diaActVistaMes].get(indiceEmpAct).getTurno().getIdTurno();
 			//Obtenemos el color de relleno a partir de él
 			//Color colorTurno=obtenColor(idTurno);
-			Color colorTurno=iCuad[diaActVistaMes].get(indiceEmpAct).getTurno().getColor();
-			colorTurno=vista.getTurno(idTurno).getColor();
+			//Color colorTurno=iCuad[diaActVistaMes].get(indiceEmpAct).getTurno().getColor();
+			Color colorTurno=vista.getTurno(idTurno).getColor();
 			//Obtenemos las cadenas a mostrar
 			String idTurnoS=("Id. Turno: "+String.valueOf(idTurno));
 			String descTurno=iCuad[diaActVistaMes].get(indiceEmpAct).getTurno().getDescripcion();
@@ -920,12 +928,13 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			int b = colorTurno.getBlue();
 			//Pintamos segun turno
 			int inicioX=margenIzq+margenNombres+10-(ancho/2);
-			
+			//canvas.
 			Util.cambiarRelleno(display, gc, r-50,g-50,b-50);
 			gc.fillRectangle(inicioX+((diaActVistaMes)*anchoDia),
 					inicioY+((empActVistaMes-1)*altoFila)-alto,ancho,alto);
 			Util.cambiarRelleno(display, gc, r,g,b);
-			Util.cambiarPincel(display, gc, r-100,g-100,b-100);
+			//Util.cambiarPincel(display, gc, r-100,g-100,b-100);
+			gc.setForeground(Util.getColorDiferenciado(colorTurno, 100));
 			gc.fillRectangle(inicioX+((diaActVistaMes)*anchoDia)-2,
 					inicioY+((empActVistaMes-1)*altoFila)-(alto+2),ancho-2,alto-2);
 			gc.drawRectangle(inicioX+((diaActVistaMes)*anchoDia)-2,
@@ -962,7 +971,10 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		
 		if (nombreValido) {
 			gc.setBackground(colorJefe);
-			gc.fillRectangle(margenIzq+1,inicioY+((empActVistaMes-1)*altoFila), margenNombres-25, altoFila);
+			gc.fillRectangle(margenIzq-1,inicioY+((empActVistaMes-1)*altoFila), margenNombres-22, altoFila);
+			String nomSel=vista.getEmpleados().get(empActVistaMes).getNombre();
+			gc.setForeground(negro);
+			gc.drawText(nomSel,margenIzq+2,inicioY+((empActVistaMes-1)*altoFila)+1);
 		}
 	}
 	
