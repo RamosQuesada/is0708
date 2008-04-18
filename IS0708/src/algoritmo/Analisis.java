@@ -3,6 +3,7 @@
  */
 package algoritmo;
 
+import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 
@@ -60,18 +61,18 @@ public class Analisis {
 							if(compruebaHora(t,trab.getFichIni(),trab.getFichFin())){
 								contador++;
 							}
-						}
+						}						
 											
 						// si el contador es menor que el minimo para ese minuto, se crea una sugerencia nueva
 						// solo si no existia una anterior con las mismas caracteristas
 						// en caso contrario, se amplia en 5 minutos la franja de la sugerencia
 						if (contador<minimoDia){
 							if ((sugAnterior!=null)&&(minimoDia-contador!=sugAnterior.getFaltas()) && (sugAnterior.getTipo()!=tipoFalta(contador,minimoDia))){		
-								Sugerencia sug=new Sugerencia(minimoDia-contador,minimoDia,new Time(t.getHours(),t.getMinutes(),0),new Time(t.getHours(),t.getMinutes()+5,0),i,tipoFalta(contador,minimoDia));
+								Sugerencia sug=new Sugerencia(minimoDia-contador,minimoDia,new Time(t.getHours(),t.getMinutes(),0),new Time(t.getHours(),t.getMinutes()+5,0),/*i*/new Date (cuadrante.getAnio(),cuadrante.getMes(),i),tipoFalta(contador,minimoDia));
 								sugerencias[i].add(sug);
 							} else {
 								if (sugAnterior==null) {
-									Sugerencia sug=new Sugerencia(minimoDia-contador,minimoDia,new Time(t.getHours(),t.getMinutes(),0),new Time(t.getHours(),t.getMinutes()+5,0),i,tipoFalta(contador,minimoDia));
+									Sugerencia sug=new Sugerencia(minimoDia-contador,minimoDia,new Time(t.getHours(),t.getMinutes(),0),new Time(t.getHours(),t.getMinutes()+5,0),/*i*/new Date (cuadrante.getAnio(),cuadrante.getMes(),i),tipoFalta(contador,minimoDia));
 									sugerencias[i].add(sug);
 								} else 
 									sugAnterior.ampliar(0,5);
