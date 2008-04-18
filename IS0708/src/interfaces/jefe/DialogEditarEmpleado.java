@@ -8,6 +8,8 @@ package interfaces.jefe;
  *******************************************************************************/
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
@@ -29,6 +31,7 @@ import aplicacion.Database;
 import aplicacion.Vista;
 import aplicacion.datos.Contrato;
 import aplicacion.datos.Empleado;
+import aplicacion.datos.Turno;
 import aplicacion.utilidades.Util;
 
 import interfaces.general.DialogSeleccionFecha;
@@ -104,6 +107,8 @@ public class DialogEditarEmpleado {
 		final Combo  cIdioma		= new Combo (grupoIzq, SWT.BORDER | SWT.READ_ONLY);
 		final Label  lContrato		= new Label (grupoDer, SWT.LEFT);
 		final Combo  cContrato		= new Combo (grupoDer, SWT.BORDER | SWT.READ_ONLY);
+		final Label  lTurno			= new Label (grupoDer, SWT.LEFT);
+		final Combo  cTurno			= new Combo (grupoDer, SWT.BORDER | SWT.READ_ONLY);
 		final Label  lExperiencia	= new Label (grupoDer, SWT.LEFT);
 		final Combo  cExperiencia	= new Combo (grupoDer, SWT.BORDER | SWT.READ_ONLY);
 		final Label  lDepto			= new Label (grupoDer, SWT.LEFT);
@@ -131,6 +136,7 @@ public class DialogEditarEmpleado {
 		lSexo			.setText(bundle.getString("Sexo"));
 		lIdioma			.setText(bundle.getString("Idioma"));
 		lContrato		.setText(bundle.getString("I08_lab_TipoContrato"));
+		lTurno			.setText(bundle.getString("Turno"));
 		lExperiencia	.setText(bundle.getString("Experiencia"));
 		lDepto			.setText(bundle.getString("Departamento"));
 		bFAlta			.setText(bundle.getString("I08_lab_FAlta"));
@@ -156,6 +162,8 @@ public class DialogEditarEmpleado {
 		cIdioma		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		lContrato	.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
 		cContrato	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		lTurno		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
+		cTurno		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		lExperiencia.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
 		cExperiencia.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		lDepto		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
@@ -238,11 +246,43 @@ public class DialogEditarEmpleado {
 			}
 
 		}
+		cContrato.addModifyListener(new ModifyListener(){
+
+			public void modifyText(ModifyEvent arg0) {
+				// TODO Auto-generated method stub
+				int j=0;
+				for (int i=0; i<contratos.size();i++){
+					String p1=contratos.get(i).getNombreContrato();
+					String p2=cContrato.getItem(cContrato.getSelectionIndex());
+					if (contratos.get(i).getNombreContrato().equals(cContrato.getItem(cContrato.getSelectionIndex()))){
+						j=i;
+					}
+				}
+				int indice = ids.get(j);
+				final ArrayList<Turno> turnos = vista.getTurnosDeUnContrato(indice);
+				int k=0;
+				boolean cumple=true;
+				int emp1=emp.getTurnoFavorito();
+				cTurno.removeAll();
+				for(int i=0;i<turnos.size();i++){
+					String nombre=turnos.get(i).getDescripcion();
+					int num=turnos.get(i).getIdTurno();
+
+					cTurno.add(turnos.get(i).getDescripcion());
+					if(emp1==num && cumple){
+						k=i;
+						cumple=false;
+					}
+					cTurno.select(k);
+				}
+			}
+			
+		});
+
+		//Rellenado del campo de los turnos posibles para dicho empleado
 		
-	
 		cSexo.select(emp.getSexo());
 		cContrato.select(j);
-
 		cExperiencia.select(emp.getGrupo());
 		cDepto.select(jj);
 		cIdioma.select(emp.getIdioma());

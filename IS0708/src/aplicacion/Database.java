@@ -1344,7 +1344,7 @@ public class Database extends Thread {
 			st=con.createStatement();
 			result = st
 			.executeQuery("SELECT * FROM " + tablaVentas + " WHERE NumVendedor = "
-					+ idVend +  " AND Fecha<='"+ fecha + "';");
+					+ idVend +  " AND Fecha='"+ fecha + "';");
 } catch (SQLException e) {
 	e.printStackTrace();
 	System.err.println("Database :: Error de lectura de Ventas");

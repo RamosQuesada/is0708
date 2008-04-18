@@ -2041,7 +2041,15 @@ public class Controlador {
 	
 	public boolean existeVentas(int idVend,Date fecha){
 		ResultSet rs=_db.obtenVentas(idVend, fecha);
-		return rs!=null;
+		try{
+			if (!rs.next())
+				return false;
+			else 
+				return true;
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 			
 	}
 	
