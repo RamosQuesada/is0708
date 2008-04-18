@@ -1391,9 +1391,10 @@ public class Vista {
 			setProgreso("Cargando empleados dpto "+dep, 100);
 			
 			//Prueba ordenación empleados
-			System.out.println("long: "+empleados.size());
+			for (int i = 0; i < empleados.size(); i++) {
+				System.out.println(empleados.get(i).getPosicion());
+			}
 			ordenaEmpleados();
-			System.out.println("long: "+empleados.size());
 			for (int i = 0; i < empleados.size(); i++) {
 				System.out.println(empleados.get(i).getPosicion());
 			}
@@ -1800,7 +1801,6 @@ public class Vista {
 			}
 			j++;
 		}
-		System.out.println("long aux; "+aux.size());
 		empleados=aux;
 	}
 	   
