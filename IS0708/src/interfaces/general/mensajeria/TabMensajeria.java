@@ -116,10 +116,6 @@ public class TabMensajeria extends Thread{
 		fd[0].setStyle(SWT.BOLD);
 		Font fNegrita = new Font(tablaMensajes.getDisplay(),fd);
 		Color yellow = new Color(tablaMensajes.getDisplay(),255,255,0);
-		//ArrayList<Mensaje> mensajes = vista.getTodosMensajesEntrantes();
-		//int totalEntrantes = mensajes.size();
-//		System.out.println("Num Men Hoja: " + vista.getNum_men_hoja());
-//		System.out.println("Primer Mensaje" + primerMensaje);
 			
 		while (vista.getEmpleados().size()>0 && i + primerMensaje < vista.getTodosMensajesEntrantes().size() && i < vista.getNum_men_hoja()) {
 			TableItem tItem = new TableItem(tablaMensajes, SWT.NONE);
@@ -158,8 +154,8 @@ public class TabMensajeria extends Thread{
 		lMensajes.setText(bundle.getString("I02_lab_MostrandoMensajes1") + " " + String.valueOf(primerMensaje+1) + " " + 
 				bundle.getString("I02_lab_MostrandoMensajes2") + " " + String.valueOf(min)+ " " + 
 				bundle.getString("I02_lab_MostrandoMensajes3") + " " + String.valueOf(vista.getTodosMensajesEntrantes().size()));
-		dMensajes.setText(bundle.getString("I02_lab_MostrandoMensajes4") + " " + String.valueOf(numNuevos) + " " +
-				bundle.getString("I02_lab_MostrandoMensajes5"));
+		/*dMensajes.setText(bundle.getString("I02_lab_MostrandoMensajes4") + " " + String.valueOf(numNuevos) + " " +
+				bundle.getString("I02_lab_MostrandoMensajes5"));*/
 		tablaMensajes.setEnabled(true);
 		tablaMensajes.setCursor(new Cursor(tablaMensajes.getDisplay(), SWT.CURSOR_ARROW));
 		bMensSiguientes.setEnabled(true);
@@ -186,7 +182,7 @@ public class TabMensajeria extends Thread{
 		
 		dMensajes = new Label(cMensajes,SWT.RIGHT);
 		dMensajes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,false, 2, 1));
-		dMensajes.setText("Hola"/*bundle.getString("I02_lab_CargandoMensajes")*/);
+		dMensajes.setText(" ");
 		
 		tablaMensajes = new Table(cMensajes,SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
 		tablaMensajes.setEnabled(false);
