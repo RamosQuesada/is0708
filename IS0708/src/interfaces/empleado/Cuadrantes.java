@@ -139,8 +139,6 @@ public class Cuadrantes extends Thread{
 			display.asyncExec(new Runnable () {
 				public void run() {
 					redibujar();
-
-
 					cuadrante.ponRepreAvance((cuadrante.dameRepreAvance()+1)%8);
 				}
 			});
