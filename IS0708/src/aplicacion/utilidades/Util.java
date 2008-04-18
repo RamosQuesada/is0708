@@ -476,15 +476,15 @@ public class Util {
 		int r = color.getRed();
 		int g = color.getGreen();
 		int b = color.getBlue();
-		int c = cantidad;
-		if ((r+g+b)/3>128) {
+		int c = Math.abs(cantidad);
+		if ((r+g+b)/3<128) {
 			if (r>255-c) r=255; else r+=c;
 			if (g>255-c) g=255; else g+=c;
 			if (b>255-c) b=255; else b+=c;
 		} else {
-			if (r<-c) r=0; else r+=c;
-			if (g<-c) g=0; else g+=c;
-			if (b<-c) b=0; else b+=c;
+			if (r<c) r=0; else r-=c;
+			if (g<c) g=0; else g-=c;
+			if (b<c) b=0; else b-=c;
 		}
 		return new Color(color.getDevice(), r, g, b);
 	}
