@@ -2597,6 +2597,11 @@ return result;
  					"Primary Key (NombreDept,fecha,horaInicio)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
 
 			st.executeBatch();
+			st.executeUpdate("INSERT INTO " + tablaTurnos + " (Descripcion, HoraEntrada, HoraSalida, HoraInicioDescanso, DuracionDescanso, Color) VALUES ('"
+					+ "Turno0"+ "', '"+ new Time(0)+ "', '"+ new Time(0)+ "', '"+ new Time(0)+ "', '"+ -1+ "', '"
+					+ "000000" + "')");
+			st.executeUpdate("INSERT INTO " + tablaDepartamentos + " values ('" + "Departamento0"
+					+ "', '" + -1 + "', '" + new Time(0) + "', '" + new Time(0) + "')");
 			st.close();
 			System.out.println("aplicacion.Database.java\t:: Estructura de tablas generada correctamente.");
 		} catch (SQLException e) {
