@@ -1,7 +1,5 @@
 package interfaces.general;
 
-import java.util.ArrayList;
-
 import org.eclipse.swt.*;
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.layout.GridData;
@@ -13,8 +11,6 @@ import algoritmo.ResultadoTurnoMatic;
 
 import java.util.ResourceBundle;
 import java.util.Locale;
-
-import java.sql.Date;
 
 import impresion.Imprimir;
 import interfaces.admin.*;
@@ -40,7 +36,6 @@ public class ShellPrincipal {
 	
 	private Label lEstado;
 	private ProgressBar pbEstado;
-	private Date fechaSeleccionada;
 	private Tray tray;
 	private Thread algRunner;
 	private DateTime calendario;
@@ -300,7 +295,7 @@ public class ShellPrincipal {
 		tmDep = cDepartamentos.getText();
 
 		final Composite cCuadrante = new Composite(cCuadrantes, SWT.BORDER);
-		cCuadrante.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 7));
+		cCuadrante.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 8));
 
 		// TODO arreglar parámetros (cogerlos del departamento)
 		ic = new I_Cuadrante(vista, 0, 0, tmDep, 4, 9, 23);
@@ -346,8 +341,6 @@ public class ShellPrincipal {
 		});
 		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false,
 				2, 1));
-		fechaSeleccionada = new Date(calendario.getYear(), calendario
-				.getMonth(), calendario.getDay());
 		final Button bPorMes = new Button(cCuadrantes, SWT.RADIO);
 		bPorMes.setText(bundle.getString("I02_but_Verpormes"));
 		bPorMes.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));
@@ -441,14 +434,14 @@ public class ShellPrincipal {
 			}
 		});
 		final Button bcambiarDatos = new Button(cCuadrantes, SWT.PUSH);
-		bcambiarDatos.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 2, 1));
+		bcambiarDatos.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, false, 2, 1));
 		bcambiarDatos.setText(this.bundle.getString("I02_but_cambiarDatos"));
 
 
 		bcambiarDatos.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-			new CambiarDatos(tabFolder.getShell(), bundle, vista);
-				}
+				new CambiarDatos(tabFolder.getShell(), bundle, vista);
+			}
 		});
 		ic.setComposite(cCuadrante,bPorMes,bPorSemanas, bGuardarCambios, calendario);
 
