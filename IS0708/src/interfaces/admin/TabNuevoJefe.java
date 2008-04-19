@@ -120,8 +120,8 @@ public class TabNuevoJefe {
 		final Combo  cIdioma		= new Combo (grupoIzq, SWT.BORDER | SWT.READ_ONLY);
 		
 		
-		final Label  lContrato		= new Label (grupoDer, SWT.LEFT);
-		final Combo  cContrato		= new Combo (grupoDer, SWT.BORDER | SWT.READ_ONLY);
+		//final Label  lContrato		= new Label (grupoDer, SWT.LEFT);
+		//final Combo  cContrato		= new Combo (grupoDer, SWT.BORDER | SWT.READ_ONLY);
 		final Label  lExperiencia	= new Label (grupoDer, SWT.LEFT);
 		final Combo  cExperiencia	= new Combo (grupoDer, SWT.BORDER | SWT.READ_ONLY);
 		final Label  lDepto			= new Label (grupoDer, SWT.LEFT);
@@ -156,9 +156,9 @@ public class TabNuevoJefe {
 		bFNacimiento	.setText(bundle.getString("I03_lab_FNacimiento"));
 		lSexo			.setText(bundle.getString("Sexo"));
 		lIdioma			.setText(bundle.getString("Idioma"));
-		lContrato		.setText(bundle.getString("I03_lab_TipoContrato"));
+		//lContrato		.setText(bundle.getString("I03_lab_TipoContrato"));
 		lExperiencia	.setText(bundle.getString("Experiencia"));
-		lDepto			.setText(bundle.getString("Departamento"));
+		//lDepto			.setText(bundle.getString("Departamento"));
 		bFAlta			.setText(bundle.getString("I03_lab_FAlta"));
 		bFContrato		.setText(bundle.getString("I03_lab_FContr"));
 		bColor			.setText(bundle.getString("I03_lab_SelColor"));
@@ -181,12 +181,12 @@ public class TabNuevoJefe {
 		lIdioma		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
 		cIdioma		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		
-		lContrato	.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
-		cContrato	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,false,1,1));
+		//lContrato	.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
+		//cContrato	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,false,1,1));
 		lExperiencia.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
-		cExperiencia.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
-		lDepto		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
-		cDepto		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
+		cExperiencia.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,true,false,1,1));
+		//lDepto		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
+		//cDepto		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,1,1));
 		bFContrato	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		tFContrato	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		bFAlta		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
@@ -219,7 +219,7 @@ public class TabNuevoJefe {
 		cExperiencia.setItems (new String [] {	bundle.getString("Principiante"),
 												bundle.getString("Experto")});
 		
-		// Cogemos los contratos
+		/*// Cogemos los contratos
 		ArrayList <Empleado> jefes=vista.getEmpleados(null, null, null, null, null, null, 2);
 		final ArrayList <Contrato> contratosJefes=new ArrayList<Contrato>();
 		for (int j=0;j<jefes.size();j++){
@@ -227,7 +227,7 @@ public class TabNuevoJefe {
 		}
 		for (int i=1; i<contratosJefes.size(); i++)
 			cContrato.add(contratosJefes.get(i).getNombreContrato());
-		
+		*/
 		
 		
 		cSexo.select(1); //sexo masculino por defecto
@@ -336,7 +336,7 @@ public class TabNuevoJefe {
 					message.open();
 				}else
 					
-				//comprobamos si ha seleccionado una fecha de nacimiento
+				/*//comprobamos si ha seleccionado un contrato
 				if(cContrato.getSelectionIndex()<0){
 					MessageBox message = new MessageBox(tabFolder.getShell(),
 							SWT.APPLICATION_MODAL | SWT.OK
@@ -345,9 +345,10 @@ public class TabNuevoJefe {
 					message.setMessage(bundle
 							.getString("I03_err_contrato"));
 					message.open();
-				}else
+				}else*/
 					
-				//comprobamos si ha seleccionado un contrato
+				
+				//comprobamos si ha seleccionado una fecha de nacimiento
 				if(tFNacimiento.getText().equals("")){
 					MessageBox message = new MessageBox(tabFolder.getShell(),
 							SWT.APPLICATION_MODAL | SWT.OK
@@ -400,9 +401,9 @@ public class TabNuevoJefe {
 							.getString("I03_dlg_pregunta"));
 					if (messageBox.open() == SWT.YES) {	
 						
-						int id = contratosJefes.get(cContrato.getSelectionIndex()).getNumeroContrato();
+						//int id = contratosJefes.get(cContrato.getSelectionIndex()).getNumeroContrato();
 						//insertamos el nuevo jefe en la base de datos
-						Empleado emp = new Empleado(null, Util.convertirNVend(tNVend.getText()), tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 2, id, fechaContrato, fechaAlta, null, cDepto.getText(), null, 0, cIdioma.getSelectionIndex(),-1,0);
+						Empleado emp = new Empleado(null, Util.convertirNVend(tNVend.getText()), tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 2, 1, fechaContrato, fechaAlta, null, cDepto.getText(), null, 0, cIdioma.getSelectionIndex(),-1,0);
 						vista.getControlador().insertEmpleado(emp);
 					}
 				}
