@@ -734,8 +734,7 @@ public class ShellPrincipal {
 		switch (rango) {
 		case 0:
 			// Tabs de administrador
-			if (vista.getControlador().conexionAbierta()){
-			vista.getControlador().abrirConexionBD();
+			if (vista.getControlador().conexionAbierta()){			
 			crearTabAdminInicio(tabFolder);
 			crearTabAdminNuevoJefe(tabFolder);
 			crearTabAdminEliminaJefe(tabFolder);

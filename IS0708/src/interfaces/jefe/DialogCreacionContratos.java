@@ -44,6 +44,7 @@ public class DialogCreacionContratos {
 	private int modo;
 
 	private int idContrato; // id del contrato a modificar o -1 en caso de nuevo
+
 	// contrato
 
 	private String patron;
@@ -213,6 +214,85 @@ public class DialogCreacionContratos {
 					}
 				}
 			}
+			if (modo == 1) {
+				ArrayList<Integer> ids = new ArrayList<Integer>();
+				for (int i = 0; i < turnos.size(); i++)
+					ids.add(turnos.get(i).getIdTurno());
+				String patronReferencia = contratoModificado.getPatron();
+				int indBarra = patronReferencia.indexOf("/");
+				System.out.println(indBarra);
+				int inicio = 0;
+				String parte2 = patronReferencia;
+				int columna=0;
+				while (indBarra != -1) {
+					String parte1 = parte2.substring(inicio, indBarra);
+					parte2 = parte2.substring(indBarra + 1, parte2.length());
+					int j = inicio;
+					// cogemos el primer numero
+					String n = parte1.substring(j,j+1);
+					// pasamos los :
+					j++;
+					j++;
+					// cogemos los turnos
+					int indComa = parte1.indexOf(",");
+					int t1 = 0;
+					if (indComa != -1) {
+						String turno1 = parte1.substring(j, indComa);
+						t1 = Integer.valueOf(turno1);
+						j++;
+					}
+					String turno2 = parte1.substring(j, indBarra);
+					if (!turno2.equals("d")) {
+						int t2 = Integer.valueOf(turno2);
+						int id1=-1;
+						int id2=-1;
+						for(int t=0;t<ids.size();t++){
+							if(ids.get(t)==t2) id2=t;
+							else if(ids.get(t)==t1) id1=t;
+						}
+						for (int k = columna; k < columna+Integer.valueOf(n); k++) {
+							cbs[id2][k].setSelection(true);
+							if (t1 != 0) {
+								cbs[id1][k].setSelection(true);
+							}
+						}
+						columna+=Integer.valueOf(n);
+					}
+					else columna+=Integer.valueOf(n);;
+					indBarra = parte2.indexOf("/");
+				}
+				int j = inicio;
+				// cogemos el primer numero
+				String n = parte2.substring(j,j+1);
+				// pasamos los :
+				j++;
+				j++;
+				// cogemos los turnos
+				int indComa = parte2.indexOf(",");
+				int t1 = 0;
+				if (indComa != -1) {
+					String turno1 = parte2.substring(j, indComa);
+					t1 = Integer.valueOf(turno1);
+					j=indComa+1;
+				}
+				String turno2 = parte2.substring(j, parte2.length());
+				if (!turno2.equals("d")){
+					int t2 = Integer.valueOf(turno2);
+					int id1=-1;
+					int id2=-1;
+					for(int t=0;t<ids.size();t++){
+						if(ids.get(t)==t2) id2=t;
+						else if(ids.get(t)==t1) id1=t;
+					}
+					for (int k = columna; k < columna+Integer.valueOf(n); k++) {
+						cbs[id2][k].setSelection(true);
+						if (t1 != 0) {
+							cbs[id1][k].setSelection(true);
+						}
+					}
+				}
+				else columna+=Integer.valueOf(n);
+			}
 
 			c1.pack();
 			sc.setContent(c1);
@@ -262,22 +342,22 @@ public class DialogCreacionContratos {
 					}
 					aux += nDiasSeguidos + ":" + turnos1 + "/";
 					patron = aux.substring(0, aux.length() - 1);
-					boolean correcto=true;
-					for (int i=0;i<turnos.size();i++){
-						int id= turnos.get(i).getIdTurno();
-						boolean correcto2=patron.contains(Integer.toString(id));
-						correcto=correcto&&correcto2;
+					boolean correcto = true;
+					for (int i = 0; i < turnos.size(); i++) {
+						int id = turnos.get(i).getIdTurno();
+						boolean correcto2 = patron.contains(Integer
+								.toString(id));
+						correcto = correcto && correcto2;
 					}
-					if (!correcto) {						
-						patron="";
-						MessageBox msgBox = new MessageBox(shell, SWT.APPLICATION_MODAL
-								| SWT.ICON_ERROR | SWT.OK);
-						msgBox
-								.setMessage(bundle
-										.getString("I09_patron_incorrecto"));
+					if (!correcto) {
+						patron = "";
+						MessageBox msgBox = new MessageBox(shell,
+								SWT.APPLICATION_MODAL | SWT.ICON_ERROR | SWT.OK);
+						msgBox.setMessage(bundle
+								.getString("I09_patron_incorrecto"));
 						msgBox.setText("Error");
 						msgBox.open();
-						
+
 					}
 					System.out.println(patron);
 					shell.dispose();
@@ -648,8 +728,8 @@ public class DialogCreacionContratos {
 		// Listener para el bot�n de nuevo turno
 		SelectionAdapter sabNuevoTurno = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				DialogCreacionTurnos i09 = new DialogCreacionTurnos(
-						shell, vista, bundle, 0, -1, idContrato, null);
+				DialogCreacionTurnos i09 = new DialogCreacionTurnos(shell,
+						vista, bundle, 0, -1, idContrato, null);
 				while (!i09.getShell().isDisposed()) {
 					if (!shell.getDisplay().readAndDispatch()) {
 						shell.getDisplay().sleep();
@@ -668,7 +748,8 @@ public class DialogCreacionContratos {
 					 * turnos.get(i).getDescripcion());
 					 * listaTurnosContrato.redraw();
 					 */
-					listaTurnosContrato.add(t.getIdTurno() + " " + t.getDescripcion());
+					listaTurnosContrato.add(t.getIdTurno() + " "
+							+ t.getDescripcion());
 					cambiarPatron = true;
 				}
 			}
@@ -704,7 +785,7 @@ public class DialogCreacionContratos {
 							listaTurnosContrato.add(taux.getIdTurno() + " "
 									+ taux.getDescripcion(), index);
 							turnos.add(index, taux);
-							//cambiarPatron = true;
+							// cambiarPatron = true;
 						}
 					} else {
 						MessageBox messageBox = new MessageBox(shell,
@@ -763,8 +844,8 @@ public class DialogCreacionContratos {
 									Contrato aux = auxContratos.get(i);
 									if (aux.getNumeroContrato() != idContrato) {
 										ArrayList<Turno> auxTurnos = vista
-												.getTurnosDeUnContrato(
-														aux.getNumeroContrato());
+												.getTurnosDeUnContrato(aux
+														.getNumeroContrato());
 										for (int j = 0; j < auxTurnos.size(); j++) {
 											if (idEliminado == auxTurnos.get(j)
 													.getIdTurno())
@@ -897,28 +978,39 @@ public class DialogCreacionContratos {
 								&& Util.naturalCheck(tTipo.getText())) {
 							int longCiclo = Integer.valueOf(tLongCiclo
 									.getText());
+							if (contratoModificado!=null){
+								if(longCiclo!=contratoModificado.getDuracionCiclo()) cambiarPatron=true;
+							}
 							double sueldo = Double.valueOf(tSalario.getText());
 							int tipo = Integer.valueOf(tTipo.getText());
 							if (modo == 0) {
 								if (cambiarPatron) {
 									MessageBox messageBox = new MessageBox(
 											shell, SWT.APPLICATION_MODAL
-													| SWT.OK | SWT.CANCEL | SWT.ICON_WARNING);
+													| SWT.OK | SWT.CANCEL
+													| SWT.ICON_WARNING);
 									messageBox.setText("Info");
 									messageBox.setMessage(bundle
 											.getString("I09_cambiar_patron"));
-									if(messageBox.open()==SWT.OK){
+									if (messageBox.open() == SWT.OK) {
 										try {
 											cambiarPatron = false;
-											new CheckBoxes(shell,
-													Integer.valueOf(tLongCiclo.getText()),
-													listaTurnosContrato.getItemCount());
+											new CheckBoxes(shell, Integer
+													.valueOf(tLongCiclo
+															.getText()),
+													listaTurnosContrato
+															.getItemCount());
 										} catch (Exception ex) {
-											MessageBox messageBox2 = new MessageBox(shell,
-													SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_WARNING);
-											messageBox2.setText(bundle.getString("Error"));
+											MessageBox messageBox2 = new MessageBox(
+													shell,
+													SWT.APPLICATION_MODAL
+															| SWT.OK
+															| SWT.ICON_WARNING);
+											messageBox2.setText(bundle
+													.getString("Error"));
 											messageBox2
-													.setMessage(bundle.getString("I09_err_LongCiclo"));
+													.setMessage(bundle
+															.getString("I09_err_LongCiclo"));
 											messageBox2.open();
 											tLongCiclo.setFocus();
 											tLongCiclo.setSelection(0, 2);
@@ -964,22 +1056,30 @@ public class DialogCreacionContratos {
 								if (cambiarPatron) {
 									MessageBox messageBox = new MessageBox(
 											shell, SWT.APPLICATION_MODAL
-													| SWT.OK | SWT.CANCEL | SWT.ICON_WARNING);
+													| SWT.OK | SWT.CANCEL
+													| SWT.ICON_WARNING);
 									messageBox.setText("Info");
 									messageBox.setMessage(bundle
 											.getString("I09_cambiar_patron"));
-									if(messageBox.open()==SWT.OK){
+									if (messageBox.open() == SWT.OK) {
 										try {
 											cambiarPatron = false;
-											new CheckBoxes(shell,
-													Integer.valueOf(tLongCiclo.getText()),
-													listaTurnosContrato.getItemCount());
+											new CheckBoxes(shell, Integer
+													.valueOf(tLongCiclo
+															.getText()),
+													listaTurnosContrato
+															.getItemCount());
 										} catch (Exception ex) {
-											MessageBox messageBox2 = new MessageBox(shell,
-													SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_WARNING);
-											messageBox2.setText(bundle.getString("Error"));
+											MessageBox messageBox2 = new MessageBox(
+													shell,
+													SWT.APPLICATION_MODAL
+															| SWT.OK
+															| SWT.ICON_WARNING);
+											messageBox2.setText(bundle
+													.getString("Error"));
 											messageBox2
-													.setMessage(bundle.getString("I09_err_LongCiclo"));
+													.setMessage(bundle
+															.getString("I09_err_LongCiclo"));
 											messageBox2.open();
 											tLongCiclo.setFocus();
 											tLongCiclo.setSelection(0, 2);
@@ -999,7 +1099,8 @@ public class DialogCreacionContratos {
 									for (int i = 0; i < idsTurnosEliminados
 											.size(); i++) {
 										int aux = idsTurnosEliminados.get(i);
-										vista.eliminaTurnoDeContrato(aux, idContrato);
+										vista.eliminaTurnoDeContrato(aux,
+												idContrato);
 									}
 									if (okis) {
 										MessageBox messageBox = new MessageBox(

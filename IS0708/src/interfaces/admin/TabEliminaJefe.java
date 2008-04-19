@@ -97,7 +97,6 @@ public class TabEliminaJefe {
 				int ancho = tablaJefes.getSize().x;
 				tablaJefes.getColumn(0).setWidth(ancho / 5 * 2);
 				tablaJefes.getColumn(1).setWidth(ancho / 3 * 2);
-
 			}
 
 			public void controlMoved(ControlEvent arg0) {
@@ -106,8 +105,6 @@ public class TabEliminaJefe {
 		tablaJefes.addSelectionListener(new SelectionListener() {
 
 			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-
 			}
 
 			public void widgetSelected(SelectionEvent arg0) {
@@ -141,9 +138,9 @@ public class TabEliminaJefe {
 			// System.out.println(num);
 			String nombre = aux.substring(0, aux.indexOf("N") - 1);
 			tItem.setText(0, nombre);
-			Empleado e = new Empleado();
-			e.setEmplId(Integer.valueOf(num));
-			ArrayList<String> arrayDepts = vista.getNombreDepartamentosJefe(e);
+//			Empleado e = new Empleado();
+//			e.setEmplId(Integer.valueOf(num));
+			ArrayList<String> arrayDepts = vista.getControlador().getDepartamentosJefe(Integer.valueOf(num));
 			String depts = "";
 			for (int j = 0; j < arrayDepts.size(); j++) {
 				depts += arrayDepts.get(j);
