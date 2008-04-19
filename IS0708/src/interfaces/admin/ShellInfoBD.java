@@ -165,12 +165,24 @@ public class ShellInfoBD {
 						dos.writeUTF(codificacionPassword);
 						String codificacionAdmin=EncriptCadena.encripta(admin);
 						dos.writeUTF(codificacionAdmin);
+						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_INFORMATION | SWT.OK);
+						messageBox.setText ("Info");
+						messageBox.setMessage (_bundle.getString("I30_cambios_ok"));
+						messageBox.open();
 					} catch (FileNotFoundException e1) {
 						System.out.println("No se encuentra el archivo");
 						e1.printStackTrace();
+						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_ERROR | SWT.OK);
+						messageBox.setText ("Error");
+						messageBox.setMessage (_bundle.getString("I30_cambios_mal"));
+						messageBox.open();
 					} catch (IOException e2) {
 						System.out.println("Error de entrada salida");
 						e2.printStackTrace();
+						MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.ICON_ERROR | SWT.OK);
+						messageBox.setText ("Error");
+						messageBox.setMessage (_bundle.getString("I30_cambios_mal"));
+						messageBox.open();
 					}  
 					shell.dispose();
 				}
