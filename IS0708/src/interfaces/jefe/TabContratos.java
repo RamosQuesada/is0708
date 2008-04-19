@@ -74,7 +74,7 @@ public class TabContratos extends Thread {
 				}
 			}
 			try {
-				// Espera 10 segundos (¿cómo lo dejamos?)
+				// Espera 5 segundos 
 				sleep(5000);
 			} catch (Exception e) {
 			}
@@ -184,9 +184,6 @@ public class TabContratos extends Thread {
 		tablaContratos.addControlListener(new ControlListener() {
 			public void controlResized(ControlEvent e) {
 				// // Configurar tamaño de las columnas
-				// int ancho = tablaContratos.getSize().x ;
-				// tablaContratos.getColumn(0).setWidth(ancho/5*2);
-				// tablaContratos.getColumn(1).setWidth(ancho/3*2);
 				int ancho = tablaContratos.getSize().x;
 				tablaContratos.getColumn(0).setWidth(ancho / 40 * 3);
 				tablaContratos.getColumn(1).setWidth(ancho / 8 * 2);
@@ -231,40 +228,32 @@ public class TabContratos extends Thread {
 				}
 				Contrato c = i09.getContratoInsertado();
 				if (c != null) {
-					// vista.getListaContratosDepartamento().add(c);
-					// tablaContratos.removeAll();
 					ArrayList<Integer> ids = i09.getTurnosInsertados();
 					int idc = c.getNumeroContrato();
 					for (int i = 0; i < ids.size(); i++) {
 						int idt = ids.get(i);
 						if (idt != c.getTurnoInicial() && (idc != -1))
-							// CAMBIAR cuando este actualizada la vista
 							vista.insertTurnoPorContrato(idt, idc);
-						// vista.getControlador().insertTurnoPorContrato(idt,
-						// idc);
 					}
 					ids.clear();
 					ids = i09.getTurnosAnadidos();
 					for (int i = 0; i < ids.size(); i++) {
 						int idt = ids.get(i);
 						if (idt != c.getTurnoInicial() && (idc != -1))
-							// CAMBIAR cuando este actualizada la vista
 							vista.insertTurnoPorContrato(idt, idc);
-						// vista.getControlador().insertTurnoPorContrato(idt,
-						// idc);
 					}
-					TableItem tItem = new TableItem(tablaContratos, SWT.NONE);
-					tItem.setText(0, Integer.toString(c.getNumeroContrato()));
-					//ArrayList<Empleado> emp = vista.getEmpleados(null, null, c
-					//		.getNumeroContrato(), null, null, null, null);
-					String empleados = "";
-					tItem.setText(1, empleados);
-					tItem.setText(2, Integer.toString(c.getTurnoInicial()));
-					tItem.setText(3, c.getNombreContrato());
-					tItem.setText(4, c.getPatron());
-					tItem.setText(5, Integer.toString(c.getDuracionCiclo()));
-					tItem.setText(6, Double.toString(c.getSalario()));
-					tItem.setText(7, Integer.toString(c.getTipoContrato()));
+//					TableItem tItem = new TableItem(tablaContratos, SWT.NONE);
+//					tItem.setText(0, Integer.toString(c.getNumeroContrato()));
+//					//ArrayList<Empleado> emp = vista.getEmpleados(null, null, c
+//					//		.getNumeroContrato(), null, null, null, null);
+//					String empleados = "";
+//					tItem.setText(1, empleados);
+//					tItem.setText(2, Integer.toString(c.getTurnoInicial()));
+//					tItem.setText(3, c.getNombreContrato());
+//					tItem.setText(4, c.getPatron());
+//					tItem.setText(5, Integer.toString(c.getDuracionCiclo()));
+//					tItem.setText(6, Double.toString(c.getSalario()));
+//					tItem.setText(7, Integer.toString(c.getTipoContrato()));
 					// mostrarContratos();
 					// tablaContratos.redraw();
 				}
@@ -411,24 +400,12 @@ public class TabContratos extends Thread {
 								}
 								// CAMBIAR
 								okis = okis && vista.eliminaContrato(idOut);
-								// boolean
-								// okis=vista.getControlador().eliminaContrato(Integer.valueOf(tit.getText(0)));
-								// okis = okis
-								// && vista.getControlador()
-								// .eliminaContratoConTurnos(
-								// Integer.valueOf(tit
-								// .getText(0)));
 								okis = okis
 										&& vista
 												.eliminaContratoConTurnos(Integer
 														.valueOf(tit.getText(0)));
 								if (okis) {
-									// tablaContratos.removeAll();
-									// vista.getListaContratosDepartamento().remove(index);
-
 									tablaContratos.remove(index);
-									// mostrarContratos();
-									// tablaContratos.redraw();
 									MessageBox messageBox2 = new MessageBox(
 											tabFolder.getShell(),
 											SWT.APPLICATION_MODAL | SWT.OK

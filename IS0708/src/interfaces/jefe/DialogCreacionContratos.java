@@ -128,7 +128,7 @@ public class DialogCreacionContratos {
 	 * Dibuja tantas filas como turnos, y tantas columnas como días haya en el
 	 * ciclo.
 	 * 
-	 * @author Daniel Dionne
+	 * @author Jose Maria Martin
 	 * 
 	 */
 	private class CheckBoxes {
@@ -393,14 +393,6 @@ public class DialogCreacionContratos {
 			listaTurnos.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 					true, 2, 4));
 			start();
-			// CAMBIAR esto por el array de turnos de la vista directamente????
-			// pensar si hacer que herede d thread
-			// final ArrayList<Turno> turnos = vista.getTurnos();
-			/*
-			 * for (int i = 0; i < turnos.size(); i++)
-			 * listaTurnos.add(turnos.get(i).getIdTurno() + " " +
-			 * turnos.get(i).getDescripcion());
-			 */
 			final Composite grupo1 = new Composite(shell, SWT.NONE);
 			grupo1.setLayout(new GridLayout(2, false));
 			grupo1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
@@ -676,8 +668,7 @@ public class DialogCreacionContratos {
 					 * turnos.get(i).getDescripcion());
 					 * listaTurnosContrato.redraw();
 					 */
-					listaTurnosContrato.add(t.getIdTurno() + " "
-							+ t.getDescripcion());
+					listaTurnosContrato.add(t.getIdTurno() + " " + t.getDescripcion());
 					cambiarPatron = true;
 				}
 			}
@@ -713,7 +704,7 @@ public class DialogCreacionContratos {
 							listaTurnosContrato.add(taux.getIdTurno() + " "
 									+ taux.getDescripcion(), index);
 							turnos.add(index, taux);
-							cambiarPatron = true;
+							//cambiarPatron = true;
 						}
 					} else {
 						MessageBox messageBox = new MessageBox(shell,
