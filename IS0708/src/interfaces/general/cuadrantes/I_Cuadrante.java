@@ -275,6 +275,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	public void cargarDeCache() {
 		try {
 			if (vista.isCacheCargada() && turno==null) {
+				vista.ordenaEmpleados();
 				vista.setProgreso("Cargando cuadrantes", 80);
 				ArrayList<Trabaja> c[] = vista.getCuadrante(mes, anio, departamento).getCuad();
 				vista.setProgreso("Cargando cuadrantes", 100);
@@ -493,7 +494,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 							while (!encontrado && i < iCuad[dia-1].size()) {
 								t = iCuad[dia-1].get(i).getTurno();
 								if (empleadoActivo==-1) { cursor(0); t.desactivarFranjas();}
-								else if (i==empleadoActivo) {
+								else if (iCuad[dia-1].get(i).getEmpl().getEmplId() == empleadosMostrados.get(empleadoActivo).getEmplId()) {
 									if 		(t.contienePixelInt(e.x))	{ cursor(1); encontrado = true; turnoActivo = t; redibujar=true;}
 									else if (t.tocaLadoIzquierdo(e.x))	{ cursor(2); encontrado = true; turnoActivo = t; redibujar=true;}
 									else if (t.tocaLadoDerecho(e.x))	{ cursor(2); encontrado = true; turnoActivo = t; redibujar=true;}
@@ -509,6 +510,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 							else if (e.x < margenNombres)			{ cursor(3); encontrado = true; turnoActivo = null; redibujar=true;}
 							else cursor(0);
 						}
+						System.out.println("Emp act: " + empleadoActivo);
+						
 						if (!encontrado && turnoActivo!=null) { cursor(0); turnoActivo=null; redibujar=true; }
 						if (redibujar) canvas.redraw();
 					}
