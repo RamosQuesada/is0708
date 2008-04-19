@@ -111,6 +111,12 @@ public class PieChart {
 				shell.getDisplay().getBounds().height / 2 - shell.getSize().y / 2  );
 		shell.open();
 		
+		shell.addListener(SWT.Close, new Listener() {
+			public void handleEvent(Event e) {
+				shell.dispose();
+			}
+		});
+		
 		while (!shell.isDisposed()) {
 			if (!shell.getDisplay().readAndDispatch()) {
 				shell.getDisplay().sleep();
