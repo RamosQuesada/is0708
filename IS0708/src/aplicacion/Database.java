@@ -1187,21 +1187,22 @@ public class Database extends Thread {
 			int rango, int idContrato, int idTurno, String Color, String Telefono,
 			String Ssid, boolean HaEntrado, Date UltimoAcceso, int posicion) {
 		boolean correcto = false;
+		String q = "INSERT INTO " + tablaUsuarios + " values (" + id + ", '"
+		+ nombre + "', '" + apellido1 + "' ,'" + apellido2 + "','"
+		+ fechaNac + "'," + sexo + ",'" + email + "','"
+		+ password + "'," + indicadorGrupo + ",'" + fechaContrato
+		+ "','" + fechaEntrada + "'," + horasExtras + ","
+		+ felicidad + "," + idioma + "," + rango + ","
+		+ idContrato + "," + idTurno + ",'" + Color + "','"
+		+ Telefono + "','" + Ssid + "'," + HaEntrado + ",'" + UltimoAcceso + "', " + posicion + ")";
 		try {
 			st = con.createStatement();
-			st.executeUpdate("INSERT INTO " + tablaUsuarios + " values (" + id + ", '"
-					+ nombre + "', '" + apellido1 + "' ,'" + apellido2 + "','"
-					+ fechaNac + "'," + sexo + ",'" + email + "','"
-					+ password + "'," + indicadorGrupo + ",'" + fechaContrato
-					+ "','" + fechaEntrada + "'," + horasExtras + ","
-					+ felicidad + "," + idioma + "," + rango + ","
-					+ idContrato + "," + idTurno + ",'" + Color + "','"
-					+ Telefono + "','" + Ssid + "'," + HaEntrado + ",'" + UltimoAcceso + "', " + posicion + ")");
+			st.executeUpdate(q);
 			correcto = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			correcto = false;
-			System.err.println("Database :: Error al insertar Usuario");
+			System.err.println("Database :: Error al insertar Usuario: " + q);
 		}
 		return correcto;
 	}
