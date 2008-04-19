@@ -321,12 +321,13 @@ public class Vista {
 	 * @param idContrato
 	 * @return boolean que nos confirma exito ne la operacion
 	 */
-	public void eliminaTurnoDeContrato(int idTurno, int idContrato){
+	public boolean eliminaTurnoDeContrato(int idTurno, int idContrato){
 		//modificamos bbdd
 		ArrayList<Object> aux=new ArrayList<Object>();
 		aux.add(idTurno);
 		aux.add(idContrato);
 		deleteCache(aux,"eliminaTurnoDeContrato");//borramos de la bbdd
+		return true;
 		
 	}
 	public boolean eliminaMensaje(Mensaje m){

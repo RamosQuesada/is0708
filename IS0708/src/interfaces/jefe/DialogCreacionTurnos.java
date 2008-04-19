@@ -66,7 +66,8 @@ public class DialogCreacionTurnos {
 		this.idContrato=idContrato;
 		this.vista=vista;
 		turnoModificado=tm;
-		seleccionColor=false;
+		if (modo==0) seleccionColor=false;
+		else seleccionColor=true;
 		shell = new Shell (padre, SWT.CLOSE | SWT.RESIZE | SWT.APPLICATION_MODAL);
 		mostrarVentana();
 	}
@@ -165,14 +166,6 @@ public class DialogCreacionTurnos {
 		bAceptar	.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		bCancelar	.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 				
-		// Listener para el selector de fecha de alta
-		SelectionAdapter sabFAlta = new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e){
-//				new I02PeticionFecha(shell, tFAlta);
-			}
-		};
-//		bFAlta.addSelectionListener(sabFAlta);
-		
 		
 		// Un listener con lo que hace el bot�n bCancelar
 		SelectionAdapter sabCancelar = new SelectionAdapter() {
