@@ -590,8 +590,7 @@ public class Database extends Thread {
 		ResultSet r = null;
 		try {
 			st = con.createStatement();
-			st
-					.executeUpdate("INSERT INTO " + tablaContratos + " (TurnoInicial,Nombre,Patron,DuracionCiclo,Salario,Tipo) values ("
+			st.executeUpdate("INSERT INTO " + tablaContratos + " (TurnoInicial,Nombre,Patron,DuracionCiclo,Salario,Tipo) values ("
 							+ turnoInicial
 							+ ", '"
 							+ nombre
@@ -2598,15 +2597,16 @@ return result;
  					"Primary Key (NombreDept,fecha,horaInicio)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
 
 			st.executeBatch();
-			st.executeUpdate("INSERT INTO " + tablaTurnos + " (Descripcion, HoraEntrada, HoraSalida, HoraInicioDescanso, DuracionDescanso, Color) VALUES ('"
-					+ "Turno0"+ "', '"+ new Time(0)+ "', '"+ new Time(0)+ "', '"+ new Time(0)+ "', '"+ -1+ "', '"
-					+ "000000" + "')");
-			st.executeUpdate("INSERT INTO " + tablaDepartamentos + " values ('" + "Departamento0"
-					+ "', '" + -1 + "', '" + new Time(0) + "', '" + new Time(0) + "')");
 			st.close();
+			st = con.createStatement();
+
+			// Insertar contrato inicial para jefe
+			st.executeUpdate("INSERT INTO " + tablaContratos + " (IdContrato, TurnoInicial) values (1,1);");
+			st.executeUpdate("INSERT INTO " + tablaTurnos + " (IdTurno) values (1);");
+
+			
 			System.out.println("aplicacion.Database.java\t:: Estructura de tablas generada correctamente.");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
