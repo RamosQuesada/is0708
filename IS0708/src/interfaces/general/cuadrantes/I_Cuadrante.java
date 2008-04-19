@@ -275,7 +275,6 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	public void cargarDeCache() {
 		try {
 			if (vista.isCacheCargada() && turno==null) {
-				vista.ordenaEmpleados();
 				vista.setProgreso("Cargando cuadrantes", 80);
 				ArrayList<Trabaja> c[] = vista.getCuadrante(mes, anio, departamento).getCuad();
 				vista.setProgreso("Cargando cuadrantes", 100);
@@ -510,7 +509,6 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 							else if (e.x < margenNombres)			{ cursor(3); encontrado = true; turnoActivo = null; redibujar=true;}
 							else cursor(0);
 						}
-						System.out.println("Emp act: " + empleadoActivo);
 						
 						if (!encontrado && turnoActivo!=null) { cursor(0); turnoActivo=null; redibujar=true; }
 						if (redibujar) canvas.redraw();
