@@ -278,7 +278,8 @@ public class TabMensajeria extends Thread{
 		1, 1));
 		bMensNuevo.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				new ShellMensajeNuevo(tabFolder.getShell(), bundle, vista);
+				//new ShellMensajeNuevo(tabFolder.getShell(), bundle, vista);
+				new ShellEscribirMensaje(tabFolder.getShell(),bundle,vista,null,0,"");
 			}
 		});
 		
@@ -303,7 +304,8 @@ public class TabMensajeria extends Thread{
 		false, 1, 1));
 		bMensEliminar.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
-				vista.eliminaMensaje(mensSelecionado);
+				if(mensSelecionado!=null)
+					vista.eliminaMensaje(mensSelecionado);
 			}
 		});
 		
