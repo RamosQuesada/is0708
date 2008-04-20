@@ -2,7 +2,6 @@ package paquete_pruebas;
 
 import java.sql.Date;
 import java.sql.Time;
-
 import aplicacion.Controlador;
 import aplicacion.Database;
 import aplicacion.datos.Contrato;
@@ -19,7 +18,7 @@ public class InsertaDatosFijos {
 	static Database bd;
 	
 	public static void insertarNdepart(int numDepartamentos) {
-	
+		
 		Date inicio = Date.valueOf("2008-01-01");
 		Date nacimiento = new Date(0);
 		
@@ -213,12 +212,18 @@ public class InsertaDatosFijos {
 			c.insertDepartamentoUsuario(10000701+nd*1000, depart, false);
 			c.insertDepartamentoUsuario(10000702+nd*1000, depart, true);
 			
+			// insertar ventas para el empleado 100xx200 para 2008
+			bd.insertarVentasACapon(10000200+nd*1000);			
+				
+			
+			
 			System.out.println("Departamento " + nd + " insertado.");
 		}
 		
 		bd.cerrarConexion();
 		
 	}
+	
 
 	public static void prepararDB() {
 		bd = new Database();
