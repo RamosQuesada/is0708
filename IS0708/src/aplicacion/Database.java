@@ -5,6 +5,7 @@ import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 import org.eclipse.swt.graphics.Color;
 
@@ -2675,6 +2676,26 @@ return result;
 			System.out.println("aplicacion.Database.java\t:: Dependencias generadas correctamente.");
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void insertarVentasACapon(int nvend) {
+		// insertar ventas para el empleado 100xx200 para 2008
+		Random rnd=new Random(5000);
+		String query = "INSERT INTO ventas \n";
+		int ventas;
+		for (int m = 1; m <= 12; m++)
+			for (int d = 1; d <= 28; d++) {
+				ventas = rnd.nextInt(5000);
+				query += "SELECT '" + nvend + "', '2008-"+m+"-"+d+"', '"+ventas+"'\n";
+				if (m!=12 || d!= 28) query += "UNION ALL \n";
+			}
+		System.out.println(query);
+		try {
+			st = con.createStatement();
+			st.executeUpdate(query);
+		} catch (SQLException e) {
+			
 		}
 	}
 }
