@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.swing.JOptionPane;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
@@ -69,14 +71,6 @@ public class Vista {
 	
 	/** Caché local: Cuadrantes del departamento actual */
 	private ArrayList<Cuadrante> cuadrantes = new ArrayList<Cuadrante>();
-	
-
-//TODO borrar si no hacen falta
-//	/** Caché local: Lista de nombres de jefes de departamento */
-//	private ArrayList<String> nombreJefesDepartamento = new ArrayList<String>();
-//	
-//	/** Caché local: Lista de números de jefes de departamento */
-//	private ArrayList<Integer> numeroJefesDepartamento = new ArrayList<Integer>();
 	
 	/**
 	 * cola FIFO de inserciones/actualizaciones a realizar en la BD
@@ -149,12 +143,14 @@ public class Vista {
 						if      (e.tipo.equals("Empleado" ))		insertEmpleadoBD((Empleado) e.o.get(0));
 						else if (e.tipo.equals("Cuadrante"))		controlador.insertCuadrante((Cuadrante) e.o.get(0)); 			
 						else if (e.tipo.equals("TurnoContrato"))	controlador.insertTurnoPorContrato((Integer)e.o.get(0), (Integer)e.o.get(1));
-						else if (e.tipo.equals("Contrato"))			controlador.insertContrato((Contrato) e.o.get(0));
+//						else if (e.tipo.equals("Contrato"))			controlador.insertContrato((Contrato) e.o.get(0));
 						/*else if (e.tipo.equals("Departamento"))		controlador.insertDepartamento((Departamento)e.o.get(0));
 						else if (e.tipo.equals("CrearDepartamento")){ 	controlador.insertDepartamentoUsuario((Integer)e.o.get(2),e.o.get(0).toString()); //tabla DepartamentoUsuario
 																		controlador.insertNumerosDepartamento((Integer)e.o.get(1),e.o.get(0).toString()); //tabla NumerosDEPARTAMENTOs
 																		controlador.insertDepartamentoPruebas(e.o.get(0).toString(),(Integer)e.o.get(2)); //tabla DEPARTAMENTO
 						}*/
+						//TODO quitar esto
+						else JOptionPane.showMessageDialog(null, "Insertar "+e.tipo+" no existe", "Error en cache", JOptionPane.ERROR_MESSAGE);
 					}
 					else if (e.i==ELIMINAR) {
 						if      (e.tipo.equals("Contrato"))			controlador.eliminaContrato((Integer) e.o.get(0));
@@ -168,6 +164,8 @@ public class Vista {
 							ArrayList<Object> aux = (ArrayList<Object>)e.o.get(0);
 							controlador.eliminaTurnoDeContrato((Integer)aux.get(0),(Integer)aux.get(1));
 						}
+						//TODO quitar esto
+						else JOptionPane.showMessageDialog(null, "Eliminar "+e.tipo+" no existe", "Error en cache", JOptionPane.ERROR_MESSAGE);
 					}
 					else if(e.i==MODIFICAR) {
 						if      (e.tipo.equals("Contrato"))			controlador.modificarContrato(((Contrato)e.o.get(0)).getNumeroContrato(), ((Contrato)e.o.get(0)).getTurnoInicial(), ((Contrato)e.o.get(0)).getNombreContrato(), ((Contrato)e.o.get(0)).getPatron() , ((Contrato)e.o.get(0)).getDuracionCiclo(), ((Contrato)e.o.get(0)).getSalario(), ((Contrato)e.o.get(0)).getTipoContrato());
@@ -180,6 +178,8 @@ public class Vista {
 //																		controlador.cambiaNombreDepartamentoUsuario(e.o.get(0).toString(),e.o.get(1).toString());
 //																		controlador.cambiaNombreNumerosDEPARTAMENTOs(e.o.get(0).toString(),e.o.get(1).toString());
 //																		} 
+						//TODO quitar esto
+						else JOptionPane.showMessageDialog(null, "Modificar "+e.tipo+" no existe", "Error en cache", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 				setProgreso("Actualizando base de datos", 100);
@@ -225,7 +225,7 @@ public class Vista {
 	public boolean insertCuadrante(Cuadrante c) {
 		int i=0;
 		while (i<cuadrantes.size()){
-			if (cuadrantes.get(i).getMes()==c.getMes())
+			if (cuadrantes.get(i).getMes()==c.getMes() && cuadrantes.get(i).getAnio()==c.getAnio())
 				cuadrantes.remove(i);
 			else
 				i++;
@@ -261,6 +261,13 @@ public class Vista {
 		return true;
 	}
 	
+	/**
+	 * Inserta ventas para un empleado y dia determinado
+	 * @param idVend Vendedor al que se le insertan las ventas
+	 * @param ventas Ventas a insertar
+	 * @param fecha Fecha en la que se insertan las ventas
+	 * @return <i>true</i> si se ha insertado correctamente
+	 */
 	public boolean insertVentas (int idVend, float ventas, Date fecha){
 		return controlador.insertVentas(idVend, ventas, fecha);
 	}
@@ -330,22 +337,46 @@ public class Vista {
 		return true;
 		
 	}
+	
+	/**
+	 * Elimina un mensaje
+	 * @param m Mensaje a borrar
+	 * @return <i>true</i> si se ha borrado correctamente
+	 */
 	public boolean eliminaMensaje(Mensaje m){
-		
 		return this.controlador.eliminaMensaje(m);		
 	}
 	
+	/**
+	 * Consulta si existen ventas para un empleado y dia determinado
+	 * @param idVend Vendedor para el que se buscan ventas
+	 * @param fecha Fecha para la que se buscan ventas
+	 * @return <i>true</i> si existen ventas para el empleado y fecha
+	 */
 	public boolean existeVentas (int idVend,Date fecha){
 		return this.controlador.existeVentas(idVend, fecha);
 	}
 	
+	/**
+	 * Cambia las ventas de un empleado de un dia determinado
+	 * @param idVend Vendedor para el que se quieren cambiar las ventas
+	 * @param fecha Fecha en la que se quieren cambiar las ventas
+	 * @param ventas Nuevas ventas
+	 */
 	public void cambiarVentas(int idVend, Date fecha, float ventas){
 		this.controlador.cambiarVentas(idVend, fecha, ventas);
 	}
-
+	
 	/**
 	 * Modifica un contrato en la base de datos
-	 * @return false si el contrato no existe
+	 * @param idContrato Contrato a modificar
+	 * @param turnoInicial Nuevo turno inicial
+	 * @param nombre Nuevo nombre
+	 * @param patron Nuevo patron
+	 * @param duracionCiclo Nueva duracion del ciclo
+	 * @param salario Nuevo salario
+	 * @param tipo Nuevo tipo
+	 * @return <i>true</i> si se ha modificado correctamente
 	 */
 	public boolean modificarContrato(int idContrato, int turnoInicial, String nombre, String patron, int duracionCiclo, double salario, int tipo) {
 		Contrato c = getContrato(idContrato);
@@ -411,8 +442,14 @@ public class Vista {
 	}
 	
 	/**
-	 * Modifica un turno de la base de datos
-	 * @return false si el turno no existe
+	 * Modifica un turno en la base de datos
+	 * @param idTurno Turno a modificar
+	 * @param descripcion Nueva descripcion
+	 * @param horaEntrada Nueva hora de entrada
+	 * @param horaSalida Nueva hora de salida
+	 * @param horaInicioDescanso Nueva hora inicio descanso
+	 * @param duracion Nueva duracion
+	 * @return <i>true</i> si se ha modificado correctamente
 	 */
 	public boolean modificarTurno(int idTurno, String descripcion, Time horaEntrada, Time horaSalida, Time horaInicioDescanso, int duracion) {
 		Turno t = getTurno(idTurno);
@@ -426,6 +463,14 @@ public class Vista {
 		return true;
 	}
 	
+	/**
+	 * Modifica un cuadrante en la base de datos
+	 * @param primerDia Primer dia a modificar
+	 * @param mes Mes del cuadrante a modificar
+	 * @param anio Anio del cuadrante a modificar
+	 * @param idDepartamento Departamento del cuadrante a modificar
+	 * @param c Cuadrante a modificar
+	 */
 	public void modificarCuadrante (int primerDia, int mes, int anio, String idDepartamento, Cuadrante c) {
 		int i = 0;
 		boolean encontrado = false;
@@ -685,6 +730,10 @@ public class Vista {
 		return display;
 	}
 	
+	/**
+	 * Devuelve el cargador de imagenes
+	 * @return el cargador de imagenes
+	 */
 	public CargadorImagenes getImagenes() {
 		return imagenes;
 	}
@@ -730,6 +779,7 @@ public class Vista {
 	public void setCursorFlecha() {
 		shell.setCursor(new Cursor(display, SWT.CURSOR_ARROW));
 	}
+	
 	/**
 	 * 
 	 * Establece información de la distribucion de un departamento para un determinado dia. 
@@ -743,6 +793,7 @@ public class Vista {
 	public void setDistribucionDiaSemana(String depart, int tipoDia, ArrayList<Object[]> datos){
 		controlador.setDistribucionDiaSemana(depart, tipoDia, datos);
 	}
+	
 	/**
 	 * Funcion que establece la hora de entrada y salida de un departamento
 	 * @param dpto: Id del Dpto.
@@ -752,6 +803,7 @@ public class Vista {
 	public void setHorarioDpto(String dpto, Time entrada, Time salida) {
 		controlador.setHorarioDpto(dpto, entrada, salida);
 	}
+	
 	/**
 	 * Devuelve true si la aplicación se ha iniciado en modo debug
 	 * 
@@ -811,6 +863,11 @@ public class Vista {
 		return controlador.getEmpleado(idEmpl);
 	}
 	
+	/**
+	 * Consulta un turno
+	 * @param idTurno Turno que se consulta
+	 * @return Turno consultado
+	 */
 	public Turno getTurno (int idTurno) {
 		// Buscar en cache
 		int i = 0;
@@ -828,6 +885,11 @@ public class Vista {
 		
 	}
 	
+	/**
+	 * Consulta un contrato
+	 * @param idContrato Contrato a consultar
+	 * @return Contrato consultado
+	 */
 	public Contrato getContrato (int idContrato) {
 		// Buscar en cache
 		int i = 0;
@@ -841,7 +903,13 @@ public class Vista {
 		return controlador.getContrato(idContrato);
 	}
 	
-		
+	/**
+	 * Consulta un cuadrante
+	 * @param mes Mes del cuadrante a consultar
+	 * @param anio Anio del cuadrante a consultar
+	 * @param idDepartamento Departamento del cuadrante a consultar
+	 * @return Cuadrante consultado
+	 */
 	public Cuadrante getCuadrante(int mes, int anio, String idDepartamento) {
 		if (!alive) return null;
 		int i = 0;
@@ -857,6 +925,12 @@ public class Vista {
 		return c;
 	}
 	
+	/**
+	 * Elimina un cuadrante de la base de datos
+	 * @param mes Mes del cuadrante a eliminar
+	 * @param anio Anio del cuadrante a eliminar
+	 * @param idDepartamento Departamento del cuadrante a eliminar
+	 */
 	public void eliminaCuadrante(int mes, int anio, String idDepartamento) {
 		if (!alive) return;
 		int i = 0;
@@ -864,10 +938,19 @@ public class Vista {
 			if (cuadrantes.get(i).getAnio()==anio && cuadrantes.get(i).getMes()==mes && cuadrantes.get(i).getIdDepartamento().equals(idDepartamento)) {
 				cuadrantes.remove(i);
 			}
-			i++;
+			else
+				i++;
 		}
 	}
 	
+	/**
+	 * Consulta la lista de trabaja para un departamento y dia determinado
+	 * @param dia Dia a consultar
+	 * @param mes Mes a consultar
+	 * @param anio Anio a consultar
+	 * @param idDepartamento Departamento a consultar
+	 * @return Lista con los turnos que cumplen los empleados que trabajan
+	 */
 	public ArrayList<Trabaja> getListaTrabajaDia(int dia, int mes, int anio, String idDepartamento) {
 		Cuadrante c = getCuadrante(mes, anio, idDepartamento);
 		return c.getListaTrabajaDia(dia-1);
@@ -880,6 +963,7 @@ public class Vista {
 	public int getTurnoSize(){
 		return turnos.size();
 	}
+	
 	/**
 	 * Esta función devuele un arraylist con los turnos de un contrato especifico
 	 * @param idContrato
@@ -909,14 +993,14 @@ public class Vista {
 		}
 		
 	}
+	
 	/**
-	 * 
+	 * Consulta los turnos cargados en cache
 	 * @return los turnos cargados de la base de datos
 	 */
-	public ArrayList <Turno> getTurnos(){
+	public ArrayList<Turno> getTurnos(){
 		return turnos;
 	}
-
 
 	/**
 	 * Carga los mensajes de la base de datos
@@ -926,8 +1010,7 @@ public class Vista {
 		infoDebug("Vista", "Cargando mensajes");
 		mensajesEntrantes = getMensajesEntrantes(getEmpleadoActual().getEmplId(), 0, num_men_hoja);
 		infoDebug("Vista", "Acabado");
-	}
-	
+	}	
 
 	/**
 	 * Carga los mensajes de la base de datos
@@ -1097,6 +1180,11 @@ public class Vista {
 		return b;
 	}
 
+	/**
+	 * Consulta los empleados de un departamento
+	 * @param idDept
+	 * @return Lista de empleados del departamento
+	 */
 	public ArrayList<Empleado> getEmpleadosDepartamento(String idDept) {
 		return controlador.getEmpleadosDepartamento(getEmpleadoActual().getEmplId(),idDept);
 	}
@@ -1199,7 +1287,6 @@ public class Vista {
 		}*/
 		
 	}
-	
     
 	/**
 	 * Obtiene una lista de <i>b</i> mensajes entrantes por orden cronológico,
@@ -1433,6 +1520,11 @@ public class Vista {
 		System.out.println("Cache cargada");
 	}
 
+	/**
+	 * Cambia el nombre de un departamento
+	 * @param NombreAntiguo Nombre antiguo
+	 * @param NombreNuevo Nombre nuevo
+	 */
 	public void cambiarNombreDepartamento(String NombreAntiguo, String NombreNuevo) {
 		// TODO Auto-generated method stub
 //se modifica el nombre del Dpto. en las 3 tablas de Departamentos
@@ -1471,9 +1563,14 @@ public class Vista {
 		return aux;*/
 	}
 
+	/**
+	 * Consulta los contrato del departamento actual (cargados en cache)
+	 * @return Lista de contratos del departamento
+	 */
 	public ArrayList<Contrato> getListaContratosDepartamento() {
 		return contratos;
 	}
+	
 	/**
 	 * Funcion que devuelve todos los nombres completos (nombre+apellidos)
 	 *  de los empleados que pueden ser jefes de departamento y su numero de vendedor
@@ -1490,9 +1587,7 @@ public class Vista {
 	public ArrayList<Integer> getNumVendedorTodosJefes() {
 		return this.controlador.getNumVendedorTodosJefes();
 //		return numeroJefesDepartamento;
-	}
-	
-	
+	}	
 	
 	/**
 	 * Funcion que incluye en la BBDD un nuevo departamento
@@ -1529,6 +1624,7 @@ public class Vista {
 		aux.add(nvJefe);
 		insertCache(aux,"crearDepartamento");*///no quitar el parseInt
 	}
+	
 	/**
 	 * Función que nos dice si ya existe ese nombre de departamento
 	 * @param nombre nombre a comparar
@@ -1579,6 +1675,13 @@ public class Vista {
 
 	}
 	
+	/**
+	 * Consulta si existe un cuadrante en la cache
+	 * @param mes Mes del cuadrante
+	 * @param anio Anio del cuadrante
+	 * @param idDepartamento Departamento del cuadrante
+	 * @return <i>true</i> si existe
+	 */
 	public boolean existeCuadranteCache (int mes, int anio, String idDepartamento) {
 		int i = 0;
 		while (i<cuadrantes.size()) {
@@ -1613,7 +1716,8 @@ public class Vista {
 		departamentosJefe.add(d);
 		modifyCache(d,"JefeDepartamento");
 		return true; //poner la funcion a void*/
-		}
+	}
+	
 	/**
 	 * Función que devuelve Info de un Dpto. (empleados y horario del dia actual)
 	 * @param dpto nombre del departamento
@@ -1691,6 +1795,7 @@ public class Vista {
 		//está ahí)
 		return this.getEmpleadosDepartamento(text).size()>1;
 	}
+	
 	/**
 	 * Función que elimina un departamento de las
 	 * 3 tablas de departamentos
@@ -1714,8 +1819,7 @@ public class Vista {
 	 */
 	public ArrayList<Object[]> getDistribucionDepartamentoDiaSemana(String depart, int tipoDia){
 		return controlador.getDistribucionDiaSemana(depart, tipoDia);
-	}
-	
+	}	
 	 
 	/**
 	 * Funcion que dado un Dpto, te devuelve 
@@ -1740,18 +1844,32 @@ public class Vista {
 		return horas;
 	}
 
+	/**
+	 * Marca como leido un mensaje
+	 * @param m Mensaje
+	 * @return <i>true</i> si se ha marcado correctamente
+	 */
 	public boolean setLeido(Mensaje m) {
 		modifyCache(m, "MensajeLeido");
 		return true;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public int getNum_men_hoja() {
 		return num_men_hoja;
 	}
 
+	/**
+	 * 
+	 * @param num_men_hoja
+	 */
 	public void setNum_men_hoja(int num_men_hoja) {
 		this.num_men_hoja = num_men_hoja;
 	}
+	
 	/**
 	 * Funcion que cambia el horario de un departamento
 	 * @param i horaInicio
@@ -1769,6 +1887,7 @@ public class Vista {
 		Time thC=Time.valueOf(horacierre);
 		this.controlador.cambiaHorarioDpto(nombre, thI, thC);
 	}
+	
 	/**
 	 * Función que ordena el ArrayList de los empleados
 	 */

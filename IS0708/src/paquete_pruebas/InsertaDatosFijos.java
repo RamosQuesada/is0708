@@ -3,8 +3,6 @@ package paquete_pruebas;
 import java.sql.Date;
 import java.sql.Time;
 
-import org.eclipse.swt.graphics.Color;
-
 import aplicacion.Controlador;
 import aplicacion.Database;
 import aplicacion.datos.Contrato;
@@ -21,8 +19,6 @@ public class InsertaDatosFijos {
 	static Database bd;
 	
 	public static void insertarNdepart(int numDepartamentos) {
-// TODO hacer inserciones en la tabla "contratosdepartamento"
-// TODO insertar colores de los empleados
 	
 		Date inicio = Date.valueOf("2008-01-01");
 		Date nacimiento = new Date(0);
@@ -236,8 +232,6 @@ public class InsertaDatosFijos {
 	public static void resetBD(int n) {
 		// Prepara la estructura de la BD
 		prepararDB();
-		// Inserta 20 nuevos departamentos para pruebas con sus datos independientes
-		//insertarNdepart(5);
 		//Inserta n nuevos departamentos para pruebas con sus datos independientes
 		InsertaDatosFijos.insertarNdepart(n);
 	}
