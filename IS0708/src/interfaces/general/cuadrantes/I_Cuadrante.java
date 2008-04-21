@@ -645,12 +645,16 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					}
 				}
 				turnoSeleccionado = null;
-				if (e.button == 1 && nombreValido && nombreSeleccionado!=null) {
-					
+				if (e.button == 1 && nombreValido && nombreSeleccionado!=null && nombreMarcado!=empActVistaMes) {
+					ArrayList<Empleado> empleados = vista.getEmpleados();
+					aplicacion.datos.Empleado empAux1=(empleados.get(nombreMarcado));
+					aplicacion.datos.Empleado empAux2=(empleados.get(empActVistaMes));
+					//empleados.remove(nombreMarcado);
+					empleados.set(empActVistaMes, empAux1);
+					empleados.set(nombreMarcado, empAux2);
+					calcularTamano();
 				}
-				if (e.button == 1 && !nombreValido && nombreSeleccionado!=null) {
-					
-				}
+				
 				nombreSeleccionado=null;
 				//turnoPulsado=false;
 				canvas.redraw();
@@ -1035,8 +1039,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		if (nombreSeleccionado!=null){
 			gc.setBackground(Util.getColorDiferenciado(azulOsc, 120));
 			gc.setForeground(azulOsc);
-			gc.drawRectangle(cursor.x-(margenNombres-15)/2,cursor.y-(altoFila-4)/2, margenNombres-15, altoFila-4);
-			gc.fillRectangle(cursor.x-(margenNombres-15)/2+1,cursor.y-(altoFila-4)/2+1, margenNombres-16, altoFila-5);
+			gc.drawRectangle(cursor.x-(margenNombres-15)/2-8,cursor.y-(altoFila-4)/2, margenNombres-15, altoFila-4);
+			gc.fillRectangle(cursor.x-(margenNombres-15)/2+1-8,cursor.y-(altoFila-4)/2+1, margenNombres-16, altoFila-5);
 			//String nomSel=vista.getEmpleados().get(empActVistaMes).getNombre();
 			//gc.setForeground(negro);
 			gc.drawText(nombreSeleccionado,cursor.x-(margenNombres-15)/2+9,cursor.y-(altoFila-4)/2+2);
