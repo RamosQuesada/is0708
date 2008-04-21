@@ -647,9 +647,14 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				turnoSeleccionado = null;
 				if (e.button == 1 && nombreValido && nombreSeleccionado!=null && nombreMarcado!=empActVistaMes) {
 					ArrayList<Empleado> empleados = vista.getEmpleados();
+					int posAux;
 					aplicacion.datos.Empleado empAux1=(empleados.get(nombreMarcado));
 					aplicacion.datos.Empleado empAux2=(empleados.get(empActVistaMes));
+					posAux=empAux1.getPosicion();
+					empAux1.setPosicion(empAux2.getPosicion());
+					empAux2.setPosicion(posAux);
 					//empleados.remove(nombreMarcado);
+					//empAux1.setPosicion(posicion);
 					empleados.set(empActVistaMes, empAux1);
 					empleados.set(nombreMarcado, empAux2);
 					calcularTamano();
