@@ -320,6 +320,9 @@ input.button {
 	padding: 0; margin: 5px 0 0 5px;
 	display: inline;
 }
+#main p {
+	text-align: justify;
+}
 #main h2 {
 	margin-top: 10px;
 	font: Bold 140% 'Trebuchet MS', Tahoma, Sans-serif;
@@ -345,6 +348,10 @@ input.button {
 	width: 100%;
 	padding: 0; margin: 5px 0 0 5px;
 	display: inline;
+}
+
+#main100 p {
+	text-align: justify;
 }
 
 /* Informes */
