@@ -371,10 +371,7 @@ input.button {
 }
 
 #main #informe p {
-	padding: 0px;
-	padding-left: 20px;
-	margin: 0px;
-	margin-bottom: 10px;
+	text-align: justify;
 }
 
 .post-footer {
