@@ -133,8 +133,14 @@ public class Cuadrantes extends Thread{
 	 */
 	public void run(){
 		boolean run=true;
+		
 		while(run){
-			if (lCuadranteTitulo.isDisposed() || vista.getEmpleadoActual().getEmplId()==0) run = false;
+			if (lCuadranteTitulo.isDisposed() || vista.getEmpleadoActual().getEmplId()==0){
+				cuadrante.finalizaThread();
+				run = false;
+				
+				
+			}
 			else{
 			display.asyncExec(new Runnable () {
 				public void run() {
@@ -148,6 +154,7 @@ public class Cuadrantes extends Thread{
 				e.printStackTrace();
 			}
 		}
+
 		}
 	}
 

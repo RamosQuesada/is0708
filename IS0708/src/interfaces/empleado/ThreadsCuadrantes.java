@@ -180,7 +180,7 @@ public class ThreadsCuadrantes extends Thread{
 			Trabaja trabaja=null;	
 			int contador=0;
 			boolean fin=false;
-			while((!fin)&&(contador<lista_trabaja.size())){
+			while(((!fin)&&(contador<lista_trabaja.size()))&&(!finalizar)){
 				if((lista_trabaja.get(contador).getIdEmpl()==cuadrante.dameEmpleado().getEmplId())){
 					trabaja=lista_trabaja.get(contador);
 					fin=true;
@@ -189,14 +189,19 @@ public class ThreadsCuadrantes extends Thread{
 				}
 				
 			int turno=0;
-			
+			if(!finalizar){
 			/* si el turno no es vacio, vemos que id tiene */
 			if(trabaja!=null){
 				turno= trabaja.getIdTurno();	
 			}
-			
-
-			Turno tturno= (cuadrante.dameVista()).getTurno(turno);
+			Turno tturno=null;
+			try{
+			tturno= (cuadrante.dameVista()).getTurno(turno);
+			}
+			catch(Exception e){
+				tturno=null;
+				finalizar=true;
+			}
 			
 			//__fin boss
 			Time horaEntrada,horaSalida,horaDescanso;
@@ -230,6 +235,7 @@ public class ThreadsCuadrantes extends Thread{
 					HorasComienzoDescansoAux.add(cont,0.0f);
 					HorasFinDescansoAux.add(cont,0.0f);
 				}
+			}
 			
 		}
 				cont++;

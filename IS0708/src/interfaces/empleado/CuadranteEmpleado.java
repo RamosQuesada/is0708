@@ -435,6 +435,9 @@ public class CuadranteEmpleado {
 	
 	}
 	
+	public void finalizaThread(){
+		thread.ponFinalizar();
+	}
 	
 	public void dibujarCarga(GC gc,String texto){
 		/*cambiarPincel(gc, 100, 200, 100);
