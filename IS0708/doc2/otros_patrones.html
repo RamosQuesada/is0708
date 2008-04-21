@@ -1,0 +1,327 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<meta name="Description" content="Documentación Turnomatic." />
+<meta name="Keywords" content="documentación, turnomatic, ingenería, software, ucm" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="Distribution" content="Global" />
+<meta name="Author" content="IS 2007-2008. UCM Madrid, Spain" />
+<meta name="Robots" content="index,follow" />
+
+<link rel="stylesheet" href="images/Envision.css" type="text/css" />
+
+<title>Documentación TurnoMatic. IS 07-08 UCM</title>
+	
+</head>
+<body>
+<!-- wrap starts here -->
+<div id="wrap">
+		
+		<!--header -->
+		<div id="headerDoc"></div>
+
+		<!-- menu superior -->	
+		<div  id="menu">
+			<ul>
+				<li>             <a href="index.html">Introducción</a></li>
+				<li>             <a href="funcionalidad.html">Funcionalidad</a></li>
+				<li>             <a href="interfaces.html">Interfaces</a></li>
+				<li>             <a href="historias.html">Historias</a></li>
+				<li>             <a href="casosdeuso.html">CU</a></li>
+				<li>             <a href="riesgos.html">Riesgos</a></li>
+				<li>             <a href="tecnologias.html">Tecnologías</a></li>
+				<li>             <a href="diseno.html">Diseño</a></li>
+				<li>             <a href="planificacion.html">Planificación</a></li>
+				<li>             <a href="glosario.html">Glosario</a></li>
+				<li class="last" id="current"><a href="otros.html">Otros</a></li>
+			</ul>
+		</div>
+
+		
+		<div id="content-wrap">
+			<!-- Menú lateral -->
+			<div id="sidebar">			
+				<h3>Índice</h3>
+				<ul class="sidemenu">				
+					<li><a href="#01">Iterator</a></li>
+					<li><a href="#02">Memento</a></li>
+					<li><a href="#03">The Builder</a></li>
+					<li><a href="#04">Chain of responsability</a></li>
+					<li><a href="#05">Visitor</a></li>
+					<li><a href="#06">Command</a></li>
+					<li><a href="#07">Strategy</a></li>
+					<li><a href="#08">Adapter</a></li>
+					<li><a href="#09">Observer</a></li>
+					<li><a href="#10">Facade</a></li>
+					<li><a href="#11">Prototype</a></li>
+					<li><a href="#12">Bridge</a></li>
+					<li><a href="#13">Proxy</a></li>
+					<li><a href="#14">Flyweight</a></li>
+					<li><a href="#15">The Iterator</a></li>
+					<li><a href="#16">Abstract Factory</a></li>
+					<li><a href="#17">Mediator</a></li>
+					<li><a href="#18">Composite</a></li>
+					<li><a href="#19">Factory Method</a></li>
+					<li><a href="#20">Singleton</a></li>
+					<li><a href="#21">Template method</a></li>
+
+				</ul>
+			</div>
+
+			<!-- Contenido -->
+			<div id="main">
+				<h1>Patrones de diseño</h1>
+				<p>Este es el resultado de un estudio que hemos hecho para saber qué patrones se pueden aplicar a TurnoMatic.</p>
+				<div id="informe">
+					<a name="01"></a>
+					<h1>INTERPRETER</h1>
+					<h2>Aplicable a TurnoMatic</h2><p>No.</p>
+					<h2>Razones</h2><p>Este patrón se usa para definir gramáticas sencillas de un lenguaje.</p><hr>
+
+					<a name="02"></a>
+					<h1>MEMENTO</h1>
+					<h2>Aplicable a TurnoMatic</h2><p>No.</p>
+					<h2>Razones</h2><p>Este patrón se usa cuando queremos restaurar el valor de un objeto o del sistema después de hacer un cambio. 
+					Se suele utilizar para deshacer operaciones en distintas aplicaciones, como editores gráficos y de texto.<br>
+					No creo que tenga utilidad en nuestra aplicación ya que nosotros guardamos toda la información en la base de datos.</p><hr>
+
+					<a name="03"></a>
+					<h1>THE BUILDER</h1>
+					<h2>Aplicable a TurnoMatic</h2><p>No.</p>
+					<h2>Razones</h2><p>Se basa en hacer una clase Principal (Director) que tenga como atributo un objeto de una clase abstracta 
+					(Abstract Builder),de manera que, se puedan crear clases constructoras (Concrete Builder) que hereden de ésta, permitiendo
+					crear  distintas representaciones de un producto.<br>
+					Quizás el único objeto complejo en el que se pudiese aplicar fuese el propio algoritmo, pero las variaciones al aplicar el
+					algoritmo son las de los festivos y ya las tenemos controladas mediante otros mecanismos, por lo que la idea de realizarlo
+					ahora no es eficiente. En cualquier caso sería más lógico usarlo si hubiese muchos más casos especiales de uso del algoritmo
+					y no pocas.</p><hr>
+
+					<a name="04"></a>
+					<h1>CHAIN OF RESPONSABILITY</h1>
+					<h2>Aplicable a TurnoMatic</h2><p>Sí.</p>
+					<h2>Razones</h2><p>Como su nombre indica "Cadena de responsabilidad" se utiliza para poder transmitir mensajes a través de una 
+					cadena en la que se ha ordenado según la responsabilidad de los objetos, en nuestro caso, si se produce una incidencia en un 
+					departamento, se podría enviar un mensaje al jefe de departamento, y si éste no puede solucionarlo, se le manda el mensaje al 
+					gerente, y así hasta que la incidencia pueda ser solucionada. De esta manera se reduce el acoplamiento, ya que, el emisor del
+					mensaje no conoce el receptor concreto, en lugar de tener una lista con todos los posibles receptores, basta con una referencia 
+					al sucesor.<br>
+					Para implementarlo bastaría con poner por cada objeto, un puntero que apunte a otro objeto, con un grado de
+					responsabilidad mayor, formando así una cadena de responsabilidad. Como ventaja tiene que para cambiar la responsabilidad de
+					un objeto, basta con cambiar el orden de responsabilidad, es decir, cambiar su puntero sucesor, y como desventaja de este patrón,
+					es que no esta garantizado que se atienda al mensaje.</p><hr>
+
+					<a name="05"></a>
+					<h1>VISITOR</h1>
+					<h2>Aplicable a TurnoMatic</h2><p>No.</p>
+					<h2>Razones</h2><p>Sirve para aplicar una operación sobre una estructura (lista, árbol, ...) de objetos de distintas clases sin
+					modificar el código de cada clase. No resulta útil en nuestra práctica ya que no tenemos estructuras de objetos de distintos
+					tipos. Se suele utilizar para operar sobre árboles sintácticos.</p><hr>
+
+					<a name="06"></a>
+					<h1>COMMAND</h1>
+					<h2>Aplicable a TurnoMatic</h2><p>Sí.</p>
+					<h2>Razones</h2><p>Sirve para encapsular una operación en un objeto, permitiendo ejecutarla sin necesidad de conocer su contenido.
+					Se suele utilizar para soportar la función deshacer. Serviría para la parte de la edición manual de cuadrantes. Ya lo estamos
+					utilizando, por ejemplo, con la interfaz aplicacion.Drawable, que define los métodos getPrintableImage y getDrawableImage que
+					tienen que ser sobrescritos por las clases que implementen la interfaz (ahora mismo, aplicacion.Empleado).</p><hr>
+
+					<a name="07"></a>
+					<h1>STRATEGY</h1>
+					<h2>Aplicable a TurnoMatic</h2><p>Sí.</p>
+					<h2>Razones</h2><p>El patrón Strategy permite mantener un conjunto de algoritmos de los que el objeto cliente puede elegir aquel que
+					le conviene eintercambiarlo según sus necesidades.<br>
+					Cualquier programa que ofrezca un servicio o función determinada, que pueda ser realizada de varias maneras, es candidato a
+					utilizar elpatrón Strategy. Puede haber cualquier número de estrategias y cualquiera de ellas podrá ser intercambiada por otra
+					en cualquier momento, incluso en tiempo de ejecución. Podría usarse haciendo una estructura general y luego diversas instancias
+					del algoritmo. Se haría una interfaz con métodos "genéricos" de algoritmo y luego se hacen instancias específicas como
+					AlgoritmoCompleto, AlgoritmoParaFijosYrotatorios,PruebaDeAlgoritmo,etc. Así el añadir nuevas estrategias a nuestro programa es
+					muy sencillo y apenas implica modificación de código alguna. También para el tema de las pruebas podríamos definir algoritmos que
+					reflejasen distintas soluciones de compromiso entre tiempo y espacio, probar distintas versiones para ver si van mejor o no sin
+					tener que cambiar drásticamente el código cada vez.<br>
+					Este patrón podría aplicarse como validador, es decir, se hace una interfaz genérica validador y luego instancias de la interfaz
+					que serían: validador de rango en un campo numérico, validador de un string (e-mail correcto), validador de fecha correcta, etc.
+					Parece más complicado en forma de patrón que simplemente un método que valide, pero puede ser también una buena solución. Otro uso
+					podría ser el registrarse y hacer una interfaz genérica y otras 2 clases q la implementen y que sean registrarse mediante password
+					o mediante lector de códigos de barras.</p><hr>
+
+					<a name="08"></a>
+					<h1>ADAPTER</h1>
+					<h2>Aplicable a TurnoMatic</h2>
+					<h2>Razones</h2><p>Se utiliza para transformar una interfaz en otra, de tal modo que una clase que no pudiera utilizar la primera,
+					haga uso de ella a través de la segunda. Convierte la interfaz de una clase en otra interfaz que el cliente espera. Adapter permite
+					a las clases trabajar juntas, lo que de otra manera no podrían hacerlo debido a sus interfaces incompatibles. No presta atención a
+					cómo se implementan dichas interfaces, ni tiene en cuenta cómo podrían evolucionar de forma independiente. Es un modo de lograr que
+					dos clases diseñadas independientemente trabajen juntas sin tener que volver a implementar una u otra y así evitar duplicar código. 
+					A la hora del mantenimiento del proyecto, es decir, meter patrones de diseño y mejorar la eficiencia, se podría usar para conectar
+					dos clases sin cambiar el código de lo que ya tenemos hecho previamente.</p><hr>
+
+					<a name="09"></a>
+					<h1>OBSERVER</h1>
+					<h2>Aplicable a TurnoMatic</h2><p>Sí.</p>
+					<h2>Razones</h2><p>Define una dependencia uno a muchos entre objetos, de manera que cuando uno de los objetos cambia su estado el
+					observador se encarga de notificar este cambio a todos los otros dependientes, por ejemplo interfaces gráficas que muestran
+					resultados. La finalidad de este patrón es eliminar las esperas activas y los bucles correspondientes a estas, pero dado que todos
+					los datos se almacenan en la base de datos y se consultan desde ahí, este patrón de momento no es útil ni aplicable, no se pueden
+					implementar ya que la base de datos no notifica los cambios a la aplicación. En nuestra práctica ya está actualmente en uso. La
+					Vista llama al controlador para cargar los datos en la cache local, y cuando termina, activa un flag para avisar a las interfaces
+					que esperan datos  que estos ya están disponibles.</p><hr>
+
+					<a name="10"></a>
+					<h1>FACADE</h1>
+					<h2>Aplicable a TurnoMatic</h2><p>Sí.</p>
+					<h2>Razones</h2><p>Se trata de implementar un objeto fachada que proporciona una interfaz única y simplificada para los servicios más
+					genéricos del subsistema. Este patrón se aplicará:</p>
+					<ol>
+						<li>Cuando queramos proporcionar una interfaz simple para un subsistema complejo, así pues, una clase, cliente o sistema no tendrá que
+						relacionarse con un conjunto de clases, sino con esta interfaz que delegara sobre el resto de clases.</li>
+						<li>Cuando haya muchas dependencias entre los clientes y las clases que implementan una abstracción. Se introduce una fachada para 
+						desacoplar el subsistema de sus clientes y de otros subsistemas.</li>
+						<li>Cuando queramos dividir en capas nuestro sistema. Cada capa tendrá una serie de clases y funciones y se provee de una interfaz a la
+						siguiente capa de forma que damos protección a nuestro sistema.</li>
+					</ol>
+					<p>La ventaja de este patrón es que los clientes que usan la fachada no tienen que acceder directamente a los objetos del subsistema.
+					Se utilizar para crear clases sencillas y cuando existen grupos de tareas muy frecuentes para las que se puede crear código más
+					sencillo y legible.<br>
+					Ya que fachade debe utilizarse para crear clases sencillas, no clases que sirvan para todo o que lo hagan todo, véase el caso del
+					controlador en nuestro código, se podría utilizar para implementar ciertos casos de uso, sirven de interfaz para un determinado caso
+					de uso, serían clases sencillas y además muy utilizas, como leer mensajes, escribir mensajes, etc...  <br>
+					Una propuesta realizable sería construir una fachada para algunos casos de uso, solo los más frecuentes, ya que facilita la
+					comprensión del código y del subsistema que utiliza cada una de ellas. <br>
+					También se podría utilizar para hacer una interfaz de una biblioteca de clases que utilizara el algoritmo.</p><hr>
+
+					<a name="11"></a>
+					<h1>PROTOTYPE</h1>
+					<h2>Aplicable a TurnoMatic</h2><p>No.</p>
+					<h2>Razones</h2><p>Este patrón tiene como finalidad crear nuevos objetos duplicándolos, clonando una instancia creada previamente.
+					No es aplicable ya que se utiliza cuando tenemos varios objetos con el mismo tipo y nuestras clases no tienen las mismas entradas,
+					salidas ni métodos. Todas son distintas y por tanto no unificables bajo este patrón.</p><hr>
+
+					<a name="12"></a>
+					<h1>BRIDGE</h1>
+					<h2>Aplicable a TurnoMatic</h2><p>Sí.</p>
+					<h2>Razones</h2><p>Es una técnica usada en programación para desacoplar una abstracción de su implementación, de manera que ambas
+					puedan ser modificadas independientemente sin necesidad de alterar por ello la otra. Permite además tener varias implementaciones
+					independientes.<br>
+					Podría ser aplicable entre la clase database y la clase controlador que la usa.  Si  por ejemplo quisiéramos diseñar y conectarnos
+					a otra base de datos, tendríamos dos implementaciones distintas de base de datos, Es decir, dos implementaciones para un mismo
+					"tipo" de objeto (database) dejando que para en el controlador todo siga igual.</p><hr>
+
+					<a name="13"></a>
+					<h1>PROXY</h1>
+					<h2>Aplicable a TurnoMatic</h2><p>No (quizás sí en un futuro)</p>
+					<h2>Razones</h2><p>Un objeto actúa como sustituto de otro y permite controlar el acceso a dicho objeto. (Ejemplo: Editor de documentos
+					con creación de imágenes 'bajo demanda')<br>
+					Solamente parece tener utilidad para algo que aún no hemos hecho: la parte web de la aplicación. Un servidor proxy es un equipo
+					intermediario situado entre el sistema del usuario e Internet. Puede utilizarse para registrar el uso de Internet y también para
+					bloquear el acceso a una sede Web."<br>
+					No obstante aún no se ha empezado a diseñar la parte web del programa.</p><hr>
+
+					<a name="14"></a>
+					<h1>FLYWEIGHT</h1>
+					<h2>Aplicable a TurnoMatic</h2><p>No.</p>
+					<h2>Razones</h2></p>Es utilizable en objetos compartidos para el consumo eficiente de memoria. Solo es eficiente en los casos en los que:</p>
+					<ol>
+						<li>Hay un gran número de objetos de un mismo tipo provocando costes de almacenamiento elevados.</li>
+						<li>La mayor parte del estado del objeto puede hacerse extrínseco (esto es, sacarse a otra clase) y en relativamente pocas
+						clases puede implementarse el comportamiento de todos los objetos.</li>
+					</ol>
+					<p>Podemos concluir que ninguna clase de nuestro programa es candidata a ser implementada con flyweight.</p><hr>
+
+					<a name="15"></a>
+					<h1>THE ITERATOR</h1>
+					<h2>Aplicable a TurnoMatic</h2><p>Sí.</p>
+					<h2>Razones</h2><p>El patrón "The Iterator" define una interfaz que declara los métodos necesarios para acceder de forma secuencial
+					a una colección de objetos, esto es, un vector, un árbol, un ArrayList (como los usados en nuestro código).<br>
+					Una de las ventajas es que las clases que utilizan esta interfaz para acceder a los objetos lo hacen de forma independiente de la
+					clase que implementa la interfaz, con lo cual la estructura interna del grupo de objetos permanece oculta. Además se puede recorrer
+					el grupo de objetos de diferentes formas y da un "estándar" de recorrido de cualquier tipo de estructura de agregación, es decir,
+					se recorren igual sean árboles que listas que lo que queráis.<br>
+					Es aplicable a nuestro código porque en el algoritmo disponemos de diferentes colecciones de objetos (empleados, trabajas,
+					franjas...) que resultan poco intuitivas y favorecería tratarlos a todos de una manera igual.</p><hr>
+					
+					<a name="16"></a>
+					<h1>ABSTRACT FACTORY</h1>
+					<h2>Aplicable a TurnoMatic</h2><p>Sí.</p>
+					<h2>Razones</h2><p>Dado que consiste en realizar clases abstractas o interfaces para poder realizar implementaciones sin que el
+					cliente conozca lo que hay debajo, ya estamos usando este patrón en la interfaz Drawable (podemos imprimir cualquier objeto que
+					extienda ese interfaz sin importarnos de qué tipo sea).</p><hr>
+					
+					<a name="17"></a>
+					<h1>MEDIATOR</h1>
+					<h2>Aplicable a TurnoMatic</h2><p>Sí.</p>
+					<h2>Razones</h2><p>Consiste en crear un objeto mediador que es responsable de controlar y coordinar las interacciones entre un grupo
+					de objetos. Hace de intermediario y evita que los objetos del grupo se refieran unos a otros explícitamente. Los objetos solo
+					conocen al mediador, reduciendo así el número de interconexiones. Se usa en conjuntos de objetos que se comunican de forma bien
+					definida pero compleja. Esto es exactamente nuestro controlador que usamos en la vista, y por lo tanto, ya está implementado.</p><hr>
+					
+					<a name="18"></a>
+					<h1>COMPOSITE</h1>
+					<h2>Aplicable a TurnoMatic</h2><p>No.</p>
+					<h2>Razones</h2><p>Se trata de agrupar varias clases cuyos objetos se usen de forma similar. Se crea una clase "maestra" de la cual se
+					heredan métodos para ser implementados. Por ejemplo, creamos una clase Figuras donde estarían agrupadas Círculo, Cuadrado, etc. Desde
+					un objeto Figuras podríamos pintar cualquiera de los objetos agrupados.<br>
+					No sirve para nuestro proyecto ya que nuestras clases son disjuntas, no se pueden agrupar dentro de una clase maestra que nos
+					permita usarlas de igual manera sin tener que aprender cómo  funciona cada una específicamente.</p><hr>
+					
+					<a name="19"></a>
+					<h1>FACTORY METHOD</h1>
+					<h2>Aplicable a TurnoMatic</h2><p>Sí.</p>
+					<h2>Razones</h2><p>Patrón consistente en la creación de distintos objetos de una naturaleza similar a través de un mecanismo común.
+					Es un concepto similar al de las clases abstractas y de hecho hace uso de ellas.<br>
+					Puede ser aplicado a nuestro proyecto en casos como:</p>
+					<ol>
+						<li>Considerar los distintos tipos de empleados (Gerentes, Jefes etc...) como clases distintas y crearlos con este patrón de
+						diseño.</li>
+						<li>Diferenciar en distintas clases los distintos tipos de mensajes (incidencias, avisos,  mensajería interna...) y crearlos
+						con este patrón de diseño.</li>
+					</ol><hr>
+					
+					<a name="20"></a>
+					<h1>SINGLETON</h1>
+					<h2>Aplicable a TurnoMatic</h2><p>Sí.</p>
+					<h2>Razones</h2><p>Singleton asegura que solo se pueda crear una instancia de una clase. Podemos utilizarlo para generar cuadrantes,
+					de forma que no se pueda lanzar más de una vez el algoritmo (clase TrunoMatic) con el fin de saturar el ordenador. Las dos
+					soluciones resultado de las dos ejecuciones del algoritmo serían la misma, por lo que no sería útil poder pedirlo por duplicado.</p><hr>
+					
+					<a name="21"></a>
+					<h1> TEMPLATE METHOD</h1>
+					<h2>Aplicable a TurnoMatic</h2><p>Sí.</p>
+					<h2>Razones</h2><p>Patrón que se encarga de definir un esbozo de algoritmo dejando los detalles de implementación a las subclases.
+					Como beneficio inmediato podemos destacar que facilita la creación de bibliotecas que encapsulan comportamientos estándar.<br>
+					Puede ser de útil implementación aunque para nada sencilla. Tiene su finalidad en algoritmos de cierta complicación como el
+					desarrollado en nuestro programa. pero la creación está diversificada en un gran número de clases (Estructura, Cuadrante y
+					TurnoMatic, por ejemplo) y esto complica dividir las tareas en dos fases que serían:</p>
+					<ol>
+						<li>Determinación de la estructura común del algoritmo en un primer momento. Creo que en nuestro caso se limitaría a definir
+						las estructuras. Además, definir las operaciones primitivas que serán implementadas en la siguiente fase. Por ejemplo, hacer
+						métodos abstractos creaEstructura(), creaCuadrante()... Esto puede realizarse al iniciar la aplicación ya que no requiere datos
+						concretos de empleados.</li>
+						<li>Dada la estructura fijada en el punto anterior, implementar los detalles del algoritmo. Esto se efectuaría una vez conocidos
+						los empleados que formarán el cuadrante.</li>
+					</ol><hr>
+
+				</div>
+			</div>
+		
+		<!-- content-wrap ends here -->	
+		</div>
+					
+		<!--footer starts here-->
+		<div id="footer">
+			
+			<p>
+			<strong>IS 2007-2008</strong> | 
+			Design by: <a href="http://www.styleshout.com/">styleshout</a> | 
+			Valid <a href="http://validator.w3.org/check?uri=referer">XHTML</a> | 
+			<a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a>
+			
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			
+		<a href="contacto.html">Contacto</a> 
+   		</p>
+		</div>
+</div>
+</body>
+</html>
