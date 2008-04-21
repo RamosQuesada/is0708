@@ -43,7 +43,7 @@ import aplicacion.utilidades.Posicion;
 import aplicacion.utilidades.Util;
 
 /**
- * Esta clase extiende la clase Cuadrante para que se pueda:
+ * Esta clase extiende la clase cuadrante para que se pueda:
  * 1. dibujar sobre un GC
  * 2. representar y modificar sobre un canvas
  * @author Daniel Dionne
@@ -87,6 +87,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private boolean nombreValido=false;
 	private String nombreSeleccionado=null;
 	private int nombreMarcado=0;
+	private boolean turnoPulsado=false;
 	private int turnPulsX=0;
 	private int turnPulsY=0;
 	
@@ -363,6 +364,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		canvas = new Canvas(cCuadrante, opciones);
 		canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		// Inicializar algunas variables
+//		creando = false;
+//		terminadoDeCrear = true;
 		movimiento = 0;
 		
 		calcularTamano();
@@ -380,6 +383,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		});
 		canvas.addMouseTrackListener(new MouseTrackListener(){
 			public void mouseEnter(MouseEvent arg0) {}
+
 			public void mouseExit(MouseEvent arg0) {
 				if (cacheCargada) {
 					empleadoActivo=-1;
@@ -389,7 +393,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					canvas.redraw();
 				}
 			}
+
 			public void mouseHover(MouseEvent arg0) {}
+			
 		});
 		
 		vBar = canvas.getVerticalBar();
@@ -405,11 +411,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		
 		mouseMoveListenerCuadrDiario = new MouseMoveListener() {
 			public void mouseMove(MouseEvent e) {
-				despMouse = e.y - alto_franjas/2;
-				if (despMouse < margenSup+alto_franjas+sep_vert_franjas)
-					despMouse = margenSup+alto_franjas+sep_vert_franjas;
-				else if (despMouse > margenSup+(alto_franjas+sep_vert_franjas)*empleadosMostrados.size())
-					despMouse = margenSup+(alto_franjas+sep_vert_franjas)*empleadosMostrados.size();
+				despMouse = Math.max(e.y - alto_franjas/2,margenSup+alto_franjas+sep_vert_franjas);
 				if (moviendoEmpleado) {
 					// asignarle la posición del empleado que está debajo
 					
@@ -418,15 +420,17 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					else if (fila>=empleadosMostrados.size())fila = empleadosMostrados.size()-1;
 					
 					// Intercambiar posiciones y reordenar datos
-					int posicionArriba = empleadosMostrados.get(empleadoActivo).getPosicion();
-					if (posicionArriba!=fila+1) {
-						if (fila<posicionArriba-2) fila = posicionArriba-2;
-						else if (fila>posicionArriba) fila = posicionArriba;
-						empleadosMostrados.get(fila).setPosicion(posicionArriba);
-						empleadosMostrados.get(posicionArriba-1).setPosicion(fila+1);
-						empleadoActivo=fila;
-						vista.ordenaEmpleados();
-						if (bGuardar!=null) bGuardar.setEnabled(true);
+					if (empleadoActivo!=-1) {
+						int posicionArriba = empleadosMostrados.get(empleadoActivo).getPosicion();
+						if (posicionArriba!=fila+1) {
+							if (fila<posicionArriba-2) fila = posicionArriba-2;
+							else if (fila>posicionArriba) fila = posicionArriba;
+							empleadosMostrados.get(fila).setPosicion(posicionArriba);
+							empleadosMostrados.get(posicionArriba-1).setPosicion(fila+1);
+							empleadoActivo=fila;
+							vista.ordenaEmpleados();
+							if (bGuardar!=null) bGuardar.setEnabled(true);
+						}
 					}
 					canvas.redraw();
 				} else if (turno!=null || cacheCargada) {
