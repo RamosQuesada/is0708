@@ -535,7 +535,7 @@ public class DialogCreacionContratos {
 		if (modo == 0)
 			shell.setText(bundle.getString("I09_lab_NuevoContrato"));
 		else
-			shell.setText(bundle.getString("I09_lab_ModifTurno"));
+			shell.setText(bundle.getString("I09_Modif_contrato"));
 		shell.setLayout(new GridLayout(2, true));
 
 		// Permite cerrar la ventana pulsando ESC

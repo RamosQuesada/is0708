@@ -4,8 +4,13 @@ import interfaces.graficos.BarChart;
 import interfaces.graficos.PieChart;
 import interfaces.graficos.TimeSeriesChart;
 import interfaces.graficos.XYChart;
+
+import java.sql.Date;
 import java.util.ResourceBundle;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
@@ -13,18 +18,25 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 
 
 import aplicacion.Vista;
+import aplicacion.utilidades.Util;
 
 public class Estadisticas {
 	
 	private ResourceBundle bundle;
 	private Vista vista;
 	private TabFolder tabFolder;
+	private Date fechaSeleccionada;
+	private Table tablaVentas;
+	
 	public Estadisticas(final ResourceBundle bundle, final Vista vista,
 			final TabFolder tabFolder) {
 		this.bundle = bundle;
@@ -58,6 +70,56 @@ public class Estadisticas {
 		final Composite cEstDer = new Composite(cEstadisticas, SWT.BORDER);		
 		cEstDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL,true, true, 1, 1));
 		cEstDer.setLayout(new GridLayout(1, true));
+		
+		tablaVentas = new Table(cEstDer, SWT.MULTI | SWT.BORDER
+				| SWT.FULL_SELECTION);
+		tablaVentas.setLinesVisible(true);
+		tablaVentas.setHeaderVisible(true);
+		String[] titles = { bundle.getString("Fecha"),
+				bundle.getString("Ventas")};
+		for (int i = 0; i < titles.length; i++) {
+			TableColumn column = new TableColumn(tablaVentas, SWT.NONE);
+			column.setText(titles[i]);
+		}
+
+		for (int i = 0; i < titles.length; i++) {
+			tablaVentas.getColumn(i).pack();
+		}
+		tablaVentas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
+				true, 1, 1));
+		tablaVentas.addControlListener(new ControlListener() {
+			public void controlResized(ControlEvent e) {
+				// // Configurar tamaño de las columnas
+				int ancho = tablaVentas.getSize().x;
+				tablaVentas.getColumn(0).setWidth(ancho / 10 * 5);
+				tablaVentas.getColumn(1).setWidth(ancho / 10 * 5);
+			}
+
+			public void controlMoved(ControlEvent arg0) {
+			}
+
+		});
+		
+		final Label lCalendario = new Label(cEstIzq, SWT.LEFT);
+		lCalendario.setText(this.bundle.getString("Calendario"));
+		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
+				false, 1, 1));
+		
+		// Creamos el calendario
+		final DateTime calendario = new DateTime(cEstIzq, SWT.CALENDAR);
+		calendario.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				int day = calendario.getDay();
+				int month = calendario.getMonth();
+				int year = calendario.getYear();
+				fechaSeleccionada = Date.valueOf(Util.aFormatoDate(Integer
+						.toString(year), Integer.toString(month + 1), Integer
+						.toString(day)));
+				System.out.println(fechaSeleccionada);
+			}
+		});
+		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false,
+				1, 1));
 
 		final Label lTitulo = new Label(cEstIzq, SWT.CENTER);
 		lTitulo.setText(this.bundle.getString("opcionvis"));
