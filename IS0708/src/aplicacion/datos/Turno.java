@@ -85,6 +85,7 @@ public class Turno {
 		t1.horaSalida   = new Time(t2.getHoraSalida()  .getTime());
 		t1.horaDescanso = new Time(t2.getHoraDescanso().getTime());
 		t1.tDescanso = t2.tDescanso;
+		t1.color=t2.color;
 		
 		t2.idTurno = aux.getIdTurno();
 		t2.descripcion = aux.getDescripcion();
@@ -92,6 +93,7 @@ public class Turno {
 		t2.horaSalida   = new Time(aux.getHoraSalida()  .getTime());
 		t2.horaDescanso = new Time(aux.getHoraDescanso().getTime());
 		t2.tDescanso = aux.tDescanso;
+		t2.color=aux.color;
 
 	}
 
