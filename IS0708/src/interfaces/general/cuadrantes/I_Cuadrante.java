@@ -105,7 +105,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private int meses31[]=new int[7];
 	private int meses30[]=new int[4];
 	
-	private Color colorJefe = new Color(display,160,210,210);
+	private Color azulOsc = new Color(display,0,110,200);
+	private Color azulClar= new Color(display,0,30,120);
 	private Color color7M = new Color(display,110,110,200);
 	private Color color7T = new Color(display,110,110,160);
 	private Color color4M = new Color(display,110,200,110);
@@ -1012,23 +1013,33 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		}
 		
 		if (nombreSeleccionado!=null){
-			gc.setBackground(colorJefe);
-			gc.fillRectangle(margenIzq-7,inicioY+((nombreMarcado-1)*altoFila), margenNombres-15, altoFila);
+			gc.setBackground(Util.getColorDiferenciado(azulClar, 120));
+			gc.setForeground(azulClar);
+			gc.drawRectangle(margenIzq-7,inicioY+((nombreMarcado-1)*altoFila), margenNombres-15, altoFila-4);
+			gc.fillRectangle(margenIzq-6,inicioY+((nombreMarcado-1)*altoFila)+1, margenNombres-16, altoFila-5);
 			String nomSel=vista.getEmpleados().get(nombreMarcado).getNombre();
-			gc.setForeground(negro);
+			//gc.setForeground(negro);
 			gc.drawText(nomSel,margenIzq+2,inicioY+((nombreMarcado-1)*altoFila)+2);
 		}
 		
 		if (nombreValido) {
-			gc.setBackground(colorJefe);
-			gc.fillRectangle(margenIzq-7,inicioY+((empActVistaMes-1)*altoFila), margenNombres-15, altoFila);
+			gc.setBackground(Util.getColorDiferenciado(azulClar, 120));
+			gc.setForeground(azulClar);
+			gc.drawRectangle(margenIzq-7,inicioY+((empActVistaMes-1)*altoFila), margenNombres-15, altoFila-4);
+			gc.fillRectangle(margenIzq-6,inicioY+((empActVistaMes-1)*altoFila)+1, margenNombres-16, altoFila-5);
 			String nomSel=vista.getEmpleados().get(empActVistaMes).getNombre();
-			gc.setForeground(negro);
+			//gc.setForeground(negro);
 			gc.drawText(nomSel,margenIzq+2,inicioY+((empActVistaMes-1)*altoFila)+2);
 		}
 		
 		if (nombreSeleccionado!=null){
-			
+			gc.setBackground(Util.getColorDiferenciado(azulOsc, 120));
+			gc.setForeground(azulOsc);
+			gc.drawRectangle(cursor.x-(margenNombres-15)/2,cursor.y-(altoFila-4)/2, margenNombres-15, altoFila-4);
+			gc.fillRectangle(cursor.x-(margenNombres-15)/2+1,cursor.y-(altoFila-4)/2+1, margenNombres-16, altoFila-5);
+			//String nomSel=vista.getEmpleados().get(empActVistaMes).getNombre();
+			//gc.setForeground(negro);
+			gc.drawText(nombreSeleccionado,cursor.x-(margenNombres-15)/2+9,cursor.y-(altoFila-4)/2+2);
 		}
 	}
 	
@@ -1095,7 +1106,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 								(anchoDia/2 - gcFondo.textExtent(String.valueOf(j+1)).x/2), margenSupVistaMes);
 						gcFondo.setForeground(new Color(display,0,0,0));
 					}
-				gcFondo.setForeground(new Color(display,20,20,200));
+				gcFondo.setForeground(azulOsc);
 				gcFondo.drawText("Empleados", margenIzq , margenSupVistaMes);
 				gcFondo.setForeground(new Color(display,0,0,0));
 				ArrayList<Empleado> empleados=vista.getEmpleados();
@@ -1128,7 +1139,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					String j="Jefe";
 					//gcFondo.drawText(j,despX,margenSupVistaMes + 20 + (limI+1)*altoFila);
 					despX+=(gcFondo.textExtent(j).x+4);
-					//gcFondo.setBackground(colorJefe);
+					//gcFondo.setBackground(azulOsc);
 					//gcFondo.fillRectangle(despX, margenSupVistaMes + 20 + (limI+1)*altoFila, anchoDia-5,altoFila-5);
 					despX+=(anchoDia-5+15);
 					//gcFondo.setBackground(blanco);
@@ -1452,14 +1463,14 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	public Color obtenColor(int idTurno){
 		Color result;
 		switch (idTurno) {
-			case 120: result=colorJefe; break;
+			case 120: result=azulOsc; break;
 			case 121: result=color7M; break;
 			case 122: result=color7T; break;
 			case 123: result=color4M; break;
 			case 124: result=color4T; break;
 			case 125: result=colorSM; break;
 			case 126: result=colorST; break;
-			default: result=colorJefe; break;
+			default: result=azulOsc; break;
 		}
 		return result;
 	}
