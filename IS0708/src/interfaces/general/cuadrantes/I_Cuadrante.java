@@ -87,6 +87,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private boolean nombreValido=false;
 	private String nombreSeleccionado=null;
 	private int nombreMarcado=0;
+	private boolean enCuadricula=false;
 	private boolean turnoPulsado=false;
 	private int turnPulsX=0;
 	private int turnPulsY=0;
@@ -612,7 +613,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 						}
 					}					
 				}
-				if (e.button == 1 && !diaValido && turnoSeleccionado!=null) {
+				if (e.button == 1 && !diaValido && enCuadricula && turnoSeleccionado!=null) {
 					ArrayList<Empleado> empleados = vista.getEmpleados();
 					//empleados.remove(0);
 					aplicacion.datos.Empleado emp2=empleados.get(empActVistaMes);
@@ -718,9 +719,11 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 							cursor(0);
 							diaValido = false;
 						}
+						enCuadricula=true;
 					} else {
 						cursor(0);
 						diaValido = false;
+						enCuadricula=false;
 					}
 					//Comprobamos si el cursor se encuentra sobre el nombre de algún empleado
 					//Primero comprobamos la franja vertical de ancho margenNombres
