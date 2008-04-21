@@ -957,7 +957,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			//Obtenemos el color de relleno a partir de él
 			//Color colorTurno=obtenColor(idTurno);
 			//Color colorTurno=iCuad[diaActVistaMes].get(indiceEmpAct).getTurno().getColor();
-			Color colorTurno=vista.getTurno(idTurno).getColor();
+			Color colorTurno=iCuad[diaActVistaMes].get(indiceEmpAct).getTurno().getColor();
 			//Obtenemos las cadenas a mostrar
 			String idTurnoS=("Id. Turno: "+String.valueOf(idTurno));
 			String descTurno=iCuad[diaActVistaMes].get(indiceEmpAct).getTurno().getDescripcion();
@@ -1000,7 +1000,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			//Color colorTurno=obtenColor(idTurno);
 			//turnoSeleccionado.setColor(color7M);
 			//Color colorTurno=turnoSeleccionado.getColor();
-			Color colorTurno=vista.getTurno(idTurno).getColor();
+			Color colorTurno=turnoSeleccionado.getColor();
 			gc.setBackground(colorTurno);
 			gc.setForeground(Util.getColorDiferenciado(colorTurno, 100));
 			//gc.drawRectangle(cursor.x-anchoDia/2, cursor.y-altoFila/2, anchoDia, altoFila);
