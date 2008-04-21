@@ -17,26 +17,17 @@
 </head>
 <body>
 <!-- wrap starts here -->
-<div id="wrap">
+<div id="wrap100">
 		
 		<!--header -->
-		<div id="header">			
-				
-			<h1 id="logo-text"><a href="index.html">TurnoMatic</a></h1>		
-			<p id="slogan">Documentación</p>		
-			
-			<div id="header-links">
-			<p>
-				<!--  <a href="index.html">Inicio</a> | --> 
-				<a href="contacto.html">Contacto</a>
-			</p>
-		</div>
-		
+		<div id="headerDoc">			
+	
 		</div>
 
 		<!-- menu superior -->	
 		<div  id="menu">
 			<ul>
+				<li class="current"><a href="index.html">Introducción</a></li>
 				<li>             <a href="funcionalidad.html">Funcionalidad</a></li>
 				<li>             <a href="interfaces.html">Interfaces</a></li>
 				<li>             <a href="historias.html">Historias</a></li>
@@ -45,26 +36,16 @@
 				<li>             <a href="tecnologias.html">Tecnologías</a></li>
 				<li>             <a href="diseno.html">Diseño</a></li>
 				<li>             <a href="planificacion.html">Planificación</a></li>
-				<li class="last"><a href="glosario.html">Glosario</a></li>
+				<li>             <a href="glosario.html">Glosario</a></li>
+				<li class="last"><a href="otros.html">Otros</a></li>
 			</ul>
 		</div>		
 		
 		<div id="content-wrap">
-			<!-- Menú lateral -->
-			<div id="sidebar">			
-				<h3>Índice</h3>
-				<ul class="sidemenu">				
-					<li><a href="#desc">Descripción</a></li>
-					<li><a href="02.html">Link 2</a></li>
-					<li><a href="03.html">Link 3</a></li>
-					<li><a href="04.html">Link 4</a></li>
-				</ul>
-			</div>
 			<!-- Contenido -->
-			<div id="main">
+			<div id="main100">
 				
-				<a name="desc"></a>
-				<h2><a href="index.html">Descripción</a></h2>
+				<h1>Descripción</h1>
 				<img src="images/logo_verde.gif" width="150" height="153" alt="Logo TurnoMatic" class="float-left" />
 				<p><b>TurnoMatic</b> es una base de datos departamental y un gestor de 
 				automatización de horarios.</p>
@@ -83,73 +64,33 @@
  				la empresa pueden ver en todo momento sus horarios, realizar peticiones de
  				cambio de horario a través del sistema y consultar sus registros de ventas. 
 				</p>
-				
-				<a name="Ejemplos"></a>
-				<h2><a href="index.html">Ejemplos</a></h2>
-				
-				<h3>Código</h3>
-				<p><code>
-				función() { <br />
-				&nbsp;&nbsp;blabla;<br />
-				&nbsp;&nbsp;blabla;<br />				
-				}		
-				</code></p>	
-				
-				<h3>Listas</h3>
-				<ol>
-					<li>Ejemplo</li>
-					<li>de una lista</li>
-					<li>ordenada</li>								
-				</ol>	
-							
+				<h1>Puntos a destacar</h1>
 				<ul>
-					<li>Ejemplo</li>
-					<li>de una lista</li>								
-					<li>no ordenada</li>
-				</ul>				
+					<li>Algoritmo de generación de horarios con backtracking que contempla no sólo 
+					la correción de los horarios generados, sino la comodidad de los empleados en la 
+					medida de lo posible.</li>
+					<li>Base de datos externa, compatible con MySQL. La construcción modular
+					facilita la migración a otro sistema de base de datos.</li>
+					<li>Interfaz propio construido desde cero. Intuitivo y adaptado exactamente a las 
+					necesidades específicas de los clientes.</li>
+					<li>Sistema opcional de impresión y lectura de códigos de barras para agilizar el
+					uso de la aplicación y garantizar la seguridad al no tener que teclear contraseñas.</li>
+					<li>Interfaz web para consultas remotas.</li>
+					<li>El instalador para Windows desarrollado con NullSoft Scriptable Install System
+					permite una cómoda y rápida instalación de la aplicación y la JVM si fuera necesaria.</li>
+				</ul>
+				<h1>Compatibilidad</h1>
+				<ul>
+					<li>Desarrollado en Java 1.6.</li>
+					<li>Compatible con Windows Me, XP, 2000 y Vista, Linux 32 y 64 bits, Solaris 8,
+					Mac OS X y AIX.
+					<li>Compatible con MySQL y PHP 5.5.</li>
+					<li>Construcción modular que facilita la migración a otro sistema de base de datos.</li>
+					<li>Paquetes de idiomas independientes para facilitar la traducción.</li>
+					<li>El interfaz, desarrollado con el Standard Widget Toolkit, se integra perfectamente
+					con cualquier sistema operativo, resultando en un aspecto familiar al usuario.</li>
+				</ul>
 				
-				<h3>Cita guay</h3>			
-				<blockquote><p>¡No a la cache!</p></blockquote>
-				
-				<h3>Imagen y texto</h3>
-				<p><a href="http://getfirefox.com/"><img src="images/firefox-gray.jpg" width="100" height="120" alt="firefox" class="float-left" /></a>
-				Soy un texto. Soy un texto. Soy un texto. Soy un texto. Soy un texto. Soy un texto. 
-				Soy un texto. Soy un texto. Soy un texto. Soy un texto. Soy un texto. Soy un texto. 
-				Soy un texto. Soy un texto. Soy un texto. Soy un texto. Soy un texto. Soy un texto.  
-				Soy un texto. Soy un texto. Soy un texto. Soy un texto. Soy un texto. Soy un texto.
-				<br><br><br><br><br>
-				</p>
-				
-				<h3>Tablas</h3>
-							
-				<table>
-					<tr>
-						<th class="first">columna 1</th>
-						<th>columna 2</th>
-						<th>columna 3</th>
-					</tr>
-					<tr class="row-a">
-						<td class="first">04.18.2007</td>
-						<td><a href="index.html">link 1</a></td>
-						<td><a href="index.html">link 2</a></td>
-					</tr>
-					<tr class="row-b">
-						<td class="first">04.18.2007</td>
-						<td><a href="index.html">link 3</a></td>
-						<td><a href="index.html">link 4</a></td>
-					</tr>
-					<tr class="row-a">
-						<td class="first">04.18.2007</td>
-						<td><a href="index.html">link 5</a></td>
-						<td><a href="index.html">link 6</a></td>
-					</tr>
-					<tr class="row-b">
-						<td class="first">04.18.2007</td>
-						<td><a href="index.html">link 7</a></td>
-						<td><a href="index.html">link 8</a></td>
-					</tr>
-				</table>
-								
 
 			</div>
 		
