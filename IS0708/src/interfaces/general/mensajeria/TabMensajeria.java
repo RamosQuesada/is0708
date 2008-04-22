@@ -229,7 +229,8 @@ public class TabMensajeria extends Thread{
 		
 		String[] titles = { " ", bundle.getString("I02_mens_De"),
 		bundle.getString("Asunto"), bundle.getString("Mensaje"),
-		bundle.getString("Fecha") };
+		bundle.getString("Fecha"),
+		bundle.getString("Hora") };
 		for (int i = 0; i < titles.length; i++) {
 			TableColumn column = new TableColumn(tablaMensajes, SWT.NONE);
 			column.setText(titles[i]);
@@ -246,6 +247,7 @@ public class TabMensajeria extends Thread{
 				tablaMensajes.getColumn(2).setWidth(ancho / 8);
 				tablaMensajes.getColumn(3).setWidth(ancho - 4*(ancho/8)-25);
 				tablaMensajes.getColumn(4).setWidth(ancho / 8);
+				tablaMensajes.getColumn(5).setWidth(ancho / 8);
 			}
 			public void controlMoved(ControlEvent e) {};
 		});
