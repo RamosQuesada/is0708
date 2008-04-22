@@ -1036,8 +1036,8 @@ public class Database extends Thread {
 	public boolean insertarSugerencia (Date fecha, Time horaInicio, String nombre, String texto) {
 		boolean correcto = false;
 		try {
-			st.addBatch("INSERT INTO " + tablaSugerencias + " values (" + nombre 
-					+ ", '" + fecha + "', '" + horaInicio + "', " + texto + ");");
+			st.executeUpdate("INSERT INTO " + tablaSugerencias + " values ('" + nombre 
+					+ "', '" + fecha + "', '" + horaInicio + "', '" + texto + "');");
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;

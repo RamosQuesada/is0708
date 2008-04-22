@@ -202,6 +202,8 @@ public class Sugerencia {
 		return resul;
 	}
 
+	public void generarResumen() {
+		this.setSugerencia(this.toString());
+	}
 
-	
 }

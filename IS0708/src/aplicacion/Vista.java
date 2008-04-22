@@ -16,6 +16,8 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
 import algoritmo.Cuadrante;
+import algoritmo.Resumen;
+import algoritmo.Sugerencia;
 import algoritmo.Trabaja;
 import aplicacion.datos.Contrato;
 import aplicacion.datos.Departamento;
@@ -71,6 +73,9 @@ public class Vista {
 	
 	/** Caché local: Cuadrantes del departamento actual */
 	private ArrayList<Cuadrante> cuadrantes = new ArrayList<Cuadrante>();
+	
+	/** Caché local: Sugerencias del departamento actual */
+	private ArrayList<Sugerencia> sugerencias = new ArrayList<Sugerencia>();
 	
 	/**
 	 * cola FIFO de inserciones/actualizaciones a realizar en la BD
@@ -143,6 +148,7 @@ public class Vista {
 						if      (e.tipo.equals("Empleado" ))		insertEmpleadoBD((Empleado) e.o.get(0));
 						else if (e.tipo.equals("Cuadrante"))		controlador.insertCuadrante((Cuadrante) e.o.get(0)); 			
 						else if (e.tipo.equals("TurnoContrato"))	controlador.insertTurnoPorContrato((Integer)e.o.get(0), (Integer)e.o.get(1));
+						else if (e.tipo.equals("Sugerencia"))		controlador.insertSugerencia((Sugerencia)e.o.get(0));
 //						else if (e.tipo.equals("Contrato"))			controlador.insertContrato((Contrato) e.o.get(0));
 						/*else if (e.tipo.equals("Departamento"))		controlador.insertDepartamento((Departamento)e.o.get(0));
 						else if (e.tipo.equals("CrearDepartamento")){ 	controlador.insertDepartamentoUsuario((Integer)e.o.get(2),e.o.get(0).toString()); //tabla DepartamentoUsuario
@@ -233,6 +239,21 @@ public class Vista {
 		cuadrantes.add(c);
 		insertCache(c, "Cuadrante");
 		return true;
+	}
+	
+	/**
+	 * Inserta una sugerencia en la base de datos
+	 * @param s la sugerencia a insertar
+	 */
+	public void insertSugerencias (Resumen r){
+		Sugerencia sugAux = null;
+		for (int i=0;i<r.getSugerencias().length;i++) {
+			for (int j=0;j<r.leerDia(i).size();j++) {
+				sugAux = r.leerDia(i).get(j);
+				sugerencias.add(r.leerDia(i).get(j));
+				insertCache(sugAux, "Sugerencia");
+			}
+		}
 	}
 	
 	/**
@@ -464,7 +485,7 @@ public class Vista {
 	}
 	
 	/**
-	 * Modifica un cuadrante en la base de datos
+	 * Modifica un cuadrante a partir de un dia
 	 * @param primerDia Primer dia a modificar
 	 * @param mes Mes del cuadrante a modificar
 	 * @param anio Anio del cuadrante a modificar
@@ -482,6 +503,28 @@ public class Vista {
 		}
 		for (int j=primerDia-1;j<c.getNumDias();j++)
 			cuadrantes.get(i).getCuad()[j]=c.getCuad()[j];
+	}
+	
+	/**
+	 * Modifica sugerencias a partir de un dia
+	 * @param primerDia Primer dia a modificar
+	 * @param mes Mes de las sugerencias a modificar
+	 * @param anio Anio de las sugerencias a modificar
+	 * @param idDepartamento Departamento de las sugerencias a modificar
+	 * @param r Sugerencias a modificar
+	 */
+	public void modificarSugerencias (int primerDia, int mes, int anio, String idDepartamento, Resumen r) {
+		int aux=0;
+		for (int i=0;i<sugerencias.size();i++){
+			if (sugerencias.get(i).getDept().equals(idDepartamento) && sugerencias.get(i).getFecha().getMonth()==mes  && sugerencias.get(i).getFecha().getYear()==anio
+					&& sugerencias.get(i).getFecha().getDay()>=primerDia-1 && sugerencias.get(i).getFecha().getDay()<r.getDias()) {
+				sugerencias.remove(i);
+				i--;
+			}
+		}
+		for (int j=primerDia-1;j<r.getSugerencias().length;j++)
+			for (int k=0;k<r.leerDia(j).size();k++)
+				sugerencias.add(r.leerDia(j).get(k));
 	}
  	
 	/**
@@ -935,8 +978,26 @@ public class Vista {
 		if (!alive) return;
 		int i = 0;
 		while (i<cuadrantes.size()) {
-			if (cuadrantes.get(i).getAnio()==anio && cuadrantes.get(i).getMes()==mes && cuadrantes.get(i).getIdDepartamento().equals(idDepartamento)) {
+			if (cuadrantes.get(i).getIdDepartamento().equals(idDepartamento) && cuadrantes.get(i).getMes()==mes && cuadrantes.get(i).getAnio()==anio) {
 				cuadrantes.remove(i);
+			}
+			else
+				i++;
+		}
+	}
+	
+	/**
+	 * Elimina las sugerencias de un mes de la base de datos
+	 * @param mes Mes de las sugerencias a eliminar
+	 * @param anio Anio de las sugerencias a eliminar
+	 * @param idDepartamento Departamento de las sugerencias a eliminar
+	 */
+	public void eliminaSugerencias(int mes, int anio, String idDepartamento) {
+		if (!alive) return;
+		int i = 0;
+		while (i<sugerencias.size()) {
+			if (sugerencias.get(i).getDept().equals(idDepartamento) && sugerencias.get(i).getFecha().getMonth()==mes && sugerencias.get(i).getFecha().getYear()==anio) {
+				sugerencias.remove(i);
 			}
 			else
 				i++;

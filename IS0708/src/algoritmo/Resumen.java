@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Resumen {
 	
-	private ArrayList<String>[] sugerencias=null;
+	private ArrayList<Sugerencia>[] sugerencias=null;
 	private ArrayList<String> informe=null;
 	private int dias;
 	
@@ -35,7 +35,7 @@ public class Resumen {
 	 * @param dia Día para el que añadimos la sugerencia
 	 * @param sugerencia Sugerencia a añadir
 	 */
-	public void add(int dia, String sugerencia){
+	public void add(int dia, Sugerencia sugerencia){
 		sugerencias[dia].add(sugerencia);
 	}
 	
@@ -44,7 +44,11 @@ public class Resumen {
 	 * @param dia Día dek que queremos las sugerencias
 	 * @return Sugerencias del día 
 	 */
-	public ArrayList<String> leerDia(int dia){
+	public ArrayList<Sugerencia> leerDia(int dia){
+		/*ArrayList<String> sug = new ArrayList<String>();
+		for (int i=0; i<sugerencias[dia].size(); i++)
+			sug.add(sugerencias[dia].get(i).getSugerencia());
+		return sug;*/
 		return sugerencias[dia];
 	}
 	
@@ -54,6 +58,44 @@ public class Resumen {
 	 */
 	public ArrayList<String> getInforme(){
 		return informe;
+	}
+	
+	/**
+	 * Establece el informe
+	 * @param informe informe que se introduce
+	 */
+	public void setInforme(ArrayList<String> informe) {
+		this.informe = informe;
+	}
+
+	/**
+	 * Devuelve las sugerencias de todos los días del mes
+	 */
+	public ArrayList<Sugerencia>[] getSugerencias() {
+		return sugerencias;
+	}
+	
+	/**
+	 * Fija las sugerencias de todo el mes
+	 * @param sugerencias
+	 */
+	public void setSugerencias(ArrayList<Sugerencia>[] sugerencias) {
+		this.sugerencias = sugerencias;
+	}
+
+	/**
+	 * Devuelve los días del mes
+	 */
+	public int getDias() {
+		return dias;
+	}
+
+	/**
+	 * Fija los dias del mes
+	 * @param dias
+	 */
+	public void setDias(int dias) {
+		this.dias = dias;
 	}
 
 }
