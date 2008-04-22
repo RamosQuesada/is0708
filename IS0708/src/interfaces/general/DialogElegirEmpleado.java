@@ -107,6 +107,14 @@ public class DialogElegirEmpleado extends Thread {
 		
 	}	
 	public void filtrar() {
+		
+		/*ArrayList<Empleado> empleados;
+		ArrayList<Empleado> jefes;
+		empleados = vista.getEmpleados();
+		jefes = vista.*/
+		
+		
+		
 		empleadosOut.clear();
 		listFiltro.removeAll();
 		if (tNombre.getText()!="") {
