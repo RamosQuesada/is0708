@@ -1,6 +1,7 @@
 package interfaces.graficos;
 
 import java.awt.image.*;
+import java.util.ArrayList;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -16,8 +17,8 @@ public class BarChart extends Chart{
 	 * Constructor de la clase
 	 *
 	 */
-	public BarChart(){
-		
+	public BarChart(ArrayList<String> fechas,ArrayList<Integer> cantidades){
+		super(fechas,cantidades);
 	}
 	/**
 	 * Metodo que crea el grafico
@@ -26,18 +27,16 @@ public class BarChart extends Chart{
 	public BufferedImage creaImagen()
     {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		dataset.setValue(5, "Ventas", "Enero");
-		dataset.setValue(7, "Ventas", "Febrero");
-		dataset.setValue(9, "Ventas", "Marzo");
-		dataset.setValue(5, "Ventas", "Abril");
-		dataset.setValue(10, "Ventas", "Mayo");
+		for(int i=0;i<fechas.size();i++){
+			dataset.addValue(cantidades.get(i), "Ventas", Integer.toString(i+1)/*fechas.get(i)*/);
+		}
 		String NumeroVentas = "Numero de Ventas";
 		String Ventas = "Ventas realizadas";
-		JFreeChart chart = ChartFactory.createBarChart(Ventas, Ventas,
+		JFreeChart chart = ChartFactory.createBarChart(Ventas, "Fecha",
 				NumeroVentas, dataset, PlotOrientation.VERTICAL, false, true,
 				false);
 
-         BufferedImage image = chart.createBufferedImage(300,300);
+        BufferedImage image = chart.createBufferedImage(700,700);
         return image;
     }	
 }

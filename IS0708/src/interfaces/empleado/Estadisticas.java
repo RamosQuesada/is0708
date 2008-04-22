@@ -1,11 +1,13 @@
 package interfaces.empleado;
 
 import interfaces.graficos.BarChart;
+import interfaces.graficos.Chart;
 import interfaces.graficos.PieChart;
 import interfaces.graficos.TimeSeriesChart;
 import interfaces.graficos.XYChart;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlEvent;
@@ -24,9 +26,12 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 
 
 import aplicacion.Vista;
+import aplicacion.datos.Contrato;
+import aplicacion.datos.Empleado;
 import aplicacion.utilidades.Util;
 
 public class Estadisticas {
@@ -36,12 +41,16 @@ public class Estadisticas {
 	private TabFolder tabFolder;
 	private Date fechaSeleccionada;
 	private Table tablaVentas;
+	private ArrayList <String> fechas;
+	private ArrayList <Integer> cantidades;
 	
 	public Estadisticas(final ResourceBundle bundle, final Vista vista,
 			final TabFolder tabFolder) {
 		this.bundle = bundle;
 		this.vista = vista;
 		this.tabFolder = tabFolder;
+		fechas= new ArrayList<String>();
+		cantidades=new ArrayList<Integer>();
 		
 		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
 		tabItem.setText(bundle.getString("I07_tab_estadisticas_emp"));
@@ -99,7 +108,13 @@ public class Estadisticas {
 			}
 
 		});
-		
+		//TODO cambiar esto para que se rellene de la base de datos metiendo algun patron
+		for (int i=0;i<30;i++){
+			TableItem tItem = new TableItem(tablaVentas, SWT.NONE);
+			if (i<9) tItem.setText(0, "2008-04-0"+(i+1));
+			else tItem.setText(0, "2008-04-"+(i+1));
+			tItem.setText(1, Integer.toString(10*(i+1)));
+		}
 		final Label lCalendario = new Label(cEstIzq, SWT.LEFT);
 		lCalendario.setText(this.bundle.getString("Calendario"));
 		lCalendario.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
@@ -115,7 +130,6 @@ public class Estadisticas {
 				fechaSeleccionada = Date.valueOf(Util.aFormatoDate(Integer
 						.toString(year), Integer.toString(month + 1), Integer
 						.toString(day)));
-				System.out.println(fechaSeleccionada);
 			}
 		});
 		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false,
@@ -162,7 +176,8 @@ public class Estadisticas {
 			}
 
 			public void widgetSelected(SelectionEvent arg0) {
-				BarChart a=new BarChart();
+				recogeDatosTabla();
+				Chart a=new BarChart(fechas,cantidades);
 				a.creaVentana();
 				
 			}
@@ -179,7 +194,8 @@ public class Estadisticas {
 			}
 
 			public void widgetSelected(SelectionEvent arg0) {
-				TimeSeriesChart a=new TimeSeriesChart();
+				recogeDatosTabla();
+				Chart a=new TimeSeriesChart(fechas,cantidades);
 				a.creaVentana();
 				
 			}
@@ -195,8 +211,9 @@ public class Estadisticas {
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 			}
 
-			public void widgetSelected(SelectionEvent arg0) {				
-				PieChart a=new PieChart();
+			public void widgetSelected(SelectionEvent arg0) {	
+				recogeDatosTabla();
+				Chart a=new PieChart(fechas,cantidades);
 				a.creaVentana();
 				
 			}
@@ -213,7 +230,8 @@ public class Estadisticas {
 			}
 
 			public void widgetSelected(SelectionEvent arg0) {
-				XYChart a=new XYChart();
+				recogeDatosTabla();
+				Chart a=new XYChart(fechas,cantidades);
 				a.creaVentana();
 				
 			}
@@ -221,5 +239,14 @@ public class Estadisticas {
 
 	}
 	
+	public void recogeDatosTabla(){
+		fechas.clear();
+		cantidades.clear();
+		for(int i=0;i<tablaVentas.getItemCount();i++){
+			TableItem item = tablaVentas.getItem(i);
+			fechas.add(item.getText(0));
+			cantidades.add(Integer.valueOf(item.getText(1)));
+		}
+	}
 
 }

@@ -1,11 +1,16 @@
 package interfaces.graficos;
 
 import java.awt.image.*;
+import java.util.Date;
+import java.util.ArrayList;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.time.TimeSeriesDataItem;
+
+import aplicacion.utilidades.Util;
 /**
  * Clase que genera graficos de lineas
  * @author Jose María Martín Blázquez
@@ -16,8 +21,8 @@ public class TimeSeriesChart extends Chart{
 	 * Constructor de la clase
 	 *
 	 */
-	public TimeSeriesChart(){
-		
+	public TimeSeriesChart(ArrayList<String> fechas,ArrayList<Integer> cantidades){
+		super(fechas,cantidades);
 	}
 	/**
 	 * Metodo que crea el grafico
@@ -27,20 +32,29 @@ public class TimeSeriesChart extends Chart{
     {
 //		 Create a time series chart
 		org.jfree.data.time.TimeSeries pop = new org.jfree.data.time.TimeSeries(
-				"Linea de Crecimiento", Day.class);
-		pop.add(new Day(2, 1, 2007), 100);
-		pop.add(new Day(2, 2, 2007), 150);
-		pop.add(new Day(2, 3, 2007), 200);
-		pop.add(new Day(2, 4, 2007), 250);
-		pop.add(new Day(2, 5, 2007), 300);
-		pop.add(new Day(2, 6, 2007), 1500);
+				"Linea de Evolución", Day.class);
+		for(int i=0;i<fechas.size();i++){
+			Date fecha=new Date(0);
+			try {
+				fecha=Util.stringADate(fechas.get(i));
+			} catch (Exception e) {
+				System.out.println("Fecha incorecta");
+				e.printStackTrace();
+			}
+			int dia=fecha.getDate();
+			int mes=fecha.getMonth();
+			int año=fecha.getYear()+1900;
+			pop.addOrUpdate(new Day(dia,mes+1,año), cantidades.get(i));
+		}
+		//TimeSeriesDataItem it=new TimeSeriesDataItem(null, 1);
+
 		TimeSeriesCollection dataset = new TimeSeriesCollection();
 		dataset.addSeries(pop);
 		JFreeChart chart = ChartFactory.createTimeSeriesChart(
-				"Crecimiento Ventas", "Fecha", "Numero Unidades", dataset,
+				"Evolución Ventas", "Fecha", "Numero Unidades", dataset,
 				true, true, false);
 
-         BufferedImage image = chart.createBufferedImage(300,300);
+         BufferedImage image = chart.createBufferedImage(700,700);
         return image;
     }
 }

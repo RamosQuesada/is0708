@@ -1,6 +1,7 @@
 package interfaces.graficos;
 
 import java.awt.image.*;
+import java.util.ArrayList;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -15,8 +16,8 @@ public class PieChart extends Chart{
 	 * Constructor de la clase
 	 *
 	 */
-	public PieChart(){
-		
+	public PieChart(ArrayList<String> fechas,ArrayList<Integer> cantidades){
+		super(fechas,cantidades);
 	}
 	/**
 	 * Metodo que crea el grafico
@@ -25,14 +26,13 @@ public class PieChart extends Chart{
 	public BufferedImage creaImagen()
     {
 		DefaultPieDataset pieDataset = new DefaultPieDataset();
-		pieDataset.setValue("Enero", new Integer(75));
-		pieDataset.setValue("Febrero", new Integer(10));
-		pieDataset.setValue("Marzo", new Integer(10));
-		pieDataset.setValue("Resto", new Integer(5));
+		for(int i=0;i<fechas.size();i++){
+			pieDataset.setValue(fechas.get(i),cantidades.get(i));
+		}
 		JFreeChart chart = ChartFactory.createPieChart("Ventas realizadas",
 				pieDataset, true, true, false);
 
-         BufferedImage image = chart.createBufferedImage(300,300);
+         BufferedImage image = chart.createBufferedImage(700,700);
         return image;
     }	
 }
