@@ -1,6 +1,7 @@
 package interfaces.graficos;
 
 import java.awt.image.*;
+import java.util.ArrayList;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.Image;
@@ -16,12 +17,15 @@ import org.eclipse.swt.layout.*;
  *
  */
 public abstract class Chart {
+	protected ArrayList <String> fechas;
+	protected ArrayList <Integer> cantidades;
 	/**
 	 * Constructor de la clase
 	 *
 	 */
-	public Chart(){
-		
+	public Chart(ArrayList<String> fechas,ArrayList<Integer> cantidades){
+		this.fechas=fechas;
+		this.cantidades=cantidades;
 	}
 	/**
 	 * Metodo que crea el grafico
@@ -102,7 +106,7 @@ public abstract class Chart {
 		c.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		c.setImage(dameImagen(convertToSWT(creaImagen()),shell.getDisplay()));
 
-		shell.setSize(350,350);
+		shell.setSize(800,800);
 		// Mostrar ventana centrada en la pantalla
 		shell.setLocation(
 				shell.getDisplay().getBounds().width  / 2 - shell.getSize().x / 2, 
