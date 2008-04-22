@@ -54,10 +54,12 @@ public class TurnoMatic {
 		this.diaIni = d;
 	    this.listaE = this.vista.getEmpleadosDepartamento(idDepartamento);
 	    //this.listaE = this.controlador.getEmpleadosDepartamentoPruebasAlg(idDepartamento);		
-		this.contratosDep = this.controlador.getListaContratosDpto(this.idDepartamento);
-		this.turnosDep = this.controlador.getListaTurnosEmpleadosDpto(this.idDepartamento);		
-		this.estruc = new Estructura(mes, year, controlador, idDepartamento, listaE);
-		this.cuadrante = new Cuadrante(mes, year, idDepartamento);		
+	    this.contratosDep = this.vista.getListaContratosDepartamento();
+		//this.contratosDep = this.controlador.getListaContratosDpto(this.idDepartamento);
+		this.turnosDep = this.vista.getTurnos();		
+		//this.turnosDep = this.controlador.getListaTurnosEmpleadosDpto(this.idDepartamento);		
+		this.estruc = new Estructura(mes, year, controlador, idDepartamento, listaE, turnosDep);
+		this.cuadrante = new Cuadrante(mes, year, idDepartamento);
 	}
 
 	/**

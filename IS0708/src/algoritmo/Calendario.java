@@ -15,7 +15,6 @@ public class Calendario {
 	private int anio;
 	private int numDias; 			//numero de dias del mes
 	private HoraCalendario cal[][]; //esta matriz contiene para cada dia y para cada hora un objeto de la clase Horacalendario
-	private Controlador cont;
 	
 	/**
 	 * Constructora por defecto
@@ -36,7 +35,6 @@ public class Calendario {
 	 */
 	public Calendario(int mes, int anio, Controlador cont, String idDepartamento){
 		this.mes = mes;
-		this.cont = cont;
 		this.anio = anio;
 		numDias = Util.dameDias(mes,anio); 
 		this.idDepartamento = idDepartamento;
