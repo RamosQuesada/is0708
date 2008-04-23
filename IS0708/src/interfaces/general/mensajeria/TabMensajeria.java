@@ -140,7 +140,7 @@ public class TabMensajeria extends Thread{
 			tItem.setText(2, Util.recortarTituloTexto(vista.getTodosMensajesEntrantes().get(vista.getTodosMensajesEntrantes().size()-i-1-primerMensaje).getAsunto(), prevAsuntoMens));
 			tItem.setText(3, Util.recortarContenidoTexto(vista.getTodosMensajesEntrantes().get(vista.getTodosMensajesEntrantes().size()-i-1-primerMensaje).getTexto(), prevTextoMens));
 			tItem.setText(4, Util.dateAString(vista.getTodosMensajesEntrantes().get(vista.getTodosMensajesEntrantes().size()-i-1-primerMensaje).getFecha()));
-			tItem.setText(5, Util.dateAString(vista.getTodosMensajesEntrantes().get(vista.getTodosMensajesEntrantes().size()-i-1-primerMensaje).getFecha()));
+			tItem.setText(5, Util.dateAStringHora(vista.getTodosMensajesEntrantes().get(vista.getTodosMensajesEntrantes().size()-i-1-primerMensaje).getFecha()));
 			i++;
 		}
 		int min;
@@ -246,9 +246,10 @@ public class TabMensajeria extends Thread{
 				tablaMensajes.getColumn(0).setWidth(20);
 				tablaMensajes.getColumn(1).setWidth(ancho / 4);
 				tablaMensajes.getColumn(2).setWidth(ancho / 8);
-				tablaMensajes.getColumn(3).setWidth(ancho - 4*(ancho/8)-25);
+				//tablaMensajes.getColumn(3).setWidth(ancho - 4*(ancho/8)-25);
+				tablaMensajes.getColumn(3).setWidth((ancho/3)+41);
 				tablaMensajes.getColumn(4).setWidth(ancho / 8);
-				tablaMensajes.getColumn(5).setWidth(ancho / 8);
+				tablaMensajes.getColumn(5).setWidth(ancho / 14);
 			}
 			public void controlMoved(ControlEvent e) {};
 		});
