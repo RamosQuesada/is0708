@@ -11,6 +11,10 @@
 <meta name="Robots" content="index,follow" />
 
 <link rel="stylesheet" href="images/Envision.css" type="text/css" />
+<link rel="stylesheet" href="css/slimbox.css" type="text/css" media="screen" />
+
+<script type="text/javascript" src="js/mootools-release-1.11.js"></script>
+<script type="text/javascript" src="js/slimbox.js"></script>
 
 <title>Documentación TurnoMatic. IS 07-08 UCM</title>
 	
@@ -47,11 +51,12 @@
 				<ul class="sidemenu">				
 					<li><a href="#cu">Diagramas de casos de uso</a></li>
 					<li><a href="#despliegue">Diagrama de despliegue</a></li>
-					
+					<li><a href="#componentes">Diagrama de componentes</a></li>
 				</ul>
 			</div>
 			<!-- Contenido -->
 			<div id="main">
+			<a href="images/image-1.jpg" rel="lightbox" title="my caption">image #1</a>
 				<h1>Diseño - Diagramas UML</h1>
 				
 				<a id="cu"></a>
@@ -65,11 +70,14 @@
 					
 				</tr>
 				<tr>
-					<td align=center><a href="uml/uml_casos_de_uso_gerente.jpg"><img width=100 src="uml/uml_casos_de_uso_gerente.jpg"></a></td>
-					<td align=center><a href="uml/uml_casos_de_uso_jefe_dep.jpg"><img width=100 src="uml/uml_casos_de_uso_jefe_dep.jpg"></a></td>
-					<td align=center><a href="uml/uml_casos_de_uso_empleado.jpg"><img width=100 src="uml/uml_casos_de_uso_empleado.jpg"></a></td>
-					<td align=center><a href="uml/uml_casos_de_uso_generales.jpg"><img width=100 src="uml/uml_casos_de_uso_generales.jpg"></a></td>
-
+					<td align=center><a href="uml/uml_casos_de_uso_gerente.jpg" rel="lightbox" title="Casos de uso - Gerente">
+						<img width=100 src="uml/uml_casos_de_uso_gerente.jpg"></a></td>
+					<td align=center><a href="uml/uml_casos_de_uso_jefe_dep.jpg" rel="lightbox" title="Casos de uso - Jefe de departamento">
+						<img width=100 src="uml/uml_casos_de_uso_jefe_dep.jpg"></a></td>
+					<td align=center><a href="uml/uml_casos_de_uso_empleado.jpg" rel="lightbox" title="Casos de uso - Empleado">
+						<img width=100 src="uml/uml_casos_de_uso_empleado.jpg"></a></td>
+					<td align=center><a href="uml/uml_casos_de_uso_generales.jpg" rel="lightbox" title="Casos de uso - Generales"
+						><img width=100 src="uml/uml_casos_de_uso_generales.jpg"></a></td>
 				</tr>
 				<tr>
 					<td align=center>Haz click en la foto para ampliar</td>
@@ -88,8 +96,45 @@
 				Descargar <a href="uml/uml_despliegue.mdl">archivo fuente</a> (190 KB)
 				</center>
 				
+				<a id="componentes"></a>
+				<h2>Diagrama de componentes</h2>
+				<center><table>
+				<tr>
+					<td align=center>	<h3>Principal</h3></td>
+					<td align=center>	<h3>Código</h3></td>
+					<td align=center>	<h3>Librerías</h3></td>
+					<td align=center>	<h3>Ejecutables</h3></td>					
+					<td align=center>	<h3>Documentos</h3></td>
+				</tr>
+				<tr>
+					<td align=center><a href="uml/uml_componentes_principal.jpg" rel="lightbox" title="Componentes - Principal">
+						<img width=100 src="uml/uml_componentes_principal.jpg">		</a></td>
+					<td align=center><a href="uml/uml_componentes_codigo.jpg" rel="lightbox" title="Componentes - Código">
+							<img width=100 src="uml/uml_componentes_codigo.jpg">		</a></td>
+					<td align=center><a href="uml/uml_componentes_librerias.jpg" rel="lightbox" title="Componentes - Librerías">
+						<img width=100 src="uml/uml_componentes_librerias.jpg">		</a></td>
+					<td align=center><a href="uml/uml_componentes_ejecutables.jpg" rel="lightbox" title="Componentes - Ejecutables">
+						<img width=100 src="uml/uml_componentes_ejecutables.jpg">	</a></td>
+					<td align=center><a href="uml/uml_componentes_documentos.jpg" rel="lightbox" title="Componentes - Documentos">
+						<img width=100 src="uml/uml_componentes_documentos.jpg">	</a></td>
+
+				</tr>
+				<tr>
+					<td align=center>Haz click en la foto para ampliar</td>
+					<td align=center>Haz click en la foto para ampliar</td>
+					<td align=center>Haz click en la foto para ampliar</td>
+					<td align=center>Haz click en la foto para ampliar</td>
+					<td align=center>Haz click en la foto para ampliar</td>
+				</tr>
+				</table>
+				Descargar <a href="uml/uml_componentes.mdl">archivo fuente</a> (277 KB)
+				</center>
+
 				<h2>Diagrama de clases</h2>
-				Hecho, sólo falta pegar la foto y poner un link al archivo de BoUML.
+				<p>Hecho. No está subido por motivos de rendimiento del repositorio (ya que son 700kB). Pondremos unas imágenes cuando el código
+				sea más estable.</p>
+
+				
 			</div>
 		
 		<!-- content-wrap ends here -->	
