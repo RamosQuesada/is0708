@@ -863,12 +863,13 @@ public class Database extends Thread {
 			String texto, boolean marcado, boolean visto) {
 		int i = 0;
 		ResultSet r = null;
+		java.sql.Timestamp ts = new java.sql.Timestamp(fecha.getTime());
 		try {
 			st = con.createStatement();
 			st.executeUpdate("INSERT INTO " + tablaMensajes + " (Remitente, Fecha, Asunto, Texto, Marcado, visto) values ( "
 							+ remitente
 							+ ", '"
-							+ fecha
+							+ ts
 							+ "', '"
 							+ asunto
 							+ "', '" + texto + "', " + marcado + ", " + visto + ");");
