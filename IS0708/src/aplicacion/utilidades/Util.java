@@ -2,6 +2,8 @@ package aplicacion.utilidades;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.lang.String;
@@ -230,8 +232,13 @@ public class Util {
 		
 		String time;
 		
-		int hour = fecha.getHours();
-		int min = fecha.getMinutes();
+		Time t;
+		t = new Time(fecha.getTime());
+		
+		
+		int hour = t.getHours();
+		int min = t.getMinutes();
+
 		
 		if(fecha==null)
 			return null;
