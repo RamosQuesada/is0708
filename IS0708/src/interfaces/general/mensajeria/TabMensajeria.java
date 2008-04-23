@@ -140,6 +140,7 @@ public class TabMensajeria extends Thread{
 			tItem.setText(2, Util.recortarTituloTexto(vista.getTodosMensajesEntrantes().get(vista.getTodosMensajesEntrantes().size()-i-1-primerMensaje).getAsunto(), prevAsuntoMens));
 			tItem.setText(3, Util.recortarContenidoTexto(vista.getTodosMensajesEntrantes().get(vista.getTodosMensajesEntrantes().size()-i-1-primerMensaje).getTexto(), prevTextoMens));
 			tItem.setText(4, Util.dateAString(vista.getTodosMensajesEntrantes().get(vista.getTodosMensajesEntrantes().size()-i-1-primerMensaje).getFecha()));
+			tItem.setText(5, Util.dateAString(vista.getTodosMensajesEntrantes().get(vista.getTodosMensajesEntrantes().size()-i-1-primerMensaje).getFecha()));
 			i++;
 		}
 		int min;
