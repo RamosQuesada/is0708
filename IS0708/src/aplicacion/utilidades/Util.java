@@ -218,6 +218,38 @@ public class Util {
 		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		return formatter.format(fecha);
 	}
+	
+	/**
+	 * Coje la hora y los minutos de un Date y lo pasa a String con el formato hh:mm
+	 * Si la fecha es null, devuelve 00:00.
+	 * @param fecha la fecha a sacar las horas
+	 * @return el String con el formato apropiado
+	 * @author Alberto Maqueda
+	 */
+	public static String dateAStringHora(java.util.Date fecha) {
+		
+		String time;
+		
+		int hour = fecha.getHours();
+		int min = fecha.getMinutes();
+		
+		if(fecha==null)
+			return null;
+		
+		String Shora = Integer.toString(hour);
+		String Sminutos = Integer.toString(min);
+		if (hour-10<0 && min<10)
+			return "0"+Shora+":"+"0"+Sminutos;
+		
+		if (hour-10<0 && !(min<10))
+			return "0"+Shora+":"+Sminutos;
+		
+		if (!(hour-10<0) && min<10)
+			return Shora+":"+"0"+Sminutos;
+		
+		return Shora+":"+Sminutos;
+		
+	}
 
 	/**
 	 * Convierte un fecha de tipo long en un String con el formato YYYY-MM-DD.
@@ -273,7 +305,7 @@ public class Util {
 		date = (Date)formatter.parse(dateString);		
 		return date;
     }
-	
+		
 	
 	/**
 	 * 
