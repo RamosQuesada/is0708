@@ -32,6 +32,7 @@ public class TabDepartamentos extends Thread{
 	private SubTabConfiguracionDias cInfoHorario;
 	private Combo cmbDepartamentos;
 	private Text lContenido;
+	private HorarioMes calendario;
 	
 	public TabDepartamentos(TabFolder tabFolder, Vista vista, ResourceBundle bundle, Shell padre) {
 		this.vista = vista;
@@ -86,12 +87,17 @@ public class TabDepartamentos extends Thread{
 		}
 		cmbDepartamentos.select(0);
 		
+		calendario=new HorarioMes(fCentro, padre, 5, 2008);	
+		calendario.setMes(5, 2008);
+		
+		
 		cInfoHorario=new SubTabConfiguracionDias(vista, array.get(0), fCentro,bundle,padre);
 		cInfoHorario.activar();	
 		cmbDepartamentos.setEnabled(true);
 		
 		//asigno el tab del control de personal para cada dia
 		fCentro.getItem(0).setControl(cInfoHorario.getControl());
+		fCentro.getItem(1).setControl(calendario.getComposite());
 		
 		//Escribo el texto en el label
 		lContenido.setText(vista.infoDpto(cmbDepartamentos.getText()));
@@ -169,9 +175,9 @@ public class TabDepartamentos extends Thread{
 		tab1.setText(bundle.getString("TabDepartamentos_tab1"));
 		
 		
-	/*	TabItem tab2=new TabItem(fCentro, SWT.NONE);
+		TabItem tab2=new TabItem(fCentro, SWT.NONE);
 		tab2.setText(bundle.getString("TabDepartamentos_tab2"));
-		tab2.setControl(calendario.getComposite());*/
+		
 		
 		TabItem tab3=new TabItem(fCentro, SWT.NONE);
 		tab3.setText(bundle.getString("TabDepartamentos_tab3"));
