@@ -498,7 +498,7 @@ public class SubTabConfiguracionDias {
 		gridData.grabExcessHorizontalSpace = true;
 		gridData.grabExcessVerticalSpace = true;
 		gridData.verticalAlignment = GridData.FILL;
-		scroll = new ScrolledComposite(padre, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+		scroll = new ScrolledComposite(padre, SWT.H_SCROLL | SWT.V_SCROLL );
 		scroll.setExpandHorizontal(true);
 	    scroll.setExpandVertical(true);
 		createComposite();
