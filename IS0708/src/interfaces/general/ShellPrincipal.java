@@ -501,17 +501,6 @@ public class ShellPrincipal {
 	 *            el tabFolder donde colocarlo
 	 * @author Jose Maria Martin
 	 */
-	private void crearTabAdminContratos(TabFolder tabFolder) {
-		new TabContratosAdmin(tabFolder,vista,bundle,locale);
-	}
-
-	/**
-	 * Crea un tab con un listado de contratos para el menú de administrador
-	 * 
-	 * @param tabFolder
-	 *            el tabFolder donde colocarlo
-	 * @author Jose Maria Martin
-	 */
 	private void crearTabJefeDepartamentos(TabFolder tabFolder) {
 		new TabDepartamentos(tabFolder,vista,bundle,shell);
 	}
@@ -734,15 +723,14 @@ public class ShellPrincipal {
 		switch (rango) {
 		case 0:
 			// Tabs de administrador
-			if (vista.getControlador().conexionAbierta()){
+		if (vista.getControlador().conexionAbierta()){
 			vista.getControlador().abrirConexionBD();
 			crearTabAdminInicio(tabFolder);
 			crearTabAdminNuevoJefe(tabFolder);
 			crearTabAdminEliminaJefe(tabFolder);
-			crearTabAdminDepartamentos(tabFolder);	
-//			crearTabAdminContratos(tabFolder);
-			}
-			else crearTabAdminInicio(tabFolder);
+			crearTabAdminDepartamentos(tabFolder);
+		}
+		else crearTabAdminInicio(tabFolder);
 			break;
 		case 2:
 			// Tabs de jefe

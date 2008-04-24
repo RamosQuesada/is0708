@@ -131,24 +131,25 @@ public class TabEliminaJefe {
 
 		});
 		arrayJefes = vista.getNombreTodosJefes();
-		for (int i = 0; i < arrayJefes.size(); i++) {
-			TableItem tItem = new TableItem(tablaJefes, SWT.NONE);
-			String aux = arrayJefes.get(i);
-			String num = aux.substring(aux.indexOf("N") + 4, aux.length());
-			// System.out.println(num);
-			String nombre = aux.substring(0, aux.indexOf("N") - 1);
-			tItem.setText(0, nombre);
-//			Empleado e = new Empleado();
-//			e.setEmplId(Integer.valueOf(num));
-			ArrayList<String> arrayDepts = vista.getControlador().getDepartamentosJefe(Integer.valueOf(num));
-			String depts = "";
-			for (int j = 0; j < arrayDepts.size(); j++) {
-				depts += arrayDepts.get(j);
-				if (j < arrayDepts.size() - 1)
-					depts += ", ";
-			}
-			tItem.setText(1, depts);
-		}
+		actualizaTabla();
+//		for (int i = 0; i < arrayJefes.size(); i++) {
+//			TableItem tItem = new TableItem(tablaJefes, SWT.NONE);
+//			String aux = arrayJefes.get(i);
+//			String num = aux.substring(aux.indexOf("N") + 4, aux.length());
+//			// System.out.println(num);
+//			String nombre = aux.substring(0, aux.indexOf("N") - 1);
+//			tItem.setText(0, nombre);
+////			Empleado e = new Empleado();
+////			e.setEmplId(Integer.valueOf(num));
+//			ArrayList<String> arrayDepts = vista.getControlador().getDepartamentosJefe(Integer.valueOf(num));
+//			String depts = "";
+//			for (int j = 0; j < arrayDepts.size(); j++) {
+//				depts += arrayDepts.get(j);
+//				if (j < arrayDepts.size() - 1)
+//					depts += ", ";
+//			}
+//			tItem.setText(1, depts);
+//		}
 
 		// composite de la derecha
 		final Composite cDcha = new Composite(cTablaJefes, SWT.NONE);
@@ -193,12 +194,25 @@ public class TabEliminaJefe {
 				cmbJefes.select(0);
 			}
 		});
+		
+		final Button bActualizar = new Button(cDcha, SWT.PUSH);
+		bActualizar.setText(bundle.getString("I05_actualiza_tabla"));
+		bActualizar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
+				1, 1));
+		
+		bActualizar.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				vista.setCursorEspera();
+				actualizaTabla();
+				vista.setCursorFlecha();
+			}
+		});
 
 		final Button bEliminar = new Button(cEliminaJefe, SWT.PUSH);
 		bEliminar.setText(bundle.getString("I02_but_Eliminar"));
 		bEliminar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
 				1, 1));
-		// Creamos un oyente
+		
 		bEliminar.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				if (seleccionado == -1) {
@@ -304,6 +318,29 @@ public class TabEliminaJefe {
 				}
 			}
 		});
+	}
+	
+	/**
+	 * Metodo que actualiza la tablas de jefes con los ultimos 
+	 *
+	 */
+	public void actualizaTabla(){
+		tablaJefes.removeAll();
+		for (int i = 0; i < arrayJefes.size(); i++) {
+			TableItem tItem = new TableItem(tablaJefes, SWT.NONE);
+			String aux = arrayJefes.get(i);
+			String num = aux.substring(aux.indexOf("N") + 4, aux.length());
+			String nombre = aux.substring(0, aux.indexOf("N") - 1);
+			tItem.setText(0, nombre);
+			ArrayList<String> arrayDepts = vista.getControlador().getDepartamentosJefe(Integer.valueOf(num));
+			String depts = "";
+			for (int j = 0; j < arrayDepts.size(); j++) {
+				depts += arrayDepts.get(j);
+				if (j < arrayDepts.size() - 1)
+					depts += ", ";
+			}
+			tItem.setText(1, depts);
+		}
 	}
 
 }

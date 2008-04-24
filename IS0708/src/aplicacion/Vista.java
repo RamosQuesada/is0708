@@ -1896,11 +1896,12 @@ public class Vista {
 	 * 3 tablas de departamentos
 	 * @param text Nombre del departamento
 	 */
-	public void eliminaDepartamento(String text) {
-		// TODO Auto-generated method stub
+	public boolean eliminaDepartamento(String text) {
+		
 		if (!this.tieneEmpleados(text)){
-		this.controlador.eliminaDepartamento(text);
+		return this.controlador.eliminaDepartamento(text);
 		}
+		return false;
 	}
 	
 	/**

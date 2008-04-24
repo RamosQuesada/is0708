@@ -27,6 +27,7 @@ public class TabDepartamentosAdmin {
 	final Vista vista;
 	final ResourceBundle bundle;
 	final TabFolder tabFolder;
+	private Combo cmbDepartamentos;
 	
 	public TabDepartamentosAdmin(TabFolder tabFolder, Vista vista, ResourceBundle bundle) {
 		this.vista = vista;
@@ -59,7 +60,7 @@ public class TabDepartamentosAdmin {
 		lDepartamentos.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
 				false, 1, 1));
 
-		final Combo cmbDepartamentos = new Combo(cDepartamentos, SWT.BORDER
+		cmbDepartamentos = new Combo(cDepartamentos, SWT.BORDER
 				| SWT.READ_ONLY);
 		cmbDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 1, 1));
@@ -117,7 +118,20 @@ public class TabDepartamentosAdmin {
 					messageBox.setText (bundle.getString("Mensaje"));
 					messageBox.setMessage (bundle.getString("I02_confirm_elim_dep"));
 					if(messageBox.open () == SWT.OK){
-						vista.eliminaDepartamento(cmbDepartamentos.getText());
+						if(!vista.eliminaDepartamento(cmbDepartamentos.getText())){
+							MessageBox messageBox2 = new MessageBox (tabFolder.getShell(), SWT.APPLICATION_MODAL | SWT.OK | SWT.CANCEL | SWT.ICON_INFORMATION);
+							messageBox2.setText (bundle.getString("Mensaje"));
+							messageBox2.setMessage (bundle.getString("I10_err_elim_dep"));
+							messageBox2.open ();
+						}
+						else{
+							cmbDepartamentos.remove(cmbDepartamentos.getText());
+							if(cmbDepartamentos.getItemCount()>0) cmbDepartamentos.select(0);
+							MessageBox messageBox2 = new MessageBox (tabFolder.getShell(), SWT.APPLICATION_MODAL | SWT.OK | SWT.CANCEL | SWT.ICON_INFORMATION);
+							messageBox2.setText (bundle.getString("Mensaje"));
+							messageBox2.setMessage (bundle.getString("I10_ok_elim_dep"));
+							messageBox2.open ();
+						}
 					}
 				}
 			}
