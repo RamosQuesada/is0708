@@ -68,6 +68,7 @@ public class TabDepartamentos extends Thread{
 							activar();
 						}
 					});
+				//	activar();
 				}
 			}
 			try {
@@ -80,7 +81,7 @@ public class TabDepartamentos extends Thread{
 	
 	protected void activar() {		
 		ArrayList<String> array = vista.getNombreDepartamentosJefe(vista.getEmpleadoActual());
-		if (array != null) {
+	/*	if (array != null) {
 			for (int i = 0; i < array.size(); i++) {
 				cmbDepartamentos.add(array.get(i));
 			}
@@ -88,16 +89,16 @@ public class TabDepartamentos extends Thread{
 		cmbDepartamentos.select(0);
 		
 		calendario=new HorarioMes(fCentro, padre, 5, 2008);	
-		calendario.setMes(5, 2008);
+		calendario.setMes(5, 2008);*/
 		
 		
-		cInfoHorario=new SubTabConfiguracionDias(vista, array.get(0), fCentro,bundle,padre);
-		cInfoHorario.activar();	
+		
+		cInfoHorario.activar(array.get(0));	
 		cmbDepartamentos.setEnabled(true);
 		
 		//asigno el tab del control de personal para cada dia
 		fCentro.getItem(0).setControl(cInfoHorario.getControl());
-		fCentro.getItem(1).setControl(calendario.getComposite());
+	//	fCentro.getItem(1).setControl(calendario.getComposite());
 		
 		//Escribo el texto en el label
 		lContenido.setText(vista.infoDpto(cmbDepartamentos.getText()));
@@ -159,6 +160,7 @@ public class TabDepartamentos extends Thread{
 		fCentro.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		
 		//comentado hasta que no pete. para probar dscomentar
+		cInfoHorario=new SubTabConfiguracionDias(vista, null, fCentro,bundle,padre);
 		
 		
 	/*	HorarioMes calendario=new HorarioMes(fCentro, padre, 5, 2008);	
@@ -173,7 +175,7 @@ public class TabDepartamentos extends Thread{
 		//comentado para ke no pete al resto
 		TabItem tab1=new TabItem(fCentro, SWT.NONE);
 		tab1.setText(bundle.getString("TabDepartamentos_tab1"));
-		
+		tab1.setControl(cInfoHorario.getControl());
 		
 		TabItem tab2=new TabItem(fCentro, SWT.NONE);
 		tab2.setText(bundle.getString("TabDepartamentos_tab2"));
