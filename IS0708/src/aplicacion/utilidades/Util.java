@@ -7,7 +7,7 @@ import java.util.GregorianCalendar;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.lang.String;
-import java.sql.Time;
+import java.sql.*;
 import java.util.Date;
 
 import org.eclipse.swt.graphics.Color;
@@ -632,7 +632,7 @@ public class Util {
 	 * @return la fecha siguiente
 	 * @author Alberto
 	 */
-	public static Date diaSiguiente(Date fecha){
+	public static Date diaSiguiente(java.sql.Date fecha){
 		int mes=fecha.getMonth()+1;
 		int ano=fecha.getYear();
 		int dia=fecha.getDate();
@@ -692,7 +692,7 @@ public class Util {
 			}
 		}
 		
-		Date fechaNueva=new Date(anoNuevo,mesNuevo-1,diaNuevo);
+		java.sql.Date fechaNueva=new java.sql.Date(anoNuevo,mesNuevo-1,diaNuevo);
 		return fechaNueva;
 	}
 	
