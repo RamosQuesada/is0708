@@ -955,11 +955,16 @@ public class Vista {
 	 */
 	public Cuadrante getCuadrante(int mes, int anio, String idDepartamento) {
 		if (!alive) return null;
+		//TODO corregir llamadas a este metodo con idDepartamento = ""
+		if (idDepartamento.equals(""))
+			idDepartamento = getEmpleadoActual().getDepartamentoId();
 		int i = 0;
 		while (i<cuadrantes.size()) {
-			if (cuadrantes.get(i).getAnio()==anio && cuadrantes.get(i).getMes()==mes && cuadrantes.get(i).getIdDepartamento().equals(idDepartamento)) {
-				return cuadrantes.get(i);
-			}
+			if (cuadrantes.get(i).getAnio()==anio)
+				if (cuadrantes.get(i).getMes()==mes)
+					if (cuadrantes.get(i).getIdDepartamento().equals(idDepartamento)) {
+						return cuadrantes.get(i);
+					}
 			i++;
 		}
 		// Si no, buscar en BD
@@ -1443,11 +1448,12 @@ public class Vista {
 			if (cu.getIdDepartamento().equals(departamento) && cu.getMes()==mes && cu.getAnio()==anio){
 				if (dia == 1)
 					cuadrantes.remove(i);
-				else
+				else {
 					cuadrantes.get(i).eliminaTrabajaDesdeDia(dia);
+					i++;
+				}
 				encontrado=true;
 			}
-			i++;
 		}
 		ArrayList<Object> aux=new ArrayList<Object>();
 		aux.add(dia);
