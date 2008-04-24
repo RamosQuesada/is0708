@@ -91,10 +91,10 @@ public class TabInicio {
 				messageBox.setMessage(bundle.getString("I30_confirm_config"));
 				if(messageBox.open()==SWT.OK){
 					new ShellInfoBD(tabFolder.getShell(), bundle, vista);
-					MessageBox messageBox2 = new MessageBox(tabFolder.getShell(), SWT.APPLICATION_MODAL | SWT.ICON_INFORMATION | SWT.OK);
-					messageBox2.setText ("Info");
-					messageBox2.setMessage (bundle.getString("I30_cambios_ok"));
-					messageBox2.open();
+//					MessageBox messageBox2 = new MessageBox(tabFolder.getShell(), SWT.APPLICATION_MODAL | SWT.ICON_INFORMATION | SWT.OK);
+//					messageBox2.setText ("Info");
+//					messageBox2.setMessage (bundle.getString("I30_cambios_ok"));
+//					messageBox2.open();
 					vista.getControlador().cerrarConexionBD();
 					vista.getControlador().abrirConexionBD();
 				}
