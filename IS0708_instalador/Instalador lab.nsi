@@ -4,7 +4,7 @@ SetCompressor lzma
 
 # Defines
 !define REGKEY "SOFTWARE\$(^Name)"
-!define VERSION 0.16.6.5
+!define VERSION 0.16.6.8
 !define COMPANY "Turno-matic"
 !define URL "http://is0708.googlecode.com"
 
@@ -25,11 +25,13 @@ SetCompressor lzma
 
 !define MUI_FINISHPAGE_NOAUTOCLOSE
 !define MUI_LICENSEPAGE_RADIOBUTTONS
-!define MUI_FINISHPAGE_SHOWREADME $INSTDIR\Datos\Ayuda\ES\index.html
+#TODO !define MUI_FINISHPAGE_SHOWREADME $INSTDIR\Datos\Ayuda\ES\index.html
+!define MUI_FINISHPAGE_SHOWREADME $INSTDIR\Ayuda\ES\index.html
 !define MUI_FINISHPAGE_23
 !define MUI_UNFINISHPAGE_NOAUTOCLOSE
 !define MUI_FINISHPAGE_RUN "c:\jdk1.6.0_02\bin\javaw.exe"
-!define MUI_FINISHPAGE_RUN_PARAMETERS "-jar $INSTDIR\Datos\Turno-matic.jar"
+#TODO !define MUI_FINISHPAGE_RUN_PARAMETERS "-jar $INSTDIR\Datos\Turno-matic.jar"
+!define MUI_FINISHPAGE_RUN_PARAMETERS "-jar $INSTDIR\Turno-matic.jar"
 
 # Included files
 !include Sections.nsh
@@ -68,23 +70,36 @@ VIAddVersionKey /LANG=${LANG_SPANISH} LegalCopyright ""
 
 # Installer sections
 Section -Main SEC0000
-    #jar
-    SetOutPath $INSTDIR\Datos
+    #Borrar lo que hubiese
+    RmDir /r $INSTDIR
+
+    #jar y configBD
+    #TODO SetOutPath $INSTDIR\Datos
+    SetOutPath $INSTDIR
     SetOverwrite on
     File ..\IS0708\Turno-matic.jar
+    File ..\IS0708\configBD
+    #TODO borrar la siguiente
+    SetOutPath $INSTDIR\Datos
     File .\Tema\Icono.ico
     SetOutPath $INSTDIR
-    CreateShortCut "$INSTDIR\Turno-matic.lnk" "c:\jdk1.6.0_02\bin\javaw.exe" "-jar $\"$INSTDIR\Datos\Turno-matic.jar$\"" "$INSTDIR\Datos\Icono.ico"
+    #TODO CreateShortCut "$INSTDIR\Turno-matic.lnk" "c:\jdk1.6.0_02\bin\javaw.exe" "-jar $\"$INSTDIR\Datos\Turno-matic.jar$\"" "$INSTDIR\Datos\Icono.ico"
+    CreateShortCut "$INSTDIR\Turno-matic.lnk" "c:\jdk1.6.0_02\bin\javaw.exe" "-jar $\"$INSTDIR\Turno-matic.jar$\"" "$INSTDIR\Datos\Icono.ico"
     
     #Ayuda
-    SetOutPath $INSTDIR\Datos\Ayuda
+    #TODO SetOutPath $INSTDIR\Datos\Ayuda
+    SetOutPath $INSTDIR\Ayuda
     SetOverwrite on
     File /r ..\IS0708\Ayuda\*
-    RmDir /r $INSTDIR\Datos\Ayuda\.svn
-    RmDir /r $INSTDIR\Datos\Ayuda\ES\.svn
-    RmDir /r $INSTDIR\Datos\Ayuda\Imagenes\.svn
+    #TODO RmDir /r $INSTDIR\Datos\Ayuda\.svn
+    #TODO RmDir /r $INSTDIR\Datos\Ayuda\ES\.svn
+    #TODO RmDir /r $INSTDIR\Datos\Ayuda\Imagenes\.svn
+    RmDir /r $INSTDIR\Ayuda\.svn
+    RmDir /r $INSTDIR\Ayuda\ES\.svn
+    RmDir /r $INSTDIR\Ayuda\Imagenes\.svn
     SetOutPath $INSTDIR
-    CreateShortcut $INSTDIR\Ayuda.lnk $INSTDIR\Datos\Ayuda\ES\index.html
+    #TODO CreateShortcut $INSTDIR\Ayuda.lnk $INSTDIR\Datos\Ayuda\ES\index.html
+    CreateShortcut $INSTDIR\Ayuda.lnk $INSTDIR\Ayuda\ES\index.html
 SectionEnd
 
 # Installer functions
