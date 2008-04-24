@@ -124,17 +124,14 @@ public class ShellPrincipal {
 			algoritmo.TurnoMatic t = new algoritmo.TurnoMatic(primerDiaGenerarCuadrante, tmMes, tmAnio, vista, tmDep);
 			// Ejecutar y obtener resultado
 			final ResultadoTurnoMatic resultado = t.ejecutaAlgoritmo();
-			if ((primerDiaGenerarCuadrante!=1) && vista.existeCuadranteCache(tmMes, tmAnio, tmDep)) {
-				// Modificar cuadrante y sugerencias
+			if ((primerDiaGenerarCuadrante!=1) && vista.existeCuadranteCache(tmMes, tmAnio, tmDep))
+				// Modificar cuadrante
 				vista.modificarCuadrante(primerDiaGenerarCuadrante, tmMes, tmAnio, tmDep, resultado.getCuadrante());
-				//vista.modificarSugerencias(primerDiaGenerarCuadrante, tmMes, tmAnio, tmDep, resultado.getResumen());
-			} else {
-				// Quitar cuadrante y las sugerencias de la fecha del calendario
+			else {
+				// Quitar cuadrante de la fecha del calendario
 				vista.eliminaCuadrante(tmMes, tmAnio, tmDep);
-				//vista.eliminaSugerencias(tmMes, tmAnio, tmDep);
-				// Añadir cuadrante y sugerencias nuevas
+				// Añadir cuadrante nuevo
 				vista.insertCuadrante(resultado.getCuadrante());
-				//vista.insertSugerencias(resultado.getResumen());
 			}
 			// Mostrar resultado, cargar cuadrante en interfaz y redibujar
 			display.asyncExec(new Runnable() {
@@ -737,7 +734,8 @@ public class ShellPrincipal {
 		switch (rango) {
 		case 0:
 			// Tabs de administrador
-			if (vista.getControlador().conexionAbierta()){			
+			if (vista.getControlador().conexionAbierta()){
+			vista.getControlador().abrirConexionBD();
 			crearTabAdminInicio(tabFolder);
 			crearTabAdminNuevoJefe(tabFolder);
 			crearTabAdminEliminaJefe(tabFolder);
@@ -751,7 +749,7 @@ public class ShellPrincipal {
 			crearTabJefeCuadrantes(tabFolder);
 			crearTabMensajes(tabFolder);
 			crearTabJefeEmpleados(tabFolder);
-			crearTabJefeDepartamentos(tabFolder);
+//			crearTabJefeDepartamentos(tabFolder);
 			crearTabJefeContratos(tabFolder);
 			break;
 		case 3:
