@@ -1051,11 +1051,11 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		if (nombreSeleccionado!=null){
 			gc.setBackground(Util.getColorDiferenciado(azulOsc, 120));
 			gc.setForeground(azulOsc);
-			gc.drawRectangle(margenIzq-7,cursor.y-(altoFila-4)/2, margenNombres-15, altoFila-4);
-			gc.fillRectangle(margenIzq-6,cursor.y-(altoFila-4)/2+1, margenNombres-16, altoFila-5);
+			gc.drawRectangle(margenIzq+13,cursor.y-(altoFila-4)/2-5, margenNombres-15, altoFila-4);
+			gc.fillRectangle(margenIzq+14,cursor.y-(altoFila-4)/2+1-5, margenNombres-16, altoFila-5);
 			//String nomSel=vista.getEmpleados().get(empActVistaMes).getNombre();
 			//gc.setForeground(negro);
-			gc.drawText(nombreSeleccionado,margenIzq+2,cursor.y-(altoFila-4)/2+2);
+			gc.drawText(nombreSeleccionado,margenIzq+22,cursor.y-(altoFila-4)/2+2-5);
 		}
 	}
 	
