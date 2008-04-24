@@ -424,7 +424,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					// Intercambiar posiciones y reordenar datos
 					if (empleadoActivo!=-1) {
 						int posicionArriba = empleadosMostrados.get(empleadoActivo).getPosicion();
-						if (posicionArriba!=fila+1) {
+						if (posicionArriba!=0 && posicionArriba!=fila+1) {
 							if (fila<posicionArriba-2) fila = posicionArriba-2;
 							else if (fila>posicionArriba) fila = posicionArriba;
 							empleadosMostrados.get(fila).setPosicion(posicionArriba);
@@ -936,6 +936,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 						empleadosMostrados.add(vista.getEmpleados().get(i));
 						iCuad[dia-1].get(j).getTurno().dibujar(display, nombre, gc, fila, empleadosMostrados.get(fila).getColor() ,margenIzq, margenNombres,margenSup,sep_vert_franjas,alto_franjas,tamHora, tamSubdiv, horaApertura, numSubdivisiones, desp);
 						fila++;
+//					} else if (moviendoEmpleado) {
+//						empleadosMostrados.add(vista.getEmpleados().get(i));
+//						fila++;
 					}
 				}
 			}
