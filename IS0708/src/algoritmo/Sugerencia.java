@@ -45,6 +45,13 @@ public class Sugerencia {
 		this.tipo=tipo;
 		this.dept=dept;
 	}
+	 
+	public Sugerencia(Time ini,Date fecha,String dept,String sugerencia) {
+		this.horaIni=ini;
+		this.fecha=fecha;
+		this.dept=dept;
+		this.sugerencia=sugerencia;
+	}
 	
 	/**
 	 * Amplía la sugerencia un periodo de tiempo
