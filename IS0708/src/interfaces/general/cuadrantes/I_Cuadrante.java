@@ -571,6 +571,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 						turnPulsX=diaActVistaMes;
 						turnPulsY=empActVistaMes;
 						//turnoPulsado=true;
+						cursor(1);
 					}
 					empleadoSeleccionado = iCuad[diaActVistaMes].get(indiceEmpAct).getEmpl();
 					turnoSeleccionado = iCuad[diaActVistaMes].get(indiceEmpAct).getTurno();
@@ -580,6 +581,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					if (nombreSeleccionado==null)
 						nombreMarcado=empActVistaMes;
 					nombreSeleccionado=vista.getEmpleados().get(empActVistaMes).getNombre();
+					cursor(3);
 				}
 			};
 			
@@ -722,7 +724,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 						iEmp++;
 					}
 					if (empEncontrado && diaEncontrado) {
-						if (empTrabDia(diaActVistaMes, empleados.get(empActVistaMes).getEmplId())) {
+						if (empTrabDia(diaActVistaMes, empleados.get(empActVistaMes).getEmplId()) && nombreSeleccionado==null) {
 							cursor(1);
 							diaValido = true;
 						} else {
@@ -740,7 +742,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					Boolean enFranjaVert=false;
 					if (e.x>margenIzq+1 && e.x<margenIzq+margenNombres-25)
 						enFranjaVert=true;
-					if (enFranjaVert && empEncontrado) {
+					if (enFranjaVert && empEncontrado && turnoSeleccionado==null) {
 						cursor(3);
 						nombreValido = true;
 					}
@@ -750,6 +752,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 						}
 						nombreValido = false;
 					}
+					if (nombreSeleccionado!=null) cursor(3);
+					if (turnoSeleccionado!=null) cursor(1);
 					canvas.redraw();
 				}
 			}
