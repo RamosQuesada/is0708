@@ -1513,11 +1513,8 @@ return result;
 
 		try {
 			st = con.createStatement();
-			rs = st.executeQuery("SELECT * FROM " + tablaDistribucionHorarios + " WHERE NombreDept ='"
-							+ nombre
-							+ "' AND DiaSemana="
-							+ DiaSemana
-							+ " ORDER BY Hora ASC");
+			String q="SELECT * FROM "+tablaDistribucionHorarios+" WHERE NombreDept='"+nombre+"' AND DiaSemana="+DiaSemana+" ORDER BY Hora ASC";
+			rs = st.executeQuery(q);		
 
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -1773,7 +1770,7 @@ return result;
 		ResultSet r = null;
 		try {
 			st = con.createStatement();
-			r = st.executeQuery("SELECT HoraApertura, HoraCierre FROM " + tablaDepartamentos + " WHERE Nombre='"+dpto+"';");
+			r = st.executeQuery("SELECT HoraApertura, HoraCierre FROM "+tablaDepartamentos+" WHERE Nombre='"+dpto+"';");
 		} catch (SQLException e) {
 			// TODO: handle exception
 			System.err.println("Database :: Error al realizar la consulta del horario de un Dpto");
