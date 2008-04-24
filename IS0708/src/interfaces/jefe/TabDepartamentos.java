@@ -163,8 +163,8 @@ public class TabDepartamentos extends Thread{
 		cInfoHorario=new SubTabConfiguracionDias(vista, null, fCentro,bundle,padre);
 		
 		
-	/*	HorarioMes calendario=new HorarioMes(fCentro, padre, 5, 2008);	
-		calendario.setMes(5, 2008);*/
+		HorarioMes calendario=new HorarioMes(fCentro, padre, 5, 2008);	
+		calendario.setMes(5, 2008);
 		
 		lContenido = new Text(fCentro, SWT.READ_ONLY | SWT.MULTI |SWT.V_SCROLL);
 		
@@ -182,6 +182,7 @@ public class TabDepartamentos extends Thread{
 		
 		TabItem tab2=new TabItem(fCentro, SWT.NONE);
 		tab2.setText(bundle.getString("TabDepartamentos_tab2"));
+		tab2.setControl(calendario.getComposite());
 		
 		
 		
