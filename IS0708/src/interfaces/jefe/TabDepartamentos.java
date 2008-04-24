@@ -97,7 +97,7 @@ public class TabDepartamentos extends Thread{
 		cmbDepartamentos.setEnabled(true);
 		
 		//asigno el tab del control de personal para cada dia
-		fCentro.getItem(0).setControl(cInfoHorario.getControl());
+	//	fCentro.getItem(0).setControl(cInfoHorario.getControl());
 	//	fCentro.getItem(1).setControl(calendario.getComposite());
 		
 		//Escribo el texto en el label
@@ -172,6 +172,9 @@ public class TabDepartamentos extends Thread{
 		lContenido.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 				true, 2, 1));
 		
+		TabItem tab3=new TabItem(fCentro, SWT.NONE);
+		tab3.setText(bundle.getString("TabDepartamentos_tab3"));
+		tab3.setControl(lContenido);
 		//comentado para ke no pete al resto
 		TabItem tab1=new TabItem(fCentro, SWT.NONE);
 		tab1.setText(bundle.getString("TabDepartamentos_tab1"));
@@ -181,9 +184,7 @@ public class TabDepartamentos extends Thread{
 		tab2.setText(bundle.getString("TabDepartamentos_tab2"));
 		
 		
-		TabItem tab3=new TabItem(fCentro, SWT.NONE);
-		tab3.setText(bundle.getString("TabDepartamentos_tab3"));
-		tab3.setControl(lContenido);
+		
 			
 		//listener para el combo y mostrar la info debajo
 		cmbDepartamentos.addListener(SWT.Selection, new Listener() {
