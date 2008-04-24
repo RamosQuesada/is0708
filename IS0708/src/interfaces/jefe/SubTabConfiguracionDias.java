@@ -43,7 +43,7 @@ public class SubTabConfiguracionDias {
 	private String departamento;
 	
 	private Shell sShell = null;  //  @jve:decl-index=0:visual-constraint="83,31"
-	private Composite composite = null;
+	private Composite composite = null;  //  @jve:decl-index=0:
 	private Group gTiposDia = null;
 	private Button rLunes = null;
 	private Button rMartes = null;
@@ -68,7 +68,7 @@ public class SubTabConfiguracionDias {
 	private Label lCierre = null;
 	private Spinner sCierre = null;
 	protected int seleccion;
-	private ScrolledComposite scroll = null;
+	private ScrolledComposite scroll = null;  //  @jve:decl-index=0:
 	private Button bEstablecer = null;
 	private Spinner sAperturaMin = null;
 	private Spinner sCierreMin = null;
@@ -138,6 +138,7 @@ public class SubTabConfiguracionDias {
 		rLunes = new Button(cTipos, SWT.RADIO);
 		rLunes.setText(bundle.getString("lunes"));
 		rLunes.setSelection(true);
+		rLunes.setEnabled(false);
 		rLunes.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				 seleccion=0;
@@ -150,6 +151,7 @@ public class SubTabConfiguracionDias {
 		});
 		rMartes = new Button(cTipos, SWT.RADIO);
 		rMartes.setText(bundle.getString("martes"));
+		rMartes.setEnabled(false);
 		rMartes.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				seleccion=1;
@@ -162,6 +164,7 @@ public class SubTabConfiguracionDias {
 		});
 		rMiercoles = new Button(cTipos, SWT.RADIO);
 		rMiercoles.setText(bundle.getString("miercoles"));
+		rMiercoles.setEnabled(false);
 		rMiercoles.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				seleccion=2;
@@ -174,6 +177,7 @@ public class SubTabConfiguracionDias {
 		});
 		rJueves = new Button(cTipos, SWT.RADIO);
 		rJueves.setText(bundle.getString("jueves"));
+		rJueves.setEnabled(false);
 		rJueves.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				seleccion=3;
@@ -186,6 +190,7 @@ public class SubTabConfiguracionDias {
 		});
 		rViernes = new Button(cTipos, SWT.RADIO);
 		rViernes.setText(bundle.getString("viernes"));
+		rViernes.setEnabled(false);
 		rViernes.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				seleccion=4;
@@ -198,6 +203,7 @@ public class SubTabConfiguracionDias {
 		});
 		rSabado = new Button(cTipos, SWT.RADIO);
 		rSabado.setText(bundle.getString("sabado"));
+		rSabado.setEnabled(false);
 		rSabado.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				seleccion=5;
@@ -210,6 +216,7 @@ public class SubTabConfiguracionDias {
 		});
 		rDomingo = new Button(cTipos, SWT.RADIO);
 		rDomingo.setText(bundle.getString("domingo"));
+		rDomingo.setEnabled(false);
 		rDomingo.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				seleccion=6;
@@ -224,7 +231,7 @@ public class SubTabConfiguracionDias {
 		
 		
 		final ArrayList<Button> otrosTipos=new ArrayList<Button>();
-		for(int i=0;i<3;i++){
+	/*	for(int i=0;i<3;i++){
 			otrosTipos.add(new Button(cTipos, SWT.RADIO));
 			otrosTipos.get(i).setText(bundle.getString("Tipo")+(i+1));
 			final int cuenta=i;
@@ -240,11 +247,12 @@ public class SubTabConfiguracionDias {
 			});		
 			cTipos.layout();
 			gTiposDia.layout();
-		}		
+		}*/		
 		
 		bNuevoTipo = new Button(gTiposDia, SWT.NONE);
 		bNuevoTipo.setText(bundle.getString("ConfiguracionHorarios_boton_nuevo"));
 		bNuevoTipo.setLayoutData(gridData2);
+		bNuevoTipo.setEnabled(false);
 		bNuevoTipo.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				Button b=new Button(cTipos, SWT.RADIO);
@@ -268,6 +276,7 @@ public class SubTabConfiguracionDias {
 		bEliminar = new Button(gTiposDia, SWT.NONE);
 		bEliminar.setText(bundle.getString("ConfiguracionHorarios_boton_eliminar"));
 		bEliminar.setLayoutData(gridData3);
+		bEliminar.setEnabled(false);
 		bEliminar.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				 if (seleccion <7){
@@ -290,6 +299,7 @@ public class SubTabConfiguracionDias {
 		bModificar = new Button(gTiposDia, SWT.NONE);
 		bModificar.setText(bundle.getString("ConfiguracionHorarios_modificar_tipo"));
 		bModificar.setLayoutData(gridData14);
+		bModificar.setEnabled(false);
 		bModificar.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				 // TODO ventana para modificar un tipo
@@ -334,6 +344,7 @@ public class SubTabConfiguracionDias {
 		bGuardar = new Button(gNumerosDia, SWT.NONE);
 		bGuardar.setText(bundle.getString("ConfiguracionHorarios_boton_guardar"));
 		bGuardar.setLayoutData(gridData5);
+		bGuardar.setEnabled(false);
 		
 		bGuardar.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
@@ -421,7 +432,7 @@ public class SubTabConfiguracionDias {
 		gridLayout2.makeColumnsEqualWidth = true;
 		
 		//
-		ArrayList<String> horario=vista.getHorarioDpto(departamento);
+	//	ArrayList<String> horario=vista.getHorarioDpto(departamento);
 		
 		//crea el grupo
 		gHoras = new Group(composite, SWT.NONE);
@@ -432,27 +443,32 @@ public class SubTabConfiguracionDias {
 		lApertura.setText("Apertura:");
 		lApertura.setLayoutData(gridData8);
 		sApertura = new Spinner(gHoras, SWT.BORDER);
-		sApertura.setSelection(Integer.valueOf(horario.get(0).substring(0, 2)));
+	//	sApertura.setSelection(Integer.valueOf(horario.get(0).substring(0, 2)));
 		sApertura.setMaximum(23);
 		sApertura.setLayoutData(gridData10);
+		sApertura.setEnabled(false);
 		sAperturaMin = new Spinner(gHoras, SWT.BORDER);
 		sAperturaMin.setMaximum(59);
-		sApertura.setSelection(Integer.valueOf(horario.get(0).substring(3, 5)));
+		sAperturaMin.setEnabled(false);
+	//	sAperturaMin.setSelection(Integer.valueOf(horario.get(0).substring(3, 5)));
 		lCierre = new Label(gHoras, SWT.NONE);
 		lCierre.setText("Cierre:");
 		lCierre.setLayoutData(gridData9);
 		sCierre = new Spinner(gHoras, SWT.BORDER);
-		sCierre.setSelection(Integer.valueOf(horario.get(1).substring(0, 2)));
+	//	sCierre.setSelection(Integer.valueOf(horario.get(1).substring(0, 2)));
 		sCierre.setMaximum(24);
 		sCierre.setMinimum(1);
 		sCierre.setLayoutData(gridData7);
+		sCierre.setEnabled(false);
 		sCierreMin = new Spinner(gHoras, SWT.BORDER);
 		sCierreMin.setMaximum(59);
 		sCierreMin.setIncrement(5);
-		sApertura.setSelection(Integer.valueOf(horario.get(1).substring(3, 5)));
+		sCierreMin.setEnabled(false);
+	//	sCierreMin.setSelection(Integer.valueOf(horario.get(1).substring(3, 5)));
 		bEstablecer = new Button(gHoras, SWT.NONE);
 		bEstablecer.setText("Estabecer");
 		bEstablecer.setLayoutData(gridData11);
+		bEstablecer.setEnabled(false);
 		bEstablecer.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
 			public void widgetSelected(org.eclipse.swt.events.SelectionEvent e) {
 				// TODO guardar la hora de apertura y cierre para este departamento este dia, y actualizar lo de abajo
@@ -541,6 +557,31 @@ public class SubTabConfiguracionDias {
 	public Composite getControl() {
 		// TODO Auto-generated method stub
 		return scroll;
+	}
+	
+	public void activar(){
+		rLunes.setEnabled(true);
+		rMartes.setEnabled(true);
+		rMiercoles.setEnabled(true);
+		rJueves.setEnabled(true);
+		rViernes.setEnabled(true);
+		rSabado.setEnabled(true);
+		rDomingo.setEnabled(true);
+		bNuevoTipo.setEnabled(true);
+		bModificar.setEnabled(true);
+		bEliminar.setEnabled(true);
+		bGuardar.setEnabled(true);
+		sApertura.setEnabled(true);
+		sAperturaMin.setEnabled(true);
+		sCierre.setEnabled(true);
+		sCierreMin.setEnabled(true);
+		bEstablecer.setEnabled(true);
+		
+		ArrayList<String> horario=vista.getHorarioDpto(departamento);
+		rellenar(vista.getDistribucionDepartamentoDiaSemana(departamento, 0),new Time(Integer.parseInt(horario.get(0).substring(0,2)),0,0),
+				 new Time(Integer.parseInt(horario.get(1).substring(0,2)),0,0));
+		
+		
 	}
 
 }

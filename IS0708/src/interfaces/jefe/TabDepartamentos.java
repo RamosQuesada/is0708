@@ -21,12 +21,17 @@ import org.eclipse.swt.widgets.Text;
 
 import aplicacion.Vista;
 
-public class TabDepartamentos {
+public class TabDepartamentos extends Thread{
 	
 	final Vista vista;
 	final ResourceBundle bundle;
 	final TabFolder tabFolder;
 	final Shell padre;
+	private TabFolder fCentro;
+	private boolean datosInterfazCargados;
+	private SubTabConfiguracionDias cInfoHorario;
+	private Combo cmbDepartamentos;
+	private Text lContenido;
 	
 	public TabDepartamentos(TabFolder tabFolder, Vista vista, ResourceBundle bundle, Shell padre) {
 		this.vista = vista;
@@ -36,6 +41,63 @@ public class TabDepartamentos {
 		crearTabJefeDepartamentos();
 	}
 	
+	
+	/**
+	 * Implementa un hilo que coge los empleados del departamento del servidor.
+	 */
+	public void run() {
+		try {
+			while (!vista.isCacheCargada()) {
+				sleep(5000);
+			}
+		} catch (Exception e) {
+		}
+
+		datosInterfazCargados = true;
+		// while (run) {
+
+		if (fCentro.isDisposed()) {
+		} // run = false;
+		else {
+			if (!fCentro.isDisposed()) {
+				// Actualizar tabla
+				if (!fCentro.isDisposed()) {
+					fCentro.getDisplay().asyncExec(new Runnable() {
+						public void run() {
+							activar();
+						}
+					});
+				}
+			}
+			try {
+				// Espera 10 segundos (¿cómo lo dejamos?)
+				sleep(10000);
+			} catch (Exception e) {
+			}
+		}
+	}
+	
+	protected void activar() {		
+		ArrayList<String> array = vista.getNombreDepartamentosJefe(vista.getEmpleadoActual());
+		if (array != null) {
+			for (int i = 0; i < array.size(); i++) {
+				cmbDepartamentos.add(array.get(i));
+			}
+		}
+		cmbDepartamentos.select(0);
+		
+		cInfoHorario=new SubTabConfiguracionDias(vista, array.get(0), fCentro,bundle,padre);
+		cInfoHorario.activar();	
+		cmbDepartamentos.setEnabled(true);
+		
+		//asigno el tab del control de personal para cada dia
+		fCentro.getItem(0).setControl(cInfoHorario.getControl());
+		
+		//Escribo el texto en el label
+		lContenido.setText(vista.infoDpto(cmbDepartamentos.getText()));
+	}
+
+
 	private void crearTabJefeDepartamentos() {
 		TabItem tabItemDepartamentos = new TabItem(tabFolder, SWT.NONE);
 		tabItemDepartamentos.setText(bundle.getString("Departamentos"));
@@ -53,18 +115,19 @@ public class TabDepartamentos {
 		lDepartamentos.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
 				false, 1, 1));
 
-		final Combo cmbDepartamentos = new Combo(cDepartamentos, SWT.BORDER
+		cmbDepartamentos = new Combo(cDepartamentos, SWT.BORDER
 				| SWT.READ_ONLY);
+		cmbDepartamentos.setEnabled(false);
 		cmbDepartamentos.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 1, 1));
 		
-		ArrayList<String> array = vista.getNombreDepartamentosJefe(vista.getEmpleadoActual());
+	/*	ArrayList<String> array = vista.getNombreDepartamentosJefe(vista.getEmpleadoActual());
 		if (array != null) {
 			for (int i = 0; i < array.size(); i++) {
 				cmbDepartamentos.add(array.get(i));
 			}
 		}
-		cmbDepartamentos.select(0);
+		cmbDepartamentos.select(0);*/
 
 		// Composite for Buttons: "New Department" and "Configure Department"
 		Composite cBut = new Composite(cDepartamentos, SWT.LEFT);
@@ -86,26 +149,29 @@ public class TabDepartamentos {
 			}
 		});
 		
-		final TabFolder fCentro= new TabFolder(cDepartamentos, SWT.NONE);
+		fCentro= new TabFolder(cDepartamentos, SWT.NONE);
 		fCentro.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		
-		//comentado hasta que no pete. para probar descomentar
-	//	SubTabConfiguracionDias cInfoHorario=new SubTabConfiguracionDias(vista, array.get(0), fCentro,bundle,padre);
+		//comentado hasta que no pete. para probar dscomentar
 		
-		final Text lContenido = new Text(fCentro, SWT.READ_ONLY | SWT.MULTI |SWT.V_SCROLL);
-		lContenido.setText(vista.infoDpto(cmbDepartamentos.getText()));
+		
+	/*	HorarioMes calendario=new HorarioMes(fCentro, padre, 5, 2008);	
+		calendario.setMes(5, 2008);*/
+		
+		lContenido = new Text(fCentro, SWT.READ_ONLY | SWT.MULTI |SWT.V_SCROLL);
+		
 		lContenido.setEditable(false);
 		lContenido.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 				true, 2, 1));
 		
 		//comentado para ke no pete al resto
-	/*	TabItem tab1=new TabItem(fCentro, SWT.NONE);
+		TabItem tab1=new TabItem(fCentro, SWT.NONE);
 		tab1.setText(bundle.getString("TabDepartamentos_tab1"));
-		tab1.setControl(cInfoHorario.getControl());	*/
 		
-		TabItem tab2=new TabItem(fCentro, SWT.NONE);
+		
+	/*	TabItem tab2=new TabItem(fCentro, SWT.NONE);
 		tab2.setText(bundle.getString("TabDepartamentos_tab2"));
-		//tab2.setControl(null);
+		tab2.setControl(calendario.getComposite());*/
 		
 		TabItem tab3=new TabItem(fCentro, SWT.NONE);
 		tab3.setText(bundle.getString("TabDepartamentos_tab3"));
@@ -117,6 +183,8 @@ public class TabDepartamentos {
 	//			lContenido.setText(vista.infoDpto(cmbDepartamentos.getText()));
 			}
 		});
+		
+		start();
 
 	}
 
