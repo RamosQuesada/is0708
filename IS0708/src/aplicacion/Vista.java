@@ -24,6 +24,7 @@ import aplicacion.datos.Departamento;
 import aplicacion.datos.Empleado;
 import aplicacion.datos.Turno;
 import aplicacion.mensajeria.Mensaje;
+import aplicacion.utilidades.Util;
 
 import idiomas.LanguageChanger;
 import interfaces.general.ShellLogin;
@@ -944,6 +945,33 @@ public class Vista {
 		}
 		// Si no, buscar en BD
 		return controlador.getContrato(idContrato);
+	}
+	
+	/**
+	 * Consulta las sugerencias de un mes
+	 * @param mes Mes de las sugerencias a consultar
+	 * @param anio Anio de las sugerencias a consultar
+	 * @param idDepartamento Departamento de las sugerencias a consultar
+	 * @return Cuadrante consultado
+	 */
+	public ArrayList<Sugerencia> getSugerencias(int mes, int anio, String idDepartamento) {
+		if (!alive) return null;
+		ArrayList<Sugerencia> aux = new ArrayList<Sugerencia>();
+		for (int i=0;i<sugerencias.size();i++) {
+			if (sugerencias.get(i).getFecha().getYear()+1900==anio && 
+				sugerencias.get(i).getFecha().getMonth()+1==mes && 
+				sugerencias.get(i).getDept().equals(idDepartamento))
+				aux.add(sugerencias.get(i));	
+		}
+		if (aux!=null) return aux;
+		// Si no, buscar en BD
+		for (int i=0;i<aplicacion.utilidades.Util.dameDias(mes, anio);i++) {
+			Date fecha = new Date (anio,mes,i);
+			ArrayList<Sugerencia> aux2 = controlador.getSugerenciasDia(idDepartamento, fecha);
+			for (int j=0;j<aux2.size();j++)
+				sugerencias.add(aux2.get(j));
+		}
+		return sugerencias;
 	}
 	
 	/**

@@ -1985,13 +1985,14 @@ public class Controlador {
 	 * @param fecha dia para el que se quieren las sugerencias
 	 * @return
 	 */
-	public ArrayList<String> getSugerenciasDia(String dept, Date fecha) {
+	public ArrayList<Sugerencia> getSugerenciasDia(String dept, Date fecha) {
 		ResultSet sug = null;
-		ArrayList<String> sugDia= new ArrayList<String>();
+		ArrayList<Sugerencia> sugDia= new ArrayList<Sugerencia>();
 		try{
 			sug = _db.obtenSugerenciasDia(dept, fecha);
 			while (sug.next()) {
-				sugDia.add(sug.getString("Texto"));
+				sugDia.add(new Sugerencia (sug.getTime("HoraInicio"),sug.getDate("Fecha"),
+						sug.getString("NombreDept"),sug.getString("Texto")));
 			}
 			return sugDia;
 		} catch (Exception e) {
