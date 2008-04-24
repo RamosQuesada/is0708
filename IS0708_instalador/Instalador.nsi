@@ -4,7 +4,7 @@ SetCompressor lzma
 
 # Defines
 !define REGKEY "SOFTWARE\$(^Name)"
-!define VERSION 0.16.6.5
+!define VERSION 0.16.6.8
 !define COMPANY "Turno-matic"
 !define URL "http://is0708.googlecode.com"
 
@@ -117,9 +117,10 @@ Section -jar SEC0001
     SetOverwrite on
     File ..\IS0708\Turno-matic.jar
     File .\Tema\Icono.ico
+    File ..\IS0708\configBD
     WriteRegStr HKLM "${REGKEY}\Components" jar 1
     SetOutPath $INSTDIR
-    CreateShortCut "$INSTDIR\Turno-matic.lnk" "$ACCESO_DIRECTO" "$ATRIBUTOS" "$INSTDIR\Icono.ico"
+    CreateShortCut "$INSTDIR\Turno-matic.lnk" "$ACCESO_DIRECTO" "$ATRIBUTOS" "$INSTDIR\Datos\Icono.ico"
 SectionEnd
 
 Section -Ayuda SEC0002
@@ -130,7 +131,7 @@ Section -Ayuda SEC0002
     RmDir /r $INSTDIR\Datos\Ayuda\ES\.svn
     RmDir /r $INSTDIR\Datos\Ayuda\Imagenes\.svn
     SetOutPath $INSTDIR
-    CreateShortcut $INSTDIR\Ayuda.lnk $INSTDIR\Datod\Ayuda\ES\index.html
+    CreateShortcut $INSTDIR\Ayuda.lnk $INSTDIR\Datos\Ayuda\ES\index.html
     WriteRegStr HKLM "${REGKEY}\Components" Ayuda 1
 SectionEnd
 
@@ -180,6 +181,7 @@ SectionEnd
 Section /o -un.jar UNSEC0001
     Delete /REBOOTOK $INSTDIR\Datos\Turno-matic.jar
     Delete /REBOOTOK $INSTDIR\Datos\Icono.ico
+    Delete /REBOOTOK $INSTDIR\Datos\configBD
     DeleteRegValue HKLM "${REGKEY}\Components" jar
     Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\Turno-matic.lnk"
     Delete /REBOOTOK "$INSTDIR\Turno-matic.lnk"
@@ -261,7 +263,7 @@ Function .onInit
     !insertmacro MUI_LANGDLL_DISPLAY
 FunctionEnd
 
-; Esta funcion sirve para comprobar la versión de la maquina virtual de java
+; Esta funcion sirve para comprobar la version de la maquina virtual de java
 Function DetectarJava
     Push $0
     Push $1
