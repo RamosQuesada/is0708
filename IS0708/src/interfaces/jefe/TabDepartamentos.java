@@ -162,9 +162,28 @@ public class TabDepartamentos extends Thread{
 		//comentado hasta que no pete. para probar dscomentar
 		cInfoHorario=new SubTabConfiguracionDias(vista, null, fCentro,bundle,padre);
 		
+		final Composite cMes=new Composite(fCentro,SWT.NONE);
+		cMes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
+				true, 1, 1));
+		cMes.setLayout(new GridLayout(2, false));
 		
-		HorarioMes calendario=new HorarioMes(fCentro, padre, 5, 2008);	
+		final Composite cCombos=new Composite(cMes,SWT.NONE);
+		cCombos.setLayout(new GridLayout(2,false));
+		
+		calendario=new HorarioMes(cMes, padre, 5, 2008);	
 		calendario.setMes(5, 2008);
+			
+		final Combo comboMes=new Combo(cCombos,SWT.BORDER | SWT.READ_ONLY);
+		final Combo comboAnio=new Combo(cCombos,SWT.BORDER | SWT.READ_ONLY);
+		final Button bSetMes=new Button(cCombos,SWT.PUSH);
+		
+		bSetMes.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				calendario.setMes(comboMes.getSelectionIndex()+1, comboMes.getSelectionIndex()+2008);
+			}
+		});
+
+		
 		
 		lContenido = new Text(fCentro, SWT.READ_ONLY | SWT.MULTI |SWT.V_SCROLL);
 		
