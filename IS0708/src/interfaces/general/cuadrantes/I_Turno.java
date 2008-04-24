@@ -45,6 +45,25 @@ public class I_Turno extends aplicacion.datos.Turno {
 	int despl = 0; // Para saber de dónde la he cogido
 	private boolean modificado; // indica si ha sido modificado
 
+	private int despPestana = 0;
+	private boolean subiendoOBajandoPestanas = false;
+	
+	private void subePestana() {
+		if (despPestana<13) {
+			despPestana++;
+			subiendoOBajandoPestanas = true;
+		}
+		else subiendoOBajandoPestanas = false;
+	}
+	
+	private void bajaPestana() {
+		if (despPestana>0) {
+			despPestana--;
+			subiendoOBajandoPestanas = true;
+		}
+		else subiendoOBajandoPestanas = false;
+	}
+	
 	public void calculaTiempoTrabajado() {
 		int franja1, franja2;
 		if (tDescanso!=0) {
@@ -121,10 +140,10 @@ public class I_Turno extends aplicacion.datos.Turno {
 		if (activa1) {
 			// Modificar los colores teniendo siempre en cuenta los límites [0-255]
 			Util.cambiarRelleno(display, gc, r-50,g-50,b-50);
-			gc.fillRoundRectangle(inicio1+2,despV-13,135,20,10,10);
+			gc.fillRoundRectangle(inicio1+2,despV-despPestana,135,20,10,10);
 			Util.cambiarRelleno(display, gc, r,g,b);	
-			gc.fillRoundRectangle(inicio1, despV-15, 135, 20,8,8);
-			gc.drawRoundRectangle(inicio1, despV-15, 135, 20,8,8);
+			gc.fillRoundRectangle(inicio1, despV-despPestana-2, 135, 20,8,8);
+			gc.drawRoundRectangle(inicio1, despV-despPestana-2, 135, 20,8,8);
 			gc.fillRectangle(inicio1+1,despV+1,Math.min(fin1-inicio1-1,136),12);
 			String s1 = "";
 			if (minutos1 != 0) s1=' '+ String.valueOf(minutos1) +'m';
@@ -133,22 +152,25 @@ public class I_Turno extends aplicacion.datos.Turno {
 				s =  Util.aString(horaEntrada.getHours()) + ":" + Util.aString(horaEntrada.getMinutes()) + " - " + Util.aString(horaSalida.getHours()) + ":" + Util.aString(horaSalida.getMinutes()) + " (" + String.valueOf(horas1)+'h'+s1+')';
 			else
 				s = Util.aString(horaEntrada.getHours()) + ":" + Util.aString(horaEntrada.getMinutes()) + " - " + Util.aString(horaDescanso.getHours()) + ":" + Util.aString(horaDescanso.getMinutes()) + " (" + String.valueOf(horas1)+'h'+s1+')';
-			gc.drawText(s, inicio1+5, despV-14, true);
+			gc.drawText(s, inicio1+5, despV-despPestana-1, true);
+			subePestana();
 		}
 		else if (activa2) {
 			// Modificar los colores teniendo siempre en cuenta los límites [0-255]
 			Util.cambiarRelleno(display, gc, r-50,g-50,b-50);
-			gc.fillRoundRectangle(inicio2+2,despV-13,135,20,10,10);
+			gc.fillRoundRectangle(inicio2+2,despV-despPestana,135,20,10,10);
 			Util.cambiarRelleno(display, gc, r,g,b);	
-			gc.fillRoundRectangle(inicio2, despV-15, 135, 20,8,8);
-			gc.drawRoundRectangle(inicio2, despV-15, 135, 20,8,8);
+			gc.fillRoundRectangle(inicio2, despV-despPestana-2, 135, 20,8,8);
+			gc.drawRoundRectangle(inicio2, despV-despPestana-2, 135, 20,8,8);
 			gc.fillRectangle(inicio2+1,despV+1,Math.min(fin2-inicio2-1,136),12);
 			String s1 = "";
 			if (minutos2 != 0) s1=' '+ String.valueOf(minutos2) +'m';
 			int hd = horaDescanso.getHours()*60+horaDescanso.getMinutes()+tDescanso;
 			String s = Util.aString(hd/60) + ":" + Util.aString(hd%60) + " - " + Util.aString(horaSalida.getHours()) + ":" + Util.aString(horaSalida.getMinutes()) + " (" + String.valueOf(horas2)+'h'+s1+')';
-			gc.drawText(s, inicio2+5, despV-14, true);
+			gc.drawText(s, inicio2+5, despV-despPestana-1, true);
+			subePestana();
 		}
+		else bajaPestana();
 	}
 	
 	public void desactivarFranjas() {
