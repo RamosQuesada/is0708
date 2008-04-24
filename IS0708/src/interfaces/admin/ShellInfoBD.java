@@ -2,7 +2,6 @@ package interfaces.admin;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -26,7 +25,7 @@ import aplicacion.utilidades.EncriptCadena;
 //import aplicacion.Vista;
 
 /**
- * Clase que crea una ventana para introducir datos de configuraci�n relativos a
+ * Clase que crea una ventana para introducir datos de configuracion relativos a
  * la base de datos
  * 
  * @author Jose Maria Martin
@@ -109,7 +108,7 @@ public class ShellInfoBD {
 		
 		FileInputStream is;
 		try {
-			is = new FileInputStream("src"+File.separator+"interfaces"+File.separator+"configBD");
+			is = new FileInputStream("configBD");
 			DataInputStream dis = new DataInputStream(is);
 			String name = dis.readUTF();
 			String ip= dis.readUTF();
@@ -156,7 +155,7 @@ public class ShellInfoBD {
 				else {	
 					FileOutputStream os;
 					try {
-						os = new FileOutputStream("src"+File.separator+"interfaces"+File.separator+"configBD");
+						os = new FileOutputStream("configBD");
 						DataOutputStream dos = new DataOutputStream(os);
 						dos.writeUTF(name);
 						dos.writeUTF(ip);
