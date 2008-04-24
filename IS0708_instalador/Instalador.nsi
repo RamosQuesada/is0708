@@ -4,7 +4,7 @@ SetCompressor lzma
 
 # Defines
 !define REGKEY "SOFTWARE\$(^Name)"
-!define VERSION 0.13.4.9
+!define VERSION 0.16.6.5
 !define COMPANY "Turno-matic"
 !define URL "http://is0708.googlecode.com"
 
@@ -126,9 +126,9 @@ Section -Ayuda SEC0002
     SetOutPath $INSTDIR\\Datos\Ayuda
     SetOverwrite on
     File /r ..\IS0708\Ayuda\*
-    RmDir /r $INSTDIR\Ayuda\.svn
-    RmDir /r $INSTDIR\Ayuda\ES\.svn
-    RmDir /r $INSTDIR\Ayuda\Imagenes\.svn
+    RmDir /r $INSTDIR\Datos\Ayuda\.svn
+    RmDir /r $INSTDIR\Datos\Ayuda\ES\.svn
+    RmDir /r $INSTDIR\Datos\Ayuda\Imagenes\.svn
     SetOutPath $INSTDIR
     CreateShortcut $INSTDIR\Ayuda.lnk $INSTDIR\Datod\Ayuda\ES\index.html
     WriteRegStr HKLM "${REGKEY}\Components" Ayuda 1
