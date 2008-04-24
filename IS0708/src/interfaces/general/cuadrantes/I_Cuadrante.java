@@ -645,7 +645,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					}
 				}
 				turnoSeleccionado = null;
-				if (e.button == 1 && nombreSeleccionado!=null && nombreMarcado!=empActVistaMes &&) {
+				if (e.button == 1 && nombreSeleccionado!=null && nombreMarcado!=empActVistaMes) {
 					ArrayList<Empleado> empleados = vista.getEmpleados();
 					int posAux;
 					aplicacion.datos.Empleado empAux1=(empleados.get(nombreMarcado));
