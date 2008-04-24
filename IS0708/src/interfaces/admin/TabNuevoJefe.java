@@ -124,8 +124,8 @@ public class TabNuevoJefe {
 		//final Combo  cContrato		= new Combo (grupoDer, SWT.BORDER | SWT.READ_ONLY);
 		final Label  lExperiencia	= new Label (grupoDer, SWT.LEFT);
 		final Combo  cExperiencia	= new Combo (grupoDer, SWT.BORDER | SWT.READ_ONLY);
-		final Label  lDepto			= new Label (grupoDer, SWT.LEFT);
-		final Combo  cDepto			= new Combo (grupoDer, SWT.BORDER | SWT.READ_ONLY);
+		//final Label  lDepto			= new Label (grupoDer, SWT.LEFT);
+		//final Combo  cDepto			= new Combo (grupoDer, SWT.BORDER | SWT.READ_ONLY);
 		final Button bFContrato		= new Button(grupoDer, SWT.PUSH);
 		final Text   tFContrato		= new Text  (grupoDer, SWT.BORDER | SWT.READ_ONLY);
 		final Button bFAlta			= new Button(grupoDer, SWT.PUSH);
@@ -233,7 +233,7 @@ public class TabNuevoJefe {
 		cSexo.select(1); //sexo masculino por defecto
 		//cContrato.select(0);
 		cExperiencia.select(0);
-		cDepto.select(0);
+		//cDepto.select(0);
 		cIdioma.select(0); //español por defecto
 				
 		// Introducimos los textos a los botones
@@ -403,7 +403,9 @@ public class TabNuevoJefe {
 						
 						//int id = contratosJefes.get(cContrato.getSelectionIndex()).getNumeroContrato();
 						//insertamos el nuevo jefe en la base de datos
-						Empleado emp = new Empleado(null, Util.convertirNVend(tNVend.getText()), tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 2, 1, fechaContrato, fechaAlta, null, cDepto.getText(), null, 0, cIdioma.getSelectionIndex(),-1,0);
+//						Empleado emp = new Empleado(null, Util.convertirNVend(tNVend.getText()), tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 2, 1, fechaContrato, fechaAlta, null, cDepto.getText(), null, 0, cIdioma.getSelectionIndex(),-1,0);
+						Empleado emp = new Empleado(null, Util.convertirNVend(tNVend.getText()), tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 2, 1, fechaContrato, fechaAlta, null, null, null, 0, cIdioma.getSelectionIndex(),-1,0);
+
 						vista.getControlador().insertEmpleado(emp);
 					}
 				}
@@ -486,7 +488,7 @@ public class TabNuevoJefe {
 						bundle.getString("julio"),bundle.getString("agosto"),bundle.getString("septiembre"),
 						bundle.getString("octubre"),bundle.getString("noviembre"),bundle.getString("diciembre")};
 				if (fechaNacimiento!=null)
-				tFNacimiento.setText(String.valueOf(fechaNacimiento.getDate()) + " de " + meses[fechaNacimiento.getMonth()]+ " de " + String.valueOf(fechaNacimiento.getYear()));
+				tFNacimiento.setText(String.valueOf(fechaNacimiento.getDate()) + " de " + meses[fechaNacimiento.getMonth()]+ " de " + String.valueOf(fechaNacimiento.getYear()+1900));
 			}
 		};
 		bFNacimiento.addSelectionListener(sabFNacimiento);
@@ -508,7 +510,7 @@ public class TabNuevoJefe {
 						bundle.getString("julio"),bundle.getString("agosto"),bundle.getString("septiembre"),
 						bundle.getString("octubre"),bundle.getString("noviembre"),bundle.getString("diciembre")};
 				if (fechaContrato != null)
-					tFContrato.setText(String.valueOf(fechaContrato.getDate()) + " de " + meses[fechaContrato.getMonth()]+ " de " + String.valueOf(fechaContrato.getYear()));				
+					tFContrato.setText(String.valueOf(fechaContrato.getDate()) + " de " + meses[fechaContrato.getMonth()]+ " de " + String.valueOf(fechaContrato.getYear()+1900));				
 			}
 		};
 		bFContrato.addSelectionListener(sabFContrato);
@@ -530,7 +532,7 @@ public class TabNuevoJefe {
 						bundle.getString("julio"),bundle.getString("agosto"),bundle.getString("septiembre"),
 						bundle.getString("octubre"),bundle.getString("noviembre"),bundle.getString("diciembre")};
 				if (fechaAlta != null)
-				tFAlta.setText(String.valueOf(fechaAlta.getDate()) + " de " + meses[fechaAlta.getMonth()]+ " de " + String.valueOf(fechaAlta.getYear()));
+				tFAlta.setText(String.valueOf(fechaAlta.getDate()) + " de " + meses[fechaAlta.getMonth()]+ " de " + String.valueOf(fechaAlta.getYear()+1900));
 			}
 		};
 		bFAlta.addSelectionListener(sabFAlta);
