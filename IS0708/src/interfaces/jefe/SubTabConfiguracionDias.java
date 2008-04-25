@@ -432,7 +432,6 @@ public class SubTabConfiguracionDias {
 		
 		//
 	//	ArrayList<String> horario=vista.getHorarioDpto(departamento);
-		
 		//crea el grupo
 		gHoras = new Group(composite, SWT.NONE);
 		gHoras.setText("Horarios de apertura y cierre");
@@ -455,7 +454,7 @@ public class SubTabConfiguracionDias {
 		lCierre.setText("Cierre:");
 		lCierre.setLayoutData(gridData9);
 		sCierre = new Spinner(gHoras, SWT.BORDER);
-	//	sCierre.setSelection(Integer.valueOf(horario.get(1).substring(0, 2)));
+		//sCierre.setSelection(Integer.valueOf(horario.get(1).substring(0, 2)));
 		sCierre.setMaximum(23);
 		sCierre.setMinimum(1);
 		sCierre.setLayoutData(gridData7);
