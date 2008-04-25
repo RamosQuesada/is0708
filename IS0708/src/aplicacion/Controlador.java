@@ -2259,7 +2259,7 @@ public class Controlador {
 			}
 	
 		} catch (Exception e) {
-			System.err.println("Controlador :: Error al obtener Lista de Turnos en la base de datos");
+			System.err.println("Controlador :: Error al obtener Horario de un Dpto");
 		}
 		return horas;
 	
