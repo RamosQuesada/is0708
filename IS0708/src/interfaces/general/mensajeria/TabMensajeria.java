@@ -106,6 +106,7 @@ public class TabMensajeria extends Thread{
 	 * Muestra los mensajes cargados en el interfaz.
 	 */
 	private void mostrarMensajes() {
+		int indice=tablaMensajes.getSelectionIndex();
 		tablaMensajes.removeAll();
 		int i = 0;
 		int numNuevos = 0;
@@ -162,6 +163,7 @@ public class TabMensajeria extends Thread{
 		bMensSiguientes.setEnabled(true);
 		bMensAnteriores.setEnabled(true);
 		bActualizar.setEnabled(true);
+		tablaMensajes.setSelection(indice);
 	}
 	
 	
@@ -247,7 +249,7 @@ public class TabMensajeria extends Thread{
 				tablaMensajes.getColumn(1).setWidth(ancho / 4);
 				tablaMensajes.getColumn(2).setWidth(ancho / 8);
 				//tablaMensajes.getColumn(3).setWidth(ancho - 4*(ancho/8)-25);
-				tablaMensajes.getColumn(3).setWidth((ancho/3)+41);
+				tablaMensajes.getColumn(3).setWidth((ancho/3)+40);
 				tablaMensajes.getColumn(4).setWidth(ancho / 8);
 				tablaMensajes.getColumn(5).setWidth(ancho / 14);
 			}
