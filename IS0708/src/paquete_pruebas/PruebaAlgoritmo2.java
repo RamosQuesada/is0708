@@ -32,6 +32,8 @@ public class PruebaAlgoritmo2 {
  		//alg.imprimeEstructura();
 		//alg.imprimeCuadrante();
 		
+		int x=0;
+		
  
 	}
 }
