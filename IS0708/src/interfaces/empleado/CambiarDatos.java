@@ -67,8 +67,8 @@ public class CambiarDatos {
 		lGrupo.numColumns = 1;
 		cGrupo.setLayout(lGrupo);
 		
+		int idioma= this._vista.getEmpleadoActual().getIdioma();
 		
-
 		final Label lcontraseñaActual	= new Label(cGrupo, SWT.LEFT);
 		lcontraseñaActual.setText(_bundle.getString("ContrasenaActual"));
 		final Composite cGrupoca = new Composite (cGrupo, SWT.NONE);
@@ -111,12 +111,13 @@ public class CambiarDatos {
 		cGrupo3.setLayout(lGrupo3);
 		final Button espanol		= new Button(cGrupo3, SWT.RADIO);
 		espanol.setText(_bundle.getString("Espanol"));
-		espanol.setSelection(true);
 		final Button ingles		= new Button(cGrupo3, SWT.RADIO);
 		ingles.setText(_bundle.getString("Ingles"));
 		final Button Polaco		= new Button(cGrupo3, SWT.RADIO);
 		Polaco.setText(_bundle.getString("Polaco"));
-		
+		if(idioma==0){espanol.setSelection(true);}
+		else if(idioma==1){ingles.setSelection(true);}
+		else if(idioma==2){Polaco.setSelection(true);}
 
 		final Composite cAceptar = new Composite (cGrupo, SWT.NONE);
 		cAceptar.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 0, 0));
@@ -132,13 +133,13 @@ public class CambiarDatos {
 		
 		bAceptar.addSelectionListener (new SelectionAdapter () {
 			public void widgetSelected (SelectionEvent e) {
+				int idioma=1;
+				String passw = tcontraseña.getText();
+				if(espanol.getSelection()){idioma=0;}
+				else if(ingles.getSelection()){idioma=1;}
+				else if(Polaco.getSelection()){idioma=2;}
 				if((tcontraseña.getText().length()>0)&&((tcontraseña.getText().compareTo(tcontraseña2.getText())==0))&&(((tcontraseñaActual.getText().compareTo(_vista.getEmpleadoActual().getPassword())==0)))){			
-					int idioma=1;
-					String passw = tcontraseña.getText();
-					if(espanol.getSelection()){idioma=0;}
-					else if(ingles.getSelection()){idioma=1;}
-					else if(Polaco.getSelection()){idioma=2;}
-					System.out.println("idioma"+idioma);
+
 					Empleado empleado = _vista.getEmpleadoActual();
 					try{
 						_vista.modificarEmpleado(empleado.getEmplId(), empleado.getNombre(),
@@ -166,6 +167,20 @@ public class CambiarDatos {
 						messageBox.setText (_bundle.getString("Error"));
 						messageBox.setMessage ("contraseña antigua incorrecta");
 						messageBox.open ();
+					}
+					else if(((tcontraseña.getText().length()==0))&&(tcontraseña2.getText().length()==0)){
+						Empleado empleado = _vista.getEmpleadoActual();
+						_vista.modificarEmpleado(empleado.getEmplId(), empleado.getNombre(),
+								empleado.getApellido1(), empleado.getApellido2(),
+								empleado.getFechaNac(), empleado.getSexo(),
+								empleado.getEmail(),empleado.getPassword(), empleado.getGrupo(), empleado.getFcontrato(),
+								empleado.getFAlta(),empleado.getFelicidad(),idioma,empleado.getRango() ,
+								empleado.getTurnoFavorito(),empleado.getContratoId(),empleado.getColor());
+							MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
+							messageBox.setText (_bundle.getString("Error"));
+							messageBox.setMessage ("Idioma Modificado");
+							messageBox.open ();
+							shell.dispose();
 					}
 					else if(((tcontraseña.getText().compareTo(tcontraseña2.getText())!=0))&&(tcontraseña.getText().length()>0)){
 						MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
