@@ -119,7 +119,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private Point cursor = new Point(0,0);
 	
 	private int movimiento;
-	private ScrollBar vBar; 
+	private ScrollBar vBar;
+	private boolean moviendoPestanas;
 	
 	private MouseListener mouseListenerCuadrDiario;
 	private MouseMoveListener mouseMoveListenerCuadrDiario;
@@ -141,6 +142,22 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 				catch (Exception e) {
 					e.printStackTrace();
 				}
+			}
+		}
+	}
+	
+	private class Animator extends Thread {
+		public void run() {
+			try {
+				while (vista.isAlive()) {
+					if (moviendoPestanas) {
+						redibujar();
+					}
+					sleep(20);
+				}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 	}
@@ -369,7 +386,10 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 //		creando = false;
 //		terminadoDeCrear = true;
 		movimiento = 0;
-		
+		moviendoPestanas = false;
+		Thread animator = new Animator();
+		animator.start();
+
 		calcularTamano();
 		display = canvas.getDisplay();
 		canvas.addPaintListener(new PaintListener() {
@@ -867,13 +887,15 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		if (display!=null && !display.isDisposed()) {
 			display.asyncExec(new Runnable() {
 				public void run() {
-					canvas.redraw();
-					if (turno==null)
-						if (diario)
-							lCuadranteTitulo.setText(String.valueOf(dia) + " de " + aplicacion.utilidades.Util.mesAString(vista.getBundle(), mes-1) + " de " + String.valueOf(anio));
-						else
-							lCuadranteTitulo.setText(aplicacion.utilidades.Util.mesAString(vista.getBundle(), mes-1).substring(0,1).toUpperCase()+
-									aplicacion.utilidades.Util.mesAString(vista.getBundle(), mes-1).substring(1)+ " de " + String.valueOf(anio));
+					if (!canvas.getShell().isDisposed()) {
+						canvas.redraw();
+						if (turno==null)
+							if (diario)
+								lCuadranteTitulo.setText(String.valueOf(dia) + " de " + aplicacion.utilidades.Util.mesAString(vista.getBundle(), mes-1) + " de " + String.valueOf(anio));
+							else
+								lCuadranteTitulo.setText(aplicacion.utilidades.Util.mesAString(vista.getBundle(), mes-1).substring(0,1).toUpperCase()+
+										aplicacion.utilidades.Util.mesAString(vista.getBundle(), mes-1).substring(1)+ " de " + String.valueOf(anio));
+					}
 				}
 			});
 		}
@@ -925,6 +947,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 */
 			int fila = 0;
 			empleadosMostrados.clear();
+			boolean b = false;
 			for ( int i=0; i<vista.getEmpleados().size(); i++) {
 			// Dibujar el nombre del empleado y el turno
 				String nombre = vista.getEmpleados().get(i).getNombre().charAt(0) + ". " + vista.getEmpleados().get(i).getApellido1();			
@@ -935,6 +958,9 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					if (vista.getEmpleados().get(i).getEmplId() == iCuad[dia-1].get(j).getEmpl().getEmplId()) {
 						empleadosMostrados.add(vista.getEmpleados().get(i));
 						iCuad[dia-1].get(j).getTurno().dibujar(display, nombre, gc, fila, empleadosMostrados.get(fila).getColor() ,margenIzq, margenNombres,margenSup,sep_vert_franjas,alto_franjas,tamHora, tamSubdiv, horaApertura, numSubdivisiones, desp);
+						if (iCuad[dia-1].get(j).getTurno().getEstadoPestana()) {
+							b = true; 
+						}
 						fila++;
 //					} else if (moviendoEmpleado) {
 //						empleadosMostrados.add(vista.getEmpleados().get(i));
@@ -942,8 +968,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					}
 				}
 			}
-
-
+			moviendoPestanas = b;
 		}
 	}
 	

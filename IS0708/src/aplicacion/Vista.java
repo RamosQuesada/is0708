@@ -2017,6 +2017,12 @@ public class Vista {
 		}
 		empleados=aux;
 	}
-	   
 	
+	/**
+	 * Informa de si la aplicación sigue ejecutándose
+	 * @return
+	 */
+	public boolean isAlive() {
+		return alive;
+	}
 }
