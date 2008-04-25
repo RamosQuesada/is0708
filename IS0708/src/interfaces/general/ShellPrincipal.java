@@ -737,7 +737,7 @@ public class ShellPrincipal {
 			crearTabJefeCuadrantes(tabFolder);
 			crearTabMensajes(tabFolder);
 			crearTabJefeEmpleados(tabFolder);
-	//		crearTabJefeDepartamentos(tabFolder);
+			crearTabJefeDepartamentos(tabFolder);
 			crearTabJefeContratos(tabFolder);
 			break;
 		case 3:
