@@ -127,7 +127,7 @@ public class DialogVentasEmpleado {
 		// Listener con lo que hace el botón bAceptar
 		SelectionAdapter sabAceptar = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				
+				boolean cumple=true;
 				// Comprueba que las ventas no es vacía (campo obligatorio)
 				if (tNventas.getText().length()==0) {
 					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
@@ -137,6 +137,8 @@ public class DialogVentasEmpleado {
 					// Enfocar tNventas y seleccionar texto
 					tNventas.setFocus();
 					tNventas.selectAll();
+					ventas=Float.valueOf(0);
+					cumple=false;
 				}
 				// Comprueba que se ha seleccionado una fecha
 				else if (tFecha.getText().length()==0){
@@ -146,14 +148,16 @@ public class DialogVentasEmpleado {
 					e.doit = messageBox.open () == SWT.YES;
 					// Enfocar tFecha y seleccionar texto
 					tFecha.setFocus();
-					tFecha.selectAll();			
+					tFecha.selectAll();		
+					cumple=false;
 				}
-				ventas= Float.valueOf((tNventas.getText()));
+				if (tNventas.getText().length()!=0) 
+					ventas= Float.valueOf((tNventas.getText()));
 								
 				
 				//añadir ventas en la base de datos
 				//Si ya tiene ventas para ese dia la modifica si no la inserta 
-				if (vista.existeVentas(idVend, fecha)){
+				if (vista.existeVentas(idVend, fecha) & cumple){
 					MessageBox msgBox = new MessageBox(shell,
 							SWT.APPLICATION_MODAL | SWT.ICON_WARNING | SWT.OK
 									| SWT.CANCEL);
@@ -163,10 +167,15 @@ public class DialogVentasEmpleado {
 					if (resp == SWT.OK) {
 						// Si a pesar de todo esta de acuerdo modificacion de las ventas.
 						vista.cambiarVentas(idVend, fecha, ventas);
+						shell.dispose();
 					}
-				}else	
-					vista.insertVentas(idVend, ventas, fecha);
-				shell.dispose();
+				}else{	
+					if (cumple){
+						vista.insertVentas(idVend, ventas, fecha);
+						shell.dispose();
+					}
+					}
+				
 			}
 		};
 		
