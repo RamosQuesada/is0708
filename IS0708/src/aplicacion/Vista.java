@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.swing.JOptionPane;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
@@ -19,14 +17,15 @@ import algoritmo.Cuadrante;
 import algoritmo.Resumen;
 import algoritmo.Sugerencia;
 import algoritmo.Trabaja;
+
 import aplicacion.datos.Contrato;
 import aplicacion.datos.Departamento;
 import aplicacion.datos.Empleado;
 import aplicacion.datos.Turno;
 import aplicacion.mensajeria.Mensaje;
-import aplicacion.utilidades.Util;
 
 import idiomas.LanguageChanger;
+
 import interfaces.general.ShellLogin;
 import interfaces.general.ShellPrincipal;
 import interfaces.imagenes.CargadorImagenes;
@@ -157,7 +156,7 @@ public class Vista {
 																		controlador.insertDepartamentoPruebas(e.o.get(0).toString(),(Integer)e.o.get(2)); //tabla DEPARTAMENTO
 						}*/
 						//TODO quitar esto
-						else JOptionPane.showMessageDialog(null, "Insertar "+e.tipo+" no existe", "Error en cache", JOptionPane.ERROR_MESSAGE);
+						else System.err.println("Error en cache - Insertar "+e.tipo+" no existe");
 					}
 					else if (e.i==ELIMINAR) {
 						if      (e.tipo.equals("Contrato"))			controlador.eliminaContrato((Integer) e.o.get(0));
@@ -172,7 +171,7 @@ public class Vista {
 							controlador.eliminaTurnoDeContrato((Integer)aux.get(0),(Integer)aux.get(1));
 						}
 						//TODO quitar esto
-						else JOptionPane.showMessageDialog(null, "Eliminar "+e.tipo+" no existe", "Error en cache", JOptionPane.ERROR_MESSAGE);
+						else System.err.println("Error en cache - Eliminar "+e.tipo+" no existe");
 					}
 					else if(e.i==MODIFICAR) {
 						if      (e.tipo.equals("Contrato"))			controlador.modificarContrato(((Contrato)e.o.get(0)).getNumeroContrato(), ((Contrato)e.o.get(0)).getTurnoInicial(), ((Contrato)e.o.get(0)).getNombreContrato(), ((Contrato)e.o.get(0)).getPatron() , ((Contrato)e.o.get(0)).getDuracionCiclo(), ((Contrato)e.o.get(0)).getSalario(), ((Contrato)e.o.get(0)).getTipoContrato());
@@ -186,7 +185,7 @@ public class Vista {
 //																		controlador.cambiaNombreNumerosDEPARTAMENTOs(e.o.get(0).toString(),e.o.get(1).toString());
 //																		} 
 						//TODO quitar esto
-						else JOptionPane.showMessageDialog(null, "Modificar "+e.tipo+" no existe", "Error en cache", JOptionPane.ERROR_MESSAGE);
+						else System.err.println("Error en cache - Modificar "+e.tipo+" no existe");
 					}
 				}
 				setProgreso("Actualizando base de datos", 100);
@@ -251,7 +250,7 @@ public class Vista {
 		for (int i=0;i<r.getSugerencias().length;i++) {
 			for (int j=0;j<r.leerDia(i).size();j++) {
 				sugAux = r.leerDia(i).get(j);
-				sugerencias.add(r.leerDia(i).get(j));
+				sugerencias.add(sugAux);
 				insertCache(sugAux, "Sugerencia");
 			}
 		}
