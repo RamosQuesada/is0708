@@ -1009,7 +1009,7 @@ public class Empleado implements Drawable {
 		/*
 		 * AMPLIACIONES:
 		 * VACACIONES
-		 * FIN DE CONTRATO CONTRATO
+		 * FIN DE CONTRATO
 		 * if ((fechaActual pertenece a vacaciones) || (fechaActual>fechaFinContrato)) {}
 		 * else {
 		 * 		CODIGO RESTANTE
