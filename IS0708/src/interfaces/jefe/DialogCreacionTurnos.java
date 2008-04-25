@@ -216,7 +216,7 @@ public class DialogCreacionTurnos {
 				}
 				else{
 					//CAMBIAR
-					boolean okis=vista.modificarTurno(idTurno,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso());
+					boolean okis=vista.modificarTurno(idTurno,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso(),it.getColor());
 					//boolean okis=vista.getControlador().modificarTurno(idTurno,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso());
 					turnoModificado = new Turno(idTurno,desc,it.getHoraEntrada(),it.getHoraSalida(),it.getHoraDescanso(),it.getTDescanso(),it.getColor());
 					if (okis){
