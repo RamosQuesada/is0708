@@ -498,7 +498,7 @@ public class Database extends Thread {
 	 */
 	public boolean cambiarTurno(int IdTurno, String Descripcion,
 			Time HoraEntrada, Time HoraSalida, Time HoraInicioDescanso,
-			int Duracion) {
+			int Duracion, String color) {
 		int r = 0;
 		try {
 			Time tdesc = new Time(0);
@@ -509,7 +509,7 @@ public class Database extends Thread {
 					+ Descripcion + "', HoraEntrada='" + HoraEntrada
 					+ "', HoraSalida='" + HoraSalida
 					+ "', HoraInicioDescanso='" + HoraInicioDescanso
-					+ "', DuracionDescanso='" + tdesc + "'" + " WHERE IdTurno="
+					+ "', DuracionDescanso='" + tdesc + "', Color ='" + color + "'" + " WHERE IdTurno="
 					+ IdTurno + ";");
 		} catch (SQLException e) {
 			System.err.println("Database :: Error modificar turno en la BD");

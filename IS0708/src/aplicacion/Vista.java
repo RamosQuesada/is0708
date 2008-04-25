@@ -176,7 +176,7 @@ public class Vista {
 					}
 					else if(e.i==MODIFICAR) {
 						if      (e.tipo.equals("Contrato"))			controlador.modificarContrato(((Contrato)e.o.get(0)).getNumeroContrato(), ((Contrato)e.o.get(0)).getTurnoInicial(), ((Contrato)e.o.get(0)).getNombreContrato(), ((Contrato)e.o.get(0)).getPatron() , ((Contrato)e.o.get(0)).getDuracionCiclo(), ((Contrato)e.o.get(0)).getSalario(), ((Contrato)e.o.get(0)).getTipoContrato());
-						else if (e.tipo.equals("Turno"))			controlador.modificarTurno(((Turno)e.o.get(0)).getIdTurno(), ((Turno)e.o.get(0)).getDescripcion(), ((Turno)e.o.get(0)).getHoraEntrada(), ((Turno)e.o.get(0)).getHoraSalida(), ((Turno)e.o.get(0)).getHoraDescanso(), ((Turno)e.o.get(0)).getTDescanso());
+						else if (e.tipo.equals("Turno"))			controlador.modificarTurno(((Turno)e.o.get(0)).getIdTurno(), ((Turno)e.o.get(0)).getDescripcion(), ((Turno)e.o.get(0)).getHoraEntrada(), ((Turno)e.o.get(0)).getHoraSalida(), ((Turno)e.o.get(0)).getHoraDescanso(), ((Turno)e.o.get(0)).getTDescanso(),((Turno)e.o.get(0)).getColor());
 						else if (e.tipo.equals("Empleado"))			controlador.cambiarEmpleado(((Empleado)e.o.get(0)).getEmplId(), ((Empleado)e.o.get(0)).getNombre(), ((Empleado)e.o.get(0)).getApellido1(), ((Empleado)e.o.get(0)).getApellido2(), ((Empleado)e.o.get(0)).getFechaNac(), ((Empleado)e.o.get(0)).getSexo(), ((Empleado)e.o.get(0)).getEmail(), ((Empleado)e.o.get(0)).getPassword(), ((Empleado)e.o.get(0)).getGrupo(), ((Empleado)e.o.get(0)).getFcontrato(), ((Empleado)e.o.get(0)).getFAlta(), ((Empleado)e.o.get(0)).getFelicidad(), ((Empleado)e.o.get(0)).getIdioma(), ((Empleado)e.o.get(0)).getRango(), ((Empleado)e.o.get(0)).getTurnoFavorito(), ((Empleado)e.o.get(0)).getColor(),((Empleado)e.o.get(0)).getContratoId());
 						else if (e.tipo.equals("Mensaje"))			controlador.marcarMensaje((Mensaje)e.o.get(0));
 						else if (e.tipo.equals("MensajeLeido"))		controlador.setLeido((Mensaje)e.o.get(0));
@@ -473,7 +473,7 @@ public class Vista {
 	 * @param duracion Nueva duracion
 	 * @return <i>true</i> si se ha modificado correctamente
 	 */
-	public boolean modificarTurno(int idTurno, String descripcion, Time horaEntrada, Time horaSalida, Time horaInicioDescanso, int duracion) {
+	public boolean modificarTurno(int idTurno, String descripcion, Time horaEntrada, Time horaSalida, Time horaInicioDescanso, int duracion, Color color) {
 		Turno t = getTurno(idTurno);
 		if (t==null) return false;
 		t.setDescripcion(descripcion);
@@ -481,6 +481,7 @@ public class Vista {
 		t.setHoraSalida(new Time(horaSalida.getTime()));
 		t.setHoraDescanso(new Time(horaInicioDescanso.getTime()));
 		t.setTDescanso(duracion);
+		t.setColor(color);
 		modifyCache(t, "Turno");
 		return true;
 	}
@@ -1302,6 +1303,25 @@ public class Vista {
 	 * @return Turno que trabaja, si no trabaja, null.
 	 */
 	@SuppressWarnings("deprecation")
+	public Turno dimeSitrabajaEmpleadoDia(int nv, Date d) {
+		Cuadrante cuad = getCuadrante(d.getMonth()+1, d.getYear()+1900, getEmpleadoActual().getDepartamentoId());
+		if (cuad != null){
+			ArrayList<Trabaja> dia = cuad.getListaTrabajaDia(d.getDate());
+			for (int j=0; j<dia.size(); j++){
+				if (dia.get(j).getIdEmpl() == nv){
+					return getTurno(dia.get(j).getIdTurno());
+				}
+			}
+		}
+		return null;
+	}
+	/**
+	 * Funcion que mira si un empleado trabaja un determinado dia.
+	 * @param nv Numero de vendedor.
+	 * @param d Dia
+	 * @return Turno que trabaja, si no trabaja, null.
+	 */
+	@SuppressWarnings("deprecation")
 	public Turno trabajaEmpleadoDia(int nv, Date d) {
 		Cuadrante cuad = getCuadrante(d.getMonth()+1, d.getYear()+1900, getEmpleadoActual().getDepartamentoId());
 		if (cuad != null){
@@ -1835,7 +1855,8 @@ public class Vista {
 		for (int i=0; i<empleados.size(); i++){
 			Turno t = trabajaEmpleadoDia(empleados.get(i).getEmplId(), getFechaActual());
 			String nombreempleado = empleados.get(i).getNombreCompleto();
-			if (t != null){
+			boolean b=controlador.trabajaEmpleadoDia(empleados.get(i).getEmplId(), this.getFechaActual());
+			if (t != null && b){
 				String horaentrada = t.getHoraEntrada().toString();
 				String horasalida = t.getHoraSalida().toString();
 				if (horaentrada!=null || horasalida!=null)

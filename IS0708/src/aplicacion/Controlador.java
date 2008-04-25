@@ -1547,8 +1547,8 @@ public class Controlador {
 	 */
 	public boolean modificarTurno(int IdTurno, String Descripcion,
 			Time HoraEntrada, Time HoraSalida, Time HoraInicioDescanso,
-			int Duracion) {
-		return _db.cambiarTurno(IdTurno, Descripcion, HoraEntrada, HoraSalida, HoraInicioDescanso, Duracion);
+			int Duracion,Color color) {
+		return _db.cambiarTurno(IdTurno, Descripcion, HoraEntrada, HoraSalida, HoraInicioDescanso, Duracion,Util.ColorAHex(color));
 	}
 	/**
 	 * 
