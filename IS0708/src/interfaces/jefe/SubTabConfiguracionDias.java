@@ -448,6 +448,7 @@ public class SubTabConfiguracionDias {
 		sApertura.setEnabled(false);
 		sAperturaMin = new Spinner(gHoras, SWT.BORDER);
 		sAperturaMin.setMaximum(59);
+		sAperturaMin.setIncrement(5);
 		sAperturaMin.setEnabled(false);
 	//	sAperturaMin.setSelection(Integer.valueOf(horario.get(0).substring(3, 5)));
 		lCierre = new Label(gHoras, SWT.NONE);
@@ -455,7 +456,7 @@ public class SubTabConfiguracionDias {
 		lCierre.setLayoutData(gridData9);
 		sCierre = new Spinner(gHoras, SWT.BORDER);
 	//	sCierre.setSelection(Integer.valueOf(horario.get(1).substring(0, 2)));
-		sCierre.setMaximum(24);
+		sCierre.setMaximum(23);
 		sCierre.setMinimum(1);
 		sCierre.setLayoutData(gridData7);
 		sCierre.setEnabled(false);
@@ -465,7 +466,7 @@ public class SubTabConfiguracionDias {
 		sCierreMin.setEnabled(false);
 	//	sCierreMin.setSelection(Integer.valueOf(horario.get(1).substring(3, 5)));
 		bEstablecer = new Button(gHoras, SWT.NONE);
-		bEstablecer.setText("Estabecer");
+		bEstablecer.setText("Establecer");
 		bEstablecer.setLayoutData(gridData11);
 		bEstablecer.setEnabled(false);
 		bEstablecer.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
