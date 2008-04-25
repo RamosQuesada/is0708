@@ -2,6 +2,7 @@ package aplicacion.utilidades;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Random;
@@ -632,7 +633,7 @@ public class Util {
 	 * @return la fecha siguiente
 	 * @author Alberto
 	 */
-	public static Date diaSiguiente(java.sql.Date fecha){
+	public static java.sql.Date diaSiguiente(java.sql.Date fecha){
 		int mes=fecha.getMonth()+1;
 		int ano=fecha.getYear();
 		int dia=fecha.getDate();
@@ -687,6 +688,153 @@ public class Util {
 				}
 				else{
 					diaNuevo=diaNuevo+1;
+					
+				}
+			}
+		}
+		
+		java.sql.Date fechaNueva=new java.sql.Date(anoNuevo,mesNuevo-1,diaNuevo);
+		return fechaNueva;
+	}
+	
+	/**
+	 * devuelve la semana a la que pertenece un dia
+	 * @param fecha la fecha de la que queremos saber la semana
+	 * @return un arraylist de 7 posiciones con fechas, de lunes a domingo
+	 * @author Alberto
+	 */
+	public static ArrayList<java.sql.Date> getSemanaFecha(java.sql.Date fecha){
+		ArrayList<java.sql.Date> resultado=new ArrayList<java.sql.Date>();
+		java.sql.Date lunes=null,martes=null,miercoles=null,jueves=null,viernes=null,sabado=null,domingo=null;
+		
+		switch (fecha.getDay()){
+		case 0:{domingo=fecha;
+				sabado=Util.diaAnterior(domingo);
+				viernes=Util.diaAnterior(sabado);
+				jueves=Util.diaAnterior(viernes);
+				miercoles=Util.diaAnterior(jueves);
+				martes=Util.diaAnterior(miercoles);
+				lunes=Util.diaAnterior(martes);
+				break;}
+		case 1:{lunes=fecha;
+				martes=Util.diaSiguiente(lunes);
+				miercoles=Util.diaSiguiente(martes);
+				jueves=Util.diaSiguiente(miercoles);
+				viernes=Util.diaSiguiente(jueves);
+				sabado=Util.diaSiguiente(viernes);
+				domingo=Util.diaSiguiente(sabado);
+				break;}
+		case 2:{martes=fecha;
+				lunes=Util.diaAnterior(martes);
+				miercoles=Util.diaSiguiente(martes);
+				jueves=Util.diaSiguiente(miercoles);
+				viernes=Util.diaSiguiente(jueves);
+				sabado=Util.diaSiguiente(viernes);
+				domingo=Util.diaSiguiente(sabado);
+				break;}
+		case 3:{miercoles=fecha;
+				martes=Util.diaAnterior(miercoles);
+				lunes=Util.diaAnterior(martes);
+				jueves=Util.diaSiguiente(miercoles);
+				viernes=Util.diaSiguiente(jueves);
+				sabado=Util.diaSiguiente(viernes);
+				domingo=Util.diaSiguiente(sabado);
+				break;}
+		case 4:{jueves=fecha;
+				miercoles=Util.diaAnterior(jueves);
+				martes=Util.diaAnterior(miercoles);
+				lunes=Util.diaAnterior(martes);
+				viernes=Util.diaSiguiente(jueves);
+				sabado=Util.diaSiguiente(viernes);
+				domingo=Util.diaSiguiente(sabado);
+				break;}
+		case 5:{viernes=fecha;
+				jueves=Util.diaAnterior(viernes);
+				miercoles=Util.diaAnterior(jueves);
+				martes=Util.diaAnterior(miercoles);
+				lunes=Util.diaAnterior(martes);
+				sabado=Util.diaSiguiente(viernes);
+				domingo=Util.diaSiguiente(sabado);
+				break;}
+		case 6:{sabado=fecha;
+				viernes=Util.diaAnterior(sabado);
+				jueves=Util.diaAnterior(viernes);
+				miercoles=Util.diaAnterior(jueves);
+				martes=Util.diaAnterior(miercoles);
+				lunes=Util.diaAnterior(martes);
+				domingo=Util.diaSiguiente(sabado);
+				break;}
+		default:break;
+		}				
+		resultado.add(lunes);
+		resultado.add(martes);
+		resultado.add(miercoles);
+		resultado.add(jueves);
+		resultado.add(viernes);
+		resultado.add(sabado);
+		resultado.add(domingo);
+			
+		return resultado;
+	}
+	
+	
+	
+	
+	public static java.sql.Date diaAnterior(java.sql.Date fecha){
+		int mes=fecha.getMonth()+1;
+		int ano=fecha.getYear();
+		int dia=fecha.getDate();
+		
+		int diaNuevo=dia;
+		int mesNuevo=mes;
+		int anoNuevo=ano;
+		
+		if ((mes==1)||(mes==2)||(mes==4)||(mes==6)||(mes==8)||(mes==9)||(mes==11)){
+			if (dia==1){
+				if(mes==1){
+					diaNuevo=31;
+					mesNuevo=12;
+					anoNuevo=anoNuevo-1;
+				}
+				else{
+					diaNuevo=31;
+					mesNuevo=mesNuevo-1;
+				}
+				
+			}
+			else{
+				diaNuevo=diaNuevo-1;
+			}
+		}
+		
+		if ((mes==5)||(mes==7)||(mes==10)||(mes==12)){
+			if (dia==1){
+				diaNuevo=30;
+				mesNuevo=mesNuevo-1;
+			}
+			else{
+				diaNuevo=diaNuevo-1;				
+			}
+		}
+		
+		if (mes==3){
+			if (ano%4==0){
+				if (dia==1){
+					diaNuevo=29;
+					mesNuevo=2;
+				}
+				else{
+					diaNuevo=diaNuevo-1;					
+				}
+			}
+		
+			else{
+				if (dia==1){
+					diaNuevo=28;
+					mesNuevo=2;
+				}
+				else{
+					diaNuevo=diaNuevo-1;
 					
 				}
 			}
