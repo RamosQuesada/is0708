@@ -4,7 +4,7 @@ SetCompressor lzma
 
 # Defines
 !define REGKEY "SOFTWARE\$(^Name)"
-!define VERSION 0.16.6.8
+!define VERSION 0.17.0.5
 !define COMPANY "Turno-matic"
 !define URL "http://is0708.googlecode.com"
 
@@ -35,9 +35,9 @@ SetCompressor lzma
 !define MUI_STARTMENUPAGE
 !define MUI_FINISHPAGE_SHOWREADME $INSTDIR\Datos\Ayuda\ES\index.html
 !define MUI_FINISHPAGE_23
-#TODO arreglar esto
-!define MUI_FINISHPAGE_RUN "$ACCESO_DIRECTO"
-!define MUI_FINISHPAGE_RUN_PARAMETERS "$ATRIBUTOS"
+!define MUI_FINISHPAGE_RUN
+!define MUI_FINISHPAGE_RUN_TEXT "$(^IniciarPrograma)"
+!define MUI_FINISHPAGE_RUN_FUNCTION "LaunchLink"
 !define MUI_UNFINISHPAGE_NOAUTOCLOSE
 
 # Included files
@@ -72,7 +72,7 @@ Var ATRIBUTOS
 # Installer languages
 !insertmacro MUI_LANGUAGE Spanish
 !insertmacro MUI_LANGUAGE English
-!insertmacro MUI_LANGUAGE Polish
+#!insertmacro MUI_LANGUAGE Polish
 
 
 # Installer attributes
@@ -186,6 +186,7 @@ Section /o -un.jar UNSEC0001
     Delete /REBOOTOK $INSTDIR\Datos\Turno-matic.jar
     Delete /REBOOTOK $INSTDIR\Datos\Icono.ico
     Delete /REBOOTOK $INSTDIR\Datos\configBD
+    Delete /REBOOTOK $INSTDIR\Datos\Turno-matic.lnk
     DeleteRegValue HKLM "${REGKEY}\Components" jar
     Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\Turno-matic.lnk"
     Delete /REBOOTOK "$INSTDIR\Turno-matic.lnk"
@@ -248,9 +249,8 @@ Function .onGUIEnd
     BGImage::Destroy
 FunctionEnd
 
+# Comprueba que no se este ejecutando ya
 Function .onInit
-
-    # Comprueba que no se este ejecutando ya
     System::Call 'kernel32::CreateMutexA(i 0, i 0, t "myMutex") i .r1 ?e'
     Pop $R0
     StrCmp $R0 0 +3
@@ -312,6 +312,11 @@ Function DetectarJava
         Pop $0
 FunctionEnd
 
+# Ejecuta la aplicacion instalada
+Function LaunchLink
+  ExecShell "" "$INSTDIR\Datos\Turno-matic.lnk"
+FunctionEnd
+
 # Uninstaller functions
 Function un.onInit
     ReadRegStr $INSTDIR HKLM "${REGKEY}" Path
@@ -331,7 +336,11 @@ FunctionEnd
 
 LangString ^UninstallLink ${LANG_SPANISH} "Desinstalar $(^Name)"
 LangString ^UninstallLink ${LANG_ENGLISH} "Uninstall $(^Name)"
-LangString ^UninstallLink ${LANG_POLISH} "Uninstall $(^Name)"
+#LangString ^UninstallLink ${LANG_POLISH} "Uninstall $(^Name)"
+
+LangString ^IniciarPrograma ${LANG_SPANISH} "Iniciar el programa"
+LangString ^IniciarPrograma ${LANG_ENGLISH} "Start the program"
+#LangString ^IniciarPrograma ${LANG_POLISH} "Start the program"
 
 #LangString SEC0000_DESC ${LANG_SPANISH} "Java jre1.6 Update 5"
 #LangString SEC0000_DESC ${LANG_ENGLISH} "Java jre1.6 Update 5"
