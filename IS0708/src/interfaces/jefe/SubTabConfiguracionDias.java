@@ -431,7 +431,7 @@ public class SubTabConfiguracionDias {
 		gridLayout2.makeColumnsEqualWidth = true;
 		
 		//
-	//	ArrayList<String> horario=vista.getHorarioDpto(departamento);
+	
 		//crea el grupo
 		gHoras = new Group(composite, SWT.NONE);
 		gHoras.setText("Horarios de apertura y cierre");
@@ -441,7 +441,7 @@ public class SubTabConfiguracionDias {
 		lApertura.setText("Apertura:");
 		lApertura.setLayoutData(gridData8);
 		sApertura = new Spinner(gHoras, SWT.BORDER);
-	//	sApertura.setSelection(Integer.valueOf(horario.get(0).substring(0, 2)));
+	
 		sApertura.setMaximum(23);
 		sApertura.setLayoutData(gridData10);
 		sApertura.setEnabled(false);
@@ -449,12 +449,11 @@ public class SubTabConfiguracionDias {
 		sAperturaMin.setMaximum(59);
 		sAperturaMin.setIncrement(5);
 		sAperturaMin.setEnabled(false);
-	//	sAperturaMin.setSelection(Integer.valueOf(horario.get(0).substring(3, 5)));
 		lCierre = new Label(gHoras, SWT.NONE);
 		lCierre.setText("Cierre:");
 		lCierre.setLayoutData(gridData9);
 		sCierre = new Spinner(gHoras, SWT.BORDER);
-		//sCierre.setSelection(Integer.valueOf(horario.get(1).substring(0, 2)));
+		
 		sCierre.setMaximum(23);
 		sCierre.setMinimum(1);
 		sCierre.setLayoutData(gridData7);
@@ -463,7 +462,7 @@ public class SubTabConfiguracionDias {
 		sCierreMin.setMaximum(59);
 		sCierreMin.setIncrement(5);
 		sCierreMin.setEnabled(false);
-	//	sCierreMin.setSelection(Integer.valueOf(horario.get(1).substring(3, 5)));
+	
 		bEstablecer = new Button(gHoras, SWT.NONE);
 		bEstablecer.setText("Establecer");
 		bEstablecer.setLayoutData(gridData11);
