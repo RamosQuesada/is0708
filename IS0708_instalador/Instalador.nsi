@@ -119,8 +119,9 @@ Section -jar SEC0001
     File .\Tema\Icono.ico
     File ..\IS0708\configBD
     WriteRegStr HKLM "${REGKEY}\Components" jar 1
-    SetOutPath $INSTDIR
-    CreateShortCut "$INSTDIR\Turno-matic.lnk" "$ACCESO_DIRECTO" "$ATRIBUTOS" "$INSTDIR\Datos\Icono.ico"
+    SetOutPath $INSTDIR\Datos
+    CreateShortCut "$INSTDIR\Datos\Turno-matic.lnk" "$ACCESO_DIRECTO" "$ATRIBUTOS" "$INSTDIR\Datos\Icono.ico"
+    CopyFiles /SILENT /FILESONLY $INSTDIR\Datos\Turno-matic.lnk $INSTDIR
 SectionEnd
 
 Section -Ayuda SEC0002
@@ -144,10 +145,12 @@ Section -post SEC0003
         CreateShortcut "$SMPROGRAMS\$StartMenuGroup\$(^UninstallLink).lnk" "$INSTDIR\Desinstalar Turno-matic.exe"
         SetOutPath $SMPROGRAMS\$StartMenuGroup
         CreateShortcut "$SMPROGRAMS\$StartMenuGroup\Ayuda.lnk "$INSTDIR\Datos\Ayuda\ES\index.html
-        SetOutPath $SMPROGRAMS\$StartMenuGroup
-        CreateShortCut "$SMPROGRAMS\$StartMenuGroup\Turno-matic.lnk" "$ACCESO_DIRECTO" "$ATRIBUTOS" "$INSTDIR\Datos\Icono.ico"
-        SetOutPath $DESKTOP
-        CreateShortCut "$DESKTOP\Turno-matic.lnk" "$ACCESO_DIRECTO" "$ATRIBUTOS" "$INSTDIR\Datos\Icono.ico"
+        #SetOutPath $SMPROGRAMS\$StartMenuGroup
+        #CreateShortCut "$SMPROGRAMS\$StartMenuGroup\Turno-matic.lnk" "$ACCESO_DIRECTO" "$ATRIBUTOS" "$INSTDIR\Datos\Icono.ico"
+        CopyFiles /SILENT /FILESONLY $INSTDIR\Datos\Turno-matic.lnk $SMPROGRAMS\$StartMenuGroup
+        #SetOutPath $DESKTOP
+        #CreateShortCut "$DESKTOP\Turno-matic.lnk" "$ACCESO_DIRECTO" "$ATRIBUTOS" "$INSTDIR\Datos\Icono.ico"
+        CopyFiles /SILENT /FILESONLY $INSTDIR\Datos\Turno-matic.lnk $DESKTOP
     !insertmacro MUI_STARTMENU_WRITE_END
     WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayName "$(^Name)"
     WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayVersion "${VERSION}"

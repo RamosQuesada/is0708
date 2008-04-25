@@ -25,13 +25,11 @@ SetCompressor lzma
 
 !define MUI_FINISHPAGE_NOAUTOCLOSE
 !define MUI_LICENSEPAGE_RADIOBUTTONS
-#TODO !define MUI_FINISHPAGE_SHOWREADME $INSTDIR\Datos\Ayuda\ES\index.html
-!define MUI_FINISHPAGE_SHOWREADME $INSTDIR\Ayuda\ES\index.html
+!define MUI_FINISHPAGE_SHOWREADME $INSTDIR\Datos\Ayuda\ES\index.html
 !define MUI_FINISHPAGE_23
 !define MUI_UNFINISHPAGE_NOAUTOCLOSE
 !define MUI_FINISHPAGE_RUN "c:\jdk1.6.0_02\bin\javaw.exe"
-#TODO !define MUI_FINISHPAGE_RUN_PARAMETERS "-jar $INSTDIR\Datos\Turno-matic.jar"
-!define MUI_FINISHPAGE_RUN_PARAMETERS "-jar $INSTDIR\Turno-matic.jar"
+!define MUI_FINISHPAGE_RUN_PARAMETERS "-jar $INSTDIR\Datos\Turno-matic.jar"
 
 # Included files
 !include Sections.nsh
@@ -74,32 +72,24 @@ Section -Main SEC0000
     RmDir /r $INSTDIR
 
     #jar y configBD
-    #TODO SetOutPath $INSTDIR\Datos
-    SetOutPath $INSTDIR
+    SetOutPath $INSTDIR\Datos
     SetOverwrite on
     File ..\IS0708\Turno-matic.jar
     File ..\IS0708\configBD
-    #TODO borrar la siguiente
-    SetOutPath $INSTDIR\Datos
     File .\Tema\Icono.ico
-    SetOutPath $INSTDIR
-    #TODO CreateShortCut "$INSTDIR\Turno-matic.lnk" "c:\jdk1.6.0_02\bin\javaw.exe" "-jar $\"$INSTDIR\Datos\Turno-matic.jar$\"" "$INSTDIR\Datos\Icono.ico"
-    CreateShortCut "$INSTDIR\Turno-matic.lnk" "c:\jdk1.6.0_02\bin\javaw.exe" "-jar $\"$INSTDIR\Turno-matic.jar$\"" "$INSTDIR\Datos\Icono.ico"
+    SetOutPath $INSTDIR\Datos
+    CreateShortCut "$INSTDIR\Datos\Turno-matic.lnk" "c:\jdk1.6.0_02\bin\javaw.exe" "-jar $\"$INSTDIR\Datos\Turno-matic.jar$\"" "$INSTDIR\Datos\Icono.ico"
+    CopyFiles /SILENT /FILESONLY $INSTDIR\Datos\Turno-matic.lnk $INSTDIR
     
     #Ayuda
-    #TODO SetOutPath $INSTDIR\Datos\Ayuda
-    SetOutPath $INSTDIR\Ayuda
+    SetOutPath $INSTDIR\Datos\Ayuda
     SetOverwrite on
     File /r ..\IS0708\Ayuda\*
-    #TODO RmDir /r $INSTDIR\Datos\Ayuda\.svn
-    #TODO RmDir /r $INSTDIR\Datos\Ayuda\ES\.svn
-    #TODO RmDir /r $INSTDIR\Datos\Ayuda\Imagenes\.svn
-    RmDir /r $INSTDIR\Ayuda\.svn
-    RmDir /r $INSTDIR\Ayuda\ES\.svn
-    RmDir /r $INSTDIR\Ayuda\Imagenes\.svn
+    RmDir /r $INSTDIR\Datos\Ayuda\.svn
+    RmDir /r $INSTDIR\Datos\Ayuda\ES\.svn
+    RmDir /r $INSTDIR\Datos\Ayuda\Imagenes\.svn
     SetOutPath $INSTDIR
-    #TODO CreateShortcut $INSTDIR\Ayuda.lnk $INSTDIR\Datos\Ayuda\ES\index.html
-    CreateShortcut $INSTDIR\Ayuda.lnk $INSTDIR\Ayuda\ES\index.html
+    CreateShortcut $INSTDIR\Ayuda.lnk $INSTDIR\Datos\Ayuda\ES\index.html
 SectionEnd
 
 # Installer functions
