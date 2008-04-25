@@ -1799,7 +1799,7 @@ return result;
 			r = st.executeQuery("SELECT HoraEntrada, HoraSalida FROM " + tablaTrabaja + " WHERE NumVendedor='"+nv+"' AND Fecha='"+d+"' AND IdTurno='"+idturno+"';");
 		} catch (SQLException e) {
 			// TODO: handle exception
-			System.err.println("Database :: Error al realizar la consulta del Jefe del Dpto");
+			System.err.println("Database :: Error al realizar la consulta de Horario del Jefe del Dpto");
 		}
 		return r;
 	}
