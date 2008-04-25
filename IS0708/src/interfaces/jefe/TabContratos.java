@@ -392,17 +392,23 @@ public class TabContratos extends Thread {
 						if (turnosFuera.size() == 0)
 							okis = true;
 						else {
+							okis = okis
+							&& vista
+									.eliminaContratoConTurnos(Integer
+											.valueOf(tit.getText(0)));
+
+							okis = okis && vista.eliminaContrato(idOut);
 							for (int i = 0; i < turnosFuera.size(); i++)
+								
 								okis = okis
 										&& vista
 												.eliminaTurno(turnosFuera
 														.get(i));
 						}
-						okis = okis && vista.eliminaContrato(idOut);
-						okis = okis
-								&& vista
-										.eliminaContratoConTurnos(Integer
-												.valueOf(tit.getText(0)));
+//						okis = okis
+//								&& vista
+//										.eliminaContratoConTurnos(Integer
+//												.valueOf(tit.getText(0)));
 						if (okis) {
 							tablaContratos.remove(index);
 							MessageBox messageBox2 = new MessageBox(
