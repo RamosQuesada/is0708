@@ -4,7 +4,7 @@ SetCompressor lzma
 
 # Defines
 !define REGKEY "SOFTWARE\$(^Name)"
-!define VERSION 0.16.6.8
+!define VERSION 0.17.0.5
 !define COMPANY "Turno-matic"
 !define URL "http://is0708.googlecode.com"
 
@@ -27,10 +27,9 @@ SetCompressor lzma
 !define MUI_LICENSEPAGE_RADIOBUTTONS
 !define MUI_FINISHPAGE_SHOWREADME $INSTDIR\Datos\Ayuda\ES\index.html
 !define MUI_FINISHPAGE_23
-!define MUI_UNFINISHPAGE_NOAUTOCLOSE
-#TODO arreglar esto
-!define MUI_FINISHPAGE_RUN "c:\jdk1.6.0_02\bin\javaw.exe"
-!define MUI_FINISHPAGE_RUN_PARAMETERS "-jar $INSTDIR\Datos\Turno-matic.jar"
+!define MUI_FINISHPAGE_RUN
+!define MUI_FINISHPAGE_RUN_TEXT "$(^IniciarPrograma)"
+!define MUI_FINISHPAGE_RUN_FUNCTION "LaunchLink"
 
 # Included files
 !include Sections.nsh
@@ -50,7 +49,7 @@ ReserveFile "${NSISDIR}\Plugins\AdvSplash.dll"
 # Installer languages
 !insertmacro MUI_LANGUAGE Spanish
 !insertmacro MUI_LANGUAGE English
-!insertmacro MUI_LANGUAGE Polish
+#!insertmacro MUI_LANGUAGE Polish
 
 # Installer attributes
 OutFile "Instalar Turno-matic en lab.exe"
@@ -143,3 +142,13 @@ Function .onInit
     !insertmacro MUI_LANGDLL_DISPLAY
 FunctionEnd
 
+# Ejecuta la aplicacion instalada
+Function LaunchLink
+  ExecShell "" "$INSTDIR\Datos\Turno-matic.lnk"
+FunctionEnd
+
+# Installer Language Strings
+
+LangString ^IniciarPrograma ${LANG_SPANISH} "Iniciar el programa"
+LangString ^IniciarPrograma ${LANG_ENGLISH} "Start the program"
+#LangString ^IniciarPrograma ${LANG_POLISH} "Start the program"
