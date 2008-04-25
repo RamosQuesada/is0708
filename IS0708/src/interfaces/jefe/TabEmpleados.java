@@ -98,6 +98,7 @@ public class TabEmpleados extends Thread{
 		if (_vista.isCacheCargada() && datosInterfazCargados) {
 			tablaEmpleados.removeAll();
 			ArrayList<Empleado> listaFiltrada = (ArrayList<Empleado>) _vista.getEmpleados().clone();
+			listaFiltrada.remove(0);
 			
 			if (tEmplNombre.getText() != "") {
 				for (int i = 0; i < listaFiltrada.size(); i++) {
@@ -133,8 +134,10 @@ public class TabEmpleados extends Thread{
 					}
 				}
 			}
+			
+			
 			// rellenado de la tabla de empleados
-			for (int i = 1; i < listaFiltrada.size(); i++) {
+			for (int i = 0; i < listaFiltrada.size(); i++) {
 				TableItem tItem = new TableItem(tablaEmpleados, SWT.NONE);
 				
 				if (listaFiltrada.get(i).getSexo()==0)
