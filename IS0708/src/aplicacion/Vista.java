@@ -1325,7 +1325,7 @@ public class Vista {
 	public Turno trabajaEmpleadoDia(int nv, Date d) {
 		Cuadrante cuad = getCuadrante(d.getMonth()+1, d.getYear()+1900, getEmpleadoActual().getDepartamentoId());
 		if (cuad != null){
-			ArrayList<Trabaja> dia = cuad.getListaTrabajaDia(d.getDate());
+			ArrayList<Trabaja> dia = cuad.getListaTrabajaDia(d.getDate()-1);
 			for (int j=0; j<dia.size(); j++){
 				if (dia.get(j).getIdEmpl() == nv){
 					return getTurno(dia.get(j).getIdTurno());
@@ -1508,12 +1508,11 @@ public class Vista {
 			if (cu.getIdDepartamento().equals(departamento) && cu.getMes()==mes && cu.getAnio()==anio){
 				if (dia == 1)
 					cuadrantes.remove(i);
-				else {
+				else 
 					cuadrantes.get(i).eliminaTrabajaDesdeDia(dia);
-					i++;
-				}
 				encontrado=true;
 			}
+			i++;
 		}
 		ArrayList<Object> aux=new ArrayList<Object>();
 		aux.add(dia);
