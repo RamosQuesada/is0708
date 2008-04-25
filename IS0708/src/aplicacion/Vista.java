@@ -38,7 +38,7 @@ public class Vista {
 	private Display display;
 	private ResourceBundle bundle;
 	private Locale locale;
-
+	private boolean pidiendoCuadrante=false;
 	private ShellLogin login;
 	private ShellPrincipal shellPrincipal;
 	private boolean alive = true;
@@ -982,6 +982,14 @@ public class Vista {
 	 * @return Cuadrante consultado
 	 */
 	public Cuadrante getCuadrante(int mes, int anio, String idDepartamento) {
+		while (pidiendoCuadrante){
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		pidiendoCuadrante=true;
 		if (!alive) return null;
 		//TODO corregir llamadas a este metodo con idDepartamento = ""
 		String idDpto = idDepartamento;
@@ -989,13 +997,19 @@ public class Vista {
 			idDpto = getEmpleadoActual().getDepartamentoId();
 		int i = 0;
 		while (i<cuadrantes.size()) {
-			if ((cuadrantes.get(i).getAnio()==anio) && (cuadrantes.get(i).getMes()==mes) && (cuadrantes.get(i).getIdDepartamento().equals(idDpto)))
+
+			if ((cuadrantes.get(i).getAnio()==anio) && (cuadrantes.get(i).getMes()==mes) && ((cuadrantes.get(i).getIdDepartamento()).compareTo(idDpto)==0)){
+				pidiendoCuadrante=false;
 				return cuadrantes.get(i);
+				
+			}
+				
 			i++;
 		}
 		// Si no, buscar en BD
 		Cuadrante c = controlador.getCuadrante(mes, anio, idDpto);
 		cuadrantes.add(c);
+		pidiendoCuadrante=false;
 		return c;
 	}
 	
