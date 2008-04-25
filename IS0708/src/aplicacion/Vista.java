@@ -984,19 +984,17 @@ public class Vista {
 	public Cuadrante getCuadrante(int mes, int anio, String idDepartamento) {
 		if (!alive) return null;
 		//TODO corregir llamadas a este metodo con idDepartamento = ""
-		if (idDepartamento.equals(""))
-			idDepartamento = getEmpleadoActual().getDepartamentoId();
+		String idDpto = idDepartamento;
+		if (idDpto.equals(""))
+			idDpto = getEmpleadoActual().getDepartamentoId();
 		int i = 0;
 		while (i<cuadrantes.size()) {
-			if (cuadrantes.get(i).getAnio()==anio)
-				if (cuadrantes.get(i).getMes()==mes)
-					if (cuadrantes.get(i).getIdDepartamento().equals(idDepartamento)) {
-						return cuadrantes.get(i);
-					}
+			if ((cuadrantes.get(i).getAnio()==anio) && (cuadrantes.get(i).getMes()==mes) && (cuadrantes.get(i).getIdDepartamento().equals(idDpto)))
+				return cuadrantes.get(i);
 			i++;
 		}
 		// Si no, buscar en BD
-		Cuadrante c = controlador.getCuadrante(mes, anio, idDepartamento);
+		Cuadrante c = controlador.getCuadrante(mes, anio, idDpto);
 		cuadrantes.add(c);
 		return c;
 	}
