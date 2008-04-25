@@ -28,6 +28,7 @@ SetCompressor lzma
 !define MUI_FINISHPAGE_SHOWREADME $INSTDIR\Datos\Ayuda\ES\index.html
 !define MUI_FINISHPAGE_23
 !define MUI_UNFINISHPAGE_NOAUTOCLOSE
+#TODO arreglar esto
 !define MUI_FINISHPAGE_RUN "c:\jdk1.6.0_02\bin\javaw.exe"
 !define MUI_FINISHPAGE_RUN_PARAMETERS "-jar $INSTDIR\Datos\Turno-matic.jar"
 
