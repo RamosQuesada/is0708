@@ -33,6 +33,8 @@ public class TabDepartamentos extends Thread{
 	private Combo cmbDepartamentos;
 	private Text lContenido;
 	private HorarioMes calendario;
+	private Combo comboMes;
+	private Combo comboAnio;
 	
 	public TabDepartamentos(TabFolder tabFolder, Vista vista, ResourceBundle bundle, Shell padre) {
 		this.vista = vista;
@@ -162,29 +164,33 @@ public class TabDepartamentos extends Thread{
 		//comentado hasta que no pete. para probar dscomentar
 		cInfoHorario=new SubTabConfiguracionDias(vista, null, fCentro,bundle,padre);
 		
-		final Composite cMes=new Composite(fCentro,SWT.NONE);
+		final Composite cMes=new Composite(fCentro,SWT.BORDER);
 		cMes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 				true, 1, 1));
 		cMes.setLayout(new GridLayout(2, false));
 		
-		final Composite cCombos=new Composite(cMes,SWT.NONE);
-		cCombos.setLayout(new GridLayout(2,false));
-		
 		calendario=new HorarioMes(cMes, padre, 5, 2008);	
 		calendario.setMes(5, 2008);
-			
-		final Combo comboMes=new Combo(cCombos,SWT.BORDER | SWT.READ_ONLY);
-		final Combo comboAnio=new Combo(cCombos,SWT.BORDER | SWT.READ_ONLY);
+		
+		final Composite cCombos=new Composite(cMes,SWT.NONE);
+		cCombos.setLayout(new GridLayout(2,false));
+				
+		comboMes=new Combo(cCombos,SWT.BORDER | SWT.READ_ONLY);
+		comboMes.setLayoutData(new GridData(SWT.CENTER,SWT.BEGINNING,true,false));
+		comboAnio=new Combo(cCombos,SWT.BORDER | SWT.READ_ONLY);
+		comboAnio.setLayoutData(new GridData(SWT.CENTER,SWT.BEGINNING,true,false));
 		final Button bSetMes=new Button(cCombos,SWT.PUSH);
+		bSetMes.setLayoutData(new GridData(SWT.FILL,SWT.BEGINNING,true,true,2,1));
+		bSetMes.setText(bundle.getString("TabDepartamentos_bSetMes"));
 		
 		bSetMes.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				calendario.setMes(comboMes.getSelectionIndex()+1, comboMes.getSelectionIndex()+2008);
+				calendario.setMes(comboMes.getSelectionIndex()+1, comboAnio.getSelectionIndex()+2008);
 			}
 		});
-
 		
-		
+		setCombos();
+	
 		lContenido = new Text(fCentro, SWT.READ_ONLY | SWT.MULTI |SWT.V_SCROLL);
 		
 		lContenido.setEditable(false);
@@ -201,7 +207,7 @@ public class TabDepartamentos extends Thread{
 		
 		TabItem tab2=new TabItem(fCentro, SWT.NONE);
 		tab2.setText(bundle.getString("TabDepartamentos_tab2"));
-		tab2.setControl(calendario.getComposite());
+		tab2.setControl(cMes);
 		
 		
 		
@@ -215,6 +221,28 @@ public class TabDepartamentos extends Thread{
 		
 		start();
 
+	}
+
+
+	private void setCombos() {
+		comboMes.add(bundle.getString("enero"));
+		comboMes.add(bundle.getString("febrero"));
+		comboMes.add(bundle.getString("marzo"));
+		comboMes.add(bundle.getString("abril"));
+		comboMes.add(bundle.getString("mayo"));
+		comboMes.add(bundle.getString("junio"));
+		comboMes.add(bundle.getString("julio"));
+		comboMes.add(bundle.getString("agosto"));
+		comboMes.add(bundle.getString("septiembre"));
+		comboMes.add(bundle.getString("octubre"));
+		comboMes.add(bundle.getString("noviembre"));
+		comboMes.add(bundle.getString("diciembre"));
+		comboMes.select(0);
+		
+		//los años deben empezar en 2008
+		String[] anios={"2008","2009","2010","2011","2012","2013","2014","2015"};
+		comboAnio.setItems(anios);
+		comboAnio.select(0);	
 	}
 
 }

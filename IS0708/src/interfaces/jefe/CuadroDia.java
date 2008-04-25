@@ -83,7 +83,7 @@ public class CuadroDia {
 		composite.setLayout(gridLayout);
 		composite.addMouseListener(new org.eclipse.swt.events.MouseAdapter() {
 			public void mouseDoubleClick(org.eclipse.swt.events.MouseEvent e) {
-				//TODO hacer listener
+				setMarcado();
 			}
 		});
 		lDia = new Label(composite, SWT.NONE);
@@ -92,7 +92,7 @@ public class CuadroDia {
 		lDia.setLayoutData(gridData1);
 		lDia.addMouseListener(new org.eclipse.swt.events.MouseAdapter() {
 			public void mouseDoubleClick(org.eclipse.swt.events.MouseEvent e) {
-				//TODO hacer listener
+				setMarcado();
 			}
 		});
 	}
@@ -123,6 +123,12 @@ public class CuadroDia {
 		composite.setBackground(new Color(Display.getCurrent(),255,150,150));
 		lDia.setBackground(new Color (Display.getCurrent(),255,150,150));
 	}
+	
+	public void setMarcado(){
+		composite.setBackground(new Color(Display.getCurrent(),255,128,0));
+		lDia.setBackground(new Color(Display.getCurrent(),255,128,0));
+	}
+	
 	
 	public void desactivar(){
 		//composite.setBackground(new Color(Display.getCurrent(),192,192,192));
