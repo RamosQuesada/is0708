@@ -22,6 +22,7 @@ import aplicacion.datos.Contrato;
 import aplicacion.datos.Departamento;
 import aplicacion.datos.Empleado;
 import aplicacion.datos.Turno;
+import aplicacion.datos.Ventas;
 import aplicacion.mensajeria.Mensaje;
 
 import idiomas.LanguageChanger;
@@ -76,6 +77,10 @@ public class Vista {
 	
 	/** Caché local: Sugerencias del departamento actual */
 	private ArrayList<Sugerencia> sugerencias = new ArrayList<Sugerencia>();
+	
+	/** Caché local: Ventas del departamento actual */
+	private ArrayList<ArrayList<Ventas>> vector_ventas = new ArrayList<ArrayList<Ventas>>();
+	
 	
 	/**
 	 * cola FIFO de inserciones/actualizaciones a realizar en la BD
