@@ -1112,6 +1112,13 @@ public class Vista {
 	public ArrayList<Turno> getTurnos(){
 		return turnos;
 	}
+	/**
+	 * Funcion que mete en cache las ventas de un año dado
+	 * @param anio
+	 */
+	public void getVentas(int anio){
+		vector_ventas=controlador.get_Ventas(anio);
+	}
 
 	/**
 	 * Carga los mensajes de la base de datos
