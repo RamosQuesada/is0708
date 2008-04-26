@@ -339,7 +339,7 @@ public class ShellPrincipal {
 				vista.setCursorEspera();
 				vista.setProgreso(bundle.getString("I02_lab_CargandoCuads"), 50);
 				ic.setDia(calendario.getDay(), calendario.getMonth()+1, calendario.getYear());
-				
+				//zeon
 				vista.setProgreso(bundle.getString("I02_lab_CargandoCuads"),100);
 				vista.setCursorFlecha();
 			}
