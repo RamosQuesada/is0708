@@ -44,7 +44,8 @@ public class ShellPrincipal {
 
 	private int tmAnio, tmMes, tmDia;
 	private String tmDep;
-	private Button itsMagic, bGuardarCambios; 
+	private Button itsMagic, bGuardarCambios;
+	private Text textSugerencias;
 	private TabFolder tabFolder;
 	private Composite estado;
 	private int primerDiaGenerarCuadrante;
@@ -95,6 +96,7 @@ public class ShellPrincipal {
 							cDepartamentos.add(vista.getDepartamento(vista.getEmpleadoActual().getDepartamentosId().get(i)).getNombreDepartamento());
 						}
 						cDepartamentos.setEnabled(true);
+						ic.setEnabled(true);
 						cDepartamentos.select(0);
 						tmDep = cDepartamentos.getText();
 						ic.setDepartamentoYCarga(tmDep);
@@ -115,6 +117,7 @@ public class ShellPrincipal {
 			display.asyncExec(new Runnable() {
 				public void run() {
 					itsMagic.setEnabled(false);
+					ic.setEnabled(false);
 					cDepartamentos.setEnabled(false);
 				}
 			});
@@ -153,6 +156,7 @@ public class ShellPrincipal {
 					ic.redibujar();
 					
 					itsMagic.setEnabled(true);
+					ic.setEnabled(true);
 					cDepartamentos.setEnabled(true);
 				}
 			});
@@ -299,6 +303,7 @@ public class ShellPrincipal {
 
 		// TODO arreglar parámetros (cogerlos del departamento)
 		ic = new I_Cuadrante(vista, 0, 0, tmDep, 4, 9, 23);
+		ic.setEnabled(false);
 		Thread loader = new Thread(new CuadranteLoader());
 		loader.start();
 		cDepartamentos.addListener(SWT.Selection, new Listener() {
@@ -333,49 +338,42 @@ public class ShellPrincipal {
 						+ String.valueOf(calendario.getYear()));
 				vista.setCursorEspera();
 				vista.setProgreso(bundle.getString("I02_lab_CargandoCuads"), 50);
-				ic.setDia(calendario.getDay(), calendario.getMonth()+1,
-						calendario.getYear());
+				ic.setDia(calendario.getDay(), calendario.getMonth()+1, calendario.getYear());
+				
 				vista.setProgreso(bundle.getString("I02_lab_CargandoCuads"),100);
 				vista.setCursorFlecha();
 			}
 		});
-		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false,
-				2, 1));
-		final Button bPorMes = new Button(cCuadrantes, SWT.RADIO);
-		bPorMes.setText(bundle.getString("I02_but_Verpormes"));
-		bPorMes.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));
+		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));
 		
-		// Creamos un boton para la seleccion del horario por semanas
+		Composite cBotonesBajoCalendario = new Composite(cCuadrantes, SWT.NONE);
+		cBotonesBajoCalendario.setLayout(new GridLayout(2,false));
+		cBotonesBajoCalendario.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 2, 1));
+
+		final Button bPorMes = new Button(cBotonesBajoCalendario, SWT.RADIO);
+		bPorMes.setText(bundle.getString("I02_but_Verpormes"));
+		bPorMes.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		
+		// Botón de generación de cuadrantes
+		itsMagic = new Button(cBotonesBajoCalendario, SWT.PUSH);
+		itsMagic.setEnabled(false);
+		itsMagic.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
+		itsMagic.setText(bundle.getString("I02_but_generarCuadrantes"));
+
+		final Button bPorDia = new Button(cBotonesBajoCalendario, SWT.RADIO);
+		bPorDia.setText(bundle.getString("I02_but_Verpordia"));
+		bPorDia.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		bPorDia.setSelection(true);
+		
 
 		// Oyente para saber cuando se ha modificado la seleccion del boton
-		/** ********************************************************* */
 		bPorMes.addListener(SWT.Selection, new Listener() {
 			// Seleccionado por mes
 			public void handleEvent(Event e) {
-				if (bPorMes.getSelection()) {
-					ic.setDiario(false);
-					ic.setMovCuadSemanal(false);
-					//ic.redibujar();
-				} else {
-					ic.setDiario(true);
-					ic.setMovCuadSemanal(true);
-					//ic.redibujar();
-				}
+				ic.setDiario(!bPorMes.getSelection());
 			}
 		});
-		/** ********************************************************* */
-		final Button bPorSemanas = new Button(cCuadrantes, SWT.RADIO);
-		bPorSemanas.setText(bundle.getString("I02_but_Verpordia"));
-		bPorSemanas.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false,
-				2, 1));
-		bPorSemanas.setSelection(true);
 		
-		
-		// Botón de generación de cuadrantes
-		itsMagic = new Button(cCuadrantes, SWT.PUSH);
-		itsMagic.setEnabled(false);
-		itsMagic.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 2, 1));
-		itsMagic.setText(bundle.getString("I02_but_generarCuadrantes"));
 		itsMagic.addSelectionListener(new SelectionListener() {
 			public void widgetDefaultSelected(SelectionEvent arg0) {}
 			public void widgetSelected(SelectionEvent arg0) {
@@ -420,6 +418,10 @@ public class ShellPrincipal {
 			}
 		});
 
+		textSugerencias = new Text(cCuadrantes,SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
+		textSugerencias.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 2, 1));
+
+		
 		// Botón para guardar los cambios sobre un cuadrante
 		bGuardarCambios = new Button(cCuadrantes, SWT.PUSH);
 		bGuardarCambios.setEnabled(false);
@@ -443,7 +445,7 @@ public class ShellPrincipal {
 				new CambiarDatos(tabFolder.getShell(), bundle, vista);
 			}
 		});
-		ic.setComposite(cCuadrante,bPorMes,bPorSemanas, bGuardarCambios, calendario);
+		ic.setComposite(cCuadrante,bPorMes,bPorDia, bGuardarCambios, calendario);
 
 	}
 
@@ -556,8 +558,7 @@ public class ShellPrincipal {
 		final Composite cEstadisticas = new Composite(tabFolder, SWT.NONE);
 		tabItem.setControl(cEstadisticas);
 
-		cEstadisticas.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false,
-				true, 1, 1));
+		cEstadisticas.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
 		// Le añadimos un layout
 		GridLayout lEstadisticas = new GridLayout();
 		lEstadisticas.numColumns = 2;
@@ -566,17 +567,14 @@ public class ShellPrincipal {
 		// Creamos el contenido interno de la pestaña cuadrantes
 		// Creamos un composite para los botones
 		final Composite cEstIzq = new Composite(cEstadisticas, SWT.BORDER);
-		cEstIzq.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1,
-				1));
+		cEstIzq.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
 		GridLayout lEstIzq = new GridLayout();
 		lEstIzq.numColumns = 1;
 		lEstIzq.makeColumnsEqualWidth = true;
 		cEstIzq.setLayout(lEstIzq);
 
 		final Composite cEstDer = new Composite(cEstadisticas, SWT.BORDER);
-		cEstDer
-				.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,
-						1));
+		cEstDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		GridLayout lEstDer = new GridLayout();
 		lEstDer.numColumns = 1;
 		lEstDer.makeColumnsEqualWidth = true;
@@ -587,18 +585,13 @@ public class ShellPrincipal {
 		lTitulo.setFont(new org.eclipse.swt.graphics.Font(
 				org.eclipse.swt.widgets.Display.getDefault(), "Arial", 10,
 				org.eclipse.swt.SWT.BOLD));
-		lTitulo
-				.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1,
-						1));
+		lTitulo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
 
 		final Label lTiempo = new Label(cEstIzq, SWT.LEFT);
 		lTiempo.setText(this.bundle.getString("tiempodatos"));
-		lTiempo
-				.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1,
-						1));
+		lTiempo.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
 		Combo cTiempo = new Combo(cEstIzq, SWT.BORDER | SWT.READ_ONLY);
-		cTiempo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1,
-				1));
+		cTiempo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		cTiempo.setItems(new String[] { bundle.getString("semana"),
 				bundle.getString("quincena"), bundle.getString("mes"),
 				bundle.getString("ano") });
@@ -606,11 +599,9 @@ public class ShellPrincipal {
 
 		final Label lComparar = new Label(cEstIzq, SWT.LEFT);
 		lComparar.setText(bundle.getString("compararcon"));
-		lComparar.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1,
-				1));
+		lComparar.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
 		Combo cComparar = new Combo(cEstIzq, SWT.BORDER | SWT.READ_ONLY);
-		cComparar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
-				1, 1));
+		cComparar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		cComparar.setItems(new String[] { bundle.getString("nadie"),
 				bundle.getString("empleadomedio"),
 				bundle.getString("mejorsemana"), bundle.getString("mejormes"),
