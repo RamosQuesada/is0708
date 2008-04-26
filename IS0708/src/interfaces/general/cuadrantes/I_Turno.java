@@ -161,7 +161,7 @@ public class I_Turno extends aplicacion.datos.Turno {
 		if (activa1 || despPestana1!=0) {
 			// Modificar los colores teniendo siempre en cuenta los límites [0-255]
 			Util.cambiarRelleno(display, gc, r-50,g-50,b-50);
-			gc.fillRoundRectangle(inicio1+2,despV-despPestana1,135,20,10,10);
+			gc.fillRoundRectangle(inicio1+2,despV-despPestana1,135, 20,10,10);
 			Util.cambiarRelleno(display, gc, r,g,b);	
 			gc.fillRoundRectangle(inicio1, despV-despPestana1-2, 135, 20,8,8);
 			gc.drawRoundRectangle(inicio1, despV-despPestana1-2, 135, 20,8,8);
@@ -177,7 +177,7 @@ public class I_Turno extends aplicacion.datos.Turno {
 			if (activa1) subePestana1();
 			else bajaPestana1();
 		}
-		else if (activa2 || despPestana2!=0) {
+		if (activa2 || despPestana2!=0) {
 			// Modificar los colores teniendo siempre en cuenta los límites [0-255]
 			Util.cambiarRelleno(display, gc, r-50,g-50,b-50);
 			gc.fillRoundRectangle(inicio2+2,despV-despPestana2,135,20,10,10);
@@ -192,7 +192,6 @@ public class I_Turno extends aplicacion.datos.Turno {
 			gc.drawText(s, inicio2+5, despV-despPestana2-1, true);
 			if (activa2) subePestana2();
 			else bajaPestana2();
-
 		}
 	}
 	

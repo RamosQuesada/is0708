@@ -64,9 +64,11 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private boolean cacheCargada = false;
 	private I_Turno turno = null;
 	private int despMouse;
+	private boolean enabled; // Dice si el widget está activado
+	/** 1 vista mensual, 2 vista diaria. */
+	private int tipoVista=2;
 	
 	// La variable terminadoDeCrear sirve para que una franja nueva no desaparezca al crearla
-	private Boolean diario = true; // 1: muestra cuadrante diario, 0: muestra cuadrante mensual
 	private int empleadoActivo = -1;
 	private I_Turno turnoActivo  = null; // Este turno es para el interfaz de creación de turnos
 	private boolean moviendoEmpleado = false;	// Indica si estamos desplazando al empleado
@@ -80,15 +82,14 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private String departamento;
 	private Image fondo;
 	
-	private int diaActVistaMes=0;
-	private int empActVistaMes=0;
+	private int diaActVistaMes=0; // el día activo en la vista mensual
+	private int empActVistaMes=0; // el empleado activo en la vista mensual
 	private int indiceEmpAct=0;
 	private boolean diaValido=false;
 	private boolean nombreValido=false;
 	private String nombreSeleccionado=null;
 	private int nombreMarcado=0;
 	private boolean enCuadricula=false;
-	private boolean turnoPulsado=false;
 	private int turnPulsX=0;
 	private int turnPulsY=0;
 	
@@ -690,8 +691,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			public void mouseDoubleClick(MouseEvent e){
 				if (e.button == 1 &&(diaValido)) {
 					//Volver a la vista diaria con el dia seleccionado
-					diario=true;
-					setMovCuadSemanal(true);
+					tipoVista=2;
+					setListenersTipoVista(2);
 					cursor(0);
 					bPorMes.setSelection(false);
 					bPorDia.setSelection(true);
@@ -779,8 +780,8 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			}
 		};
 
-	canvas.addMouseMoveListener(mouseMoveListenerCuadrDiario);
-	canvas.addMouseListener(mouseListenerCuadrDiario);
+//	canvas.addMouseMoveListener(mouseMoveListenerCuadrDiario);
+//	canvas.addMouseListener(mouseListenerCuadrDiario);
 	}
 
 	private int dameMovimiento() {
@@ -798,7 +799,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			catch (SWTException ex){
 				System.err.println(ex.code);
 			}
-			if (diario) dibujarCuadranteDia(display, gc2, empleadoActivo);
+			if (tipoVista==2) dibujarCuadranteDia(display, gc2, empleadoActivo);
 			else dibujarCuadranteMes(gc2);
 			gc.drawImage(bufferImage, 0, origen);
 			bufferImage.dispose();
@@ -861,7 +862,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		setTamano(ancho, alto);
 		if (turno!=null)
 			turno.recalcularFranjas(margenIzq, margenNombres, horaApertura, tamHora);
-		else if (cacheCargada && diario) {
+		else if (cacheCargada && tipoVista==2) {
 			for (int i = 0; i < iCuad[dia-1].size(); i++) {
 				if (iCuad[dia-1].get(i).getTurno()==null) 
 					System.out.println("Turno nulo dia " + dia + " posicion " + i);
@@ -890,7 +891,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					if (!canvas.getShell().isDisposed()) {
 						canvas.redraw();
 						if (turno==null)
-							if (diario)
+							if (tipoVista==2)
 								lCuadranteTitulo.setText(String.valueOf(dia) + " de " + aplicacion.utilidades.Util.mesAString(vista.getBundle(), mes-1) + " de " + String.valueOf(anio));
 							else
 								lCuadranteTitulo.setText(aplicacion.utilidades.Util.mesAString(vista.getBundle(), mes-1).substring(0,1).toUpperCase()+
@@ -1096,7 +1097,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		int h = horaCierre - horaApertura;
 		int sep = (ancho - m - margenDer)/h;
 		int subsep = sep/numSubdivisiones;
-		if (fondo == null && diario) {
+		if (fondo == null && tipoVista==2) {
 			fondo = new Image(display,ancho,alto);
 			GC gcFondo = new GC(fondo);
 			for (int i=0; i<=h; i++) {
@@ -1113,7 +1114,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 					}
 			}
 			gcFondo.setLineStyle(SWT.LINE_SOLID);
-		} else if (fondo==null && !diario) {
+		} else if (fondo==null && tipoVista!=2) {
 			if (cacheCargada){
 				fondo = new Image(display,ancho,alto);
 				GC gcFondo = new GC(fondo);						
@@ -1376,24 +1377,34 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	
 	/**
 	 * Cambia la forma del cursor según el parámetro escrito.
-	 * @param i		Entero con el cursor a mostrar.
+	 * @param i		Entero con el cursor a mostrar:<br>
+	 * <ul>				
+	 * <li>0: Arrow</li>
+	 * <li>1: Hand</li>
+	 * <li>2: Size E</li>
+	 * <li>3: Size All</li>
+	 * <li>4: Wait</li>
+	 * </ul>
 	 */
 	private void cursor(int i) {
-		switch (i) {
-		case 1:
-			canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_HAND));
-			break;
-		case 2:
-			canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_SIZEE));
-			break;
-		case 3:
-			canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_SIZEALL));
-			break;
-		default:
-			canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_ARROW));
-			break;
-		}
-
+		if (canvas!=null)
+			switch (i) {
+			case 1:
+				canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_HAND));
+				break;
+			case 2:
+				canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_SIZEE));
+				break;
+			case 3:
+				canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_SIZEALL));
+				break;
+			case 4:
+				canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_WAIT));
+				break;
+			default:
+				canvas.setCursor(new Cursor(canvas.getDisplay(), SWT.CURSOR_ARROW));
+				break;
+			}
 	}
 /*
 	public ImageData getDrawableImage() {
@@ -1414,27 +1425,28 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	 * @param d		booleano con el valor a establecer.
 	 */
 	public void setDiario(boolean d) {
-		diario=d;
+		if (d) {
+			tipoVista = 2;
+			setListenersTipoVista(2);
+		} else {
+			tipoVista = 1;
+			setListenersTipoVista(1);
+		}
 		fondo = null;
+		calcularTamano();
 		redibujar();
 	}
 	
 	/**
 	 * Activa/desactiva las acciones del raton sobre los cuadrantes diarios y mensuales.
-	 * @param b 	True activa, False desactiva.
+	 * @param i 	Define qué cambio realizar:<br>
+	 * 				0 desactiva listeners<br>
+	 * 				1 activa listeners mensuales (desactiva diarios)<br>
+	 * 				2 activa listeners diarios (desactiva mensuales)
 	 */
-	public void setMovCuadSemanal(boolean b) {
-		if (b) {
-			canvas.removeMouseMoveListener(mouseMoveListenerCuadrMensual);
-			canvas.removeMouseListener(mouseListenerCuadrMensual);
-			canvas.addMouseMoveListener(mouseMoveListenerCuadrDiario);
-			canvas.addMouseListener(mouseListenerCuadrDiario);
-			//lCuadranteTitulo.setVisible(true);
-			lGridCuadrante.setVisible(true);
-			cGridCuadrante.setVisible(true);
-			this.calcularTamano();
-		}
-		else {
+	public void setListenersTipoVista(int i) {
+		switch (i) {
+		case 1:
 			canvas.removeMouseMoveListener(mouseMoveListenerCuadrDiario);
 			canvas.removeMouseListener(mouseListenerCuadrDiario);
 			canvas.addMouseMoveListener(mouseMoveListenerCuadrMensual);
@@ -1443,6 +1455,27 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			//lCuadranteTitulo.setVisible(false);
 			lGridCuadrante.setVisible(false);
 			cGridCuadrante.setVisible(false);
+			tipoVista = 1;
+			break;
+		case 2: 
+			canvas.removeMouseMoveListener(mouseMoveListenerCuadrMensual);
+			canvas.removeMouseListener(mouseListenerCuadrMensual);
+			canvas.addMouseMoveListener(mouseMoveListenerCuadrDiario);
+			canvas.addMouseListener(mouseListenerCuadrDiario);
+			//lCuadranteTitulo.setVisible(true);
+			lGridCuadrante.setVisible(true);
+			cGridCuadrante.setVisible(true);
+			this.calcularTamano();
+			tipoVista = 2;
+			break;
+		default:
+			if (canvas!=null) {
+				canvas.removeMouseMoveListener(mouseMoveListenerCuadrMensual);
+				canvas.removeMouseListener(mouseListenerCuadrMensual);
+				canvas.removeMouseMoveListener(mouseMoveListenerCuadrDiario);
+				canvas.removeMouseListener(mouseListenerCuadrDiario);
+			}
+			break;
 		}
 	}
 	
@@ -1530,5 +1563,21 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			i++;
 		}
 		return max;
-	}	
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+		if (enabled) {
+			setListenersTipoVista(tipoVista);
+			cursor(0);
+		}
+		else {
+			setListenersTipoVista(0);
+			cursor(4);
+		}
+	}
 }
