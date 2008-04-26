@@ -799,8 +799,10 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			catch (SWTException ex){
 				System.err.println(ex.code);
 			}
-			if (tipoVista==2) dibujarCuadranteDia(display, gc2, empleadoActivo);
-			else dibujarCuadranteMes(gc2);
+			if (tipoVista==2) 
+				dibujarCuadranteDia(display, gc2, empleadoActivo);
+			else
+				dibujarCuadranteMes(gc2);
 			gc.drawImage(bufferImage, 0, origen);
 			bufferImage.dispose();
 		}
@@ -931,11 +933,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		if (turno!=null) {			
 			turno.dibujar(display, "", gc, 0, null, margenIzq, margenNombres,margenSup,sep_vert_franjas,alto_franjas,tamHora, tamSubdiv, horaApertura, numSubdivisiones,0);
 		}
-		else if (!cacheCargada) {
-			gc.setForeground(new Color(display, 0,0,0));
-			gc.drawText("Cargando\ndatos...", 5, 5);
-		}
-		else {
+		else if (cacheCargada) {
 /*			for (int i = 0; i < iCuad[dia-1].size(); i++) {
 				// Dibujar el nombre del empleado y el turno
 				String nombre = iCuad[dia-1].get(i).getEmpl().getNombre().charAt(0) + ". " + iCuad[dia-1].get(i).getEmpl().getApellido1();
@@ -1100,10 +1098,14 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		if (fondo == null && tipoVista==2) {
 			fondo = new Image(display,ancho,alto);
 			GC gcFondo = new GC(fondo);
+			if (!enabled) {
+				gcFondo.setBackground(display.getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND));
+				gcFondo.fillRectangle(0,0,ancho,alto);
+			}
 			for (int i=0; i<=h; i++) {
 				gcFondo.setLineStyle(SWT.LINE_SOLID);
 				gcFondo.setForeground(new Color(display,40,80,40));
-				if (sep>14 && sep<=20) gcFondo.drawText(String.valueOf((horaApertura+i)%24),     m+i*sep-5, margenSup, true);
+				if (sep>14 && sep<=20) gcFondo.drawText(String.valueOf((horaApertura+i)%24), m+i*sep-5, margenSup, true);
 				else if (sep>20)     gcFondo.drawText(String.valueOf((horaApertura+i)%24)+'h', m+i*sep-5, margenSup, true);
 				gcFondo.drawLine(m+i*sep, 20+margenSup, m+i*sep, alto-margenInf);
 				gcFondo.setForeground(new Color(display, 120,170,120));
@@ -1579,5 +1581,6 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			setListenersTipoVista(0);
 			cursor(4);
 		}
+		fondo=null;
 	}
 }
