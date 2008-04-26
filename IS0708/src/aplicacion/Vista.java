@@ -1116,7 +1116,7 @@ public class Vista {
 	 * Funcion que mete en cache las ventas de un año dado
 	 * @param anio
 	 */
-	public void getVentas(int anio){
+	public void almacena_ventas_cache(int anio){
 		vector_ventas=controlador.get_Ventas(anio);
 	}
 
