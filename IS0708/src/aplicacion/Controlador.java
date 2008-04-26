@@ -15,6 +15,7 @@ import aplicacion.datos.Contrato;
 import aplicacion.datos.Departamento;
 import aplicacion.datos.Empleado;
 import aplicacion.datos.Turno;
+import aplicacion.datos.Ventas;
 import aplicacion.mensajeria.Mensaje;
 import aplicacion.utilidades.Util;
 
@@ -1803,6 +1804,16 @@ public class Controlador {
 					+ " no tiene turnos asignados");
 			return null;
 		}
+	}
+	/**
+	 * Funcion que devuelve un arrayList donde se especifican las ventas de un año dado
+	 * @param anio
+	 * @return ArrayList<ArrayList<Ventas>>
+	 */
+	public ArrayList<ArrayList<Ventas>> get_Ventas(int anio){
+		ArrayList<ArrayList<Ventas>> vector_ventas = new ArrayList<ArrayList<Ventas>>();
+		//Camilo aqui tienes que llamar al metodo que hagas en la base de datos para rellenarlo
+		return null;
 	}
 
 	/**
