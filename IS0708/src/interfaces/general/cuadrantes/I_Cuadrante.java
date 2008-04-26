@@ -518,7 +518,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 							while (!encontrado && i < iCuad[dia-1].size()) {
 								t = iCuad[dia-1].get(i).getTurno();
 								if (empleadoActivo==-1) { cursor(0); t.desactivarFranjas();}
-								else if (iCuad[dia-1].get(i).getEmpl().getEmplId() == empleadosMostrados.get(empleadoActivo).getEmplId()) {
+								else if (iCuad[dia-1].get(i).getEmpl()!=null && iCuad[dia-1].get(i).getEmpl().getEmplId() == empleadosMostrados.get(empleadoActivo).getEmplId()) {
 									if 		(t.contienePixelInt(e.x))	{ cursor(1); encontrado = true; turnoActivo = t; redibujar=true;}
 									else if (t.tocaLadoIzquierdo(e.x))	{ cursor(2); encontrado = true; turnoActivo = t; redibujar=true;}
 									else if (t.tocaLadoDerecho(e.x))	{ cursor(2); encontrado = true; turnoActivo = t; redibujar=true;}
@@ -826,6 +826,12 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		this.dia = dia;
 		this.mes = mes;
 		this.anio = anio;
+		try {
+			String s = vista.getSugerencias(mes, anio, departamento).get(0).toString();
+			if (s!=null)
+				System.out.println(s);
+		}
+		catch(Exception e) {System.err.println("No encuentro sugerencias.");}
 		if (vista.isCacheCargada()) {
 			cargarDeCache();
 			redibujar();			
