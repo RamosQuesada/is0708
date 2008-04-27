@@ -203,7 +203,7 @@ public class TabMensajeria extends Thread{
 					Mensaje m = vista.getTodosMensajesEntrantes().get(totalEntrantes - tablaMensajes.getSelectionIndex()-1-primerMensaje);
 					estaMarcado = m.isMarcado(); 
 					vista.setLeido(m);
-					new ShellEscribirMensaje(tabFolder.getShell(),bundle,vista,m,0,"");
+					new ShellEscribirMensaje(tabFolder.getShell(),bundle,vista,m,0,"",false);
 				}
 			}
 			public void mouseUp(MouseEvent e) {};
@@ -285,7 +285,7 @@ public class TabMensajeria extends Thread{
 		bMensNuevo.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				//new ShellMensajeNuevo(tabFolder.getShell(), bundle, vista);
-				new ShellEscribirMensaje(tabFolder.getShell(),bundle,vista,null,0,"");
+				new ShellEscribirMensaje(tabFolder.getShell(),bundle,vista,null,0,"",false);
 			}
 		});
 		
@@ -297,8 +297,8 @@ public class TabMensajeria extends Thread{
 		bMensResponder.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				if(mensSelecionado!=null)
-				new ShellEscribirMensaje(tabFolder.getShell(),bundle,vista,null,mensSelecionado.getRemitente(),
-						vista.getEmpleado(mensSelecionado.getRemitente()).getNombreCompleto());
+				new ShellEscribirMensaje(tabFolder.getShell(),bundle,vista,mensSelecionado,mensSelecionado.getRemitente(),
+						vista.getEmpleado(mensSelecionado.getRemitente()).getNombreCompleto(),true);
 			}
 		});
 		
