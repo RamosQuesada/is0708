@@ -228,14 +228,10 @@ public class ShellEscribirMensaje {
 		shell.addListener (SWT.Close, new Listener () {
 				public void handleEvent (Event e) {
 					if(!(tAsunto.getCharCount()==0)||!(tMensaje.getCharCount()==0)){
-					/*	MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO | SWT.ICON_INFORMATION);
+						MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.YES | SWT.NO | SWT.ICON_INFORMATION);
 						messageBox.setText (_bundle.getString("Mensaje"));
 						messageBox.setMessage (_bundle.getString("salimensaje"));
-						e.doit = (messageBox.open () == SWT.YES);*/
-						MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
-						messageBox.setText (_bundle.getString("Enviado"));
-						messageBox.setMessage (_bundle.getString("I14_lab_Enviado"));
-						messageBox.open ();
+						e.doit = (messageBox.open () == SWT.YES);
 					}	
 				
 				}
