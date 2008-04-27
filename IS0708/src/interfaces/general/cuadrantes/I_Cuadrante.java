@@ -3,7 +3,6 @@ package interfaces.general.cuadrantes;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -792,7 +791,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private void dibujarCuadrante(GC gc) {
 		// Doble buffering para evitar parpadeo
 		if (ancho != 0 && alto != 0) {
-			Image bufferImage = new Image(display, ancho, alto);
+			Image bufferImage = new Image(display, ancho, canvas.getSize().y);
 			GC gc2 = new GC(bufferImage);
 			try {
 				gc2.setAntialias(SWT.ON);
@@ -858,7 +857,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		ancho = canvas.getClientArea().width;
 		int altoVentana = canvas.getClientArea().height;
 		if (cacheCargada)
-			alto = 30 * alto_franjas;
+			alto = (vista.getEmpleadosDepartamento(departamento).size()+1) * (alto_franjas + sep_vert_franjas);
 		else alto = altoVentana;
 		if (vBar!=null) {
 			if (alto<=altoVentana) vBar.setEnabled(false);
