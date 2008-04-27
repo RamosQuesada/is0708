@@ -1304,6 +1304,12 @@ public class Vista {
 	 * @return Lista de empleados del departamento
 	 */
 	public ArrayList<Empleado> getEmpleadosDepartamento(String idDept) {
+		ArrayList<Empleado> e = new ArrayList<Empleado>();
+		for (int i=0; i<empleados.size(); i++) {
+			if (empleados.get(i).getDepartamentoId().equals(idDept))
+				e.add(empleados.get(i));
+		}
+		if (e.size()>0) return e;
 		return controlador.getEmpleadosDepartamento(getEmpleadoActual().getEmplId(),idDept);
 	}
 	
