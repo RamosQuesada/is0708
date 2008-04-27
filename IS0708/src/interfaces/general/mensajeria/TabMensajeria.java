@@ -286,6 +286,7 @@ public class TabMensajeria extends Thread{
 			public void widgetSelected(SelectionEvent e) {
 				//new ShellMensajeNuevo(tabFolder.getShell(), bundle, vista);
 				new ShellEscribirMensaje(tabFolder.getShell(),bundle,vista,null,0,"",false);
+				
 			}
 		});
 		
