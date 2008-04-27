@@ -3,6 +3,7 @@ package interfaces.general.cuadrantes;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -857,7 +858,6 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		ancho = canvas.getClientArea().width;
 		int altoVentana = canvas.getClientArea().height;
 		if (cacheCargada)
-			// TODO coger número de empleados
 			alto = 30 * alto_franjas;
 		else alto = altoVentana;
 		if (vBar!=null) {

@@ -53,16 +53,19 @@ public class I_Turno extends aplicacion.datos.Turno {
 		if (despPestana1<13) {
 			despPestana1++;
 			subiendoOBajandoPestanas = true;
+		} else {
+			subiendoOBajandoPestanas = false;
 		}
-		else subiendoOBajandoPestanas = false;
 	}
 	
 	private void bajaPestana1() {
-		if (despPestana1>0) {
+		if (despPestana1>1) {
 			despPestana1--;
 			subiendoOBajandoPestanas = true;
+		} else {
+			despPestana1=0;
+			subiendoOBajandoPestanas = false;
 		}
-		else subiendoOBajandoPestanas = false;
 	}
 	
 	private void subePestana2() {
@@ -74,11 +77,13 @@ public class I_Turno extends aplicacion.datos.Turno {
 	}
 	
 	private void bajaPestana2() {
-		if (despPestana2>0) {
+		if (despPestana2>1) {
 			despPestana2--;
 			subiendoOBajandoPestanas = true;
+		} else {
+			despPestana2=0;
+			subiendoOBajandoPestanas = false;
 		}
-		else subiendoOBajandoPestanas = false;
 	}
 
 	public boolean getEstadoPestana() {
