@@ -82,6 +82,7 @@ public class Empleado implements Drawable {
 	private boolean HaEntrado = false;
 	private Date UltimoAcceso = new Date(0);
 	private int posicion;
+	private Date finContrato;
 	
 	//Optimizacion Algoritmo (reducción llamadas a BBDD)
 	private ArrayList<Turno> turnoE;
@@ -916,7 +917,14 @@ public class Empleado implements Drawable {
 	public Date getUltimoAcceso() {
 		return UltimoAcceso;
 	}
-		
+
+	public Date getFinContrato() {
+		return finContrato;
+	}
+	
+	public void setFinContrato(Date fecha) {
+		finContrato = fecha;
+	}
 	
 	public ImageData getPrintableImage(Device device, ResourceBundle bundle, Rectangle size, boolean bn) {
 		int w = size.width/2;
