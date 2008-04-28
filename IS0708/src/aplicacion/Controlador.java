@@ -1809,6 +1809,7 @@ public class Controlador {
 	/**
 	 * Funcion que devuelve un arrayList donde se especifican las ventas de un año dado
 	 * @param anio
+	 * @param vendedor Numero del vendedor para el que se buscan las ventas
 	 * @return ArrayList<ArrayList<Object[]>>
 	 * 		   Cada arraylist dentro del arraylist global representa un mes.
 	 * 		   Para cada mes hay un array de 2 elementos:
