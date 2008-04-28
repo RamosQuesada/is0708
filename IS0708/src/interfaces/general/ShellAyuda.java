@@ -15,13 +15,15 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Button;
 
 import aplicacion.Vista;
+import aplicacion.utilidades.Util;
 
 import java.io.File;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ShellAyuda {
-
+	
+	private Vista _vista;
 	private String htmlDefault;
 	private Browser browser;
 	private Image icoPq, icoPrnt, icoBk,icoFw,icoHome;
@@ -57,11 +59,12 @@ public class ShellAyuda {
 	 * @param _display
 	 *            class uses main window display atribut to show help window
 	 */
-	public ShellAyuda(Display d, Locale locale, ResourceBundle bundle, String hpath) {
+	public ShellAyuda(Display d, Locale locale, ResourceBundle bundle, String hpath, Vista vista) {
 
 		display = d;
+		_vista = vista;
 		shell = new Shell(display, SWT.CLOSE | SWT.MAX |SWT.MIN | SWT.APPLICATION_MODAL);
-		icoPq = new Image(display, ShellAyuda.class.getResourceAsStream("icoPq.gif"));
+		icoPq = _vista.getImagenes().getIcoPq();
 
 		htmlDefault = "<html> \n <head> \n " + "</head>"
 			+ "<body>" + bundle.getString("I12_err_fileNotFound")
@@ -72,7 +75,7 @@ public class ShellAyuda {
 		 * to work under Windows system file
 		 */
 
-		localpath = (new File("").getAbsolutePath());
+		localpath = Util.rutaTrabajo();
 
 		//helppath = "/Ayuda/" + locale.getCountry() + "/index.html";
 		this.helppath=hpath;
@@ -100,10 +103,10 @@ public class ShellAyuda {
 		shell.setText("Turno Matic");
 		shell.setSize(700, 500);
 
-		icoBk	= new Image(display, ShellAyuda.class.getResourceAsStream("ico_Bk.gif"));
-		icoFw	= new Image(display, ShellAyuda.class.getResourceAsStream("ico_Fw.gif"));
-		icoHome = new Image(display, ShellAyuda.class.getResourceAsStream("ico_Home.gif"));
-		icoPrnt = new Image(display, ShellAyuda.class.getResourceAsStream("ico_Imprimir.gif"));
+		icoBk	= _vista.getImagenes().getIcoBk();
+		icoFw	= _vista.getImagenes().getIcoFw();
+		icoHome = _vista.getImagenes().getIco_home();
+		icoPrnt = _vista.getImagenes().getIco_imprimir();
 		
 		Composite c = new Composite(shell,SWT.NONE);
 		c.setLayout(new GridLayout(1,true));

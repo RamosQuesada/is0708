@@ -4,13 +4,16 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 
 public class CargadorImagenes {
-	private Image icoGr, icoPq, ico_imprimir, ico_cuadrante, ico_chico,
+	private Image icoGr, icoPq, icoBk, icoFw, ico_home, ico_imprimir, ico_cuadrante, ico_chico,
 	ico_chica, ico_chicos, fondoLogin, ico_mens_l, ico_mens, fondoAdmin, grafica,
 	carga1,carga2,carga3,carga4,carga5,carga6,carga7;		
 	
 	public CargadorImagenes(Display display) {
 		icoGr				= new Image(display, CargadorImagenes.class.getResourceAsStream("icoGr.gif"));
 		icoPq				= new Image(display, CargadorImagenes.class.getResourceAsStream("icoPq.gif"));
+		icoBk               = new Image(display, CargadorImagenes.class.getResourceAsStream("ico_bk.gif"));
+		icoFw               = new Image(display, CargadorImagenes.class.getResourceAsStream("ico_fw.gif"));
+		ico_home            = new Image(display, CargadorImagenes.class.getResourceAsStream("ico_home.gif"));
 		ico_imprimir		= new Image(display, CargadorImagenes.class.getResourceAsStream("ico_imprimir.gif"));
 		ico_cuadrante		= new Image(display, CargadorImagenes.class.getResourceAsStream("ico_cuadrante.gif"));
 		ico_chico			= new Image(display, CargadorImagenes.class.getResourceAsStream("ico_chico.gif"));
@@ -28,7 +31,6 @@ public class CargadorImagenes {
 		carga5				= new Image(display, CargadorImagenes.class.getResourceAsStream("espere05.png"));
 		carga6				= new Image(display, CargadorImagenes.class.getResourceAsStream("espere06.png"));
 		carga7				= new Image(display, CargadorImagenes.class.getResourceAsStream("espere07.png"));
-		
 	}
 	
 	public void dispose() {
@@ -61,6 +63,18 @@ public class CargadorImagenes {
 
 	public Image getIcoPq() {
 		return icoPq;
+	}
+
+	public Image getIcoBk() {
+		return icoBk;
+	}
+
+	public Image getIcoFw() {
+		return icoFw;
+	}
+
+	public Image getIco_home() {
+		return ico_home;
 	}
 
 	public Image getIco_imprimir() {
