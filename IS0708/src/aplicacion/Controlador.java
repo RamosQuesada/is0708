@@ -1809,12 +1809,41 @@ public class Controlador {
 	/**
 	 * Funcion que devuelve un arrayList donde se especifican las ventas de un año dado
 	 * @param anio
-	 * @return ArrayList<ArrayList<Ventas>>
+	 * @return ArrayList<ArrayList<Object[]>>
+	 * 		   Cada arraylist dentro del arraylist global representa un mes.
+	 * 		   Para cada mes hay un array de 2 elementos:
+	 * 				- Array[0] contiene la fecha
+	 * 				- Array[1] contiene las ventas en esa fecha
 	 */
-	public ArrayList<ArrayList<Ventas>> get_Ventas(int anio){
-		ArrayList<ArrayList<Ventas>> vector_ventas = new ArrayList<ArrayList<Ventas>>();
+	public ArrayList<ArrayList<Object[]>> getVentas(int vendedor, int anio){		
 		//Camilo aqui tienes que llamar al metodo que hagas en la base de datos para rellenarlo
-		return null;
+		ArrayList<ArrayList<Object[]>> ventas = new ArrayList<ArrayList<Object[]>>();
+		try {
+			ResultSet rs = _db.obtenVentasAnio(vendedor, anio);
+			
+			int mesAnterior = 0;
+			ArrayList<Object[]> aux = new ArrayList<Object[]>();
+			while (rs.next()) {				
+				Date d = rs.getDate("Fecha");
+				float v = rs.getFloat("Importe");
+				Object datos[] = new Object[2];
+				
+				datos[0] = d;
+				datos[1] = v;
+				
+				if (d.getMonth() > mesAnterior) {
+					ventas.add(aux);					
+					aux = new ArrayList<Object[]>();
+					mesAnterior++;
+				}
+				
+				aux.add(datos);
+			}
+			ventas.add(aux);
+		} catch (Exception e) {
+			System.err.print("Controlador :: Error al obtener las ventas anuales de la base de datos");
+		}
+		return ventas;
 	}
 
 	/**
