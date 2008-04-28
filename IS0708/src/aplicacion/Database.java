@@ -2576,6 +2576,7 @@ return result;
 					"HaEntrado bool," +
 					"UltimoAcceso Datetime," +
 					"Posicion int," +
+					"FinContrato Date," +
 					"check (length(numvendedor)=3)," +
 					"check (sexo in(0,1))," +
 					"check(idioma in(0,1,2))," +
