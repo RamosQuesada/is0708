@@ -844,4 +844,18 @@ public class Util {
 		return fechaNueva;
 	}
 	
+	/**
+	 * Devuelve la ruta del directorio raiz de la aplicacion
+	 * @return ruta de la carpeta
+	 */
+	public static String rutaTrabajo(){
+		String ruta = System.getProperty("java.class.path");
+		// Distinguir entre ejecucion desde eclipse y ejecucion desde el jar
+		if (ruta.contains(";"))
+			ruta = ruta.substring(0,ruta.indexOf(";")-4);
+		else
+			ruta = ruta.substring(0, ruta.length()-16);
+		return ruta;
+	}
+	
 }

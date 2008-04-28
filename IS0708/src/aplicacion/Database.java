@@ -61,7 +61,7 @@ public class Database extends Thread {
 		try {
 			//para desencriptar
 			FileInputStream is;
-			is = new FileInputStream("configBD");
+			is = new FileInputStream(Util.rutaTrabajo() + File.separator + "configBD");
 			DataInputStream dis = new DataInputStream(is);
 			dbName=dis.readUTF();
 			ip= dis.readUTF();

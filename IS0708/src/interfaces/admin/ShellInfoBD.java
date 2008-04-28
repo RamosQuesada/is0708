@@ -2,6 +2,7 @@ package interfaces.admin;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -21,6 +22,7 @@ import org.eclipse.swt.widgets.Text;
 
 import aplicacion.Vista;
 import aplicacion.utilidades.EncriptCadena;
+import aplicacion.utilidades.Util;
 
 //import aplicacion.Vista;
 
@@ -108,7 +110,7 @@ public class ShellInfoBD {
 		
 		FileInputStream is;
 		try {
-			is = new FileInputStream("configBD");
+			is = new FileInputStream(Util.rutaTrabajo() + File.separator + "configBD");
 			DataInputStream dis = new DataInputStream(is);
 			String name = dis.readUTF();
 			String ip= dis.readUTF();
@@ -155,7 +157,7 @@ public class ShellInfoBD {
 				else {	
 					FileOutputStream os;
 					try {
-						os = new FileOutputStream("configBD");
+						os = new FileOutputStream(Util.rutaTrabajo() + File.separator + "configBD");
 						DataOutputStream dos = new DataOutputStream(os);
 						dos.writeUTF(name);
 						dos.writeUTF(ip);
