@@ -1006,7 +1006,7 @@ public class Empleado implements Drawable {
 		java.util.Date today;
 		int diaCiclo,n;
 		long difFechas;
-		boolean encontrado;
+		boolean encontrado, entrado=false;
 		
 		//cálculo del dia en el que nos encontramos dentro del ciclo.
 		//today = new java.util.Date();
@@ -1024,94 +1024,91 @@ public class Empleado implements Drawable {
 		 * }
 		 */
 		
-		if(fContrato == null)
-			fContrato = new Date(fechaActual.getTime());
-		
-		long milsDia = 24*60*60*1000;
-		difFechas = (fechaActual.getTime()+(dia*milsDia))-(fContrato.getTime());
-		diaCiclo = (int) (difFechas/(milsDia))+1;  		
-		
-		//Obtencion del contrato del empleado.
-		//contrato = cont.getContrato(this.getContratoId());
-		encontrado = false;
-		n = 0;
-		contrato = null;
-		while(!encontrado && n<listaContratos.size()){
-			contrato = listaContratos.get(n);
-			if(this.idContrato == contrato.getNumeroContrato())
-				encontrado = true;			
-			n++;
-		}
-		
-		if (turnosStr == null && contrato!=null) //tratar el error en caso de que no exista el contrato.
-		{
-			patron = contrato.getPatron();
-			turnosStr = obtenerTurnos(patron);
-		}
-		
-		
-		
-		/* NO BORRAR!!!! PROBAR PARA EMPLEADOS CUYO CONTRATO NO EMPIEZA UN LUNES
-		 * 
-		 * diaSemanaContrato es el día de la semana en que empezó el contrato
-		 * int diaSemanaContrato = fContrato.getDay()-1;
-		 * if (diaSemanaContrato < 0) diaSemanaContrato=6;
-		 * diaCiclo = diaCiclo+diaSemanaContrato;
-		 * 
-		 * OTRA FORMA (CREO QUE LA BUENA)
-		 * if (contratoget.Tipo() != 5)
-		 * 	CODIGO DE ABAJO PARA CALCULAR diaCiclo
-		 * else
-		 * 	NADA
-		 */
-		
-		int diaSemanaInicioContrato = fContrato.getDay();
-		if (diaSemanaInicioContrato==0) diaSemanaInicioContrato=7;
-		diaCiclo=diaCiclo+diaSemanaInicioContrato-1;
-		diaCiclo = diaCiclo%turnosStr.size();
-		
-	/*	if((diaCiclo == contrato.getDuracionCiclo()-1) && (hora == numTrozos-1))
-				fContrato.setTime(fechaActual.getTime() + ((dia+1)*milsDia));*/
-		
-		//Obtencion del turno correspondiente a ese dia.
-		turnoStr = turnosStr.get(diaCiclo);
-		
-		//COMPROBAR SI TRABAJA UN DIA	
-		if (turnoStr.get(0).equals("d"))
-			return false;
-		else
-			if ((contrato.getTipoContrato()==3) || (contrato.getTipoContrato()==4))
-				return true;
+		if ((finContrato!=null) & (finContrato.after(fechaActual))) {
 			
-		//Obtencion del turno a partir de la base de datos.
-		if (turnoE == null)
-		{
-			turnoE = c.getListaTurnosContrato(this.idEmpl); //ponerlo al principio del alg.
-		}
-		
-		//Obtencion del turno que le corresponde.
-		boolean entrado = false;	
-		//Es condicion necesaria que entre.
-		for(int i=0; i<turnoE.size(); i++)
-		{
-			for(int j=0; j<turnoStr.size(); j++)
-			{
-				if(turnoE.get(i).getIdTurno() == Integer.parseInt(turnoStr.get(j)))
-				{
-					turnoActual = turnoE.get(i);
-					if ((turnoActual.getHoraEntrada().getTime() > iniH.getTime()) || (turnoActual.getHoraSalida().getTime() < finH.getTime())){
-						return false;
-					} else 
-					{
-						if ((iniH.getTime() >= turnoActual.getHoraDescanso().getTime()) && (iniH.getTime() < Util.calculaFinDescanso(turnoActual.getHoraDescanso(),turnoActual.getTDescanso()).getTime())){
+			if(fContrato == null)
+				fContrato = new Date(fechaActual.getTime());
+			
+			long milsDia = 24*60*60*1000;
+			difFechas = (fechaActual.getTime()+(dia*milsDia))-(fContrato.getTime());
+			diaCiclo = (int) (difFechas/(milsDia))+1;  		
+			
+			//Obtencion del contrato del empleado.
+			//contrato = cont.getContrato(this.getContratoId());
+			encontrado = false;
+			n = 0;
+			contrato = null;
+			while(!encontrado && n<listaContratos.size()){
+				contrato = listaContratos.get(n);
+				if(this.idContrato == contrato.getNumeroContrato())
+					encontrado = true;			
+				n++;
+			}
+			
+			if (turnosStr == null && contrato!=null) { //tratar el error en caso de que no exista el contrato.
+				patron = contrato.getPatron();
+				turnosStr = obtenerTurnos(patron);
+			}
+			
+			
+			
+			/* NO BORRAR!!!! PROBAR PARA EMPLEADOS CUYO CONTRATO NO EMPIEZA UN LUNES
+			 * 
+			 * diaSemanaContrato es el día de la semana en que empezó el contrato
+			 * int diaSemanaContrato = fContrato.getDay()-1;
+			 * if (diaSemanaContrato < 0) diaSemanaContrato=6;
+			 * diaCiclo = diaCiclo+diaSemanaContrato;
+			 * 
+			 * OTRA FORMA (CREO QUE LA BUENA)
+			 * if (contratoget.Tipo() != 5)
+			 * 	CODIGO DE ABAJO PARA CALCULAR diaCiclo
+			 * else
+			 * 	NADA
+			 */
+			
+			int diaSemanaInicioContrato = fContrato.getDay();
+			if (diaSemanaInicioContrato==0) diaSemanaInicioContrato=7;
+			diaCiclo=diaCiclo+diaSemanaInicioContrato-1;
+			diaCiclo = diaCiclo%turnosStr.size();
+			
+		/*	if((diaCiclo == contrato.getDuracionCiclo()-1) && (hora == numTrozos-1))
+					fContrato.setTime(fechaActual.getTime() + ((dia+1)*milsDia));*/
+			
+			//Obtencion del turno correspondiente a ese dia.
+			turnoStr = turnosStr.get(diaCiclo);
+			
+			//COMPROBAR SI TRABAJA UN DIA	
+			if (turnoStr.get(0).equals("d"))
+				return false;
+			else
+				if ((contrato.getTipoContrato()==3) || (contrato.getTipoContrato()==4))
+					return true;
+				
+			//Obtencion del turno a partir de la base de datos.
+			if (turnoE == null) {
+				turnoE = c.getListaTurnosContrato(this.idEmpl); //ponerlo al principio del alg.
+			}
+			
+			//Obtencion del turno que le corresponde.
+			entrado = false;	
+			//Es condicion necesaria que entre.
+			for(int i=0; i<turnoE.size(); i++) {
+				for(int j=0; j<turnoStr.size(); j++) {
+					if(turnoE.get(i).getIdTurno() == Integer.parseInt(turnoStr.get(j))) {
+						turnoActual = turnoE.get(i);
+						if ((turnoActual.getHoraEntrada().getTime() > iniH.getTime()) || (turnoActual.getHoraSalida().getTime() < finH.getTime())) {
 							return false;
+						} else {
+							if ((iniH.getTime() >= turnoActual.getHoraDescanso().getTime()) && (iniH.getTime() < Util.calculaFinDescanso(turnoActual.getHoraDescanso(),turnoActual.getTDescanso()).getTime())){
+								return false;
+							}
 						}
+						entrado = true;
+						break;
 					}
-					entrado = true;
-					break;
 				}
 			}
-		}
+		} else entrado = false;
 		return entrado;
 	}
 	
