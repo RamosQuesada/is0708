@@ -756,7 +756,7 @@ public class ShellPrincipal {
 	public void crearVentana(int rango) {
 		// Crear la ventana
 		shell.setText(bundle.getString("Turno-matic"));// idiomas igual siempre
-
+		shell.setMinimumSize(500, 450);
 		// Dos iconos de tamaño diferente para SO's que los necesiten
 		shell.setImages(new Image[] { vista.getImagenes().getIcoPq(), vista.getImagenes().getIcoGr() });
 
