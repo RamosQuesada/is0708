@@ -43,6 +43,7 @@ public class DialogAnadirEmpleado {
 	private Date fechaContrato;
 	private Date fechaAlta;
 	private Date fechaNacimiento;
+	private Date fechaFContrato;
 	private ArrayList<Contrato> contratos;
 	//http://java.sun.com/j2se/1.4.2/docs/api/java/util/GregorianCalendar.html 
 	public DialogAnadirEmpleado(Shell padre, ResourceBundle bundle, Vista vista) {
@@ -97,6 +98,8 @@ public class DialogAnadirEmpleado {
 		final Text   tFContrato		= new Text  (grupoDer, SWT.BORDER | SWT.READ_ONLY);
 		final Button bFAlta			= new Button(grupoDer, SWT.PUSH);
 		final Text   tFAlta			= new Text  (grupoDer, SWT.BORDER | SWT.READ_ONLY);
+		final Button bFFContrato	= new Button(grupoDer, SWT.PUSH);
+		final Text   tFFContrato	= new Text  (grupoDer, SWT.BORDER | SWT.READ_ONLY);
 		final Button bColor			= new Button(grupoDer, SWT.PUSH);
 		final Label  lColor			= new Label	(grupoDer,  SWT.NONE);
 		
@@ -117,6 +120,7 @@ public class DialogAnadirEmpleado {
 		lDepto			.setText(bundle.getString("Departamento"));
 		bFAlta			.setText(bundle.getString("I08_lab_FAlta"));
 		bFContrato		.setText(bundle.getString("I08_lab_FContr"));
+		bFFContrato		.setText(bundle.getString("I08_lab_FFContr"));
 		bColor			.setText(bundle.getString("I08_lab_SelColor"));
 
 		lNVend		.setLayoutData	(new GridData(SWT.LEFT,SWT.FILL,false,false,1,1));
@@ -147,6 +151,8 @@ public class DialogAnadirEmpleado {
 		tFContrato	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		bFAlta		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		tFAlta		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
+		bFFContrato	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
+		tFFContrato	.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		bColor		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		lColor		.setLayoutData	(new GridData(SWT.FILL,SWT.FILL,false,false,2,1));
 		
@@ -260,6 +266,28 @@ public class DialogAnadirEmpleado {
 		};
 		bFAlta.addSelectionListener(sabFAlta);
 		
+		// Listener para el selector de fecha de final de contrato
+		SelectionAdapter sabFFContrato = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e){
+				DialogSeleccionFecha i17 = new DialogSeleccionFecha(shell);
+				while (!i17.isDisposed()) {
+					if (!shell.getDisplay().readAndDispatch()) {
+						shell.getDisplay().sleep();
+					}
+				}
+				fechaFContrato = i17.getFecha(); 
+				String [] meses = {bundle.getString("enero"),bundle.getString("febrero"),bundle.getString("marzo"),
+						bundle.getString("abril"),bundle.getString("mayo"),bundle.getString("junio"),
+						bundle.getString("julio"),bundle.getString("agosto"),bundle.getString("septiembre"),
+						bundle.getString("octubre"),bundle.getString("noviembre"),bundle.getString("diciembre")};
+				if (fechaFContrato != null)
+				tFFContrato.setText(String.valueOf(fechaFContrato.getDate()) +" " + bundle.getString("artiFecha(de)")+" " + meses[fechaFContrato.getMonth()]+" " + bundle.getString("artiFecha(de)")+" "  + (String.valueOf(fechaFContrato.getYear()+1900)));
+			}
+		};
+		bFFContrato.addSelectionListener(sabFFContrato);
+		
+		
+		
 		// Listener para el selector de color
 		SelectionAdapter sabColor = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
@@ -346,7 +374,7 @@ public class DialogAnadirEmpleado {
 					tApell2.selectAll();
 				}
 				// Comprueba que las fechas se han seleccionado
-				else if (tFNacimiento.getText().length()==0 || tFContrato.getText().length()==0 || tFAlta.getText().length()==0) {
+				else if (tFNacimiento.getText().length()==0 || tFContrato.getText().length()==0 || tFAlta.getText().length()==0 || tFFContrato.getText().length()==0 ) {
 					MessageBox messageBox = new MessageBox (shell, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
 					messageBox.setText (bundle.getString("Error"));
 					messageBox.setMessage (bundle.getString("I08_err_Fecha"));					
@@ -395,6 +423,7 @@ public class DialogAnadirEmpleado {
 					
 					Empleado emp = new Empleado(vista.getEmpleadoActual().getEmplId(), Util.convertirNVend(tNVend.getText()), tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 0, id, fechaContrato, fechaAlta, null, cDepto.getText(), null, 0, cIdioma.getSelectionIndex(), turno, 0);
 					emp.setColor(lColor.getBackground());
+					emp.setFinContrato(fechaFContrato);
 					vista.insertEmpleado(emp);
 
 					shell.dispose();
