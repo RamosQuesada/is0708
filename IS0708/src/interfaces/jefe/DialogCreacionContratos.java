@@ -720,7 +720,7 @@ public class DialogCreacionContratos {
 			public void widgetSelected(SelectionEvent e) {
 				String helppath = "/Ayuda/" + locale.getCountry()
 						+ "/contratos.html";
-				new ShellAyuda(shell.getDisplay(), locale, bundle, helppath);
+				new ShellAyuda(shell.getDisplay(), locale, bundle, helppath, vista);
 			}
 		};
 		bAyuda.addSelectionListener(sabAyuda);

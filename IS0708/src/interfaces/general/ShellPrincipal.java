@@ -259,7 +259,7 @@ public class ShellPrincipal {
 		helpHelpItem.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				String helppath = "/Ayuda/" + locale.getCountry() + "/index.html";
-				new ShellAyuda(display, locale, bundle, helppath);
+				new ShellAyuda(display, locale, bundle, helppath, vista);
 			}
 		});
 		
