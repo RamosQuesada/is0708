@@ -43,6 +43,7 @@ public class TabMensajeria extends Thread{
 	private boolean bAnt = true;
 	private boolean bSig = true;
 	private boolean iniciado = false;
+	private TabMensajeria tabla;
 	Mensaje mensSelecionado;
 	// Los caracteres a previsualizar de un mensaje
 	final int prevTextoMens = 50; 
@@ -61,6 +62,7 @@ public class TabMensajeria extends Thread{
 		this.tabFolder = tabFolder;
 		this.estaMarcado = false;
 		this.mensSelecionado = null;
+		tabla = this;
 		crearTab();
 		//desplazarVentanaMensajes(0);
 	}
@@ -203,7 +205,7 @@ public class TabMensajeria extends Thread{
 					Mensaje m = vista.getTodosMensajesEntrantes().get(totalEntrantes - tablaMensajes.getSelectionIndex()-1-primerMensaje);
 					estaMarcado = m.isMarcado(); 
 					vista.setLeido(m);
-					new ShellEscribirMensaje(tabFolder.getShell(),bundle,vista,m,0,"",false);
+					new ShellEscribirMensaje(tabFolder.getShell(),bundle,vista,m,0,"",false,tabla);
 				}
 			}
 			public void mouseUp(MouseEvent e) {};
@@ -285,7 +287,7 @@ public class TabMensajeria extends Thread{
 		bMensNuevo.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				//new ShellMensajeNuevo(tabFolder.getShell(), bundle, vista);
-				new ShellEscribirMensaje(tabFolder.getShell(),bundle,vista,null,0,"",false);
+				new ShellEscribirMensaje(tabFolder.getShell(),bundle,vista,null,0,"",false,tabla);
 				
 			}
 		});
@@ -299,7 +301,7 @@ public class TabMensajeria extends Thread{
 			public void widgetSelected(SelectionEvent e) {
 				if(mensSelecionado!=null)
 				new ShellEscribirMensaje(tabFolder.getShell(),bundle,vista,mensSelecionado,mensSelecionado.getRemitente(),
-						vista.getEmpleado(mensSelecionado.getRemitente()).getNombreCompleto(),true);
+						vista.getEmpleado(mensSelecionado.getRemitente()).getNombreCompleto(),true,tabla);
 			}
 		});
 		
@@ -313,6 +315,7 @@ public class TabMensajeria extends Thread{
 			public void widgetSelected (SelectionEvent e) {
 				if(mensSelecionado!=null)
 					vista.eliminaMensaje(mensSelecionado);
+				tabla.refrescaTabla();
 			}
 		});
 		
@@ -350,8 +353,7 @@ public class TabMensajeria extends Thread{
 					}
 					//int totalEntrantes = vista.getTodosMensajesEntrantes().size();
 					vista.marcarMensaje(vista.getTodosMensajesEntrantes().get(vista.getTodosMensajesEntrantes().size() - tablaMensajes.getSelectionIndex()-1-primerMensaje));
-					desplazarVentanaMensajes(0);
-					vista.loadTodosMensajes();
+					tabla.refrescaTabla();
 				}
 			}
 		});
@@ -427,5 +429,12 @@ public class TabMensajeria extends Thread{
 		if (desp==0) vista.loadTodosMensajes();
 		notify();
 	}
+	
+	protected void refrescaTabla(){
+		
+		this.desplazarVentanaMensajes(0);
+		vista.loadTodosMensajes();		
+	}
+	
 
 }
