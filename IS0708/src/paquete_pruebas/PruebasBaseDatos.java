@@ -34,6 +34,8 @@ public class PruebasBaseDatos {
 		b = c.existeNumDepartamento(1);
 		
 		Util.stringAColor("FFFFFF");
+		
+		ArrayList<ArrayList<Object[]>> t = c.getVentas(10007200, 2008);
 		//Time e = new Time(9);
 		//c.setHorarioDpto("DatosFijos7", e, e);
 		//c.setDistribucionDiaSemana("DatosFijos7", 2, c.getDistribucionDiaSemana("DatosFijos7", 1));

@@ -79,7 +79,7 @@ public class Vista {
 	private ArrayList<Sugerencia> sugerencias = new ArrayList<Sugerencia>();
 	
 	/** Caché local: Ventas del departamento actual */
-	private ArrayList<ArrayList<Ventas>> vector_ventas = new ArrayList<ArrayList<Ventas>>();
+	private ArrayList<ArrayList<Object[]>> vector_ventas = new ArrayList<ArrayList<Object[]>>();
 	
 	
 	/**
@@ -1117,7 +1117,7 @@ public class Vista {
 	 * @param anio
 	 */
 	public void almacena_ventas_cache(int anio){
-		vector_ventas=controlador.get_Ventas(anio);
+		vector_ventas=controlador.getVentas(this.getEmpleadoActual().getEmplId(), anio);
 	}
 
 	/**

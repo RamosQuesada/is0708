@@ -1346,12 +1346,29 @@ public class Database extends Thread {
 			result = st
 			.executeQuery("SELECT * FROM " + tablaVentas + " WHERE NumVendedor = "
 					+ idVend +  " AND Fecha='"+ fecha + "';");
-} catch (SQLException e) {
-	e.printStackTrace();
-	System.err.println("Database :: Error de lectura de Ventas");
-}
-return result;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("Database :: Error de lectura de Ventas");
+		}
+		return result;
 		
+	}
+	
+	public ResultSet obtenVentasAnio(int vend, int anio) {
+		ResultSet rs = null;
+		try {
+			String inicio = anio + "-01-01";
+			String fin = anio + "-12-31";
+			st = con.createStatement();
+			rs = st.executeQuery("SELECT * FROM " + tablaVentas + 
+					" WHERE NumVendedor = " + vend + " AND Fecha >= '" + inicio + "' AND Fecha <= '" + fin +
+					"' ORDER BY Fecha ASC;");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("Database :: Error de lectura de Ventas Anuales");
+		}
+		
+		return rs;
 	}
 	/**
 	 * Método que lee todos los contratos de un departamento
