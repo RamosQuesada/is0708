@@ -29,11 +29,13 @@ public class ShellEscribirMensaje {
 	private Vista _vista;
 	private Shell shell;
 	private DialogElegirEmpleado tNombre;
+	private TabMensajeria _tabla;
 	
-	public ShellEscribirMensaje(Shell padre, ResourceBundle bundle, Vista vista, Mensaje mensaje, int idEmpl, String destinatario, boolean resp) {
+	public ShellEscribirMensaje(Shell padre, ResourceBundle bundle, Vista vista, Mensaje mensaje, int idEmpl, String destinatario, boolean resp, TabMensajeria tabla) {
 		_padre = padre;
 		_bundle = bundle;
 		_vista = vista;
+		_tabla = tabla;
 		mostrarVentana(mensaje, idEmpl, destinatario,resp);
 		
 	}
@@ -165,15 +167,16 @@ public class ShellEscribirMensaje {
 							if (idEmpl==0) destino = tNombre.getIdEmpl();
 							if (m.creaMensaje(destino, tAsunto.getText(), tMensaje.getText())>-1) {
 								MessageBox messageBox2 = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
-								messageBox.setText (_bundle.getString("Enviado"));
-								messageBox.setMessage (_bundle.getString("I14_lab_Enviado"));
-								messageBox.open ();
+								messageBox2.setText (_bundle.getString("Enviado"));
+								messageBox2.setMessage (_bundle.getString("I14_lab_Enviado"));
+								messageBox2.open ();
+								actualizaTabla();
 							}
 							else {
 								MessageBox messageBox2 = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
-								messageBox.setText (_bundle.getString("Error"));
-								messageBox.setMessage (_bundle.getString("I14_lab_NoEnviado"));
-								messageBox.open ();
+								messageBox2.setText (_bundle.getString("Error"));
+								messageBox2.setMessage (_bundle.getString("I14_lab_NoEnviado"));
+								messageBox2.open ();
 							}
 							shell.dispose();							
 						}
@@ -187,6 +190,7 @@ public class ShellEscribirMensaje {
 							messageBox.setText (_bundle.getString("Enviado"));
 							messageBox.setMessage (_bundle.getString("I14_lab_Enviado"));
 							messageBox.open ();
+							actualizaTabla();
 						}
 						else {
 							MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR);
@@ -205,7 +209,7 @@ public class ShellEscribirMensaje {
 			bResponder.addSelectionListener (new SelectionAdapter () {
 				public void widgetSelected (SelectionEvent e) {
 					shell.dispose();
-					new ShellEscribirMensaje(_padre,_bundle,_vista,mensaje,mensaje.getRemitente(),_vista.getEmpleado(mensaje.getRemitente()).getNombreCompleto(),true);
+					new ShellEscribirMensaje(_padre,_bundle,_vista,mensaje,mensaje.getRemitente(),_vista.getEmpleado(mensaje.getRemitente()).getNombreCompleto(),true,_tabla);
 				}
 			});
 			
@@ -238,4 +242,12 @@ public class ShellEscribirMensaje {
 			});
 		}
 	}
+	
+	private void actualizaTabla(){
+		
+		_tabla.refrescaTabla();
+		
+		
+	}
+	
 }
