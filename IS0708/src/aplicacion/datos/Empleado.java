@@ -82,7 +82,7 @@ public class Empleado implements Drawable {
 	private boolean HaEntrado = false;
 	private Date UltimoAcceso = new Date(0);
 	private int posicion;
-	private Date finContrato;
+	private Date finContrato = new Date(0);
 	
 	//Optimizacion Algoritmo (reducción llamadas a BBDD)
 	private ArrayList<Turno> turnoE;
