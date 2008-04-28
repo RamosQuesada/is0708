@@ -1186,7 +1186,7 @@ public class Database extends Thread {
 			String password, int indicadorGrupo, Date fechaContrato,
 			Date fechaEntrada, int horasExtras, int felicidad, int idioma,
 			int rango, int idContrato, int idTurno, String Color, String Telefono,
-			String Ssid, boolean HaEntrado, Date UltimoAcceso, int posicion) {
+			String Ssid, boolean HaEntrado, Date UltimoAcceso, int posicion, Date finContrato) {
 		boolean correcto = false;
 		String q = "INSERT INTO " + tablaUsuarios + " values (" + id + ", '"
 		+ nombre + "', '" + apellido1 + "' ,'" + apellido2 + "','"
@@ -1195,7 +1195,7 @@ public class Database extends Thread {
 		+ "','" + fechaEntrada + "'," + horasExtras + ","
 		+ felicidad + "," + idioma + "," + rango + ","
 		+ idContrato + "," + idTurno + ",'" + Color + "','"
-		+ Telefono + "','" + Ssid + "'," + HaEntrado + ",'" + UltimoAcceso + "', " + posicion + ")";
+		+ Telefono + "','" + Ssid + "'," + HaEntrado + ",'" + UltimoAcceso + "', " + posicion + ",'" + finContrato + "')";
 		try {
 			st = con.createStatement();
 			st.executeUpdate(q);
