@@ -12,7 +12,8 @@ public class LanguageChanger {
 	 private Locale[] supportedLocales = {
 			new Locale("es","ES"),
 			new Locale("en","US"),
-			new Locale("pl","POL")
+			new Locale("pl","POL"),
+			new Locale("it","ITA")
 		};
 	public LanguageChanger(){		
 		currentLocale = supportedLocales[0];
