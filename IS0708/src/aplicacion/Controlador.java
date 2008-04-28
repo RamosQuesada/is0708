@@ -15,7 +15,6 @@ import aplicacion.datos.Contrato;
 import aplicacion.datos.Departamento;
 import aplicacion.datos.Empleado;
 import aplicacion.datos.Turno;
-import aplicacion.datos.Ventas;
 import aplicacion.mensajeria.Mensaje;
 import aplicacion.utilidades.Util;
 
@@ -1817,7 +1816,6 @@ public class Controlador {
 	 * 				- Array[1] contiene las ventas en esa fecha
 	 */
 	public ArrayList<ArrayList<Object[]>> getVentas(int vendedor, int anio){		
-		//Camilo aqui tienes que llamar al metodo que hagas en la base de datos para rellenarlo
 		ArrayList<ArrayList<Object[]>> ventas = new ArrayList<ArrayList<Object[]>>();
 		try {
 			ResultSet rs = _db.obtenVentasAnio(vendedor, anio);
