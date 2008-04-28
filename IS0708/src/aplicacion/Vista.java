@@ -1665,7 +1665,7 @@ public class Vista {
 		}
 		if(rango==1 || rango==2){//si es un empleadoo un jefe, guardamos las ventas en cache
 			java.util.Date fecha = new java.util.Date();
-			vector_ventas=controlador.getVentas(this.getEmpleadoActual().getEmplId(),fecha.getYear());
+			vector_ventas=controlador.getVentas(this.getEmpleadoActual().getEmplId(),2008);
 		}
 		System.out.println("Cache cargada");
 	}
