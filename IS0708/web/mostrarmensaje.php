@@ -41,14 +41,16 @@ if (!$_SESSION['codigo'])
 				</ul>
 				<h3>Consultar horarios</h3>
 				<ul class="sidemenu">
-					<li>Toda la semana</li>
-					<li>Todo el mes</li>
+					<li><a href="calendario.php">Ver calendario</a></li>
 				</ul>
+				<h3>Volver a identificarse</h3>
+				<ul class="sidemenu">
+				<li><a href="Identificarse.php">identificarse</a></li></ul>
 			</div>
 			<div id="main">
 				<?php
 					$m=$_GET['codM'];
-					@$db=new mysqli('localhost','root','','turnomat_bd');
+					@$db=new mysqli('localhost','root','is0708','turnomat_bd');
 					if (mysqli_connect_errno())
 						echo "No se puede conectar con la base de datos";
 					else {
@@ -65,7 +67,7 @@ if (!$_SESSION['codigo'])
 							$reg=$registro->fetch_assoc();
 							echo "<form action= method=post>
 								<table align=center width=100%>";
-							echo "<tr><td>Remitente:</td><td width=100%>". $reg['Remitente'] ." - ".$reg['nombre']." ".$reg['apellido1']." ".$reg['apellido2']."</td></tr>";
+							echo "<tr><td>Remitente:</td><td width=100%>". $reg['Remitente'] ." || ".$reg['nombre']." ".$reg['apellido1']." ".$reg['apellido2']."</td></tr>";
 							echo "<tr><td>Fecha:</td><td>".$reg['Fecha']."</td></tr>";
 							echo "<tr><td>Asunto:</td><td>".$reg['Asunto']."</td></tr>";
 							echo "<tr><td valign=top colspan=2><textarea cols=50 rows=10 name=t readonly=true>".$reg['texto']."</textarea></td></tr>";

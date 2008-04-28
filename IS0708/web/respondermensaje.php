@@ -26,7 +26,6 @@ $re=$_GET['remitente'];
 	
 </head>
 <body>
-<!-- wrap starts here -->
 <div id="wrap">
 		
 		<!--header -->
@@ -38,20 +37,20 @@ $re=$_GET['remitente'];
 				<ul class="sidemenu">
 					<li><a href="nuevomensaje.php">Nuevo mensaje</a></li>
 					<li><a href="mensajes.php?cod=1">Ver todos</a></li>
-					<li><a href="mensajes.php?cod=2">Mensajes no le&iacute;dos</a></li>
+					<li><a href="mensajes.php?cod=2">Mensajes no leídos</a></li>
 					<li><a href="mensajesenviados.php">Mensajes enviados</a></li>
 				</ul>
 				<h3>Consultar horarios</h3>
 				<ul class="sidemenu">
-					<li>Toda la semana</li>
-					<li>Todo el mes</li>
+					<li><a href="calendario.php">Ver calendario</a></li>
 				</ul>
+				<h3>Volver a identificarse</h3>
+				<ul class="sidemenu">
+				<li><a href="Identificarse.php">identificarse</a></li></ul>
 			</div>
-
 			<div id="main">
-
 			<?php
-				@ $db=new mysqli('localhost','root','','turnomat_bd');
+				@ $db=new mysqli('localhost','root','is0708','turnomat_bd');
 				if (mysqli_connect_errno()) {
 					echo 'No se puede conectar con la base de datos'; 
 				} else {
@@ -74,8 +73,9 @@ $re=$_GET['remitente'];
 
 			<form action="crearnuevomensaje.php" method="post">
 				<input type="hidden" name="remitente" value=<?php echo $_SESSION['codigo']; ?>>
+				
 				<?php
-					@$db=new mysqli('localhost','root','','turnomat_bd');
+					@$db=new mysqli('localhost','root','is0708','turnomat_bd');
 					if (mysqli_connect_errno())
 						echo "No se puede conectar con la base de datos";
 					else {
@@ -85,15 +85,15 @@ $re=$_GET['remitente'];
 						if($nreg == 0) {
 							echo " no hay usuarios";
 						} else {
-							echo "<tr align=left><td>Destinatario</td><td>".$r;
-							echo "</select></td></tr>";
+							echo "<tr align=left><td>Destinatario</td><td><input name=destinatario size=50 value=".$r.">";
+							echo "</td></tr>";
 						}
 					$registro->free();
 					$db->close();
 				}
-				echo "<tr align=left><td>Asunto</td><td><input name=\"asunto\" type=\"text\" value=\"Re: ".$a."\" size=50></td></tr>";
-				echo "<tr align=left valign=top><td>Texto</td><td><textarea name=\"texto\" cols=50 rows=25>\n\n\n\n--- Mensaje original ---\n".$t."</textarea></td></tr>";
-				echo "<tr><td align=right colspan=2><input type=\"reset\" value=\"Borrar\"> <input type=\"submit\" value=\"Enviar mensaje\"></td></tr>";
+				echo "<tr align=left><td>Asunto</td><td><input name=asunto type=text value=\"Re: ".$a."\" size=50></td></tr>";
+				echo "<tr align=left valign=top><td>Texto</td><td><textarea name=texto cols=50 rows=25>\n\n\n\n--- Mensaje original ---\n".$t."</textarea></td></tr>";
+				echo "<tr><td align=right colspan=2><input type=reset value=Borrar> <input type=submit value=Enviar mensaje></td></tr>";
 				?>
 				
 			</form>

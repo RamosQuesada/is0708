@@ -2,13 +2,22 @@
 
 <?php 
 session_start();
+if ($_SESSION)
+{
+$_SESSION['codigo']=NULL;
+$_SESSION['nombre']=NULL;
+$_SESSION['apellido1']=NULL;
+$_SESSION['apellido2']=NULL;
+
+}
+
 ?>
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
 <head>
 
 <meta name="Description" content="Servicio Web Turnomatic." />
-<meta name="Keywords" content="documentaciï¿½n, turnomatic, ingenerï¿½a, software, ucm" />
+<meta name="Keywords" content="documentación, turnomatic, ingenería, software, ucm" />
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="Distribution" content="Global" />
 <meta name="Author" content="IS 2007-2008. UCM Madrid, Spain" />
@@ -36,7 +45,7 @@ if (!($_POST))
 
 				<table align="center">
 					<tr>
-						<td colspan="2">Por favor, identifï¿½quese:</td>
+						<td colspan="2">Por favor, identifíquese:</td>
 					</tr>
 					<form action="identificarse.php" method="post">
 						<tr>
@@ -44,8 +53,8 @@ if (!($_POST))
 							<td> <input type="text" name="codigo" maxlength="8"></td>
 						</tr>
 						<tr>
-							<td>Contraseï¿½a</td>
-							<td> <input type="text" name="password"></td>
+							<td>Contraseña</td>
+							<td> <input type="password" name="password"></td>
 						</tr>
 						<tr>
 							<td align="center"><input name="reset" type="reset" value="Borrar"></td>
@@ -55,11 +64,13 @@ if (!($_POST))
 				</table>
 
 <?php 
-} else {
+}
+else 
+{
 	$cod=trim($_POST['codigo']);
 	$pas=trim($_POST['password']);
 
-	@$db=new mysqli('localhost','root','','turnomat_bd');
+	@$db=new mysqli('localhost','root','is0708','turnomat_bd');
 	//@$db=new mysqli('72.34.56.241','turnomat_user','is0708','turnomat_bd');
 	//$bd=mysql_connect('localhost','turnomat_user','is0708');
 	//mysql_select_db('turnomat_bd');
@@ -75,8 +86,8 @@ if (!($_POST))
 
 		if($nreg == 0)
 		{
-			echo "<p>Los datos introducidos no se corresponden con los de ningï¿½n usuario.</p>";
-			echo "<p>Intente volver a <a href=identificarse.php>identificarse</a>.</p>";
+			echo "Los datos introducidos no se corresponden con los de ningún usuario.";
+			echo "<br>Intente volver a <a href=identificarse.php>identificarse</a>.";
 		}
 		else
 		{
