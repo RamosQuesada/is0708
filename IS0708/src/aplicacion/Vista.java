@@ -1112,8 +1112,12 @@ public class Vista {
 		return turnos;
 	}
 	/**
-	 * Funcion que mete en cache las ventas de un año dado
-	 * 
+	 * Funcion que devuelve un arrayList donde se especifican las ventas del año actual
+	 * @return ArrayList<ArrayList<Object[]>>
+	 * 		   Cada arraylist dentro del arraylist global representa un mes.
+	 * 		   Para cada mes hay un array de 2 elementos:
+	 * 				- Array[0] contiene la fecha
+	 * 				- Array[1] contiene las ventas en esa fecha
 	 */
 	public ArrayList<ArrayList<Object[]>> getVentas(){
 		return vector_ventas;
