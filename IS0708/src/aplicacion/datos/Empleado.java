@@ -1012,7 +1012,7 @@ public class Empleado implements Drawable {
 		//today = new java.util.Date();
 		//java.sql.Date fechaActual = new java.sql.Date(today.getTime());
 		//java.sql.Date fechaActual = new java.sql.Date(anio,mes,0);
-		java.sql.Date fechaActual = new java.sql.Date(anio-1900,mes-1,1);
+		java.sql.Date fechaActual = new java.sql.Date(anio-1900,mes-1,dia+1);
 		
 		/*
 		 * AMPLIACIONES:
@@ -1024,7 +1024,7 @@ public class Empleado implements Drawable {
 		 * }
 		 */
 		
-		if ((finContrato!=null) & (finContrato.after(fechaActual))) {
+		if ((finContrato==null) || (finContrato.after(fechaActual))) {
 			
 			if(fContrato == null)
 				fContrato = new Date(fechaActual.getTime());
