@@ -372,7 +372,8 @@ public class Controlador {
 						.getFAlta(), 0, 0, empleado.getIdioma(), 1,
 				empleado.getContratoId(), empleado.getTurnoFavorito(),
 				empleado.getNombreColor(), empleado.getTelefono(), empleado.getSsid(),
-				empleado.getHaEntrado(), empleado.getUltimoAcceso(), empleado.getPosicion());
+				empleado.getHaEntrado(), empleado.getUltimoAcceso(), empleado.getPosicion(),
+				empleado.getFinContrato());
 	}
 	
 
@@ -436,7 +437,7 @@ public class Controlador {
 				sexo, email, password, indicadorGrupo, fechaContrato,
 				fechaEntrada, horasExtras, felicidad, idioma, rango,
 				idContrato, idTurno, Color, Telefono,
-				Ssid, HaEntrado, UltimoAcceso, posicion);
+				Ssid, HaEntrado, UltimoAcceso, posicion, new Date(0));
 	}
 
 	
