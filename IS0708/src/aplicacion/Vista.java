@@ -22,7 +22,6 @@ import aplicacion.datos.Contrato;
 import aplicacion.datos.Departamento;
 import aplicacion.datos.Empleado;
 import aplicacion.datos.Turno;
-import aplicacion.datos.Ventas;
 import aplicacion.mensajeria.Mensaje;
 
 import idiomas.LanguageChanger;
@@ -1114,10 +1113,10 @@ public class Vista {
 	}
 	/**
 	 * Funcion que mete en cache las ventas de un año dado
-	 * @param anio
+	 * 
 	 */
-	public void almacena_ventas_cache(int anio){
-		vector_ventas=controlador.getVentas(this.getEmpleadoActual().getEmplId(), anio);
+	public ArrayList<ArrayList<Object[]>> getVentas(){
+		return vector_ventas;
 	}
 
 	/**
@@ -1659,6 +1658,10 @@ public class Vista {
 			} else {
 				System.err.println("Vista\t:: Tipo de empleado inválido para cargar la cache.");
 			}
+		}
+		if(rango==1 || rango==2){//si es un empleadoo un jefe, guardamos las ventas en cache
+			java.util.Date fecha = new java.util.Date();
+			vector_ventas=controlador.getVentas(this.getEmpleadoActual().getEmplId(),fecha.getYear());
 		}
 		System.out.println("Cache cargada");
 	}
