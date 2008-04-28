@@ -37,14 +37,14 @@ if (!$_SESSION['codigo'])
 				$d=$_POST['destinatario'];
 				$a=$_POST['asunto'];
 				$t=$_POST['texto'];
-				@ $db=new mysqli('localhost','root','','turnomat_bd');
+				@$db=new mysqli('localhost','root','is0708','turnomat_bd');
 				if (mysqli_connect_errno())
 				{
 					echo 'No se puede conectar con la base de datos'; 
 				}
 				else
 				{
-				$consulta="insert into mensaje(remitente,asunto,texto,fecha) values(".$r.",'".$a."','".$t."','".date("Y-m-d H:i:s")."')";
+				$consulta="insert into mensaje(remitente,asunto,texto,fecha,visto) values(".$r.",'".$a."','".$t."','".date("Y-m-d H:i:s")."',0)";
 				$registros=$db->query($consulta);
 				$sql="select max(idmensaje) numero from  mensaje";
 				$registros=$db->query($sql);

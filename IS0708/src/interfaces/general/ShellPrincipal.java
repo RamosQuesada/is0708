@@ -762,12 +762,12 @@ public class ShellPrincipal {
 
 		crearBarraMenu();
 
-		tray = display.getSystemTray();
-		final TrayItem trayItem = new TrayItem(tray, SWT.NONE);
-		shell.setImage(vista.getImagenes().getIcoPq());
-		if (tray != null) {
-			trayItem.setImage(vista.getImagenes().getIcoPq());
-		}
+//		tray = display.getSystemTray();
+//		final TrayItem trayItem = new TrayItem(tray, SWT.NONE);
+//		shell.setImage(vista.getImagenes().getIcoPq());
+//		if (tray != null) {
+//			trayItem.setImage(vista.getImagenes().getIcoPq());
+//		}
 
 		// Crear layout principal
 		GridLayout lShell = new GridLayout(1, false);

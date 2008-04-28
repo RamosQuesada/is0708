@@ -1,7 +1,12 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//ES" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <?php 
 session_start();
+if (!$_SESSION['codigo'])
+{
+header("Location:identificarse.php");
+}
 ?>
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
@@ -37,15 +42,15 @@ session_start();
 				</ul>
 				<h3>Consultar horarios</h3>
 				<ul class="sidemenu">
-					<li>Toda la semana</li>
-					<li>Todo el mes</li>
+					<li><a href="calendario.php">Ver calendario</a></li>
 				</ul>
+				<h3>Volver a identificarse</h3>
+				<ul class="sidemenu">
+				<li><a href="Identificarse.php">identificarse</a></li></ul>
 			</div>
 			<div id="main">
-				<h1>Bienvenido/a <?php echo $_SESSION['nombre'] ." ".$_SESSION['apellido1']." ".$_SESSION['apellido2'];?></h1>
-				<div id="clearimg">
-					<center><a href="mensajes.php?cod=1"><img src="images/email.png"></a></center>
-				</div>
+				<h1>Bienvenido/a <?php echo $_SESSION['nombre'] ." ".$_SESSION['apellido1']." ".$_SESSION['apellido2'];?>
+				</h1>
 			</div>
 		
 		<!-- content-wrap ends here -->	
