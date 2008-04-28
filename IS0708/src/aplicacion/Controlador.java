@@ -159,6 +159,8 @@ public class Controlador {
 						rango, idContrato, fechaContrato, fechaAlta, color,
 						null, idSubordinados, felicidad, idioma, turnoFavorito, 0);
 				emp.setIDDepartamentos(idDepartamentos);
+				
+				emp.setFinContrato(rs.getDate("FinContrato"));
 			}
 		} catch (Exception e) {
 			System.err.println("Controlador: Error al obtener el Empleado "
@@ -993,7 +995,9 @@ public class Controlador {
 						rango, idContrato, fechaContrato, fechaAlta, color,
 						null, idSubordinados, felicidad, idioma, turnoFavorito, posicion);
 				emp.setIDDepartamentos(idDepartamentos);
+				emp.setFinContrato(rs.getDate("FinContrato"));
 				emps.add(emp);
+				
 			}
 		} catch (Exception e) {
 			System.err
@@ -1047,6 +1051,7 @@ public class Controlador {
 						rango, idContrato, fechaContrato, fechaAlta, color,
 						null, null, felicidad, idioma, turnoFavorito, 0);
 				emp.setIDDepartamentos(null);
+				emp.setFinContrato(rs.getDate("FinContrato"));
 				emps.add(emp);
 			}
 		} catch (Exception e) {
