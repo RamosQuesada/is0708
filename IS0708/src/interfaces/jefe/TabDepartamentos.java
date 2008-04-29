@@ -35,6 +35,7 @@ public class TabDepartamentos extends Thread{
 	private HorarioMes calendario;
 	private Combo comboMes;
 	private Combo comboAnio;
+	private Combo comboTipo;
 	
 	public TabDepartamentos(TabFolder tabFolder, Vista vista, ResourceBundle bundle, Shell padre) {
 		this.vista = vista;
@@ -104,6 +105,8 @@ public class TabDepartamentos extends Thread{
 		
 		//Escribo el texto en el label
 		lContenido.setText(vista.infoDpto(cmbDepartamentos.getText()));
+		
+		//TODO coger tipos de dias de la BBDD y meterselos en el combo
 	}
 
 
@@ -188,11 +191,19 @@ public class TabDepartamentos extends Thread{
 			public void handleEvent(Event e) {
 				calendario.setMes(comboMes.getSelectionIndex()+1, comboAnio.getSelectionIndex()+2008);
 			}
-		});
+		});  
 		final Label separador=new Label(cCombos,SWT.SEPARATOR|SWT.HORIZONTAL);
 		separador.setLayoutData(new GridData(SWT.FILL,SWT.BEGINNING,true,false,2,1));
 		
 		setCombos();
+		
+		final Label lTipoDia=new Label(cCombos,SWT.NONE);
+		lTipoDia.setText(bundle.getString("TabDepartamentos_tipoDia"));
+		lTipoDia.setLayoutData(new GridData(SWT.FILL,SWT.BEGINNING,true,false));
+		
+		comboTipo=new Combo(cCombos, SWT.BORDER | SWT.READ_ONLY);
+		comboTipo.setLayoutData(new GridData(SWT.FILL,SWT.BEGINNING,true,false));
+		
 	
 		lContenido = new Text(fCentro, SWT.READ_ONLY | SWT.MULTI |SWT.V_SCROLL);
 		
