@@ -174,13 +174,14 @@ public class TabDepartamentos extends Thread{
 		
 		final Composite cCombos=new Composite(cMes,SWT.NONE);
 		cCombos.setLayout(new GridLayout(2,false));
+		cCombos.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true));
 				
 		comboMes=new Combo(cCombos,SWT.BORDER | SWT.READ_ONLY);
 		comboMes.setLayoutData(new GridData(SWT.CENTER,SWT.BEGINNING,true,false));
 		comboAnio=new Combo(cCombos,SWT.BORDER | SWT.READ_ONLY);
 		comboAnio.setLayoutData(new GridData(SWT.CENTER,SWT.BEGINNING,true,false));
 		final Button bSetMes=new Button(cCombos,SWT.PUSH);
-		bSetMes.setLayoutData(new GridData(SWT.FILL,SWT.BEGINNING,true,true,2,1));
+		bSetMes.setLayoutData(new GridData(SWT.FILL,SWT.BEGINNING,true,false,2,1));
 		bSetMes.setText(bundle.getString("TabDepartamentos_bSetMes"));
 		
 		bSetMes.addListener(SWT.Selection, new Listener() {
@@ -188,6 +189,8 @@ public class TabDepartamentos extends Thread{
 				calendario.setMes(comboMes.getSelectionIndex()+1, comboAnio.getSelectionIndex()+2008);
 			}
 		});
+		final Label separador=new Label(cCombos,SWT.SEPARATOR|SWT.HORIZONTAL);
+		separador.setLayoutData(new GridData(SWT.FILL,SWT.BEGINNING,true,false,2,1));
 		
 		setCombos();
 	
@@ -208,10 +211,7 @@ public class TabDepartamentos extends Thread{
 		TabItem tab2=new TabItem(fCentro, SWT.NONE);
 		tab2.setText(bundle.getString("TabDepartamentos_tab2"));
 		tab2.setControl(cMes);
-		
-		
-		
-			
+	
 		//listener para el combo y mostrar la info debajo
 		cmbDepartamentos.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
