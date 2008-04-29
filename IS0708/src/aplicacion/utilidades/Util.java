@@ -850,9 +850,10 @@ public class Util {
 	 */
 	public static String rutaTrabajo(){
 		String ruta = System.getProperty("java.class.path");
+		String separadorRutas = System.getProperty("path.separator");
 		// Distinguir entre ejecucion desde eclipse y ejecucion desde el jar
-		if (ruta.contains(";"))
-			ruta = ruta.substring(0,ruta.indexOf(";")-4);
+		if (ruta.contains(separadorRutas))
+			ruta = ruta.substring(0,ruta.indexOf(separadorRutas)-4);
 		else
 			ruta = ruta.substring(0, ruta.length()-16);
 		return ruta;
