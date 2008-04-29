@@ -1,5 +1,7 @@
 Name Turno-matic
 
+#TODO hacer que no copie las carpetas .svn
+
 SetCompressor lzma
 
 # Defines
@@ -119,6 +121,9 @@ Section -jar SEC0001
     File ..\IS0708\Turno-matic.jar
     File .\Tema\Icono.ico
     File ..\IS0708\configBD
+    SetOutPath $INSTDIR\Datos\Imagenes
+    File /r ..\IS0708\Imagenes\*
+    RmDir /r $INSTDIR\Datos\Imagenes\.svn
     WriteRegStr HKLM "${REGKEY}\Components" jar 1
     SetOutPath $INSTDIR\Datos
     CreateShortCut "$INSTDIR\Datos\Turno-matic.lnk" "$ACCESO_DIRECTO" "$ATRIBUTOS" "$INSTDIR\Datos\Icono.ico"
@@ -186,6 +191,7 @@ Section /o -un.jar UNSEC0001
     Delete /REBOOTOK $INSTDIR\Datos\Turno-matic.jar
     Delete /REBOOTOK $INSTDIR\Datos\Icono.ico
     Delete /REBOOTOK $INSTDIR\Datos\configBD
+    RmDir /r /REBOOTOK $INSTDIR\Datos\Imagenes
     Delete /REBOOTOK $INSTDIR\Datos\Turno-matic.lnk
     DeleteRegValue HKLM "${REGKEY}\Components" jar
     Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\Turno-matic.lnk"
