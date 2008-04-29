@@ -1,5 +1,7 @@
 Name "Turno-matic Lab"
 
+#TODO hacer que no copie las carpetas .svn
+
 SetCompressor lzma
 
 # Defines
@@ -71,12 +73,15 @@ Section -Main SEC0000
     #Borrar lo que hubiese
     RmDir /r $INSTDIR
 
-    #jar y configBD
+    #jar, configBD e Imagenes
     SetOutPath $INSTDIR\Datos
     SetOverwrite on
     File ..\IS0708\Turno-matic.jar
     File ..\IS0708\configBD
     File .\Tema\Icono.ico
+    SetOutPath $INSTDIR\Datos\Imagenes
+    File /r ..\IS0708\Imagenes\*
+    RmDir /r $INSTDIR\Datos\Imagenes\.svn
     SetOutPath $INSTDIR\Datos
     CreateShortCut "$INSTDIR\Datos\Turno-matic.lnk" "c:\jdk1.6.0_02\bin\javaw.exe" "-jar $\"$INSTDIR\Datos\Turno-matic.jar$\"" "$INSTDIR\Datos\Icono.ico"
     CopyFiles /SILENT /FILESONLY $INSTDIR\Datos\Turno-matic.lnk $INSTDIR
