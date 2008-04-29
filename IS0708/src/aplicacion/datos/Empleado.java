@@ -1013,6 +1013,7 @@ public class Empleado implements Drawable {
 		//java.sql.Date fechaActual = new java.sql.Date(today.getTime());
 		//java.sql.Date fechaActual = new java.sql.Date(anio,mes,0);
 		java.sql.Date fechaActual = new java.sql.Date(anio-1900,mes-1,dia+1);
+		java.sql.Date primerDiaMes = new java.sql.Date(anio-1900,mes-1,1);
 		
 		/*
 		 * AMPLIACIONES:
@@ -1024,13 +1025,13 @@ public class Empleado implements Drawable {
 		 * }
 		 */
 		
-		if ((finContrato==null) || (finContrato.after(fechaActual))) {
+		if ((finContrato==null) || (finContrato.after(fechaActual)) || (finContrato.equals(fechaActual))) {
 			
 			if(fContrato == null)
-				fContrato = new Date(fechaActual.getTime());
+				fContrato = new Date(primerDiaMes.getTime());
 			
 			long milsDia = 24*60*60*1000;
-			difFechas = (fechaActual.getTime()+(dia*milsDia))-(fContrato.getTime());
+			difFechas = (primerDiaMes.getTime()+(dia*milsDia))-(fContrato.getTime());
 			diaCiclo = (int) (difFechas/(milsDia))+1;  		
 			
 			//Obtencion del contrato del empleado.
