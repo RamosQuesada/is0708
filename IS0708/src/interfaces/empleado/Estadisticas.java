@@ -3,6 +3,7 @@ package interfaces.empleado;
 import interfaces.graficos.BarChart;
 import interfaces.graficos.Chart;
 import interfaces.graficos.PieChart;
+import interfaces.graficos.Tabla;
 import interfaces.graficos.TimeSeriesChart;
 import interfaces.graficos.XYChart;
 
