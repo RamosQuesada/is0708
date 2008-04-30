@@ -1,5 +1,7 @@
 package interfaces.admin;
 
+import interfaces.graficos.Tabla;
+
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -191,7 +193,7 @@ public class TabEliminaJefe {
 				for (int i = 0; i < arrayJefes.size(); i++) {
 					cmbJefes.add(arrayJefes.get(i));
 				}
-				cmbJefes.select(0);
+				cmbJefes.select(0);				
 			}
 		});
 		
