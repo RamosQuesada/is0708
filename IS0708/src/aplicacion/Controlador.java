@@ -1849,6 +1849,15 @@ public class Controlador {
 		}
 		return ventas;
 	}
+	/**
+	 * Funcion que devuelve un arrayList donde se especifican la suma de las ventas de los empleados de un departamento de un año dado
+	 * @param vendedor
+	 * @param anio
+	 * @return
+	 */
+	public ArrayList<ArrayList<Object[]>> getVentasJefe(int vendedor, int anio){
+		return null;
+	}
 
 	/**
 	 * Método que asocia un turno con un contrato y lo inserta en la base de
