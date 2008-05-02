@@ -1854,10 +1854,15 @@ public class Controlador {
 		return ventas;
 	}
 	/**
-	 * Funcion que devuelve un arrayList donde se especifican la suma de las ventas de los empleados de un departamento de un año dado
-	 * @param vendedor
-	 * @param anio
-	 * @return
+	 * Funcion que devuelve un arrayList donde se especifican las ventas de los empleados de un departamento de un año dado
+	 * @param emp: Un arraylist con los empleados del departamento en cuestion 
+	 * @param anio: El año a buscar en la BD
+	 * @return ArrayList<ArrayList<Object[]>>
+	 * 		   Cada arraylist dentro del arraylist global representa un mes.
+	 * 		   Para cada mes hay un array de 2 elementos:
+	 * 				- Array[0] contiene la fecha
+	 * 				- Array[1] contiene las ventas en esa fecha
+	 * 		   Si en algun mes no hay datos se devuelve null en esa posicion del ArrayList 
 	 */
 	public ArrayList<ArrayList<Object[]>> getVentasJefe(ArrayList<Empleado> emp, int anio){
 		ArrayList<ArrayList<Object[]>> ventas = new ArrayList<ArrayList<Object[]>>();
