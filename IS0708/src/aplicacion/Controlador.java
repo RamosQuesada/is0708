@@ -1819,6 +1819,7 @@ public class Controlador {
 	 * 		   Para cada mes hay un array de 2 elementos:
 	 * 				- Array[0] contiene la fecha
 	 * 				- Array[1] contiene las ventas en esa fecha
+	 * 		   Si en algun mes no hay datos se devuelve null en esa posicion del ArrayList 
 	 */
 	public ArrayList<ArrayList<Object[]>> getVentas(int vendedor, int anio){		
 		ArrayList<ArrayList<Object[]>> ventas = new ArrayList<ArrayList<Object[]>>();
@@ -1827,6 +1828,9 @@ public class Controlador {
 			
 			int mesAnterior = 0;
 			ArrayList<Object[]> aux = new ArrayList<Object[]>();
+			for (int i=0; i<12; i++)
+				ventas.add(null);
+			
 			while (rs.next()) {				
 				Date d = rs.getDate("Fecha");
 				float v = rs.getFloat("Importe");
@@ -1836,14 +1840,14 @@ public class Controlador {
 				datos[1] = v;
 				
 				if (d.getMonth() > mesAnterior) {
-					ventas.add(aux);					
+					ventas.set(mesAnterior,aux);					
 					aux = new ArrayList<Object[]>();
-					mesAnterior++;
+					mesAnterior=d.getMonth();
 				}
 				
 				aux.add(datos);
 			}
-			ventas.add(aux);
+			ventas.set(mesAnterior,aux);
 		} catch (Exception e) {
 			System.err.print("Controlador :: Error al obtener las ventas anuales de la base de datos");
 		}
@@ -1855,8 +1859,43 @@ public class Controlador {
 	 * @param anio
 	 * @return
 	 */
-	public ArrayList<ArrayList<Object[]>> getVentasJefe(int vendedor, int anio){
-		return null;
+	public ArrayList<ArrayList<Object[]>> getVentasJefe(ArrayList<Empleado> emp, int anio){
+		ArrayList<ArrayList<Object[]>> ventas = new ArrayList<ArrayList<Object[]>>();
+		try {
+			int[] vendedores = new int[emp.size()];
+			
+			for (int i=0; i<emp.size(); i++)
+				vendedores[i] = emp.get(i).getEmplId();
+			
+			ResultSet rs = _db.obtenVentasJefeAnio(vendedores, anio);
+			
+			int mesAnterior = 0;
+			ArrayList<Object[]> aux = new ArrayList<Object[]>();
+			for (int i=0; i<12; i++)
+				ventas.add(null);
+			
+			while (rs.next()) {				
+				Date d = rs.getDate("Fecha");
+				float v = rs.getFloat("Importe");
+				Object datos[] = new Object[2];
+				
+				datos[0] = d;
+				datos[1] = v;
+				
+				if (d.getMonth() > mesAnterior) {
+					ventas.set(mesAnterior,aux);					
+					aux = new ArrayList<Object[]>();
+					mesAnterior=d.getMonth();
+				}
+				
+				aux.add(datos);
+			}
+			ventas.set(mesAnterior,aux);
+			
+		} catch (Exception e) {
+			System.err.print("Controlador :: Error al obtener las ventas anuales de un departamento de la base de datos");
+		}
+		return ventas;
 	}
 
 	/**
