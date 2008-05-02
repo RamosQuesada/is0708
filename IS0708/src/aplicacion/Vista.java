@@ -1663,12 +1663,12 @@ public class Vista {
 				System.err.println("Vista\t:: Tipo de empleado inválido para cargar la cache.");
 			}
 		}
-		if(rango==1){//si es un empleadoo un jefe, guardamos las ventas en cache
+		if(rango==1){//si es un empleado guardamos las ventas que éste ha hecho en un año
 			java.util.Date fecha = new java.util.Date();//cogemos la fecha del sistema
 			vector_ventas=controlador.getVentas(this.getEmpleadoActual().getEmplId(),fecha.getYear()+1900);
-		}else if(rango==2){//si es un jefe almacenamos la suma de las ventas de los empleados de un departamento
+		}else if(rango==2){//si es un jefe almacenamos la suma de las ventas de todos los empleados de este departamento durante un año
 			java.util.Date fecha = new java.util.Date();//cogemos la fecha del sistema
-			vector_ventas=controlador.getVentasJefe(this.getEmpleadoActual().getEmplId(),fecha.getYear()+1900);
+			vector_ventas=controlador.getVentasJefe(this.empleados,fecha.getYear()+1900);
 		}
 		System.out.println("Cache cargada");
 	}
