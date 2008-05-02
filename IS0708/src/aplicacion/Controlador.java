@@ -1833,7 +1833,7 @@ public class Controlador {
 			
 			while (rs.next()) {				
 				Date d = rs.getDate("Fecha");
-				float v = rs.getFloat("Importe");
+				double v = rs.getDouble("Importe");
 				Object datos[] = new Object[2];
 				
 				datos[0] = d;
@@ -1881,7 +1881,7 @@ public class Controlador {
 			
 			while (rs.next()) {				
 				Date d = rs.getDate("Fecha");
-				float v = rs.getFloat("Importe");
+				double v = rs.getDouble("Importe");
 				Object datos[] = new Object[2];
 				
 				datos[0] = d;

@@ -22,7 +22,7 @@ import java.sql.Time;
  * <ul>
  * <li>	0 - Administrador<br>
  * 		El administrador es un superusuario que tiene 
- * 		permiso para crear gerentes y configurar la aplicación.
+ * 		permiso para crear jefes y configurar la aplicación.
  * 		No es considerado un empleado, y no se le pueden asignar
  * 		departamentos. Por tanto tampoco puede consultar un cuadrante
  * 		ni su rendimiento.
@@ -36,11 +36,6 @@ import java.sql.Time;
  * 		departamentos. Además de lo que puede hacer un empleado,
  * 		puede cambiar los cuadrantes de sus departamentos y mirar
  * 		sus estad?sticas e índices de rendimiento.
- * <li> 3 - Gerente<br>
- * 		El gerente es un empleado que tiene a su cargo empleados
- * 		que son jefes. Puede tener también la función de jefe si
- * 		tiene algún departamento a su cargo, y además puede crear
- * 		jefes, departamentos y asignar jefes a departamentos.
  * 
  * @author Daniel Dionne
  *

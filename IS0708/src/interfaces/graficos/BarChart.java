@@ -17,7 +17,7 @@ public class BarChart extends Chart{
 	 * Constructor de la clase
 	 *
 	 */
-	public BarChart(ArrayList<String> fechas,ArrayList<Integer> cantidades){
+	public BarChart(ArrayList<String> fechas,ArrayList<Double> cantidades){
 		super(fechas,cantidades);
 	}
 	/**
