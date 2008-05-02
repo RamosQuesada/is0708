@@ -64,6 +64,7 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 	private boolean cacheCargada = false;
 	private I_Turno turno = null;
 	private int despMouse;
+	private int trasteando = 0;
 	private boolean enabled; // Dice si el widget está activado
 	/** 1 vista mensual, 2 vista diaria. */
 	private int tipoVista=2;
@@ -517,26 +518,35 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 						if (turno==null) {
 							while (!encontrado && i < iCuad[dia-1].size()) {
 								t = iCuad[dia-1].get(i).getTurno();
-								if (empleadoActivo==-1) { cursor(0); t.desactivarFranjas();}
+								if (empleadoActivo==-1) { cursor(0); t.desactivarFranjas(); }
 								else if (iCuad[dia-1].get(i).getEmpl()!=null && iCuad[dia-1].get(i).getEmpl().getEmplId() == empleadosMostrados.get(empleadoActivo).getEmplId()) {
-									if 		(t.contienePixelInt(e.x))	{ cursor(1); encontrado = true; turnoActivo = t; redibujar=true;}
+									if 		(t.contienePixelInt(e.x))	{ cursor(1); encontrado = true; turnoActivo = t; redibujar=true; trasteando++;}
 									else if (t.tocaLadoIzquierdo(e.x))	{ cursor(2); encontrado = true; turnoActivo = t; redibujar=true;}
 									else if (t.tocaLadoDerecho(e.x))	{ cursor(2); encontrado = true; turnoActivo = t; redibujar=true;}
 									else if (e.x < margenNombres)		{ cursor(3); encontrado = true; turnoActivo = null; redibujar=true;}
-									else cursor(0);
+									else 								{ cursor(0); }
 								}
 								i++;
 							}
 						} else {
-							if 		(turno.contienePixelInt(e.x))	{ cursor(1); encontrado = true; turnoActivo = turno; redibujar=true;}
+							if 		(turno.contienePixelInt(e.x))	{ cursor(1); encontrado = true; turnoActivo = turno; redibujar=true; trasteando++;}
 							else if (turno.tocaLadoIzquierdo(e.x))	{ cursor(2); encontrado = true; turnoActivo = turno; redibujar=true;}
 							else if (turno.tocaLadoDerecho(e.x))	{ cursor(2); encontrado = true; turnoActivo = turno; redibujar=true;}
 							else if (e.x < margenNombres)			{ cursor(3); encontrado = true; turnoActivo = null; redibujar=true;}
-							else cursor(0);
+							else 									{ cursor(0); }
 						}
 						
 						if (!encontrado && turnoActivo!=null) { cursor(0); turnoActivo=null; redibujar=true; }
 						if (redibujar) canvas.redraw();
+						// Si el usuario está haciendo el memo con las barritas
+						if (trasteando==400) {
+							MessageBox messageBox = new MessageBox(canvas.getShell(),
+									SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
+							messageBox.setText("Pesao");
+							messageBox.setMessage("¿Quieres dejarlo ya?");
+							messageBox.open();
+							trasteando=0;
+						}
 					}
 				}
 			}
@@ -822,20 +832,20 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 		}
 	};
 
-	public void setDia(int dia, int mes, int anio) {
+	public String setDiaYGetSugerencia(int dia, int mes, int anio) {
 		this.dia = dia;
 		this.mes = mes;
 		this.anio = anio;
+		String s = null;
 		try {
-			String s = vista.getSugerencias(mes, anio, departamento).get(0).toString();
-			if (s!=null)
-				System.out.println(s);
+			s = vista.getSugerencias(mes, anio, departamento).get(0).toString();
 		}
 		catch(Exception e) {System.err.println("No encuentro sugerencias.");}
 		if (vista.isCacheCargada()) {
 			cargarDeCache();
 			redibujar();			
 		}
+		return s;
 	}
 	
 	/**

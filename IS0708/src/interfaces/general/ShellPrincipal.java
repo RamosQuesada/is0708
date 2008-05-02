@@ -36,7 +36,7 @@ public class ShellPrincipal {
 	
 	private Label lEstado;
 	private ProgressBar pbEstado;
-	private Tray tray;
+//	private Tray tray;
 	private Thread algRunner;
 	private DateTime calendario;
 	private Combo cDepartamentos;
@@ -87,7 +87,7 @@ public class ShellPrincipal {
 			} catch (Exception e) {}
 			if (!display.isDisposed()) {
 				// Selecciona el día que queremos ver
-				ic.setDia(tmDia, tmMes, tmAnio);
+				ic.setDiaYGetSugerencia(tmDia, tmMes, tmAnio);
 				display.asyncExec(new Runnable() {
 					public void run() {
 						// Introduce los departamentos en el selector de departamentos
@@ -157,7 +157,7 @@ public class ShellPrincipal {
 					
 					vista.setProgreso(bundle.getString("I02_lab_GenerandoCuads"), 100);
 					vista.setCursorFlecha();
-					ic.setDia(calendario.getDay(), calendario.getMonth()+1,	calendario.getYear());
+					ic.setDiaYGetSugerencia(calendario.getDay(), calendario.getMonth()+1,	calendario.getYear());
 					ic.cargarDeCache();
 					ic.redibujar();
 					
@@ -329,7 +329,7 @@ public class ShellPrincipal {
 		tmMes = calendario.getMonth()+1;
 		tmDia = calendario.getDay();
 
-		ic.setDia(tmDia, tmMes, tmAnio);
+		ic.setDiaYGetSugerencia(tmDia, tmMes, tmAnio);
 		
 		calendario.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
@@ -344,8 +344,11 @@ public class ShellPrincipal {
 						+ String.valueOf(calendario.getYear()));
 				vista.setCursorEspera();
 				vista.setProgreso(bundle.getString("I02_lab_CargandoCuads"), 50);
-				ic.setDia(calendario.getDay(), calendario.getMonth()+1, calendario.getYear());
-				//zeon
+				// Cambio de día y presentación de sugerencias
+				String sug = ic.setDiaYGetSugerencia(calendario.getDay(), calendario.getMonth()+1, calendario.getYear());
+				if (sug==null) sug = bundle.getString("I02_lab_NoHaySugerencias");
+				textSugerencias.setText(sug);
+				
 				vista.setProgreso(bundle.getString("I02_lab_CargandoCuads"),100);
 				vista.setCursorFlecha();
 			}
