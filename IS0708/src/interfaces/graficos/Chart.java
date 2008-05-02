@@ -18,12 +18,12 @@ import org.eclipse.swt.layout.*;
  */
 public abstract class Chart {
 	protected ArrayList <String> fechas;
-	protected ArrayList <Integer> cantidades;
+	protected ArrayList <Double> cantidades;
 	/**
 	 * Constructor de la clase
 	 *
 	 */
-	public Chart(ArrayList<String> fechas,ArrayList<Integer> cantidades){
+	public Chart(ArrayList<String> fechas,ArrayList<Double> cantidades){
 		this.fechas=fechas;
 		this.cantidades=cantidades;
 	}
