@@ -69,11 +69,6 @@ public class Database extends Thread {
 			password=EncriptCadena.desencripta(dis.readUTF());
 			String url = "jdbc:mysql://"+ ip +"/" + dbName;
 
-// Descomentar este trozo para usar la base de datos local
-//			userName = "root";
-//			password = "";
-//			url = "jdbc:mysql://localhost/turnomat_bd";
-
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			//DriverManager.setLoginTimeout(300);
 			con = DriverManager.getConnection(url, userName, password);
@@ -1011,7 +1006,6 @@ public class Database extends Thread {
 		}
 		try {
 			st.executeUpdate(q);
-			System.out.println(q);
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
@@ -1036,13 +1030,14 @@ public class Database extends Thread {
 	 */
 	public boolean insertarSugerencia (Date fecha, Time horaInicio, String nombre, String texto) {
 		boolean correcto = false;
+		String q = "INSERT INTO " + tablaSugerencias + " values ('" + nombre 
+		+ "', '" + fecha + "', '" + horaInicio + "', '" + texto + "');";
 		try {
-			st.executeUpdate("INSERT INTO " + tablaSugerencias + " values ('" + nombre 
-					+ "', '" + fecha + "', '" + horaInicio + "', '" + texto + "');");
+			st.executeUpdate(q);
 			correcto = true;
 		} catch (SQLException e) {
 			correcto = false;
-			System.err.println("Database :: Error al insertar en Sugerencias");
+			System.err.println("Database :: Error al insertar en Sugerencias:\n\tConsulta: " + q + "\n\tError: " + e.getMessage());
 		}
 		return correcto;
 	}
