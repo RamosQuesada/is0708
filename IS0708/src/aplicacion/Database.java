@@ -1339,6 +1339,12 @@ public class Database extends Thread {
 		return result;
 	}
 
+	/**
+	 * Lee las ventas de un empleado para un dia concreto
+	 * @param idVend El numero de vendedor
+	 * @param fecha El dia que se quiere leer en formato Date
+	 * @return Un ResultSet con los datos
+	 */
 	public ResultSet obtenVentas(int idVend,Date fecha){
 		ResultSet result =null;
 		try{
@@ -1353,7 +1359,12 @@ public class Database extends Thread {
 		return result;
 		
 	}
-	
+	/**
+	 * Lee de la BBDD las ventas de un empleado durante un año entero
+	 * @param vend El numero de vendedor
+	 * @param anio El año que se quiere leer
+	 * @return Un ResultSet con los datos
+	 */
 	public ResultSet obtenVentasAnio(int vend, int anio) {
 		ResultSet rs = null;
 		try {
@@ -1370,6 +1381,31 @@ public class Database extends Thread {
 		
 		return rs;
 	}
+	
+	public ResultSet obtenVentasJefeAnio(int[] vendedores, int anio) {
+		ResultSet rs = null;
+		try {
+			String inicio = anio + "-01-01";
+			String fin = anio + "-12-31";			
+			String sql = "";
+			
+			for (int i=0; i<vendedores.length-1; i++)
+				sql += "SELECT * FROM " + tablaVentas + " WHERE NumVendedor = " + vendedores[i] +
+				" AND Fecha >= '" + inicio + "' AND Fecha <= '" + fin + "' UNION ";
+			
+			sql += "SELECT * FROM " + tablaVentas + " WHERE NumVendedor = " + vendedores[vendedores.length-1] +
+			" AND Fecha >= '" + inicio + "' AND Fecha <= '" + fin +	"' ORDER BY Fecha ASC;";
+			
+			st = con.createStatement();
+			rs = st.executeQuery(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("Database :: Error de lectura de Ventas Anuales");
+		}
+		
+		return rs;
+	}
+	
 	/**
 	 * Método que lee todos los contratos de un departamento
 	 * 
