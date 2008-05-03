@@ -78,6 +78,9 @@ public class Empleado implements Drawable {
 	private Date UltimoAcceso = new Date(0);
 	private int posicion;
 	private Date finContrato = new Date(0);
+	/** 	Este parámetro lo usa el cuadrante para saber si se ha recolocado su posibión
+			y hay que guardarlo al pulsar el botón guardar. */
+	private boolean modificado; 
 	
 	//Optimizacion Algoritmo (reducción llamadas a BBDD)
 	private ArrayList<Turno> turnoE;
@@ -1172,8 +1175,15 @@ public class Empleado implements Drawable {
 
 	public void setPosicion(int posicion) {
 		this.posicion = posicion;
+		modificado = true;
 	}
-	
-	
+
+	public boolean isModificado() {
+		return modificado;
+	}
+
+	public void setModificado(boolean modificado) {
+		this.modificado = modificado;
+	}
 	
 }

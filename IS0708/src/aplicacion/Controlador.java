@@ -753,6 +753,11 @@ public class Controlador {
 	public void cambiaHorarioDpto(String Nombre, Time hI, Time hC) {
 		 _db.modificaHorarioDepartamento(Nombre, hI, hC);
 	}
+	
+	public boolean modificaTrabaja(int numVendedor, int idTurno, String fecha) {
+		 return _db.modificarTrabaja(numVendedor, idTurno, fecha);
+	}
+
 	/**
 	 * Metodo que a partir de un identificador de departamento y un dia
 	 * nos devuelve una lista dividida en horas con sus correspondientes 
@@ -2298,8 +2303,8 @@ public class Controlador {
 	 */
 	public void cambiarEmpleado (int idEmp, String nomb, String Ape1, String Ape2, java.util.Date FNac, int sexo, 
 			String mail, String Passw, int grupo, java.util.Date FCont, java.util.Date Fentr, int Felic, int Idiom, 
-			int Rang, int Turn, Color color, int Contr){
-		this._db.cambiarEmpleado(idEmp, nomb, Ape1, Ape2, FNac, sexo, mail, Passw, grupo, FCont, Fentr, Felic, Idiom, Rang, Turn, color,Contr);
+			int Rang, int Turn, Color color, int Contr, int posicion){
+		this._db.cambiarEmpleado(idEmp, nomb, Ape1, Ape2, FNac, sexo, mail, Passw, grupo, FCont, Fentr, Felic, Idiom, Rang, Turn, color,Contr, posicion);
 	}
 	
 	public ArrayList<String> getTodosNumerosDEPARTAMENTOs() {

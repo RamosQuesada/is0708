@@ -129,6 +129,10 @@ public class Vista {
 		colaEscritura.add(new ElementoCache(o, MODIFICAR, tipo));
 	}
 	
+	private void modifyCache(Object o, String fecha, String tipo) {
+		colaEscritura.add(new ElementoCache(o, fecha, MODIFICAR, tipo));
+	}
+
 	private void deleteCache(Object o, String tipo) {
 		colaEscritura.add(new ElementoCache(o, ELIMINAR, tipo));
 	}
@@ -180,7 +184,7 @@ public class Vista {
 					else if(e.i==MODIFICAR) {
 						if      (e.tipo.equals("Contrato"))			controlador.modificarContrato(((Contrato)e.o.get(0)).getNumeroContrato(), ((Contrato)e.o.get(0)).getTurnoInicial(), ((Contrato)e.o.get(0)).getNombreContrato(), ((Contrato)e.o.get(0)).getPatron() , ((Contrato)e.o.get(0)).getDuracionCiclo(), ((Contrato)e.o.get(0)).getSalario(), ((Contrato)e.o.get(0)).getTipoContrato());
 						else if (e.tipo.equals("Turno"))			controlador.modificarTurno(((Turno)e.o.get(0)).getIdTurno(), ((Turno)e.o.get(0)).getDescripcion(), ((Turno)e.o.get(0)).getHoraEntrada(), ((Turno)e.o.get(0)).getHoraSalida(), ((Turno)e.o.get(0)).getHoraDescanso(), ((Turno)e.o.get(0)).getTDescanso(),((Turno)e.o.get(0)).getColor());
-						else if (e.tipo.equals("Empleado"))			controlador.cambiarEmpleado(((Empleado)e.o.get(0)).getEmplId(), ((Empleado)e.o.get(0)).getNombre(), ((Empleado)e.o.get(0)).getApellido1(), ((Empleado)e.o.get(0)).getApellido2(), ((Empleado)e.o.get(0)).getFechaNac(), ((Empleado)e.o.get(0)).getSexo(), ((Empleado)e.o.get(0)).getEmail(), ((Empleado)e.o.get(0)).getPassword(), ((Empleado)e.o.get(0)).getGrupo(), ((Empleado)e.o.get(0)).getFcontrato(), ((Empleado)e.o.get(0)).getFAlta(), ((Empleado)e.o.get(0)).getFelicidad(), ((Empleado)e.o.get(0)).getIdioma(), ((Empleado)e.o.get(0)).getRango(), ((Empleado)e.o.get(0)).getTurnoFavorito(), ((Empleado)e.o.get(0)).getColor(),((Empleado)e.o.get(0)).getContratoId());
+						else if (e.tipo.equals("Empleado"))			controlador.cambiarEmpleado(((Empleado)e.o.get(0)).getEmplId(), ((Empleado)e.o.get(0)).getNombre(), ((Empleado)e.o.get(0)).getApellido1(), ((Empleado)e.o.get(0)).getApellido2(), ((Empleado)e.o.get(0)).getFechaNac(), ((Empleado)e.o.get(0)).getSexo(), ((Empleado)e.o.get(0)).getEmail(), ((Empleado)e.o.get(0)).getPassword(), ((Empleado)e.o.get(0)).getGrupo(), ((Empleado)e.o.get(0)).getFcontrato(), ((Empleado)e.o.get(0)).getFAlta(), ((Empleado)e.o.get(0)).getFelicidad(), ((Empleado)e.o.get(0)).getIdioma(), ((Empleado)e.o.get(0)).getRango(), ((Empleado)e.o.get(0)).getTurnoFavorito(), ((Empleado)e.o.get(0)).getColor(),((Empleado)e.o.get(0)).getContratoId(), ((Empleado)e.o.get(0)).getPosicion());
 						else if (e.tipo.equals("Mensaje"))			controlador.marcarMensaje((Mensaje)e.o.get(0));
 						else if (e.tipo.equals("MensajeLeido"))		controlador.setLeido((Mensaje)e.o.get(0));
 						//else if (e.tipo.equals("JefeDepartamento"))	controlador.modificaDpto(((Departamento)e.o.get(0)).getNombreDepartamento(), ((Departamento)e.o.get(0)).getJefeDepartamento().getEmplId()); 
@@ -188,6 +192,7 @@ public class Vista {
 //																		controlador.cambiaNombreDepartamentoUsuario(e.o.get(0).toString(),e.o.get(1).toString());
 //																		controlador.cambiaNombreNumerosDEPARTAMENTOs(e.o.get(0).toString(),e.o.get(1).toString());
 //																		} 
+						else if (e.tipo.equals("Trabaja"))			controlador.modificaTrabaja(((Trabaja)e.o.get(0)).getIdEmpl(), ((Trabaja)e.o.get(0)).getIdTurno(), (String)e.o.get(1));
 						//TODO quitar esto
 						else System.err.println("Error en cache - Modificar "+e.tipo+" no existe");
 					}
@@ -220,7 +225,8 @@ public class Vista {
 	 * @return el id, -1 si el turno ya existe
 	 */
 	public int insertTurno(Turno t) {
-		if (getTurno(t.getIdTurno())!=null) return -1;
+		// TODO He quitado esta comprobación porque si metes un turno, se le asigna un id nuevo, ¿no? - Dani
+//		if (getTurno(t.getIdTurno())!=null) return -1;
 		int i = controlador.insertTurno(t);
 		t.setIdTurno(i);
 		turnos.add(t);
@@ -466,6 +472,59 @@ public class Vista {
 		return true;
 	}
 	
+	/**
+	 * Modifica la información de un empleado
+	 * @param emp el empleado modificado
+	 * @return <i>cierto</i> si se ha podido modificar
+	 */
+	public boolean modificarEmpleado(Empleado emp){
+		Empleado eCache = getEmpleado(emp.getEmplId());
+		Contrato c = getContrato(emp.getContratoId());
+		
+		if (eCache==null) return false;
+		eCache.setNombre(emp.getNombre());
+		eCache.setApellido1(emp.getApellido1());
+		eCache.setApellido2(emp.getApellido2());
+		eCache.setFechaNac(emp.getFechaNac());
+		eCache.setSexo(emp.getSexo());
+		eCache.setEmail(emp.getEmail());
+		eCache.setPassword(emp.getPassword());
+		eCache.setGrupo(emp.getGrupo());
+		eCache.setFcontrato(emp.getFcontrato());
+		eCache.setFAlta(emp.getFAlta());
+		eCache.setFelicidad(emp.getFelicidad());
+		eCache.setIdioma(emp.getIdioma());
+		eCache.setRango(emp.getRango());
+		if (emp.getContratoId() != eCache.getContratoId())
+			eCache.setTurnoFavorito(c.getTurnoInicial());
+		eCache.setContrato(c);
+		eCache.setIdContrato(emp.getContratoId());
+		eCache.setColor(emp.getColor());
+		eCache.setPosicion(emp.getPosicion());
+		
+		modifyCache(eCache, "Empleado");
+		return true;
+	}
+	
+	public boolean modificarTrabaja(int idTurno, int idEmpl, int dia, int mes, int anio, String dep) {
+		// Coger Trabaja del Cuadrante
+		Cuadrante c = getCuadrante(mes, anio, dep);
+		Trabaja t = null;
+		int i=0; boolean encontrado = false;
+		while (!encontrado && i<c.getListaTrabajaDia(dia-1).size()) {	// Coger trabaja correspondiente al empleado
+			if (c.getListaTrabajaDia(dia-1).get(i).getIdEmpl()==idEmpl) {
+				t = c.getListaTrabajaDia(dia-1).get(i);
+				encontrado = true;
+			}
+			else i++;
+		}
+		if (t==null) return false;
+		
+		t.setIdTurno(idTurno);
+		modifyCache(t, aplicacion.utilidades.Util.fechaAString(dia, mes, anio), "Trabaja");
+		return true;
+	}
+
 	/**
 	 * Modifica un turno en la base de datos
 	 * @param idTurno Turno a modificar

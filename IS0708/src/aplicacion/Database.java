@@ -452,7 +452,7 @@ public class Database extends Thread {
 	 */
 	public boolean cambiarEmpleado(int idEmp, String nomb, String Ape1, String Ape2, Date FNac, int sexo, 
 			String mail, String Passw, int grupo, Date FCont, Date Fentr, int Felic, int Idiom, 
-			int Rang, int Turn, Color color, int Contr) {
+			int Rang, int Turn, Color color, int Contr, int pos) {
 		int r = 0;
 		String col =Util.ColorAHex(color);
 		try {
@@ -469,7 +469,7 @@ public class Database extends Thread {
 					+ ", FechaContrato='" + Cont + "', FechaEntrada='" + Entr
 					+ "', Felicidad=" + Felic
 					+ ", Idioma=" + Idiom + ", Rango=" + Rang
-					+ ", IdContrato=" + Contr + ", IdTurno=" + Turn + ", Color='" + col
+					+ ", IdContrato=" + Contr + ", IdTurno=" + Turn + ", Color='" + col + "', Posicion='" + pos
 					+ "' WHERE NumVendedor=" + idEmp + ";");
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -971,7 +971,41 @@ public class Database extends Thread {
 		}
 		return correcto;
 	}
-	
+
+	/**
+	 * Modifica la entrada en la tabla Trabaja para un empleado una fecha determinada.
+	 * Además, elimina todos los turnos especiales que hubiera generados para ese empleado
+	 * y ese día.
+	 * Para pasar la fecha en el formato correcto, utilizar <b>aplicacion.utilidades.Util.fechaAString</b>.
+	 * @param numVendedor	el vendedor al que se le cambia el horario
+	 * @param idTurno		el turno nuevo
+	 * @param fecha			la fecha en formato YYYY-MM-DD
+	 * @return				<i>true</i> si se realiza la modificación con éxito 
+	 */
+	public boolean modificarTrabaja(int numVendedor, int idTurno, String fecha) {
+		boolean correcto = false;
+		// Actualizar el cuadrante
+		String q1 = "UPDATE " + tablaTrabaja + " SET IdTurno = "
+				+ idTurno 
+				+ " WHERE NumVendedor = " + numVendedor + " AND "  
+				+ " Fecha = '" + fecha + "';";
+		// Eliminar los turnos temporales que se hubieran creado para este vendedor y esta fecha
+		String q2 = "DELETE FROM "+ tablaTurnos +" WHERE Descripcion = 'TE-" + numVendedor + "@" + fecha + "' " +
+				"AND IdTurno != " + idTurno + ";\n";
+
+		try {
+			st = con.createStatement();
+			st.addBatch(q1);
+			st.addBatch(q2);
+			st.executeBatch();
+			correcto = true;
+		} catch (SQLException e) {
+			correcto = false;
+			System.err.println("Database :: Error al modificar en Trabaja\n\t" + q1 + "\n\t" + q2 + "\n\t" + e.getMessage());
+		}
+		return correcto;
+	}
+
 	
 	public boolean insertarCuadrante(Cuadrante cuadrante) {
 		boolean correcto = false;
