@@ -199,7 +199,8 @@ public class Util {
 	}
 	
 	/**
-	 * Convierte un fecha de tipo Date en un String con el formato YYYY-MM-DD.
+	 * Convierte un fecha de tipo Date en un String con el formato YYYY-MM-DD
+	 * (que usa la BD).
 	 * Si la fecha es null, devuelve 0000-00-00.
 	 * @param fecha la fecha a convertir
 	 * @return el String con el formato apropiado
@@ -222,6 +223,29 @@ public class Util {
 		return formatter.format(fecha);
 	}
 	
+	/**
+	 * Convierte una fecha dada en enteros separados en un String con el
+	 * formato YYYY-MM-DD (que usa la BD).
+	 * @param dia el día
+	 * @param mes el mes
+	 * @param anio el año
+	 * @return el string con el formato apropiado
+	 * @author Daniel Dionne
+	 */
+	public static String fechaAString(int dia, int mes, int anio) {
+		String an = String.valueOf(anio);
+		String me = String.valueOf(mes);
+		String di = String.valueOf(dia);
+		
+		if (an.length()==1)
+			an = "0" + an;
+		if (me.length()==1)
+			me = "0" + me;
+		if (di.length()==1)
+			di = "0" + di;
+		return an + "-" + me + "-" + di;
+
+	}
 	/**
 	 * Coje la hora y los minutos de un Date y lo pasa a String con el formato hh:mm
 	 * Si la fecha es null, devuelve 00:00.

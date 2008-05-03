@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.DateTime;
 
+import algoritmo.Cuadrante;
 import algoritmo.Trabaja;
 import aplicacion.Vista;
 //De dónde coger javadoc: http://javashoplm.sun.com/ECom/docs/Welcome.jsp?StoreId=22&PartDetailId=jdk-6u3-oth-JPR&SiteId=JSC&TransactionId=noreg
@@ -1597,5 +1598,58 @@ public class I_Cuadrante extends algoritmo.Cuadrante { // implements aplicacion.
 			cursor(4);
 		}
 		fondo=null;
+	}
+	
+	/**
+	 * Guarda los cambios realizados sobre el cuadrante en la BD
+	 */
+	public boolean guardarCambios() {
+		cursor(4);
+		I_Trabaja t;
+		Empleado e;
+		boolean correcto = true;
+		// Mirar qué empleados se han modificado
+		for (int i=0; i<vista.getEmpleados().size(); i++) {
+			e = vista.getEmpleados().get(i);
+			if (e.isModificado()) {
+				correcto &= vista.modificarEmpleado(e);
+			}
+		}
+		if (!correcto) return false;
+		// Mirar qué turnos se han modificado
+		for (int i=0; i<iCuad[dia-1].size(); i++) {
+			t = iCuad[dia-1].get(i);
+			// Si el turno se ha modificado, hay que insertarlo en la BD como uno nuevo
+			if (t.isModificado()) {
+				int idEmpl = iCuad[dia-1].get(i).getEmpl().getEmplId();
+				// Se inserta el turno nuevo con una descripción diferente
+				Turno turno = new Turno(t.getTurno());
+				turno.setDescripcion("TE-" + idEmpl + "@" + aplicacion.utilidades.Util.fechaAString(dia, mes, anio));
+				int idTurno = vista.insertTurno(turno);
+				// Se asigna el turno al empleado para el día correspondiente
+				correcto &= vista.modificarTrabaja(idTurno, idEmpl, dia, mes, anio, departamento);
+			}
+			
+		}
+		cursor(0);
+		return correcto;
+	}
+	
+	/**
+	 * Indica si se ha tocado algo en el cuadrante
+	 * @return <i>true</i> si se ha desplazado algún empleado o se ha modificado algún turno
+	 */
+	public boolean isModificado() {
+		boolean modificado = false;
+		// Mirar si se ha cambiado algún empleado de posición
+		for (int i=0; i<vista.getEmpleados().size(); i++)
+			if (vista.getEmpleados().get(i).isModificado())
+				modificado = true;
+		
+		// Mirar si se ha modificado algún turno
+		for (int i=0; i<iCuad[dia-1].size(); i++) 
+			if (iCuad[dia-1].get(i).isModificado())
+				modificado = true;
+		return modificado;
 	}
 }

@@ -331,26 +331,45 @@ public class ShellPrincipal {
 
 		ic.setDiaYGetSugerencia(tmDia, tmMes, tmAnio);
 		
+		// Listener del calendario
 		calendario.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				tmAnio = calendario.getYear();
-				tmMes = calendario.getMonth()+1;
-				tmDia = calendario.getDay();
-				vista.infoDebug("I02_Principal", "Fecha cambiada a "
-						+ String.valueOf(calendario.getDay())
-						+ " de "
-						+ aplicacion.utilidades.Util.mesAString(bundle, calendario
-								.getMonth()) + " de "
-						+ String.valueOf(calendario.getYear()));
-				vista.setCursorEspera();
-				vista.setProgreso(bundle.getString("I02_lab_CargandoCuads"), 50);
-				// Cambio de día y presentación de sugerencias
-				String sug = ic.setDiaYGetSugerencia(calendario.getDay(), calendario.getMonth()+1, calendario.getYear());
-				if (sug==null) sug = bundle.getString("I02_lab_NoHaySugerencias");
-				textSugerencias.setText(sug);
-				
-				vista.setProgreso(bundle.getString("I02_lab_CargandoCuads"),100);
-				vista.setCursorFlecha();
+				// Primero mirar si el cuadrante ha sido modificado
+				boolean cuadModificado = ic.isModificado();
+				int respuesta = SWT.NO;
+				// Si se ha modificado, preguntar si descartar cambios
+				if (cuadModificado) {
+					MessageBox messageBox = new MessageBox(shell,
+							SWT.APPLICATION_MODAL | SWT.YES | SWT.NO);
+					messageBox.setText(bundle.getString("Aviso"));
+					messageBox.setMessage(bundle.getString("I02_dlg_DescartarCambios?"));
+					respuesta = messageBox.open();
+				}
+				// Si no se ha modificado, o se ha modificado pero quiere descartar cambios, cambiar fecha 
+				if (!cuadModificado || (cuadModificado && respuesta==SWT.YES)) {
+					tmAnio = calendario.getYear();
+					tmMes = calendario.getMonth()+1;
+					tmDia = calendario.getDay();
+					vista.infoDebug("I02_Principal", "Fecha cambiada a "
+							+ String.valueOf(calendario.getDay())
+							+ " de "
+							+ aplicacion.utilidades.Util.mesAString(bundle, calendario
+									.getMonth()) + " de "
+									+ String.valueOf(calendario.getYear()));
+					vista.setCursorEspera();
+					vista.setProgreso(bundle.getString("I02_lab_CargandoCuads"), 50);
+					// Cambio de día y presentación de sugerencias
+					String sug = ic.setDiaYGetSugerencia(calendario.getDay(), calendario.getMonth()+1, calendario.getYear());
+					if (sug==null) sug = bundle.getString("I02_lab_NoHaySugerencias");
+					textSugerencias.setText(sug);
+
+					vista.setProgreso(bundle.getString("I02_lab_CargandoCuads"),100);
+					vista.setCursorFlecha();
+				} else {
+				// Si no se quiere cambiar de día, hay que volver a poner el calendario en la fecha que estaba
+				// antes de tocarlo
+					calendario.setDay(tmDia);
+				}
 			}
 		});
 		calendario.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));
@@ -440,8 +459,13 @@ public class ShellPrincipal {
 			public void widgetDefaultSelected(SelectionEvent arg0) {}
 			public void widgetSelected(SelectionEvent arg0) {
 				bGuardarCambios.setEnabled(false);
-				
-				// TODO Guardar los cambios
+				MessageBox messageBox = new MessageBox(shell, SWT.APPLICATION_MODAL | SWT.OK);
+				messageBox.setText(bundle.getString("Aviso"));
+				if (ic.guardarCambios())
+					messageBox.setMessage("I02_dlg_CambiosGuardados");
+				else
+					messageBox.setMessage("I02_dlg_CambiosNoGuardados");
+				messageBox.open();
 			}
 		});
 		final Button bcambiarDatos = new Button(cCuadrantes, SWT.PUSH);
