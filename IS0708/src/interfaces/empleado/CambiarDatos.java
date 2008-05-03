@@ -69,30 +69,29 @@ public class CambiarDatos {
 		
 		int idioma= this._vista.getEmpleadoActual().getIdioma();
 		
-		final Label lcontraseñaActual	= new Label(cGrupo, SWT.LEFT);
-		lcontraseñaActual.setText(_bundle.getString("ContrasenaActual"));
-		final Composite cGrupoca = new Composite (cGrupo, SWT.NONE);
-		cGrupoca.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 0, 0));
-		GridLayout lGrupoca = new GridLayout();
-		lGrupoca.numColumns = 1;
-		cGrupoca.setLayout(lGrupoca);
-		final Text tcontraseñaActual =new Text (cGrupoca, SWT.BORDER);
-		tcontraseñaActual.setEchoChar('*');
-		tcontraseñaActual.setTextLimit(10);
-		tcontraseñaActual.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 0, 0));
-		final Label lcontraseña	= new Label(cGrupo, SWT.LEFT);
-		lcontraseña.setText(_bundle.getString("ContrasenaNueva"));
+
+
+
 		final Composite cGrupo2 = new Composite (cGrupo, SWT.NONE);
-		cGrupo2.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 0, 0));
+		cGrupo2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 0, 0));
 		GridLayout lGrupo2 = new GridLayout();
 		lGrupo2.numColumns = 1;
 		cGrupo2.setLayout(lGrupo2);
+		final Label lcontraseñaActual	= new Label(cGrupo2, SWT.LEFT);
+		lcontraseñaActual.setText(_bundle.getString("ContrasenaActual"));
+
+		final Text tcontraseñaActual =new Text (cGrupo2, SWT.BORDER);
+		tcontraseñaActual.setEchoChar('*');
+		tcontraseñaActual.setTextLimit(10);
+		tcontraseñaActual.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 0, 0));
+		final Label lcontraseña	= new Label(cGrupo2, SWT.NONE);
+		lcontraseña.setText(_bundle.getString("ContrasenaNueva"));
 		final Text tcontraseña =new Text (cGrupo2, SWT.BORDER);
 		tcontraseña.setEchoChar('*');
 		tcontraseña.setTextLimit(10);
 		tcontraseña.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 0, 0));
 
-		final Label lcontraseña2	= new Label(cGrupo2, SWT.LEFT);
+		final Label lcontraseña2	= new Label(cGrupo2, SWT.NONE);
 		lcontraseña2.setText(_bundle.getString("DeNuevoContrasena"));
 		final Text tcontraseña2 =new Text (cGrupo2, SWT.BORDER);
 		tcontraseña2.setEchoChar('*');
@@ -115,10 +114,11 @@ public class CambiarDatos {
 		ingles.setText(_bundle.getString("Ingles"));
 		final Button Polaco		= new Button(cGrupo3, SWT.RADIO);
 		Polaco.setText(_bundle.getString("Polaco"));
-		if(idioma==0){espanol.setSelection(true);}
-		else if(idioma==1){ingles.setSelection(true);}
-		else if(idioma==2){Polaco.setSelection(true);}
-
+		
+		Empleado empleado = _vista.getEmpleadoActual();
+		if (empleado.getIdioma()==0) espanol.setSelection(true);
+		if (empleado.getIdioma()==1) ingles.setSelection(true);
+		if (empleado.getIdioma()==2) Polaco.setSelection(true);
 		final Composite cAceptar = new Composite (cGrupo, SWT.NONE);
 		cAceptar.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 0, 0));
 		GridLayout lAceptar = new GridLayout();
@@ -140,6 +140,7 @@ public class CambiarDatos {
 				else if(Polaco.getSelection()){idioma=2;}
 				if((tcontraseña.getText().length()>0)&&((tcontraseña.getText().compareTo(tcontraseña2.getText())==0))&&(((tcontraseñaActual.getText().compareTo(_vista.getEmpleadoActual().getPassword())==0)))){			
 
+					System.out.println("idioma"+idioma);
 					Empleado empleado = _vista.getEmpleadoActual();
 					try{
 						_vista.modificarEmpleado(empleado.getEmplId(), empleado.getNombre(),
@@ -187,6 +188,28 @@ public class CambiarDatos {
 						messageBox.setText (_bundle.getString("Error"));
 						messageBox.setMessage ("la nueva contraseña no coincide");
 						messageBox.open ();
+					}
+					else if((tcontraseña.getText().length()==0)&&(tcontraseña2.getText().length()==0)){
+						Empleado empleado = _vista.getEmpleadoActual();
+						try{
+							_vista.modificarEmpleado(empleado.getEmplId(), empleado.getNombre(),
+								empleado.getApellido1(), empleado.getApellido2(),
+								empleado.getFechaNac(), empleado.getSexo(),
+								empleado.getEmail(),empleado.getPassword(), empleado.getGrupo(), empleado.getFcontrato(),
+								empleado.getFAlta(),empleado.getFelicidad(),idioma,empleado.getRango() ,
+								empleado.getTurnoFavorito(),empleado.getContratoId(),empleado.getColor());
+							MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
+							messageBox.setText (_bundle.getString("Error"));
+							messageBox.setMessage ("modificacion realizada");
+							messageBox.open ();
+						}
+						catch(Exception exc){
+							MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
+							messageBox.setText (_bundle.getString("Error"));
+							messageBox.setMessage ("error en la modificacion, inténtelo mas tarde");
+							messageBox.open ();
+						}
+						shell.dispose();
 					}
 					else if(tcontraseña.getText().length()==0){
 						MessageBox messageBox = new MessageBox (_padre, SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
