@@ -170,7 +170,7 @@ public class ShellMensajeNuevo {
 					e.doit = messageBox.open () == SWT.CLOSE;
 				}
 				if(opcion_actual==MENSAJERIA_INTERNA){
-					ShellEscribirMensaje ventana = new ShellEscribirMensaje(_padre,_bundle, _vista, null, 0, "");
+					ShellEscribirMensaje ventana = new ShellEscribirMensaje(_padre,_bundle, _vista, null, 0, "",false,null);
 					shell.dispose();
 
 				}
