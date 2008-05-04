@@ -366,11 +366,12 @@ public class Controlador {
 	public boolean insertEmpleado(Empleado empleado) {
 		int sexo = empleado.getSexo();
 		int grupo = empleado.getGrupo();
+		// TODO Pone Horas extras 0, falta getter en Empleado
 		return _db.insertarUsuario(empleado.getEmplId(), empleado.getNombre(),
 				empleado.getApellido1(), empleado.getApellido2(), empleado
 						.getFechaNac(), sexo, empleado.getEmail(), empleado
 						.getPassword(), grupo, empleado.getFcontrato(), empleado
-						.getFAlta(), 0, 0, empleado.getIdioma(), 1,
+						.getFAlta(), 0, empleado.getFelicidad(), empleado.getIdioma(), empleado.getRango(),
 				empleado.getContratoId(), empleado.getTurnoFavorito(),
 				empleado.getNombreColor(), empleado.getTelefono(), empleado.getSsid(),
 				empleado.getHaEntrado(), empleado.getUltimoAcceso(), empleado.getPosicion(),
