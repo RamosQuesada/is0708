@@ -162,8 +162,20 @@ public class TabMensajeria extends Thread{
 				bundle.getString("I02_lab_MostrandoMensajes5"));*/
 		tablaMensajes.setEnabled(true);
 		tablaMensajes.setCursor(new Cursor(tablaMensajes.getDisplay(), SWT.CURSOR_ARROW));
-		bMensSiguientes.setEnabled(true);
-		bMensAnteriores.setEnabled(true);
+		
+		int totalEntrantes = vista.getTodosMensajesEntrantes().size();
+		if(primerMensaje+vista.getNum_men_hoja() < totalEntrantes)
+			bSig = true;
+		else 
+			bSig = false;
+		bMensSiguientes.setEnabled(bSig);
+		
+		if(primerMensaje > 0)
+			bAnt = true;
+		else 
+			bAnt = false;
+		bMensAnteriores.setEnabled(bAnt);
+		
 		bActualizar.setEnabled(true);
 		tablaMensajes.setSelection(indice);
 	}
@@ -362,6 +374,10 @@ public class TabMensajeria extends Thread{
 		bMensAnteriores.setText(bundle.getString("I02_but_Anteriores"));
 		bMensAnteriores.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
 		1, 1));
+		if(primerMensaje > 0)
+			bAnt = true;
+		else 
+			bAnt = false;
 		bMensAnteriores.setEnabled(bAnt);
 		
 		bMensAnteriores.addSelectionListener(new SelectionAdapter() {
@@ -369,12 +385,14 @@ public class TabMensajeria extends Thread{
 				if(primerMensaje > 0)
 				{
 					desplazarVentanaMensajes(-vista.getNum_men_hoja());
-					bMensSiguientes.setEnabled(true);
+					bAnt = true;
+					bMensSiguientes.setEnabled(bAnt);
+					bSig = true;
 				}
 				else
 				{
 					bAnt = false;
-					bMensAnteriores.setEnabled(false);
+					bMensAnteriores.setEnabled(bAnt);
 				}
 			}
 		});
@@ -383,6 +401,11 @@ public class TabMensajeria extends Thread{
 		bMensSiguientes.setText(bundle.getString("I02_but_Siguientes"));
 		bMensSiguientes.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
 		1, 1));
+		int totalEntrantes = vista.getTodosMensajesEntrantes().size();
+		if(primerMensaje+vista.getNum_men_hoja() < totalEntrantes)
+			bSig = true;
+		else 
+			bSig = false;
 		bMensSiguientes.setEnabled(bSig);
 
 		bMensSiguientes.addSelectionListener(new SelectionAdapter() {
@@ -391,12 +414,14 @@ public class TabMensajeria extends Thread{
 				if (primerMensaje+vista.getNum_men_hoja() < totalEntrantes)
 				{
 					desplazarVentanaMensajes(vista.getNum_men_hoja());
-					bMensAnteriores.setEnabled(true);
+					bSig = true;
+					bMensAnteriores.setEnabled(bSig);
+					bAnt = true;
 				}
 				else
 				{
 					bSig = false;
-					bMensSiguientes.setEnabled(false);
+					bMensSiguientes.setEnabled(bSig);
 				}
 			}
 		});
