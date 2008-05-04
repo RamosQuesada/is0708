@@ -206,14 +206,10 @@ public class TabContratos extends Thread {
 				modificaContrato();
 			}
 
-			public void mouseDown(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
+			public void mouseDown(MouseEvent arg0) {				
 			}
 
-			public void mouseUp(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
+			public void mouseUp(MouseEvent arg0) {				
 			}
 			
 		});
@@ -392,18 +388,23 @@ public class TabContratos extends Thread {
 						if (turnosFuera.size() == 0)
 							okis = true;
 						else {
+							
 							okis = okis
 							&& vista
 									.eliminaContratoConTurnos(Integer
 											.valueOf(tit.getText(0)));
-
-							okis = okis && vista.eliminaContrato(idOut);
-							for (int i = 0; i < turnosFuera.size(); i++)
-								
+							
+							for (int i = 0; i < turnosFuera.size(); i++)								
 								okis = okis
 										&& vista
 												.eliminaTurno(turnosFuera
 														.get(i));
+							
+							okis = okis && vista.eliminaContrato(idOut);
+							
+							//TODO borrar tambien del departamento
+							
+							
 						}
 //						okis = okis
 //								&& vista
