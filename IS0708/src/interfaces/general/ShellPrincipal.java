@@ -689,7 +689,7 @@ public class ShellPrincipal {
 				// Diferentes iconos:
 				// http://www.developer.com/java/other/article.php/10936_3330861_2
 				String mensaje = bundle.getString("I02_dlg_CerrarAp");
-				if (ic.isModificado()) mensaje = bundle.getString("I02_dlg_CerrarAp2") + "\n" +bundle.getString("I02_dlg_CerrarAp");
+				if (ic!=null && ic.isModificado()) mensaje = bundle.getString("I02_dlg_CerrarAp2") + "\n" +bundle.getString("I02_dlg_CerrarAp");
 				messageBox.setMessage(mensaje);
 				if (messageBox.open() == SWT.YES) {
 					e.doit = true;

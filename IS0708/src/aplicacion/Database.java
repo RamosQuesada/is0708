@@ -1230,9 +1230,9 @@ public class Database extends Thread {
 			st.executeUpdate(q);
 			correcto = true;
 		} catch (SQLException e) {
+			System.err.println("Database :: Error al insertar Usuario: " + q);
 			e.printStackTrace();
 			correcto = false;
-			System.err.println("Database :: Error al insertar Usuario: " + q);
 		}
 		return correcto;
 	}

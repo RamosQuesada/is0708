@@ -404,15 +404,24 @@ public class TabNuevoJefe {
 						//int id = contratosJefes.get(cContrato.getSelectionIndex()).getNumeroContrato();
 						//insertamos el nuevo jefe en la base de datos
 //						Empleado emp = new Empleado(null, Util.convertirNVend(tNVend.getText()), tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 2, 1, fechaContrato, fechaAlta, null, cDepto.getText(), null, 0, cIdioma.getSelectionIndex(),-1,0);
-						Empleado emp = new Empleado(null, Util.convertirNVend(tNVend.getText()), tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 2, 1, fechaContrato, fechaAlta, null, null, null, 0, cIdioma.getSelectionIndex(),-1,0);
+						Empleado emp = new Empleado(null, Util.convertirNVend(tNVend.getText()), tNombre.getText(), tApell1.getText(), tApell2.getText(), fechaNacimiento, cSexo.getSelectionIndex(), tEMail.getText(), tPassword.getText(), cExperiencia.getSelectionIndex(), 2, 1, fechaContrato, fechaAlta, null, null, null, 0, cIdioma.getSelectionIndex(),1,0);
 
-						vista.getControlador().insertEmpleado(emp);
+						messageBox = new MessageBox(tabFolder.getShell(),
+								SWT.APPLICATION_MODAL | SWT.OK);
+						messageBox.setText(bundle.getString("Aviso"));
+						try {
+							if (vista.getControlador().insertEmpleado(emp)) 
+								messageBox.setMessage(bundle.getString("I03_dlg_jefe_guardado"));
+							else
+								messageBox.setMessage(bundle.getString("I03_dlg_jefe_no_guardado"));
+						} catch (Exception ex) {
+							messageBox.setMessage(bundle.getString("I03_dlg_jefe_no_guardado"));
+						}
+						messageBox.open();
 					}
 				}
 			}
 		});
-		
-		
 		
 		// Introducimos los valores y eventos de Cancelar
 		bCancelar.addSelectionListener(new SelectionAdapter() {
