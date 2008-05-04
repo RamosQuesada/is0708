@@ -68,6 +68,8 @@ public class DialogCreacionContratos {
 	private final int longCicloDefault = 14;
 
 	private boolean cambiarPatron;
+	
+	private boolean ciclico;
 
 	/**
 	 * Constructor. Crea una nueva ventana para la creación/modificacion de un
@@ -119,6 +121,7 @@ public class DialogCreacionContratos {
 		idsTurnosEliminados = new ArrayList<Integer>();
 		idsTurnosAnadidos = new ArrayList<Integer>();
 		cambiarPatron = false;
+		ciclico=false;
 		// contratos=vista.getControlador().getListaContratosDpto("DatosFijos");
 		crearVentana();
 
@@ -666,6 +669,19 @@ public class DialogCreacionContratos {
 		tTipo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		tTipo.setToolTipText(bundle.getString("I09_tip_IdTurno"));
 		tTipo.setTextLimit(1);
+		tTipo.setEnabled(false);
+		
+		final Button bCiclico = new Button(shell, SWT.CHECK);
+		bCiclico.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false,
+				2, 1));
+		bCiclico.setText(bundle.getString("I09_check_ciclico"));
+		SelectionAdapter sabCheckCiclico = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				tTipo.setEnabled(!ciclico);
+				ciclico=!ciclico;
+			}
+		};
+		bCiclico.addSelectionListener(sabCheckCiclico);
 
 		// Parte inferior de la ventana
 		final Button bAceptar = new Button(shell, SWT.PUSH);
@@ -983,6 +999,7 @@ public class DialogCreacionContratos {
 							}
 							double sueldo = Double.valueOf(tSalario.getText());
 							int tipo = Integer.valueOf(tTipo.getText());
+							if (!ciclico) tipo=5;
 							if (modo == 0) {
 								if (cambiarPatron) {
 									MessageBox messageBox = new MessageBox(
