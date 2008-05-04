@@ -715,6 +715,7 @@ public class Empleado implements Drawable {
 	 * <li>0 - Español
 	 * <li>1 - Inglés
 	 * <li>2 - Polaco
+	 * <li>3 - Italiano
 	 * @return el idioma del empleado
 	 */
 	public int getIdioma() {
@@ -723,9 +724,9 @@ public class Empleado implements Drawable {
 
 	/**
 	 * Asigna un idioma al empleado:<ul>
-	 * <li>1 - Español
-	 * <li>2 - Inglés
-	 * <li>3 - Polaco
+	 * <li>0 - Español
+	 * <li>1 - Inglés
+	 * <li>3 - Italiano
 	 * @param idioma el idioma a asignar
 	 */
 	public void setIdioma(int idioma) {
