@@ -1824,9 +1824,10 @@ public class Vista {
 		String horacierre=aplicacion.utilidades.Util.horaminutosAString(horCi, minCi);
 		Time thI= Time.valueOf(horaapertura);
 		Time thC=Time.valueOf(horacierre);
-		this.controlador.insertDepartamentoUsuario(nvJefe, nombredep); //tabla DepartamentoUsuario
-		this.controlador.insertNumerosDepartamento(n, nombredep); //tabla NumerosDEPARTAMENTOs
 		this.controlador.insertDepartamentoPruebas(nombredep, nvJefe,thI,thC); //tabla DEPARTAMENTO
+		this.controlador.insertNumerosDepartamento(n, nombredep); //tabla NumerosDEPARTAMENTOs
+		this.controlador.insertDepartamentoUsuario(nvJefe, nombredep); //tabla DepartamentoUsuario
+
 		//insertamos en la cache
 		//Departamento d=new Departamento(nombredep,Integer.parseInt(num),getEmpleado(nvJefe),null,null);
 		//departamentosJefe.add(d);
