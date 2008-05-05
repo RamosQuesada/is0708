@@ -1309,9 +1309,9 @@ public class Controlador {
 	 * @return <i>true</i> si dpto se ha eliminado correctamente
 	 */
 	public boolean eliminaDepartamento(String nombre) {
-		return this._db.borraDepartamento(nombre) && 
+		return  
 			this._db.borraNombreDepartamentoUsuario(nombre)
-			&& this._db.borraNumerosDepartamentos(nombre);
+			&& this._db.borraNumerosDepartamentos(nombre)&& this._db.borraDepartamento(nombre);
 
 	}
 
