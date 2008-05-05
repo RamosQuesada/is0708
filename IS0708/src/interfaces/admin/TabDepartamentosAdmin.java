@@ -127,7 +127,7 @@ public class TabDepartamentosAdmin {
 						else{
 							cmbDepartamentos.remove(cmbDepartamentos.getText());
 							if(cmbDepartamentos.getItemCount()>0) cmbDepartamentos.select(0);
-							MessageBox messageBox2 = new MessageBox (tabFolder.getShell(), SWT.APPLICATION_MODAL | SWT.OK | SWT.CANCEL | SWT.ICON_INFORMATION);
+							MessageBox messageBox2 = new MessageBox (tabFolder.getShell(), SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_INFORMATION);
 							messageBox2.setText (bundle.getString("Mensaje"));
 							messageBox2.setMessage (bundle.getString("I10_ok_elim_dep"));
 							messageBox2.open ();
