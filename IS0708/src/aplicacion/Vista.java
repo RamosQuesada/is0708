@@ -1026,10 +1026,10 @@ public class Vista {
 				sugerencias.get(i).getDept().equals(idDepartamento))
 				aux.add(sugerencias.get(i));	
 		}
-		if (aux!=null) return aux;
+		if (aux.size() != 0) return aux;
 		// Si no, buscar en BD
-		for (int i=0;i<aplicacion.utilidades.Util.dameDias(mes, anio);i++) {
-			Date fecha = new Date (anio,mes,i);
+		for (int i=1;i<=aplicacion.utilidades.Util.dameDias(mes, anio);i++) {
+			Date fecha = new Date(anio,mes,i);
 			ArrayList<Sugerencia> aux2 = controlador.getSugerenciasDia(idDepartamento, fecha);
 			for (int j=0;j<aux2.size();j++)
 				sugerencias.add(aux2.get(j));
@@ -1072,6 +1072,7 @@ public class Vista {
 		// Si no, buscar en BD
 		Cuadrante c = controlador.getCuadrante(mes, anio, idDpto);
 		cuadrantes.add(c);
+		getSugerencias(mes, anio, idDpto);
 		pidiendoCuadrante=false;
 		return c;
 	}
