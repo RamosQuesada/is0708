@@ -1,0 +1,19 @@
+# Introducción #
+
+Un cuadrante es una tabla que define los horarios de un departamento. Puede ser diario, semanal, mensual, etc. Aquí tenéis un cuadrante de muestra (mensual) que me ha dado Jose.
+
+# Detalles #
+
+Os lo explico un poco:
+  * Primera columna, los vendedores. D/S significa días sueltos, esta gente sólo trabaja fines de semana y festivos. Así que nuestra aplicación tendrá que tener en cuenta los festivos para poner a esta gente a trabajar.
+  * En gris los días de descanso o libranza. Por muy aleatorio que parezca, siguen un patrón. Normalmente el ciclo es el siguiente: trabaja 6 días, libra 1, trabaja 3, libra 1, trabaja 3, libra 2, trabaja 6, libra 4. Y vuelta a empezar, es un ciclo de 26 días. Nuestra aplicación deberá tener un generador de ciclos para distintos tipos de contrato. Un empleado de días sueltos trabaja normalmente 4 fines de semana seguidos, el siguiente descansa el sábado, y el siguiente lo tiene libre. Es un ciclo de 6 semanas, o 42 días. Como veis, los ciclos pueden tener distinta duración. Los promotores tienen horarios muy raros, normalmente con un ciclo semanal.
+  * Los empleados normales tienen vacaciones, pero los de días sueltos no. Podéis ver que Miguel empieza el mes de vacaciones.
+  * Marga tiene todo B's. Está de baja por una operación.
+  * Elena está de feria. Suena a broma, pero quiere decir que le han cambiado de departamento temporalmente para cubrir una feria, en este caso, la feria de Talavera. Las vacaciones, las bajas, los cambios temporales de departamento, etc. se pueden considerar como incidencias en las que el vendedor está ausente. Nuestro programa debería permitir crear incidencias y darles distintos nombres y colores.
+  * Las letras y números que rellenan el cuadrante son el horario de una persona un determinado día. Así M significa mañana (de 9:30 a 18:30 con una hora para comer) y T significa tarde (de 15:30 a 22:30). Los fines de semana hay otros horarios. Para una persona que viene los fines de semana, un 1 significa de 11:00 a 21:00 con dos horas para comer. Un 2 significa de 12:15 a 22:15, igual con dos horas para comer. Distintos centros, o incluso distintos departamentos, pueden tener distintos horarios para contratos determinados. De todas formas, los horarios están determinados por el contrato, así que el programa debe permitir crear distintos tipos de contrato, y al dar de alta un vendedor, asignarle uno. Así no cabe la posibilidad de tener a un empleado de diario trabajando con el horario de un promotor, por ejemplo.
+  * Lo del final de N y F signfica nocturnidad y festivos. En el cuadrante de ejemplo no pone nada, pero debería poner en horas el tiempo trabajado en festivos y en nocturnidad (nocturnidad se considera a partir de las 22:00). Un jefe (y un vendedor) debe tener esto en cuenta, puesto que se pagan más caras estas horas de trabajo.
+  * Como veis, Pilar viene todos los días por la tarde, y Ángeles por la mañana. Supongo que porque lo han hablado y lo prefieren así. El programa debería admitir este tipo de excepciones, ya que de lo contrario, lo mejor es intentar una rotación.
+
+Ejemplo de un cuadrante diario:
+
+http://is0708.googlecode.com/files/Captura.JPG
